@@ -8,11 +8,8 @@
     "strict": true,
     "noImplicitOverride": true,
     "paths": {
-      "icc": [
-        "dist/icc"
-      ],
-      "icc-ui": [
-        "dist/icc-ui"
+      "@icc/ui/*": [
+        "projects/icc/*"
       ]
     },
     "noPropertyAccessFromIndexSignature": true,

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'icc-icc',
+  selector: 'icc-about',
   template: `
     <p>
-      icc works ok!
+      icc about works ok!
     </p>
   `,
   styles: [
   ]
 })
-export class IccComponent {
+export class IccAboutComponent {
 
 }

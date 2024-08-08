@@ -3,43 +3,10 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "icc-ui": {
-      "projectType": "library",
-      "root": "projects/icc-ui",
-      "sourceRoot": "projects/icc-ui/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/icc-ui/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/icc-ui/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/icc-ui/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/icc-ui/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
     "icc": {
       "projectType": "library",
       "root": "projects/icc",
-      "sourceRoot": "projects/icc/src",
+      "sourceRoot": "projects/icc",
       "prefix": "icc",
       "architect": {
         "build": {

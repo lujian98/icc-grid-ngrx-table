@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'icc-button',
+  selector: 'icc-about-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css']
+  styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent {
+export class IccButtonComponent {
   @Input() label = 'Accept';
   //label = 'Accept';
 }

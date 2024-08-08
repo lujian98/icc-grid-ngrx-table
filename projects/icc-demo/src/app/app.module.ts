@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IccModule } from 'icc';
+import { IccAboutModule } from '@icc/ui/about';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { IccModule } from 'icc';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    IccModule
+    IccAboutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
