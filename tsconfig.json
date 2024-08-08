@@ -10,6 +10,9 @@
     "paths": {
       "@icc/ui/*": [
         "projects/icc/*"
+      ],
+      "@icc/ui": [
+        "projects/icc"
       ]
     },
     "noPropertyAccessFromIndexSignature": true,
