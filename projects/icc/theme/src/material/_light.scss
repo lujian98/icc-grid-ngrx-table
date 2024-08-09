@@ -1,0 +1,16 @@
+.icc-light-theme {
+  $theme: (
+    color-primary-100: #f2f6ff,
+    color-basic-100: #0f0f0f,
+    color-basic-200: #191919,
+    color-basic-300: #191919,
+    );
+  /*
+  $primary: mat-palette($mat-indigo);
+  $accent:  mat-palette($mat-pink, A200, A100, A400);
+  $warn:    mat-palette($mat-red);
+  $theme:   mat-light-theme($primary, $accent, $warn);
+  @include angular-material-theme($theme);
+  */
+  @include icc-theme($theme);
+}

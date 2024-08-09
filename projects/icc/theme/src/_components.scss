@@ -1,0 +1,6 @@
+@import '../../about/src/about.theme';
+
+@mixin icc-theme($app-theme) {
+  @include test-component-theme($app-theme);
+}
+
