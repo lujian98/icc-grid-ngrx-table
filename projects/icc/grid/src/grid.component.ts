@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IccColumnConfig } from './models/grid-column.model';
 
 @Component({
   selector: 'icc-grid',
@@ -7,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccGridComponent {
+  @Input() columnConfig: IccColumnConfig[] = [];
 
 }

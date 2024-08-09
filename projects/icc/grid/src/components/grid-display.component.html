@@ -1,28 +1,34 @@
+
 <cdk-table [dataSource]="dataSource">
-  <!-- Position Column -->
-  <ng-container cdkColumnDef="position">
-    <cdk-header-cell *cdkHeaderCellDef> No. </cdk-header-cell>
-    <cdk-cell *cdkCellDef="let element"> {{element.position}} </cdk-cell>
+  <ng-container *ngFor="let column of columnConfig; let colIndex = index" cdkColumnDef="{{ column.field }}">
+    <cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </cdk-header-cell>
+    <cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column.field] }} </cdk-cell>
   </ng-container>
-
-  <!-- Name Column -->
-  <ng-container cdkColumnDef="name">
-    <cdk-header-cell *cdkHeaderCellDef> Name </cdk-header-cell>
-    <cdk-cell *cdkCellDef="let element"> {{element.name}} </cdk-cell>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container cdkColumnDef="weight">
-    <cdk-header-cell *cdkHeaderCellDef> Weight </cdk-header-cell>
-    <cdk-cell *cdkCellDef="let element"> {{element.weight}} </cdk-cell>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container cdkColumnDef="symbol">
-    <cdk-header-cell *cdkHeaderCellDef> Symbol </cdk-header-cell>
-    <cdk-cell *cdkCellDef="let element"> {{element.symbol}} </cdk-cell>
-  </ng-container>
-
   <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
   <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
 </cdk-table>
+
+
+<!--
+
+<cdk-table [dataSource]="dataSource">
+  <ng-container *ngFor="let column of displayedColumns; let colIndex = index" cdkColumnDef="{{ column }}">
+    <cdk-header-cell *cdkHeaderCellDef> {{ column }} </cdk-header-cell>
+    <cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column] }} </cdk-cell>
+  </ng-container>
+  <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
+  <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
+</cdk-table>
+
+
+<table cdk-table [dataSource]="dataSource" fixedLayout>
+
+  <ng-container *ngFor="let column of columnConfig; let colIndex = index" cdkColumnDef="{{ column.field }}">
+    <th cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </th>
+    <td cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column.field] }} </td>
+  </ng-container>
+
+  <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+  <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+-->
