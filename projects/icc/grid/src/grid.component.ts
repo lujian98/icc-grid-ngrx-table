@@ -8,6 +8,7 @@ import { IccColumnConfig } from './models/grid-column.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccGridComponent {
+  @Input() gridName!: string;
   @Input() columnConfig: IccColumnConfig[] = [];
 
 }

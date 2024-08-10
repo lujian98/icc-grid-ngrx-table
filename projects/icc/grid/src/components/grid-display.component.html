@@ -1,15 +1,19 @@
 
 <cdk-table [dataSource]="dataSource">
-  <ng-container *ngFor="let column of columnConfig; let colIndex = index" cdkColumnDef="{{ column.field }}">
-    <cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </cdk-header-cell>
-    <cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column.field] }} </cdk-cell>
+  <ng-container *ngFor="let column of displayedColumns; let colIndex = index" cdkColumnDef="{{ column }}">
+    <cdk-header-cell *cdkHeaderCellDef> {{ column }} </cdk-header-cell>
+    <cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column] }} </cdk-cell>
   </ng-container>
   <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
   <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
 </cdk-table>
 
 
+
+
 <!--
+   <icc-header-cell [column]="column"></icc-header-cell>
+    <cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </cdk-header-cell>
 
 <cdk-table [dataSource]="dataSource">
   <ng-container *ngFor="let column of displayedColumns; let colIndex = index" cdkColumnDef="{{ column }}">
@@ -31,4 +35,20 @@
   <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
   <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+
+<cdk-table [dataSource]="dataSource">
+  <ng-container *ngFor="let column of columnConfig; let colIndex = index" cdkColumnDef="{{ column.field }}">
+
+    <div *ngIf="column">
+      <cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </cdk-header-cell>
+      </div>
+    <cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column.field] }} </cdk-cell>
+  </ng-container>
+
+
+  <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
+  <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
+</cdk-table>
+
 -->

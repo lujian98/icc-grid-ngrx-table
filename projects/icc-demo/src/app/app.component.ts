@@ -9,6 +9,7 @@ import { IccColumnConfig } from '@icc/ui/grid';
 export class AppComponent {
   title = 'icc-demo';
   label = 'Test Button';
+  gridName: string = 'DCR';
 
   columnConfig: IccColumnConfig[] = [{
     field: 'name',
