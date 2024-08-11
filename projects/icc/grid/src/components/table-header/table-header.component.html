@@ -1,0 +1,35 @@
+<!--ngrx-grid-header
+<ng-content select="ngrx-grid-header-item"></ng-content>
+
+-->
+
+
+<ng-container *ngFor="let column of columnConfig; let index = index;">
+  <icc-table-header-cell
+    [column]="column"
+  >
+  </icc-table-header-cell>
+</ng-container>
+
+
+<!--
+<ng-container *ngFor="let column of columnConfig; trackBy: trackByIndex; let index = index;">
+  <ngrx-grid-header-item *ngIf="column.visible"
+                         [cdkDragDisabled]="dragDisabled"
+                         [column]="column"
+                         (columnResizing)="columnResizing.emit($event)"
+                         (columnResized)="columnResized.emit($event)"
+                         cdkDrag ngrxColumnResize>
+    <ngrx-dynamic-grid-header-item [column]="column"
+                                   [filterSequence]="index"
+                                   [config]="config"
+                                   (filterGrid)="filterGrid.emit($event)"
+                                   (sortGrid)="sortGrid.emit($event)">
+    </ngrx-dynamic-grid-header-item>
+    <div class="drag-placeholder" *cdkDragPlaceholder></div>
+    <div *ngIf="config.columnResize" class="resize-action" ngrxColumnResizeTrigger></div>
+  </ngrx-grid-header-item>
+</ng-container>
+-->
+
+

@@ -1,0 +1,29 @@
+<!--ngrx-grid-display-->
+
+<icc-table-header [columnConfig]="columnConfig">
+
+</icc-table-header>
+
+
+<!--
+  <ngrx-grid-header [columns]="columns"
+                    [config]="config"
+                    [ngStyle]="columnsStyle"
+                    (filterGrid)="filterGrid.emit($event)"
+                    (sortGrid)="sortGrid.emit($event)"
+                    (cdkDropListDropped)="onDrop($event)"
+                    (columnResizing)="onColumnResizing($event)"
+                    (columnResized)="columnResized.emit($event)"
+                    cdkDropListOrientation="horizontal"
+                    cdkDropList>
+    <ngrx-grid-header-item *ngIf="config.masterDetail"></ngrx-grid-header-item>
+    <ngrx-grid-header-item *ngIf="selectionType">
+      <ngrx-row-select *ngIf="hasCheckboxSelection()"
+                       id="selectAll"
+                       [isSelected]="allSelected"
+                       [type]="selectionType"
+                       (selected)="onToggleSelectAllRowsOnCurrentPage()">
+      </ngrx-row-select>
+    </ngrx-grid-header-item>
+  </ngrx-grid-header>
+-->

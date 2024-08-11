@@ -7,9 +7,9 @@ import { IccColumnConfig } from '../../models/grid-column.model';
 
 
 @Component({
-  selector: 'icc-header-cell',
-  templateUrl: './header-cell.component.html',
-  styleUrls: ['./header-cell.component.scss'],
+  selector: 'icc-table-header-cell',
+  templateUrl: './table-header-cell.component.html',
+  styleUrls: ['./table-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -17,10 +17,7 @@ import { IccColumnConfig } from '../../models/grid-column.model';
     CdkTableModule,
   ],
 })
-export class IccHeaderCellComponent {
-  @Input() columnConfig: IccColumnConfig[] = [];
+export class IccTableHeaderCellComponent {
+  @Input() column!: IccColumnConfig;
 
-  get displayedColumns():  string[] {
-    return this.columnConfig.map((column)=> column.field);
-  }
 }

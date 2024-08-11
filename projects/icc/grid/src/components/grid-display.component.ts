@@ -4,7 +4,6 @@ import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig } from '../models/grid-column.model';
-import { IccHeaderCellComponent } from './header-cell/header-cell.component';
 
 export interface PeriodicElement {
   name: string;
@@ -47,7 +46,6 @@ export class ExampleDataSource extends DataSource<PeriodicElement> {
   imports: [
     CommonModule,
     CdkTableModule,
-    IccHeaderCellComponent,
   ],
 })
 export class IccGridDisplayComponent {

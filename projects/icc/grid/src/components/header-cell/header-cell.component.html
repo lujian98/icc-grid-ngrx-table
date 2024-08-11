@@ -1,7 +1,0 @@
-<ng-container *ngFor="let column of columnConfig; let colIndex = index" cdkColumnDef="{{ column.field }}">
-  <th cdk-header-cell *cdkHeaderCellDef> {{ column.field }} </th>
-  <td cdk-cell *cdkCellDef="let record; let rowIndex = index"> {{ record[column.field] }} </td>
-</ng-container>
-
-
-
