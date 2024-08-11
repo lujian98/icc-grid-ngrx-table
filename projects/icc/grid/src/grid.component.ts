@@ -30,5 +30,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class IccGridComponent {
   @Input() gridName!: string;
   @Input() columnConfig: IccColumnConfig[] = [];
-  gridData = ELEMENT_DATA;
+  @Input() gridData!: any[];
+  //gridData = ELEMENT_DATA;
 }

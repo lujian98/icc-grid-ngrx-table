@@ -1,15 +1,33 @@
 <!--ngrx-grid-display-->
 
+
+
 <icc-grid-header [columnConfig]="columnConfig">
 
 </icc-grid-header>
 
-<icc-grid-row *ngFor="let rowData of gridRows; let index = index;"
-  [columns]="columnConfig"
-  [record]="rowData">
-</icc-grid-row>
+<cdk-virtual-scroll-viewport itemSize="25">
+  <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
+    [columns]="columnConfig"
+    [record]="rowData">
+  </icc-grid-row>
+</cdk-virtual-scroll-viewport>
 
 <!--
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+  <div *cdkVirtualFor="let item of items; let i = index" class="example-item">
+    {{ item }}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+
+<cdk-virtual-scroll-viewport class="list-container list-group" autosize>
+	<div *cdkVirtualFor="let size of fixedSizeData; let i = index" class="list-group-item" [style.height.px]="size">
+		Item {{i}}
+	</div>
+</cdk-virtual-scroll-viewport>
+
+
   <ngrx-grid-header [columns]="columns"
                     [config]="config"
                     [ngStyle]="columnsStyle"

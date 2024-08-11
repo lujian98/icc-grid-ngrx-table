@@ -1,26 +1,10 @@
-
-cdk-row, cdk-header-row, cdk-footer-row {
+:host {
   display: flex;
-}
-
-cdk-cell, cdk-header-cell, cdk-footer-cell {
-  flex: 1;
-}
-/*
-table {
-  width: 100%;
-}
-
-th {
-  text-align: left;
+  flex-direction: column;
+  height: -webkit-fill-available;
+  cdk-virtual-scroll-viewport {
+    flex: 1;
+  }
 }
 
 
-cdk-row, cdk-header-row, cdk-footer-row {
-  display: flex;
-}
-
-cdk-cell, cdk-header-cell, cdk-footer-cell {
-  flex: 1;
-}
-  */
