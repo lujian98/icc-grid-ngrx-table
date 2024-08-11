@@ -1,22 +1,62 @@
 :host {
   display: flex;
-  flex: 1;
-}
-/*
-table {
   width: 100%;
+  //     width: 250px;
+
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px 0px 0px 1px;
+  padding: 0 15px;
+  line-height: 32px;
+
+  .grid-header-cell {
+     display: flex;
+     justify-content: center;
+     width: 100%;
+
+    .grid-header-cell-title {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      //margin: 0 $size-xs 0 0;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  /*
+      &.ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }*/
+    }
+
+    .grid-header-cell-sort {
+      display: flex;
+      flex-direction: column;
+      padding-left: 5px;
+    }
+  }
+  .grid-header-cell-menu {
+    margin-left: auto !important;
+  }
 }
 
-th {
-  text-align: left;
+/*
+.caret-up {
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid; // rgba($color: $text-color, $alpha: .4);
+  margin-bottom: 3px;
 }
 
-
-cdk-row, cdk-header-row, cdk-footer-row {
-  display: flex;
+.fa-caret {
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid; // rgba($color: $text-color, $alpha: .4);
 }
-
-cdk-cell, cdk-header-cell, cdk-footer-cell {
-  flex: 1;
-}
-  */
+*/

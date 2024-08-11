@@ -12,12 +12,14 @@ export class AppComponent {
   gridName: string = 'DCR';
 
   columnConfig: IccColumnConfig[] = [{
-    field: 'name',
+    name: 'name',
+    //title: 'This is list of the name This is list of the name This is list of the name This is list of the name hhhhhh',
   }, {
-    field: 'position',
+    name: 'position',
+    //title: '',
   }, {
-    field: 'symbol',
+    name: 'symbol',
   }, {
-    field: 'weight',
+    name: 'weight',
   }];
 }

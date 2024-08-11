@@ -24,6 +24,6 @@ export class IccGridViewComponent {
   @Input() gridRows: any[] = [];
 
   get displayedColumns():  string[] {
-    return this.columnConfig.map((column)=> column.field);
+    return this.columnConfig.map((column)=> column.name);
   }
 }

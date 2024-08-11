@@ -63,6 +63,10 @@
               "projects/icc-demo/src/assets"
             ],
             "styles": [
+              "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "projects/icc-demo/src/styles.scss"
             ],
             "scripts": []

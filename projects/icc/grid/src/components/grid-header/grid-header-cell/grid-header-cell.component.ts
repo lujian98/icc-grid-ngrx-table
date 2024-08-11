@@ -20,4 +20,18 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
 export class IccGridHeaderCellComponent {
   @Input() column!: IccColumnConfig;
 
+  get title(): string {
+    console.log('title =', this.column.title)
+    return this.column.title === undefined ? this.column.name : this.column.title;
+  }
+
+  get downCaretStyle() {
+    return {'border-top': '5px solid rgba(16, 46, 84, 0.8)'};
+    //return {'border-top': sortDescending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
+  }
+
+  get upCaretStyle() {
+    return {'border-bottom': null};
+    //return {'border-bottom': sortAscending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
+  }
 }

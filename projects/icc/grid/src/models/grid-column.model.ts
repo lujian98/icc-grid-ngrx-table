@@ -1,7 +1,9 @@
 
 export interface IccColumnConfig {
-  header?: string;
-  field: string;
+  //header?: string;
+  name: string;
+  title?: string;
+  //field: string;
   fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
   //index?: number;
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always

@@ -22,7 +22,7 @@ export class IccGridRowComponent {
   @Input() record: any;
 
   get displayedColumns():  string[] {
-    return this.columns.map((column)=> column.field);
+    return this.columns.map((column)=> column.name);
   }
 
   trackByIndex(tmp: any, index: number): number {

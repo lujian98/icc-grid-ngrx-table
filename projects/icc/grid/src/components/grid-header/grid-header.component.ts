@@ -21,7 +21,7 @@ export class IccGridHeaderComponent {
   @Input() columnConfig: IccColumnConfig[] = [];
 
   get displayedColumns():  string[] {
-    return this.columnConfig.map((column)=> column.field);
+    return this.columnConfig.map((column)=> column.name);
   }
 
   trackByIndex(tmp: any, index: number): number {

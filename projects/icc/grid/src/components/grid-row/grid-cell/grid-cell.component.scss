@@ -1,6 +1,13 @@
 :host {
   display: flex;
   flex: 1;
+
+  // border: 1px solid grey;
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px 0px 0px 1px;
+  padding: 0 15px;
+  line-height: 25px;
 }
 /*
 table {

@@ -22,6 +22,6 @@ export class IccGridCellComponent {
   @Input() record: any;
 
   get data(): any {
-    return this.record[this.column.field];
+    return this.record[this.column.name];
   }
 }
