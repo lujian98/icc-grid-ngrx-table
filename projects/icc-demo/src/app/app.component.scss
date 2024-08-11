@@ -1,6 +1,30 @@
 :host {
-  display: block;
-  //height: -webkit-fill-available;
-  height:600px;
-  //width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 25px);
+
+  .icc-top-nav-bar {
+    height: 50px;
+    text-align: center;
+    color: Blue;
+  }
+
+  .icc-main-container {
+    display: flex;
+    height: -webkit-fill-available;
+    .icc-left-side-bar {
+      width: 250px;
+      max-width: 400px;
+    }
+    .icc-center-view {
+      width: 100%;
+    }
+  }
+
+  .icc-footer-bar {
+    height: 30px;
+    padding-top: 15px;
+    text-align: center;
+    color: orange;
+  }
 }

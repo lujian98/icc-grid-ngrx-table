@@ -33,10 +33,10 @@ export class IccGridViewComponent implements AfterViewChecked {
     return this.columnConfig.map((column)=> column.name);
   }
 
-  @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewChecked(): void {
-    this.viewport.checkViewportSize();
-    console.log(' this.viewport=', this.viewport)
+    //this.viewport.checkViewportSize();
+    //console.log(' this.viewport=', this.viewport)
   }
 }

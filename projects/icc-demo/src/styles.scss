@@ -8,3 +8,16 @@
 @import '@fortawesome/fontawesome-free/scss/solid.scss';
 @import '@fortawesome/fontawesome-free/scss/brands.scss';
 
+/* // Set box-sizing globally to handle padding and border widths */
+*,
+*:after, *:before {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+}
+
+/* // Default body styles */
+body {
+	letter-spacing: .01em;
+}
