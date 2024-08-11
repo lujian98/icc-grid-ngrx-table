@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IccGridComponent } from './grid.component';
 import { IccGridDisplayComponent } from './components/grid-display.component';
-import { IccTableComponent } from './components/table/table.component';
+import { IccGridViewComponent } from './components/grid-view.component';
 
 @NgModule({
   declarations: [
     IccGridComponent,
-    //IccTableComponent,
   ],
   exports: [
     IccGridComponent,
-    IccTableComponent,
+    //IccGridViewComponent,
   ],
   imports: [
     IccGridDisplayComponent,
-    IccTableComponent,
+    IccGridViewComponent,
   ],
 })
 export class IccGridModule { }

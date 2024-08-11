@@ -3,29 +3,26 @@ import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccColumnConfig } from '../../models/grid-column.model';
-import { IccTableHeaderCellComponent } from '../table-header-cell/table-header-cell.component';
+import { IccColumnConfig } from '../models/grid-column.model';
+import { IccGridHeaderComponent } from './grid-header/grid-header.component';
+
 
 @Component({
-  selector: 'icc-table-header',
-  templateUrl: './table-header.component.html',
-  styleUrls: ['./table-header.component.scss'],
+  selector: 'icc-grid-view',
+  templateUrl: './grid-view.component.html',
+  styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,
-    IccTableHeaderCellComponent,
+    IccGridHeaderComponent,
+    //CdkTableModule,
   ],
 })
-export class IccTableHeaderComponent {
+export class IccGridViewComponent {
   @Input() columnConfig: IccColumnConfig[] = [];
 
   get displayedColumns():  string[] {
     return this.columnConfig.map((column)=> column.field);
-  }
-
-  trackByIndex(tmp: any, index: number): number {
-    console.log( 'tmp=', tmp)
-    return index;
   }
 }
