@@ -4,6 +4,10 @@
 
 </icc-grid-header>
 
+<icc-grid-row *ngFor="let rowData of gridRows; let index = index;"
+  [columns]="columnConfig"
+  [record]="rowData">
+</icc-grid-row>
 
 <!--
   <ngrx-grid-header [columns]="columns"
@@ -26,4 +30,16 @@
       </ngrx-row-select>
     </ngrx-grid-header-item>
   </ngrx-grid-header>
+
+      <ngrx-grid-row *ngFor="let rowData of gridRows; trackBy: trackByIndex; let index = index;"
+                   [ngStyle]="columnsStyle"
+                   [columns]="columns"
+                   [data]="rowData"
+                   [config]="config"
+                   [rowIndex]="rowDataIndexes[index]"
+                   [active]="isDetailGridVisible(index)"
+                   [selected]="checkSelected(index)"
+                   (toggleRow)="toggleRow.emit($event)"
+                   (toggleDetails)="toggleDetails.emit($event)">
+    </ngrx-grid-row>
 -->

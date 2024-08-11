@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccColumnConfig } from '../../models/grid-column.model';
+import { IccColumnConfig } from '../../../models/grid-column.model';
 
 
 @Component({

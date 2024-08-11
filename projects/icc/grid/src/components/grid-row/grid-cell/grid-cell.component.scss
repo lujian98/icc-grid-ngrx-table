@@ -1,9 +1,5 @@
-
-cdk-row, cdk-header-row, cdk-footer-row {
+:host {
   display: flex;
-}
-
-cdk-cell, cdk-header-cell, cdk-footer-cell {
   flex: 1;
 }
 /*

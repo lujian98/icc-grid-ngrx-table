@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IccGridComponent } from './grid.component';
-import { IccGridDisplayComponent } from './components/grid-display.component';
 import { IccGridViewComponent } from './components/grid-view.component';
 
 @NgModule({
@@ -9,10 +8,8 @@ import { IccGridViewComponent } from './components/grid-view.component';
   ],
   exports: [
     IccGridComponent,
-    //IccGridViewComponent,
   ],
   imports: [
-    IccGridDisplayComponent,
     IccGridViewComponent,
   ],
 })
