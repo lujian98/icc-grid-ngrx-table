@@ -1,24 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-//import { SunLoadRecordParams, SunGridState } from 'sunbird-seven-ui';
-//import { CreateDownload } from '../models/download.model';
-//import { AuditLog } from '../models/audit-log.model';
+import { IccColumnConfig } from '../models/grid-column.model';
 
-export const getAuditLog = createAction(
-  '[AuditLog] Get Audit Log',
-  //props<{ loadParams?: SunLoadRecordParams }>()
+export const setupGridConfig = createAction(
+  '[Grid] Setup Grid Config',
+  props<{ gridName: string }>()
 );
 
-export const getAuditLogSuccess = createAction(
-  '[AuditLog] Get Audit Log Success',
-  /*
-  props<{
-    auditLogs: AuditLog[];
-    total: number;
-    loadParams: SunLoadRecordParams;
-  }>()*/
+export const setupGridColumnConfig = createAction(
+  '[Grid] Setup Grid Column Config',
+  props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
 );
 
-export const getAuditLogFailure = createAction(
-  '[AuditLog] Get Audit Log Failure',
-  props<{ errors: any }>()
-);

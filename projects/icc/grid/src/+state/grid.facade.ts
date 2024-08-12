@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-
+import { IccColumnConfig } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
 /*
 import {
@@ -15,6 +15,16 @@ import {
 @Injectable()
 export class IccGridFacade {
   private store = inject(Store);
+
+
+
+  setupGridConfig(gridName: string): void {
+    this.store.dispatch(gridActions.setupGridConfig({ gridName }));
+  }
+
+  setupGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnConfig({ gridName, columnConfig }));
+  }
   /*
   auditLogs$ = this.store.select(selectAuditLogs);
   total$ = this.store.select(selectTotal);

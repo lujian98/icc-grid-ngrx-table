@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { IccGridFacade } from './+state/grid.facade';
 import { IccColumnConfig } from './models/grid-column.model';
 
 export interface PeriodicElement {
@@ -28,8 +29,22 @@ const ELEMENT_DATA: PeriodicElement[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccGridComponent {
-  @Input() gridName!: string;
+  private gridFacade = inject(IccGridFacade);
+  private _gridName: string = '';
+
+  @Input()
+  set gridName(value: string) {
+    this._gridName = value;
+    this.gridFacade.setupGridConfig(value);
+  }
+  get gridName(): string {
+    return this._gridName;
+  }
+
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridData!: any[];
   //gridData = ELEMENT_DATA;
+
+
+
 }
