@@ -1,6 +1,14 @@
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryService } from './mock/in-memory-service';
+import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,12 +22,24 @@ import { IccGridModule } from '@icc/ui/grid';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    //HttpClientModule,
+    StoreModule.forRoot({ router: routerReducer }),
+    StoreRouterConnectingModule.forRoot({}),
+    EffectsModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 1500 }),
     AppRoutingModule,
     MatCheckboxModule,
     IccAboutModule,
     IccGridModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InMemoryHttpInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
