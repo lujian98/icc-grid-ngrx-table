@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -48,11 +48,12 @@ export class IccGridViewComponent implements AfterViewChecked {
     return this.columnConfig.map((column) => column.name);
   }
 
-  //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewChecked(): void {
+    const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
     //this.viewport.checkViewportSize();
-    //console.log(' this.viewport=', this.viewport)
+    console.log(' viewportSize=', viewportSize)
   }
 
   onToggleSelectAllRowsOnCurrentPage() {
