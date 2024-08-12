@@ -1,29 +1,21 @@
+//@import "../../../../styles/variables";
+
 :host {
   display: flex;
-  flex: 1;
-
-  // border: 1px solid grey;
-  border-style: solid;
-  border-color: grey;
-  border-width: 1px 0px 0px 1px;
-  padding: 0 15px;
-  line-height: 25px;
-}
-/*
-table {
   width: 100%;
-}
-
-th {
+  //padding: $cell-padding;
   text-align: left;
-}
+  //color: $text-color;
+  //border-bottom: 1px solid $border-color;
 
+ &.expandable-row {
+   justify-content: center;
+   align-items: center;
+ }
 
-cdk-row, cdk-header-row, cdk-footer-row {
-  display: flex;
-}
+ /*
+  @media screen and (max-width: 769px) {
+    padding: 0 $size-s;
+  }*/
 
-cdk-cell, cdk-header-cell, cdk-footer-cell {
-  flex: 1;
 }
-  */

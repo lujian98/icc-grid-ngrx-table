@@ -4,20 +4,32 @@
 -->
 
 <ng-container *ngFor="let column of columns;">
-  <icc-grid-cell
-    [record]="record"
-    [column]="column">
+  <icc-grid-cell>
+    <icc-dynamic-grid-cell
+      [record]="record"
+      [column]="column">
+    </icc-dynamic-grid-cell>
   </icc-grid-cell>
 </ng-container>
 
 <!--
 
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex;">
   <ngrx-grid-cell *ngIf="column.visible">
     <ngrx-dynamic-grid-cell [row]="data"
                             [data]="getColumnData(column)"
                             [column]="column">
     </ngrx-dynamic-grid-cell>
   </ngrx-grid-cell>
+</ng-container>
+
+
+<ng-container *ngFor="let column of columns;">
+  <icc-grid-cell-view
+    [record]="record"
+    [column]="column">
+  </icc-grid-cell-view>
+</ng-container>
 
 <ng-container *ngFor="let column of columnConfig; trackBy: trackByIndex; let index = index;">
   <ngrx-grid-header-item *ngIf="column.visible"

@@ -5,6 +5,8 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig } from '../../models/grid-column.model';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
+import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
+import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
 
 @Component({
   selector: 'icc-grid-row',
@@ -14,7 +16,9 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
   standalone: true,
   imports: [
     CommonModule,
+    IccGridCellViewComponent,
     IccGridCellComponent,
+    IccDynamicGridCellComponent,
   ],
 })
 export class IccGridRowComponent {
