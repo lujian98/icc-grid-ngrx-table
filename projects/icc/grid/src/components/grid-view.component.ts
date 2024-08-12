@@ -25,6 +25,7 @@ export const FIXED_SIZE = Array(10000).fill(30);
     CommonModule,
     DragDropModule,
     ScrollingModule,
+    //MatPaginatorModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
     IccGridRowComponent,
@@ -43,8 +44,8 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   fixedSizeData = FIXED_SIZE;
 
-  get displayedColumns():  string[] {
-    return this.columnConfig.map((column)=> column.name);
+  get displayedColumns(): string[] {
+    return this.columnConfig.map((column) => column.name);
   }
 
   //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;

@@ -3,4 +3,20 @@
   flex-direction: column;
   width: 100%;
   height: -webkit-fill-available;
+
+  .icc-grid-toolbar {
+    display: flex;
+    height: 32px;
+    background-color: gray;
+    align-items: center;
+    justify-content: center;
+    //text-align: center;
+  }
+
+  .icc-grid-bottom-bar {
+    height: 32px;
+    background-color: gray;
+    align-items: center;
+    //justify-content: left;
+  }
 }
