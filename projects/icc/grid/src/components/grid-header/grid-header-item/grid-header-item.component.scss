@@ -8,6 +8,12 @@
   position: relative;
   //background-color: $c_white;
 
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px 0px 0px 1px;
+  padding: 0 15px;
+  line-height: 32px;
+
   &.cdk-drag {
     cursor: move;
 /*
