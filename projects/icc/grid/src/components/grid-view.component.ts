@@ -1,5 +1,6 @@
-import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -7,6 +8,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
+import { DragDropEvent } from '../models/drag-drop-event';
+import { ColumnResizeEvent } from '../models/column-resize-event';
 
 export const FIXED_SIZE = Array(10000).fill(30);
 
@@ -18,6 +21,7 @@ export const FIXED_SIZE = Array(10000).fill(30);
   standalone: true,
   imports: [
     CommonModule,
+    DragDropModule,
     ScrollingModule,
     IccGridHeaderComponent,
     IccGridRowComponent,
@@ -26,6 +30,11 @@ export const FIXED_SIZE = Array(10000).fill(30);
 export class IccGridViewComponent implements AfterViewChecked {
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridRows: any[] = [];
+
+  @Output() sortGrid = new EventEmitter<any>();
+  @Output() filterGrid = new EventEmitter<any>();
+  @Output() dropColumn = new EventEmitter<DragDropEvent>();
+  @Output() columnResized = new EventEmitter<ColumnResizeEvent>();
 
   fixedSizeData = FIXED_SIZE;
 
@@ -38,5 +47,13 @@ export class IccGridViewComponent implements AfterViewChecked {
   ngAfterViewChecked(): void {
     //this.viewport.checkViewportSize();
     //console.log(' this.viewport=', this.viewport)
+  }
+
+  onDrop(events: any): void {
+    //this.dropColumn.emit({ currentIndex, previousIndex });
+  }
+
+  onColumnResizing(events: any): void {
+    //this.setColumnsStyle(updateColumnWidth(columnId, width, this.columnConfig));
   }
 }

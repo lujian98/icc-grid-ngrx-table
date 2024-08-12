@@ -1,22 +1,44 @@
 :host {
   display: flex;
-  //border: 1px solid grey;
-}
-/*
-table {
-  width: 100%;
-}
 
-th {
-  text-align: left;
-}
+  //@include display-grid();
+  //border-bottom: 2px solid $c_primary;
 
+  .drag-placeholder {
+    //background-color: tint-color($c_primary, 50%);
+    //border: 1.5px dashed $c_primary;
+    z-index: 4;
+  }
 
-cdk-row, cdk-header-row, cdk-footer-row {
-  display: flex;
-}
+  .resize-action {
+    width: 10px;
+    height: 20px;
+    position: absolute;
+    right: -5px;
+    z-index: 3;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
-cdk-cell, cdk-header-cell, cdk-footer-cell {
-  flex: 1;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 20px;
+      width: 1px;
+      margin: auto;
+      //background-color: $border-color;
+    }
+
+    &:hover, &:active {
+      cursor: ew-resize;
+    }
+  }
 }
-  */

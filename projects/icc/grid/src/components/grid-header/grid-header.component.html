@@ -2,13 +2,24 @@
 <ng-content select="ngrx-grid-header-item"></ng-content>
 
 -->
+<ng-content select="icc-grid-header-item"></ng-content>
 
 
 <ng-container *ngFor="let column of columnConfig; let index = index;">
-  <icc-grid-header-cell
-    [column]="column"
-  >
-  </icc-grid-header-cell>
+  <icc-grid-header-item
+    [cdkDragDisabled]="dragDisabled"
+    (columnResizing)="columnResizing.emit($event)"
+    (columnResized)="columnResized.emit($event)"
+    cdkDrag iccColumnResize>
+    <icc-grid-header-cell
+      [column]="column"
+      (filterGrid)="filterGrid.emit($event)"
+      (sortGrid)="sortGrid.emit($event)"
+    >
+    </icc-grid-header-cell>
+    <div class="drag-placeholder" *cdkDragPlaceholder></div>
+    <div class="resize-action" iccColumnResizeTrigger></div>
+  </icc-grid-header-item>
 </ng-container>
 
 

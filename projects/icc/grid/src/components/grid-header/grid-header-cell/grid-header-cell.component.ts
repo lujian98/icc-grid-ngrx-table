@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -20,8 +20,11 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
 export class IccGridHeaderCellComponent {
   @Input() column!: IccColumnConfig;
 
+  @Output() sortGrid = new EventEmitter<any>();
+  @Output() filterGrid = new EventEmitter<any>();
+
   get title(): string {
-    console.log('title =', this.column.title)
+    //console.log('title =', this.column.title)
     return this.column.title === undefined ? this.column.name : this.column.title;
   }
 

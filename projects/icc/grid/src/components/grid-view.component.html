@@ -2,7 +2,15 @@
 
 
 
-<icc-grid-header [columnConfig]="columnConfig">
+<icc-grid-header
+  [columnConfig]="columnConfig"
+  (filterGrid)="filterGrid.emit($event)"
+  (sortGrid)="sortGrid.emit($event)"
+  (cdkDropListDropped)="onDrop($event)"
+  (columnResizing)="onColumnResizing($event)"
+  (columnResized)="columnResized.emit($event)"
+  cdkDropListOrientation="horizontal"
+  cdkDropList>
 
 </icc-grid-header>
 
