@@ -10,6 +10,7 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
 import { ColumnResizeEvent } from '../../models/column-resize-event';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
+import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
 
 @Component({
   selector: 'icc-grid-header',
@@ -24,6 +25,7 @@ import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-
     IccGridHeaderItemComponent,
     IccColumnResizeDirective,
     IccColumnResizeTriggerDirective,
+    IccColumnFilterComponent,
   ],
 })
 export class IccGridHeaderComponent {

@@ -17,7 +17,10 @@
       (sortGrid)="sortGrid.emit($event)"
     >
     </icc-grid-header-cell>
-    <div>Filter...</div>
+    <icc-column-filter
+      [column]="column"
+    >
+    </icc-column-filter>
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
     <div class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
