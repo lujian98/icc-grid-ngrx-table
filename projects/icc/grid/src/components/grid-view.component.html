@@ -12,6 +12,13 @@
   cdkDropListOrientation="horizontal"
   cdkDropList>
 
+  <icc-grid-header-item>
+    <icc-row-select
+      [isSelected]="allSelected"
+      (selected)="onToggleSelectAllRowsOnCurrentPage()"
+    >
+    </icc-row-select>
+  </icc-grid-header-item>
 </icc-grid-header>
 
 

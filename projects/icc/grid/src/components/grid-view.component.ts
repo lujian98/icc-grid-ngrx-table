@@ -7,7 +7,9 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
+import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
+import { IccRowSelectComponent } from './row-select/row-select.component';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { ColumnResizeEvent } from '../models/column-resize-event';
 
@@ -24,12 +26,15 @@ export const FIXED_SIZE = Array(10000).fill(30);
     DragDropModule,
     ScrollingModule,
     IccGridHeaderComponent,
+    IccGridHeaderItemComponent,
     IccGridRowComponent,
+    IccRowSelectComponent,
   ],
 })
 export class IccGridViewComponent implements AfterViewChecked {
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridRows: any[] = [];
+  @Input() allSelected = false;
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();
@@ -47,6 +52,21 @@ export class IccGridViewComponent implements AfterViewChecked {
   ngAfterViewChecked(): void {
     //this.viewport.checkViewportSize();
     //console.log(' this.viewport=', this.viewport)
+  }
+
+  onToggleSelectAllRowsOnCurrentPage() {
+    //console.log( ' view columnConfig=', this.columnConfig)
+    //this.toggleSelectAllRowsOnCurrentPage.emit(!this.allSelected);
+  }
+
+  hasCheckboxSelection(): boolean {
+    return true;
+    //return isCheckboxSelection(this.selectionType);
+  }
+
+  checkSelected(index: number): boolean {
+    return true;
+    //return this.isRowSelected(index, this.selectedRowIndexes);
   }
 
   onDrop(events: any): void {

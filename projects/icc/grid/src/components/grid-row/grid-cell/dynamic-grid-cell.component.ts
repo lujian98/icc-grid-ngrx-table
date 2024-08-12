@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { DataGridColumnWithId } from '../../../models';
 import { IccGridCellViewComponent } from './grid-cell-view.component';
@@ -16,26 +16,22 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   ],
 })
 export class IccDynamicGridCellComponent implements OnInit {
-  /*
-  @Input() row: any;
-  @Input() data: any;
-  @Input() column: any;
-  */
+  private viewContainerRef = inject(ViewContainerRef);
+
   @Input() column!: IccColumnConfig;
   @Input() record: any;
 
   //@ViewChild(IccGridCellDirective, {read: ViewContainerRef, static: true}) cellHost!: ViewContainerRef;
 
-  constructor(private container: ViewContainerRef) {}
 
   ngOnInit(): void {
-    this.container.clear();
+    this.viewContainerRef.clear();
     this.loadComponent();
   }
 
   private loadComponent(): void {
-    const cellComponent = IccGridCellViewComponent; // this.column.component ||
-    const componentRef = this.container.createComponent(cellComponent);
+    const cellComponent = IccGridCellViewComponent; // this.column.component || // to dynamic components
+    const componentRef = this.viewContainerRef.createComponent(cellComponent);
     componentRef.instance.column = this.column;
     componentRef.instance.record = this.record;
   }
