@@ -17,6 +17,7 @@
       (sortGrid)="sortGrid.emit($event)"
     >
     </icc-grid-header-cell>
+    <div>Filter...</div>
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
     <div class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
@@ -24,6 +25,14 @@
 
 
 <!--
+
+
+    <icc-dynamic-column-filter
+      [record]="record"
+      [column]="column">
+    </icc-dynamic-column-filter>
+
+
 <ng-container *ngFor="let column of columnConfig; trackBy: trackByIndex; let index = index;">
   <ngrx-grid-header-item *ngIf="column.visible"
                          [cdkDragDisabled]="dragDisabled"
