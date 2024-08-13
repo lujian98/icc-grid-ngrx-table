@@ -50,4 +50,18 @@ export class IccGridEffects {
       })
     )
   );
+
+  getGridData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.getGridData),
+      switchMap((action) => {
+        const gridName = action.gridName;
+        return this.gridService.getGridData(gridName, action.gridData).pipe(
+          map((gridData) => {
+            return gridActions.getGridDataSuccess({gridName, gridData});
+          }),
+        );
+      })
+    )
+  );
 }

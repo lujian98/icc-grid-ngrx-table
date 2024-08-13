@@ -4,7 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccGridConfig, IccColumnConfig } from '../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
@@ -33,6 +33,7 @@ export class IccGridViewComponent implements AfterViewChecked {
   private _gridConfig!: IccGridConfig;
   gridConfig$!: Observable<IccGridConfig>;
   columnConfig$!: Observable<IccColumnConfig[]>;
+  gridData$!: Observable<any[]>;
 
   @Input()
   set gridConfig(val: IccGridConfig) {
@@ -40,6 +41,7 @@ export class IccGridViewComponent implements AfterViewChecked {
     this._gridConfig = val;
     this.gridConfig$ = this.gridFacade.selectGridConfig(val.gridName);
     this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
+    this.gridData$ = this.gridFacade.selectGridData(val.gridName);
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -47,10 +49,16 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set columnConfig(columns: IccColumnConfig[]) {
+    console.log( ' 6666 input IccColumnConfig =', columns)
     this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, columns);
   }
 
-  @Input() gridRows: any[] = [];
+  @Input()
+  set gridData(val: IccGridData<any>) {
+    console.log( ' 7777 input grid data =', val)
+    this.gridFacade.getGridData(this.gridConfig.gridName, val);
+  }
+
   @Input() allSelected = false;
 
   @Output() sortGrid = new EventEmitter<any>();

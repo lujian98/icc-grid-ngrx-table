@@ -9,22 +9,26 @@ export const {
 
 const featureSelector = createFeatureSelector('iccGrid');
 
-export const selectColumnConfig = (gridName: string) => createSelector(
-  // @ts-ignore
-  featureSelector,
-  (state: IccGridState) => {
-    //console.log( ' state=', state)
-    //console.log( ' gridName=', gridName)
-    return state[gridName] ? state[gridName].columnConfig : [];
-  }
-);
-
 export const selectGridConfig = (gridName: string) => createSelector(
   // @ts-ignore
   featureSelector,
   (state: IccGridState) => {
-    console.log( ' 22 state=', state)
-    console.log( ' 22gridName=', gridName)
     return state[gridName] ? state[gridName].gridConfig : defaultState.gridConfig;
+  }
+);
+
+export const selectColumnConfig = (gridName: string) => createSelector(
+  // @ts-ignore
+  featureSelector,
+  (state: IccGridState) => {
+    return state[gridName] ? state[gridName].columnConfig : [];
+  }
+);
+
+export const selectGridData = (gridName: string) => createSelector(
+  // @ts-ignore
+  featureSelector,
+  (state: IccGridState) => {
+    return state[gridName] ? state[gridName].data : [];
   }
 );

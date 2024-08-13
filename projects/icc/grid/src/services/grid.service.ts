@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData } from '../models/grid-column.model';
+import { CARSDATA } from '../spec-helpers/cars-large';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class IccGridService {
 
 
   getGridConfig(gridName: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    console.log(' service config =', gridConfig)
+    //console.log(' service config =', gridConfig)
     return of(gridConfig);
     /*
     return this.http
@@ -23,7 +24,7 @@ export class IccGridService {
   }
 
   getGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    console.log(' service columnConfig =', columnConfig)
+    //console.log(' service columnConfig =', columnConfig)
     const config: IccColumnConfig[] = [{
       name: 'vin',
     }, {
@@ -42,17 +43,15 @@ export class IccGridService {
       */
   }
 
-  /*
-    sendTestEmail(
-      testEmail: TestEmail
-    ): Observable<SunHttpErrorModel | undefined> {
-      const params = { to_address: testEmail.recipientEmailAddress };
-      return this.http
-        .post(this.endpointService.buildUrl('smtp_settings/test'), params)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            return throwError(() => sunNormalizeHttpError(error));
-          })
-        );
-    }*/
+  getGridData<T>(gridName: string, gridData: IccGridData<T>): Observable<IccGridData<T>> {
+    //console.log(' service get =', gridData)
+    const data: IccGridData<any> = CARSDATA;
+    return of(data);
+    /*
+    return this.http
+      .get<EmailResponse>(this.endpointService.buildUrl('smtp_settings'))
+      .pipe(map(this.adapter.adapt));
+      */
+  }
+
 }

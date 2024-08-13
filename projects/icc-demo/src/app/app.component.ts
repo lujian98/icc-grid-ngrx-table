@@ -40,5 +40,5 @@ export class AppComponent {
     name: 'color',
   }];
 
-  gridData = CARSDATA.data;
+  gridData = CARSDATA;
 }

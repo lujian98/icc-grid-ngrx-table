@@ -16,7 +16,7 @@ export const iccGridFeature = createFeature({
         ...defaultState,
         gridConfig: action.gridConfig,
       };
-      console.log( ' setup config state = ', newState)
+      //console.log( ' setup config state = ', newState)
       return {
         ...newState,
       }
@@ -29,10 +29,24 @@ export const iccGridFeature = createFeature({
         ...state[key],
         columnConfig: action.columnConfig,
       };
-      console.log( ' setup column config state = ', newState)
+      //console.log( ' setup column config state = ', newState)
       return {
         ...newState,
       }
     }),
+
+    on(gridActions.getGridDataSuccess, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...state[key],
+        data: action.gridData.data,
+      };
+      //console.log( ' setup grid data = ', newState)
+      return {
+        ...newState,
+      }
+    }),
+
   ),
 });

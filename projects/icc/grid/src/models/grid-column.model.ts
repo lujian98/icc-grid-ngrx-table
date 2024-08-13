@@ -17,6 +17,12 @@ export interface GridState<T extends object = object> {
   TotalCounts: number;
 }
 
+
+export interface IccGridData<T> {
+  data: T[];
+  //TotalCounts: number;
+}
+
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
   rowSelection: false,

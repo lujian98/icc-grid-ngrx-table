@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import { IccGridConfig, IccColumnConfig, defaultGridConfig } from './models/grid-column.model';
+import { IccGridConfig, IccColumnConfig, defaultGridConfig, IccGridData } from './models/grid-column.model';
 
 @Component({
   selector: 'icc-grid',
@@ -23,9 +23,5 @@ export class IccGridComponent {
   }
 
   @Input() columnConfig: IccColumnConfig[] = [];
-  @Input() gridData!: any[];
-  //gridData = ELEMENT_DATA;
-
-
-
+  @Input() gridData!: IccGridData<any>;
 }
