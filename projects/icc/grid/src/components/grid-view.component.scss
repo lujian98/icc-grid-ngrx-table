@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
   height: -webkit-fill-available;
-  cdk-virtual-scroll-viewport, .icc-grid-view-port {
-    flex: 1;
-  }
 }
 
 

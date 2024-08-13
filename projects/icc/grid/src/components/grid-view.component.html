@@ -20,11 +20,11 @@
       </icc-grid-header-item>
     </icc-grid-header>
 
-    <cdk-virtual-scroll-viewport itemSize="25" *ngIf="gridData$ | async as gridData">
-      <icc-grid-row *cdkVirtualFor="let record of gridData; let index = index;"
-        [columns]="columns"
-        [record]="record">
-      </icc-grid-row>
-    </cdk-virtual-scroll-viewport>
+    <icc-grid-viewport *ngIf="gridData$ | async as gridData"
+      [gridConfig]="gridConfig"
+      [columns]="columns"
+      [gridData]="gridData"
+    >
+    </icc-grid-viewport>
   </ng-container>
 </ng-container>

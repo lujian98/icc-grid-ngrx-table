@@ -17,7 +17,7 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridColumnConfig({ gridName, columnConfig }));
   }
 
-  getGridData<T>(gridName: string, gridData: IccGridData<T>): void {
+  getGridData<T>(gridName: string, gridData?: IccGridData<T>): void {
     this.store.dispatch(gridActions.getGridData({ gridName, gridData }));
   }
 

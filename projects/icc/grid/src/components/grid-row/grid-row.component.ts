@@ -34,6 +34,10 @@ export class IccGridRowComponent {
     return this.columns.map((column)=> column.name);
   }
 
+  constructor() {
+    console.log( ' grid row loaded ')
+  }
+
   trackByIndex(tmp: any, index: number): number {
     console.log( 'tmp=', tmp)
     return index;

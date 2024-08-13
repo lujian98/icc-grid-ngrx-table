@@ -7,6 +7,7 @@ import { IccGridFacade } from '../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
+import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
 import { DragDropEvent } from '../models/drag-drop-event';
@@ -21,10 +22,11 @@ import { ColumnResizeEvent } from '../models/column-resize-event';
   imports: [
     CommonModule,
     DragDropModule,
-    ScrollingModule,
+    //ScrollingModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
-    IccGridRowComponent,
+    //IccGridRowComponent,
+    IccGridViewportComponent,
     IccRowSelectComponent,
   ],
 })
@@ -54,9 +56,11 @@ export class IccGridViewComponent implements AfterViewChecked {
   }
 
   @Input()
-  set gridData(val: IccGridData<any>) {
-    console.log( ' 7777 input grid data =', val)
-    this.gridFacade.getGridData(this.gridConfig.gridName, val);
+  set gridData(data: IccGridData<any>) { // TODO set local data here
+    console.log( ' 7777 input grid data =', data)
+    if(data) { // get data from input
+      this.gridFacade.getGridData(this.gridConfig.gridName, data);
+    }
   }
 
   @Input() allSelected = false;
@@ -70,10 +74,10 @@ export class IccGridViewComponent implements AfterViewChecked {
     return this.columnConfig.map((column) => column.name);
   }
 
-  @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewChecked(): void {
-    const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
+    //const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
     //this.viewport.checkViewportSize();
     //console.log(' viewportSize=', viewportSize)
   }

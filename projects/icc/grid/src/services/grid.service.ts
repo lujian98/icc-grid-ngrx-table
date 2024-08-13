@@ -41,7 +41,7 @@ export class IccGridService {
       */
   }
 
-  getGridData<T>(gridName: string, gridData: IccGridData<T>): Observable<IccGridData<T>> {
+  getGridData<T>(gridName: string, gridData?: IccGridData<T>): Observable<IccGridData<T>> {
     //console.log(' service get =', gridData)
     //const data: IccGridData<any> = CARSDATA;
    // return of(data);

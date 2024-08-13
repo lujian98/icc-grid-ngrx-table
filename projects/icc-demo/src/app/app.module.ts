@@ -27,7 +27,7 @@ import { IccGridModule } from '@icc/ui/grid';
     StoreRouterConnectingModule.forRoot({}),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 1500 }),
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
     MatCheckboxModule,
     IccAboutModule,

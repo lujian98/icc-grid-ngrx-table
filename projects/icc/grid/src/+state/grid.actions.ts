@@ -24,7 +24,7 @@ export const setupGridColumnConfigSuccess = createAction(
 
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
-  props<{ gridName: string, gridData: IccGridData<any> }>()
+  props<{ gridName: string, gridData?: IccGridData<any> }>()
 );
 
 export const getGridDataSuccess = createAction(
