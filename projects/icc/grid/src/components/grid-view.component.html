@@ -1,92 +1,30 @@
 <!--ngrx-grid-display-->
-
-
 <ng-container *ngIf="gridConfig$ | async as gridConfig">
-  <icc-grid-header *ngIf="columnConfig$ | async as columns"
-    [columnConfig]="columns"
-    (filterGrid)="filterGrid.emit($event)"
-    (sortGrid)="sortGrid.emit($event)"
-    (cdkDropListDropped)="onDrop($event)"
-    (columnResizing)="onColumnResizing($event)"
-    (columnResized)="columnResized.emit($event)"
-    cdkDropListOrientation="horizontal"
-    cdkDropList>
+  <ng-container *ngIf="columnConfig$ | async as columns">
+    <icc-grid-header
+      [columnConfig]="columns"
+      (filterGrid)="filterGrid.emit($event)"
+      (sortGrid)="sortGrid.emit($event)"
+      (cdkDropListDropped)="onDrop($event)"
+      (columnResizing)="onColumnResizing($event)"
+      (columnResized)="columnResized.emit($event)"
+      cdkDropListOrientation="horizontal"
+      cdkDropList>
 
-    <icc-grid-header-item>
-      <icc-row-select
-        [isSelected]="allSelected"
-        (selected)="onToggleSelectAllRowsOnCurrentPage()"
-      >
-      </icc-row-select>
-    </icc-grid-header-item>
-  </icc-grid-header>
+      <icc-grid-header-item>
+        <icc-row-select
+          [isSelected]="allSelected"
+          (selected)="onToggleSelectAllRowsOnCurrentPage()"
+        >
+        </icc-row-select>
+      </icc-grid-header-item>
+    </icc-grid-header>
 
-
-  <cdk-virtual-scroll-viewport itemSize="25" *ngIf="columnConfig$ | async as columns">
-    <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
-      [columns]="columns"
-      [record]="rowData">
-    </icc-grid-row>
-  </cdk-virtual-scroll-viewport>
+    <cdk-virtual-scroll-viewport itemSize="25">
+      <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
+        [columns]="columns"
+        [record]="rowData">
+      </icc-grid-row>
+    </cdk-virtual-scroll-viewport>
+  </ng-container>
 </ng-container>
-
-
-<!--
-
-
-<cdk-virtual-scroll-viewport itemSize="25">
-  <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
-    [columns]="columnConfig"
-    [record]="rowData">
-  </icc-grid-row>
-</cdk-virtual-scroll-viewport>
-
-<div class="icc-grid-view-port">
-  <icc-grid-row *ngFor="let rowData of gridRows; let index = index;"
-    [columns]="columnConfig"
-    [record]="rowData">
-  </icc-grid-row>
-</div>
-
-
-
-<cdk-virtual-scroll-viewport class="list-container list-group" autosize>
-	<div *cdkVirtualFor="let size of fixedSizeData; let i = index" class="list-group-item" [style.height.px]="size">
-		Item {{i}}
-	</div>
-</cdk-virtual-scroll-viewport>
-
-
-  <ngrx-grid-header [columns]="columns"
-                    [config]="config"
-                    [ngStyle]="columnsStyle"
-                    (filterGrid)="filterGrid.emit($event)"
-                    (sortGrid)="sortGrid.emit($event)"
-                    (cdkDropListDropped)="onDrop($event)"
-                    (columnResizing)="onColumnResizing($event)"
-                    (columnResized)="columnResized.emit($event)"
-                    cdkDropListOrientation="horizontal"
-                    cdkDropList>
-    <ngrx-grid-header-item *ngIf="config.masterDetail"></ngrx-grid-header-item>
-    <ngrx-grid-header-item *ngIf="selectionType">
-      <ngrx-row-select *ngIf="hasCheckboxSelection()"
-                       id="selectAll"
-                       [isSelected]="allSelected"
-                       [type]="selectionType"
-                       (selected)="onToggleSelectAllRowsOnCurrentPage()">
-      </ngrx-row-select>
-    </ngrx-grid-header-item>
-  </ngrx-grid-header>
-
-      <ngrx-grid-row *ngFor="let rowData of gridRows; trackBy: trackByIndex; let index = index;"
-                   [ngStyle]="columnsStyle"
-                   [columns]="columns"
-                   [data]="rowData"
-                   [config]="config"
-                   [rowIndex]="rowDataIndexes[index]"
-                   [active]="isDetailGridVisible(index)"
-                   [selected]="checkSelected(index)"
-                   (toggleRow)="toggleRow.emit($event)"
-                   (toggleDetails)="toggleDetails.emit($event)">
-    </ngrx-grid-row>
--->
