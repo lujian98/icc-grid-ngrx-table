@@ -13,7 +13,6 @@ import { CARSDATA } from './data/cars-large';
 export class AppComponent {
   title = 'icc-demo';
   label = 'Test Button';
-  gridName: string = 'DCR';
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
