@@ -9,9 +9,7 @@ import { CARSDATA } from '../spec-helpers/cars-large';
   providedIn: 'root',
 })
 export class IccGridService {
-  // private http = inject(HttpClient);
-
-
+  private http = inject(HttpClient);
 
   getGridConfig(gridName: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig)

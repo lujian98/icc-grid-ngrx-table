@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
@@ -22,7 +22,7 @@ import { IccGridModule } from '@icc/ui/grid';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    //HttpClientModule,
+    HttpClientModule,
     StoreModule.forRoot({ router: routerReducer }),
     StoreRouterConnectingModule.forRoot({}),
     EffectsModule.forRoot(),
