@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IccColumnConfig } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
 import { CARSDATA } from './data/cars-large';
 //import { CARSHUGEDATA } from './cars-huge';
@@ -14,6 +14,10 @@ export class AppComponent {
   title = 'icc-demo';
   label = 'Test Button';
   gridName: string = 'DCR';
+  gridConfig: IccGridConfig = {
+    ...defaultGridConfig,
+    gridName: 'DCR',
+  }
 
   columnConfig2: IccColumnConfig[] = [{
     name: 'name',

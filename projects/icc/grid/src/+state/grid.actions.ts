@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { IccColumnConfig } from '../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig } from '../models/grid-column.model';
 
 export const setupGridConfig = createAction(
   '[Grid] Setup Grid Config',
-  props<{ gridName: string }>()
+  props<{ gridConfig: IccGridConfig }>()
 );
 
 export const setupGridColumnConfig = createAction(

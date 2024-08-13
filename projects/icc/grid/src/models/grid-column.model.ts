@@ -1,4 +1,36 @@
 
+export interface IccGridConfig {
+  gridName: string;
+  rowSelection: boolean;
+  columnReorder: boolean;
+  columnResize: boolean;
+}
+
+export interface IccGridState {
+  [key: string]: GridState;
+}
+
+export interface GridState<T extends object = object> {
+  gridConfig: IccGridConfig;
+  columnConfig: IccColumnConfig[];
+  data: T[];
+  TotalCounts: number;
+}
+
+export const defaultGridConfig: IccGridConfig = {
+  gridName: 'test',
+  rowSelection: false,
+  columnReorder: false,
+  columnResize: false,
+}
+
+export const defaultState: GridState = {
+  gridConfig: defaultGridConfig,
+  columnConfig: [],
+  data: [],
+  TotalCounts: 0,
+}
+
 export interface IccColumnConfig {
   //header?: string;
   name: string;

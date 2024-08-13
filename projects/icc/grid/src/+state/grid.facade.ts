@@ -1,18 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { IccColumnConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-import { IccGridConfig } from './grid.reducer';
-/*
-import {
-  selectAuditLogs,
-  selectTotal,
-  isLoaded,
-  selectLastGridStates,
-  selectIsDownloadAuditLogs,
-} from './audit-log.selectors';
- */
+
 
 import { selectGridConfig, selectColumnConfig } from './grid.selectors';
 
@@ -22,8 +13,8 @@ export class IccGridFacade {
 
 
 
-  setupGridConfig(gridName: string): void {
-    this.store.dispatch(gridActions.setupGridConfig({ gridName }));
+  setupGridConfig(gridConfig: IccGridConfig): void {
+    this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
   setupGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): void {

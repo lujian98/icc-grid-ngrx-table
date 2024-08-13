@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import { IccGridConfig } from './+state/grid.reducer';
-import { IccColumnConfig } from './models/grid-column.model';
+import { IccGridConfig, IccColumnConfig, defaultGridConfig } from './models/grid-column.model';
 
 export interface PeriodicElement {
   name: string;
@@ -32,20 +31,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class IccGridComponent {
   private gridFacade = inject(IccGridFacade);
-  gridConfig!: IccGridConfig;
-  private _gridName: string = '';
+  private _gridConfig: IccGridConfig = defaultGridConfig;
 
   @Input()
-  set gridName(value: string) {
-    this._gridName = value;
+  set gridConfig(value: IccGridConfig) {
+    this._gridConfig = value;
     this.gridFacade.setupGridConfig(value);
-    this.gridFacade.selectGridConfig(this.gridName).subscribe((config)=>{
-      console.log( ' config =', config)
-      this.gridConfig = config;
-    });
   }
-  get gridName(): string {
-    return this._gridName;
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
   }
 
   @Input() columnConfig: IccColumnConfig[] = [];
