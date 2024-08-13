@@ -2,8 +2,8 @@
 
 
 
-<icc-grid-header
-  [columnConfig]="columnConfig"
+<icc-grid-header *ngIf="columnConfig$ | async as columns"
+  [columnConfig]="columns"
   (filterGrid)="filterGrid.emit($event)"
   (sortGrid)="sortGrid.emit($event)"
   (cdkDropListDropped)="onDrop($event)"

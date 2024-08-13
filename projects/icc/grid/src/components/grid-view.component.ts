@@ -6,6 +6,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
+import { IccGridConfig } from '../+state/grid.reducer';
 import { IccColumnConfig } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
@@ -35,10 +36,29 @@ export const FIXED_SIZE = Array(10000).fill(30);
 })
 export class IccGridViewComponent implements AfterViewChecked {
   private gridFacade = inject(IccGridFacade);
-
   private _columnConfig: IccColumnConfig[] = [];
+  private _gridConfig!: IccGridConfig;
+  private _gridName: string = '';
+  columnConfig$!: Observable<IccColumnConfig[]>;
 
-  @Input() gridName: string = '';
+  @Input()
+  set gridName(val: string) {
+    this._gridName = val;
+    this.columnConfig$ = this.gridFacade.selectColumnConfig(this.gridName);
+  }
+  get gridName(): string {
+    return this._gridName;
+  }
+
+  @Input()
+  set gridConfig(val: IccGridConfig) {
+    console.log( ' 6666 gridConfig=', val)
+    this._gridConfig = val;
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
+
   @Input()
   set columnConfig(columns: IccColumnConfig[]) {
     this._columnConfig = columns;
@@ -67,7 +87,7 @@ export class IccGridViewComponent implements AfterViewChecked {
   ngAfterViewChecked(): void {
     const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
     //this.viewport.checkViewportSize();
-    console.log(' viewportSize=', viewportSize)
+    //console.log(' viewportSize=', viewportSize)
   }
 
   onToggleSelectAllRowsOnCurrentPage() {

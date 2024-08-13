@@ -34,7 +34,7 @@ export const setupState: GridState = {
 export const initialState: IccGridState = {};
 
 export const iccGridFeature = createFeature({
-  name: 'grid',
+  name: 'iccGrid',
   reducer: createReducer(
     initialState,
     on(gridActions.setupGridConfig, (state, action) => {
