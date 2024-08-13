@@ -14,14 +14,40 @@ import {
   tap,
   takeUntil,
 } from 'rxjs/operators';
-//import { AuditLogService } from '../services/audit-log.service';
-//import * as auditLogActions from './audit-log.actions';
-//import { CreateDownload, DownloadJob } from '../models/download.model';
+import * as gridActions from './grid.actions'
+import { IccGridService } from '../services/grid.service';
+
 
 @Injectable()
 export class IccGridEffects {
   private actions$ = inject(Actions);
-  //private auditLogService = inject(AuditLogService);
+  private gridService = inject(IccGridService);
 
+  setupGridConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.setupGridConfig),
+      switchMap((action) => {
+        const gridName = action.gridConfig.gridName;
+        return this.gridService.getGridConfig(gridName, action.gridConfig).pipe(
+          map((gridConfig) => {
+            return gridActions.setupGridConfigSuccess({gridName, gridConfig});
+          }),
+        );
+      })
+    )
+  );
 
+  setupGridColumnConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.setupGridColumnConfig),
+      switchMap((action) => {
+        const gridName = action.gridName;
+        return this.gridService.getGridColumnConfig(gridName, action.columnConfig).pipe(
+          map((columnConfig) => {
+            return gridActions.setupGridColumnConfigSuccess({gridName, columnConfig});
+          }),
+        );
+      })
+    )
+  );
 }

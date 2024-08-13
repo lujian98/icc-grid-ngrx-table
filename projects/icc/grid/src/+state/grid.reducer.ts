@@ -9,8 +9,8 @@ export const iccGridFeature = createFeature({
   name: 'iccGrid',
   reducer: createReducer(
     initialState,
-    on(gridActions.setupGridConfig, (state, action) => {
-      const key = action.gridConfig.gridName;
+    on(gridActions.setupGridConfigSuccess, (state, action) => {
+      const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
         ...defaultState,
@@ -22,7 +22,7 @@ export const iccGridFeature = createFeature({
       }
     }),
 
-    on(gridActions.setupGridColumnConfig, (state, action) => {
+    on(gridActions.setupGridColumnConfigSuccess, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
