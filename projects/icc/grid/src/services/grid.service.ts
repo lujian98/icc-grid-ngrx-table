@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IccColumnConfig, IccGridConfig, IccGridData } from '../models/grid-column.model';
-import { CARSDATA } from '../spec-helpers/cars-large';
+//import { CARSDATA } from '../spec-helpers/cars-large';
 
 @Injectable({
   providedIn: 'root',
@@ -43,13 +43,17 @@ export class IccGridService {
 
   getGridData<T>(gridName: string, gridData: IccGridData<T>): Observable<IccGridData<T>> {
     //console.log(' service get =', gridData)
-    const data: IccGridData<any> = CARSDATA;
-    return of(data);
-    /*
-    return this.http
-      .get<EmailResponse>(this.endpointService.buildUrl('smtp_settings'))
-      .pipe(map(this.adapter.adapt));
-      */
+    //const data: IccGridData<any> = CARSDATA;
+   // return of(data);
+   const params = { };
+   return this.http
+     .get<any>('/api/DCR', params)
+     .pipe(
+      map((res)=> {
+        console.log( ' res=', res)
+        return res;
+      })
+     );
   }
 
 }
