@@ -35,14 +35,35 @@ export const iccGridFeature = createFeature({
       }
     }),
 
+    on(gridActions.setViewportPageSize, (state, action) => {
+      console.log( ' i999 action=', action)
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...defaultState,
+        gridConfig: {
+          ...defaultState.gridConfig,
+          pageSize: action.pageSize,
+        }
+      };
+      console.log( ' setup pageSize state = ', newState)
+      return {
+        ...newState,
+      }
+    }),
+
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
         ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          pageSize: action.pageSize,
+        },
         data: action.gridData.data,
       };
-      //console.log( ' setup grid data = ', newState)
+      console.log( ' load data setup grid data = ', newState)
       return {
         ...newState,
       }

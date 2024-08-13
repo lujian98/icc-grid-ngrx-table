@@ -21,13 +21,25 @@ export const setupGridColumnConfigSuccess = createAction(
   props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
 );
 
+export const setViewportPageSize = createAction(
+  '[Grid] Setup Grid Viewport Page Size',
+  props<{ gridName: string, pageSize: number }>()
+);
 
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
-  props<{ gridName: string, gridData?: IccGridData<any> }>()
+  props<{
+    gridName: string,
+    pageSize: number,
+    gridData?: IccGridData<any>
+  }>()
 );
 
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
-  props<{ gridName: string, gridData: IccGridData<any> }>()
+  props<{
+    gridName: string,
+    pageSize: number,
+    gridData: IccGridData<any>
+  }>()
 );

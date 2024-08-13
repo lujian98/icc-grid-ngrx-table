@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { interval, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridRowComponent } from '../grid-row/grid-row.component';
 import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
@@ -12,7 +13,7 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
   selector: 'icc-grid-viewport',
   templateUrl: './grid-viewport.component.html',
   styleUrls: ['./grid-viewport.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [
     CommonModule,
@@ -28,25 +29,36 @@ export class IccGridViewportComponent implements AfterViewInit {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log( ' 8888 gridConfig=', val)
+    console.log(' 8888 gridConfig=', val)
     this._gridConfig = val;
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
   }
 
-   @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   constructor() {
-    console.log( ' grid row loaded ')
+    console.log(' grid row loaded ')
   }
 
   ngAfterViewInit(): void {
     const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
-    console.log(' 99999 viewportSize=', viewportSize)
-   // console.log(' viewportSize=', viewportSize)
+    console.log(' 99999 viewportSize=', viewportSize, 'this.gridConfig.gridName=', this.gridConfig.gridName)
+    // this.gridFacade.setViewportPageSize(this.gridConfig.gridName, 35);
+    // console.log(' viewportSize=', viewportSize)
     // TODO set remote data here only
-    this.gridFacade.getGridData(this.gridConfig.gridName);
+    const pageSize = Math.floor(viewportSize.height / 25) - 1;
+    console.log(' 99999 pageSize=', pageSize)
+
+    this.gridFacade.getGridData(this.gridConfig.gridName, pageSize);
+    /*
+        interval(1)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.gridFacade.getGridData(this.gridConfig.gridName);
+
+        });*/
   }
 
 }

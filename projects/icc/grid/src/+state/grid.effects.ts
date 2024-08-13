@@ -56,9 +56,10 @@ export class IccGridEffects {
       ofType(gridActions.getGridData),
       switchMap((action) => {
         const gridName = action.gridName;
+        const pageSize = action.pageSize;
         return this.gridService.getGridData(gridName, action.gridData).pipe(
           map((gridData) => {
-            return gridActions.getGridDataSuccess({gridName, gridData});
+            return gridActions.getGridDataSuccess({gridName, pageSize, gridData});
           }),
         );
       })
