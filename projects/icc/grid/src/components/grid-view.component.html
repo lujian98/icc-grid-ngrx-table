@@ -1,34 +1,34 @@
 <!--ngrx-grid-display-->
 
 
+<ng-container *ngIf="gridConfig$ | async as gridConfig">
+  <icc-grid-header *ngIf="columnConfig$ | async as columns"
+    [columnConfig]="columns"
+    (filterGrid)="filterGrid.emit($event)"
+    (sortGrid)="sortGrid.emit($event)"
+    (cdkDropListDropped)="onDrop($event)"
+    (columnResizing)="onColumnResizing($event)"
+    (columnResized)="columnResized.emit($event)"
+    cdkDropListOrientation="horizontal"
+    cdkDropList>
 
-<icc-grid-header *ngIf="columnConfig$ | async as columns"
-  [columnConfig]="columns"
-  (filterGrid)="filterGrid.emit($event)"
-  (sortGrid)="sortGrid.emit($event)"
-  (cdkDropListDropped)="onDrop($event)"
-  (columnResizing)="onColumnResizing($event)"
-  (columnResized)="columnResized.emit($event)"
-  cdkDropListOrientation="horizontal"
-  cdkDropList>
-
-  <icc-grid-header-item>
-    <icc-row-select
-      [isSelected]="allSelected"
-      (selected)="onToggleSelectAllRowsOnCurrentPage()"
-    >
-    </icc-row-select>
-  </icc-grid-header-item>
-</icc-grid-header>
+    <icc-grid-header-item>
+      <icc-row-select
+        [isSelected]="allSelected"
+        (selected)="onToggleSelectAllRowsOnCurrentPage()"
+      >
+      </icc-row-select>
+    </icc-grid-header-item>
+  </icc-grid-header>
 
 
-<cdk-virtual-scroll-viewport itemSize="25">
-  <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
-    [columns]="columnConfig"
-    [record]="rowData">
-  </icc-grid-row>
-</cdk-virtual-scroll-viewport>
-
+  <cdk-virtual-scroll-viewport itemSize="25" *ngIf="columnConfig$ | async as columns">
+    <icc-grid-row *cdkVirtualFor="let rowData of gridRows; let index = index;"
+      [columns]="columns"
+      [record]="rowData">
+    </icc-grid-row>
+  </cdk-virtual-scroll-viewport>
+</ng-container>
 
 
 <!--

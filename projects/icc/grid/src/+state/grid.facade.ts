@@ -1,17 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-
-
 import { selectGridConfig, selectColumnConfig } from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
   private store = inject(Store);
-
-
 
   setupGridConfig(gridConfig: IccGridConfig): void {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));

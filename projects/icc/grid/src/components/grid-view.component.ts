@@ -2,9 +2,7 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, inject, Ou
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { DataSource } from '@angular/cdk/collections';
-import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
@@ -13,8 +11,6 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { ColumnResizeEvent } from '../models/column-resize-event';
-
-export const FIXED_SIZE = Array(10000).fill(30);
 
 @Component({
   selector: 'icc-grid-view',
@@ -26,7 +22,6 @@ export const FIXED_SIZE = Array(10000).fill(30);
     CommonModule,
     DragDropModule,
     ScrollingModule,
-    //MatPaginatorModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
     IccGridRowComponent,
@@ -35,24 +30,16 @@ export const FIXED_SIZE = Array(10000).fill(30);
 })
 export class IccGridViewComponent implements AfterViewChecked {
   private gridFacade = inject(IccGridFacade);
-  private _columnConfig: IccColumnConfig[] = [];
   private _gridConfig!: IccGridConfig;
-  private _gridName: string = '';
+  gridConfig$!: Observable<IccGridConfig>;
   columnConfig$!: Observable<IccColumnConfig[]>;
-
-  @Input()
-  set gridName(val: string) {
-    this._gridName = val;
-    this.columnConfig$ = this.gridFacade.selectColumnConfig(this.gridName);
-  }
-  get gridName(): string {
-    return this._gridName;
-  }
 
   @Input()
   set gridConfig(val: IccGridConfig) {
     console.log( ' 6666 gridConfig=', val)
     this._gridConfig = val;
+    this.gridConfig$ = this.gridFacade.selectGridConfig(val.gridName);
+    this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -60,11 +47,7 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set columnConfig(columns: IccColumnConfig[]) {
-    this._columnConfig = columns;
-    this.gridFacade.setupGridColumnConfig(this.gridName, columns);
-  }
-  get columnConfig(): IccColumnConfig[] {
-    return this._columnConfig;
+    this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, columns);
   }
 
   @Input() gridRows: any[] = [];
@@ -74,8 +57,6 @@ export class IccGridViewComponent implements AfterViewChecked {
   @Output() filterGrid = new EventEmitter<any>();
   @Output() dropColumn = new EventEmitter<DragDropEvent>();
   @Output() columnResized = new EventEmitter<ColumnResizeEvent>();
-
-  fixedSizeData = FIXED_SIZE;
 
   get displayedColumns(): string[] {
     return this.columnConfig.map((column) => column.name);

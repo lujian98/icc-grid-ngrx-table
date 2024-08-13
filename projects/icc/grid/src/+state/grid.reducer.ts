@@ -1,7 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import * as gridActions from './grid.actions'
-import { IccColumnConfig, IccGridConfig, IccGridState, GridState, defaultState } from '../models/grid-column.model';
+import * as gridActions from './grid.actions';
+import { IccGridState, defaultState } from '../models/grid-column.model';
 
 export const initialState: IccGridState = {};
 
@@ -12,7 +12,6 @@ export const iccGridFeature = createFeature({
     on(gridActions.setupGridConfig, (state, action) => {
       const key = action.gridConfig.gridName;
       const newState: IccGridState = {};
-
       newState[key] = {
         ...defaultState,
         gridConfig: action.gridConfig,
@@ -25,13 +24,11 @@ export const iccGridFeature = createFeature({
 
     on(gridActions.setupGridColumnConfig, (state, action) => {
       const key = action.gridName;
-      const gridState: GridState = {
+      const newState: IccGridState = {};
+      newState[key] = {
         ...state[key],
         columnConfig: action.columnConfig,
       };
-      gridState.columnConfig = action.columnConfig;
-      const newState: IccGridState = {};
-      newState[key] = gridState;
       console.log( ' setup column config state = ', newState)
       return {
         ...newState,
