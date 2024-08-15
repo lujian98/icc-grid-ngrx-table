@@ -22,8 +22,8 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
   }
 
-  getGridData<T>(gridName: string, pageSize: number, gridData?: IccGridData<T>): void {
-    this.store.dispatch(gridActions.getGridData({ gridName, pageSize, gridData }));
+  getGridData<T>(gridName: string, gridData?: IccGridData<T>): void {
+    this.store.dispatch(gridActions.getGridData({ gridName, gridData }));
   }
 
   selectGridConfig(gridName: string): Observable<IccGridConfig> {

@@ -45,13 +45,13 @@ export class IccGridViewportComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
     console.log(' 99999 viewportSize=', viewportSize, 'this.gridConfig.gridName=', this.gridConfig.gridName)
-    // this.gridFacade.setViewportPageSize(this.gridConfig.gridName, 35);
+     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, 35);
     // console.log(' viewportSize=', viewportSize)
     // TODO set remote data here only
     const pageSize = Math.floor(viewportSize.height / 25) - 1;
     console.log(' 99999 pageSize=', pageSize)
 
-    this.gridFacade.getGridData(this.gridConfig.gridName, pageSize);
+    this.gridFacade.getGridData(this.gridConfig.gridName);
     /*
         interval(1)
         .pipe(take(1))

@@ -28,18 +28,10 @@ export const setViewportPageSize = createAction(
 
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
-  props<{
-    gridName: string,
-    pageSize: number,
-    gridData?: IccGridData<any>
-  }>()
+  props<{gridName: string, gridData?: IccGridData<any>}>()
 );
 
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
-  props<{
-    gridName: string,
-    pageSize: number,
-    gridData: IccGridData<any>
-  }>()
+  props<{gridName: string, gridData: IccGridData<any>}>()
 );

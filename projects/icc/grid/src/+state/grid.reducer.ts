@@ -40,7 +40,7 @@ export const iccGridFeature = createFeature({
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
-        ...defaultState,
+        ...state[key],
         gridConfig: {
           ...defaultState.gridConfig,
           pageSize: action.pageSize,
@@ -59,7 +59,6 @@ export const iccGridFeature = createFeature({
         ...state[key],
         gridConfig: {
           ...state[key].gridConfig,
-          pageSize: action.pageSize,
         },
         data: action.gridData.data,
       };
