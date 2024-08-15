@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -45,10 +45,16 @@ export class IccGridService {
     //console.log(' service get =', gridData)
     //const data: IccGridData<any> = CARSDATA;
    // return of(data);
+   let params = new HttpParams();
+   const offset = 0;
+   const limit = gridConfig.pageSize;
+   params = params.append('offset', offset.toString());
+   params = params.append('limit', limit.toString());
    console.log( ' service getGridData gridConfig =', gridConfig);
-   const params = { };
+   console.log( ' params =', params);
+   //const params = { };
    return this.http
-     .get<any>('/api/DCR', params)
+     .get<any>('/api/DCR', { params })
      .pipe(
       map((res)=> {
         console.log( ' res=', res)
@@ -56,5 +62,22 @@ export class IccGridService {
       })
      );
   }
+
+  /*
+      const begin = Number(query.get('offset')[0]);
+    const end = Number(query.get('limit')[0]) + begin;
+
+      appendPaginationHttpParams(pagination: SunPagination, params: HttpParams): HttpParams {
+    const offset = pagination.offset > 0 ? pagination.offset : 0;
+    const limit = pagination.limit;
+    params = params.append('offset', offset.toString());
+    params = params.append('page[offset]', offset.toString());
+    params = params.append('start', offset.toString());
+    params = params.append('limit', limit.toString());
+    params = params.append('page[limit]', limit.toString());
+    return params;
+  }
+
+    */
 
 }

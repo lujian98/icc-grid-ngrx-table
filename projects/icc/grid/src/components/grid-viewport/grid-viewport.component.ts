@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, inject, AfterViewInit, EventEmitter, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DataSource } from '@angular/cdk/collections';
@@ -23,6 +23,7 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
 })
 export class IccGridViewportComponent implements AfterViewInit {
   private gridFacade = inject(IccGridFacade);
+  private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridData: any[] = [];
@@ -36,19 +37,19 @@ export class IccGridViewportComponent implements AfterViewInit {
     return this._gridConfig;
   }
 
-  @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+ // @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   constructor() {
     console.log(' grid row loaded ')
   }
 
   ngAfterViewInit(): void {
-    const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
-    //console.log(' 99999 viewportSize=', viewportSize, 'this.gridConfig.gridName=', this.gridConfig.gridName)
-    const pageSize = Math.floor(viewportSize.height / 25) - 1;
-    this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
-    //console.log(' 99999 pageSize=', pageSize)
-    this.gridFacade.getGridData(this.gridConfig.gridName);
+    interval(1).pipe(take(1)).subscribe(() => {
+      const clientHeight = this.elementRef.nativeElement.clientHeight;
+      const pageSize = Math.floor(clientHeight / 25) ;
+      this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
+      this.gridFacade.getGridData(this.gridConfig.gridName);
+    });
   }
 
 }
