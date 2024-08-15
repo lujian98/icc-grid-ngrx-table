@@ -58,8 +58,8 @@ export class IccGridViewComponent implements AfterViewChecked {
   @Input()
   set gridData(data: IccGridData<any>) { // TODO set local data here
     console.log( ' 7777 input grid data =', data)
-    if(data) { // get data from input
-      this.gridFacade.getGridData(this.gridConfig.gridName, data);
+    if(data) { // use set getGridDataSuccess ??
+      //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }
   }
 

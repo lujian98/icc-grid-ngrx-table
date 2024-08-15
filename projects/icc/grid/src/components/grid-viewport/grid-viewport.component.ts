@@ -29,7 +29,7 @@ export class IccGridViewportComponent implements AfterViewInit {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log(' 8888 gridConfig=', val)
+    //console.log(' 8888 gridConfig=', val)
     this._gridConfig = val;
   }
   get gridConfig(): IccGridConfig {
@@ -44,10 +44,10 @@ export class IccGridViewportComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
-    console.log(' 99999 viewportSize=', viewportSize, 'this.gridConfig.gridName=', this.gridConfig.gridName)
+    //console.log(' 99999 viewportSize=', viewportSize, 'this.gridConfig.gridName=', this.gridConfig.gridName)
     const pageSize = Math.floor(viewportSize.height / 25) - 1;
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
-    console.log(' 99999 pageSize=', pageSize)
+    //console.log(' 99999 pageSize=', pageSize)
     this.gridFacade.getGridData(this.gridConfig.gridName);
   }
 

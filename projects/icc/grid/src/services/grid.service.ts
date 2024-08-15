@@ -41,10 +41,11 @@ export class IccGridService {
       */
   }
 
-  getGridData<T>(gridName: string, gridData?: IccGridData<T>): Observable<IccGridData<T>> {
+  getGridData<T>(gridName: string, gridConfig: IccGridConfig): Observable<IccGridData<T>> {
     //console.log(' service get =', gridData)
     //const data: IccGridData<any> = CARSDATA;
    // return of(data);
+   console.log( ' service getGridData gridConfig =', gridConfig);
    const params = { };
    return this.http
      .get<any>('/api/DCR', params)

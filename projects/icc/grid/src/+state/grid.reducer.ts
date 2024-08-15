@@ -36,7 +36,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.setViewportPageSize, (state, action) => {
-      console.log( ' i999 action=', action)
+      //console.log( ' i999 action=', action)
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
@@ -46,7 +46,7 @@ export const iccGridFeature = createFeature({
           pageSize: action.pageSize,
         }
       };
-      console.log( ' setup pageSize state = ', newState)
+      //console.log( ' setup pageSize state = ', newState)
       return {
         ...newState,
       }

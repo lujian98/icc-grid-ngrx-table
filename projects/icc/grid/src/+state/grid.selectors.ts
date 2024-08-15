@@ -29,7 +29,7 @@ export const selectGridData = (gridName: string) => createSelector(
   // @ts-ignore
   featureSelector,
   (state: IccGridState) => {
-    console.log( ' select data jjjjjjjj =', state)
+    //console.log( ' select data jjjjjjjj =', state)
     return state[gridName] ? state[gridName].data : [];
   }
 );

@@ -18,12 +18,11 @@ export class IccGridFacade {
   }
 
   setViewportPageSize(gridName: string, pageSize: number): void {
-    console.log( ' ppp gridName=', gridName, ' pageSize=', pageSize)
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
   }
 
-  getGridData<T>(gridName: string, gridData?: IccGridData<T>): void {
-    this.store.dispatch(gridActions.getGridData({ gridName, gridData }));
+  getGridData<T>(gridName: string): void {
+    this.store.dispatch(gridActions.getGridData({ gridName }));
   }
 
   selectGridConfig(gridName: string): Observable<IccGridConfig> {
