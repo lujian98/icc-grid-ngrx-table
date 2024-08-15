@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { BehaviorSubject, concat, of, Observable, Subject } from 'rxjs';
+import { Actions, createEffect, ofType, } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators'
+import { BehaviorSubject, concat, of, Observable, Subject, } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -51,10 +52,72 @@ export class IccGridEffects {
     )
   );
 
+  /*
+  map(action => action.payload),
+mergeMap((id) =>
+    of(id).pipe(
+        withLatestFrom(
+            this.store.pipe(select(state => getEntityById(state, id))),
+            this.store.pipe(select(state => getWhateverElse(state)))
+        )
+    ),
+    (id, latestStoreData) => latestStoreData
+),
+switchMap(([id, entity, whateverElse]) => callService(entity))
+
+loadLocalSubServices$: Observable<Action> = this.actions$.pipe(
+    ofType(LocalSubServiceTemplateActions.LocalSubServicesTemplateActionTypes.LoadLocalSubService),
+    map((action: LocalSubServiceTemplateActions.LoadLocalSubService) => action.payload.globalSubServiceId),
+    (globalSubServiceId) => {
+        return withLatestFrom(this.store.pipe(select(fromLocalSubservices.getSearchParams(globalSubServiceId))));
+    },
+    map(searchParams => searchParams[1]),
+    mergeMap((params) =>
+      this.subServiceService.getLocalSubServices(params).pipe(
+        map(localSubServices => (new LocalSubServiceTemplateActions.LocalSubServiceLoadSuccess(localSubServices))),
+        catchError(err => of(new LocalSubServiceTemplateActions.LocalSubServiceLoadFail(err)))
+      )
+    )
+  );
+
+  class Effect {
+  detail$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(ProductDetailPage.loaded),
+      concatLatestFrom(() => this.store.select(selectProducts)),
+      mergeMap(([action, products]) => {
+        ...
+      })
+    )
+  })
+}
+
+public readonly something$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(someAction),
+        concatLatestFrom(() => [
+          this.store.select(selectFoo),
+          this.store.select(selectBar),
+        ]),
+        switchMap(([action, foo, bar]) => {
+
+          // Do what you need
+
+        }),
+      ),
+  );
+
+*/
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      switchMap((action) => {
+      concatLatestFrom((action) => {
+        console.log( ' yyyyyyyyyyyy concat action=', action)
+        return of(true);
+      }),
+      switchMap(([action, data]) => {
+        console.log( ' concat last =', data);
         const gridName = action.gridName;
         return this.gridService.getGridData(gridName, action.gridData).pipe(
           map((gridData) => {
