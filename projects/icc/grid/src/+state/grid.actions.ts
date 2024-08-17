@@ -26,6 +26,16 @@ export const setViewportPageSize = createAction(
   props<{ gridName: string, pageSize: number }>()
 );
 
+export const getPrevPageData = createAction(
+  '[Grid] Setup Grid Get Prev Page Data',
+  props<{ gridName: string }>()
+);
+
+export const getNextPageData = createAction(
+  '[Grid] Setup Grid Get Next Page Data',
+  props<{ gridName: string }>()
+);
+
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
   props<{gridName: string}>()

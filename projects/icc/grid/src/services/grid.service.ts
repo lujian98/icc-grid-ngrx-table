@@ -46,7 +46,7 @@ export class IccGridService {
     //const data: IccGridData<any> = CARSDATA;
    // return of(data);
    let params = new HttpParams();
-   const offset = 0;
+   const offset = gridConfig.page * gridConfig.pageSize;
    const limit = gridConfig.pageSize;
    params = params.append('offset', offset.toString());
    params = params.append('limit', limit.toString());

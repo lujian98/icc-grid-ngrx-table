@@ -42,11 +42,43 @@ export const iccGridFeature = createFeature({
       newState[key] = {
         ...state[key],
         gridConfig: {
-          ...defaultState.gridConfig,
+          ...state[key].gridConfig,
           pageSize: action.pageSize,
         }
       };
       //console.log( ' setup pageSize state = ', newState)
+      return {
+        ...newState,
+      }
+    }),
+
+    on(gridActions.getPrevPageData, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      const page = state[key].gridConfig.page - 1;
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          page: page < 1 ? 1: page,
+        }
+      };
+      return {
+        ...newState,
+      }
+    }),
+
+    on(gridActions.getNextPageData, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      const page = state[key].gridConfig.page + 1;
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          page: page, // TODO max page number based on total
+        }
+      };
       return {
         ...newState,
       }

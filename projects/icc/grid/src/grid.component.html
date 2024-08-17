@@ -1,6 +1,8 @@
 
 <div class="icc-grid-toolbar">
-  Top Toolbar
+  <button (click)="refresh()">
+    Refresh
+  </button>
 </div>
 <icc-grid-view
   [gridConfig]="gridConfig"
@@ -10,6 +12,14 @@
 </icc-grid-view>
 
 <div class="icc-grid-bottom-bar">
+  <button (click)="getPrevPageData()">
+    Prev
+  </button>
+  <button (click)="getNextPageData()">
+    Next
+  </button>
+  <!--
   <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
   </mat-paginator>
+    -->
 </div>

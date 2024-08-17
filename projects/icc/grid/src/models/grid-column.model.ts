@@ -1,6 +1,7 @@
 
 export interface IccGridConfig {
   gridName: string;
+  page: number;
   pageSize: number;
   rowSelection: boolean;
   columnReorder: boolean;
@@ -26,6 +27,7 @@ export interface IccGridData<T> {
 
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
+  page: 1,
   pageSize: 20,
   rowSelection: false,
   columnReorder: false,

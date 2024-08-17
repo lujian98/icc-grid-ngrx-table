@@ -21,6 +21,16 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
   }
 
+  getPrevPageData(gridName: string): void {
+    this.store.dispatch(gridActions.getPrevPageData({ gridName }));
+    this.getGridData(gridName);
+  }
+
+  getNextPageData(gridName: string): void {
+    this.store.dispatch(gridActions.getNextPageData({ gridName }));
+    this.getGridData(gridName);
+  }
+
   getGridData<T>(gridName: string): void {
     this.store.dispatch(gridActions.getGridData({ gridName }));
   }

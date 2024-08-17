@@ -24,4 +24,16 @@ export class IccGridComponent {
 
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridData!: IccGridData<any>;
+
+  refresh(): void {
+    this.gridFacade.getGridData(this.gridConfig.gridName);
+  }
+
+  getPrevPageData(): void {
+    this.gridFacade.getPrevPageData(this.gridConfig.gridName);
+  }
+
+  getNextPageData(): void {
+    this.gridFacade.getNextPageData(this.gridConfig.gridName);
+  }
 }
