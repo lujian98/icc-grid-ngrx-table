@@ -37,7 +37,16 @@ export class IccGridFooterComponent {
   }
 
   get lastPage(): number {
-    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 1;
+    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0;
+  }
+
+  get displaying(): string {
+    const start = (this.gridConfig.page - 1) * this.gridConfig.pageSize + 1;
+    let end = start + this.gridConfig.pageSize - 1;
+    if(end > this.gridConfig.totalCounts) {
+      end = this.gridConfig.totalCounts;
+    }
+    return `Displaying ${start} - ${end} of ${this.gridConfig.totalCounts}`;
   }
 
   getGridPageData(page: number): void {

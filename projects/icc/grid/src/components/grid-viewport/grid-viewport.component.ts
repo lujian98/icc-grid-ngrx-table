@@ -26,7 +26,7 @@ export class IccGridViewportComponent implements AfterViewInit {
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
   @Input() columns: IccColumnConfig[] = [];
-  @Input() gridData: any[] = [];
+  private _gridData: any[] = [];
 
   @Input()
   set gridConfig(val: IccGridConfig) {
@@ -37,16 +37,25 @@ export class IccGridViewportComponent implements AfterViewInit {
     return this._gridConfig;
   }
 
+  @Input()
+  set gridData(data: any[]) { // TODO set local data here
+    this._gridData = data;
+  }
+  get gridData(): any[] {
+    // console.log(' view port data uuuu =', this._gridData)
+    return this._gridData;
+  }
+
  // @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   constructor() {
-    console.log(' grid row loaded ')
+    //console.log(' grid row loaded ')
   }
 
   ngAfterViewInit(): void {
     interval(1).pipe(take(1)).subscribe(() => {
       const clientHeight = this.elementRef.nativeElement.clientHeight;
-      const pageSize = Math.floor(clientHeight / 25) ;
+      const pageSize = Math.floor(clientHeight / 24) ;
       this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
       this.gridFacade.getGridData(this.gridConfig.gridName);
     });

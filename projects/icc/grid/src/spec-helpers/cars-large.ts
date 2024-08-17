@@ -1,4 +1,4 @@
-export const CARSDATA = {
+export const CARSDATA0 = {
     //"TotalCounts": 200,
     "data":[
         {
@@ -1203,3 +1203,12 @@ export const CARSDATA = {
         }
     ]
 }
+
+export const CARSDATA = {
+  data: CARSDATA0.data.map((item: any, index) => {
+    item['ID'] = index + 1;
+    return item;
+  })
+}
+
+//console.log( 'CARSDATA= ', CARSDATA)

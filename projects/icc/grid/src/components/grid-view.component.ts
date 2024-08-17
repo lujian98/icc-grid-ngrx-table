@@ -38,7 +38,7 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log( ' 5555 gridConfig=', val)
+    //console.log( ' 5555 gridConfig=', val)
     this._gridConfig = val;
     this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
@@ -49,13 +49,13 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set columnConfig(columns: IccColumnConfig[]) {
-    console.log( ' 6666 input IccColumnConfig =', columns)
+  //  console.log( ' 6666 input IccColumnConfig =', columns)
     this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, columns);
   }
 
   @Input()
   set gridData(data: IccGridData<any>) { // TODO set local data here
-    console.log( ' 7777 input grid data =', data)
+   // console.log( ' 7777 input grid data =', data)
     if(data) { // use set getGridDataSuccess ??
       //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }

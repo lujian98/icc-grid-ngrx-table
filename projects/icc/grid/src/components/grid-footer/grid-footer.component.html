@@ -31,17 +31,18 @@
   Refresh
 </button>
 
-<span>Total: {{gridConfig.totalCounts}}</span>
+<span>Page Size:
+  <input
+    type="number"
+    min="1"
+    max="1000"
+    [value]="gridConfig.pageSize"
+    autocomplete="off"
+  >
+</span>
+
+<span>{{displaying}}</span>
 <!--
     first prev | page 1 of 20 | next last | refresh |
 
-
-      <input
-    type="text"
-    [value]="value"
-    autocomplete="off"
-    (click)="$event.stopPropagation()"
-    (keyup)="applyFilter($event)"
-    placeholder="{{filterPlaceholder}}"
-    >
 -->

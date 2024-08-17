@@ -24,6 +24,8 @@ export class IccGridService {
   getGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
     //console.log(' service columnConfig =', columnConfig)
     const config: IccColumnConfig[] = [{
+      name: 'ID',
+    }, {
       name: 'vin',
     }, {
       name: 'brand',
@@ -46,7 +48,7 @@ export class IccGridService {
     //const data: IccGridData<any> = CARSDATA;
    // return of(data);
    let params = new HttpParams();
-   const offset = gridConfig.page * gridConfig.pageSize;
+   const offset = (gridConfig.page-1) * gridConfig.pageSize;
    const limit = gridConfig.pageSize;
    params = params.append('offset', offset.toString());
    params = params.append('limit', limit.toString());

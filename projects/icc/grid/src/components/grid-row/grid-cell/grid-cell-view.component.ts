@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig } from '../../../models/grid-column.model';
 
 
@@ -18,10 +16,22 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   ],
 })
 export class IccGridCellViewComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private _record: any;
   @Input() column!: IccColumnConfig;
-  @Input() record: any;
+
+
+  @Input()
+  set record(data: any) {
+    this._record = data;
+    this.changeDetectorRef.markForCheck();
+  }
+  get record(): any {
+    return this._record;
+  }
 
   get data(): any {
+    // console.log(' get record =', this.column.name)
     return this.record[this.column.name];
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -23,7 +23,7 @@ import { IccRowSelectComponent } from '../row-select/row-select.component';
     IccRowSelectComponent,
   ],
 })
-export class IccGridRowComponent {
+export class IccGridRowComponent implements OnChanges {
   @Input() columns: IccColumnConfig[] = [];
   @Input() record: any;
   @Input() selected = false;
@@ -35,17 +35,21 @@ export class IccGridRowComponent {
   }
 
   constructor() {
-    console.log( ' grid row loaded ')
+    //console.log( ' grid row loaded ')
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log( ' wwww changes =', changes)
   }
 
   trackByIndex(tmp: any, index: number): number {
-    console.log( 'tmp=', tmp)
+    //console.log( 'tmp=', tmp)
     return index;
   }
 
   toggleRowSelection() {
-    console.log( ' row columns=', this.columns)
-    console.log( ' row record=', this.record)
+    //console.log( ' row columns=', this.columns)
+    //console.log( ' row record=', this.record)
     this.toggleRow.emit({
       dataItem: this.record,
       //selectionType: this.selectionType

@@ -58,7 +58,7 @@ export class InMemoryService extends InMemoryDbService {
   }
 
   get(reqInfo: RequestInfo) {
-    console.log( ' reqInfo=', reqInfo)
+    //console.log( ' reqInfo=', reqInfo)
     if (reqInfo.id) {
       return this.getDataDetail(reqInfo);
     } else if (reqInfo.query.size > 0) {
@@ -72,8 +72,10 @@ export class InMemoryService extends InMemoryDbService {
     return reqInfo.utils.createResponse$(() => {
       const collection = reqInfo.collection.data.slice();
       const filteredData = this.getFilteredData(collection, reqInfo);
+      //console.log( ' filteredData=', filteredData)
       const sortedData = this.getSortedData(filteredData, reqInfo.query);
       const data = this.getOffsetData(sortedData, reqInfo.query);
+      //console.log( ' offset data=', data)
       const body = {
         totalCounts: filteredData.length,
         data: data,
