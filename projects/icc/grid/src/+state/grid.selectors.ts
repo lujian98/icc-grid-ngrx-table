@@ -33,3 +33,11 @@ export const selectGridData = (gridName: string) => createSelector(
     return state[gridName] ? state[gridName].data : [];
   }
 );
+
+export const selectIsFirstPage = (gridName: string) => createSelector(
+  // @ts-ignore
+  featureSelector,
+  (state: IccGridState) => {
+    return state[gridName] && state[gridName].gridConfig.page === 1;
+  }
+);

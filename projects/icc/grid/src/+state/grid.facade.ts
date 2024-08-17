@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccColumnConfig, IccGridConfig, IccGridData } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-import { selectGridConfig, selectColumnConfig, selectGridData } from './grid.selectors';
+import { selectGridConfig, selectColumnConfig, selectGridData, selectIsFirstPage } from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -45,5 +45,9 @@ export class IccGridFacade {
 
   selectGridData(gridName: string): Observable<any[]> {
     return this.store.select(selectGridData(gridName));
+  }
+
+  isFirstPage(gridName: string): Observable<boolean> {
+    return this.store.select(selectIsFirstPage(gridName));
   }
 }

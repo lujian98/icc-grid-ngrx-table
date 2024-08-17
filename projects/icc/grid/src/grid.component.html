@@ -12,7 +12,7 @@
 </icc-grid-view>
 
 <div class="icc-grid-bottom-bar">
-  <button (click)="getPrevPageData()">
+  <button (click)="getPrevPageData()" [disabled]="isFirstPage$ | async">
     Prev
   </button>
   <button (click)="getNextPageData()">
