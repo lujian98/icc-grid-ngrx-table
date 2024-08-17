@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccColumnConfig, IccGridConfig, IccGridData } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-import { selectGridConfig, selectColumnConfig, selectGridData, selectIsFirstPage, selectIsLastPage } from './grid.selectors';
+import { selectGridConfig, selectColumnConfig, selectGridData, } from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -21,17 +21,12 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
   }
 
-  getPrevPageData(gridName: string): void {
-    this.store.dispatch(gridActions.getPrevPageData({ gridName }));
+  getGridPageData(gridName: string, page: number): void {
+    this.store.dispatch(gridActions.setViewportPage({ gridName, page }));
     this.getGridData(gridName);
   }
 
-  getNextPageData(gridName: string): void {
-    this.store.dispatch(gridActions.getNextPageData({ gridName }));
-    this.getGridData(gridName);
-  }
-
-  getGridData<T>(gridName: string): void {
+  getGridData(gridName: string): void {
     this.store.dispatch(gridActions.getGridData({ gridName }));
   }
 
@@ -45,13 +40,5 @@ export class IccGridFacade {
 
   selectGridData(gridName: string): Observable<any[]> {
     return this.store.select(selectGridData(gridName));
-  }
-
-  isFirstPage(gridName: string): Observable<boolean> {
-    return this.store.select(selectIsFirstPage(gridName));
-  }
-
-  isLastPage(gridName: string): Observable<boolean> {
-    return this.store.select(selectIsLastPage(gridName));
   }
 }

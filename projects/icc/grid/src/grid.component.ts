@@ -12,14 +12,13 @@ import { IccGridConfig, IccColumnConfig, defaultGridConfig, IccGridData } from '
 export class IccGridComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
-  isFirstPage$!: Observable<boolean>;
-  isLastPage$!: Observable<boolean>;
+  gridConfig$!: Observable<IccGridConfig>;
+
 
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
-    this.isFirstPage$ = this.gridFacade.isFirstPage(this.gridConfig.gridName);
-    this.isLastPage$ = this.gridFacade.isLastPage(this.gridConfig.gridName);
+    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridConfig.gridName);
     this.gridFacade.setupGridConfig(value);
   }
   get gridConfig(): IccGridConfig {
@@ -31,13 +30,5 @@ export class IccGridComponent {
 
   refresh(): void {
     this.gridFacade.getGridData(this.gridConfig.gridName);
-  }
-
-  getPrevPageData(): void {
-    this.gridFacade.getPrevPageData(this.gridConfig.gridName);
-  }
-
-  getNextPageData(): void {
-    this.gridFacade.getNextPageData(this.gridConfig.gridName);
   }
 }

@@ -33,26 +33,3 @@ export const selectGridData = (gridName: string) => createSelector(
     return state[gridName] ? state[gridName].data : [];
   }
 );
-
-export const selectIsFirstPage = (gridName: string) => createSelector(
-  // @ts-ignore
-  featureSelector,
-  (state: IccGridState) => {
-    return state[gridName] && state[gridName].gridConfig.page === 1;
-  }
-);
-
-export const selectIsLastPage = (gridName: string) => createSelector(
-  // @ts-ignore
-  featureSelector,
-  (state: IccGridState) => {
-    let isLastPage = false;
-    if(state[gridName]) {
-      const st = state[gridName];
-      const page = st.gridConfig.page;
-      const lastPage = Math.ceil(st.totalCounts / st.gridConfig.pageSize)-1;
-      isLastPage = page === lastPage;
-    }
-    return isLastPage;
-  }
-);

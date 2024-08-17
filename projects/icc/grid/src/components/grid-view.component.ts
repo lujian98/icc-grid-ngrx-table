@@ -33,7 +33,6 @@ import { ColumnResizeEvent } from '../models/column-resize-event';
 export class IccGridViewComponent implements AfterViewChecked {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-  gridConfig$!: Observable<IccGridConfig>;
   columnConfig$!: Observable<IccColumnConfig[]>;
   gridData$!: Observable<any[]>;
 
@@ -41,7 +40,6 @@ export class IccGridViewComponent implements AfterViewChecked {
   set gridConfig(val: IccGridConfig) {
     console.log( ' 5555 gridConfig=', val)
     this._gridConfig = val;
-    this.gridConfig$ = this.gridFacade.selectGridConfig(val.gridName);
     this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
   }

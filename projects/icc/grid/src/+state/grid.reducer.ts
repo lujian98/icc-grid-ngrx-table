@@ -52,31 +52,14 @@ export const iccGridFeature = createFeature({
       }
     }),
 
-    on(gridActions.getPrevPageData, (state, action) => {
+    on(gridActions.setViewportPage, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
-      const page = state[key].gridConfig.page - 1;
       newState[key] = {
         ...state[key],
         gridConfig: {
           ...state[key].gridConfig,
-          page: page < 1 ? 1: page,
-        }
-      };
-      return {
-        ...newState,
-      }
-    }),
-
-    on(gridActions.getNextPageData, (state, action) => {
-      const key = action.gridName;
-      const newState: IccGridState = {};
-      const page = state[key].gridConfig.page + 1;
-      newState[key] = {
-        ...state[key],
-        gridConfig: {
-          ...state[key].gridConfig,
-          page: page, // TODO max page number based on total
+          page: action.page,
         }
       };
       return {
@@ -91,6 +74,7 @@ export const iccGridFeature = createFeature({
         ...state[key],
         gridConfig: {
           ...state[key].gridConfig,
+          totalCounts: action.gridData.totalCounts,
         },
         totalCounts: action.gridData.totalCounts,
         data: action.gridData.data,

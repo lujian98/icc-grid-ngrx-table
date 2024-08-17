@@ -1,5 +1,4 @@
 <!--ngrx-grid-display-->
-<ng-container *ngIf="gridConfig$ | async as gridConfig">
   <ng-container *ngIf="columnConfig$ | async as columns">
     <icc-grid-header
       [columnConfig]="columns"
@@ -27,4 +26,3 @@
     >
     </icc-grid-viewport>
   </ng-container>
-</ng-container>

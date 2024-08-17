@@ -1,0 +1,25 @@
+
+<button (click)="getGridPageData(1)" [disabled]="page === 1">
+  First
+</button>
+
+<button (click)="getGridPageData(page-1)" [disabled]="page === 1">
+  Prev
+</button>
+<span> Page: {{ page }} </span>
+<span> of {{lastPage}} </span>
+<button (click)="getGridPageData(page+1)" [disabled]="page === lastPage">
+  Next
+</button>
+
+<button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
+  Last
+</button>
+
+<button (click)="getGridPageData(page)">
+  Refresh
+</button>
+
+<!--
+    first prev | page 1 of 20 | next last | refresh |
+-->
