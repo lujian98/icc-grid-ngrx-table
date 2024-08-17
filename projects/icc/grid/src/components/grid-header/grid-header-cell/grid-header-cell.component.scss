@@ -2,6 +2,11 @@
   display: flex;
   width: 100%;
   padding: 0 10px;
+  align-items: center;
+
+  button {
+    padding: 0 2px;
+  }
   //     width: 250px;
 /*
   border-style: solid;

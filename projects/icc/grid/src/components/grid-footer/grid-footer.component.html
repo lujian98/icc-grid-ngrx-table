@@ -1,10 +1,10 @@
 
 <button (click)="getGridPageData(1)" [disabled]="page === 1">
-  First
+  <i class="fa-solid fa-backward-step"></i>
 </button>
 
 <button (click)="getGridPageData(page-1)" [disabled]="page === 1">
-  Prev
+  <i class="fa-solid fa-caret-left"></i>
 </button>
 <span> Page:
   <input
@@ -21,15 +21,15 @@
 </span>
 <span> of {{lastPage}} </span>
 <button (click)="getGridPageData(page+1)" [disabled]="page === lastPage">
-  Next
+  <i class="fa-solid fa-caret-right"></i>
 </button>
 
 <button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
-  Last
+  <i class="fa-solid fa-forward-step"></i>
 </button>
 
 <button (click)="getGridPageData(page)">
-  Refresh
+  <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 
 <span>Page Size:
