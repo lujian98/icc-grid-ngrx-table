@@ -6,7 +6,18 @@
 <button (click)="getGridPageData(page-1)" [disabled]="page === 1">
   Prev
 </button>
-<span> Page: {{ page }} </span>
+<span> Page:
+  <input
+    type="number"
+    min="1"
+    [max]="lastPage"
+    [value]="page"
+    autocomplete="off"
+    (click)="$event.stopPropagation()"
+    (input)="valueChanged($event)"
+  >
+
+</span>
 <span> of {{lastPage}} </span>
 <button (click)="getGridPageData(page+1)" [disabled]="page === lastPage">
   Next
@@ -20,6 +31,17 @@
   Refresh
 </button>
 
+<span>Total: {{gridConfig.totalCounts}}</span>
 <!--
     first prev | page 1 of 20 | next last | refresh |
+
+
+      <input
+    type="text"
+    [value]="value"
+    autocomplete="off"
+    (click)="$event.stopPropagation()"
+    (keyup)="applyFilter($event)"
+    placeholder="{{filterPlaceholder}}"
+    >
 -->

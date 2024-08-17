@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, inject, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { IccGridConfig } from '../../models/grid-column.model';
 import { IccGridFacade } from '../../+state/grid.facade';
 
@@ -16,31 +18,43 @@ import { IccGridFacade } from '../../+state/grid.facade';
 export class IccGridFooterComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-
+  private _page: number = 1;
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log( ' fffffff gridConfig=', val.page)
     this._gridConfig = val;
+    this.page = val.page;
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
   }
 
+  set page(val: number) {
+    this._page = val;
+  }
   get page(): number {
-    return this.gridConfig.page;
+    return this._page;
   }
 
   get lastPage(): number {
-    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize)-1;
-  }
-
-
-  refresh(): void {
-    this.gridFacade.getGridData(this.gridConfig.gridName);
+    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 1;
   }
 
   getGridPageData(page: number): void {
     this.gridFacade.getGridPageData(this.gridConfig.gridName, page);
+  }
+
+  valueChanged(event: any): void {
+    let page: number = event.target.value | 1;
+    if (page < 1) {
+      page = 1;
+    } else if (page > this.lastPage) {
+      page = this.lastPage;
+    }
+    interval(500)
+      .pipe(
+        take(1),
+      )
+      .subscribe(() => this.getGridPageData(this.page));
   }
 }
