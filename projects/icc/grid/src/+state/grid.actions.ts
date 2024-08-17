@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig, IccGridData, IccSortField } from '../models/grid-column.model';
 
 export const setupGridConfig = createAction(
   '[Grid] Setup Grid Config',
@@ -29,6 +29,11 @@ export const setViewportPageSize = createAction(
 export const setViewportPage = createAction(
   '[Grid] Setup Grid Viewport Page',
   props<{ gridName: string, page: number }>()
+);
+
+export const setGridSortField = createAction(
+  '[Grid] Set Grid Sort Field',
+  props<{ gridName: string, sortFields: IccSortField[] }>()
 );
 
 export const getGridData = createAction(

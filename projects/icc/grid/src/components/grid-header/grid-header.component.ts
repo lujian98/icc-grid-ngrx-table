@@ -4,7 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccColumnConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
 import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.component';
 import { ColumnResizeEvent } from '../../models/column-resize-event';
@@ -30,6 +30,7 @@ import { IccColumnFilterComponent } from '../column-filter/column-filter.compone
 })
 export class IccGridHeaderComponent {
   @Input() columnConfig: IccColumnConfig[] = [];
+  @Input() gridConfig!: IccGridConfig;
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();

@@ -176,6 +176,7 @@ export class InMemoryService extends InMemoryDbService {
     if (sortlist && sortlist.length > 0) {
       sortlist.forEach((aSort: string) => {
         const sort = aSort.split('.');
+        //console.log(' sort=', sort)
         data = this.dataSortByField(data, sort[0], sort[1]);
       });
     }
@@ -184,9 +185,10 @@ export class InMemoryService extends InMemoryDbService {
 
   private dataSortByField(data: any[], field: string, direction: string) {
     const order = direction === 'asc' ? 1 : -1;
+    //console.log( ' data=', data)
     data.sort((d1: any, d2: any) => {
-      const v1 = (d1.attributes as any)[field];
-      const v2 = (d2.attributes as any)[field];
+      const v1 = (d1 as any)[field];
+      const v2 = (d2 as any)[field];
       let res = null;
       if (v1 == null && v2 != null) {
         res = -1;

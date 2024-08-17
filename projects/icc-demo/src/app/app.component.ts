@@ -16,6 +16,10 @@ export class AppComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
+    sortFields: [{
+      field: 'ID',
+      dir: 'desc',
+    }]
   }
 
   columnConfig2: IccColumnConfig[] = [{

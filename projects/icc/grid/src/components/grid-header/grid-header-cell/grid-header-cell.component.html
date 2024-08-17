@@ -1,13 +1,18 @@
-<!--ngrx-dynamic-grid-header-item
-
--->
-
 <div class="grid-header-cell">
-  <div class="grid-header-cell-title">{{ title }}</div>
-  <div class="grid-header-cell-sort">
-    <i class="fa-solid fa-caret-up"></i>
-    <i class="fa-solid fa-caret-down"></i>
-  </div>
+  <div class="grid-header-cell-title" (click)="headCellClick()">{{ title }}</div>
+
+  <ng-container *ngIf="isSortField">
+    <button *ngIf="sortDir==='asc'"
+      class="grid-header-cell-sort"
+      (click)="headCellClick()">
+      <i class="fa-solid fa-caret-up"></i>
+    </button>
+    <button *ngIf="sortDir==='desc'"
+      class="grid-header-cell-sort"
+      (click)="headCellClick()">
+      <i class="fa-solid fa-caret-down"></i>
+    </button>
+  </ng-container>
 </div>
 
 <ng-container>
@@ -18,6 +23,13 @@
 
 </ng-container>
 <!--
+    <i class="fa-solid fa-caret-down"></i>
+
+    <div class="grid-header-cell-sort" (click)="headCellClick()">
+    <i class="fa-solid fa-caret-up"></i>
+    <i class="fa-solid fa-caret-down"></i>
+  </div>
+
 <button sun-button
 <i class="fa-solid fa-bars"></i>
 caret-up

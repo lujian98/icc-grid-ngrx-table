@@ -52,6 +52,21 @@ export const iccGridFeature = createFeature({
       }
     }),
 
+    on(gridActions.setGridSortField, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          sortFields: action.sortFields,
+        }
+      };
+      return {
+        ...newState,
+      }
+    }),
+
     on(gridActions.setViewportPage, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};

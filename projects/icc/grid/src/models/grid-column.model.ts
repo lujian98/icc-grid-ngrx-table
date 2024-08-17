@@ -1,9 +1,15 @@
 
+export interface IccSortField {
+  field: string;
+  dir: string;
+}
+
 export interface IccGridConfig {
   gridName: string;
   page: number;
   pageSize: number;
   totalCounts: number;
+  sortFields: IccSortField[],
   rowSelection: boolean;
   columnReorder: boolean;
   columnResize: boolean;
@@ -31,6 +37,7 @@ export const defaultGridConfig: IccGridConfig = {
   page: 1,
   pageSize: 20,
   totalCounts: 0,
+  sortFields: [],
   rowSelection: false,
   columnReorder: false,
   columnResize: false,

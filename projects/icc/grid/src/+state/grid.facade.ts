@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccSortField } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
 import { selectGridConfig, selectColumnConfig, selectGridData, } from './grid.selectors';
 
@@ -19,6 +19,11 @@ export class IccGridFacade {
 
   setViewportPageSize(gridName: string, pageSize: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
+  }
+
+  setGridSortField(gridName: string, sortFields: IccSortField[]): void {
+    this.store.dispatch(gridActions.setGridSortField({ gridName, sortFields }));
+    this.getGridData(gridName);
   }
 
   getGridPageData(gridName: string, page: number): void {
