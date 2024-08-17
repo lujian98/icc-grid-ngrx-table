@@ -15,6 +15,7 @@
     autocomplete="off"
     (click)="$event.stopPropagation()"
     (input)="valueChanged($event)"
+    style="text-align:center;"
   >
 
 </span>
@@ -35,9 +36,11 @@
   <input
     type="number"
     min="1"
-    max="1000"
+    max="10"
     [value]="gridConfig.pageSize"
     autocomplete="off"
+    readonly
+    style="text-align:right;"
   >
 </span>
 

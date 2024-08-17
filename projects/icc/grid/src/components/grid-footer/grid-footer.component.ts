@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { interval } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { IccGridConfig } from '../../models/grid-column.model';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { BehaviorSubject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
+import { IccGridConfig } from '../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-footer',
@@ -19,6 +19,7 @@ export class IccGridFooterComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _page: number = 1;
+  valueChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @Input()
   set gridConfig(val: IccGridConfig) {
@@ -43,13 +44,29 @@ export class IccGridFooterComponent {
   get displaying(): string {
     const start = (this.gridConfig.page - 1) * this.gridConfig.pageSize + 1;
     let end = start + this.gridConfig.pageSize - 1;
-    if(end > this.gridConfig.totalCounts) {
+    if (end > this.gridConfig.totalCounts) {
       end = this.gridConfig.totalCounts;
     }
     return `Displaying ${start} - ${end} of ${this.gridConfig.totalCounts}`;
   }
 
+  constructor() {
+    this.valueChanged$
+      .pipe(
+        skip(1),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((page) => {
+          return of(page).pipe(takeUntil(this.valueChanged$.pipe(skip(1))));
+        })
+      )
+      .subscribe((page) => {
+        this.getGridPageData(this.page);
+      });
+  }
+
   getGridPageData(page: number): void {
+    console.log(' load data')
     this.gridFacade.getGridPageData(this.gridConfig.gridName, page);
   }
 
@@ -60,10 +77,7 @@ export class IccGridFooterComponent {
     } else if (page > this.lastPage) {
       page = this.lastPage;
     }
-    interval(500)
-      .pipe(
-        take(1),
-      )
-      .subscribe(() => this.getGridPageData(this.page));
+    this.page = page;
+    this.valueChanged$.next(page);
   }
 }

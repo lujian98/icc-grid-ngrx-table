@@ -52,8 +52,8 @@ export class IccGridService {
    const limit = gridConfig.pageSize;
    params = params.append('offset', offset.toString());
    params = params.append('limit', limit.toString());
-   console.log( ' service getGridData gridConfig =', gridConfig);
-   console.log( ' params =', params);
+   //console.log( ' service getGridData gridConfig =', gridConfig);
+   //console.log( ' params =', params);
    //const params = { };
    return this.http
      .get<any>('/api/DCR', { params })

@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, inject, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { DataSource } from '@angular/cdk/collections';
-import { CdkTableModule } from '@angular/cdk/table';
-import { interval, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, inject } from '@angular/core';
+import { BehaviorSubject, interval, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
+import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccGridRowComponent } from '../grid-row/grid-row.component';
-import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-viewport',
@@ -25,6 +23,8 @@ export class IccGridViewportComponent implements AfterViewInit {
   private gridFacade = inject(IccGridFacade);
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
+  sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+
   @Input() columns: IccColumnConfig[] = [];
   private _gridData: any[] = [];
 
@@ -46,19 +46,36 @@ export class IccGridViewportComponent implements AfterViewInit {
     return this._gridData;
   }
 
- // @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  // @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   constructor() {
-    //console.log(' grid row loaded ')
+    this.sizeChanged$
+      .pipe(
+        skip(1),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((event) => {
+          return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
+        })
+      )
+      .subscribe((event) => {
+        this.setViewportPageSize();
+      });
   }
 
   ngAfterViewInit(): void {
-    interval(1).pipe(take(1)).subscribe(() => {
-      const clientHeight = this.elementRef.nativeElement.clientHeight;
-      const pageSize = Math.floor(clientHeight / 24) ;
-      this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
-      this.gridFacade.getGridData(this.gridConfig.gridName);
-    });
+    interval(1).pipe(take(1)).subscribe(() => this.setViewportPageSize());
   }
 
+  private setViewportPageSize(): void {
+    const clientHeight = this.elementRef.nativeElement.clientHeight;
+    const pageSize = Math.floor(clientHeight / 24);
+    this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
+    this.gridFacade.getGridData(this.gridConfig.gridName);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: MouseEvent) {
+    this.sizeChanged$.next(event);
+  }
 }
