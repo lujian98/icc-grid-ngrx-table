@@ -15,7 +15,7 @@
   <button (click)="getPrevPageData()" [disabled]="isFirstPage$ | async">
     Prev
   </button>
-  <button (click)="getNextPageData()">
+  <button (click)="getNextPageData()" [disabled]="isLastPage$ | async">
     Next
   </button>
   <!--
@@ -23,3 +23,6 @@
   </mat-paginator>
     -->
 </div>
+<!--
+  first prev | page 1 of 20 | next last | refresh |
+-->

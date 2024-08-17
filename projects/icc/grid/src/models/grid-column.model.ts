@@ -16,13 +16,13 @@ export interface GridState<T extends object = object> {
   gridConfig: IccGridConfig;
   columnConfig: IccColumnConfig[];
   data: T[];
-  TotalCounts: number;
+  totalCounts: number;
 }
 
 
 export interface IccGridData<T> {
   data: T[];
-  //TotalCounts: number;
+  totalCounts: number;
 }
 
 export const defaultGridConfig: IccGridConfig = {
@@ -38,7 +38,7 @@ export const defaultState: GridState = {
   gridConfig: defaultGridConfig,
   columnConfig: [],
   data: [],
-  TotalCounts: 0,
+  totalCounts: 0,
 }
 
 export interface IccColumnConfig {

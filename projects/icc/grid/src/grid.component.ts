@@ -13,11 +13,13 @@ export class IccGridComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
   isFirstPage$!: Observable<boolean>;
+  isLastPage$!: Observable<boolean>;
 
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     this.isFirstPage$ = this.gridFacade.isFirstPage(this.gridConfig.gridName);
+    this.isLastPage$ = this.gridFacade.isLastPage(this.gridConfig.gridName);
     this.gridFacade.setupGridConfig(value);
   }
   get gridConfig(): IccGridConfig {

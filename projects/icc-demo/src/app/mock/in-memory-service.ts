@@ -75,11 +75,13 @@ export class InMemoryService extends InMemoryDbService {
       const sortedData = this.getSortedData(filteredData, reqInfo.query);
       const data = this.getOffsetData(sortedData, reqInfo.query);
       const body = {
+        totalCounts: filteredData.length,
         data: data,
+        /*
         included: reqInfo.collection.included,
         meta: {
           total: filteredData.length,
-        },
+        },*/
       };
       const options: ResponseOptions = {
         body: body,
