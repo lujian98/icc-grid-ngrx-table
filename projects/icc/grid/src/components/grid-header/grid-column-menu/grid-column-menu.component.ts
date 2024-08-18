@@ -33,12 +33,38 @@ export class IccGridColumnMenuComponent {
     return column.title === undefined ? column.name : column.title;
   }
 
+  columnSort(dir: string): void {
+    const sort = {
+      field: this.column.name,
+      dir: dir,
+    };
+    this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
+  }
+
+
+  /*
+    headCellClick(): void {
+    let find = this.findSortField;
+    let sort: IccSortField;
+    if (find) {
+      sort = { ...find };
+      sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sort = {
+        field: this.column.name,
+        dir: 'asc'
+      };
+    }
+    this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
+  }
+  */
+
   columnHideShow(column: IccColumnConfig): void {
     const col: IccColumnConfig = {
       ...column,
       hidden: column.hidden ? false: true,
     };
-    console.log('col=', col );
+    //console.log('col=', col );
     this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, col);
   }
 }

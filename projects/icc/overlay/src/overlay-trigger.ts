@@ -62,11 +62,8 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
           this.firstTime = false;
           return shouldShow && !container;
         }
-        console.log( ' shouldShow=', shouldShow)
-        console.log( ' container=', this.container())
-        console.log( ' event.target=', event.target)
-        console.log( ' container2=', container)
-        return !shouldShow && !container;
+        const popoverMenuItem = (event.target as Element).attributes.getNamedItem('popoverMenuItem')
+        return !shouldShow && !popoverMenuItem;
       }
     ),
     map(([, event]) => event),

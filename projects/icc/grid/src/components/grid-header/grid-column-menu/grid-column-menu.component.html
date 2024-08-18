@@ -1,9 +1,16 @@
 <ng-container  *ngIf="columnConfig$ | async as columnConfig">
+  <button (click)="columnSort('asc')" popoverMenuItem="true">
+    <i class="fa-solid fa-arrow-up-short-wide"></i>
+    Sort ASC
+  </button>
+  <button (click)="columnSort('desc')" popoverMenuItem="true">
+    <i class="fa-solid fa-arrow-down-wide-short"></i>
+    Sort DESC
+  </button>
+  <div>&#160;</div>
   <ng-container *ngFor="let column of columnConfig; let index = index;">
-
-    <div (click)="columnHideShow(column)">
+    <div (click)="columnHideShow(column)" popoverMenuItem="true">
       {{getTitle(column)}}
     </div>
-
   </ng-container>
 </ng-container>

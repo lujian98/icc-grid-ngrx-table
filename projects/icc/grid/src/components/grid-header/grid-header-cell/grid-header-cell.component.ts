@@ -74,17 +74,10 @@ export class IccGridHeaderCellComponent {
   }
 
   onClickColumnMenu(event: MouseEvent): void {
-    const x = event.pageX; // -  this.popoverCanvas.nativeElement.offsetLeft;
-    const y = event.pageY; // - this.popoverCanvas.nativeElement.offsetTop;
-
-    // if (element) {
     const fakeElement = this.getFakeElement(event);
     const popoverContext = { gridConfig: this.gridConfig, column: this.column };
     this.buildPopover(fakeElement, popoverContext);
     this.show();
-    // } else {
-    //   this.hide();
-    // }
   }
 
   private getFakeElement(event: MouseEvent): ElementRef {
@@ -115,12 +108,10 @@ export class IccGridHeaderCellComponent {
       IccPopoverComponent,
       elementRef,
       IccPosition.BOTTOM,
-      //IccTrigger.NOOP,
       IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,
       this.dynamicOverlayService
     );
   }
-
 }
