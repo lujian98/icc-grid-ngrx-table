@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
@@ -12,6 +13,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   standalone: true,
   imports: [
     CommonModule,
+    IccCheckboxModule,
   ],
 })
 export class IccGridColumnMenuComponent {

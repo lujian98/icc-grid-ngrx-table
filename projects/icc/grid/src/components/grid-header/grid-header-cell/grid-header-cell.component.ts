@@ -107,7 +107,7 @@ export class IccGridHeaderCellComponent {
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       elementRef,
-      IccPosition.BOTTOM,
+      IccPosition.BOTTOM_END,
       IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,
