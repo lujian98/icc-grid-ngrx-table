@@ -17,12 +17,17 @@
 
 <ng-container>
 
-  <button icc-button class="grid-header-cell-menu">
+  <button icc-button class="grid-header-cell-menu" [iccPopover]="gridColumnMenuComponent" [iccPopoverTrigger]="clickTrigger">
     <i class="fa-solid fa-bars"></i>
   </button>
 
 </ng-container>
 <!--
+
+      <button sunButton [sunPopover]="popoverComponentTemplate" sunPopoverTrigger="click">
+      Click2
+    </button>
+
     <i class="fa-solid fa-caret-down"></i>
 
     <div class="grid-header-cell-sort" (click)="headCellClick()">

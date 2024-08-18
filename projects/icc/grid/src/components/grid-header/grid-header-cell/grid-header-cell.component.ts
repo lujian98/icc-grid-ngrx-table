@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccButtonModule } from '@icc/ui/button';
+import { IccPopoverModule } from '@icc/ui/popover';
+import { IccOverlayModule, IccTrigger } from '@icc/ui/overlay';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
+import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 
 @Component({
@@ -16,13 +18,20 @@ import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/gr
   standalone: true,
   imports: [
     CommonModule,
-    CdkTableModule,
+    //CdkTableModule, IccTrigger
+    // IccOverlayModule.forRoot(),
+    IccPopoverModule,
+   // IccOverlayModule.forRoot(),
+    IccGridColumnMenuComponent,
   ],
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
+
+  gridColumnMenuComponent = IccGridColumnMenuComponent;
+  clickTrigger = IccTrigger.CLICK;
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();

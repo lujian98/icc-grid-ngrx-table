@@ -1,7 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-
+import { DOCUMENT } from '@angular/common';
+import { ICC_DOCUMENT } from './document';
 // import { IccSharedModule } from '../../shared/shared.module';
 import { IccOverlayService } from './overlay.service';
 import { IccOverlay } from './mapping';
@@ -18,7 +19,13 @@ export class IccOverlayModule {
   static forRoot(): ModuleWithProviders<IccOverlayModule> {
     return {
       ngModule: IccOverlayModule,
-      providers: [IccOverlayService, IccOverlay, IccPositionBuilderService, IccTriggerStrategyBuilderService],
+      providers: [
+        IccOverlayService,
+        IccOverlay,
+        IccPositionBuilderService,
+        IccTriggerStrategyBuilderService,
+        { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
+      ],
     };
   }
 }
