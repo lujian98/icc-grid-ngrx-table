@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
-  selector: 'sun-grid-column-menu',
+  selector: 'icc-grid-column-menu',
   templateUrl: './grid-column-menu.component.html',
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +18,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
+  private elementRef = inject(ElementRef);
   columnConfig$!: Observable<IccColumnConfig[]>;
   private _gridConfig!: IccGridConfig;
 
@@ -41,6 +42,7 @@ export class IccGridColumnMenuComponent {
       dir: dir,
     };
     this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
+    console.log( 'elementRef=', this.elementRef)
   }
 
 
@@ -68,5 +70,6 @@ export class IccGridColumnMenuComponent {
     };
     //console.log('col=', col );
     this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, col);
+    console.log( 'elementRef=', this.elementRef)
   }
 }

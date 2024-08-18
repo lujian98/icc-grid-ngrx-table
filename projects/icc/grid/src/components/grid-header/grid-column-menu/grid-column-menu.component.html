@@ -1,15 +1,15 @@
-<ng-container  *ngIf="columnConfig$ | async as columnConfig">
-  <button (click)="columnSort('asc')" popoverMenuItem="true">
+<ng-container *ngIf="columnConfig$ | async as columnConfig">
+  <button (click)="columnSort('asc')" >
     <i class="fa-solid fa-arrow-up-short-wide"></i>
     Sort ASC
   </button>
-  <button (click)="columnSort('desc')" popoverMenuItem="true">
+  <button (click)="columnSort('desc')">
     <i class="fa-solid fa-arrow-down-wide-short"></i>
     Sort DESC
   </button>
   <ng-container *ngFor="let column of columnConfig; let index = index;">
     <button (click)="columnHideShow(column)" popoverMenuItem="true">
-      <icc-checkbox [checked]="!column.hidden" popoverMenuItem="true">
+      <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">
         <div popoverMenuItem="true">{{getTitle(column)}}</div>
       </icc-checkbox>
     </button>
