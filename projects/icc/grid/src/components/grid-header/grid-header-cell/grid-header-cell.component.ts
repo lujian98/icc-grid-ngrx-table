@@ -1,14 +1,21 @@
-import { ChangeDetectionStrategy, Component, Input, inject, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccPopoverModule } from '@icc/ui/popover';
-import { IccOverlayModule, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverModule, IccPopoverComponent } from '@icc/ui/popover';
+import { IccOverlayModule, IccTrigger, IccPosition, IccDynamicOverlayService } from '@icc/ui/overlay';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
+export interface CanvasElement {
+  title: string;
+  x: number;
+  y: number;
+  r: number;
+  color: string;
+}
 
 @Component({
   selector: 'icc-grid-header-cell',
@@ -24,9 +31,11 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
    // IccOverlayModule.forRoot(),
     IccGridColumnMenuComponent,
   ],
+  providers: [IccDynamicOverlayService],
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
+  private dynamicOverlayService =  inject(IccDynamicOverlayService);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
 
@@ -77,4 +86,61 @@ export class IccGridHeaderCellComponent {
     }
     this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
   }
+
+  onClickColumnMenu(event: MouseEvent): void {
+    const x = event.pageX; // - this.tooltipCanvas.nativeElement.offsetLeft;
+    const y = event.pageY; // - this.tooltipCanvas.nativeElement.offsetTop;
+    //const element = this.findElement(x, y);
+   // if (element) {
+      const fakeElement = this.getFakeElement(event);
+      // const tooltip = `Title: ${element.title} Color: ${element.color} X: ${element.x} Y: ${element.y} R: ${element.r}`;
+      const popoverContext = { element: 'test' };
+      this.buildPopover(fakeElement, popoverContext);
+      this.show();
+   // } else {
+   //   this.hide();
+   // }
+  }
+
+  private getFakeElement(event: MouseEvent): ElementRef {
+    return new ElementRef({
+      // @ts-ignore
+      getBoundingClientRect: (): ClientRect => ({
+        bottom: event.clientY,
+        height: 0,
+        left: event.clientX,
+        right: event.clientX,
+        top: event.clientY,
+        width: 0,
+      }),
+    });
+  }
+/*
+  private findElement(x: number, y: number): CanvasElement {
+    return this.elemets.find(
+      (item) => x > item.x - item.r && x < item.x + item.r && y > item.y - item.r && y < item.y + item.r
+    );
+  }*/
+
+  private show(): void {
+    this.hide();
+    this.dynamicOverlayService.show();
+  }
+
+  private hide() {
+    this.dynamicOverlayService.hide();
+  }
+
+  private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
+    this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      elementRef,
+      IccPosition.BOTTOM,
+      IccTrigger.NOOP,
+      IccGridColumnMenuComponent,
+      popoverContext,
+      this.dynamicOverlayService
+    );
+  }
+
 }
