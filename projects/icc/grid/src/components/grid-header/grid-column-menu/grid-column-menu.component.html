@@ -1,7 +1,9 @@
 <ng-container  *ngIf="columnConfig$ | async as columnConfig">
   <ng-container *ngFor="let column of columnConfig; let index = index;">
 
-    <div>{{getTitle(column)}}</div>
+    <div (click)="columnHideShow(column)">
+      {{getTitle(column)}}
+    </div>
 
   </ng-container>
 </ng-container>

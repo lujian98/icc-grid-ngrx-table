@@ -82,6 +82,38 @@ export const iccGridFeature = createFeature({
       }
     }),
 
+    on(gridActions.setGridColumnHiddenShow, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...state[key],
+        columnConfig: state[key].columnConfig.map((column)=>{
+          if(column.name === action.columnConfig.name) {
+            return {
+              ...column,
+              hidden: action.columnConfig.hidden
+            }
+          } else {
+            return column;
+          }
+        })
+      };
+      return {
+        ...newState,
+      }
+    }),
+
+    /*
+            if (unlockUserIds.includes(user.id)) {
+          const updatedUser: UserRecord = {
+            ...user,
+            lockedAt: null,
+          };
+          return updatedUser;
+        }
+        return user;
+        */
+
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};

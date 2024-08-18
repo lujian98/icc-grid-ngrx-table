@@ -36,6 +36,12 @@ export const setGridSortField = createAction(
   props<{ gridName: string, sortFields: IccSortField[] }>()
 );
 
+export const setGridColumnHiddenShow = createAction(
+  '[Grid] Setup Grid Column Hidden Show',
+  props<{ gridName: string, columnConfig: IccColumnConfig }>()
+);
+
+
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
   props<{gridName: string}>()

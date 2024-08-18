@@ -115,6 +115,7 @@ export class IccGridHeaderCellComponent {
       IccPopoverComponent,
       elementRef,
       IccPosition.BOTTOM,
+      //IccTrigger.NOOP,
       IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,

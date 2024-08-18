@@ -6,7 +6,7 @@
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns;">
-  <icc-grid-cell>
+  <icc-grid-cell *ngIf="!column.hidden">
     <icc-dynamic-grid-cell
       [record]="record"
       [column]="column">

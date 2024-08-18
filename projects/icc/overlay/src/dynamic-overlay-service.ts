@@ -85,6 +85,8 @@ export class IccDynamicOverlayService {
     this.overlayRef = this.overlayService.create({
       scrollStrategy: this.overlayService.scrollStrategies.close(),
       positionStrategy,
+      //hasBackdrop: true,
+      //backdropClass: '',
     });
   }
 

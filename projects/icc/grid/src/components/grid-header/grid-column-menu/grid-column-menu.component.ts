@@ -32,4 +32,13 @@ export class IccGridColumnMenuComponent {
   getTitle(column: IccColumnConfig): string {
     return column.title === undefined ? column.name : column.title;
   }
+
+  columnHideShow(column: IccColumnConfig): void {
+    const col: IccColumnConfig = {
+      ...column,
+      hidden: column.hidden ? false: true,
+    };
+    console.log('col=', col );
+    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, col);
+  }
 }

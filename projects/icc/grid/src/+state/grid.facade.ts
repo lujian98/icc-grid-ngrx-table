@@ -26,6 +26,10 @@ export class IccGridFacade {
     this.getGridData(gridName);
   }
 
+  setGridColumnHiddenShow(gridName: string, columnConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnHiddenShow({ gridName, columnConfig }));
+  }
+
   getGridPageData(gridName: string, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridName, page }));
     this.getGridData(gridName);
