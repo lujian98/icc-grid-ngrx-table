@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccGridConfig, IccColumnConfig, IccGridData, IccSortField } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField } from '../models/grid-column.model';
 
 export const setupGridConfig = createAction(
   '[Grid] Setup Grid Config',
@@ -40,7 +40,6 @@ export const setGridColumnHiddenShow = createAction(
   '[Grid] Setup Grid Column Hidden Show',
   props<{ gridName: string, columnConfig: IccColumnConfig }>()
 );
-
 
 export const getGridData = createAction(
   '[Grid] Get Grid Data',
