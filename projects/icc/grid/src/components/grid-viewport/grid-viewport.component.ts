@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -19,7 +19,7 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
     IccGridRowComponent,
   ],
 })
-export class IccGridViewportComponent implements AfterViewInit {
+export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
@@ -77,5 +77,9 @@ export class IccGridViewportComponent implements AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
     this.sizeChanged$.next(event);
+  }
+
+  ngOnDestroy(): void {
+    this.sizeChanged$.complete();
   }
 }

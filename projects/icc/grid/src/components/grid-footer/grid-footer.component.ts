@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -15,7 +15,7 @@ import { IccGridConfig } from '../../models/grid-column.model';
     CommonModule,
   ],
 })
-export class IccGridFooterComponent {
+export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _page: number = 1;
@@ -79,5 +79,9 @@ export class IccGridFooterComponent {
     }
     this.page = page;
     this.valueChanged$.next(page);
+  }
+
+  ngOnDestroy(): void {
+    this.valueChanged$.complete();
   }
 }
