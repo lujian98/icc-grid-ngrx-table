@@ -1,0 +1,17 @@
+:host {
+  label {
+    display: inline-flex;
+    padding: 0.25rem 0;
+    position: relative;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  sun-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+  }
+}
