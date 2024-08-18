@@ -79,7 +79,7 @@ export class IccGridHeaderCellComponent {
 
     // if (element) {
     const fakeElement = this.getFakeElement(event);
-    const popoverContext = { element: 'test' };
+    const popoverContext = { gridConfig: this.gridConfig, column: this.column };
     this.buildPopover(fakeElement, popoverContext);
     this.show();
     // } else {
@@ -115,7 +115,7 @@ export class IccGridHeaderCellComponent {
       IccPopoverComponent,
       elementRef,
       IccPosition.BOTTOM,
-      IccTrigger.NOOP,
+      IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,
       this.dynamicOverlayService

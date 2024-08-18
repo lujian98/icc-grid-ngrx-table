@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IccAboutModule } from '@icc/ui/about';
 import { IccGridModule } from '@icc/ui/grid';
+import { IccDialogModule } from '@icc/ui/dialog';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { IccGridModule } from '@icc/ui/grid';
     MatCheckboxModule,
     IccAboutModule,
     IccGridModule,
+    IccDialogModule.forRoot(),
   ],
   providers: [
     {

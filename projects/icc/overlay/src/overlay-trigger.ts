@@ -8,6 +8,7 @@ import { ICC_DOCUMENT } from './document';
 export enum IccTrigger {
   CLICK = 'click',
   NOOP = 'noop',
+  POINT = 'point',
   HOVER = 'hover',
   CONTEXTMENU = 'contextmenu',
   TOOLTIP = 'tooltip',
@@ -42,6 +43,31 @@ export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
 export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
   show$ = EMPTY;
   hide$ = EMPTY;
+}
+
+export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
+  show$ = EMPTY;
+  private firstTime: boolean = true;
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => [!this.container(), event] as [boolean, Event]),
+    share(),
+    takeWhile(() => this.alive)
+  );
+
+  hide$ = this.click$.pipe(
+    filter(
+      ([shouldShow, event]) => {
+        const container = this.container() && this.container().location.nativeElement.contains(event.target);
+        if(this.firstTime) {
+          this.firstTime = false;
+          return shouldShow && !container;
+        }
+        return !shouldShow && !container;
+      }
+    ),
+    map(([, event]) => event),
+    takeWhile(() => this.alive)
+  );
 }
 
 export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
@@ -165,6 +191,8 @@ export class IccTriggerStrategyBuilderService {
         return new IccClickTriggerStrategy(this.document, host, container);
       case IccTrigger.NOOP:
         return new IccNoopTriggerStrategy(this.document, host, container);
+      case IccTrigger.POINT:
+        return new IccPointTriggerStrategy(this.document, host, container);
       case IccTrigger.HOVER:
         return new IccHoverTriggerStrategy(this.document, host, container);
       case IccTrigger.CONTEXTMENU:
