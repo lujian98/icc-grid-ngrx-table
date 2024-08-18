@@ -1,3 +1,7 @@
-<p>
-  I'm a Component!  Click me to close!
-</p>
+<ng-container  *ngIf="columnConfig$ | async as columnConfig">
+  <ng-container *ngFor="let column of columnConfig; let index = index;">
+
+    <div>{{getTitle(column)}}</div>
+
+  </ng-container>
+</ng-container>
