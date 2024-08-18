@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { IccOverlayContainerComponent, IccRenderableContainer, IccDynamicOverlayService } from '@icc/ui/overlay';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
   selector: 'icc-popover',
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccPopoverComponent implements IccRenderableContainer {
   @Input() content: any;

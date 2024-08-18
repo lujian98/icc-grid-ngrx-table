@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
 import { CARSDATA } from './data/cars-large';
@@ -6,7 +6,8 @@ import { CARSDATA } from './data/cars-large';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'icc-demo';

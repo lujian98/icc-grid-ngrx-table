@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ComponentRef, EmbeddedViewRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, ElementRef, ComponentRef, EmbeddedViewRef } from '@angular/core';
 import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 
 export interface IccRenderableContainer {
@@ -9,6 +9,7 @@ export interface IccRenderableContainer {
 @Component({
   selector: 'icc-overlay-container',
   template: ` <ng-template cdkPortalOutlet></ng-template> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccOverlayContainerComponent {
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
