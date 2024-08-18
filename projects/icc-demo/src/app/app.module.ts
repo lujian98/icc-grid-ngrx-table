@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { IccAboutModule } from '@icc/ui/about';
 import { IccGridModule } from '@icc/ui/grid';
 import { IccDialogModule } from '@icc/ui/dialog';
+import { IccCheckboxModule } from '@icc/ui/checkbox';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { IccDialogModule } from '@icc/ui/dialog';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
-    MatCheckboxModule,
+    IccCheckboxModule,
     IccAboutModule,
     IccGridModule,
     IccDialogModule.forRoot(),

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { IccCheckboxModule } from '@icc/ui/checkbox';
 //import { SelectionType } from '../../config';
 //import { isCheckboxSelection, isRadioSelection } from '../../util/selection';
 
@@ -12,7 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   standalone: true,
   imports: [
     CommonModule,
-    MatCheckboxModule,
+    IccCheckboxModule,
   ],
 })
 export class IccRowSelectComponent {
