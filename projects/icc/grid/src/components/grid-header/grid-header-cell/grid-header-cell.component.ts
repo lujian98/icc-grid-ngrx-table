@@ -1,21 +1,10 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataSource } from '@angular/cdk/collections';
-import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IccPopoverModule, IccPopoverComponent } from '@icc/ui/popover';
-import { IccOverlayModule, IccTrigger, IccPosition, IccDynamicOverlayService } from '@icc/ui/overlay';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
+import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverComponent, IccPopoverModule } from '@icc/ui/popover';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
-
-export interface CanvasElement {
-  title: string;
-  x: number;
-  y: number;
-  r: number;
-  color: string;
-}
 
 @Component({
   selector: 'icc-grid-header-cell',
@@ -25,17 +14,14 @@ export interface CanvasElement {
   standalone: true,
   imports: [
     CommonModule,
-    //CdkTableModule, IccTrigger
-    // IccOverlayModule.forRoot(),
     IccPopoverModule,
-   // IccOverlayModule.forRoot(),
     IccGridColumnMenuComponent,
   ],
   providers: [IccDynamicOverlayService],
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
-  private dynamicOverlayService =  inject(IccDynamicOverlayService);
+  private dynamicOverlayService = inject(IccDynamicOverlayService);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
 
@@ -51,17 +37,17 @@ export class IccGridHeaderCellComponent {
   }
 
   get downCaretStyle() {
-    return {'border-top': '5px solid rgba(16, 46, 84, 0.8)'};
+    return { 'border-top': '5px solid rgba(16, 46, 84, 0.8)' };
     //return {'border-top': sortDescending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
   }
 
   get upCaretStyle() {
-    return {'border-bottom': null};
+    return { 'border-bottom': null };
     //return {'border-bottom': sortAscending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
   }
 
   get findSortField(): IccSortField | undefined {
-    return this.gridConfig.sortFields.find((field)=>field.field === this.column.name);
+    return this.gridConfig.sortFields.find((field) => field.field === this.column.name);
   }
 
   get isSortField(): boolean {
@@ -72,11 +58,11 @@ export class IccGridHeaderCellComponent {
     return this.findSortField!.dir;
   }
 
-  headCellClick(): void  {
+  headCellClick(): void {
     let find = this.findSortField;
     let sort: IccSortField;
-    if(find) {
-      sort = {...find};
+    if (find) {
+      sort = { ...find };
       sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
     } else {
       sort = {
@@ -88,18 +74,17 @@ export class IccGridHeaderCellComponent {
   }
 
   onClickColumnMenu(event: MouseEvent): void {
-    const x = event.pageX; // - this.tooltipCanvas.nativeElement.offsetLeft;
-    const y = event.pageY; // - this.tooltipCanvas.nativeElement.offsetTop;
-    //const element = this.findElement(x, y);
-   // if (element) {
-      const fakeElement = this.getFakeElement(event);
-      // const tooltip = `Title: ${element.title} Color: ${element.color} X: ${element.x} Y: ${element.y} R: ${element.r}`;
-      const popoverContext = { element: 'test' };
-      this.buildPopover(fakeElement, popoverContext);
-      this.show();
-   // } else {
-   //   this.hide();
-   // }
+    const x = event.pageX; // -  this.popoverCanvas.nativeElement.offsetLeft;
+    const y = event.pageY; // - this.popoverCanvas.nativeElement.offsetTop;
+
+    // if (element) {
+    const fakeElement = this.getFakeElement(event);
+    const popoverContext = { element: 'test' };
+    this.buildPopover(fakeElement, popoverContext);
+    this.show();
+    // } else {
+    //   this.hide();
+    // }
   }
 
   private getFakeElement(event: MouseEvent): ElementRef {
@@ -115,12 +100,6 @@ export class IccGridHeaderCellComponent {
       }),
     });
   }
-/*
-  private findElement(x: number, y: number): CanvasElement {
-    return this.elemets.find(
-      (item) => x > item.x - item.r && x < item.x + item.r && y > item.y - item.r && y < item.y + item.r
-    );
-  }*/
 
   private show(): void {
     this.hide();
