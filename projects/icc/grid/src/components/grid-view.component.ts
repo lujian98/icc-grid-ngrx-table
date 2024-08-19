@@ -38,7 +38,7 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    //console.log( ' 5555 gridConfig=', val)
+    console.log( ' 5555 gridConfig=', val)
     this._gridConfig = val;
     this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);

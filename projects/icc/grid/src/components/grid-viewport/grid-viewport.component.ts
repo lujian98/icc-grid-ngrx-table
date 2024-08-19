@@ -24,6 +24,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+  dataChanged$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   @Input() columns: IccColumnConfig[] = [];
   private _gridData: any[] = [];
@@ -38,11 +39,12 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set gridData(data: any[]) { // TODO set local data here
+  set gridData(data: any[]) {
     this._gridData = data;
+    this.dataChanged$.next(data);
   }
   get gridData(): any[] {
-    // console.log(' view port data uuuu =', this._gridData)
+    console.log(' view port data uuuu =', this._gridData)
     return this._gridData;
   }
 
@@ -61,6 +63,25 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
       .subscribe((event) => {
         this.setViewportPageSize();
       });
+
+    this.dataChanged$
+      .pipe(
+        skip(1),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((data) => {
+          return of(data).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
+        })
+      )
+      .subscribe((data) => {
+        console.log(' elementRef=', this.elementRef)
+        const viewpport = this.elementRef.nativeElement.querySelector('cdk-virtual-scroll-viewport');
+        console.log(' viewpport=', viewpport)
+        const scrollY = viewpport.scrollHeight - viewpport.offsetHeight;
+        //this.setViewportPageSize(); // scrollHeight
+        console.log(' scrollY=', scrollY)
+        this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -73,6 +94,12 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize);
     this.gridFacade.getGridData(this.gridConfig.gridName);
   }
+
+  /*
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    */
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

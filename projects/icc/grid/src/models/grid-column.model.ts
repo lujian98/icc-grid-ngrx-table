@@ -9,6 +9,7 @@ export interface IccGridConfig {
   page: number;
   pageSize: number;
   totalCounts: number;
+  hasScrollY: boolean,
   sortFields: IccSortField[],
   rowSelection: boolean;
   columnReorder: boolean;
@@ -38,6 +39,7 @@ export const defaultGridConfig: IccGridConfig = {
   pageSize: 20,
   totalCounts: 0,
   sortFields: [],
+  hasScrollY: false,
   rowSelection: false,
   columnReorder: false,
   columnResize: false,

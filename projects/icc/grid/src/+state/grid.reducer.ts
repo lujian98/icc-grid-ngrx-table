@@ -72,6 +72,20 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),
+    on(gridActions.setViewportScrollY, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          hasScrollY: action.hasScrollY,
+        }
+      };
+      return {
+        ...newState,
+      }
+    }),
     on(gridActions.setGridColumnHiddenShow, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};

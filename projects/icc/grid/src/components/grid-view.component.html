@@ -1,6 +1,7 @@
 <!--ngrx-grid-display-->
   <ng-container *ngIf="columnConfig$ | async as columns">
     <icc-grid-header
+      [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden' }"
       [gridConfig]="gridConfig"
       [columnConfig]="columns"
       (filterGrid)="filterGrid.emit($event)"

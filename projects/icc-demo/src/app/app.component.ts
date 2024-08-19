@@ -15,6 +15,7 @@ export class AppComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
+    pageSize: 200,
     sortFields: [{
       field: 'ID',
       dir: 'desc',
