@@ -80,6 +80,7 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           hasScrollY: action.hasScrollY,
+          page: 1,
         }
       };
       return {

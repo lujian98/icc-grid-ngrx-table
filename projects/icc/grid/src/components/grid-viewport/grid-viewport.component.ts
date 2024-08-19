@@ -80,7 +80,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
         const scrollY = viewpport.scrollHeight - viewpport.offsetHeight;
         //this.setViewportPageSize(); // scrollHeight
         console.log(' scrollY=', scrollY)
-        this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
+        //this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
       });
   }
 
