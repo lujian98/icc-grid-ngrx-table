@@ -6,6 +6,12 @@
   //@include display-grid();
   //border-bottom: 2px solid $c_primary;
 
+  .icc-header-row-select {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    //border-bottom: 1px solid;
+  }
 
   .drag-placeholder {
     //background-color: tint-color($c_primary, 50%);

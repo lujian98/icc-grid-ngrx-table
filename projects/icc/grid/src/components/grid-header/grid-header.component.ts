@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
 import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.component';
+import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { ColumnResizeEvent } from '../../models/column-resize-event';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
@@ -26,11 +27,14 @@ import { IccColumnFilterComponent } from '../column-filter/column-filter.compone
     IccColumnResizeDirective,
     IccColumnResizeTriggerDirective,
     IccColumnFilterComponent,
+    IccRowSelectComponent,
   ],
 })
 export class IccGridHeaderComponent {
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
+
+  @Input() allSelected = false;
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();
@@ -49,5 +53,10 @@ export class IccGridHeaderComponent {
   get dragDisabled(): boolean {
     return false;
     //return !this.columnConfig.columnReorder;
+  }
+
+  onToggleSelectAllRowsOnCurrentPage() {
+    //console.log( ' view columnConfig=', this.columnConfig)
+    //this.toggleSelectAllRowsOnCurrentPage.emit(!this.allSelected);
   }
 }

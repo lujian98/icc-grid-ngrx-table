@@ -1,9 +1,16 @@
 <!--ngrx-grid-header
 <ng-content select="ngrx-grid-header-item"></ng-content>
-
--->
 <ng-content select="icc-grid-header-item"></ng-content>
+-->
 
+
+<icc-grid-header-item >
+  <icc-row-select class="icc-header-row-select"
+    [isSelected]="allSelected"
+    (selected)="onToggleSelectAllRowsOnCurrentPage()"
+  >
+  </icc-row-select>
+</icc-grid-header-item>
 
 <ng-container *ngFor="let column of columnConfig; let index = index;">
   <icc-grid-header-item *ngIf="!column.hidden"
