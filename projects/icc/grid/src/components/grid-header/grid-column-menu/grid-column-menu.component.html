@@ -10,7 +10,7 @@
   <ng-container *ngFor="let column of columnConfig; let index = index;">
     <button (click)="columnHideShow(column)" popoverMenuItem="true">
       <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">
-        <div popoverMenuItem="true">{{getTitle(column)}}</div>
+        <div class="checkbox-label" popoverMenuItem="true">{{getTitle(column)}}</div>
       </icc-checkbox>
     </button>
   </ng-container>
