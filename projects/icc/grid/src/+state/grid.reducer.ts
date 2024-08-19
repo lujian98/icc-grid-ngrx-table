@@ -72,6 +72,7 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),
+    /*
     on(gridActions.setViewportScrollY, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
@@ -80,13 +81,13 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           hasScrollY: action.hasScrollY,
-          page: 1,
+          //page: 1,
         }
       };
       return {
         ...newState,
       }
-    }),
+    }),*/
     on(gridActions.setGridColumnHiddenShow, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
