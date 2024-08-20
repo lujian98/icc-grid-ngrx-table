@@ -1,6 +1,7 @@
 
 <cdk-virtual-scroll-viewport itemSize="24">
   <icc-grid-row *cdkVirtualFor="let record of gridData; let index = index;"
+    [gridConfig]="gridConfig"
     [columns]="columns"
     [record]="record">
   </icc-grid-row>

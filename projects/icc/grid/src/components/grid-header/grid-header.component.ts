@@ -45,6 +45,18 @@ export class IccGridHeaderComponent {
     return this.columnConfig.map((column)=> column.name);
   }
 
+  get totalWidth(): number {
+    return this.columnConfig
+      .filter((column)=>!column.hidden)
+      .map((column)=> (column.width || 100))
+      .reduce((prev, curr) => prev + curr, 0);
+  }
+
+  getColumnWidth(column: IccColumnConfig): number {
+    const viewportWidth = this.gridConfig.viewportWidth - 40; // select row cell width 50
+    return viewportWidth * column.width! / this.totalWidth;
+  }
+
   trackByIndex(tmp: any, index: number): number {
     console.log( 'tmp=', tmp)
     return index;

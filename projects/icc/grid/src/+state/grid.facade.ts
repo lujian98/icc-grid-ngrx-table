@@ -17,8 +17,8 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridColumnConfig({ gridName, columnConfig }));
   }
 
-  setViewportPageSize(gridName: string, pageSize: number): void {
-    this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize }));
+  setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
+    this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }));
   }
 
   setViewportScrollY(gridName: string, hasScrollY: boolean): void {

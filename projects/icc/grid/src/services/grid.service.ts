@@ -25,6 +25,8 @@ export class IccGridService {
     //console.log(' service columnConfig =', columnConfig)
     const config: IccColumnConfig[] = [{
       name: 'ID',
+      width: 50,
+      align: 'center',
     }, {
       name: 'vin',
     }, {

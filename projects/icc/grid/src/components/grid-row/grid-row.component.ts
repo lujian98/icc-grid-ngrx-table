@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IccColumnConfig } from '../../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
 import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
@@ -25,6 +25,7 @@ import { IccRowSelectComponent } from '../row-select/row-select.component';
 })
 export class IccGridRowComponent implements OnChanges {
   @Input() columns: IccColumnConfig[] = [];
+  @Input() gridConfig!: IccGridConfig;
   @Input() record: any;
   @Input() selected = false;
 
@@ -34,9 +35,19 @@ export class IccGridRowComponent implements OnChanges {
     return this.columns.map((column)=> column.name);
   }
 
-  constructor() {
-    //console.log( ' grid row loaded ')
+
+  get totalWidth(): number {
+    return this.columns
+      .filter((column)=>!column.hidden)
+      .map((column)=> (column.width || 100))
+      .reduce((prev, curr) => prev + curr, 0);
   }
+
+  getColumnWidth(column: IccColumnConfig): number {
+    const viewportWidth = this.gridConfig.viewportWidth - 40; // select row cell width 50
+    return viewportWidth * column.width! / this.totalWidth;
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log( ' wwww changes =', changes)

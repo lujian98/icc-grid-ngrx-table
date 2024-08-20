@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { IccColumnConfig } from '../../../models/grid-column.model';
@@ -33,5 +33,14 @@ export class IccGridCellViewComponent {
   get data(): any {
     // console.log(' get record =', this.column.name)
     return this.record[this.column.name];
+  }
+
+  get align(): string {
+    return this.column.align ? this.column.align: 'left';
+  }
+
+  @HostBinding('class.grid-cell-view-align-center')
+  get alignCenter() {
+    return this.align === 'center';
   }
 }

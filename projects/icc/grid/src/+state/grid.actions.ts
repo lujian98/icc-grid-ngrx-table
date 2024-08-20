@@ -23,7 +23,7 @@ export const setupGridColumnConfigSuccess = createAction(
 
 export const setViewportPageSize = createAction(
   '[Grid] Setup Grid Viewport Page Size',
-  props<{ gridName: string, pageSize: number }>()
+  props<{ gridName: string, pageSize: number, viewportWidth: number }>()
 );
 
 export const setViewportPage = createAction(

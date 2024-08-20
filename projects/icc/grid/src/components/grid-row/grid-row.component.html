@@ -1,4 +1,4 @@
-<icc-grid-cell>
+<icc-grid-cell class="icc-grid-cell-row-select" [ngStyle]="{flex: '0 40px'}">
   <icc-row-select
     [isSelected]="selected"
     (selected)="toggleRowSelection()">
@@ -6,7 +6,7 @@
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns;">
-  <icc-grid-cell *ngIf="!column.hidden">
+  <icc-grid-cell *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column) + 'px'}">
     <icc-dynamic-grid-cell
       [record]="record"
       [column]="column">
@@ -14,7 +14,7 @@
   </icc-grid-cell>
 </ng-container>
 
-<!--
+<!-- justify-content: center
 <ngrx-grid-cell *ngIf="selectionType">
   <ngrx-row-select [isSelected]="selected"
                    [id]="rowIndex"

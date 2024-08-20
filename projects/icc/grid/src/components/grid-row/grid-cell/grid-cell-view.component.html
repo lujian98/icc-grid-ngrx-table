@@ -1,6 +1,10 @@
 <!--ngrx-dynamic-grid-header-item
+    justify-content: center;
 
+    <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column) + 'px'}"
 -->
 
-<div class="grid-cell">{{ data }}</div>
+<div class="grid-cell">
+  {{ data }}
+</div>
 

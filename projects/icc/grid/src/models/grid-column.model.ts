@@ -8,6 +8,7 @@ export interface IccGridConfig {
   gridName: string;
   page: number;
   pageSize: number;
+  viewportWidth: number;
   totalCounts: number;
   hasScrollY: boolean,
   sortFields: IccSortField[],
@@ -37,6 +38,7 @@ export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
   page: 1,
   pageSize: 20,
+  viewportWidth: 1000,
   totalCounts: 0,
   sortFields: [],
   hasScrollY: false,

@@ -3,8 +3,19 @@
 <ng-content select="icc-grid-header-item"></ng-content>
 -->
 
+<!--
+      <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.field }}">
+      <mat-header-cell *matHeaderCellDef [ngStyle]="{ flex: '1 ' + column.width + 'px' }"></mat-header-cell>
+      <mat-cell
+        *matCellDef="let record; let rowIndex = index"
+        [ngStyle]="{ flex: column.field == 'rowSelection' ? '0 30px' : '1 ' + column.width + 'px' }"
 
-<icc-grid-header-item >
+        [ngStyle]="{flex: '0 30px'}"
+
+        [ngStyle]="{ flex: '1 ' + column.width + 'px' }"
+      >
+-->
+<icc-grid-header-item [ngStyle]="{flex: '0 40px'}">
   <icc-row-select class="icc-header-row-select"
     [isSelected]="allSelected"
     (selected)="onToggleSelectAllRowsOnCurrentPage()"
@@ -13,7 +24,7 @@
 </icc-grid-header-item>
 
 <ng-container *ngFor="let column of columnConfig; let index = index;">
-  <icc-grid-header-item *ngIf="!column.hidden"
+  <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     (columnResizing)="columnResizing.emit($event)"
     (columnResized)="columnResized.emit($event)"

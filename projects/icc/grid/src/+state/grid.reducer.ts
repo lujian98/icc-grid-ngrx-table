@@ -24,7 +24,12 @@ export const iccGridFeature = createFeature({
       const newState: IccGridState = {};
       newState[key] = {
         ...state[key],
-        columnConfig: action.columnConfig,
+        columnConfig: action.columnConfig.map((column) => {
+          return {
+            ...column,
+            width: column.width || 100,
+          }
+        }),
       };
       return {
         ...newState,
@@ -38,6 +43,7 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           pageSize: action.pageSize,
+          viewportWidth: action.viewportWidth,
         }
       };
       return {
