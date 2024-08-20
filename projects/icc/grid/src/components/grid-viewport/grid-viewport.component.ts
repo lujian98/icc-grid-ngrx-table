@@ -113,5 +113,6 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sizeChanged$.complete();
+    this.dataChanged$.complete();
   }
 }

@@ -116,6 +116,8 @@ export class IccGridViewComponent implements AfterViewChecked {
       ...this.columns.find((item)=>item.name === event.name)!,
       width: event.width! / this.widthRatio,
     }
+
+    //TODO delay set store ???
     this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);
   }
 
