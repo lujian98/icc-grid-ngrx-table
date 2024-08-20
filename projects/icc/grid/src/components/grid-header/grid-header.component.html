@@ -25,7 +25,7 @@
 </icc-grid-header-item>
 
 <ng-container *ngFor="let column of columns; let index = index;">
-  <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column, index) + 'px'}"
+  <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(index) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"
     (columnResizing)="columnResizing.emit($event)"

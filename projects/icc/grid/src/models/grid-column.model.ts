@@ -56,6 +56,11 @@ export const defaultState: GridState = {
   totalCounts: 0,
 }
 
+export interface IccColumnWidth {
+  name: string;
+  width: number;
+}
+
 export interface IccColumnConfig {
   name: string;
   title?: string;

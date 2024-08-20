@@ -4,7 +4,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostList
 import { BehaviorSubject, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccGridRowComponent } from '../grid-row/grid-row.component';
 
 @Component({
@@ -27,7 +27,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   dataChanged$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   @Input() columns: IccColumnConfig[] = [];
-  @Input() columnWidths: any[] = [];
+  @Input() columnWidths: IccColumnWidth[] = [];
   private _gridData: any[] = [];
 
   @Input()

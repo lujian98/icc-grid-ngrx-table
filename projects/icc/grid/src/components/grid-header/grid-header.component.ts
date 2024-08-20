@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
@@ -28,7 +28,7 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
 })
 export class IccGridHeaderComponent {
   @Input() columns: IccColumnConfig[] = [];
-  @Input() columnWidths: any[] = [];
+  @Input() columnWidths: IccColumnWidth[] = [];
   @Input() gridConfig!: IccGridConfig;
 
   @Input() allSelected = false;
@@ -38,7 +38,7 @@ export class IccGridHeaderComponent {
   @Output() columnResizing = new EventEmitter<IccColumnConfig>();
   @Output() columnResized = new EventEmitter<IccColumnConfig>();
 
-  getColumnWidth(column: IccColumnConfig, index: number): number {
+  getColumnWidth(index: number): number {
     return this.columnWidths[index].width;
   }
 

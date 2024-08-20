@@ -4,7 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig, IccColumnWidth, IccGridData } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
@@ -34,7 +34,7 @@ export class IccGridViewComponent implements AfterViewChecked {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
-  private _columnWidths: any[] = [];
+  private _columnWidths: IccColumnWidth[] = [];
   gridData$!: Observable<any[]>;
 
   @Input()
@@ -93,11 +93,11 @@ export class IccGridViewComponent implements AfterViewChecked {
     return viewportWidth / this.totalWidth;
   }
 
-  set columnWidths(values: any[]) {
+  set columnWidths(values: IccColumnWidth[]) {
     this._columnWidths = values;
   }
 
-  get columnWidths(): any[] {
+  get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
   }
 
@@ -106,7 +106,7 @@ export class IccGridViewComponent implements AfterViewChecked {
       const width = column.name === events.name ? events.width : this.widthRatio * column.width!;
       return {
         name: column.name,
-        width: width,
+        width: width!,
       }
     });
   }
