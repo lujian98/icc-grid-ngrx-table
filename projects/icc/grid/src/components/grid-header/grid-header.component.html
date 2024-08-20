@@ -24,7 +24,7 @@
   </icc-row-select>
 </icc-grid-header-item>
 
-<ng-container *ngFor="let column of columns; let index = index;">
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index;">
   <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(index) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"

@@ -42,8 +42,7 @@ export class IccGridHeaderComponent {
     return this.columnWidths[index].width;
   }
 
-  trackByIndex(tmp: any, index: number): number {
-    console.log( 'tmp=', tmp)
+  trackByIndex(index: number): number {
     return index;
   }
 

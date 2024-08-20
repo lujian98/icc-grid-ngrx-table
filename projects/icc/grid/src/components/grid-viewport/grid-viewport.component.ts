@@ -106,6 +106,10 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
 
     */
 
+  trackByIndex(index: number): number {
+    return index;
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
     this.sizeChanged$.next(event);
