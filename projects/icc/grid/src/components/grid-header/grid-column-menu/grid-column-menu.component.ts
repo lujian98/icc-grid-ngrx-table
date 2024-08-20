@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@
 import { Observable } from 'rxjs';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -18,17 +18,18 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
-  // private elementRef = inject(ElementRef);
+  gridConfig$!: Observable<IccGridConfig>;
   columnConfig$!: Observable<IccColumnConfig[]>;
-  private _gridConfig!: IccGridConfig;
+  private _gridName!: string;
 
   @Input()
-  set gridConfig(val: IccGridConfig) {
-    this._gridConfig = val;
-    this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
+  set gridName(val: string) {
+    this._gridName = val;
+    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
+    this.columnConfig$ = this.gridFacade.selectColumnConfig(this.gridName);
   }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
+  get gridName(): string {
+    return this._gridName;
   }
   @Input() column!: IccColumnConfig;
 
@@ -36,12 +37,21 @@ export class IccGridColumnMenuComponent {
     return column.title === undefined ? column.name : column.title;
   }
 
+  getSortDisabled(gridConfig: IccGridConfig, dir: string): boolean {
+    const sortField = this.findSortField(gridConfig);
+    return (this.column.sortField===false) || (!!sortField && sortField.dir === dir);
+  }
+
+  private findSortField(gridConfig: IccGridConfig): IccSortField | undefined {
+    return gridConfig.sortFields.find((field) => field.field === this.column.name);
+  }
+
   columnSort(dir: string): void {
     const sort = {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
+    this.gridFacade.setGridSortField(this.gridName, [sort]);
   }
 
   columnHideShow(column: IccColumnConfig): void {
@@ -49,6 +59,6 @@ export class IccGridColumnMenuComponent {
       ...column,
       hidden: column.hidden ? false: true,
     };
-    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, col);
+    this.gridFacade.setGridColumnHiddenShow(this.gridName, col);
   }
 }

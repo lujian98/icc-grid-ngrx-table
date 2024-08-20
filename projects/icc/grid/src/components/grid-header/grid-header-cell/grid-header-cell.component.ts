@@ -81,7 +81,7 @@ export class IccGridHeaderCellComponent {
 
   onClickColumnMenu(event: MouseEvent): void {
     const fakeElement = this.getFakeElement(event);
-    const popoverContext = { gridConfig: this.gridConfig, column: this.column };
+    const popoverContext = { gridName: this.gridConfig.gridName, column: this.column };
     this.buildPopover(fakeElement, popoverContext);
     this.show();
   }

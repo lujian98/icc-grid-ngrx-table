@@ -1,13 +1,16 @@
-<ng-container *ngIf="columnConfig$ | async as columnConfig">
-  <button (click)="columnSort('asc')" [disabled]="column.sortField===false">
+<ng-container *ngIf="gridConfig$ | async as gridConfig">
+  <button (click)="columnSort('asc')" [disabled]="getSortDisabled(gridConfig, 'asc')">
     <i class="fa-solid fa-arrow-up-short-wide"></i>
     Sort ASC
   </button>
-  <button (click)="columnSort('desc')" [disabled]="column.sortField===false">
+  <button (click)="columnSort('desc')" [disabled]="getSortDisabled(gridConfig, 'desc')">
     <i class="fa-solid fa-arrow-down-wide-short"></i>
     Sort DESC
   </button>
-  <ng-container *ngFor="let column of columnConfig; let index = index;">
+</ng-container>
+
+<ng-container *ngIf="columnConfig$ | async as columns">
+  <ng-container *ngFor="let column of columns; let index = index;">
     <button (click)="columnHideShow(column)" popoverMenuItem="true">
       <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">
         <div class="checkbox-label" popoverMenuItem="true">{{getTitle(column)}}</div>
