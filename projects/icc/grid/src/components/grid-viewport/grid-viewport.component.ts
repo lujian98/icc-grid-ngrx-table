@@ -32,7 +32,6 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    //console.log(' 8888 gridConfig=', val)
     this._gridConfig = val;
   }
   get gridConfig(): IccGridConfig {
@@ -46,7 +45,6 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     this.dataChanged$.next(data);
   }
   get gridData(): any[] {
-   // console.log(' view port data uuuu =', this._gridData)
     return this._gridData;
   }
 
@@ -95,16 +93,10 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     const clientWidth  = this.elementRef.nativeElement.clientWidth;
 
     const pageSize = Math.floor(clientHeight / 24);
-    console.log(' 222 this.elementRef=', this.elementRef)
+    //console.log(' 222 this.elementRef=', this.elementRef)
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
   }
-
-  /*
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    */
 
   trackByIndex(index: number): number {
     return index;

@@ -17,6 +17,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridColumnConfig({ gridName, columnConfig }));
   }
 
+  setGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnConfigSuccess({ gridName, columnConfig }));
+  }
+
   setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }));
   }

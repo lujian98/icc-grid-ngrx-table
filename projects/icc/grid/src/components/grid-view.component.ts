@@ -1,18 +1,15 @@
-import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, inject, Output, EventEmitter, ViewChild } from '@angular/core';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccGridConfig, IccColumnConfig, IccColumnWidth, IccGridData } from '../models/grid-column.model';
-import { IccGridHeaderComponent } from './grid-header/grid-header.component';
-import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
-import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
-import { IccGridRowComponent } from './grid-row/grid-row.component';
-import { IccRowSelectComponent } from './row-select/row-select.component';
 import { DragDropEvent } from '../models/drag-drop-event';
-import { ColumnResizeEvent } from '../models/column-resize-event';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridData } from '../models/grid-column.model';
+import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
+import { IccGridHeaderComponent } from './grid-header/grid-header.component';
+import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
+import { IccRowSelectComponent } from './row-select/row-select.component';
 
 @Component({
   selector: 'icc-grid-view',
@@ -23,10 +20,8 @@ import { ColumnResizeEvent } from '../models/column-resize-event';
   imports: [
     CommonModule,
     DragDropModule,
-    //ScrollingModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
-    //IccGridRowComponent,
     IccGridViewportComponent,
     IccRowSelectComponent,
   ],
@@ -53,9 +48,11 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log(' 5555 gridConfig=', val)
+    //console.log(' 5555 gridConfig=', val)
     this._gridConfig = val;
-    this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, []);
+    if(!this.columns || this.columns.length === 0) {
+      this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, []);
+    }
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
   }
   get gridConfig(): IccGridConfig {
@@ -71,17 +68,7 @@ export class IccGridViewComponent implements AfterViewChecked {
   }
 
   @Input() allSelected = false;
-
-  @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();
-  @Output() dropColumn = new EventEmitter<DragDropEvent>();
-  @Output() columnResized = new EventEmitter<ColumnResizeEvent>();
-
-  //  get displayedColumns(): string[] {
-  //    return this.columnConfig.map((column) => column.name);
-  //  }
-
-  //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
   get totalWidth(): number {
     return this.columns
@@ -138,6 +125,23 @@ export class IccGridViewComponent implements AfterViewChecked {
     this.columnResized$.next(column);
   }
 
+  onColumnDragDrop(events: DragDropEvent): void {
+    const previousIndex = this.indexCorrection(events.previousIndex);
+    const currentIndex = this.indexCorrection(events.currentIndex);
+    const columns = [...this.columns];
+    moveItemInArray(columns, previousIndex, currentIndex);
+    this.gridFacade.setGridColumnConfig(this.gridConfig.gridName, columns);
+  }
+
+  private indexCorrection(idx: number): number {
+    this.columns.forEach((column, index)=>{
+      if(column.hidden && idx >= index) {
+        idx++;
+      }
+    });
+    return idx;
+  }
+
   ngAfterViewChecked(): void {
     //const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
     //this.viewport.checkViewportSize();
@@ -158,10 +162,5 @@ export class IccGridViewComponent implements AfterViewChecked {
     return true;
     //return this.isRowSelected(index, this.selectedRowIndexes);
   }
-
-  onDrop(events: any): void {
-    //this.dropColumn.emit({ currentIndex, previousIndex });
-  }
-
 
 }

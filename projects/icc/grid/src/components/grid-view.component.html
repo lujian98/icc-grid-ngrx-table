@@ -1,38 +1,18 @@
-<!--ngrx-grid-display
-  <ng-container *ngIf="columnConfig$ | async as columns">
-      </ng-container>
--->
+<icc-grid-header [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden' }"
+  [gridConfig]="gridConfig"
+  [columns]="columns"
+  [columnWidths]="columnWidths"
+  (filterGrid)="filterGrid.emit($event)"
+  (cdkDropListDropped)="onColumnDragDrop($event)"
+  (columnResizing)="onColumnResizing($event)"
+  (columnResized)="onColumnResized($event)"
+  cdkDropListOrientation="horizontal"
+  cdkDropList>
+</icc-grid-header>
 
-    <icc-grid-header
-      [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden' }"
-      [gridConfig]="gridConfig"
-      [columns]="columns"
-      [columnWidths]="columnWidths"
-      (filterGrid)="filterGrid.emit($event)"
-      (sortGrid)="sortGrid.emit($event)"
-      (cdkDropListDropped)="onDrop($event)"
-      (columnResizing)="onColumnResizing($event)"
-      (columnResized)="onColumnResized($event)"
-      cdkDropListOrientation="horizontal"
-      cdkDropList>
-
-      <!--
-
-      <icc-grid-header-item>
-        <icc-row-select
-          [isSelected]="allSelected"
-          (selected)="onToggleSelectAllRowsOnCurrentPage()"
-        >
-        </icc-row-select>
-      </icc-grid-header-item>
-            -->
-    </icc-grid-header>
-
-    <icc-grid-viewport *ngIf="gridData$ | async as gridData"
-      [gridConfig]="gridConfig"
-      [columns]="columns"
-      [columnWidths]="columnWidths"
-      [gridData]="gridData"
-    >
-    </icc-grid-viewport>
-
+<icc-grid-viewport *ngIf="gridData$ | async as gridData"
+  [gridConfig]="gridConfig"
+  [columns]="columns"
+  [columnWidths]="columnWidths"
+  [gridData]="gridData">
+</icc-grid-viewport>

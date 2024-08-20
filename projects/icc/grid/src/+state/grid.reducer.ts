@@ -31,6 +31,7 @@ export const iccGridFeature = createFeature({
           }
         }),
       };
+      console.log(' setupGridColumnConfigSuccess=', newState)
       return {
         ...newState,
       }
@@ -60,6 +61,7 @@ export const iccGridFeature = createFeature({
           sortFields: action.sortFields,
         }
       };
+      console.log(' setGridSortField=', newState)
       return {
         ...newState,
       }
