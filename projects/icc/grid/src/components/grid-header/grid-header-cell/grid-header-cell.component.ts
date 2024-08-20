@@ -59,7 +59,7 @@ export class IccGridHeaderCellComponent {
   }
 
   headCellClick(): void {
-    if(this.isSortField) {
+    if(this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
       if (find) {
