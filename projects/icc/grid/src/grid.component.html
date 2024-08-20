@@ -1,18 +1,23 @@
 <ng-container *ngIf="gridConfig$ | async as gridConfig">
-  <div class="icc-grid-toolbar">
-    <button (click)="refresh()">
-      Refresh
-    </button>
-  </div>
-  <icc-grid-view
-    [gridConfig]="gridConfig"
-    [columnConfig]="columnConfig"
-    [gridData]="gridData"
-    >
-  </icc-grid-view>
+  <ng-container *ngIf="columnConfig$ | async as columns">
+    <div class="icc-grid-toolbar">
+      <button (click)="refresh()">
+        Refresh
+      </button>
+    </div>
+    <icc-grid-view
+      [gridConfig]="gridConfig"
+      [columns]="columns"
+      [gridData]="gridData"
+      >
+    </icc-grid-view>
 
-  <icc-grid-footer
-    [gridConfig]="gridConfig"
-  >
-  </icc-grid-footer>
+    <icc-grid-footer
+      [gridConfig]="gridConfig"
+    >
+    </icc-grid-footer>
+  </ng-container>
 </ng-container>
+<!--
+  [columnConfig]="columnConfig"
+ -->

@@ -33,14 +33,27 @@ import { ColumnResizeEvent } from '../models/column-resize-event';
 export class IccGridViewComponent implements AfterViewChecked {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-  columnConfig$!: Observable<IccColumnConfig[]>;
+  private _columns: IccColumnConfig[] = [];
+  private _columnWidths: any[] = [];
   gridData$!: Observable<any[]>;
 
   @Input()
+  set columns(val: IccColumnConfig[]) {
+    this._columns = val;
+    this.columnWidths = [...this.columns].map((column) => ({
+      name: column.name,
+      width: this.widthRatio * column.width!,
+    }));
+  }
+  get columns(): IccColumnConfig[] {
+    return this._columns;
+  }
+
+  @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log( ' 5555 gridConfig=', val)
+    console.log(' 5555 gridConfig=', val)
     this._gridConfig = val;
-    this.columnConfig$ = this.gridFacade.selectColumnConfig(val.gridName);
+    this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, []);
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
   }
   get gridConfig(): IccGridConfig {
@@ -48,15 +61,9 @@ export class IccGridViewComponent implements AfterViewChecked {
   }
 
   @Input()
-  set columnConfig(columns: IccColumnConfig[]) {
-  //  console.log( ' 6666 input IccColumnConfig =', columns)
-    this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, columns);
-  }
-
-  @Input()
   set gridData(data: IccGridData<any>) { // TODO set local data here
-   // console.log( ' 7777 input grid data =', data)
-    if(data) { // use set getGridDataSuccess ??
+    // console.log( ' 7777 input grid data =', data)
+    if (data) { // use set getGridDataSuccess ??
       //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }
   }
@@ -68,11 +75,49 @@ export class IccGridViewComponent implements AfterViewChecked {
   @Output() dropColumn = new EventEmitter<DragDropEvent>();
   @Output() columnResized = new EventEmitter<ColumnResizeEvent>();
 
-  get displayedColumns(): string[] {
-    return this.columnConfig.map((column) => column.name);
-  }
+  //  get displayedColumns(): string[] {
+  //    return this.columnConfig.map((column) => column.name);
+  //  }
 
   //@ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+
+  get totalWidth(): number {
+    return this.columns
+      .filter((column) => !column.hidden)
+      .map((column) => (column.width || 100))
+      .reduce((prev, curr) => prev + curr, 0);
+  }
+
+  get widthRatio(): number {
+    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
+    return viewportWidth / this.totalWidth;
+  }
+
+  set columnWidths(values: any[]) {
+    this._columnWidths = values;
+  }
+
+  get columnWidths(): any[] {
+    return this._columnWidths;
+  }
+
+  onColumnResizing(events: IccColumnConfig): void {
+    this.columnWidths = [...this.columns].map((column) => {
+      const width = column.name === events.name ? events.width : this.widthRatio * column.width!;
+      return {
+        name: column.name,
+        width: width,
+      }
+    });
+  }
+
+  onColumnResized(event: IccColumnConfig): void {
+    const column: IccColumnConfig = {
+      ...event,
+      width: event.width! / this.widthRatio,
+    }
+    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);
+  }
 
   ngAfterViewChecked(): void {
     //const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
@@ -99,7 +144,5 @@ export class IccGridViewComponent implements AfterViewChecked {
     //this.dropColumn.emit({ currentIndex, previousIndex });
   }
 
-  onColumnResizing(events: any): void {
-    //this.setColumnsStyle(updateColumnWidth(columnId, width, this.columnConfig));
-  }
+
 }

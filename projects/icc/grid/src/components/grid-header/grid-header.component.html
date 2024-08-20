@@ -24,12 +24,12 @@
   </icc-row-select>
 </icc-grid-header-item>
 
-<ng-container *ngFor="let column of columnConfig; let index = index;">
-  <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column) + 'px'}"
+<ng-container *ngFor="let column of columns; let index = index;">
+  <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column, index) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"
-    (columnResizing)="onColumnResizing($event, column)"
-    (columnResized)="onColumnResized($event, column)"
+    (columnResizing)="columnResizing.emit($event)"
+    (columnResized)="columnResized.emit($event)"
     cdkDrag iccColumnResize>
     <icc-grid-header-cell
       [column]="column"
@@ -57,7 +57,7 @@
     </icc-dynamic-column-filter>
 
 
-<ng-container *ngFor="let column of columnConfig; trackBy: trackByIndex; let index = index;">
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index;">
   <ngrx-grid-header-item *ngIf="column.visible"
                          [cdkDragDisabled]="dragDisabled"
                          [column]="column"

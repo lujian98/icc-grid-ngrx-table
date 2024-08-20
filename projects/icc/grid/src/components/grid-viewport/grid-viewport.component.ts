@@ -27,6 +27,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   dataChanged$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   @Input() columns: IccColumnConfig[] = [];
+  @Input() columnWidths: any[] = [];
   private _gridData: any[] = [];
 
   @Input()

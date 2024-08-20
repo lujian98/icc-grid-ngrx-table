@@ -5,6 +5,7 @@ import { EventTypes } from '../models/event-types';
 import { EventTargetTypes } from '../models/event-target-types';
 import { ColumnResizeEvent } from '../models/column-resize-event';
 //import { MIN_HEADER_NAME_WIDTH } from '../util/columns-style';
+import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
 
 export const MIN_HEADER_NAME_WIDTH = 60;
 
@@ -23,8 +24,8 @@ export class IccColumnResizeDirective implements AfterViewInit {
   @Input() column: any;
 
 
-  @Output() readonly columnResizing = new EventEmitter<ColumnResizeEvent>();
-  @Output() readonly columnResized = new EventEmitter<ColumnResizeEvent>();
+  @Output() readonly columnResizing = new EventEmitter<IccColumnConfig>();
+  @Output() readonly columnResized = new EventEmitter<IccColumnConfig>();
 
   columnInResizeMode = false;
   resizeStartPositionX!: number;
@@ -93,7 +94,11 @@ export class IccColumnResizeDirective implements AfterViewInit {
   private getColumnResizeEventData(currentPositionX: number): any {
    // const width = this.calculateColumnWidth(currentPositionX);
    // this.column.width = width;
-    return {columnId: this.column.name, width: this.calculateColumnWidth(currentPositionX)};
+    return {
+      ...this.column,
+      width: this.calculateColumnWidth(currentPositionX),
+    }
+    //return {columnId: this.column.name, width: this.calculateColumnWidth(currentPositionX)};
   }
 
   private calculateColumnWidth(currentPositionX: number) {

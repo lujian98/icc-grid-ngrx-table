@@ -1,18 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { DataSource } from '@angular/cdk/collections';
-import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IccGridFacade } from '../../+state/grid.facade';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
+import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
+import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
 import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.component';
-import { IccRowSelectComponent } from '../row-select/row-select.component';
-import { ColumnResizeEvent } from '../../models/column-resize-event';
-import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
-import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
-import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
 
 @Component({
   selector: 'icc-grid-header',
@@ -32,59 +27,19 @@ import { IccColumnFilterComponent } from '../column-filter/column-filter.compone
   ],
 })
 export class IccGridHeaderComponent {
-  private gridFacade = inject(IccGridFacade);
-  @Input() columnConfig: IccColumnConfig[] = [];
+  @Input() columns: IccColumnConfig[] = [];
+  @Input() columnWidths: any[] = [];
   @Input() gridConfig!: IccGridConfig;
 
   @Input() allSelected = false;
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();
-  @Output() columnResizing = new EventEmitter<ColumnResizeEvent>();
-  @Output() columnResized = new EventEmitter<ColumnResizeEvent>();
+  @Output() columnResizing = new EventEmitter<IccColumnConfig>();
+  @Output() columnResized = new EventEmitter<IccColumnConfig>();
 
-  get displayedColumns():  string[] {
-    return this.columnConfig.map((column)=> column.name);
-  }
-
-  get totalWidth(): number {
-    return this.columnConfig
-      .filter((column)=>!column.hidden)
-      .map((column)=> (column.width || 100))
-      .reduce((prev, curr) => prev + curr, 0);
-  }
-
-  get widthRatio(): number {
-     const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
-     return viewportWidth / this.totalWidth;
-  }
-
-  getColumnWidth(column: IccColumnConfig): number {
-    return this.widthRatio * column.width!;
-  }
-
-  onColumnResizing(event: any, column: IccColumnConfig): void {
-    // cannot use state to make changes
-    this.columnResizing.emit(event);
-    console.log( ' event=', event)
-    console.log( ' column=', column)
-    const width = (event.width / this.widthRatio);
-    console.log( ' width=', width)
-    const columnConfig: IccColumnConfig = {
-      ...column,
-      width: event.width / this.widthRatio,
-    }
-    //this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, columnConfig)
-  }
-
-  onColumnResized(event: any, column: IccColumnConfig): void {
-    //this.columnResized.emit(event);
-    const width = (event.width / this.widthRatio);
-    const columnConfig: IccColumnConfig = {
-      ...column,
-      width: event.width / this.widthRatio,
-    }
-    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, columnConfig)
+  getColumnWidth(column: IccColumnConfig, index: number): number {
+    return this.columnWidths[index].width;
   }
 
   trackByIndex(tmp: any, index: number): number {

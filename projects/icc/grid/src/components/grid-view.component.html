@@ -1,14 +1,18 @@
-<!--ngrx-grid-display-->
+<!--ngrx-grid-display
   <ng-container *ngIf="columnConfig$ | async as columns">
+      </ng-container>
+-->
+
     <icc-grid-header
       [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden' }"
       [gridConfig]="gridConfig"
-      [columnConfig]="columns"
+      [columns]="columns"
+      [columnWidths]="columnWidths"
       (filterGrid)="filterGrid.emit($event)"
       (sortGrid)="sortGrid.emit($event)"
       (cdkDropListDropped)="onDrop($event)"
       (columnResizing)="onColumnResizing($event)"
-      (columnResized)="columnResized.emit($event)"
+      (columnResized)="onColumnResized($event)"
       cdkDropListOrientation="horizontal"
       cdkDropList>
 
@@ -27,7 +31,8 @@
     <icc-grid-viewport *ngIf="gridData$ | async as gridData"
       [gridConfig]="gridConfig"
       [columns]="columns"
+      [columnWidths]="columnWidths"
       [gridData]="gridData"
     >
     </icc-grid-viewport>
-  </ng-container>
+

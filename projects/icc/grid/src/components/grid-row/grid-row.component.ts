@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataSource } from '@angular/cdk/collections';
-import { CdkTableModule } from '@angular/cdk/table';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
-import { IccGridCellComponent } from './grid-cell/grid-cell.component';
-import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
-import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
+import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
+import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
+import { IccGridCellComponent } from './grid-cell/grid-cell.component';
 
 @Component({
   selector: 'icc-grid-row',
@@ -25,29 +22,16 @@ import { IccRowSelectComponent } from '../row-select/row-select.component';
 })
 export class IccGridRowComponent implements OnChanges {
   @Input() columns: IccColumnConfig[] = [];
+  @Input() columnWidths: any[] = [];
   @Input() gridConfig!: IccGridConfig;
   @Input() record: any;
   @Input() selected = false;
 
   @Output() toggleRow = new EventEmitter<any>();
 
-  get displayedColumns():  string[] {
-    return this.columns.map((column)=> column.name);
+  getColumnWidth(index: number): number {
+    return this.columnWidths[index].width;
   }
-
-
-  get totalWidth(): number {
-    return this.columns
-      .filter((column)=>!column.hidden)
-      .map((column)=> (column.width || 100))
-      .reduce((prev, curr) => prev + curr, 0);
-  }
-
-  getColumnWidth(column: IccColumnConfig): number {
-    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
-    return viewportWidth * column.width! / this.totalWidth;
-  }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log( ' wwww changes =', changes)
