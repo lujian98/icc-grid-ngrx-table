@@ -51,7 +51,7 @@ export class IccGridHeaderCellComponent {
   }
 
   get isSortField(): boolean {
-    return !!this.findSortField;
+    return this.column.sortField !== false && !!this.findSortField;
   }
 
   get sortDir(): string {
@@ -59,18 +59,20 @@ export class IccGridHeaderCellComponent {
   }
 
   headCellClick(): void {
-    let find = this.findSortField;
-    let sort: IccSortField;
-    if (find) {
-      sort = { ...find };
-      sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
-    } else {
-      sort = {
-        field: this.column.name,
-        dir: 'asc'
-      };
+    if(this.isSortField) {
+      let find = this.findSortField;
+      let sort: IccSortField;
+      if (find) {
+        sort = { ...find };
+        sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sort = {
+          field: this.column.name,
+          dir: 'asc'
+        };
+      }
+      this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
     }
-    this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
   }
 
   onClickColumnMenu(event: MouseEvent): void {

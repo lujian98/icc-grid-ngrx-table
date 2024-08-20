@@ -29,8 +29,10 @@ export class IccGridService {
       align: 'center',
     }, {
       name: 'vin',
+      sortField: false,
     }, {
       name: 'brand',
+      hidden: false,
     }, {
       name: 'year',
     }, {

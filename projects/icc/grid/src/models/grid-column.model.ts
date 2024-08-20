@@ -10,9 +10,10 @@ export interface IccGridConfig {
   pageSize: number;
   viewportWidth: number;
   totalCounts: number;
-  hasScrollY: boolean,
   sortFields: IccSortField[],
   rowSelection: boolean;
+
+  hasScrollY: boolean,
   columnReorder: boolean;
   columnResize: boolean;
 }
@@ -41,8 +42,9 @@ export const defaultGridConfig: IccGridConfig = {
   viewportWidth: 1000,
   totalCounts: 0,
   sortFields: [],
-  hasScrollY: false,
   rowSelection: false,
+
+  hasScrollY: false,
   columnReorder: false,
   columnResize: false,
 }
@@ -55,19 +57,35 @@ export const defaultState: GridState = {
 }
 
 export interface IccColumnConfig {
-  //header?: string;
   name: string;
   title?: string;
-  //field: string;
-  fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
-  //index?: number;
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
-  //validations?: SunValidation[];
   width?: number;
-  fixedWidth?: boolean | 'auto';
-  minWidth?: number;
-  draggable?: boolean;
   align?: string;
-  dateFormat?: string;
-  dateRangePreset?: boolean;
+  //fixedWidth?: boolean | 'auto';
+  //minWidth?: number;
+  sortField?: boolean;
+
+  //field: string;
+  //fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
+  //index?: number;
+  //validations?: SunValidation[];
+
+  //draggable?: boolean;
+  //dateFormat?: string;
+  //dateRangePreset?: boolean;
+  /*
+  header?: string;
+  headerClass?: string;
+  sortField?: SunSortField;
+  filterField?: SunFilterField;
+  renderer?: SunRendererType;
+  groupField?: SunGroupField;
+  editField?: SunEditField;
+  cellReadonly?: boolean | Function;
+  priority?: number;
+  menu?: boolean | SunMenuItem;
+  groupHeader?: SunGroupHeader;
+  copyToClipboard?: boolean;
+  */
 }

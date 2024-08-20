@@ -44,7 +44,7 @@ export class IccGridRowComponent implements OnChanges {
   }
 
   getColumnWidth(column: IccColumnConfig): number {
-    const viewportWidth = this.gridConfig.viewportWidth - 40; // select row cell width 50
+    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
     return viewportWidth * column.width! / this.totalWidth;
   }
 

@@ -1,9 +1,9 @@
 <ng-container *ngIf="columnConfig$ | async as columnConfig">
-  <button (click)="columnSort('asc')" >
+  <button (click)="columnSort('asc')" [disabled]="column.sortField===false">
     <i class="fa-solid fa-arrow-up-short-wide"></i>
     Sort ASC
   </button>
-  <button (click)="columnSort('desc')">
+  <button (click)="columnSort('desc')" [disabled]="column.sortField===false">
     <i class="fa-solid fa-arrow-down-wide-short"></i>
     Sort DESC
   </button>

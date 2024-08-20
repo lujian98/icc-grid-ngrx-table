@@ -18,7 +18,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
-  private elementRef = inject(ElementRef);
+  // private elementRef = inject(ElementRef);
   columnConfig$!: Observable<IccColumnConfig[]>;
   private _gridConfig!: IccGridConfig;
 

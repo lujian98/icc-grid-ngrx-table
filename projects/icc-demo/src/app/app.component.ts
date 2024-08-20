@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
-import { CARSDATA } from './data/cars-large';
+//import { CARSDATA } from './data/cars-large';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +19,11 @@ export class AppComponent {
     sortFields: [{
       field: 'ID',
       dir: 'desc',
-    }]
+    }],
+    rowSelection: true,
   }
 
+  /*
   columnConfig2: IccColumnConfig[] = [{
     name: 'name',
     //title: 'This is list of the name This is list of the name This is list of the name This is list of the name hhhhhh',
@@ -45,4 +47,5 @@ export class AppComponent {
   }];
 
   gridData = CARSDATA;
+  */
 }
