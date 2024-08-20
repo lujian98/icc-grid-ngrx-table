@@ -42,6 +42,7 @@ export class IccColumnResizeDirective implements AfterViewInit {
   }
 
   onMouseDown(event: MouseEvent) {
+    console.log( 'column=', this.column)
     event.stopPropagation();
     this.columnInResizeMode = true;
     this.resizeStartPositionX = event.x;
@@ -86,6 +87,7 @@ export class IccColumnResizeDirective implements AfterViewInit {
 
   private calculateColumnWidth(currentPositionX: number) {
     const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
+    console.log( ' new width=', width)
     return width;
     //return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
   }

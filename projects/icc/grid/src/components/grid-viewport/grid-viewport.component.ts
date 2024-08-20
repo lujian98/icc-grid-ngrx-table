@@ -45,7 +45,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     this.dataChanged$.next(data);
   }
   get gridData(): any[] {
-    console.log(' view port data uuuu =', this._gridData)
+   // console.log(' view port data uuuu =', this._gridData)
     return this._gridData;
   }
 
