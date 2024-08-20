@@ -101,7 +101,7 @@ export class IccGridViewComponent implements AfterViewChecked {
     return this._columnWidths;
   }
 
-  onColumnResizing(events: IccColumnConfig): void {
+  onColumnResizing(events: IccColumnWidth): void {
     this.columnWidths = [...this.columns].map((column) => {
       const width = column.name === events.name ? events.width : this.widthRatio * column.width!;
       return {
@@ -111,9 +111,9 @@ export class IccGridViewComponent implements AfterViewChecked {
     });
   }
 
-  onColumnResized(event: IccColumnConfig): void {
+  onColumnResized(event: IccColumnWidth): void {
     const column: IccColumnConfig = {
-      ...event,
+      ...this.columns.find((item)=>item.name === event.name)!,
       width: event.width! / this.widthRatio,
     }
     this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);

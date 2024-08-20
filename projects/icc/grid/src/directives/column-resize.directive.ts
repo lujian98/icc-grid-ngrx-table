@@ -5,7 +5,7 @@ import { EventTypes } from '../models/event-types';
 import { EventTargetTypes } from '../models/event-target-types';
 import { ColumnResizeEvent } from '../models/column-resize-event';
 //import { MIN_HEADER_NAME_WIDTH } from '../util/columns-style';
-import { IccGridConfig, IccColumnConfig, IccGridData } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth } from '../models/grid-column.model';
 
 export const MIN_HEADER_NAME_WIDTH = 60;
 
@@ -21,11 +21,11 @@ export const getColumnId = R.prop(COLUMN_ID);
 })
 export class IccColumnResizeDirective implements AfterViewInit {
  // @Input() column: DataGridColumnWithId;
-  @Input() column: any;
+  @Input() column!: IccColumnConfig;
 
 
-  @Output() readonly columnResizing = new EventEmitter<IccColumnConfig>();
-  @Output() readonly columnResized = new EventEmitter<IccColumnConfig>();
+  @Output() readonly columnResizing = new EventEmitter<IccColumnWidth>();
+  @Output() readonly columnResized = new EventEmitter<IccColumnWidth>();
 
   columnInResizeMode = false;
   resizeStartPositionX!: number;
@@ -51,7 +51,6 @@ export class IccColumnResizeDirective implements AfterViewInit {
   }
 
   onMouseDown(event: MouseEvent) {
-    console.log( 'column=', this.column)
     event.stopPropagation();
     this.columnInResizeMode = true;
     this.resizeStartPositionX = event.x;
@@ -95,7 +94,7 @@ export class IccColumnResizeDirective implements AfterViewInit {
    // const width = this.calculateColumnWidth(currentPositionX);
    // this.column.width = width;
     return {
-      ...this.column,
+      name: this.column.name,
       width: this.calculateColumnWidth(currentPositionX),
     }
     //return {columnId: this.column.name, width: this.calculateColumnWidth(currentPositionX)};
