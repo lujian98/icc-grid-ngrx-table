@@ -101,10 +101,12 @@ export const iccGridFeature = createFeature({
         ...state[key],
         columnConfig: state[key].columnConfig.map((column) => {
           if (column.name === action.columnConfig.name) {
+            return {...action.columnConfig}
+            /*
             return {
               ...column,
               hidden: action.columnConfig.hidden
-            }
+            }*/
           } else {
             return column;
           }

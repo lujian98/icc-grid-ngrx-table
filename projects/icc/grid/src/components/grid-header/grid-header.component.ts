@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DataSource } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
 import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.component';
@@ -31,6 +32,7 @@ import { IccColumnFilterComponent } from '../column-filter/column-filter.compone
   ],
 })
 export class IccGridHeaderComponent {
+  private gridFacade = inject(IccGridFacade);
   @Input() columnConfig: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
 
@@ -52,9 +54,37 @@ export class IccGridHeaderComponent {
       .reduce((prev, curr) => prev + curr, 0);
   }
 
+  get widthRatio(): number {
+     const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
+     return viewportWidth / this.totalWidth;
+  }
+
   getColumnWidth(column: IccColumnConfig): number {
-    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
-    return viewportWidth * column.width! / this.totalWidth;
+    return this.widthRatio * column.width!;
+  }
+
+  onColumnResizing(event: any, column: IccColumnConfig): void {
+    // cannot use state to make changes
+    this.columnResizing.emit(event);
+    console.log( ' event=', event)
+    console.log( ' column=', column)
+    const width = (event.width / this.widthRatio);
+    console.log( ' width=', width)
+    const columnConfig: IccColumnConfig = {
+      ...column,
+      width: event.width / this.widthRatio,
+    }
+    //this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, columnConfig)
+  }
+
+  onColumnResized(event: any, column: IccColumnConfig): void {
+    //this.columnResized.emit(event);
+    const width = (event.width / this.widthRatio);
+    const columnConfig: IccColumnConfig = {
+      ...column,
+      width: event.width / this.widthRatio,
+    }
+    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, columnConfig)
   }
 
   trackByIndex(tmp: any, index: number): number {

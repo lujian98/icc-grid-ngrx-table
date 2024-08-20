@@ -6,6 +6,14 @@ import { EventTargetTypes } from '../models/event-target-types';
 import { ColumnResizeEvent } from '../models/column-resize-event';
 //import { MIN_HEADER_NAME_WIDTH } from '../util/columns-style';
 
+export const MIN_HEADER_NAME_WIDTH = 60;
+
+/*
+export const HEADER_NAME_ID = 'headerName';
+export const headerName = R.prop(HEADER_NAME_ID);
+export const COLUMN_ID = 'columnId';
+export const getColumnId = R.prop(COLUMN_ID);
+*/
 @Directive({
   selector: '[iccColumnResize]',
   standalone: true,
@@ -81,13 +89,16 @@ export class IccColumnResizeDirective implements AfterViewInit {
     });
   }
 
-  private getColumnResizeEventData(currentPositionX: number): ColumnResizeEvent {
-    return {columnId: this.column.columnId, width: this.calculateColumnWidth(currentPositionX)};
+  //private getColumnResizeEventData(currentPositionX: number): ColumnResizeEvent {
+  private getColumnResizeEventData(currentPositionX: number): any {
+   // const width = this.calculateColumnWidth(currentPositionX);
+   // this.column.width = width;
+    return {columnId: this.column.name, width: this.calculateColumnWidth(currentPositionX)};
   }
 
   private calculateColumnWidth(currentPositionX: number) {
     const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
-    console.log( ' new width=', width)
+    //console.log( ' new width=', width)
     return width;
     //return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
   }

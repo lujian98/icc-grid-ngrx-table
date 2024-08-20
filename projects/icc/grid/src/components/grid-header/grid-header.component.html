@@ -28,8 +28,8 @@
   <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(column) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"
-    (columnResizing)="columnResizing.emit($event)"
-    (columnResized)="columnResized.emit($event)"
+    (columnResizing)="onColumnResizing($event, column)"
+    (columnResized)="onColumnResized($event, column)"
     cdkDrag iccColumnResize>
     <icc-grid-header-cell
       [column]="column"
