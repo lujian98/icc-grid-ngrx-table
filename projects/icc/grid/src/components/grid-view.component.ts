@@ -2,7 +2,8 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, Input, inject, Ou
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig, IccColumnWidth, IccGridData } from '../models/grid-column.model';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
@@ -36,6 +37,7 @@ export class IccGridViewComponent implements AfterViewChecked {
   private _columns: IccColumnConfig[] = [];
   private _columnWidths: IccColumnWidth[] = [];
   gridData$!: Observable<any[]>;
+  columnResized$: BehaviorSubject<any> = new BehaviorSubject({});
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -101,6 +103,23 @@ export class IccGridViewComponent implements AfterViewChecked {
     return this._columnWidths;
   }
 
+  constructor() {
+    this.columnResized$
+      .pipe(
+        skip(1),
+        debounceTime(100),
+        distinctUntilChanged(),
+        switchMap((column) => {
+          return of(column).pipe(takeUntil(this.columnResized$.pipe(skip(1))));
+        })
+      )
+      .subscribe((column) => {
+        this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);
+        // window.dispatchEvent(new Event('resize'));
+      });
+
+  }
+
   onColumnResizing(events: IccColumnWidth): void {
     this.columnWidths = [...this.columns].map((column) => {
       const width = column.name === events.name ? events.width : this.widthRatio * column.width!;
@@ -116,9 +135,7 @@ export class IccGridViewComponent implements AfterViewChecked {
       ...this.columns.find((item)=>item.name === event.name)!,
       width: event.width! / this.widthRatio,
     }
-
-    //TODO delay set store ???
-    this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);
+    this.columnResized$.next(column);
   }
 
   ngAfterViewChecked(): void {

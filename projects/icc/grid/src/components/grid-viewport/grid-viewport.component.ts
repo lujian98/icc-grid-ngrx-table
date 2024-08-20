@@ -56,7 +56,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     this.sizeChanged$
       .pipe(
         skip(1),
-        debounceTime(500),
+        debounceTime(250),
         distinctUntilChanged(),
         switchMap((event) => {
           return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
@@ -95,7 +95,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
     const clientWidth  = this.elementRef.nativeElement.clientWidth;
 
     const pageSize = Math.floor(clientHeight / 24);
-    console.log(' this.elementRef=', this.elementRef)
+    console.log(' 222 this.elementRef=', this.elementRef)
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
   }
