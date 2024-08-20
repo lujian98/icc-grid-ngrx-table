@@ -58,7 +58,10 @@ export class IccGridHeaderCellComponent {
     return this.findSortField!.dir;
   }
 
-  headCellClick(): void {
+  headCellClick(event: MouseEvent): void {
+    //console.log('111click')
+    //event.stopPropagation();
+    //event.preventDefault();
     if(this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
@@ -71,6 +74,7 @@ export class IccGridHeaderCellComponent {
           dir: 'asc'
         };
       }
+      console.log('click')
       this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
     }
   }

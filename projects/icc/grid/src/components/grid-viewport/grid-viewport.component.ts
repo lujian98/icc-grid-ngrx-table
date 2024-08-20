@@ -40,6 +40,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridData(data: any[]) {
+    console.log(' set new data=', data)
     this._gridData = data;
     this.dataChanged$.next(data);
   }

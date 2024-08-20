@@ -1,15 +1,15 @@
 <div class="grid-header-cell">
-  <div class="grid-header-cell-title" (click)="headCellClick()">{{ title }}</div>
+  <div class="grid-header-cell-title" (click)="headCellClick($event)">{{ title }}</div>
 
   <ng-container *ngIf="isSortField">
     <button *ngIf="sortDir==='asc'"
       class="grid-header-cell-sort"
-      (click)="headCellClick()">
+      (click)="headCellClick($event)">
       <i class="fa-solid fa-caret-up"></i>
     </button>
     <button *ngIf="sortDir==='desc'"
       class="grid-header-cell-sort"
-      (click)="headCellClick()">
+      (click)="headCellClick($event)">
       <i class="fa-solid fa-caret-down"></i>
     </button>
   </ng-container>
