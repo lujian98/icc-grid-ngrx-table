@@ -44,7 +44,7 @@ export const defaultGridConfig: IccGridConfig = {
   viewportWidth: 1000,
   totalCounts: 0,
   sortFields: [],
-  columnFilters: [{name: 'vin', value: '9d'}],
+  columnFilters: [],
   rowSelection: false,
 
   hasScrollY: false,

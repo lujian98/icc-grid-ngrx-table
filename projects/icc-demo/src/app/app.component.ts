@@ -20,6 +20,7 @@ export class AppComponent {
       field: 'ID',
       dir: 'desc',
     }],
+    columnFilters: [{name: 'vin', value: '9'}],
     rowSelection: true,
   }
 
