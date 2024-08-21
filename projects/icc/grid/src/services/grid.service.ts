@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField } from '../models/grid-column.model';
-//import { CARSDATA } from '../spec-helpers/cars-large';
 
 @Injectable({
   providedIn: 'root',
@@ -29,12 +28,12 @@ export class IccGridService {
       align: 'center',
     }, {
       name: 'vin',
-      sortField: false,
     }, {
       name: 'brand',
       hidden: false,
     }, {
       name: 'year',
+      //sortField: false,
     }, {
       name: 'color',
     }];
@@ -48,20 +47,18 @@ export class IccGridService {
   }
 
   getGridData<T>(gridName: string, gridConfig: IccGridConfig): Observable<IccGridData<T>> {
-    //console.log(' service get =', gridData)
-    //const data: IccGridData<any> = CARSDATA;
-    // return of(data);
     let params = new HttpParams();
-    params = this.appendSortHttpParams(gridConfig.sortFields, params );
+    params = this.appendSortHttpParams(gridConfig.sortFields, params);
 
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
-    //console.log( ' service getGridData gridConfig =', gridConfig);
-    console.log( ' params =', params);
+    console.log(' service getGridData gridConfig =', gridConfig);
+    console.log(' params =', params);
+    const urlKey = gridConfig.urlKey || gridConfig.gridName;
     return this.http
-      .get<any>('/api/DCR', { params })
+      .get<any>(`/api/${urlKey}`, { params })
       .pipe(
         map((res) => {
           console.log(' res=', res)

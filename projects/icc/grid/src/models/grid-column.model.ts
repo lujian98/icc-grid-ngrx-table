@@ -6,6 +6,7 @@ export interface IccSortField {
 
 export interface IccGridConfig {
   gridName: string;
+  urlKey?: string;
   page: number;
   pageSize: number;
   viewportWidth: number;
