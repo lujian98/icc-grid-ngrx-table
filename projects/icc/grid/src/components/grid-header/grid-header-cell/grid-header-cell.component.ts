@@ -32,10 +32,10 @@ export class IccGridHeaderCellComponent {
   @Output() filterGrid = new EventEmitter<any>();
 
   get title(): string {
-    //console.log('title =', this.column.title)
     return this.column.title === undefined ? this.column.name : this.column.title;
   }
 
+  /*
   get downCaretStyle() {
     return { 'border-top': '5px solid rgba(16, 46, 84, 0.8)' };
     //return {'border-top': sortDescending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
@@ -44,7 +44,7 @@ export class IccGridHeaderCellComponent {
   get upCaretStyle() {
     return { 'border-bottom': null };
     //return {'border-bottom': sortAscending(this.sortType) ? '5px solid rgba(16, 46, 84, 0.8)' : null};
-  }
+  }*/
 
   get findSortField(): IccSortField | undefined {
     return this.gridConfig.sortFields.find((field) => field.field === this.column.name);
@@ -59,9 +59,6 @@ export class IccGridHeaderCellComponent {
   }
 
   headCellClick(event: MouseEvent): void {
-    //console.log('111click')
-    //event.stopPropagation();
-    //event.preventDefault();
     if(this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
@@ -74,7 +71,6 @@ export class IccGridHeaderCellComponent {
           dir: 'asc'
         };
       }
-      console.log('click')
       this.gridFacade.setGridSortField(this.gridConfig.gridName, [sort]);
     }
   }

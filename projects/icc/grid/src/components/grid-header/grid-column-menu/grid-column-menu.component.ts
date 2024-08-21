@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
+import { Observable } from 'rxjs';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 

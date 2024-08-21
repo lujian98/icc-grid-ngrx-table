@@ -1,11 +1,12 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { iccGridFeature } from './grid.reducer';
+//import { iccGridFeature } from './grid.reducer';
 import { IccGridState, defaultState } from '../models/grid-column.model';
 
-
+/*
 export const {
   selectTotal,
 } = iccGridFeature;
+*/
 
 const featureSelector = createFeatureSelector('iccGrid');
 
@@ -21,7 +22,6 @@ export const selectColumnConfig = (gridName: string) => createSelector(
   // @ts-ignore
   featureSelector,
   (state: IccGridState) => {
-    console.log( 'tttttttttttt select column=', state[gridName] ? state[gridName].columnConfig : [])
     return state[gridName] ? state[gridName].columnConfig : [];
   }
 );
@@ -30,7 +30,6 @@ export const selectGridData = (gridName: string) => createSelector(
   // @ts-ignore
   featureSelector,
   (state: IccGridState) => {
-    //console.log( ' select data jjjjjjjj =', state)
     return state[gridName] ? state[gridName].data : [];
   }
 );

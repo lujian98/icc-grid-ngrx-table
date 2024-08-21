@@ -7,7 +7,7 @@
   </icc-row-select>
 </icc-grid-cell>
 
-<ng-container *ngFor="let column of columns; let index = index;">
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index;">
   <icc-grid-cell *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(index) + 'px'}">
     <icc-dynamic-grid-cell
       [record]="record"

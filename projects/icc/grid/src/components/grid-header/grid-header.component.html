@@ -1,20 +1,3 @@
-<!--ngrx-grid-header
-<ng-content select="ngrx-grid-header-item"></ng-content>
-<ng-content select="icc-grid-header-item"></ng-content>
--->
-
-<!--
-      <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.field }}">
-      <mat-header-cell *matHeaderCellDef [ngStyle]="{ flex: '1 ' + column.width + 'px' }"></mat-header-cell>
-      <mat-cell
-        *matCellDef="let record; let rowIndex = index"
-        [ngStyle]="{ flex: column.field == 'rowSelection' ? '0 30px' : '1 ' + column.width + 'px' }"
-
-        [ngStyle]="{flex: '0 30px'}"
-
-        [ngStyle]="{ flex: '1 ' + column.width + 'px' }"
-      >
--->
 <icc-grid-header-item *ngIf="gridConfig.rowSelection"
   [ngStyle]="{flex: '0 40px'}">
   <icc-row-select class="icc-header-row-select"
@@ -46,34 +29,3 @@
     <div class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>
-
-
-<!--
-
-
-    <icc-dynamic-column-filter
-      [record]="record"
-      [column]="column">
-    </icc-dynamic-column-filter>
-
-
-<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index;">
-  <ngrx-grid-header-item *ngIf="column.visible"
-                         [cdkDragDisabled]="dragDisabled"
-                         [column]="column"
-                         (columnResizing)="columnResizing.emit($event)"
-                         (columnResized)="columnResized.emit($event)"
-                         cdkDrag ngrxColumnResize>
-    <ngrx-dynamic-grid-header-item [column]="column"
-                                   [filterSequence]="index"
-                                   [config]="config"
-                                   (filterGrid)="filterGrid.emit($event)"
-                                   (sortGrid)="sortGrid.emit($event)">
-    </ngrx-dynamic-grid-header-item>
-    <div class="drag-placeholder" *cdkDragPlaceholder></div>
-    <div *ngIf="config.columnResize" class="resize-action" ngrxColumnResizeTrigger></div>
-  </ngrx-grid-header-item>
-</ng-container>
--->
-
-
