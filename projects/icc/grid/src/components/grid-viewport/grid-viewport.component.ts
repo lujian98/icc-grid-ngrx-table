@@ -74,12 +74,12 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
         })
       )
       .subscribe((data) => {
-        console.log(' elementRef=', this.elementRef)
+        //console.log(' elementRef=', this.elementRef)
         const viewpport = this.elementRef.nativeElement.querySelector('cdk-virtual-scroll-viewport');
-        console.log(' viewpport=', viewpport)
+        //console.log(' viewpport=', viewpport)
         const scrollY = viewpport.scrollHeight - viewpport.offsetHeight;
         //this.setViewportPageSize(); // scrollHeight
-        console.log(' scrollY=', scrollY)
+        //console.log(' scrollY=', scrollY)
         //this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
       });
   }

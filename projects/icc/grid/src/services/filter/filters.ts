@@ -9,7 +9,7 @@ export class IccFilters {
   get filters(): Array<IccFilter> {
     return this._filters;
   }
-
+/*
   setFilters(columns: IccColumnConfig[]) {
     const factory = new IccFilterFactory();
     columns.forEach((column: IccColumnConfig, index) => {
@@ -17,6 +17,7 @@ export class IccFilters {
       this._filters.push(filter);
     });
   }
+    */
 
   update(filteredValues: { [index: string]: any }) {
     this.filters.forEach((filter) => {

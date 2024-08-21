@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '../models/grid-column.model';
 
 export const setupGridConfig = createAction(
   '[Grid] Setup Grid Config',
@@ -36,9 +36,14 @@ export const setViewportScrollY = createAction(
   props<{ gridName: string, hasScrollY: boolean }>()
 );
 
-export const setGridSortField = createAction(
-  '[Grid] Set Grid Sort Field',
+export const setGridSortFields = createAction(
+  '[Grid] Set Grid Sort Fields',
   props<{ gridName: string, sortFields: IccSortField[] }>()
+);
+
+export const setGridColumnFilters = createAction(
+  '[Grid] Set Grid Column Filters',
+  props<{ gridName: string, columnFilters: IccColumnFilter[] }>()
 );
 
 export const setGridColumnConfig = createAction(

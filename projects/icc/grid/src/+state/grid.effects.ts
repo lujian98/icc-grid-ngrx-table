@@ -58,11 +58,13 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.getGridData),
       concatLatestFrom((action) => {
-        return this.gridFacade.selectGridConfig(action.gridName);
+        return [this.gridFacade.selectGridConfig(action.gridName),
+          this.gridFacade.selectColumnConfig(action.gridName),
+        ];
       }),
-      switchMap(([action, gridConfig]) => {
+      switchMap(([action, gridConfig, columns]) => {
         const gridName = action.gridName;
-        return this.gridService.getGridData(gridName, gridConfig).pipe(
+        return this.gridService.getGridData(gridConfig, columns).pipe(
           map((gridData) => {
             return gridActions.getGridDataSuccess({gridName, gridData});
           }),

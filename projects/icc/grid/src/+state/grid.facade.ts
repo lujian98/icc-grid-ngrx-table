@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccColumnConfig, IccGridConfig, IccSortField } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccSortField, IccColumnFilter } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
 import { selectGridConfig, selectColumnConfig, selectGridData, } from './grid.selectors';
 
@@ -29,8 +29,14 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setViewportScrollY({ gridName, hasScrollY }));
   }
 
-  setGridSortField(gridName: string, sortFields: IccSortField[]): void {
-    this.store.dispatch(gridActions.setGridSortField({ gridName, sortFields }));
+  setGridSortFields(gridName: string, sortFields: IccSortField[]): void {
+    this.store.dispatch(gridActions.setGridSortFields({ gridName, sortFields }));
+    this.getGridData(gridName);
+  }
+
+  setGridColumnFilters(gridName: string, columnFilters: IccColumnFilter[]): void {
+    console.log( ' new filters = ', columnFilters)
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridName, columnFilters }));
     this.getGridData(gridName);
   }
 

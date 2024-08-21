@@ -12,6 +12,17 @@ export class IccFilterFactory {
     };
   }
 
+  getFilter(column: IccColumnConfig) {
+    const fieldType = column.fieldType!;
+    let component = this.componentMapper[fieldType];
+    if (!component) {
+      component = this.componentMapper['text'];
+    }
+    const componentRef = new component(column, column.name);
+    return componentRef;
+  }
+//   constructor(column: IccColumnConfig, key: string) {
+  /*
   getFilter(column: IccColumnConfig, columns: IccColumnConfig[]) {
     let type = 'text';
     let filterField = column.name;
@@ -31,6 +42,7 @@ export class IccFilterFactory {
     const componentRef = new component(column, filterField);
     return componentRef;
   }
+    */
 
   private getFilterType(filterField: string, columns: IccColumnConfig[]): string {
     let type = 'text';

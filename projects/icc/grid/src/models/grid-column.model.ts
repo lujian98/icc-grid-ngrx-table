@@ -12,6 +12,7 @@ export interface IccGridConfig {
   viewportWidth: number;
   totalCounts: number;
   sortFields: IccSortField[],
+  columnFilters: IccColumnFilter[],
   rowSelection: boolean;
 
   hasScrollY: boolean,
@@ -43,6 +44,7 @@ export const defaultGridConfig: IccGridConfig = {
   viewportWidth: 1000,
   totalCounts: 0,
   sortFields: [],
+  columnFilters: [{name: 'vin', value: '9d'}],
   rowSelection: false,
 
   hasScrollY: false,
@@ -72,7 +74,7 @@ export enum FilterType {
 
 export interface IccColumnFilter {
   name: string;
-  type: string;
+  //type: string;
   value: string | number | boolean; // string[] | number[];
 }
 

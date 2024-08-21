@@ -27,6 +27,7 @@ export const iccGridFeature = createFeature({
         columnConfig: action.columnConfig.map((column) => {
           return {
             ...column,
+            fieldType: column.fieldType || 'text',
             width: column.width || 100,
           }
         }),
@@ -51,7 +52,7 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),
-    on(gridActions.setGridSortField, (state, action) => {
+    on(gridActions.setGridSortFields, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
@@ -66,6 +67,23 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),
+
+    on(gridActions.setGridColumnFilters, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {};
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          columnFilters: action.columnFilters,
+        }
+      };
+      //console.log(' setGridSortField=', newState)
+      return {
+        ...newState,
+      }
+    }),
+
     on(gridActions.setViewportPage, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};

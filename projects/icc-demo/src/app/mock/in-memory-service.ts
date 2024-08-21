@@ -126,8 +126,9 @@ export class InMemoryService extends InMemoryDbService {
         const searches = reqInfo.query.get(key)!;
         const search =
           ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches[0].toLowerCase() : searches;
+
         data = data.filter((item) => {
-          const val = item.attributes[filterKey];
+          const val = item[filterKey];
           const value = this.getTypedValue(search, val, val);
           const filter = this.getTypedValue(search, val, search);
           switch (compareKey) {

@@ -51,7 +51,7 @@ export class IccGridColumnMenuComponent {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortField(this.gridName, [sort]);
+    this.gridFacade.setGridSortFields(this.gridName, [sort]);
   }
 
   columnHideShow(column: IccColumnConfig): void {
