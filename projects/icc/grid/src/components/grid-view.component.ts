@@ -51,7 +51,7 @@ export class IccGridViewComponent implements AfterViewChecked {
     //console.log(' 5555 gridConfig=', val)
     this._gridConfig = val;
     if(!this.columns || this.columns.length === 0) {
-      this.gridFacade.setupGridColumnConfig(this.gridConfig.gridName, []);
+      this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
   }
@@ -101,7 +101,7 @@ export class IccGridViewComponent implements AfterViewChecked {
         })
       )
       .subscribe((column) => {
-        this.gridFacade.setGridColumnHiddenShow(this.gridConfig.gridName, column);
+        this.gridFacade.setGridColumnConfig(this.gridConfig.gridName, column);
         // window.dispatchEvent(new Event('resize'));
       });
 
@@ -130,7 +130,7 @@ export class IccGridViewComponent implements AfterViewChecked {
     const currentIndex = this.indexCorrection(events.currentIndex);
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnConfig(this.gridConfig.gridName, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
   private indexCorrection(idx: number): number {

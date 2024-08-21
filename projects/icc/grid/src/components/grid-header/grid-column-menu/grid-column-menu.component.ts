@@ -59,6 +59,6 @@ export class IccGridColumnMenuComponent {
       ...column,
       hidden: column.hidden ? false: true,
     };
-    this.gridFacade.setGridColumnHiddenShow(this.gridName, col);
+    this.gridFacade.setGridColumnConfig(this.gridName, col);
   }
 }

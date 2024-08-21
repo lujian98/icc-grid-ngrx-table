@@ -11,13 +11,13 @@ export const setupGridConfigSuccess = createAction(
   props<{ gridName: string, gridConfig: IccGridConfig }>()
 );
 
-export const setupGridColumnConfig = createAction(
-  '[Grid] Setup Grid Column Config',
+export const setupGridColumnsConfig = createAction(
+  '[Grid] Setup Grid Columns Config',
   props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
 );
 
-export const setupGridColumnConfigSuccess = createAction(
-  '[Grid] Setup Grid Column Config Success',
+export const setupGridColumnsConfigSuccess = createAction(
+  '[Grid] Setup Grid Columns Config Success',
   props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
 );
 
@@ -41,8 +41,8 @@ export const setGridSortField = createAction(
   props<{ gridName: string, sortFields: IccSortField[] }>()
 );
 
-export const setGridColumnHiddenShow = createAction(
-  '[Grid] Setup Grid Column Hidden Show',
+export const setGridColumnConfig = createAction(
+  '[Grid] Setup Grid Column Config',
   props<{ gridName: string, columnConfig: IccColumnConfig }>()
 );
 

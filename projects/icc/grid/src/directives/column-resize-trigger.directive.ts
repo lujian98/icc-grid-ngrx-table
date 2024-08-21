@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { IccColumnResizeDirective } from './column-resize.directive';
 
 @Directive({
@@ -6,11 +6,7 @@ import { IccColumnResizeDirective } from './column-resize.directive';
   standalone: true,
 })
 export class IccColumnResizeTriggerDirective {
-
-  constructor(
-    private columnResizeDirective: IccColumnResizeDirective
-  ) {
-  }
+  private columnResizeDirective = inject(IccColumnResizeDirective);
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent) {

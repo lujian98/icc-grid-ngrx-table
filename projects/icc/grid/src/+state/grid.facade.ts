@@ -13,12 +13,12 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
-  setupGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnConfig({ gridName, columnConfig }));
+  setupGridColumnsConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnConfig }));
   }
 
-  setGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnConfigSuccess({ gridName, columnConfig }));
+  setGridColumnsConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridName, columnConfig }));
   }
 
   setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
@@ -34,8 +34,8 @@ export class IccGridFacade {
     this.getGridData(gridName);
   }
 
-  setGridColumnHiddenShow(gridName: string, columnConfig: IccColumnConfig): void {
-    this.store.dispatch(gridActions.setGridColumnHiddenShow({ gridName, columnConfig }));
+  setGridColumnConfig(gridName: string, columnConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnConfig({ gridName, columnConfig }));
   }
 
   getGridPageData(gridName: string, page: number): void {
