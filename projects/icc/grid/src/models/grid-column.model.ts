@@ -61,18 +61,33 @@ export interface IccColumnWidth {
   width: number;
 }
 
+/*
+export enum FilterType {
+  Text = 'Text',
+  Number = 'Number',
+  Boolean = 'Boolean'
+}
+*/
+
+export interface IccColumnFilter {
+  name: string;
+  type: string;
+  value: string | number | boolean; // string[] | number[];
+}
+
 export interface IccColumnConfig {
   name: string;
   title?: string;
+  fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
   sortField?: boolean;
+  filterField?: boolean;
 
   //field: string;
-  //fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
   //index?: number;
   //validations?: SunValidation[];
 
@@ -82,8 +97,7 @@ export interface IccColumnConfig {
   /*
   header?: string;
   headerClass?: string;
-  sortField?: SunSortField;
-  filterField?: SunFilterField;
+
   renderer?: SunRendererType;
   groupField?: SunGroupField;
   editField?: SunEditField;
