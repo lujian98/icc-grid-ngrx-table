@@ -125,8 +125,12 @@ export class IccGridViewComponent<T> {
 
   private getResizeColumnWidths(events: IccColumnWidth): IccColumnWidth[] {
     const column = this.columnWidths.find((item) => item.name === events.name);
-    const dx = (events.width - column!.width);
+    let dx = (events.width - column!.width);
     const index = this.columnWidths.findIndex((item) => item.name === column?.name);
+    if(events.width < 100 || (this.columnWidths[index+1].width - dx) < 100) {
+      dx = 0;
+    }
+   // console.log( ' ')
     return [...this.columnWidths].map((column, idx) => {
       let width = column.width!;
       if (idx == index) {
@@ -134,9 +138,10 @@ export class IccGridViewComponent<T> {
       } else if (idx == index + 1) {
         width = column.width! - dx;
       }
+      /*
       if(width <100) {
         width = 100;
-      }
+      }*/
       return {
         name: column.name,
         width: width!,

@@ -11,6 +11,7 @@
   <icc-grid-header-item *ngIf="!column.hidden" [ngStyle]="{flex: '1 ' +getColumnWidth(index) + 'px'}"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"
+    [columns]="columns"
     (columnResizing)="columnResizing.emit($event)"
     (columnResized)="columnResized.emit($event)"
     cdkDrag iccColumnResize>

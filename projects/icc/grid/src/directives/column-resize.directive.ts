@@ -22,7 +22,7 @@ export const getColumnId = R.prop(COLUMN_ID);
 export class IccColumnResizeDirective implements AfterViewInit {
  // @Input() column: DataGridColumnWithId;
   @Input() column!: IccColumnConfig;
-
+  @Input() columns!: IccColumnConfig[];
 
   @Output() readonly columnResizing = new EventEmitter<IccColumnWidth>();
   @Output() readonly columnResized = new EventEmitter<IccColumnWidth>();
@@ -51,6 +51,7 @@ export class IccColumnResizeDirective implements AfterViewInit {
   }
 
   onMouseDown(event: MouseEvent) {
+    console.log( ' columns=', this.columns)
     event.stopPropagation();
     this.columnInResizeMode = true;
     this.resizeStartPositionX = event.x;
