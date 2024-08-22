@@ -35,8 +35,8 @@ export class IccGridHeaderComponent {
 
   @Output() sortGrid = new EventEmitter<any>();
   @Output() filterGrid = new EventEmitter<any>();
-  @Output() columnResizing = new EventEmitter<IccColumnWidth>();
-  @Output() columnResized = new EventEmitter<IccColumnWidth>();
+  @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
+  @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
 
   getColumnWidth(index: number): number {
     return this.columnWidths[index].width;

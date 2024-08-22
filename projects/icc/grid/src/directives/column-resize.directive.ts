@@ -1,69 +1,64 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
-//import { DataGridColumnWithId, HEADER_NAME_ID } from '../models';
-//import * as R from 'ramda';
-import { EventTypes } from '../models/event-types';
+import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, inject } from '@angular/core';
 import { EventTargetTypes } from '../models/event-target-types';
-import { ColumnResizeEvent } from '../models/column-resize-event';
-//import { MIN_HEADER_NAME_WIDTH } from '../util/columns-style';
-import { IccColumnConfig, IccColumnWidth } from '../models/grid-column.model';
+import { EventTypes } from '../models/event-types';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
 
-export const MIN_HEADER_NAME_WIDTH = 60;
 
-/*
-export const HEADER_NAME_ID = 'headerName';
-export const headerName = R.prop(HEADER_NAME_ID);
-export const COLUMN_ID = 'columnId';
-export const getColumnId = R.prop(COLUMN_ID);
-*/
+
 @Directive({
   selector: '[iccColumnResize]',
   standalone: true,
 })
-export class IccColumnResizeDirective implements AfterViewInit {
- // @Input() column: DataGridColumnWithId;
+export class IccColumnResizeDirective {
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
   @Input() column!: IccColumnConfig;
   @Input() columns!: IccColumnConfig[];
+  @Input() gridConfig!: IccGridConfig;
 
-  @Output() readonly columnResizing = new EventEmitter<IccColumnWidth>();
-  @Output() readonly columnResized = new EventEmitter<IccColumnWidth>();
+  @Output() readonly columnResizing = new EventEmitter<IccColumnWidth[]>();
+  @Output() readonly columnResized = new EventEmitter<IccColumnWidth[]>();
 
-  columnInResizeMode = false;
-  resizeStartPositionX!: number;
-  minColumnWidth!: number;
-  currentWidth!: number;
+  private columnWidths: IccColumnWidth[] = [];
+  private currentIndex: number = 0;
+  private columnInResizeMode = false;
+  private resizeStartPositionX!: number;
+  private currentWidth!: number;
 
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2,
-  ) {
-  }
-
-  ngAfterViewInit(): void {
-    this.minColumnWidth = this.calculateMinColumnWidth();
-  }
-
-  get element() {
+  get element(): HTMLBaseElement {
     return this.elementRef.nativeElement;
   }
 
-  get elementWidth() {
+  get elementWidth(): number {
     return this.element.getBoundingClientRect().width;
   }
 
-  onMouseDown(event: MouseEvent) {
-    console.log( ' columns=', this.columns)
+  get totalWidth(): number {
+    return this.columns
+      .filter((column) => !column.hidden)
+      .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
+      .reduce((prev, curr) => prev + curr, 0);
+  }
+
+  get widthRatio(): number {
+    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
+    return viewportWidth / this.totalWidth;
+  }
+
+  onMouseDown(event: MouseEvent): void {
+    this.currentIndex = this.columns.findIndex((item) => item.name === this.column.name);
+    this.columnWidths = [...this.columns].map((column) => ({
+      name: column.name,
+      width: this.widthRatio * column.width!,
+    }));
     event.stopPropagation();
     this.columnInResizeMode = true;
     this.resizeStartPositionX = event.x;
     this.currentWidth = this.elementWidth;
-
-   // console.log(' event=', event)
-   // console.log(' this.resizeStartPositionX=', this.resizeStartPositionX)
-   // console.log(' this.currentWidth=', this.currentWidth)
     this.registerMouseEvents();
   }
 
-  onMouseUp(event: MouseEvent) {
+  onMouseUp(event: MouseEvent): void {
     event.stopPropagation();
     if (this.columnInResizeMode) {
       this.columnResized.emit(this.getColumnResizeEventData(event.x));
@@ -71,13 +66,13 @@ export class IccColumnResizeDirective implements AfterViewInit {
     }
   }
 
-  onMouseMove(event: MouseEvent) {
+  onMouseMove(event: MouseEvent): void {
     if (this.columnInResizeMode) {
       this.columnResizing.emit(this.getColumnResizeEventData(event.x));
     }
   }
 
-  private registerMouseEvents() {
+  private registerMouseEvents(): void {
     const unregisterMouseMove = this.renderer.listen(EventTargetTypes.Document, EventTypes.MouseMove, (mouseMoveEvent: MouseEvent) => {
       this.onMouseMove(mouseMoveEvent);
     });
@@ -94,43 +89,43 @@ export class IccColumnResizeDirective implements AfterViewInit {
     });
   }
 
-  //private getColumnResizeEventData(currentPositionX: number): ColumnResizeEvent {
-  private getColumnResizeEventData(currentPositionX: number): any {
-   // const width = this.calculateColumnWidth(currentPositionX);
-   // this.column.width = width;
-
-  // console.log( ' currentWidth=', this.currentWidth)
-   // console.log( ' currentPositionX=', currentPositionX)
-   //console.log( ' resizeStartPositionX=', this.resizeStartPositionX)
-    return {
-      name: this.column.name,
-      width: this.calculateColumnWidth(currentPositionX),
+  private getColumnResizeEventData(currentPositionX: number): IccColumnWidth[] {
+    const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
+    let dx = width - this.columnWidths[this.currentIndex].width
+    if (width < MIN_GRID_COLUMN_WIDTH || (this.columnWidths[this.currentIndex + 1].width - dx) < MIN_GRID_COLUMN_WIDTH) {
+      dx = 0;
     }
-    //return {columnId: this.column.name, width: this.calculateColumnWidth(currentPositionX)};
+    this.columnWidths = [...this.columnWidths].map((column, idx) => {
+      let width = column.width!;
+      if (idx == this.currentIndex) {
+        width = column.width! + dx;
+      } else if (idx == this.currentIndex + 1) {
+        width = column.width! - dx;
+      }
+      return {
+        name: column.name,
+        width: width!,
+      }
+    });
+    return this.columnWidths
   }
-
+  /*
+  ngAfterViewInit(): void {
+    this.minColumnWidth = this.calculateMinColumnWidth();
+  }
   private calculateColumnWidth(currentPositionX: number) {
-    //TODO not sure why need - 80 to adjust the width
-   // const dx = Number(this.resizeStartPositionX - currentPositionX);
     const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX); // - 90;
-    //console.log( ' new width=', width)
-   // console.log( ' currentPositionX=', currentPositionX, ' new width=', width, 'dx=', dx)
-    return width;
-    //return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
+    return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
   }
 
   private calculateMinColumnWidth(): number {
-    return 100;
-    //return Number((R.sum(this.getChildrenWidth())).toFixed(0));
+    return Number((R.sum(this.getChildrenWidth())).toFixed(0));
   }
 
   private getChildrenWidth(): number {
-    return 200;
-    /*
     return R.map(child => child?.id === HEADER_NAME_ID
         ? MIN_HEADER_NAME_WIDTH
         : child.getBoundingClientRect()?.width,
       R.head(this.element?.children)?.children);
-    */
-  }
+  }*/
 }

@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as gridActions from './grid.actions';
-import { IccGridState, defaultState } from '../models/grid-column.model';
+import { IccGridState, defaultState, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
 
 export const initialState: IccGridState = {};
 
@@ -28,7 +28,7 @@ export const iccGridFeature = createFeature({
           return {
             ...column,
             fieldType: column.fieldType || 'text',
-            width: column.width || 100,
+            width: column.width || MIN_GRID_COLUMN_WIDTH,
           }
         }),
       };
