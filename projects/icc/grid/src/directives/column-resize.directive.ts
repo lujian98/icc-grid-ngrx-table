@@ -3,8 +3,6 @@ import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
 
-
-
 @Directive({
   selector: '[iccColumnResize]',
   standalone: true,
@@ -91,23 +89,34 @@ export class IccColumnResizeDirective {
 
   private getColumnResizeEventData(currentPositionX: number): IccColumnWidth[] {
     const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
-    let dx = width - this.columnWidths[this.currentIndex].width
-    if (width < MIN_GRID_COLUMN_WIDTH || (this.columnWidths[this.currentIndex + 1].width - dx) < MIN_GRID_COLUMN_WIDTH) {
-      dx = 0;
-    }
+    let dx = width - this.columnWidths[this.currentIndex].width;
+    let nextIndex = this.currentIndex + 1;
+
     this.columnWidths = [...this.columnWidths].map((column, idx) => {
       let width = column.width!;
       if (idx == this.currentIndex) {
         width = column.width! + dx;
-      } else if (idx == this.currentIndex + 1) {
+        if (width < MIN_GRID_COLUMN_WIDTH) {
+          width = MIN_GRID_COLUMN_WIDTH;
+          dx = 0;
+        }
+      } else if (idx == nextIndex) {
         width = column.width! - dx;
+        if (width < MIN_GRID_COLUMN_WIDTH) {
+          width = MIN_GRID_COLUMN_WIDTH;
+          if(nextIndex === this.columnWidths.length-1) {
+            dx = 0;
+          }
+          nextIndex++;
+        }
       }
       return {
         name: column.name,
         width: width!,
       }
     });
-    return this.columnWidths
+    //console.log(' this.columnWidths=', this.columnWidths)
+    return this.columnWidths;
   }
   /*
   ngAfterViewInit(): void {
