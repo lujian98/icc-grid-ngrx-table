@@ -13,14 +13,14 @@ export class IccGridComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
   gridConfig$!: Observable<IccGridConfig>;
-  columnConfig$!: Observable<IccColumnConfig[]>;
+  columnsConfig$!: Observable<IccColumnConfig[]>;
 
 
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridConfig.gridName);
-    this.columnConfig$ = this.gridFacade.selectColumnConfig(this.gridConfig.gridName);
+    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridConfig.gridName);
     this.gridFacade.setupGridConfig(value);
   }
   get gridConfig(): IccGridConfig {

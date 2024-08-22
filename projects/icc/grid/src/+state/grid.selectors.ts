@@ -11,11 +11,11 @@ export const selectGridConfig = (gridName: string) => createSelector(
   }
 );
 
-export const selectColumnConfig = (gridName: string) => createSelector(
+export const selectColumnsConfig = (gridName: string) => createSelector(
   // @ts-ignore
   featureSelector,
   (state: IccGridState) => {
-    return state[gridName] ? state[gridName].columnConfig : [];
+    return state[gridName] ? state[gridName].columnsConfig : [];
   }
 );
 

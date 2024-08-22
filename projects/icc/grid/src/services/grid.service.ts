@@ -22,7 +22,7 @@ export class IccGridService {
       */
   }
 
-  getGridColumnConfig(gridName: string, columnConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
+  getGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
     //console.log(' service columnConfig =', columnConfig)
     const config: IccColumnConfig[] = [{
       name: 'ID',

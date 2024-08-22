@@ -8,6 +8,7 @@ export interface IccSortField {
 export interface IccGridConfig {
   gridName: string;
   urlKey?: string;
+  remoteColumnsConfig: boolean,
   page: number;
   pageSize: number;
   viewportWidth: number;
@@ -27,7 +28,7 @@ export interface IccGridState {
 
 export interface GridState<T extends object = object> {
   gridConfig: IccGridConfig;
-  columnConfig: IccColumnConfig[];
+  columnsConfig: IccColumnConfig[];
   data: T[];
   totalCounts: number;
 }
@@ -40,6 +41,7 @@ export interface IccGridData<T> {
 
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
+  remoteColumnsConfig: true,
   page: 1,
   pageSize: 20,
   viewportWidth: 1000,
@@ -55,7 +57,7 @@ export const defaultGridConfig: IccGridConfig = {
 
 export const defaultState: GridState = {
   gridConfig: defaultGridConfig,
-  columnConfig: [],
+  columnsConfig: [],
   data: [],
   totalCounts: 0,
 }

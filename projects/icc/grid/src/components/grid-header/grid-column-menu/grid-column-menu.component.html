@@ -9,7 +9,7 @@
   </button>
 </ng-container>
 
-<ng-container *ngIf="columnConfig$ | async as columns">
+<ng-container *ngIf="columnsConfig$ | async as columns">
   <ng-container *ngFor="let column of columns; let index = index;">
     <button (click)="columnHideShow(column)" popoverMenuItem="true">
       <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">

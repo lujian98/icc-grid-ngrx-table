@@ -13,12 +13,12 @@ export const setupGridConfigSuccess = createAction(
 
 export const setupGridColumnsConfig = createAction(
   '[Grid] Setup Grid Columns Config',
-  props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
+  props<{ gridName: string, columnsConfig: IccColumnConfig[] }>()
 );
 
 export const setupGridColumnsConfigSuccess = createAction(
   '[Grid] Setup Grid Columns Config Success',
-  props<{ gridName: string, columnConfig: IccColumnConfig[] }>()
+  props<{ gridName: string, columnsConfig: IccColumnConfig[] }>()
 );
 
 export const setViewportPageSize = createAction(
@@ -46,9 +46,9 @@ export const setGridColumnFilters = createAction(
   props<{ gridName: string, columnFilters: IccColumnFilter[] }>()
 );
 
-export const setGridColumnConfig = createAction(
+export const setGridColumnsConfig = createAction(
   '[Grid] Setup Grid Column Config',
-  props<{ gridName: string, columnConfig: IccColumnConfig }>()
+  props<{ gridName: string, columnsConfig: IccColumnConfig }>()
 );
 
 export const getGridData = createAction(

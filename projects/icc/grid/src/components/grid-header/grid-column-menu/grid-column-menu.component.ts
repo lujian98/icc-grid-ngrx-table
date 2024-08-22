@@ -19,14 +19,14 @@ import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/gr
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
   gridConfig$!: Observable<IccGridConfig>;
-  columnConfig$!: Observable<IccColumnConfig[]>;
+  columnsConfig$!: Observable<IccColumnConfig[]>;
   private _gridName!: string;
 
   @Input()
   set gridName(val: string) {
     this._gridName = val;
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
-    this.columnConfig$ = this.gridFacade.selectColumnConfig(this.gridName);
+    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridName);
   }
   get gridName(): string {
     return this._gridName;

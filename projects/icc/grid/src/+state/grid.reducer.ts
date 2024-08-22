@@ -24,7 +24,7 @@ export const iccGridFeature = createFeature({
       const newState: IccGridState = {};
       newState[key] = {
         ...state[key],
-        columnConfig: action.columnConfig.map((column) => {
+        columnsConfig: action.columnsConfig.map((column) => {
           return {
             ...column,
             fieldType: column.fieldType || 'text',
@@ -114,14 +114,14 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),*/
-    on(gridActions.setGridColumnConfig, (state, action) => {
+    on(gridActions.setGridColumnsConfig, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {};
       newState[key] = {
         ...state[key],
-        columnConfig: state[key].columnConfig.map((column) => {
-          if (column.name === action.columnConfig.name) {
-            return {...action.columnConfig}
+        columnsConfig: state[key].columnsConfig.map((column) => {
+          if (column.name === action.columnsConfig.name) {
+            return {...action.columnsConfig}
           } else {
             return column;
           }

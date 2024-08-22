@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
-//import { CARSDATA } from './data/cars-large';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

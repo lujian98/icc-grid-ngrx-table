@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccColumnConfig, IccGridConfig, IccSortField, IccColumnFilter } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-import { selectGridConfig, selectColumnConfig, selectGridData, } from './grid.selectors';
+import { selectGridConfig, selectColumnsConfig, selectGridData, } from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -13,12 +13,12 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
-  setupGridColumnsConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnConfig }));
+  setupGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnsConfig }));
   }
 
-  setGridColumnsConfig(gridName: string, columnConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridName, columnConfig }));
+  setGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridName, columnsConfig }));
   }
 
   setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
@@ -40,8 +40,8 @@ export class IccGridFacade {
     this.getGridData(gridName);
   }
 
-  setGridColumnConfig(gridName: string, columnConfig: IccColumnConfig): void {
-    this.store.dispatch(gridActions.setGridColumnConfig({ gridName, columnConfig }));
+  setGridColumnConfig(gridName: string, columnsConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnsConfig({ gridName, columnsConfig }));
   }
 
   getGridPageData(gridName: string, page: number): void {
@@ -57,8 +57,8 @@ export class IccGridFacade {
     return this.store.select(selectGridConfig(gridName));
   }
 
-  selectColumnConfig(gridName: string): Observable<IccColumnConfig[]> {
-    return this.store.select(selectColumnConfig(gridName));
+  selectColumnsConfig(gridName: string): Observable<IccColumnConfig[]> {
+    return this.store.select(selectColumnsConfig(gridName));
   }
 
   selectGridData(gridName: string): Observable<any[]> {

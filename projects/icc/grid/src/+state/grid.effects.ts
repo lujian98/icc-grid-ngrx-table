@@ -45,9 +45,9 @@ export class IccGridEffects {
       ofType(gridActions.setupGridColumnsConfig),
       switchMap((action) => {
         const gridName = action.gridName;
-        return this.gridService.getGridColumnConfig(gridName, action.columnConfig).pipe(
-          map((columnConfig) => {
-            return gridActions.setupGridColumnsConfigSuccess({gridName, columnConfig});
+        return this.gridService.getGridColumnsConfig(gridName, action.columnsConfig).pipe(
+          map((columnsConfig) => {
+            return gridActions.setupGridColumnsConfigSuccess({gridName, columnsConfig});
           }),
         );
       })
@@ -59,7 +59,7 @@ export class IccGridEffects {
       ofType(gridActions.getGridData),
       concatLatestFrom((action) => {
         return [this.gridFacade.selectGridConfig(action.gridName),
-          this.gridFacade.selectColumnConfig(action.gridName),
+          this.gridFacade.selectColumnsConfig(action.gridName),
         ];
       }),
       switchMap(([action, gridConfig, columns]) => {
