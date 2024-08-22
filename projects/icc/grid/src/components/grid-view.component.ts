@@ -1,6 +1,6 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
@@ -26,7 +26,7 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
     IccRowSelectComponent,
   ],
 })
-export class IccGridViewComponent implements AfterViewChecked {
+export class IccGridViewComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
@@ -38,24 +38,13 @@ export class IccGridViewComponent implements AfterViewChecked {
   set columns(val: IccColumnConfig[]) {
     this._columns = val;
     this.setColumWidths();
-
-
   }
   get columns(): IccColumnConfig[] {
     return this._columns;
   }
 
-  setColumWidths(): void {
-    this.columnWidths = [...this.columns].map((column) => ({
-      name: column.name,
-      width: this.widthRatio * column.width!,
-    }));
-    //console.log( ' 00000 this.columnWidths=', this.columnWidths)
-  }
-
   @Input()
   set gridConfig(val: IccGridConfig) {
-    //console.log(' 5555 gridConfig=', val.viewportWidth)
     this._gridConfig = val;
     if (!this.columns || this.columns.length === 0) {
       this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
@@ -69,14 +58,10 @@ export class IccGridViewComponent implements AfterViewChecked {
 
   @Input()
   set gridData(data: IccGridData<any>) { // TODO set local data here
-    // console.log( ' 7777 input grid data =', data)
     if (data) { // use set getGridDataSuccess ??
       //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }
   }
-
-  @Input() allSelected = false;
-  @Output() filterGrid = new EventEmitter<any>();
 
   get totalWidth(): number {
     return this.columns
@@ -127,8 +112,14 @@ export class IccGridViewComponent implements AfterViewChecked {
         width: this.columnWidths[index].width / this.widthRatio,
       }
     });
-   // console.log(' columns=', columns)
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+  }
+
+  private setColumWidths(): void {
+    this.columnWidths = [...this.columns].map((column) => ({
+      name: column.name,
+      width: this.widthRatio * column.width!,
+    }));
   }
 
   private getResizeColumnWidths(events: IccColumnWidth): IccColumnWidth[] {
@@ -141,6 +132,9 @@ export class IccGridViewComponent implements AfterViewChecked {
         width = column.width! + dx;
       } else if (idx == index + 1) {
         width = column.width! - dx;
+      }
+      if(width <100) {
+        width = 100;
       }
       return {
         name: column.name,
@@ -165,26 +159,4 @@ export class IccGridViewComponent implements AfterViewChecked {
     });
     return idx;
   }
-
-  ngAfterViewChecked(): void {
-    //const viewportSize = this.viewport.elementRef.nativeElement.getBoundingClientRect();
-    //this.viewport.checkViewportSize();
-    //console.log(' viewportSize=', viewportSize)
-  }
-
-  onToggleSelectAllRowsOnCurrentPage() {
-    //console.log( ' view columnConfig=', this.columnConfig)
-    //this.toggleSelectAllRowsOnCurrentPage.emit(!this.allSelected);
-  }
-
-  hasCheckboxSelection(): boolean {
-    return true;
-    //return isCheckboxSelection(this.selectionType);
-  }
-
-  checkSelected(index: number): boolean {
-    return true;
-    //return this.isRowSelected(index, this.selectedRowIndexes);
-  }
-
 }
