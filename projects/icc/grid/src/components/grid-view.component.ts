@@ -37,23 +37,31 @@ export class IccGridViewComponent implements AfterViewChecked {
   @Input()
   set columns(val: IccColumnConfig[]) {
     this._columns = val;
-    this.columnWidths = [...this.columns].map((column) => ({
-      name: column.name,
-      width: this.widthRatio * column.width!,
-    }));
+    this.setColumWidths();
+
+
   }
   get columns(): IccColumnConfig[] {
     return this._columns;
   }
 
+  setColumWidths(): void {
+    this.columnWidths = [...this.columns].map((column) => ({
+      name: column.name,
+      width: this.widthRatio * column.width!,
+    }));
+    //console.log( ' 00000 this.columnWidths=', this.columnWidths)
+  }
+
   @Input()
   set gridConfig(val: IccGridConfig) {
-    //console.log(' 5555 gridConfig=', val)
+    //console.log(' 5555 gridConfig=', val.viewportWidth)
     this._gridConfig = val;
-    if(!this.columns || this.columns.length === 0) {
+    if (!this.columns || this.columns.length === 0) {
       this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
+    this.setColumWidths();
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -108,21 +116,37 @@ export class IccGridViewComponent implements AfterViewChecked {
   }
 
   onColumnResizing(events: IccColumnWidth): void {
-    this.columnWidths = [...this.columns].map((column) => {
-      const width = column.name === events.name ? events.width : this.widthRatio * column.width!;
+    this.columnWidths = this.getResizeColumnWidths(events);
+  }
+
+  onColumnResized(events: IccColumnWidth): void {
+    this.columnWidths = this.getResizeColumnWidths(events);
+    const columns: IccColumnConfig[] = [...this.columns].map((column, index)=>{
+      return {
+        ...column,
+        width: this.columnWidths[index].width / this.widthRatio,
+      }
+    });
+   // console.log(' columns=', columns)
+    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+  }
+
+  private getResizeColumnWidths(events: IccColumnWidth): IccColumnWidth[] {
+    const column = this.columnWidths.find((item) => item.name === events.name);
+    const dx = (events.width - column!.width);
+    const index = this.columnWidths.findIndex((item) => item.name === column?.name);
+    return [...this.columnWidths].map((column, idx) => {
+      let width = column.width!;
+      if (idx == index) {
+        width = column.width! + dx;
+      } else if (idx == index + 1) {
+        width = column.width! - dx;
+      }
       return {
         name: column.name,
         width: width!,
       }
     });
-  }
-
-  onColumnResized(event: IccColumnWidth): void {
-    const column: IccColumnConfig = {
-      ...this.columns.find((item)=>item.name === event.name)!,
-      width: event.width! / this.widthRatio,
-    }
-    this.columnResized$.next(column);
   }
 
   onColumnDragDrop(events: DragDropEvent): void {
@@ -134,8 +158,8 @@ export class IccGridViewComponent implements AfterViewChecked {
   }
 
   private indexCorrection(idx: number): number {
-    this.columns.forEach((column, index)=>{
-      if(column.hidden && idx >= index) {
+    this.columns.forEach((column, index) => {
+      if (column.hidden && idx >= index) {
         idx++;
       }
     });

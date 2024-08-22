@@ -55,6 +55,10 @@ export class IccColumnResizeDirective implements AfterViewInit {
     this.columnInResizeMode = true;
     this.resizeStartPositionX = event.x;
     this.currentWidth = this.elementWidth;
+
+   // console.log(' event=', event)
+   // console.log(' this.resizeStartPositionX=', this.resizeStartPositionX)
+   // console.log(' this.currentWidth=', this.currentWidth)
     this.registerMouseEvents();
   }
 
@@ -93,6 +97,10 @@ export class IccColumnResizeDirective implements AfterViewInit {
   private getColumnResizeEventData(currentPositionX: number): any {
    // const width = this.calculateColumnWidth(currentPositionX);
    // this.column.width = width;
+
+  // console.log( ' currentWidth=', this.currentWidth)
+   // console.log( ' currentPositionX=', currentPositionX)
+   //console.log( ' resizeStartPositionX=', this.resizeStartPositionX)
     return {
       name: this.column.name,
       width: this.calculateColumnWidth(currentPositionX),
@@ -101,8 +109,11 @@ export class IccColumnResizeDirective implements AfterViewInit {
   }
 
   private calculateColumnWidth(currentPositionX: number) {
-    const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
+    //TODO not sure why need - 80 to adjust the width
+   // const dx = Number(this.resizeStartPositionX - currentPositionX);
+    const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX); // - 90;
     //console.log( ' new width=', width)
+   // console.log( ' currentPositionX=', currentPositionX, ' new width=', width, 'dx=', dx)
     return width;
     //return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
   }
