@@ -62,7 +62,7 @@ export class IccGridService {
     //console.log(' params =', params);
     const urlKey = gridConfig.urlKey || gridConfig.gridName;
     return this.http
-      .get<any>(`/api/${urlKey}`, { params })
+      .get<IccGridData<T>>(`/api/${urlKey}`, { params })
       .pipe(
         map((res) => {
           console.log(' res=', res)

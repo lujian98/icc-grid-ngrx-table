@@ -20,11 +20,11 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
     IccRowSelectComponent,
   ],
 })
-export class IccGridRowComponent {
+export class IccGridRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];
   @Input() columnWidths: IccColumnWidth[] = [];
   @Input() gridConfig!: IccGridConfig;
-  @Input() record: any;
+  @Input() record!: T;
   @Input() selected = false;
 
   @Output() toggleRow = new EventEmitter<any>();

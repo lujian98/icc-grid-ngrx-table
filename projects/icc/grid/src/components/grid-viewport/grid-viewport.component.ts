@@ -19,7 +19,7 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
     IccGridRowComponent,
   ],
 })
-export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
+export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
@@ -28,7 +28,7 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
 
   @Input() columns: IccColumnConfig[] = [];
   @Input() columnWidths: IccColumnWidth[] = [];
-  private _gridData: any[] = [];
+  private _gridData: T[] = [];
 
   @Input()
   set gridConfig(val: IccGridConfig) {
@@ -39,12 +39,12 @@ export class IccGridViewportComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set gridData(data: any[]) {
+  set gridData(data: T[]) {
     console.log(' set new data=', data)
     this._gridData = data;
     this.dataChanged$.next(data);
   }
-  get gridData(): any[] {
+  get gridData(): T[] {
     return this._gridData;
   }
 

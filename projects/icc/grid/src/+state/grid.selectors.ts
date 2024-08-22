@@ -1,12 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-//import { iccGridFeature } from './grid.reducer';
 import { IccGridState, defaultState } from '../models/grid-column.model';
-
-/*
-export const {
-  selectTotal,
-} = iccGridFeature;
-*/
 
 const featureSelector = createFeatureSelector('iccGrid');
 

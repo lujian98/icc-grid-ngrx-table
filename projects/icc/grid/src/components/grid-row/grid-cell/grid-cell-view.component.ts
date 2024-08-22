@@ -15,24 +15,24 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
     CdkTableModule,
   ],
 })
-export class IccGridCellViewComponent {
+export class IccGridCellViewComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  private _record: any;
+  private _record!: T;
   @Input() column!: IccColumnConfig;
 
 
   @Input()
-  set record(data: any) {
+  set record(data: T) {
     this._record = data;
     this.changeDetectorRef.markForCheck();
   }
-  get record(): any {
+  get record(): T {
     return this._record;
   }
 
-  get data(): any {
+  get data(): T {
     // console.log(' get record =', this.column.name)
-    return this.record[this.column.name];
+    return (this.record as any)[this.column.name];
   }
 
   get align(): string {

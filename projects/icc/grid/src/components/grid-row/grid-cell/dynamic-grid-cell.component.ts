@@ -15,22 +15,22 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
     IccGridCellViewComponent,
   ],
 })
-export class IccDynamicGridCellComponent implements OnInit {
+export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
   private _componentRef: any;
 
   @Input() column!: IccColumnConfig;
-  private _record: any;
+  private _record!: T;
 
   @Input()
-  set record(data: any) {
+  set record(data: T) {
     this._record = data;
     if(this._componentRef) {
       //console.log( ' 22222 set record =', data)
       this._componentRef.instance.record = this.record;
     }
   }
-  get record(): any {
+  get record(): T {
     return this._record;
   }
 

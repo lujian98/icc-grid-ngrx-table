@@ -26,13 +26,13 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
     IccRowSelectComponent,
   ],
 })
-export class IccGridViewComponent {
+export class IccGridViewComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
   private _columnWidths: IccColumnWidth[] = [];
-  gridData$!: Observable<any[]>;
-  columnResized$: BehaviorSubject<any> = new BehaviorSubject({});
+  gridData$!: Observable<T[]>;
+  //columnResized$: BehaviorSubject<any> = new BehaviorSubject({});
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -57,7 +57,7 @@ export class IccGridViewComponent {
   }
 
   @Input()
-  set gridData(data: IccGridData<any>) { // TODO set local data here
+  set gridData(data: IccGridData<T>) { // TODO set local data here
     if (data) { // use set getGridDataSuccess ??
       //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }
@@ -84,6 +84,7 @@ export class IccGridViewComponent {
   }
 
   constructor() {
+    /*
     this.columnResized$
       .pipe(
         skip(1),
@@ -97,7 +98,7 @@ export class IccGridViewComponent {
         this.gridFacade.setGridColumnConfig(this.gridConfig.gridName, column);
         // window.dispatchEvent(new Event('resize'));
       });
-
+*/
   }
 
   onColumnResizing(events: IccColumnWidth): void {

@@ -9,7 +9,7 @@ import { IccGridConfig, IccColumnConfig, defaultGridConfig, IccGridData } from '
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IccGridComponent {
+export class IccGridComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
   gridConfig$!: Observable<IccGridConfig>;
@@ -28,7 +28,7 @@ export class IccGridComponent {
   }
 
   //@Input() columnConfig: IccColumnConfig[] = []; //TODO if input here
-  @Input() gridData!: IccGridData<any>;
+  @Input() gridData!: IccGridData<T>;
 
   refresh(): void {
     this.gridFacade.getGridData(this.gridConfig.gridName);
