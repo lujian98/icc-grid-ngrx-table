@@ -56,12 +56,13 @@ export class IccGridViewComponent<T> {
     return this._gridConfig;
   }
 
+  /*
   @Input()
   set gridData(data: IccGridData<T>) { // TODO set local data here
     if (data) { // use set getGridDataSuccess ??
       //this.gridFacade.getGridData(this.gridConfig.gridName, data);
     }
-  }
+  }*/
 
   get totalWidth(): number {
     return this.columns

@@ -13,6 +13,7 @@ export class IccGridComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
+  private _gridData!: IccGridData<T>;
   gridConfig$!: Observable<IccGridConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
@@ -38,7 +39,16 @@ export class IccGridComponent<T> {
     return this._columnsConfig;
   }
 
-  @Input() gridData!: IccGridData<T>;
+   @Input()
+  set gridData(val: IccGridData<T>) {
+    this._gridData = val;
+    if(!this.gridConfig.remoteGridData && this.gridData) {
+      this.gridFacade.setGridData(this.gridConfig.gridName, this.gridData);
+    }
+  }
+  get gridData():IccGridData<T> {
+    return this._gridData;
+  }
 
   refresh(): void {
     this.gridFacade.getGridData(this.gridConfig.gridName);

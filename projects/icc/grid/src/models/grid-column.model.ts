@@ -9,6 +9,7 @@ export interface IccGridConfig {
   gridName: string;
   urlKey?: string;
   remoteColumnsConfig: boolean,
+  remoteGridData: boolean,
   page: number;
   pageSize: number;
   viewportWidth: number;
@@ -42,6 +43,7 @@ export interface IccGridData<T> {
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
   remoteColumnsConfig: true,
+  remoteGridData: true,
   page: 1,
   pageSize: 20,
   viewportWidth: 1000,

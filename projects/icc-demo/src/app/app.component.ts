@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
+import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
     ...defaultGridConfig,
     gridName: 'DCR',
     remoteColumnsConfig: true,
+    remoteGridData: true,
     pageSize: 200,
     sortFields: [{
       field: 'ID',
@@ -38,6 +40,6 @@ export class AppComponent {
     name: 'color',
   }];
 
- // gridData = CARSDATA;
+  gridData = CARSDATA3;
 
 }

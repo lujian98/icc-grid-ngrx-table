@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccColumnConfig, IccGridConfig, IccSortField, IccColumnFilter } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
 import { selectGridConfig, selectColumnsConfig, selectGridData, } from './grid.selectors';
 
@@ -14,7 +14,7 @@ export class IccGridFacade {
   }
 
   setupGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
-    console.log( ' 1111 setupGridColumnsConfig ')
+    console.log(' 1111 setupGridColumnsConfig ')
     this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnsConfig }));
   }
 
@@ -52,6 +52,10 @@ export class IccGridFacade {
 
   getGridData(gridName: string): void {
     this.store.dispatch(gridActions.getGridData({ gridName }));
+  }
+
+  setGridData(gridName: string, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.getGridDataSuccess({ gridName, gridData }));
   }
 
   selectGridConfig(gridName: string): Observable<IccGridConfig> {

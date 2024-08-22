@@ -1211,4 +1211,12 @@ export const CARSDATA = {
   })
 }
 
+
+export const CARSDATA3 = {
+  data: CARSDATA0.data.map((item: any, index) => {
+    item['ID'] = index + 1;
+    return item;
+  }),
+  totalCounts:200,
+}
 //console.log( 'CARSDATA= ', CARSDATA)
