@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import { IccGridConfig, IccColumnConfig, defaultGridConfig, IccGridData } from './models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData, defaultGridConfig } from './models/grid-column.model';
 
 @Component({
   selector: 'icc-grid',
@@ -12,9 +12,9 @@ import { IccGridConfig, IccColumnConfig, defaultGridConfig, IccGridData } from '
 export class IccGridComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
+  private _columnsConfig: IccColumnConfig[] = [];
   gridConfig$!: Observable<IccGridConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
-
 
   @Input()
   set gridConfig(value: IccGridConfig) {
@@ -27,7 +27,17 @@ export class IccGridComponent<T> {
     return this._gridConfig;
   }
 
-  //@Input() columnConfig: IccColumnConfig[] = []; //TODO if input here
+  @Input()
+  set columnsConfig(val: IccColumnConfig[]) {
+    this._columnsConfig = val;
+    if(!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
+      this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, this.columnsConfig);
+    }
+  }
+  get columnsConfig(): IccColumnConfig[] {
+    return this._columnsConfig;
+  }
+
   @Input() gridData!: IccGridData<T>;
 
   refresh(): void {

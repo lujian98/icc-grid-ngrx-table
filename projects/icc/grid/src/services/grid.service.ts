@@ -23,7 +23,7 @@ export class IccGridService {
   }
 
   getGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    //console.log(' service columnConfig =', columnConfig)
+    console.log(' get remote service columnConfig =', gridName)
     const config: IccColumnConfig[] = [{
       name: 'ID',
       width: 50,

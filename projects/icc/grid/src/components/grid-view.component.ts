@@ -30,6 +30,7 @@ export class IccGridViewComponent<T> {
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
   private _columnWidths: IccColumnWidth[] = [];
+  private firstTimeLoadColumnsConfig = true;
   gridData$!: Observable<T[]>;
 
   @Input()
@@ -44,7 +45,8 @@ export class IccGridViewComponent<T> {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = val;
-    if (!this.columns || this.columns.length === 0) {
+    if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
+      this.firstTimeLoadColumnsConfig = false;
       this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);

@@ -14,6 +14,7 @@ export class IccGridFacade {
   }
 
   setupGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
+    console.log( ' 1111 setupGridColumnsConfig ')
     this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnsConfig }));
   }
 

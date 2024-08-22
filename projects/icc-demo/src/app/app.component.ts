@@ -13,30 +13,23 @@ export class AppComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
+    remoteColumnsConfig: true,
     pageSize: 200,
     sortFields: [{
       field: 'ID',
       dir: 'desc',
     }],
-    columnFilters: [{name: 'vin', value: '9'}],
+    columnFilters: [{ name: 'vin', value: '9' }],
     rowSelection: true,
   }
 
-  /*
-  columnConfig2: IccColumnConfig[] = [{
-    name: 'name',
-    //title: 'This is list of the name This is list of the name This is list of the name This is list of the name hhhhhh',
+  columnsConfig: IccColumnConfig[] = [{
+    name: 'ID',
+    width: 50,
+    align: 'center',
   }, {
-    name: 'position',
-    //title: '',
-  }, {
-    name: 'symbol',
-  }, {
-    name: 'weight',
-  }];
-
-  columnConfig: IccColumnConfig[] = [{
     name: 'vin',
+    width: 50,
   }, {
     name: 'brand',
   }, {
@@ -45,6 +38,6 @@ export class AppComponent {
     name: 'color',
   }];
 
-  gridData = CARSDATA;
-  */
+ // gridData = CARSDATA;
+
 }
