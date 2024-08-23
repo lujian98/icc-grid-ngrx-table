@@ -115,26 +115,6 @@ export class IccColumnResizeDirective {
         width: width!,
       }
     });
-    //console.log(' this.columnWidths=', this.columnWidths)
     return this.columnWidths;
   }
-  /*
-  ngAfterViewInit(): void {
-    this.minColumnWidth = this.calculateMinColumnWidth();
-  }
-  private calculateColumnWidth(currentPositionX: number) {
-    const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX); // - 90;
-    return R.lt(width, this.minColumnWidth) ? this.minColumnWidth : width;
-  }
-
-  private calculateMinColumnWidth(): number {
-    return Number((R.sum(this.getChildrenWidth())).toFixed(0));
-  }
-
-  private getChildrenWidth(): number {
-    return R.map(child => child?.id === HEADER_NAME_ID
-        ? MIN_HEADER_NAME_WIDTH
-        : child.getBoundingClientRect()?.width,
-      R.head(this.element?.children)?.children);
-  }*/
 }
