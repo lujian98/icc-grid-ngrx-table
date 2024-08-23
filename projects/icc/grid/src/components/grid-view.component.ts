@@ -9,7 +9,7 @@ import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
-import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
+import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
 @Component({
   selector: 'icc-grid-view',
@@ -57,18 +57,6 @@ export class IccGridViewComponent<T> {
     return this._gridConfig;
   }
 
-  get totalWidth(): number {
-    return this.columns
-      .filter((column) => !column.hidden)
-      .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
-      .reduce((prev, curr) => prev + curr, 0);
-  }
-
-  get widthRatio(): number {
-    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
-    return viewportWidth / this.totalWidth;
-  }
-
   set columnWidths(values: IccColumnWidth[]) {
     this._columnWidths = values;
   }
@@ -86,7 +74,7 @@ export class IccGridViewComponent<T> {
     const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
       return {
         ...column,
-        width: this.columnWidths[index].width / this.widthRatio,
+        width: this.columnWidths[index].width / viewportWidthRatio(this.gridConfig, this.columns),
       }
     });
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
@@ -103,7 +91,7 @@ export class IccGridViewComponent<T> {
   private setColumWidths(): void {
     this.columnWidths = [...this.columns].map((column) => ({
       name: column.name,
-      width: this.widthRatio * column.width!,
+      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
     }));
   }
 

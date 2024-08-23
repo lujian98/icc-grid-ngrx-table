@@ -1,6 +1,6 @@
 <icc-grid-cell *ngIf="gridConfig.rowSelection"
   class="icc-grid-cell-row-select"
-  [ngStyle]="{flex: '0 40px'}">
+  [ngStyle]="{flex: '0 ' + rowSelectionCellWidth + 'px'}">
   <icc-row-select
     [isSelected]="selected"
     (selected)="toggleRowSelection()">

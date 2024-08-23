@@ -1,5 +1,5 @@
 <icc-grid-header-item *ngIf="gridConfig.rowSelection"
-  [ngStyle]="{flex: '0 40px'}">
+  [ngStyle]="{flex: '0 ' + rowSelectionCellWidth + 'px'}">
   <icc-row-select class="icc-header-row-select"
     [isSelected]="allSelected"
     (selected)="onToggleSelectAllRowsOnCurrentPage()"

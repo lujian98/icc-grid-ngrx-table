@@ -8,6 +8,7 @@ import { IccColumnFilterComponent } from '../column-filter/column-filter.compone
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
 import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.component';
+import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 
 @Component({
   selector: 'icc-grid-header',
@@ -35,6 +36,8 @@ export class IccGridHeaderComponent {
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
+
+  rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
 
   getColumnWidth(index: number): number {
     return this.columnWidths[index].width;

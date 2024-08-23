@@ -1,1 +1,2 @@
 export const MIN_GRID_COLUMN_WIDTH = 100;
+export const ROW_SELECTION_CELL_WIDTH = 40;

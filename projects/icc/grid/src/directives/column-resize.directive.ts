@@ -3,6 +3,7 @@ import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
+import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
 @Directive({
   selector: '[iccColumnResize]',
@@ -32,23 +33,11 @@ export class IccColumnResizeDirective {
     return this.element.getBoundingClientRect().width;
   }
 
-  get totalWidth(): number {
-    return this.columns
-      .filter((column) => !column.hidden)
-      .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
-      .reduce((prev, curr) => prev + curr, 0);
-  }
-
-  get widthRatio(): number {
-    const viewportWidth = this.gridConfig.viewportWidth - (this.gridConfig.rowSelection ? 40 : 0);
-    return viewportWidth / this.totalWidth;
-  }
-
   onMouseDown(event: MouseEvent): void {
     this.currentIndex = this.columns.findIndex((item) => item.name === this.column.name);
     this.columnWidths = [...this.columns].map((column) => ({
       name: column.name,
-      width: this.widthRatio * column.width!,
+      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
     }));
     event.stopPropagation();
     this.columnInResizeMode = true;
