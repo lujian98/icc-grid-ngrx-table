@@ -15,6 +15,7 @@ import { IccAboutModule } from '@icc/ui/about';
 import { IccGridModule } from '@icc/ui/grid';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
+import { IccAccordionModule } from '@icc/ui/accordion';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { IccCheckboxModule } from '@icc/ui/checkbox';
     IccAboutModule,
     IccGridModule,
     IccDialogModule.forRoot(),
+    IccAccordionModule,
   ],
   providers: [
     {

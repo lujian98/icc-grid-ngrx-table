@@ -11,6 +11,29 @@ import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 export class AppComponent {
   title = 'icc-demo';
   label = 'Test Button';
+
+  // items = ['Item 1A', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+
+  items = [{
+    label: "item 1A",
+    items: [{
+      label: 'Menu 1',
+    }, {
+      label: 'Menu 2',
+    }, {
+      label: 'Menu 3',
+    }]
+  }, {
+    label: "item 1A",
+    items: [{
+      label: 'Menu 1',
+    }, {
+      label: 'Menu 2',
+    }, {
+      label: 'Menu 3',
+    }]
+  }]
+
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',

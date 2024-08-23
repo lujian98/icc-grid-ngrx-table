@@ -1,15 +1,12 @@
 <div class="icc-top-nav-bar"> Top Nav Bar </div>
 
 <div class="icc-main-container">
-  <div class="icc-left-side-bar"> Side Bar
-    <icc-checkbox>Checked</icc-checkbox>
-    <div></div>
+  <div class="icc-left-side-bar">
+    <icc-accordion [items]="items"></icc-accordion>
   </div>
 
   <div class="icc-center-view">
-    <icc-grid
-      [gridConfig]="gridConfig"
-    >
+    <icc-grid [gridConfig]="gridConfig">
     </icc-grid>
   </div>
 
@@ -20,6 +17,10 @@
 </div>
 
 <!--
+
+    <icc-checkbox>Checked</icc-checkbox>
+    <div></div>
+
         [columnsConfig]="columnsConfig"
         [gridData]="gridData"
 -->

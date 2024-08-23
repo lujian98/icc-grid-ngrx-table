@@ -1,0 +1,52 @@
+
+<cdk-accordion class="example-accordion">
+  @for (item of items; track item; let index = $index) {
+    <cdk-accordion-item
+      [expanded]="isExpaneded(index)"
+
+      #accordionItem="cdkAccordionItem"
+      class="example-accordion-item"
+      role="button"
+      [tabindex]="index"
+      [attr.id]="'accordion-header-' + index"
+      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.aria-controls]="'accordion-body-' + index">
+      <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+        {{ item.label }}
+        <span class="example-accordion-item-description">
+          <i *ngIf="accordionItem.expanded" class="fa-solid fa-chevron-up"></i>
+          <i *ngIf="!accordionItem.expanded" class="fa-solid fa-chevron-down"></i>
+        </span>
+      </div>
+
+      @for (menu of item.items; track menu; let j = $index) {
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index">
+          {{menu.label}}
+        </div>
+
+      }
+      <!--
+
+      <div
+        class="example-accordion-item-body"
+        role="region"
+        [style.display]="accordionItem.expanded ? '' : 'none'"
+        [attr.id]="'accordion-body-' + index"
+        [attr.aria-labelledby]="'accordion-header-' + index">
+
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+        excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
+        veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+
+      </div>
+            -->
+
+    </cdk-accordion-item>
+  }
+</cdk-accordion>
+
