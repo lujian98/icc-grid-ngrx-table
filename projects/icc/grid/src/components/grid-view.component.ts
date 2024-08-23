@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core
 import { Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridData, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
@@ -55,14 +55,6 @@ export class IccGridViewComponent<T> {
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
   }
-
-  /*
-  @Input()
-  set gridData(data: IccGridData<T>) { // TODO set local data here
-    if (data) { // use set getGridDataSuccess ??
-      //this.gridFacade.getGridData(this.gridConfig.gridName, data);
-    }
-  }*/
 
   get totalWidth(): number {
     return this.columns

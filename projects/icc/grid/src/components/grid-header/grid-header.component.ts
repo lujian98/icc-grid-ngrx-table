@@ -33,8 +33,6 @@ export class IccGridHeaderComponent {
 
   @Input() allSelected = false;
 
-  @Output() sortGrid = new EventEmitter<any>();
-  @Output() filterGrid = new EventEmitter<any>();
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
 

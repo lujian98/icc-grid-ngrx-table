@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { IccColumnConfig } from '../../../models/grid-column.model';
 
-
 @Component({
   selector: 'icc-grid-cell-view',
   templateUrl: './grid-cell-view.component.html',
