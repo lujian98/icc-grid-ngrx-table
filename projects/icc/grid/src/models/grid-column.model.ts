@@ -1,5 +1,3 @@
-export const MIN_GRID_COLUMN_WIDTH = 100;
-
 export interface IccSortField {
   field: string;
   dir: string;

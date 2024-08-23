@@ -1,7 +1,8 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, inject } from '@angular/core';
 import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
+import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 
 @Directive({
   selector: '[iccColumnResize]',

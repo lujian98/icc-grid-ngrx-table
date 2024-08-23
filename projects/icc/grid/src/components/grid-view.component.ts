@@ -4,11 +4,12 @@ import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core
 import { Observable } from 'rxjs';
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig, MIN_GRID_COLUMN_WIDTH } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
+import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 
 @Component({
   selector: 'icc-grid-view',
