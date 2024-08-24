@@ -1,6 +1,5 @@
-@import '../../about/src/about.theme';
+//@import '../button/button.component.theme';
 
-@mixin icc-theme($app-theme) {
-  @include test-component-theme($app-theme);
+@mixin icc-theme-components() {
+ // @include icc-button-theme();
 }
-

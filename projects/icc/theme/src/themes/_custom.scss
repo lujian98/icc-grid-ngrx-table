@@ -74,7 +74,7 @@ $theme: (
   tooltip-color: #cfcfcf,
 
   nvd3-nv-axis-tick-line-color: #4a4a4a,
-  progress-bar-background-color: #0f0f0f,
+  progress-bar-background-color: #f1f1f1,
   progress-bar-count-text-color: #ffffff,
   progress-bar-fill-color: #f18a20,
   sidebar-border-color: transparent,
@@ -101,7 +101,6 @@ $theme: (
   stepper-step-header-label-hover-color: #353535,
   stepper-step-header-label-selected-color: #4b4f54,
 
-  tab-bar-background-color: #353535,
   tab-border-color: #4b4f54,
   tab-active-border-color: transparent,
 
@@ -136,7 +135,7 @@ $theme: (
   toast-error-color: color-danger-default,
 
   // tree colors
-  tree-node-drag-preview-background-color: #ffffff,
+  tree-node-drag-preview-background-color: #f1f1f1,
   tree-node-drag-text-color: #353535,
 
   // Option colors
@@ -205,4 +204,4 @@ $theme: (
   icc-panel-border-color: #353535,
 );
 
-$icc-themes: icc-register-theme($theme, dark);
+$icc-themes: icc-register-theme($theme, custom);

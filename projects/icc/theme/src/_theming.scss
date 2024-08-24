@@ -1,11 +1,21 @@
+$icc-enable-css-custom-properties: false !default;
 
-// @import './variables/colors';
-@import './components';
+$icc-themes: ();
+$icc-processed-theme: ();
 
-@import './material/core';
-@import './material/light';
-@import './material/dark';
+html {
+  box-sizing: border-box;
+}
 
+*, *::before, *::after {
+  box-sizing: inherit;
+}
 
-@import './themes/light';
-@import './themes/dark';
+@import 'core/common';
+@import 'core/functions';
+@import 'core/variants';
+@import 'core/variables';
+@import 'components';
+@import 'reset';
+@import 'typography';
+@import 'themes';

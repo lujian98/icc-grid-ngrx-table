@@ -1,4 +1,209 @@
-:root,
-.icc-light-theme {
-  --icc-cdk-table-cell-border-color: rgba(0,0,0,.12);
-}
+$theme: (
+  color-primary-100: #f2f6ff,
+  color-basic-100: #ffffff,
+  color-basic-200: #fbfbfb,
+  color-basic-300: #f6f1ed,
+
+  // Status colors
+  color-basic-default: #4b4f54,
+  color-basic-transparent-active: #f1f1f1,
+  color-basic-transparent-hover: #f1f1f1,
+  color-basic-transparent-default: #f6f1ed,
+  color-basic-transparent-default-border: #d0c6bc,
+  color-primary-default: #f18a20,
+  color-warning-default: #eba500,
+  color-danger-default: #ff4f4f,
+  color-success-default: #00b188,
+  color-alternative-active: #863594,
+
+  // Backgrounds and borders
+  background-basic-color-1: color-basic-100,
+  background-basic-color-2: color-basic-200,
+  background-basic-color-3: color-basic-300,
+  border-basic-color-1: #d0c6bc,
+  border-basic-color-2: #d0c6bc,
+  background-alternative-1: #ffffff,
+  background-alternative-2: #ebe5e0,
+  background-alternative-3: #fbfbfb,
+
+  calendar-panel-background-color: background-basic-color-2,
+  calendar-weekdays-text-color: #757575,
+
+  calendar-month-day-text-color: color-basic-default,
+  calendar-month-today-border-color: color-basic-default,
+  calendar-month-day-selected-text-color: color-basic-default,
+  calendar-month-day-selected-background-color: #f8c48f,
+  calendar-month-day-hover-text-color: color-basic-default,
+  calendar-month-day-hover-background-color: #c5cbe9,
+
+  calendar-month-header-background-color: #fdeede,
+  calendar-month-header-text-color: color-basic-default,
+
+  crumbs-ellipsis-text-color: color-basic-default,
+  crumbs-ellipsis-background-color: background-alternative-2,
+  dropdown-background-color: #fff,
+  dropdown-border: #dedede,
+  dropdown-shadow-color: #dedede,
+  dropdown-submenu-border: #adadad,
+  dropdown-submenu-toggle-border: #dedede,
+  dropdown-header-tab-hover: #f1f1f1,
+  dropdown-text-color: color-basic-default,
+  dropdown-submenu-background: color-basic-100,
+  dropdown-submenu-hover: #f1f1f1,
+
+  background-alternative-green: #dff0d8,
+  background-alternative-red: #f2dede,
+  background-alternative-yellow: #fcf8e3,
+  border-alternative-green: #d6e9c6,
+  border-alternative-red: #ebccd1,
+  border-alternative-yellow: #faebcc,
+
+  base-button-bkg-color: #ffffff,
+  base-button-border-color: transparent,
+
+  form-field-input-border-color: #f6f1ed,
+  form-field-input-bkg-color: #fff,
+  form-field-focus-border-color: #d0c6bc,
+  form-field-focus-bkg-color: #f6f1ed,
+
+  radio-background-color: #ffffff,
+
+  tooltip-border-color: #767676,
+  tooltip-background-color: #f1f2f7,
+  tooltip-background-gradient: #fff,
+  tooltip-color: #000,
+
+  nvd3-nv-axis-tick-line-color: #e5e5e5,
+  progress-bar-background-color: #f1f1f1,
+  progress-bar-count-text-color: #ffffff,
+  progress-bar-fill-color: #f18a20,
+  sidebar-border-color: #d0c6bc,
+  slide-toggle-bar-background-color: #dedede,
+  slide-toggle-bar-checked-background-color: #00b188,
+  slide-toggle-thumb-background-color: #ffffff,
+
+  statistic-card-background-color: #fbfbfb,
+  statistic-card-border-color: #dedede,
+  statistic-card-text-color: #4b4f54,
+  statistic-card-item-label-color: #4b4f54,
+  statistic-card-item-border-color: #d0c6bc,
+
+  stepper-step-header-background-color: #adadad,
+  stepper-step-header-completed-background-color: #00b188,
+  stepper-step-header-selected-background-color: color-primary-default,
+  stepper-step-header-inner-background-color: #f1f1f1,
+  stepper-step-header-completed-inner-background-color: transparent,
+  stepper-step-header-selected-inner-background-color: #ffffff,
+  stepper-step-horizontal-line-border-color: #adadad,
+  stepper-step-horizontal-line-completed-border-color: #00b188,
+  stepper-step-header-label-color: #797979,
+  stepper-step-header-label-disabled-color: #adadad,
+  stepper-step-header-label-hover-color: #353535,
+  stepper-step-header-label-selected-color: #4b4f54,
+
+  tab-bar-background-color: #f1f1f1,
+  tab-border-color: #d0c6bc,
+  tab-active-border-color: transparent,
+
+  // Text colors
+  text-basic-color: color-basic-default,
+  text-alternative-color-1: color-basic-default,
+  text-alternative-color-2: color-basic-default,
+  text-alternative-color-3: #dedede,
+  text-alternative-color-4: #191919,
+  text-primary-color: color-primary-default,
+  text-secondary-color: #797979,
+  text-alternative-color-green: #3c763d,
+  text-alternative-color-red: #a94442,
+  text-alternative-color-yellow: #8a6d3b,
+
+  // Table Colors
+  table-border-color: #dedede,
+  table-header-background-color: #f6f1ed,
+  table-row-background-color: #fbfbfb,
+  table-row-even-background-color: #ffffff,
+  table-row-odd-background-color: #fbfbfb,
+  table-row-hover-background-color: #f6f1ed,
+  table-row-selected-background-color: #fdeede,
+  table-header-text-color: #797979,
+  table-row-text-color: #4b4f54,
+  table-label-text-color: #797979,
+
+  toast-close-icon-color: #adadad,
+  toast-default-color: color-primary-default,
+  toast-success-color: #00b188,
+  toast-warning-color: #e1e61e,
+  toast-error-color: color-danger-default,
+
+  // tree colors
+  tree-node-drag-preview-background-color: #8c8c8c,
+  tree-node-drag-text-color: #dedede,
+
+  // Option colors
+  option-hover-background-color: #f6f1ed,
+  option-selected-text-color: #000000,
+
+  // Banner Colors
+  banner-text-color: text-basic-color,
+  banner-background-color: background-basic-color-3,
+
+  // chart colors
+  bullet-chart-nv-range-min-color: #6ac48f,
+  bullet-chart-nv-range-avg-color: #ffd600,
+  bullet-chart-nv-range-max-color: #eb5757,
+  bullet-chart-nv-measure-color: #2f80ed,
+  bullet-chart-nv-title-color: #191919,
+  bullet-chart-nv-subtitle-color: #797979,
+  bullet-chart-placeholder-nv-range-min-color: #999,
+  bullet-chart-placeholder-nv-range-avg-color: #666,
+  bullet-chart-placeholder-nv-range-max-color: #333,
+
+  // Checkboxes
+  checkbox-border-color: #adadad,
+  checkbox-hover-border-color: #4b4f54,
+  checkbox-disabled-border-color: #dedede,
+  checkbox-background-color: #ffffff,
+  checkbox-disabled-background-color: #f1f1f1,
+  checkbox-checkmark-color: transparent,
+  checkbox-checked-checkmark-color: color-primary-default,
+  checkbox-disabled-checkmark-color: #dedede,
+
+  // Checkmark (Table checks)
+  checkmark-color: text-alternative-color-3,
+  checkmark-checked-color: color-primary-default,
+  checkmark-background-color: transparent,
+  checkmark-checked-background-color: transparent,
+
+  // Actions Toolbar Colors
+  actions-toolbar-background-color: #f6f1ed,
+  actions-toolbar-border-color: #d0c6bc,
+
+  // Extra variables
+  shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  divider-color: #ebe5e0,
+  outline-color: #dedede,
+  underline-color: #0f0f0f,
+
+  // Grid View Colors
+  grid-view-border-color: #d0c6bc,
+
+  // List Views color
+  list-views-button-color: #fff,
+  list-views-button-hover-color: #f6f1ed,
+  list-views-button-border-color: none,
+  list-views-button-border-hover-color: #d0c6bc,
+  list-views-background-color: #ebe5e0,
+  list-of-view-background-color: none,
+  list-views-heading-color: #f2ece6,
+  list-views-border-right-color: #d0c6bc,
+  list-views-search-background-hover-color: #f6f1ed,
+  list-views-text-color: #337ab7,
+
+  // Leaflet Map View
+  leaflet-map-filter: none,
+
+  // Panel Colors
+  icc-panel-border-color: #f6f1ed,
+);
+
+$icc-themes: icc-register-theme($theme, light);
