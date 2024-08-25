@@ -1,12 +1,23 @@
 $icc-mapping: (
 
-  checkbox-border-color: checkbox-border-color,
-  checkbox-hover-border-color: checkbox-hover-border-color,
-  checkbox-disabled-border-color: checkbox-disabled-border-color,
-  checkbox-background-color: checkbox-background-color,
-  checkbox-disabled-background-color: checkbox-disabled-background-color,
-  checkbox-checkmark-color: checkbox-checkmark-color,
-  checkbox-checked-checkmark-color: checkbox-checked-checkmark-color,
-  checkbox-disabled-checkmark-color: checkbox-disabled-checkmark-color,
+checkbox-border-color: checkbox-border-color,
+checkbox-hover-border-color: checkbox-hover-border-color,
+checkbox-disabled-border-color: checkbox-disabled-border-color,
+checkbox-background-color: checkbox-background-color,
+checkbox-disabled-background-color: checkbox-disabled-background-color,
+checkbox-checkmark-color: checkbox-checkmark-color,
+checkbox-checked-checkmark-color: checkbox-checked-checkmark-color,
+checkbox-disabled-checkmark-color: checkbox-disabled-checkmark-color,
+
+checkmark-color: checkmark-color,
+checkmark-checked-color: checkmark-checked-color,
+checkmark-background-color: checkmark-background-color,
+checkmark-checked-background-color: checkmark-checked-background-color,
+
+icon-default-color: color-basic-default,
+icon-primary-color: color-primary-default,
+icon-warning-color: color-warning-default,
+icon-danger-color: color-danger-default,
+icon-success-color: color-success-default,
 
 );

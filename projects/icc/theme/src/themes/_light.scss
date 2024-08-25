@@ -26,6 +26,22 @@ $theme: (
   background-alternative-2: #ebe5e0,
   background-alternative-3: #fbfbfb,
 
+  // Checkboxes
+  checkbox-border-color: #adadad,
+  checkbox-hover-border-color: #4b4f54,
+  checkbox-disabled-border-color: #dedede,
+  checkbox-background-color: #ffffff,
+  checkbox-disabled-background-color: #f1f1f1,
+  checkbox-checkmark-color: transparent,
+  checkbox-checked-checkmark-color: color-primary-default,
+  checkbox-disabled-checkmark-color: #dedede,
+
+  // Checkmark (Table checks)
+  checkmark-color: text-alternative-color-3,
+  checkmark-checked-color: color-primary-default,
+  checkmark-background-color: transparent,
+  checkmark-checked-background-color: transparent,
+
   // Panel Colors
   icc-panel-border-color: #f6f1ed,
 );
