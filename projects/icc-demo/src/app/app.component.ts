@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject, Renderer2 } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
-import { IccThemeService } from '@icc/ui/theme';
+import { IccThemeService, ICC_DOCUMENT } from '@icc/ui/theme';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
@@ -71,4 +71,23 @@ export class AppComponent {
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
   }
+
+  constructor(
+    protected renderer: Renderer2,
+    @Inject(ICC_DOCUMENT) protected document: Document,
+  ) {}
+
+  ngOnInit() { // TODO below should be in the @icc/ui/theme?
+    this.themeService
+      .onThemeChange()
+     // .pipe(takeWhile(() => this.alive))
+      .subscribe((theme: any) => {
+        const body = this.document.getElementsByTagName('body')[0];
+        if (theme.previous) {
+          this.renderer.removeClass(body, `icc-theme-${theme.previous}`);
+        }
+        this.renderer.addClass(body, `icc-theme-${theme.name}`);
+      });
+  }
+
 }

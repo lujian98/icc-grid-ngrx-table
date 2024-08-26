@@ -40,7 +40,6 @@ export class IccIconComponent implements OnChanges, OnInit {
 
   @HostBinding('class.status-primary')
   get primary() {
-    console.log( ' icon 9999 primary=', this.status)
     return this.status === 'primary';
   }
 
