@@ -23,6 +23,7 @@ export class IccThemeService {
   }
 
   changeTheme(name: string): void {
+    console.log( ' changeTheme=', name)
     if (this.platform.TRIDENT) {
       name = 'light';
     }

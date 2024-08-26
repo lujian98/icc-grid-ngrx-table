@@ -6,8 +6,8 @@
   --mdc-checkbox-state-layer-size: 16px;
 }
 
-// @import '../../icc/theme/src/themes';
-@import '../../../dist/icc/theming';
+@import '../../icc/theme/src/theming';
+//@import '../../../dist/icc/theming';
 
 //$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -15,7 +15,12 @@
 @import '@fortawesome/fontawesome-free/scss/solid.scss';
 @import '@fortawesome/fontawesome-free/scss/brands.scss';
 
+@include icc-install() {
+  @include icc-theme-components();
+};
+
 /* // Set box-sizing globally to handle padding and border widths */
+/*
 *,
 *:after, *:before {
   box-sizing: inherit;
@@ -24,7 +29,8 @@ html {
   box-sizing: border-box;
 }
 
-/* // Default body styles */
+
 body {
 	letter-spacing: .01em;
 }
+*/

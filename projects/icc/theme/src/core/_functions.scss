@@ -98,6 +98,7 @@
 
 @mixin icc-install-with-scss-vars() {
   @each $theme-name, $theme in $icc-themes {
+    //@warn "Theme: `icc-theme()` cannot find value for key `" + $theme (+"`");
     @include icc-pre-process-context($theme-name, $theme);
 
     .icc-theme-#{$theme-name} {
@@ -108,10 +109,12 @@
 
 @mixin icc-install() {
   @if ($icc-enable-css-custom-properties) {
+    //@warn "Theme: `icc-theme()` = custom-properties ";
     @include icc-install-with-css-props() {
       @content;
     }
   } @else {
+    //@warn "Theme: `icc-theme()` = with-scss-vars ";
     @include icc-install-with-scss-vars() {
       @content;
     }

@@ -4,9 +4,11 @@
   height: calc(100vh - 25px);
 
   .icc-top-nav-bar {
-    height: 50px;
+    display: flex;
+    //height: 50px;
     text-align: center;
-    color: Blue;
+    justify-content: center;
+    //color: Blue;
   }
 
   .icc-main-container {

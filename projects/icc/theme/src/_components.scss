@@ -1,7 +1,9 @@
-@import '../../checkbox//src/checkbox.component.theme';
+@import '../../checkbox/src/checkbox.component.theme';
 @import '../../icon/src/icon.component.theme';
+@import '../../about/src/about.component.theme';
 
 @mixin icc-theme-components() {
+  @include icc-about-theme();
   @include icc-checkbox-theme();
   @include icc-icon-theme();
 }

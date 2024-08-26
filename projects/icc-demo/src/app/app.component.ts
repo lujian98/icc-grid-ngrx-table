@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
+import { IccThemeService } from '@icc/ui/theme';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
@@ -9,6 +10,8 @@ import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+  private themeService = inject(IccThemeService);
+
   title = 'icc-demo';
   label = 'Test Button';
 
@@ -65,4 +68,7 @@ export class AppComponent {
 
   gridData = CARSDATA3;
 
+  toggleTheme(): void {
+    this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
+  }
 }

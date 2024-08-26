@@ -11,10 +11,12 @@ import { InMemoryService } from './mock/in-memory-service';
 import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { IccThemeModule } from '@icc/ui/theme';
 import { IccAboutModule } from '@icc/ui/about';
 import { IccGridModule } from '@icc/ui/grid';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
+import { IccIconModule } from '@icc/ui/icon';
 import { IccAccordionModule } from '@icc/ui/accordion';
 
 @NgModule({
@@ -31,7 +33,9 @@ import { IccAccordionModule } from '@icc/ui/accordion';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
+    IccThemeModule.forRoot({ name: 'dark' }),
     IccCheckboxModule,
+    IccIconModule,
     IccAboutModule,
     IccGridModule,
     IccDialogModule.forRoot(),

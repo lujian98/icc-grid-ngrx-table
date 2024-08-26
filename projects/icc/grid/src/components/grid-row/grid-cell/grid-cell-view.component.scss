@@ -2,6 +2,11 @@
   display: flex;
   flex: 1;
 
+  .grid-cell {
+    display: flex;
+    align-items: center;
+  }
+
   &.grid-cell-view-align-center {
     justify-content: center;
   }
