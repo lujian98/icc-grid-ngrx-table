@@ -6,6 +6,9 @@
   --mdc-checkbox-state-layer-size: 16px;
 }
 
+// @import '../../icc/theme/src/themes';
+@import '../../../dist/icc/theming';
+
 //$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '@fortawesome/fontawesome-free/scss/regular.scss';
