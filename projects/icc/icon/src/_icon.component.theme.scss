@@ -1,7 +1,7 @@
-@mixin sun-icon-theme() {
-  @each $status in sun-get-statuses() {
-    sun-icon.status-#{$status} {
-      color: sun-theme(icon-#{$status}-color);
+@mixin icc-icon-theme() {
+  @each $status in icc-get-statuses() {
+    icc-icon.status-#{$status} {
+      color: icc-theme(icon-#{$status}-color);
     }
   }
 }

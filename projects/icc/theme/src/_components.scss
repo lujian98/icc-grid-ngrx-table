@@ -1,5 +1,5 @@
-//@import '../button/button.component.theme';
+@import '../../icon/src/icon.component.theme';
 
 @mixin icc-theme-components() {
- // @include icc-button-theme();
+  @include icc-icon-theme();
 }
