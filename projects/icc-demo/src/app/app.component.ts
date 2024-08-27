@@ -18,22 +18,28 @@ export class AppComponent {
   // items = ['Item 1A', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
 
   items = [{
-    label: "item 1A",
+    title: "item 1A",
     items: [{
-      label: 'Menu 1',
+      title: 'Menu 1',
+      link: 'test',
     }, {
-      label: 'Menu 2',
+      title: 'Menu 2',
+      link: 'test',
     }, {
-      label: 'Menu 3',
+      title: 'Menu 3',
+      link: 'test',
     }]
   }, {
-    label: "item 1A",
+    title: "item 1A",
     items: [{
-      label: 'Menu 1',
+      title: 'Menu 1',
+      link: 'test',
     }, {
-      label: 'Menu 2',
+      title: 'Menu 2',
+      link: 'test',
     }, {
-      label: 'Menu 3',
+      title: 'Menu 3',
+      link: 'test',
     }]
   }]
 

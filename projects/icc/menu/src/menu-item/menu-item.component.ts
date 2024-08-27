@@ -18,6 +18,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuItem } from '../menu-item';
 import { IccMenuService } from '../menu.service';
@@ -31,6 +32,7 @@ import { IccMenuService } from '../menu.service';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IccIconModule,
   ],
   host: {
@@ -56,9 +58,9 @@ export class IccMenuItemComponent implements DoCheck, OnInit, AfterViewInit {
     // private elementRef: ElementRef,
     private iccMenuService: IccMenuService,
     protected cd: ChangeDetectorRef,
-   // protected overlayService: IccOverlayService,
-   // protected positionBuilderService: IccPositionBuilderService,
-   // protected triggerStrategyBuilder: IccTriggerStrategyBuilderService,
+    // protected overlayService: IccOverlayService,
+    // protected positionBuilderService: IccPositionBuilderService,
+    // protected triggerStrategyBuilder: IccTriggerStrategyBuilderService,
     //@Inject(MENU_PANEL_TOKEN) private componentType: Type<any>
   ) {
     // this.menuPanelComponent = componentType;

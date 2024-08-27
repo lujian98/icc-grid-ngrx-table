@@ -1,9 +1,8 @@
-<a
-  *ngIf="menuItem.url && !menuItem.children"
-  [attr.href]="menuItem.url"
-  [attr.target]="menuItem.target"
-  [class.active]="menuItem.selected"
-  (click)="onItemSelected(menuItem)"
+<a *ngIf="menuItem.link && !menuItem.children"
+  [routerLink]="menuItem.link"
+  [queryParams]="menuItem.queryParams"
+  [routerLinkActiveOptions]="menuItem.routerOptions || {}"
+  routerLinkActive="active"
   (click)="itemClicked($event, menuItem)">
   <icc-icon class="icc-menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></icc-icon>
   <span class="icc-menu-title">
