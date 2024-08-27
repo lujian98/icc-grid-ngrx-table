@@ -1,8 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { ReplaySubject, Observable } from 'rxjs';
 import { share, map, pairwise, filter, startWith } from 'rxjs/operators';
 
-import { ICC_THEME_OPTIONS } from './theme.options';
+import { ICC_THEME_OPTIONS, ICC_DOCUMENT } from './theme.options';
 import { IccMediaBreakpointsService, IccMediaBreakpoint } from './media-breakpoints.service';
 import { Platform } from '@angular/cdk/platform';
 
@@ -11,32 +11,43 @@ export class IccThemeService {
   currentTheme!: string;
   private themeChanges$ = new ReplaySubject(1);
   private windowWidthChanges$ = new ReplaySubject<number>(2);
+  private renderer!: Renderer2;
 
   constructor(
     @Inject(ICC_THEME_OPTIONS) protected options: any,
     private breakpointService: IccMediaBreakpointsService,
-    private platform: Platform
+    private platform: Platform,
+    private rendererFactory: RendererFactory2,
+    @Inject(ICC_DOCUMENT) protected document: Document,
   ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     if (options?.name) {
       this.changeTheme(options.name);
     }
   }
 
-  changeTheme(name: string): void {
-    console.log( ' xxxxxx changeTheme=', name)
+  changeTheme(current: string): void {
     if (this.platform.TRIDENT) {
-      name = 'light';
+      current = 'light';
     }
     this.themeChanges$.next({ name, previous: this.currentTheme });
-    this.currentTheme = name;
+    const previous = this.currentTheme;
+    this.currentTheme = current;
 
     localStorage.removeItem('currentTheme');
-    localStorage.setItem('currentTheme', name);
+    localStorage.setItem('currentTheme', current);
 
-    this.updateIframesTheme(name);
+    this.updateIframesTheme(current, previous);
   }
 
-  updateIframesTheme(name: string) {
+  updateIframesTheme(current: string, previous: string): void {
+    const body = this.document.getElementsByTagName('body')[0];
+    if (previous) {
+      this.renderer.removeClass(body, `icc-theme-${previous}`);
+    }
+    this.renderer.addClass(body, `icc-theme-${current}`);
+
+    /*
     const iframes = Array.prototype.slice.call(document.querySelectorAll('iframe'));
 
     if (iframes.length > 0) {
@@ -56,7 +67,7 @@ export class IccThemeService {
           // Ignore iframe preventing script access
         }
       });
-    }
+    }*/
   }
 
   changeWindowWidth(width: number): void {
