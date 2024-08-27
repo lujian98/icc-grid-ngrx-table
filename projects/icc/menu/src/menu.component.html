@@ -1,0 +1,14 @@
+<ul class="icc-menu-items">
+  <ng-container *ngFor="let item of items">
+    <li icc-menu-item *ngIf="!item.hidden"
+      [menuItem]="item"
+      [menuType]="menuType"
+      class="icc-menu-item header-menu-item"
+      [ngClass]="item.class!"
+      [menuItemTpl]="menuItemTpl"
+      (toggleSubMenu)="onToggleSubMenu($event)"
+      (click)="itemClicked($event, item)"
+      (selectItem)="onSelectItem($event)">
+    </li>
+  </ng-container>
+</ul>

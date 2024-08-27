@@ -1,0 +1,33 @@
+::ng-deep .icc-menu-item.menu-item-separator {
+  margin-top: 0.3125rem;
+  margin-bottom: 0.3125rem;
+  border-top-width: 1px;
+}
+
+ul.icc-menu-items {
+  .icc-menu-item {
+    padding: 0;
+
+    a {
+      flex-grow: 1;
+      padding-left: 0.625rem;
+      padding-right: 1.625rem;
+
+      .icc-menu-title {
+        padding: 0;
+      }
+    }
+
+    &.sub-menu-item {
+      a.active {
+        .icc-menu-title {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+a {
+  white-space: nowrap;
+}
