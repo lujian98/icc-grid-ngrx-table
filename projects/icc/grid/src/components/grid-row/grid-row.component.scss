@@ -3,4 +3,14 @@
   .icc-grid-cell-row-select {
     justify-content: center;
   }
+
+  icc-grid-cell {
+    border-style: solid;
+    border-color: grey;
+    border-width: 0px 0px 1px 1px;
+  }
+
+  icc-grid-cell:last-child {
+    border-right: solid 1px grey;
+  }
 }
