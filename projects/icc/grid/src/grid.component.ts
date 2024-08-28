@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccGridData, defaultGridConfig } from './models/grid-column.model';
@@ -9,7 +9,7 @@ import { IccColumnConfig, IccGridConfig, IccGridData, defaultGridConfig } from '
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IccGridComponent<T> {
+export class IccGridComponent<T> implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig: IccGridConfig = defaultGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
@@ -52,5 +52,9 @@ export class IccGridComponent<T> {
 
   refresh(): void {
     this.gridFacade.getGridData(this.gridConfig.gridName);
+  }
+
+  ngOnDestroy(): void {
+    this.gridFacade.clearGridDataStore(this.gridConfig.gridName);
   }
 }

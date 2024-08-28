@@ -15,16 +15,14 @@ export class AppComponent {
   title = 'icc-demo';
   label = 'Test Button';
 
-  // items = ['Item 1A', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
-
   items = [{
     title: "item 1A",
     items: [{
-      title: 'Menu 1',
-      link: 'test',
+      title: 'Grid Test',
+      link: 'grid-test',
     }, {
-      title: 'Menu 2',
-      link: 'test',
+      title: 'Grid Test 2',
+      link: 'grid-test2',
     }, {
       title: 'Menu 3',
       link: 'test',
@@ -43,19 +41,6 @@ export class AppComponent {
     }]
   }]
 
-  gridConfig: IccGridConfig = {
-    ...defaultGridConfig,
-    gridName: 'DCR',
-    remoteColumnsConfig: true,
-    remoteGridData: true,
-    pageSize: 200,
-    sortFields: [{
-      field: 'ID',
-      dir: 'desc',
-    }],
-    columnFilters: [{ name: 'vin', value: '9' }],
-    rowSelection: true,
-  }
 
   columnsConfig: IccColumnConfig[] = [{
     name: 'ID',

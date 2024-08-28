@@ -60,3 +60,8 @@ export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
   props<{gridName: string, gridData: IccGridData<any>}>()
 );
+
+export const clearGridDataStore = createAction(
+  '[Grid] Clear Grid Data Store',
+  props<{gridName: string}>()
+);

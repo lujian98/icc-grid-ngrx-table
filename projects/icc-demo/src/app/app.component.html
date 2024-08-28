@@ -10,11 +10,11 @@
 <div class="icc-main-container">
   <div class="icc-left-side-bar">
     <icc-accordion [items]="items"></icc-accordion>
+
   </div>
 
   <div class="icc-center-view">
-    <icc-grid [gridConfig]="gridConfig">
-    </icc-grid>
+    <router-outlet></router-outlet>
   </div>
 
 </div>
@@ -24,6 +24,8 @@
 </div>
 
 <!--
+
+
   <div (click)="toggleTheme()">
     Toggle Theme
   </div>

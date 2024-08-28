@@ -56,6 +56,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.getGridDataSuccess({ gridName, gridData }));
   }
 
+  clearGridDataStore(gridName: string): void {
+    this.store.dispatch(gridActions.clearGridDataStore({ gridName }));
+  }
+
   selectGridConfig(gridName: string): Observable<IccGridConfig> {
     return this.store.select(selectGridConfig(gridName));
   }

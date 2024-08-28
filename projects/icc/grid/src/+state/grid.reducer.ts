@@ -11,7 +11,8 @@ export const iccGridFeature = createFeature({
     initialState,
     on(gridActions.setupGridConfigSuccess, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
+      console.log( ' ooooo state =', state)
       newState[key] = {
         ...defaultState,
         gridConfig: action.gridConfig,
@@ -22,7 +23,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setupGridColumnsConfigSuccess, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         columnsConfig: action.columnsConfig.map((column) => {
@@ -40,7 +41,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setViewportPageSize, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
@@ -55,7 +56,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setGridSortFields, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
@@ -71,7 +72,7 @@ export const iccGridFeature = createFeature({
 
     on(gridActions.setGridColumnFilters, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
@@ -87,7 +88,7 @@ export const iccGridFeature = createFeature({
 
     on(gridActions.setViewportPage, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
@@ -102,7 +103,7 @@ export const iccGridFeature = createFeature({
     /*
     on(gridActions.setViewportScrollY, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
@@ -117,7 +118,7 @@ export const iccGridFeature = createFeature({
     }),*/
     on(gridActions.setGridColumnsConfig, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       newState[key] = {
         ...state[key],
         columnsConfig: state[key].columnsConfig.map((column) => {
@@ -134,7 +135,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridName;
-      const newState: IccGridState = {};
+      const newState: IccGridState = {...state };
       //console.log(' old state=', state)
       newState[key] = {
         ...state[key],
@@ -145,7 +146,15 @@ export const iccGridFeature = createFeature({
         totalCounts: action.gridData.totalCounts,
         data: action.gridData.data,
       };
-      //console.log(' new load data setup grid data = ', newState)
+      console.log(' new load data setup grid data = ', newState)
+      return {
+        ...newState,
+      }
+    }),
+    on(gridActions.clearGridDataStore, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {...state };
+      delete newState[key];
       return {
         ...newState,
       }
