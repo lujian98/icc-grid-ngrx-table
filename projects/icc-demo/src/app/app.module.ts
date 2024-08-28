@@ -6,6 +6,7 @@ import { IccAccordionModule } from '@icc/ui/accordion';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccThemeModule } from '@icc/ui/theme';
+import { IccLayoutModule } from '@icc/ui/layout';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -31,7 +32,8 @@ import { InMemoryService } from './mock/in-memory-service';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
-    IccThemeModule.forRoot({ name: 'dark' }),
+    IccThemeModule.forRoot({ name: 'light' }),
+    IccLayoutModule,
     IccIconModule,
     IccDialogModule.forRoot(),
     IccAccordionModule,

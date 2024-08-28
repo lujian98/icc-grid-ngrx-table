@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh);
+  width: 100%;
+  overflow-y: hidden;
+
+  ::ng-deep {
+    icc-layout-header {
+      display: flex;
+      height: 50px;
+      text-align: center;
+      justify-content: center;
+    }
+
+    icc-layout-footer {
+      height: 30px;
+      padding-top: 15px;
+      text-align: center;
+      color: orange;
+    }
+  }
+
+  .icc-main-container {
+    display: flex;
+    height: -webkit-fill-available;
+    width: 100%;
+    padding-right: 5px;
+  }
+}

@@ -1,3 +1,7 @@
+body {
+  margin: 0px;
+}
+
 icc-layout, .cdk-overlay-container { // Ideally would be scoped to body but don't want to conflict with legacy pages
   font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.75rem;

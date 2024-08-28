@@ -44,6 +44,18 @@ $theme: (
 
   // Panel Colors
   icc-panel-border-color: #353535,
+
+  // Text colors
+  text-basic-color: #adadad,
+  text-alternative-color-1: #cfcfcf,
+  text-alternative-color-2: #ffffff,
+  text-alternative-color-3: #797979,
+  text-alternative-color-4: #ffffff,
+  text-primary-color: color-primary-default,
+  text-secondary-color: #797979,
+  text-alternative-color-green: #3c763d,
+  text-alternative-color-red: #a94442,
+  text-alternative-color-yellow: #8a6d3b,
 );
 
 $icc-themes: icc-register-theme($theme, custom);

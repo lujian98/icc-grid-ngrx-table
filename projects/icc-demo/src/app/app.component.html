@@ -1,40 +1,21 @@
-<div class="icc-top-nav-bar"> Top Nav Bar
-  <div (click)="toggleTheme()">
-    Toggle Theme
-  </div>
-  <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
-</div>
+<icc-layout>
+  <icc-layout-header>
+    Top Nav Bar
+    <div (click)="toggleTheme()">
+      Toggle Theme
+    </div>
+    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+  </icc-layout-header>
 
-<div class="icc-main-container">
+
   <div class="icc-left-side-bar">
     <icc-accordion [items]="items"></icc-accordion>
-
   </div>
-
   <div class="icc-center-view">
     <router-outlet></router-outlet>
   </div>
 
-</div>
-
-<div class="icc-footer-bar"> Footer Bar
-
-</div>
-
-<!--
-
-
-  <div (click)="toggleTheme()">
-    Toggle Theme
-  </div>
-
-  <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
-  <icc-about></icc-about>
- <a sun-dropdown-item (click)="toggleTheme()">Toggle Theme</a>
-
-    <icc-checkbox>Checked</icc-checkbox>
-    <div></div>
-
-        [columnsConfig]="columnsConfig"
-        [gridData]="gridData"
--->
+  <icc-layout-footer>
+    Footer Bar
+  </icc-layout-footer>
+</icc-layout>

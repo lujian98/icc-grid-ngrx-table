@@ -12,7 +12,6 @@ export const iccGridFeature = createFeature({
     on(gridActions.setupGridConfigSuccess, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {...state };
-      console.log( ' ooooo state =', state)
       newState[key] = {
         ...defaultState,
         gridConfig: action.gridConfig,
@@ -146,7 +145,7 @@ export const iccGridFeature = createFeature({
         totalCounts: action.gridData.totalCounts,
         data: action.gridData.data,
       };
-      console.log(' new load data setup grid data = ', newState)
+      //console.log(' new load data setup grid data = ', newState)
       return {
         ...newState,
       }

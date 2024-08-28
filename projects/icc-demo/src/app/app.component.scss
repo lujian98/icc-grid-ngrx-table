@@ -1,35 +1,15 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 25px);
 
-  .icc-top-nav-bar {
-    display: flex;
-    height: 50px;
-    text-align: center;
-    justify-content: center;
-    //color: Blue;
+  // TODO move this to layout ???
+  .icc-left-side-bar {
+    width: 250px;
+    max-width: 400px;
+    padding-right: 10px;
   }
 
-  .icc-main-container {
+  .icc-center-view {
     display: flex;
+    width: 100%;
     height: -webkit-fill-available;
-    .icc-left-side-bar {
-      width: 250px;
-      max-width: 400px;
-      padding-right: 10px;
-    }
-    .icc-center-view {
-      display: flex;
-      width: 100%;
-      height: -webkit-fill-available;
-    }
-  }
-
-  .icc-footer-bar {
-    height: 30px;
-    padding-top: 15px;
-    text-align: center;
-    color: orange;
   }
 }
