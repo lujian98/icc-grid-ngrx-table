@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IccGridTestComponent } from './examples/grid/grid-test/grid-test.component';
-import { IccGridTest2Component } from './examples/grid/grid-test2/grid-test2.component';
 
 const routes: Routes = [
   {
-    path: 'grid-test',
-    component: IccGridTestComponent,
-  },
-  {
-    path: 'grid-test2',
-    component: IccGridTest2Component,
+    path: '',
+    children: [
+      {
+        path: 'grid',
+        loadChildren: () => import('./examples/grid/grid-examples.module').then((m) => m.AppGridExamplesModule),
+      },
+      {
+        path: '**',
+        redirectTo: '/grid',
+      },
+    ],
   },
 ];
 

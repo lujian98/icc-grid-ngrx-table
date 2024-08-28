@@ -11,18 +11,16 @@ import { IccThemeService } from '@icc/ui/theme';
 })
 export class AppComponent {
   private themeService = inject(IccThemeService);
-
   title = 'icc-demo';
-  label = 'Test Button';
 
   items = [{
-    title: "item 1A",
+    title: "Grid Examples",
     items: [{
       title: 'Grid Test',
-      link: 'grid-test',
+      link: 'grid/grid-test',
     }, {
       title: 'Grid Test 2',
-      link: 'grid-test2',
+      link: 'grid/grid-test2',
     }, {
       title: 'Menu 3',
       link: 'test',

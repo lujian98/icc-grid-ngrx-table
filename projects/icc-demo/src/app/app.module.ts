@@ -1,23 +1,21 @@
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IccAccordionModule } from '@icc/ui/accordion';
+import { IccDialogModule } from '@icc/ui/dialog';
+import { IccIconModule } from '@icc/ui/icon';
+import { IccThemeModule } from '@icc/ui/theme';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryService } from './mock/in-memory-service';
-import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IccThemeModule } from '@icc/ui/theme';
-import { IccAboutModule } from '@icc/ui/about';
-import { IccGridModule } from '@icc/ui/grid';
-import { IccDialogModule } from '@icc/ui/dialog';
-import { IccCheckboxModule } from '@icc/ui/checkbox';
-import { IccIconModule } from '@icc/ui/icon';
-import { IccAccordionModule } from '@icc/ui/accordion';
+import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
+import { InMemoryService } from './mock/in-memory-service';
+
 
 @NgModule({
   declarations: [
@@ -34,10 +32,7 @@ import { IccAccordionModule } from '@icc/ui/accordion';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
     IccThemeModule.forRoot({ name: 'dark' }),
-    IccCheckboxModule,
     IccIconModule,
-    IccAboutModule,
-    IccGridModule,
     IccDialogModule.forRoot(),
     IccAccordionModule,
   ],

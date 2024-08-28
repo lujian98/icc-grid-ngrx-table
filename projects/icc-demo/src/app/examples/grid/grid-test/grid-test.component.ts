@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
-  selector: 'icc-grid-test',
+  selector: 'app-grid-test',
   templateUrl: './grid-test.component.html',
   styleUrls: ['./grid-test.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,7 +13,7 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
     IccGridModule,
   ],
 })
-export class IccGridTestComponent {
+export class AppGridTestComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
