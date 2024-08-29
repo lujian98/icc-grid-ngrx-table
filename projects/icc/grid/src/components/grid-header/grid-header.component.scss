@@ -2,22 +2,15 @@
   display: flex;
   overflow-x: hidden;
 
-
   .icc-header-row-select {
     display: flex;
     height: 30px;
     align-items: center;
   }
 
-  .drag-placeholder {
-    //background-color: tint-color($c_primary, 50%);
-    //border: 1.5px dashed $c_primary;
-    z-index: 4;
-  }
-
   .resize-action {
     width: 10px;
-    height: 20px;
+    height: 60px; // TODO dynamic change with filter???
     position: absolute;
     right: -5px;
     z-index: 3;
@@ -39,7 +32,7 @@
       height: 20px;
       width: 1px;
       margin: auto;
-      //background-color: $border-color;
+     //background-color: red;
     }
 
     &:hover, &:active {

@@ -24,5 +24,27 @@
     icc-grid-cell:last-child {
       border-right: solid 1px icc-theme(border-basic-color-1);
     }
+
+    icc-grid-header {
+      .drag-placeholder {
+        background-color: red;
+        border: 1.5px dashed orange;
+        z-index: 4;
+      }
+    }
+  }
+
+  // preview must be outside
+  .cdk-drag {
+    cursor: move;
+
+    &-preview {
+      background-color: orange;
+      border: 1.5px dashed cyan;
+    }
+
+    &-disabled {
+      cursor: default;
+    }
   }
 }
