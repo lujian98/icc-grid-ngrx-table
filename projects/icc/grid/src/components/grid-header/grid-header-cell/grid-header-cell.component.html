@@ -1,4 +1,4 @@
-<div class="grid-header-cell">
+<div class="grid-header-cell" (mouseover)="mouseover=true" (mouseout)="mouseover=false">
   <div class="grid-header-cell-title" (click)="headCellClick($event)">{{ title }}</div>
 
   <ng-container *ngIf="isSortField">
@@ -15,8 +15,9 @@
   </ng-container>
 </div>
 
+<!--TODO mouse over show-->
 <ng-container>
   <button icc-button class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
-    <i class="fa-solid fa-bars"></i>
+    <i class="fa-solid fa-ellipsis-v"></i>
   </button>
 </ng-container>

@@ -24,6 +24,7 @@ export class IccGridHeaderCellComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
+  mouseover:boolean = false;
 
   get title(): string {
     return this.column.title === undefined ? this.column.name : this.column.title;
