@@ -1,6 +1,10 @@
 @mixin icc-grid-theme() {
   icc-grid {
 
+    icc-grid-header {
+      background-color: icc-theme(icc-grid-header-background-color);
+    }
+
     icc-grid-row:nth-child(odd) {
       background-color: icc-theme(icc-grid-row-odd-background-color);
       &:focus,
@@ -47,6 +51,12 @@
         border: 1.5px dashed orange;
         z-index: 4;
       }
+    }
+
+    input {
+      width: 100%;
+      border: solid 1px icc-theme(border-basic-color-1); // TODO color
+      background-color: icc-theme(icc-grid-row-hover-background-color);
     }
   }
 
