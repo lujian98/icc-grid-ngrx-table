@@ -1,5 +1,12 @@
 @mixin icc-grid-theme() {
   icc-grid {
+    icc-grid-row:nth-child(odd) icc-grid-cell {
+      background-color: icc-theme(icc-grid-row-odd-cell-background-color);
+    }
+
+    icc-grid-row:nth-child(2n) icc-grid-cell {
+      background-color: icc-theme(icc-grid-row-even-cell-background-color);
+    }
 
     icc-grid-header-item {
       border-style: solid;

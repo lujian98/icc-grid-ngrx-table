@@ -56,6 +56,12 @@ $theme: (
   text-alternative-color-green: #3c763d,
   text-alternative-color-red: #a94442,
   text-alternative-color-yellow: #8a6d3b,
+
+  //grid
+  icc-grid-row-odd-cell-background-color: #fbfbfb,
+  icc-grid-row-even-cell-background-color: #ffffff,
+
+
 );
 
 $icc-themes: icc-register-theme($theme, light);
