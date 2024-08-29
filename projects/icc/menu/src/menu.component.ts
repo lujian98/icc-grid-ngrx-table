@@ -10,6 +10,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 @Component({
   selector: 'icc-menu',
   templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss'],
 })
 export class IccMenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() items!: IccMenuItem[];
