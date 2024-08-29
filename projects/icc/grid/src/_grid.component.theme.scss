@@ -1,11 +1,20 @@
 @mixin icc-grid-theme() {
   icc-grid {
-    icc-grid-row:nth-child(odd) icc-grid-cell {
-      background-color: icc-theme(icc-grid-row-odd-cell-background-color);
+
+    icc-grid-row:nth-child(odd) {
+      background-color: icc-theme(icc-grid-row-odd-background-color);
+      &:focus,
+      &:hover {
+        background-color: icc-theme(icc-grid-row-hover-background-color);
+      }
     }
 
-    icc-grid-row:nth-child(2n) icc-grid-cell {
-      background-color: icc-theme(icc-grid-row-even-cell-background-color);
+    icc-grid-row:nth-child(2n)  {
+      background-color: icc-theme(icc-grid-row-even-background-color);
+      &:focus,
+      &:hover {
+        background-color: icc-theme(icc-grid-row-hover-background-color);
+      }
     }
 
     icc-grid-header-item {
