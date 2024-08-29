@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { DataGridColumnWithId } from '../../../models';
 import { IccGridCellViewComponent } from './grid-cell-view.component';
 import { IccColumnConfig } from '../../../models/grid-column.model';
 
@@ -26,7 +25,6 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   set record(data: T) {
     this._record = data;
     if(this._componentRef) {
-      //console.log( ' 22222 set record =', data)
       this._componentRef.instance.record = this.record;
     }
   }
@@ -34,7 +32,6 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     return this._record;
   }
 
-  //@ViewChild(IccGridCellDirective, {read: ViewContainerRef, static: true}) cellHost!: ViewContainerRef;
   ngOnInit(): void {
     this.viewContainerRef.clear();
     this.loadComponent();

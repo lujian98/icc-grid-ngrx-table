@@ -1,0 +1,28 @@
+@mixin icc-grid-theme() {
+  icc-grid {
+
+    icc-grid-header-item {
+      border-style: solid;
+      border-color: icc-theme(border-basic-color-1);
+      border-width: 1px 0px 1px 1px;
+    }
+
+    icc-grid-header-item:last-child {
+      border-right: solid 1px icc-theme(border-basic-color-1);
+    }
+
+    icc-text-filter {
+      border-top: 1px solid icc-theme(border-basic-color-1);
+    }
+
+    icc-grid-cell {
+      border-style: solid;
+      border-color: icc-theme(border-basic-color-1);
+      border-width: 0px 0px 1px 1px;
+    }
+
+    icc-grid-cell:last-child {
+      border-right: solid 1px icc-theme(border-basic-color-1);
+    }
+  }
+}

@@ -1,6 +1,4 @@
 :host {
- // min-height: $header-height;
- // padding: $cell-padding;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -8,13 +6,9 @@
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  //background-color: $c_white;
 
-  border-style: solid;
-  border-color: grey;
-  border-width: 1px 0px 1px 1px;
-  //padding: 0 10px;
- // line-height: 30px;
+
+
 
   &.cdk-drag {
     cursor: move;

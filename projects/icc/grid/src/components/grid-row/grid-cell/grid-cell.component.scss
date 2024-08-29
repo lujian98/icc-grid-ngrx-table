@@ -1,31 +1,13 @@
-//@import "../../../../styles/variables";
-
 :host {
   display: flex;
   width: 100%;
-  //padding: $cell-padding;
-  text-align: left;
-
-  //color: $text-color;
-  //border-bottom: 1px solid $border-color;
-
-
+  // text-align: center;
   padding: 0 10px;
   height: 24px;
 
- &.expandable-row {
-   justify-content: center;
-   align-items: center;
- }
-
- /*
-   .example-accordion-item:last-child {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-
-  @media screen and (max-width: 769px) {
-    padding: 0 $size-s;
+  /*
+  &.expandable-row {
+    justify-content: center;
+    align-items: center;
   }*/
-
 }

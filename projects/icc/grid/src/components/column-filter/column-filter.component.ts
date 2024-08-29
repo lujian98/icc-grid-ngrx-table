@@ -6,7 +6,6 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
 @Component({
   selector: 'icc-column-filter',
   templateUrl: 'column-filter.component.html',
-  //styleUrls: ['column-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [

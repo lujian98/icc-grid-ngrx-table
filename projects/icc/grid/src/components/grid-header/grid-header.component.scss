@@ -1,20 +1,12 @@
 :host {
   display: flex;
-  //height: 64px;
   overflow-x: hidden;
 
-  //@include display-grid();
-  //border-bottom: 2px solid $c_primary;
-
-  icc-grid-header-item:last-child {
-    border-right: solid 1px grey;
-  }
 
   .icc-header-row-select {
     display: flex;
     height: 30px;
     align-items: center;
-    //border-bottom: 1px solid;
   }
 
   .drag-placeholder {
