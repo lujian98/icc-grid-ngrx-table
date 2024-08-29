@@ -9,7 +9,7 @@
       }
     }
 
-    icc-grid-row:nth-child(2n)  {
+    icc-grid-row:nth-child(even)  {
       background-color: icc-theme(icc-grid-row-even-background-color);
       &:focus,
       &:hover {
