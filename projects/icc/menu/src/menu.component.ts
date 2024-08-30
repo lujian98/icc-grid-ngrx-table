@@ -20,6 +20,9 @@ export class IccMenuComponent {
   private setSelected(selected: IccMenuItem): void {
     this.items.forEach((item) => item.selected = false);
     selected.selected = true;
+    if(selected.checkbox) {
+      selected.checked = !selected.checked;
+    }
     //console.log(' this.items=', this.items)
   }
 }

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccMenuItem } from '../../models/menu-item.model';
 
 @Component({
@@ -19,6 +20,7 @@ import { IccMenuItem } from '../../models/menu-item.model';
     CommonModule,
     RouterModule,
     IccIconModule,
+    IccCheckboxModule,
   ],
 })
 export class IccMenuItemComponent {
@@ -41,5 +43,27 @@ export class IccMenuItemComponent {
 
   get title(): string {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
+  }
+
+  onCheckboxChange(event: any): void {
+    // console.log(' onCheckboxChange item=', event)
+    if(event.type === 'change') {
+      console.log(' onCheckboxChange item=', event)
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      console.log('xxxx onCheckboxChange item=', event)
+    }
+   // event.preventDefault();
+   // event.stopPropagation();
+   this.menuItem.selected = true;
+  }
+
+  onCheckboxClick(event: any): void {
+    console.log(' onCheckboxClick item=', event)
+    event.preventDefault();
+    event.stopPropagation();
+    this.menuItem.selected = true;
+
   }
 }

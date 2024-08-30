@@ -11,5 +11,8 @@ export interface IccMenuItem {
   link?: string;
   queryParams?: Params;
   routerOptions?: any;
+  checkbox?: boolean;
+  checked?: boolean;
   separator?: boolean;
+
 }

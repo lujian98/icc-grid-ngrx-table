@@ -4,7 +4,16 @@
   [routerLinkActiveOptions]="menuItem.routerOptions || {}"
   routerLinkActive="active"
 >
-
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon" ></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>
 </a>
+
+<div *ngIf="menuItem.checkbox" (click)="onCheckboxClick($event)">
+  <icc-checkbox
+    [checked]="!!menuItem.checked"
+    (change)="onCheckboxChange($event)"
+    >
+    <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon" ></icc-icon>
+    <span class="icc-menu-title"> {{ title }} </span>
+  </icc-checkbox>
+</div>

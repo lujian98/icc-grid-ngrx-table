@@ -19,12 +19,17 @@ export class AppComponent {
     items: [{
       name: 'Grid Test',
       link: 'grid/grid-test',
+      icon: 'arrows-rotate',
     }, {
       name: 'Grid Test 2',
       link: 'grid/grid-test2',
+      icon: 'arrows-rotate',
     }, {
       name: 'Menu 3',
-      link: 'test',
+      //link: 'test',
+      checkbox: true,
+      checked: true,
+      icon: 'arrows-rotate',
     }]
   }, {
     name: "item 1A",
