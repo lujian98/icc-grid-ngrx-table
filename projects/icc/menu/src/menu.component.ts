@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
@@ -11,6 +11,8 @@ export class IccMenuComponent {
   @Input() items: IccMenuItem[] = [];
   // @Input() menuType!: string;
 
+  @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
+
   onCheckboxChange(selectedItem: IccMenuItem): void { //checkbox emit here
     this.items = [...this.items].map(((item) => {
       return (item.name === selectedItem.name) ?
@@ -22,11 +24,13 @@ export class IccMenuComponent {
           ...item,
           selected: false,
         }
-    }))
+    }));
+    this.iccMenuItemChange.emit(selectedItem);
   }
 
-  itemClicked(event: MouseEvent, item: IccMenuItem) { // if checkbox no emit here
-    this.setSelected(item);
+  itemClicked(selectedItem: IccMenuItem) {
+    this.setSelected(selectedItem);
+    this.iccMenuItemChange.emit(selectedItem);
   }
 
   private setSelected(selectedItem: IccMenuItem): void {
