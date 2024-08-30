@@ -1,0 +1,10 @@
+<a *ngIf="menuItem.link"
+  [routerLink]="menuItem.link"
+  [queryParams]="menuItem.queryParams"
+  [routerLinkActiveOptions]="menuItem.routerOptions || {}"
+  routerLinkActive="active"
+>
+
+  <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon" ></icc-icon>
+  <span class="icc-menu-title"> {{ menuItem.title }} </span>
+</a>

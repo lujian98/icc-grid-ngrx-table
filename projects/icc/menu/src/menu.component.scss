@@ -2,12 +2,4 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  span {
-    align-items: center;
-    border-top: 1px solid gray;
-    &:focus,
-    &:hover {
-      background-color: lightgrey;
-    }
-  }
 }

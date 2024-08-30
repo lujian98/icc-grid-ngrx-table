@@ -1,6 +1,7 @@
 <ng-container *ngFor="let item of items">
-  <span icc-menu-item *ngIf="!item.hidden" [menuItem]="item" [menuType]="menuType"
-    class="icc-menu-item header-menu-item" [ngClass]="item.class!" [menuItemTpl]="menuItemTpl"
-    (click)="itemClicked($event, item)" (selectItem)="onSelectItem($event)">
-  </span>
+  <icc-menu-item *ngIf="!item.hidden"
+    [menuItem]="item"
+    (click)="itemClicked($event, item)"
+  >
+  </icc-menu-item>
 </ng-container>

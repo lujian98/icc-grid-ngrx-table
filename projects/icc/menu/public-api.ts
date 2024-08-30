@@ -1,6 +1,5 @@
 
-export * from './src/menu-item';
-export * from './src/menu-item/menu-item.component';
+export * from './src/models/menu-item.model';
+export * from './src/components/menu-item/menu-item.component';
 export * from './src/menu.component';
-export * from './src/menu.service';
 export * from './src/menu.module';

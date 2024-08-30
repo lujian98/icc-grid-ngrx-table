@@ -4,11 +4,24 @@
   padding: 0px 15px;
   width: 100%;
 
+
+  align-items: center;
+  border-top: 1px solid gray;
+  &:focus,
+  &:hover {
+    background-color: lightgrey;
+  }
+
+  &.selected {
+    //color: cyan; //sun-theme(option-selected-text-color);
+    background-color: cyan;
+    font-weight: bold;
+  }
+
+
   a {
       width: 100%;
       border: none;
-
-
     }
   }
 

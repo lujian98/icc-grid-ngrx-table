@@ -1,9 +1,7 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccMenuComponent } from './menu.component';
-import { IccMenuItemComponent } from './menu-item/menu-item.component';
-import { IccMenuService } from './menu.service';
-import { PortalModule } from '@angular/cdk/portal';
+import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
@@ -11,16 +9,8 @@ import { PortalModule } from '@angular/cdk/portal';
   ],
   imports: [
     CommonModule,
-    PortalModule,
     IccMenuItemComponent,
   ],
   exports: [IccMenuComponent],
 })
-export class IccMenuModule {
-  static forRoot(): ModuleWithProviders<IccMenuModule> {
-    return {
-      ngModule: IccMenuModule,
-      providers: [IccMenuService],
-    };
-  }
-}
+export class IccMenuModule { }

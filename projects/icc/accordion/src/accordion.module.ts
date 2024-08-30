@@ -5,7 +5,7 @@ import { IccAccordionComponent } from './accordion.component';
 import { IccMenuModule } from '@icc/ui/menu';
 
 @NgModule({
-  imports: [CommonModule, CdkAccordionModule, IccMenuModule.forRoot()],
+  imports: [CommonModule, CdkAccordionModule, IccMenuModule],
   declarations: [IccAccordionComponent],
   exports: [IccAccordionComponent],
 })
