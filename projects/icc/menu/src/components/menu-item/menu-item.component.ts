@@ -38,4 +38,8 @@ export class IccMenuItemComponent {
   get disabled() {
     return this.menuItem.disabled;
   }
+
+  get title(): string {
+    return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
+  }
 }

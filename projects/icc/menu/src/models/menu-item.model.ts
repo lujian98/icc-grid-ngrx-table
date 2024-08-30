@@ -3,7 +3,7 @@ import { Params } from '@angular/router';
 
 export interface IccMenuItem {
   name: string;
-  title: string;
+  title?: string;
   selected?: boolean;
   hidden?: boolean;
   disabled?: boolean;

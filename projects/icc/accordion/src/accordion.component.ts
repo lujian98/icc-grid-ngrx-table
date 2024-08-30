@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IccAccordion } from './models/accordion.model';
 
 @Component({
   selector: 'icc-accordion',
@@ -8,10 +8,13 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccAccordionComponent {
-  @Input() items: any[] = [];
+  @Input() items: IccAccordion[] = [];
 
   isExpaneded(index: number): boolean {
     return index === 0;
   }
 
+  getTitle(item: IccAccordion): string {
+    return item.title === undefined ? item.name : item.title;
+  }
 }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 import { IccThemeService } from '@icc/ui/theme';
+import { IccAccordion } from '@icc/ui/accordion';
 
 @Component({
   selector: 'app-root',
@@ -13,28 +14,28 @@ export class AppComponent {
   private themeService = inject(IccThemeService);
   title = 'icc-demo';
 
-  items = [{
-    title: "Grid Examples",
+  items: IccAccordion[] = [{
+    name: "Grid Examples",
     items: [{
-      title: 'Grid Test',
+      name: 'Grid Test',
       link: 'grid/grid-test',
     }, {
-      title: 'Grid Test 2',
+      name: 'Grid Test 2',
       link: 'grid/grid-test2',
     }, {
-      title: 'Menu 3',
+      name: 'Menu 3',
       link: 'test',
     }]
   }, {
-    title: "item 1A",
+    name: "item 1A",
     items: [{
-      title: 'Menu 1',
+      name: 'Menu 1',
       link: 'test',
     }, {
-      title: 'Menu 2',
+      name: 'Menu 2',
       link: 'test',
     }, {
-      title: 'Menu 3',
+      name: 'Menu 3',
       link: 'test',
     }]
   }]
