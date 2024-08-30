@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
-  Input
+  Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccIconModule } from '@icc/ui/icon';
@@ -27,6 +29,8 @@ export class IccMenuItemComponent {
   @Input() menuItem!: IccMenuItem;
   @Input() menuType!: string;
 
+  @Output() iccCheckboxChange = new EventEmitter<IccMenuItem>(true);
+
   @HostBinding('class.menu-item-separator')
   get separator() {
     return this.menuItem.separator;
@@ -45,25 +49,13 @@ export class IccMenuItemComponent {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
 
-  onCheckboxChange(event: any): void {
-    // console.log(' onCheckboxChange item=', event)
-    if(event.type === 'change') {
-      console.log(' onCheckboxChange item=', event)
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      console.log('xxxx onCheckboxChange item=', event)
+  onCheckboxChange(event: boolean | MouseEvent): void {
+    if(typeof event === 'boolean') {
+      //console.log( ' rrrrrrrr checked=', event)
+      this.iccCheckboxChange.emit({
+        ...this.menuItem,
+        checked: event,
+      })
     }
-   // event.preventDefault();
-   // event.stopPropagation();
-   this.menuItem.selected = true;
-  }
-
-  onCheckboxClick(event: any): void {
-    console.log(' onCheckboxClick item=', event)
-    event.preventDefault();
-    event.stopPropagation();
-    this.menuItem.selected = true;
-
   }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IccAccordionModule } from '@icc/ui/accordion';
+import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccThemeModule } from '@icc/ui/theme';
@@ -33,6 +34,7 @@ import { InMemoryService } from './mock/in-memory-service';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
     IccThemeModule.forRoot({ name: 'light' }),
+    IccCheckboxModule,
     IccLayoutModule,
     IccIconModule,
     IccDialogModule.forRoot(),

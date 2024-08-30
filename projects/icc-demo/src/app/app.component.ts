@@ -66,4 +66,8 @@ export class AppComponent {
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
   }
+
+  onCheckboxChange(event: any): void {
+    console.log( ' 999999 event=', event)
+  }
 }

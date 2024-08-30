@@ -9,6 +9,7 @@ import {
   ElementRef,
   Directive,
   HostBinding,
+  HostListener,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -41,8 +42,8 @@ export class IccCheckboxComponent implements ControlValueAccessor {
 
   @Output() change = new EventEmitter<boolean>();
 
-  protected onChange = (value: any) => {};
-  protected onTouched = () => {};
+  protected onChange = (value: any) => { };
+  protected onTouched = () => { };
 
   @Input()
   get checked(): boolean {
@@ -68,7 +69,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     this._indeterminate = coerceBooleanProperty(value);
   }
 
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef) { }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -104,5 +105,13 @@ export class IccCheckboxComponent implements ControlValueAccessor {
 
   focus(): void {
     this.inputEl.nativeElement.focus();
+  }
+
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    if (event.type === 'click') {
+      this.checked = !this.checked;
+      this.change.emit(this.checked);
+      this.onChange(this.checked);
+    }
   }
 }
