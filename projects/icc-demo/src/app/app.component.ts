@@ -17,22 +17,18 @@ export class AppComponent {
   items: IccAccordion[] = [{
     name: "Grid Remote Data",
     items: [
-      { name: 'Simple Grid', link: 'grid/remote-simple-grid', },
-      { name: 'Grid Sort', link: 'grid/remote-grid-sort', },
-      { name: 'Grid Filter', link: 'grid/remote-grid-filter', },
-      { name: 'Grid Column Resize', link: 'grid/remote-grid-column-resize', },
-      { name: 'Grid Column Reorder', link: 'grid/remote-grid-column-reorder', },
-      { name: 'Grid Column Menu', link: 'grid/remote-grid-column-menu', },
-
-      {
-      name: 'Grid Test',
-      link: 'grid/grid-test',
-      icon: 'arrows-rotate',
-    }, {
-      name: 'Grid Test 2',
-      link: 'grid/grid-test2',
-      icon: 'arrows-rotate',
-    }]
+      { name: '1: Simple Grid', link: 'grid/remote-simple-grid', },
+      { name: '2: Grid Sort', link: 'grid/remote-grid-sort', },
+      { name: '3: Grid Filter', link: 'grid/remote-grid-filter', },
+      { name: '4: Grid Column Resize', link: 'grid/remote-grid-column-resize', },
+      { name: '5: Grid Column Reorder', link: 'grid/remote-grid-column-reorder', },
+      { name: '6: Grid Column Menu', link: 'grid/remote-grid-column-menu', },
+      { name: '7: Grid Column Hidden', link: 'grid/remote-grid-column-hidden', },
+      { name: '8: Grid Remote Column Config', link: 'grid/remote-grid-remote-column-config', },
+      { name: '9: Grid Row Seletion', link: 'grid/remote-grid-row-selection', },
+      { name: '12: Grid Overall', link: 'grid/remote-grid-overall', },
+      //{ name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
+    ]
   }, {
     name: "item 1A",
     items: [{
