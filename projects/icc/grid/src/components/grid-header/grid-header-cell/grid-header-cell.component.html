@@ -1,19 +1,18 @@
-<div class="grid-header-cell" (mouseover)="mouseover=true" (mouseout)="mouseover=false" (click)="headCellClick($event)">
+<div class="grid-header-cell" (click)="headCellClick($event)">
   <div class="grid-header-cell-title" >{{ title }}</div>
 
   <ng-container *ngIf="isSortField">
-    <button *ngIf="sortDir==='asc'" class="grid-header-cell-sort">
-      <i class="fa-solid fa-caret-up"></i>
-    </button>
-    <button *ngIf="sortDir==='desc'" class="grid-header-cell-sort">
-      <i class="fa-solid fa-caret-down"></i>
-    </button>
+    <div *ngIf="sortDir==='asc'" class="grid-header-cell-sort">
+      <icc-icon config="caret-up" ></icc-icon>
+    </div>
+    <div *ngIf="sortDir==='desc'" class="grid-header-cell-sort">
+      <icc-icon config="caret-down" ></icc-icon>
+    </div>
   </ng-container>
 </div>
 
-<!--TODO mouse over show-->
 <ng-container>
-  <button icc-button class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
-    <i class="fa-solid fa-ellipsis-v"></i>
-  </button>
+  <div class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
+    <icc-icon config="ellipsis-v" ></icc-icon>
+  </div>
 </ng-container>

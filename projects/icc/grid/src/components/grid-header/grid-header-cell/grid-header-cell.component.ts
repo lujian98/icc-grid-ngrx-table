@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
 import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverModule } from '@icc/ui/popover';
+import { IccIconModule } from '@icc/ui/icon';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
@@ -15,6 +16,7 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   imports: [
     CommonModule,
     IccPopoverModule,
+    IccIconModule,
     IccGridColumnMenuComponent,
   ],
   providers: [IccDynamicOverlayService],
@@ -24,7 +26,6 @@ export class IccGridHeaderCellComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
-  mouseover:boolean = false;
 
   get title(): string {
     return this.column.title === undefined ? this.column.name : this.column.title;
