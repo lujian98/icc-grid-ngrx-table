@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccMenuItem, IccMenuModule } from '@icc/ui/menu';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
@@ -18,64 +18,77 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
-  gridConfig$!: Observable<IccGridConfig>;
-  columnsConfig$!: Observable<IccColumnConfig[]>;
+  columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   private _gridName!: string;
+  private gridConfig!: IccGridConfig;
+  private columns!: IccColumnConfig[];
+  private _menuItems: IccMenuItem[] = [];
 
   @Input()
   set gridName(val: string) {
     this._gridName = val;
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridName);
+    this.columnMenus$ = combineLatest([
+      this.gridFacade.selectGridConfig(this.gridName),
+      this.gridFacade.selectColumnsConfig(this.gridName),
+    ])
+      .pipe(
+        map(([gridConfig, columns]) => {
+          this.gridConfig = gridConfig;
+          this.columns = columns;
+          this.setMenuItems();
+          return [gridConfig, columns];
+        })
+      );
+
   }
   get gridName(): string {
     return this._gridName;
   }
+
   @Input() column!: IccColumnConfig;
 
-  getMenuItems(gridConfig: IccGridConfig, columns: IccColumnConfig[]): IccMenuItem[] {
+  set menuItems(val: IccMenuItem[]) {
+    this._menuItems = val;
+  }
+  get menuItems(): IccMenuItem[] {
+    return this._menuItems;
+  }
+
+  private setMenuItems(): void {
     const menuItems = [{
       name: 'asc',
       title: 'Sort ASC',
       icon: 'arrow-up-short-wide',
-      disabled: !gridConfig.columnSort || this.column.sortField === false,
+      disabled: this.sortDisabled('asc'),
     }, {
       name: 'desc',
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
-      disabled: !gridConfig.columnSort || this.column.sortField === false,
+      disabled: this.sortDisabled('desc'),
     }];
-    const columnItems = [...columns].map((column) => {
+    const columnItems = [...this.columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
-        disabled: !gridConfig.columnHidden || this.column.sortField === false
+        disabled: !this.gridConfig.columnHidden || this.column.sortField === false
       }
     });
-    return [...menuItems, ...columnItems];
+    this.menuItems = [...menuItems, ...columnItems];
   }
 
-  /*
-
-  getSortDisabled(gridConfig: IccGridConfig, dir: string): boolean {
-    const sortField = this.findSortField(gridConfig);
-    return (this.column.sortField === false) || (!!sortField && sortField.dir === dir);
-  }
-
-  private findSortField(gridConfig: IccGridConfig): IccSortField | undefined {
-    return gridConfig.sortFields.find((field) => field.field === this.column.name);
-  } */
-
-
-
-  onMenuItemChange(item: IccMenuItem, columns: IccColumnConfig[]): void {
+  onMenuItemChange(item: IccMenuItem): void {
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.checkbox) {
-      this.columnHideShow(item, columns);
+      this.columnHideShow(item, this.columns);
     }
+  }
+
+  private sortDisabled(dir: string): boolean {
+    const sortField = this.gridConfig.sortFields.find((field) => field.field === this.column.name);
+    return (!this.gridConfig.columnSort) || (this.column.sortField === false) || (!!sortField && sortField.dir === dir);
   }
 
   private columnSort(dir: string): void {
@@ -87,7 +100,7 @@ export class IccGridColumnMenuComponent {
   }
 
   private columnHideShow(item: IccMenuItem, columns: IccColumnConfig[]): void {
-    const column = columns.find((col) => col.name === item.name)!;
+    const column = this.columns.find((col) => col.name === item.name)!;
     const col: IccColumnConfig = {
       ...column,
       hidden: !item.checked,

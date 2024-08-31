@@ -1,9 +1,4 @@
-<ng-container *ngIf="gridConfig$ | async as gridConfig">
-  <ng-container *ngIf="columnsConfig$ | async as columns">
-    <icc-menu
-      [items]="getMenuItems(gridConfig, columns)"
-      (iccMenuItemChange)="onMenuItemChange($event, columns)"
-      >
-    </icc-menu>
-  </ng-container>
+<ng-container *ngIf="columnMenus$ | async as vm">
+  <icc-menu [items]="menuItems" (iccMenuItemChange)="onMenuItemChange($event)">
+  </icc-menu>
 </ng-container>
