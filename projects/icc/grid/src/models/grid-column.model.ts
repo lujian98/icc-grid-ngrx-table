@@ -6,15 +6,19 @@ export interface IccSortField {
 export interface IccGridConfig {
   gridName: string;
   urlKey?: string;
-  remoteColumnsConfig: boolean,
-  remoteGridData: boolean,
+  enableSort: boolean;
+  enableFilter: boolean;
+  rowSelection: boolean;
+
+  remoteColumnsConfig: boolean;
+  remoteGridData: boolean;
   page: number;
   pageSize: number;
   viewportWidth: number;
   totalCounts: number;
-  sortFields: IccSortField[],
-  columnFilters: IccColumnFilter[],
-  rowSelection: boolean;
+  sortFields: IccSortField[];
+  columnFilters: IccColumnFilter[];
+
 
   hasScrollY: boolean,
   columnReorder: boolean;

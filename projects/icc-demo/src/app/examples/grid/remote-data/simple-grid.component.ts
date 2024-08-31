@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
-  selector: 'app-grid-test2',
+  selector: 'app-simple-grid',
   template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,21 +13,14 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
     IccGridModule,
   ],
 })
-export class AppGridTest2Component {
+export class AppSimpleGridComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR2',
+    gridName: 'DCR1',
     urlKey: 'DCR',
-    enableSort: true,
-    enableFilter: true,
-
+    //enableSort: false,
+    //enableFilter: false,
     remoteColumnsConfig: true,
     remoteGridData: true,
-    sortFields: [{
-      field: 'ID',
-      dir: 'desc',
-    }],
-    columnFilters: [],
-    rowSelection: true,
   }
 }

@@ -44,7 +44,7 @@ export class IccGridHeaderCellComponent {
   }
 
   headCellClick(event: MouseEvent): void {
-    if(this.column.sortField !== false) {
+    if(this.gridConfig.enableSort && this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
       if (find) {

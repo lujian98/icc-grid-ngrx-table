@@ -1,7 +1,7 @@
 <div class="grid-header-cell" (click)="headCellClick($event)">
   <div class="grid-header-cell-title" >{{ title }}</div>
 
-  <ng-container *ngIf="isSortField">
+  <ng-container *ngIf="gridConfig.enableSort && isSortField">
     <div *ngIf="sortDir==='asc'" class="grid-header-cell-sort">
       <icc-icon config="caret-up" ></icc-icon>
     </div>

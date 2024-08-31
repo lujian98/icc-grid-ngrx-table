@@ -21,11 +21,13 @@
       [gridConfig]="gridConfig"
     >
     </icc-grid-header-cell>
-    <icc-column-filter
+
+    <icc-column-filter *ngIf="gridConfig.enableFilter"
       [gridConfig]="gridConfig"
       [column]="column"
     >
     </icc-column-filter>
+
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
     <div class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>

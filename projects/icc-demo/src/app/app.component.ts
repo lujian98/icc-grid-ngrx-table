@@ -17,6 +17,9 @@ export class AppComponent {
   items: IccAccordion[] = [{
     name: "Grid Remote Data",
     items: [{
+      name: 'Simple Grid',
+      link: 'grid/simple-grid',
+    }, {
       name: 'Grid Test',
       link: 'grid/grid-test',
       icon: 'arrows-rotate',

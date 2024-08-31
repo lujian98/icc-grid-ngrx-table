@@ -33,8 +33,8 @@ export class IccGridColumnMenuComponent {
   }
   @Input() column!: IccColumnConfig;
 
-  getMenuItems(columns: IccColumnConfig[]): IccMenuItem[] {
-    const menuItems = [{
+  getMenuItems(gridConfig: IccGridConfig, columns: IccColumnConfig[]): IccMenuItem[] {
+    const menuItems = gridConfig.enableSort ? [{
       name: 'asc',
       title: 'Sort ASC',
       icon: 'arrow-up-short-wide',
@@ -42,7 +42,7 @@ export class IccGridColumnMenuComponent {
       name: 'desc',
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
-    }];
+    }]: [];
     const columnItems = [...columns].map((column) => {
       return {
         name: column.name,

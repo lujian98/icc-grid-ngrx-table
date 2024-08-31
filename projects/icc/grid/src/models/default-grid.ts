@@ -3,6 +3,10 @@ import { IccGridConfig, GridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
+  enableSort: false,
+  enableFilter: false,
+  rowSelection: false,
+
   remoteColumnsConfig: true,
   remoteGridData: true,
   page: 1,
@@ -11,7 +15,7 @@ export const defaultGridConfig: IccGridConfig = {
   totalCounts: 0,
   sortFields: [],
   columnFilters: [],
-  rowSelection: false,
+
 
   hasScrollY: false,
   columnReorder: false,
