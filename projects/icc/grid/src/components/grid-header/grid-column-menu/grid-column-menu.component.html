@@ -1,20 +1,27 @@
 <ng-container *ngIf="gridConfig$ | async as gridConfig">
-  <button (click)="columnSort('asc')" [disabled]="getSortDisabled(gridConfig, 'asc')">
-    <i class="fa-solid fa-arrow-up-short-wide"></i>
-    Sort ASC
-  </button>
-  <button (click)="columnSort('desc')" [disabled]="getSortDisabled(gridConfig, 'desc')">
-    <i class="fa-solid fa-arrow-down-wide-short"></i>
-    Sort DESC
-  </button>
+  <ng-container *ngFor="let item of sortItems">
+    <icc-menu-item
+    [menuItem]="item"
+    (click)="columnSort(item.name)"
+    >
+    </icc-menu-item>
+  </ng-container>
 </ng-container>
-
-<ng-container *ngIf="columnsConfig$ | async as columns">
+<!--
   <ng-container *ngFor="let column of columns; let index = index;">
-    <button (click)="columnHideShow(column)" popoverMenuItem="true">
+    <button (click)="columnHideShow(column); $event.stopPropagation()" popoverMenuItem="true">
       <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">
         <div class="checkbox-label" popoverMenuItem="true">{{getTitle(column)}}</div>
       </icc-checkbox>
     </button>
+  </ng-container>
+-->
+<ng-container *ngIf="columnsConfig$ | async as columns">
+  <ng-container *ngFor="let item of getColumnItems(columns); let index = index;">
+    <icc-menu-item
+    [menuItem]="item"
+    (iccCheckboxChange)="columnHideShow($event, columns)"
+    >
+    </icc-menu-item>
   </ng-container>
 </ng-container>

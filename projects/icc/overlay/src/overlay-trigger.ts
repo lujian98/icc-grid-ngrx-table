@@ -27,6 +27,7 @@ export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
 
   abstract show$: Observable<Event>;
   abstract hide$: Observable<Event>;
+  //protected containerBox!: DOMRect;
 
   destroy() {
     this.alive = false;
@@ -37,7 +38,8 @@ export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
     protected host: HTMLElement,
     protected container: () => ComponentRef<any>,
     //protected formField?: IccFormFieldComponent
-  ) {}
+  ) {
+  }
 }
 
 export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
@@ -57,13 +59,15 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   hide$ = this.click$.pipe(
     filter(
       ([shouldShow, event]) => {
-        const container = this.container() && this.container().location.nativeElement.contains(event.target);
+        //const container = this.container() && this.container().location.nativeElement.contains(event.target);
+        const box = this.container() && this.container().location.nativeElement.getBoundingClientRect();
         if(this.firstTime) {
           this.firstTime = false;
-          return shouldShow && !container;
+          return shouldShow; // && !container;
         }
-        const popoverMenuItem = (event.target as Element).attributes.getNamedItem('popoverMenuItem')
-        return !shouldShow && !(popoverMenuItem || container);
+        const {x, y} = event as MouseEvent;
+        const show = box.top < y && y < box.bottom && box.left < x && x < box.right;
+        return !shouldShow && !(show);
       }
     ),
     map(([, event]) => event),
