@@ -42,4 +42,9 @@ export class IccGridCellViewComponent<T> {
   get alignCenter() {
     return this.align === 'center';
   }
+
+  @HostBinding('class.grid-cell-view-align-right')
+  get alignRight() {
+    return this.align === 'right';
+  }
 }

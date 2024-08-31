@@ -12,7 +12,7 @@ export const defaultGridConfig: IccGridConfig = {
 
   rowSelection: false,
 
-  remoteColumnsConfig: true,
+  remoteColumnsConfig: false,
   remoteGridData: true,
   page: 1,
   pageSize: 20,

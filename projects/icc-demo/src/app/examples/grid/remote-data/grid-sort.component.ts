@@ -13,19 +13,16 @@ import { IccColumnConfig, IccGridConfig, IccGridModule, defaultGridConfig } from
     IccGridModule,
   ],
 })
-export class AppSimpleGridComponent {
+export class AppGridSortComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR1',
     urlKey: 'DCR',
-    //columnSort: true,
-    //columnFilter: true,
-    //columnResize: true,
-    //columnReorder: true,
-    //columnMenu: true,
-    //columnHidden: true,
-    //remoteColumnsConfig: false,
-
+    columnSort: true,
+    sortFields: [{
+      field: 'brand',
+      dir: 'desc',
+    }],
     remoteGridData: true,
   }
 

@@ -18,7 +18,10 @@ export class AppComponent {
     name: "Grid Remote Data",
     items: [{
       name: 'Simple Grid',
-      link: 'grid/simple-grid',
+      link: 'grid/remote-simple-grid',
+    }, {
+      name: 'Grid Sort',
+      link: 'grid/remote-grid-sort',
     }, {
       name: 'Grid Test',
       link: 'grid/grid-test',
