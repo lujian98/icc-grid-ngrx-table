@@ -12,19 +12,16 @@ export interface IccGridConfig {
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
-
-  rowSelection: boolean;
-
   remoteColumnsConfig: boolean;
-  remoteGridData: boolean;
-  page: number;
-  pageSize: number;
-  viewportWidth: number;
-  totalCounts: number;
+  rowSelection: boolean;
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
+  page: number;
+  pageSize: number;
+  totalCounts: number;
+  remoteGridData: boolean;
 
-
+  viewportWidth: number;
   hasScrollY: boolean,
 }
 
@@ -44,31 +41,6 @@ export interface IccGridData<T> {
   data: T[];
   totalCounts: number;
 }
-
-/*
-export const defaultGridConfig: IccGridConfig = {
-  gridName: 'test',
-  remoteColumnsConfig: true,
-  remoteGridData: true,
-  page: 1,
-  pageSize: 20,
-  viewportWidth: 1000,
-  totalCounts: 0,
-  sortFields: [],
-  columnFilters: [],
-  rowSelection: false,
-
-  hasScrollY: false,
-  columnReorder: false,
-  columnResize: false,
-}
-
-export const defaultState: GridState = {
-  gridConfig: defaultGridConfig,
-  columnsConfig: [],
-  data: [],
-  totalCounts: 0,
-}*/
 
 export interface IccColumnWidth {
   name: string;

@@ -9,19 +9,16 @@ export const defaultGridConfig: IccGridConfig = {
   columnReorder: false,
   columnMenu: false,
   columnHidden: false,
-
-  rowSelection: false,
-
   remoteColumnsConfig: false,
-  remoteGridData: true,
-  page: 1,
-  pageSize: 20,
-  viewportWidth: 1000,
-  totalCounts: 0,
+  rowSelection: false,
   sortFields: [],
   columnFilters: [],
+  page: 1,
+  pageSize: 20,
+  totalCounts: 0,
+  remoteGridData: true,
 
-
+  viewportWidth: 1000,
   hasScrollY: false,
 }
 

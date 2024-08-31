@@ -24,12 +24,13 @@ export class AppGridTest2Component {
     columnReorder: true,
     columnMenu: true,
     columnHidden: false,
+    page: 5,
 
     remoteColumnsConfig: true,
     remoteGridData: true,
     sortFields: [{
       field: 'ID',
-      dir: 'desc',
+      dir: 'asc',
     }],
     columnFilters: [],
     rowSelection: true,

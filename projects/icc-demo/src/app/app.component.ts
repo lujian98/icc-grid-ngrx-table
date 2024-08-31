@@ -26,8 +26,10 @@ export class AppComponent {
       { name: '7: Grid Column Hidden', link: 'grid/remote-grid-column-hidden', },
       { name: '8: Grid Remote Column Config', link: 'grid/remote-grid-remote-column-config', },
       { name: '9: Grid Row Seletion', link: 'grid/remote-grid-row-selection', },
+      { name: '10: Grid Page', link: 'grid/remote-grid-page', },
+
       { name: '12: Grid Overall', link: 'grid/remote-grid-overall', },
-      //{ name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
+      { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
     ]
   }, {
     name: "item 1A",

@@ -10,6 +10,7 @@ import { AppGridColumnHiddenComponent } from './remote-data/grid-column-hidden.c
 import { AppGridRemoteColumnConfigComponent } from './remote-data/grid-remote-column-config.component';
 import { AppGridRowSelectionComponent } from './remote-data/grid-row-selection.component';
 import { AppGridOverallComponent } from './remote-data/grid-overall.component';
+import { AppGridPageComponent } from './remote-data/grid-page.component';
 
 import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
@@ -26,8 +27,9 @@ const routes: Route[] = [
       { path: 'remote-grid-column-hidden', component: AppGridColumnHiddenComponent, },
       { path: 'remote-grid-remote-column-config', component: AppGridRemoteColumnConfigComponent, },
       { path: 'remote-grid-row-selection', component: AppGridRowSelectionComponent, },
-      { path: 'remote-grid-overall', component: AppGridOverallComponent, },
+      { path: 'remote-grid-page', component: AppGridPageComponent, },
 
+      { path: 'remote-grid-overall', component: AppGridOverallComponent, },
       {
         path: 'grid-test2',
         component: AppGridTest2Component,
