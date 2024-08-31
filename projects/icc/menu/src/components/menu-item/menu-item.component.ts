@@ -51,7 +51,6 @@ export class IccMenuItemComponent {
 
   onCheckboxChange(event: boolean | MouseEvent): void {
     if(typeof event === 'boolean') {
-      console.log( ' rrrrrrrr checked=', event)
       this.iccCheckboxChange.emit({
         ...this.menuItem,
         checked: event,

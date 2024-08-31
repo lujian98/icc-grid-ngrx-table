@@ -1,4 +1,4 @@
-<label (click)="$event.stopPropagation()">
+<label>
   <input #inputEl
     type="checkbox"
     class="cdk-visually-hidden"
@@ -8,7 +8,7 @@
     (change)="updateValueAndIndeterminate($event)">
     <!--
 
-
+    (click)="$event.stopPropagation()"
   <span class="icc-checkbox-container">
     <icc-icon *ngIf="indeterminate" icon="minus"></icc-icon>
     <icc-icon [ngClass]="checked? 'checked': ''" *ngIf="!indeterminate" icon="check"></icc-icon>

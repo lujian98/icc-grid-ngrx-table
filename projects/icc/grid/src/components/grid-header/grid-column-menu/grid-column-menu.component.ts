@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
-//import { IccCheckboxModule } from '@icc/ui/checkbox';
+import { IccMenuItem, IccMenuModule } from '@icc/ui/menu';
 import { Observable } from 'rxjs';
-import { IccMenuModule, IccMenuItem, IccMenuItemComponent } from '@icc/ui/menu';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -14,9 +13,7 @@ import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/gr
   standalone: true,
   imports: [
     CommonModule,
-    IccMenuItemComponent,
     IccMenuModule,
-    //IccCheckboxModule,
   ],
 })
 export class IccGridColumnMenuComponent {
@@ -36,12 +33,8 @@ export class IccGridColumnMenuComponent {
   }
   @Input() column!: IccColumnConfig;
 
-  getTitle(column: IccColumnConfig): string {
-    return column.title === undefined ? column.name : column.title;
-  }
-
-  get sortItems(): IccMenuItem[] {
-    return [{
+  getMenuItems(columns: IccColumnConfig[]): IccMenuItem[] {
+    const menuItems = [{
       name: 'asc',
       title: 'Sort ASC',
       icon: 'arrow-up-short-wide',
@@ -50,7 +43,18 @@ export class IccGridColumnMenuComponent {
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
     }];
+    const columnItems = [...columns].map((column) => {
+      return {
+        name: column.name,
+        title: column.title,
+        checkbox: true,
+        checked: !column.hidden,
+      }
+    });
+    return [...menuItems, ...columnItems];
   }
+
+  /*
 
   getSortDisabled(gridConfig: IccGridConfig, dir: string): boolean {
     const sortField = this.findSortField(gridConfig);
@@ -59,9 +63,19 @@ export class IccGridColumnMenuComponent {
 
   private findSortField(gridConfig: IccGridConfig): IccSortField | undefined {
     return gridConfig.sortFields.find((field) => field.field === this.column.name);
+  } */
+
+
+
+  onMenuItemChange(item: IccMenuItem, columns: IccColumnConfig[]): void {
+    if (item.name === 'asc' || item.name === 'desc') {
+      this.columnSort(item.name);
+    } else if (item.checkbox) {
+      this.columnHideShow(item, columns);
+    }
   }
 
-  columnSort(dir: string): void {
+  private columnSort(dir: string): void {
     const sort = {
       field: this.column.name,
       dir: dir,
@@ -69,20 +83,8 @@ export class IccGridColumnMenuComponent {
     this.gridFacade.setGridSortFields(this.gridName, [sort]);
   }
 
-  getColumnItems(columns: IccColumnConfig[]): IccMenuItem[] {
-    return [...columns].map((column) => {
-      return {
-        name: column.name,
-        title: column.title,
-        checkbox: true,
-        checked: !column.hidden,
-      }
-    })
-  }
-
-  columnHideShow(item: IccMenuItem, columns: IccColumnConfig[]): void {
+  private columnHideShow(item: IccMenuItem, columns: IccColumnConfig[]): void {
     const column = columns.find((col) => col.name === item.name)!;
-    //console.log('3333333 item=', item)
     const col: IccColumnConfig = {
       ...column,
       hidden: !item.checked,

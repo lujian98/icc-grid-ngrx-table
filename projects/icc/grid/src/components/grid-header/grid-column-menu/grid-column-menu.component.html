@@ -1,27 +1,7 @@
-<ng-container *ngIf="gridConfig$ | async as gridConfig">
-  <ng-container *ngFor="let item of sortItems">
-    <icc-menu-item
-    [menuItem]="item"
-    (click)="columnSort(item.name)"
-    >
-    </icc-menu-item>
-  </ng-container>
-</ng-container>
-<!--
-  <ng-container *ngFor="let column of columns; let index = index;">
-    <button (click)="columnHideShow(column); $event.stopPropagation()" popoverMenuItem="true">
-      <icc-checkbox [checked]="!column.hidden" (change)="columnHideShow(column)">
-        <div class="checkbox-label" popoverMenuItem="true">{{getTitle(column)}}</div>
-      </icc-checkbox>
-    </button>
-  </ng-container>
--->
 <ng-container *ngIf="columnsConfig$ | async as columns">
-  <ng-container *ngFor="let item of getColumnItems(columns); let index = index;">
-    <icc-menu-item
-    [menuItem]="item"
-    (iccCheckboxChange)="columnHideShow($event, columns)"
+  <icc-menu
+    [items]="getMenuItems(columns)"
+    (iccMenuItemChange)="onMenuItemChange($event, columns)"
     >
-    </icc-menu-item>
-  </ng-container>
+  </icc-menu>
 </ng-container>

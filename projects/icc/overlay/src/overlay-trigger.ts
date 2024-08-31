@@ -47,6 +47,7 @@ export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
   hide$ = EMPTY;
 }
 
+// ONLY USED???
 export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   show$ = EMPTY;
   private firstTime: boolean = true;
@@ -60,13 +61,16 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
     filter(
       ([shouldShow, event]) => {
         //const container = this.container() && this.container().location.nativeElement.contains(event.target);
-        const box = this.container() && this.container().location.nativeElement.getBoundingClientRect();
         if(this.firstTime) {
           this.firstTime = false;
           return shouldShow; // && !container;
         }
-        const {x, y} = event as MouseEvent;
-        const show = box.top < y && y < box.bottom && box.left < x && x < box.right;
+        let show = true;
+        const box = this.container() && this.container().location.nativeElement.getBoundingClientRect();
+        if(box) {
+          const {x, y} = event as MouseEvent;
+          show = box.top < y && y < box.bottom && box.left < x && x < box.right;
+        }
         return !shouldShow && !(show);
       }
     ),
