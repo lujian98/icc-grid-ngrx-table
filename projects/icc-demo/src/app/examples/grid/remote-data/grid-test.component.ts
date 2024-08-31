@@ -26,6 +26,7 @@ export class AppGridTestComponent {
 
     remoteColumnsConfig: true,
     remoteGridData: true,
+
     sortFields: [{
       field: 'ID',
       dir: 'desc',
