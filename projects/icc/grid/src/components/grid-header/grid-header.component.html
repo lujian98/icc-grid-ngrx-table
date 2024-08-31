@@ -22,7 +22,7 @@
     >
     </icc-grid-header-cell>
 
-    <icc-column-filter *ngIf="gridConfig.columnFilter"
+    <icc-column-filter *ngIf="gridConfig.columnFilter && column.filterField !==false"
       [gridConfig]="gridConfig"
       [column]="column"
     >

@@ -34,9 +34,10 @@ export class IccGridService {
     }, {
       name: 'brand',
       hidden: false,
+      filterField: false,
     }, {
       name: 'year',
-      //sortField: false,
+      sortField: false,
     }, {
       name: 'color',
     }];

@@ -34,6 +34,7 @@ export class IccGridColumnMenuComponent {
   @Input() column!: IccColumnConfig;
 
   getMenuItems(gridConfig: IccGridConfig, columns: IccColumnConfig[]): IccMenuItem[] {
+    // TODO disable sort if columnSort or column each sort is disaled ??
     const menuItems = gridConfig.columnSort ? [{
       name: 'asc',
       title: 'Sort ASC',
