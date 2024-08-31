@@ -16,16 +16,15 @@ export class AppComponent {
 
   items: IccAccordion[] = [{
     name: "Grid Remote Data",
-    items: [{
-      name: 'Simple Grid',
-      link: 'grid/remote-simple-grid',
-    }, {
-      name: 'Grid Sort',
-      link: 'grid/remote-grid-sort',
-    }, {
-      name: 'Grid Filter',
-      link: 'grid/remote-grid-filter',
-    }, {
+    items: [
+      { name: 'Simple Grid', link: 'grid/remote-simple-grid', },
+      { name: 'Grid Sort', link: 'grid/remote-grid-sort', },
+      { name: 'Grid Filter', link: 'grid/remote-grid-filter', },
+      { name: 'Grid Column Resize', link: 'grid/remote-grid-column-resize', },
+      { name: 'Grid Column Reorder', link: 'grid/remote-grid-column-reorder', },
+      { name: 'Grid Column Menu', link: 'grid/remote-grid-column-menu', },
+
+      {
       name: 'Grid Test',
       link: 'grid/grid-test',
       icon: 'arrows-rotate',
