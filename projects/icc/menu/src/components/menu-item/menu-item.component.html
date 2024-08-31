@@ -10,6 +10,7 @@
 
 <icc-checkbox *ngIf="menuItem.checkbox"
   [checked]="!!menuItem.checked"
+  [disabled]="!!menuItem.disabled"
   (change)="onCheckboxChange($event)"
   >
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon" ></icc-icon>

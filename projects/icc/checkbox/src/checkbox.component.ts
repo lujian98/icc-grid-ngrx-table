@@ -108,7 +108,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    if (event.type === 'click') {
+    if (!this.disabled && event.type === 'click') {
       this.checked = !this.checked;
       this.change.emit(this.checked);
       this.onChange(this.checked);

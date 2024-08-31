@@ -43,14 +43,15 @@ export class IccGridColumnMenuComponent {
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
     }] : [];
-    const columnItems = gridConfig.columnHidden ? [...columns].map((column) => {
+    const columnItems = [...columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
+        disabled: !gridConfig.columnHidden,
       }
-    }) : [];
+    });
     return [...menuItems, ...columnItems];
   }
 

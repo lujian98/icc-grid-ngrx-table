@@ -23,6 +23,7 @@ export class AppSimpleGridComponent {
     //columnResize: true,
     //columnReorder: true,
     //columnMenu: true,
+    //columnHidden: true,
 
     remoteColumnsConfig: true,
     remoteGridData: true,
