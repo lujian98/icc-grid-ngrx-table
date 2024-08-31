@@ -18,6 +18,11 @@
     font-weight: bold;
   }
 
+  &.disabled { // TODO may need disabled color?
+    .icc-menu-title, .icc-menu-icon {
+      opacity: 0.5;
+    }
+  }
 
   a {
       width: 100%;

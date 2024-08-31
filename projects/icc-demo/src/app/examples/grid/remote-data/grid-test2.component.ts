@@ -18,7 +18,7 @@ export class AppGridTest2Component {
     ...defaultGridConfig,
     gridName: 'DCR2',
     urlKey: 'DCR',
-    columnSort: true,
+    columnSort: false,
     columnFilter: true,
     columnResize: true,
     columnReorder: true,

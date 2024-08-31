@@ -34,23 +34,24 @@ export class IccGridColumnMenuComponent {
   @Input() column!: IccColumnConfig;
 
   getMenuItems(gridConfig: IccGridConfig, columns: IccColumnConfig[]): IccMenuItem[] {
-    // TODO disable sort if columnSort or column each sort is disaled ??
-    const menuItems = gridConfig.columnSort ? [{
+    const menuItems = [{
       name: 'asc',
       title: 'Sort ASC',
       icon: 'arrow-up-short-wide',
+      disabled: !gridConfig.columnSort || this.column.sortField === false,
     }, {
       name: 'desc',
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
-    }] : [];
+      disabled: !gridConfig.columnSort || this.column.sortField === false,
+    }];
     const columnItems = [...columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
-        disabled: !gridConfig.columnHidden,
+        disabled: !gridConfig.columnHidden || this.column.sortField === false
       }
     });
     return [...menuItems, ...columnItems];

@@ -28,9 +28,13 @@ export class IccMenuComponent {
     this.iccMenuItemChange.emit(selectedItem);
   }
 
-  itemClicked(selectedItem: IccMenuItem) {
-    this.setSelected(selectedItem);
-    this.iccMenuItemChange.emit(selectedItem);
+  itemClicked(event: MouseEvent, selectedItem: IccMenuItem): void {
+    if(selectedItem.disabled) {
+      event.stopPropagation();
+    } else {
+      this.setSelected(selectedItem);
+      this.iccMenuItemChange.emit(selectedItem);
+    }
   }
 
   private setSelected(selectedItem: IccMenuItem): void {

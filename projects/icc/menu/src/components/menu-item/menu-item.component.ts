@@ -41,8 +41,10 @@ export class IccMenuItemComponent {
     return !!this.menuItem.selected;
   }
 
-  get disabled() {
-    return this.menuItem.disabled;
+  @HostBinding('class.disabled')
+  @Input()
+  get disabled(): boolean {
+    return !!this.menuItem.disabled;
   }
 
   get title(): string {
