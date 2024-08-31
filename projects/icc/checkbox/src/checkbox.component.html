@@ -5,7 +5,9 @@
     [checked]="checked"
     [disabled]="disabled"
     [indeterminate]="indeterminate"
-    (change)="updateValueAndIndeterminate($event)">
+    (change)="updateValueAndIndeterminate($event)"
+    (click)="$event.stopPropagation()"
+    >
     <!--
 
     (click)="$event.stopPropagation()"
@@ -14,7 +16,7 @@
     <icc-icon [ngClass]="checked? 'checked': ''" *ngIf="!indeterminate" icon="check"></icc-icon>
   </span>
       -->
-  <span class="icc-checkbox-label">
+  <span class="icc-checkbox-label" (click)="$event.stopPropagation()">
     <ng-content></ng-content>
   </span>
 </label>
