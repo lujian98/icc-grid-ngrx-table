@@ -23,18 +23,15 @@ export class AppComponent {
       name: 'Grid Sort',
       link: 'grid/remote-grid-sort',
     }, {
+      name: 'Grid Filter',
+      link: 'grid/remote-grid-filter',
+    }, {
       name: 'Grid Test',
       link: 'grid/grid-test',
       icon: 'arrows-rotate',
     }, {
       name: 'Grid Test 2',
       link: 'grid/grid-test2',
-      icon: 'arrows-rotate',
-    }, {
-      name: 'Menu 3',
-      //link: 'test',
-      checkbox: true,
-      checked: true,
       icon: 'arrows-rotate',
     }]
   }, {
@@ -48,6 +45,12 @@ export class AppComponent {
     }, {
       name: 'Menu 3',
       link: 'test',
+    }, {
+      name: 'Menu 4',
+      //link: 'test',
+      checkbox: true,
+      checked: true,
+      icon: 'arrows-rotate',
     }]
   }]
 
