@@ -1,5 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { IccGridState, defaultState } from '../models/grid-column.model';
+import { IccGridState } from '../models/grid-column.model';
+import { defaultState } from '../models/default-grid';
 
 const featureSelector = createFeatureSelector('iccGrid');
 

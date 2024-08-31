@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
-import { AppGridTestComponent } from './grid-test/grid-test.component';
-import { AppGridTest2Component } from './grid-test2/grid-test2.component';
+import { AppGridTestComponent } from './remote-data/grid-test.component';
+import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
 const routes: Route[] = [
   {

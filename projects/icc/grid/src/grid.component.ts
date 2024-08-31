@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccGridData, defaultGridConfig } from './models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
+import { defaultGridConfig } from './models/default-grid';
 
 @Component({
   selector: 'icc-grid',

@@ -4,8 +4,8 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid-test',
-  templateUrl: './grid-test.component.html',
-  styleUrls: ['./grid-test.component.scss'],
+  template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
+  styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -19,7 +19,6 @@ export class AppGridTestComponent {
     gridName: 'DCR',
     remoteColumnsConfig: true,
     remoteGridData: true,
-    pageSize: 200,
     sortFields: [{
       field: 'ID',
       dir: 'desc',

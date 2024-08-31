@@ -38,6 +38,7 @@ export interface IccGridData<T> {
   totalCounts: number;
 }
 
+/*
 export const defaultGridConfig: IccGridConfig = {
   gridName: 'test',
   remoteColumnsConfig: true,
@@ -60,7 +61,7 @@ export const defaultState: GridState = {
   columnsConfig: [],
   data: [],
   totalCounts: 0,
-}
+}*/
 
 export interface IccColumnWidth {
   name: string;

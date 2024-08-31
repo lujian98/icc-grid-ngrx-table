@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'icc-demo';
 
   items: IccAccordion[] = [{
-    name: "Grid Examples",
+    name: "Grid Remote Data",
     items: [{
       name: 'Grid Test',
       link: 'grid/grid-test',
