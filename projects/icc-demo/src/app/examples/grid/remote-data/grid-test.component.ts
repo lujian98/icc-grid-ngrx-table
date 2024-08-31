@@ -17,8 +17,12 @@ export class AppGridTestComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'DCR',
-    enableSort: true,
-    enableFilter: true,
+    columnSort: true,
+    columnFilter: true,
+    columnResize: true,
+    columnReorder: true,
+    columnMenu: true,
+    columnHidden: true,
 
     remoteColumnsConfig: true,
     remoteGridData: true,

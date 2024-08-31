@@ -34,7 +34,7 @@ export class IccGridColumnMenuComponent {
   @Input() column!: IccColumnConfig;
 
   getMenuItems(gridConfig: IccGridConfig, columns: IccColumnConfig[]): IccMenuItem[] {
-    const menuItems = gridConfig.enableSort ? [{
+    const menuItems = gridConfig.columnSort ? [{
       name: 'asc',
       title: 'Sort ASC',
       icon: 'arrow-up-short-wide',
@@ -42,15 +42,15 @@ export class IccGridColumnMenuComponent {
       name: 'desc',
       title: 'Sort DESC',
       icon: 'arrow-down-wide-short',
-    }]: [];
-    const columnItems = [...columns].map((column) => {
+    }] : [];
+    const columnItems = gridConfig.columnHidden ? [...columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
       }
-    });
+    }) : [];
     return [...menuItems, ...columnItems];
   }
 

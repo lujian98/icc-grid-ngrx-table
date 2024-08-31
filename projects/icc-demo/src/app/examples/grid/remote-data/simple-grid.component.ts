@@ -18,8 +18,12 @@ export class AppSimpleGridComponent {
     ...defaultGridConfig,
     gridName: 'DCR1',
     urlKey: 'DCR',
-    //enableSort: false,
-    //enableFilter: false,
+    //columnSort: true,
+    //columnFilter: true,
+    //columnResize: true,
+    //columnReorder: true,
+    //columnMenu: true,
+
     remoteColumnsConfig: true,
     remoteGridData: true,
   }

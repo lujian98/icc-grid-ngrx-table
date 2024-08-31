@@ -6,8 +6,13 @@ export interface IccSortField {
 export interface IccGridConfig {
   gridName: string;
   urlKey?: string;
-  enableSort: boolean;
-  enableFilter: boolean;
+  columnSort: boolean;
+  columnFilter: boolean;
+  columnResize: boolean;
+  columnReorder: boolean;
+  columnMenu: boolean;
+  columnHidden: boolean;
+
   rowSelection: boolean;
 
   remoteColumnsConfig: boolean;
@@ -21,8 +26,6 @@ export interface IccGridConfig {
 
 
   hasScrollY: boolean,
-  columnReorder: boolean;
-  columnResize: boolean;
 }
 
 export interface IccGridState {

@@ -2,9 +2,14 @@
 import { IccGridConfig, GridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
-  gridName: 'test',
-  enableSort: false,
-  enableFilter: false,
+  gridName: 'icc-grid',
+  columnSort: false,
+  columnFilter: false,
+  columnResize: false,
+  columnReorder: false,
+  columnMenu: false,
+  columnHidden: false,
+
   rowSelection: false,
 
   remoteColumnsConfig: true,
@@ -18,8 +23,6 @@ export const defaultGridConfig: IccGridConfig = {
 
 
   hasScrollY: false,
-  columnReorder: false,
-  columnResize: false,
 }
 
 export const defaultState: GridState = {

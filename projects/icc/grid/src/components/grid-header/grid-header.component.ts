@@ -47,9 +47,8 @@ export class IccGridHeaderComponent {
     return index;
   }
 
-  get dragDisabled(): boolean {
-    return false;
-    //return !this.columnConfig.columnReorder;
+  get dragDisabled(): boolean { // TODO add each column enable/disable
+    return !this.gridConfig.columnReorder;
   }
 
   onToggleSelectAllRowsOnCurrentPage() {
