@@ -8,8 +8,20 @@ import { IccMenuItem } from './models/menu-item.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccMenuComponent {
-  @Input() items: IccMenuItem[] = [];
+  private _items: IccMenuItem[] = [];
   // @Input() menuType!: string;
+  private selected: IccMenuItem | undefined;
+
+  @Input()
+  set items(val: IccMenuItem[]) {
+    this._items = val;
+    if(this.selected) {
+      this.items.forEach((item) => item.selected = item.name === this.selected!.name);
+    }
+  }
+  get items(): IccMenuItem[] {
+    return this._items;
+  }
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
 
@@ -25,6 +37,7 @@ export class IccMenuComponent {
           selected: false,
         }
     }));
+    this.selected = selectedItem;
     this.iccMenuItemChange.emit(selectedItem);
   }
 
@@ -39,5 +52,6 @@ export class IccMenuComponent {
 
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => item.selected = item.name === selectedItem.name);
+    this.selected = selectedItem;
   }
 }
