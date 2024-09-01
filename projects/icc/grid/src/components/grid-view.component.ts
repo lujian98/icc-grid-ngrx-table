@@ -104,6 +104,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
+    if (this.gridConfig.horizontalScroll) {
+      console.log( ' this.viewport.elementRef=', this.viewport.elementRef);
+
+    }
     this.columnWidths = columnWidths;
   }
 

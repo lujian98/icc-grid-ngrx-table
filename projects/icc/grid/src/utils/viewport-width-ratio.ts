@@ -9,7 +9,7 @@ export function viewportWidthRatio(gridConfig: IccGridConfig, columns: IccColumn
 
   const viewportWidth = gridConfig.viewportWidth - (gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0);
 
-  if(gridConfig.horizontalScroll) {
+  if (gridConfig.horizontalScroll) {
     return 1.0;
   }
   return viewportWidth / totalWidth;
