@@ -74,6 +74,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
         })
       )
       .subscribe((data) => {
+        /*
         //console.log(' elementRef=', this.elementRef)
         const viewpport = this.elementRef.nativeElement.querySelector('cdk-virtual-scroll-viewport');
         //console.log(' viewpport=', viewpport)
@@ -81,6 +82,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
         //this.setViewportPageSize(); // scrollHeight
         //console.log(' scrollY=', scrollY)
         //this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
+        */
       });
   }
 
