@@ -1,19 +1,17 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ChangeDetectionStrategy, Component, Input, inject, ViewChild, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, interval, of, Observable } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, ViewChild, inject } from '@angular/core';
+import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
+import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
-import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
-import { IccRowSelectComponent } from './row-select/row-select.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
-import { viewportWidthRatio } from '../utils/viewport-width-ratio';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { IccRowSelectComponent } from './row-select/row-select.component';
 
 @Component({
   selector: 'icc-grid-view',
@@ -27,7 +25,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
     ScrollingModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
-    IccGridViewportComponent,
     IccRowSelectComponent,
     IccGridRowComponent,
   ],
@@ -89,10 +86,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
         })
       )
-      .subscribe((event) => {
-        this.setViewportPageSize();
-      });
-
+      .subscribe(() =>this.setViewportPageSize());
   }
 
   trackByIndex(index: number): number {
@@ -159,6 +153,5 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sizeChanged$.complete();
-    //this.dataChanged$.complete();
   }
 }
