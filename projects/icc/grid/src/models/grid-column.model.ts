@@ -14,6 +14,7 @@ export interface IccGridConfig {
   columnHidden: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
+  horizontalScroll: boolean;
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
   page: number;

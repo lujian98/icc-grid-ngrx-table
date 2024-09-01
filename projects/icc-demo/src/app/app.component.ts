@@ -27,7 +27,7 @@ export class AppComponent {
       { name: '8: Grid Remote Column Config', link: 'grid/remote-grid-remote-column-config', },
       { name: '9: Grid Row Seletion', link: 'grid/remote-grid-row-selection', },
       { name: '10: Grid Page', link: 'grid/remote-grid-page', },
-
+      //{ name: '11: Grid Horizontal Scroll', link: 'grid/remote-grid-horizontal-scroll', },
       { name: '12: Grid Overall', link: 'grid/remote-grid-overall', },
       { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
     ]

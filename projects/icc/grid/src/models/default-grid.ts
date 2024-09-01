@@ -11,6 +11,7 @@ export const defaultGridConfig: IccGridConfig = {
   columnHidden: false,
   remoteColumnsConfig: false,
   rowSelection: false,
+  horizontalScroll: false,
   sortFields: [],
   columnFilters: [],
   page: 1,

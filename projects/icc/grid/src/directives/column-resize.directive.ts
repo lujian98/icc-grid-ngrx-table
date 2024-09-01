@@ -90,7 +90,7 @@ export class IccColumnResizeDirective {
           width = MIN_GRID_COLUMN_WIDTH;
           dx = 0;
         }
-      } else if (idx == nextIndex) {
+      } else if (idx == nextIndex && !this.gridConfig.horizontalScroll) {
         width = column.width! - dx;
         if (width < MIN_GRID_COLUMN_WIDTH) {
           width = MIN_GRID_COLUMN_WIDTH;
