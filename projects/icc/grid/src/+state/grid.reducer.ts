@@ -94,6 +94,7 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           page: action.page,
+          viewReady: true,
         }
       };
       return {

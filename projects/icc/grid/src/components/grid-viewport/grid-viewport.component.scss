@@ -1,6 +1,7 @@
 :host {
   display: flex;
   height: -webkit-fill-available;
+  flex-direction: column;
 
   cdk-virtual-scroll-viewport {
     flex: 1;

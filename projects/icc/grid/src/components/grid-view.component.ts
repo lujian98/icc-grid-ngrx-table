@@ -1,7 +1,9 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ChangeDetectionStrategy, Component, Input, inject, ViewChild, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, interval, of, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
@@ -9,7 +11,9 @@ import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridViewportComponent } from './grid-viewport/grid-viewport.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
+import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { viewportWidthRatio } from '../utils/viewport-width-ratio';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'icc-grid-view',
@@ -20,18 +24,21 @@ import { viewportWidthRatio } from '../utils/viewport-width-ratio';
   imports: [
     CommonModule,
     DragDropModule,
+    ScrollingModule,
     IccGridHeaderComponent,
     IccGridHeaderItemComponent,
     IccGridViewportComponent,
     IccRowSelectComponent,
+    IccGridRowComponent,
   ],
 })
-export class IccGridViewComponent<T> {
+export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
   private _columnWidths: IccColumnWidth[] = [];
   private firstTimeLoadColumnsConfig = true;
+  sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
 
@@ -66,6 +73,42 @@ export class IccGridViewComponent<T> {
     return this._columnWidths;
   }
 
+  @ViewChild(CdkVirtualScrollViewport, { static: true }) viewport!: CdkVirtualScrollViewport;
+
+  ngAfterViewInit(): void {
+    interval(10).pipe(
+      take(1)
+    ).subscribe(() => this.setViewportPageSize());
+
+    this.sizeChanged$
+      .pipe(
+        skip(1),
+        debounceTime(250),
+        distinctUntilChanged(),
+        switchMap((event) => {
+          return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
+        })
+      )
+      .subscribe((event) => {
+        this.setViewportPageSize();
+      });
+
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  private setViewportPageSize(): void {
+    const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
+    if (clientHeight > 0) {
+      const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
+      const pageSize = Math.floor(clientHeight / 24);
+      this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
+      this.gridFacade.getGridData(this.gridConfig.gridName);
+    }
+  }
+
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     this.columnWidths = columnWidths;
   }
@@ -89,9 +132,8 @@ export class IccGridViewComponent<T> {
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
-  onColumnHeaderPosition(position: number): void {
-    console.log( ' position=', position)
-    this.columnHeaderPosition = position;
+  onViewportScroll(event: any): void {
+    this.columnHeaderPosition = -event.target.scrollLeft;
   }
 
   private setColumWidths(): void {
@@ -108,5 +150,15 @@ export class IccGridViewComponent<T> {
       }
     });
     return idx;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: MouseEvent) {
+    this.sizeChanged$.next(event);
+  }
+
+  ngOnDestroy(): void {
+    this.sizeChanged$.complete();
+    //this.dataChanged$.complete();
   }
 }

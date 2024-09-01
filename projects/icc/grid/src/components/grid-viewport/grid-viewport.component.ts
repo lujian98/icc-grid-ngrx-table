@@ -19,7 +19,7 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
     IccGridRowComponent,
   ],
 })
-export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
+export class IccGridViewportComponent<T>  {
   private gridFacade = inject(IccGridFacade);
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
@@ -33,6 +33,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = val;
+    //this.setViewportPageSize();
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -51,6 +52,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
   @Output() columnHeaderPosition = new EventEmitter<number>();
 
   constructor() {
+    /*
     this.sizeChanged$
       .pipe(
         skip(1),
@@ -63,42 +65,10 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
       .subscribe((event) => {
         this.setViewportPageSize();
       });
+*/
 
-    this.dataChanged$
-      .pipe(
-        skip(1),
-        debounceTime(500),
-        distinctUntilChanged(),
-        switchMap((data) => {
-          return of(data).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
-        })
-      )
-      .subscribe((data) => {
-        /*
-        //console.log(' elementRef=', this.elementRef)
-        const viewpport = this.elementRef.nativeElement.querySelector('cdk-virtual-scroll-viewport');
-        //console.log(' viewpport=', viewpport)
-        const scrollY = viewpport.scrollHeight - viewpport.offsetHeight;
-        //this.setViewportPageSize(); // scrollHeight
-        //console.log(' scrollY=', scrollY)
-        //this.gridFacade.setViewportScrollY(this.gridConfig.gridName, scrollY > 0);
-        */
-      });
   }
 
-  ngAfterViewInit(): void {
-    interval(1).pipe(take(1)).subscribe(() => this.setViewportPageSize());
-  }
-
-  private setViewportPageSize(): void {
-    const clientHeight = this.elementRef.nativeElement.clientHeight;
-    const clientWidth  = this.elementRef.nativeElement.clientWidth;
-
-    const pageSize = Math.floor(clientHeight / 24);
-    //console.log(' 222 this.elementRef=', this.elementRef)
-    this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
-    this.gridFacade.getGridData(this.gridConfig.gridName);
-  }
 
   trackByIndex(index: number): number {
     return index;
@@ -110,7 +80,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
-    this.sizeChanged$.next(event);
+    ///this.sizeChanged$.next(event);
   }
 
   ngOnDestroy(): void {

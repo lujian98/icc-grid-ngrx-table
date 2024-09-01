@@ -15,6 +15,7 @@ export interface IccGridConfig {
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
   horizontalScroll: boolean;
+  viewReady: boolean;
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
   page: number;
