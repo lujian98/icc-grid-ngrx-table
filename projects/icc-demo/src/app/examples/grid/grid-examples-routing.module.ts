@@ -14,6 +14,8 @@ import { AppGridPageComponent } from './remote-data/grid-page.component';
 
 import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
+import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-test.component';
+
 const routes: Route[] = [
   {
     path: '',
@@ -34,6 +36,7 @@ const routes: Route[] = [
         path: 'grid-test2',
         component: AppGridTest2Component,
       },
+      { path: 'in-memory-grid-test', component: AppGridinMemoryTestComponent, },
       {
         path: '**',
         redirectTo: 'remote-grid-overall',

@@ -151,6 +151,24 @@ export const iccGridFeature = createFeature({
         ...newState,
       }
     }),
+    on(gridActions.setGridInMemoryData, (state, action) => {
+      const key = action.gridName;
+      const newState: IccGridState = {...state };
+      //console.log(' old state=', state)
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...state[key].gridConfig,
+          totalCounts: action.gridData.totalCounts,
+        },
+        totalCounts: action.gridData.totalCounts,
+        inMemoryData: action.gridData.data,
+      };
+      //console.log(' new load data setup grid data = ', newState)
+      return {
+        ...newState,
+      }
+    }),
     on(gridActions.clearGridDataStore, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = {...state };

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '../models/grid-column.model';
 import * as gridActions from './grid.actions'
-import { selectGridConfig, selectColumnsConfig, selectGridData, } from './grid.selectors';
+import { selectGridConfig, selectColumnsConfig, selectGridData, selectGridInMemoryData} from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -56,6 +56,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.getGridDataSuccess({ gridName, gridData }));
   }
 
+  setGridInMemoryData(gridName: string, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.setGridInMemoryData({ gridName, gridData }));
+  }
+
   clearGridDataStore(gridName: string): void {
     this.store.dispatch(gridActions.clearGridDataStore({ gridName }));
   }
@@ -70,5 +74,9 @@ export class IccGridFacade {
 
   selectGridData(gridName: string): Observable<any[]> {
     return this.store.select(selectGridData(gridName));
+  }
+
+  selectGridInMemoryData(gridName: string): Observable<any[]> {
+    return this.store.select(selectGridInMemoryData(gridName));
   }
 }

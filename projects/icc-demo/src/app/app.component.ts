@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'icc-demo';
 
   items: IccAccordion[] = [{
-    name: "Grid Remote Data",
+    name: 'Grid Remote Data',
     items: [
       { name: '1: Simple Grid', link: 'grid/remote-simple-grid', },
       { name: '2: Grid Sort', link: 'grid/remote-grid-sort', },
@@ -32,23 +32,10 @@ export class AppComponent {
       { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
     ]
   }, {
-    name: "item 1A",
-    items: [{
-      name: 'Menu 1',
-      link: 'test',
-    }, {
-      name: 'Menu 2',
-      link: 'test',
-    }, {
-      name: 'Menu 3',
-      link: 'test',
-    }, {
-      name: 'Menu 4',
-      //link: 'test',
-      checkbox: true,
-      checked: true,
-      icon: 'arrows-rotate',
-    }]
+    name: 'Grid in-memory Data',
+    items: [
+      { name: 'Grid In-Memory Test', link: 'grid/in-memory-grid-test', icon: 'arrows-rotate', },
+    ]
   }]
 
 

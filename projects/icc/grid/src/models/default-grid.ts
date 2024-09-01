@@ -16,7 +16,7 @@ export const defaultGridConfig: IccGridConfig = {
   page: 1,
   pageSize: 20,
   totalCounts: 0,
-  remoteGridData: true,
+  remoteGridData: false,
 
   viewportWidth: 1000,
   hasScrollY: false,
@@ -27,4 +27,5 @@ export const defaultState: GridState = {
   columnsConfig: [],
   data: [],
   totalCounts: 0,
+  inMemoryData: [],
 }

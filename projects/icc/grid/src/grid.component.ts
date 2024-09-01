@@ -44,7 +44,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set gridData(val: IccGridData<T>) {
     this._gridData = val;
     if(!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridData(this.gridConfig.gridName, this.gridData);
+      this.gridFacade.setGridInMemoryData(this.gridConfig.gridName, this.gridData);
     }
   }
   get gridData():IccGridData<T> {

@@ -34,6 +34,7 @@ export interface GridState<T extends object = object> {
   columnsConfig: IccColumnConfig[];
   data: T[];
   totalCounts: number;
+  inMemoryData: T[];
 }
 
 

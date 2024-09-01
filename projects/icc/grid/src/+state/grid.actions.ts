@@ -61,6 +61,11 @@ export const getGridDataSuccess = createAction(
   props<{gridName: string, gridData: IccGridData<any>}>()
 );
 
+export const setGridInMemoryData = createAction(
+  '[Grid] Get Grid In Memory Data',
+  props<{gridName: string, gridData: IccGridData<any>}>()
+);
+
 export const clearGridDataStore = createAction(
   '[Grid] Clear Grid Data Store',
   props<{gridName: string}>()

@@ -1,22 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType, } from '@ngrx/effects';
-import { concatLatestFrom } from '@ngrx/operators'
-import { BehaviorSubject, concat, of, Observable, Subject, } from 'rxjs';
+import { concatLatestFrom } from '@ngrx/operators';
 import {
-  catchError,
-  concatMap,
-  debounceTime,
-  distinctUntilChanged,
-  delay,
-  map,
-  mergeMap,
-  skip,
-  switchMap,
-  tap,
-  takeUntil,
+  map, switchMap
 } from 'rxjs/operators';
-import * as gridActions from './grid.actions'
+import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
+import * as gridActions from './grid.actions';
 import { IccGridFacade } from './grid.facade';
 
 
@@ -25,6 +15,7 @@ export class IccGridEffects {
   private actions$ = inject(Actions);
   private gridFacade = inject(IccGridFacade);
   private gridService = inject(IccGridService);
+  private gridinMemoryService = inject(IccGridinMemoryService);
 
   setupGridConfig$ = createEffect(() =>
     this.actions$.pipe(
@@ -58,11 +49,13 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.getGridData),
       concatLatestFrom((action) => {
-        return [this.gridFacade.selectGridConfig(action.gridName),
-        this.gridFacade.selectColumnsConfig(action.gridName),
+        return [
+          this.gridFacade.selectGridConfig(action.gridName),
+          this.gridFacade.selectColumnsConfig(action.gridName),
+          this.gridFacade.selectGridInMemoryData(action.gridName),
         ];
       }),
-      switchMap(([action, gridConfig, columns]) => {
+      switchMap(([action, gridConfig, columns, inMemoryData]) => {
         const gridName = action.gridName;
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
@@ -71,7 +64,7 @@ export class IccGridEffects {
             }),
           );
         } else {
-          return this.gridService.getGridInMemoeryData(gridConfig, columns).pipe(
+          return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
             map((gridData) => {
               return gridActions.getGridDataSuccess({ gridName, gridData });
             }),
