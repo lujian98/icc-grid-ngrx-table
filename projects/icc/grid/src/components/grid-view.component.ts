@@ -33,6 +33,7 @@ export class IccGridViewComponent<T> {
   private _columnWidths: IccColumnWidth[] = [];
   private firstTimeLoadColumnsConfig = true;
   gridData$!: Observable<T[]>;
+  columnHeaderPosition = 0;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -86,6 +87,11 @@ export class IccGridViewComponent<T> {
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+  }
+
+  onColumnHeaderPosition(position: number): void {
+    console.log( ' position=', position)
+    this.columnHeaderPosition = position;
   }
 
   private setColumWidths(): void {

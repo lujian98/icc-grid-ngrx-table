@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter, Component, ElementRef, HostListener, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -48,7 +48,7 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
     return this._gridData;
   }
 
-  // @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+  @Output() columnHeaderPosition = new EventEmitter<number>();
 
   constructor() {
     this.sizeChanged$
@@ -102,6 +102,10 @@ export class IccGridViewportComponent<T> implements AfterViewInit, OnDestroy {
 
   trackByIndex(index: number): number {
     return index;
+  }
+
+  onViewportScroll(event: any): void {
+    this.columnHeaderPosition.emit(-event.target.scrollLeft);
   }
 
   @HostListener('window:resize', ['$event'])

@@ -1,4 +1,7 @@
-<cdk-virtual-scroll-viewport itemSize="24">
+<cdk-virtual-scroll-viewport
+  itemSize="24"
+  (scroll)="onViewportScroll($event)">
+
   <icc-grid-row *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index;"
     [gridConfig]="gridConfig"
     [columns]="columns"

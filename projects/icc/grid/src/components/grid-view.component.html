@@ -1,4 +1,4 @@
-<icc-grid-header [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden' }"
+<icc-grid-header [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden', left: columnHeaderPosition + 'px' }"
   [gridConfig]="gridConfig"
   [columns]="columns"
   [columnWidths]="columnWidths"
@@ -13,5 +13,6 @@
   [gridConfig]="gridConfig"
   [columns]="columns"
   [columnWidths]="columnWidths"
-  [gridData]="gridData">
+  [gridData]="gridData"
+  (columnHeaderPosition)="onColumnHeaderPosition($event)">
 </icc-grid-viewport>
