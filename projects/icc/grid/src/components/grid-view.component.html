@@ -1,4 +1,5 @@
-<icc-grid-header [ngStyle]="{ 'overflow-y': gridConfig.hasScrollY ? 'auto' : 'hidden', left: columnHeaderPosition + 'px' }"
+<div class="grid-header-container">
+<icc-grid-header [ngStyle]="gridHeaderStyle"
   [gridConfig]="gridConfig"
   [columns]="columns"
   [columnWidths]="columnWidths"
@@ -8,6 +9,7 @@
   cdkDropListOrientation="horizontal"
   cdkDropList>
 </icc-grid-header>
+</div>
 
 <cdk-virtual-scroll-viewport
   itemSize="24"

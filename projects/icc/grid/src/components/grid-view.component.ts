@@ -1,7 +1,7 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, ViewChild, inject, Renderer2 } from '@angular/core';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
@@ -12,6 +12,7 @@ import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
+import { MIN_GRID_COLUMN_WIDTH, ROW_SELECTION_CELL_WIDTH } from '../models/constants';
 
 @Component({
   selector: 'icc-grid-view',
@@ -31,6 +32,7 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
+  private renderer = inject(Renderer2);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
   private _columnWidths: IccColumnWidth[] = [];
@@ -38,6 +40,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
+  headerwidth = 1000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -68,6 +71,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
+  }
+
+  get gridHeaderStyle(): Object {
+    if (this.gridConfig.horizontalScroll) {
+      return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
+    } else {
+      return { display: 'flex' };
+    }
   }
 
   @ViewChild(CdkVirtualScrollViewport, { static: true }) viewport!: CdkVirtualScrollViewport;
@@ -105,7 +116,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     if (this.gridConfig.horizontalScroll) {
-      console.log( ' this.viewport.elementRef=', this.viewport.elementRef);
 
     }
     this.columnWidths = columnWidths;
@@ -135,10 +145,41 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setColumWidths(): void {
-    this.columnWidths = [...this.columns].map((column) => ({
-      name: column.name,
-      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
-    }));
+    this.headerwidth = this.gridConfig.viewportWidth;
+    if (this.gridConfig.horizontalScroll) {
+      const viewWidth = this.setViewportWidth(this.columns);
+
+      const totalWidth: number = this.columns
+      .filter((column) => !column.hidden)
+      .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
+      .reduce((prev, curr) => prev + curr, 0);
+      const viewportWidth = viewWidth - (this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0);
+      const ration = viewportWidth / totalWidth;
+
+      this.columnWidths = [...this.columns].map((column) => ({
+        name: column.name,
+        width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
+      }));
+
+    } else {
+      this.columnWidths = [...this.columns].map((column) => ({
+        name: column.name,
+        width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
+      }));
+    }
+
+  }
+
+  private setViewportWidth(columns: any[]): number {
+    console.log( ' this.viewport.elementRef=', this.viewport.elementRef);
+    const element = this.viewport.elementRef.nativeElement.firstChild as HTMLElement;
+    const totalWidth = columns
+    //.filter((column) => !column.hidden)
+    .map((column) => (column.width))
+    .reduce((prev, curr) => prev + curr, 0);
+    console.log( ' totalWidth=', totalWidth)
+    this.renderer.setStyle(element, 'width', `${totalWidth}px`);
+    return totalWidth;
   }
 
   private indexCorrection(idx: number): number {

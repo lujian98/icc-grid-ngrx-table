@@ -1,7 +1,7 @@
 :host {
   display: flex;
-  overflow-x: hidden;
   position: relative;
+  overflow: hidden;
 
   .icc-header-row-select {
     display: flex;
