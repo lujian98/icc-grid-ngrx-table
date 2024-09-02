@@ -5,13 +5,13 @@
 
   .icc-header-row-select {
     display: flex;
-    height: 30px;
+    height: 30px; // TODO move to theme?
     align-items: center;
   }
 
   .resize-action {
     width: 10px;
-    height: 60px; // TODO dynamic change with filter???
+    height: 60px;
     position: absolute;
     right: -5px;
     z-index: 3;

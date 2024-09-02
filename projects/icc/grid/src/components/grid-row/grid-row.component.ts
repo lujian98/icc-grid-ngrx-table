@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
@@ -29,7 +28,7 @@ export class IccGridRowComponent<T> {
 
   @Output() toggleRow = new EventEmitter<any>();
 
-  rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
+  // rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
 
   trackByIndex(index: number): number {
     return index;

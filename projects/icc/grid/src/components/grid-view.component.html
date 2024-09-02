@@ -19,7 +19,7 @@
 <cdk-virtual-scroll-viewport
   itemSize="24"
   [ngStyle]="{
-    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'auto',
+    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'hidden',
     'overflow-y': gridConfig.fitVertical ? 'hidden' : 'auto',
   }"
   (scroll)="onViewportScroll($event)"

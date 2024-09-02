@@ -22,6 +22,7 @@ import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
+import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
 
 @Component({
   selector: 'icc-grid-view',
@@ -172,7 +173,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         return widthRatio * column.width! + 'px';
       })
       .join(' ');
-    this.gridTemplateColumns = this.gridConfig.rowSelection ? '60px ' + colWidths : colWidths;
+    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px${colWidths}` : colWidths;
     //console.log(' this.tableWidth=', this.tableWidth);
     //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
   }
