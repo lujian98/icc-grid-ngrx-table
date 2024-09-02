@@ -173,7 +173,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         return widthRatio * column.width! + 'px';
       })
       .join(' ');
-    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px${colWidths}` : colWidths;
+    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
     //console.log(' this.tableWidth=', this.tableWidth);
     //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
   }
