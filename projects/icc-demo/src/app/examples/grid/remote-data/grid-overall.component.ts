@@ -8,10 +8,7 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccGridModule,
-  ],
+  imports: [CommonModule, IccGridModule],
 })
 export class AppGridOverallComponent {
   gridConfig: IccGridConfig = {
@@ -27,11 +24,13 @@ export class AppGridOverallComponent {
     remoteColumnsConfig: true,
     remoteGridData: true,
 
-    sortFields: [{
-      field: 'ID',
-      dir: 'desc',
-    }],
+    sortFields: [
+      {
+        field: 'ID',
+        dir: 'desc',
+      },
+    ],
     columnFilters: [{ name: 'vin', value: '9' }],
     rowSelection: true,
-  }
+  };
 }

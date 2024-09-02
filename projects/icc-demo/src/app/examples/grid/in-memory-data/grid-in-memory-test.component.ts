@@ -1,18 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridModule, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
+import {
+  IccGridConfig,
+  IccGridModule,
+  IccColumnConfig,
+  defaultGridConfig,
+  IccGridData,
+} from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
   selector: 'app-grid-in-memory-test',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
+  template: `<icc-grid
+    [gridConfig]="gridConfig"
+    [columnsConfig]="columnsConfig"
+    [gridData]="gridData"
+  ></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccGridModule,
-  ],
+  imports: [CommonModule, IccGridModule],
 })
 export class AppGridinMemoryTestComponent {
   gridConfig: IccGridConfig = {
@@ -25,31 +32,39 @@ export class AppGridinMemoryTestComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
-    sortFields: [{
-      field: 'brand',
-      dir: 'desc',
-    }],
+    sortFields: [
+      {
+        field: 'brand',
+        dir: 'desc',
+      },
+    ],
     columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,
     remoteGridData: false,
-  }
+  };
 
-  columnsConfig: IccColumnConfig[] = [{
-    name: 'ID',
-    width: 50,
-    align: 'center',
-  }, {
-    name: 'vin',
-  }, {
-    name: 'brand',
-  }, {
-    name: 'year',
-    width: 50,
-    align: 'right',
-  }, {
-    name: 'color',
-    width: 80,
-    align: 'center',
-  }];
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+    },
+    {
+      name: 'brand',
+    },
+    {
+      name: 'year',
+      width: 50,
+      align: 'right',
+    },
+    {
+      name: 'color',
+      width: 80,
+      align: 'center',
+    },
+  ];
   gridData: IccGridData<any> = CARSDATA3;
 }

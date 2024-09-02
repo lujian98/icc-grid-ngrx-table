@@ -18,12 +18,7 @@ import { IccMenuItem } from '../../models/menu-item.model';
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    IccIconModule,
-    IccCheckboxModule,
-  ],
+  imports: [CommonModule, RouterModule, IccIconModule, IccCheckboxModule],
 })
 export class IccMenuItemComponent {
   @Input() menuItem!: IccMenuItem;
@@ -48,15 +43,17 @@ export class IccMenuItemComponent {
   }
 
   get title(): string {
-    return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
+    return this.menuItem.title === undefined
+      ? this.menuItem.name
+      : this.menuItem.title;
   }
 
   onCheckboxChange(event: boolean | MouseEvent): void {
-    if(typeof event === 'boolean') {
+    if (typeof event === 'boolean') {
       this.iccCheckboxChange.emit({
         ...this.menuItem,
         checked: event,
-      })
+      });
     }
   }
 }

@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { IccColumnConfig } from '../../../models/grid-column.model';
@@ -9,16 +16,12 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   styleUrls: ['./grid-cell-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    CdkTableModule,
-  ],
+  imports: [CommonModule, CdkTableModule],
 })
 export class IccGridCellViewComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _record!: T;
   @Input() column!: IccColumnConfig;
-
 
   @Input()
   set record(data: T) {
@@ -35,7 +38,7 @@ export class IccGridCellViewComponent<T> {
   }
 
   get align(): string {
-    return this.column.align ? this.column.align: 'left';
+    return this.column.align ? this.column.align : 'left';
   }
 
   @HostBinding('class.grid-cell-view-align-center')

@@ -24,7 +24,7 @@ export interface IccGridConfig {
   remoteGridData: boolean;
 
   viewportWidth: number;
-  hasScrollY: boolean,
+  hasScrollY: boolean;
 }
 
 export interface IccGridState {
@@ -38,7 +38,6 @@ export interface GridState<T extends object = object> {
   totalCounts: number;
   inMemoryData: T[];
 }
-
 
 export interface IccGridData<T> {
   data: T[];

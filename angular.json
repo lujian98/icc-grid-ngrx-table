@@ -28,10 +28,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/icc/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
@@ -53,9 +50,7 @@
             "outputPath": "dist/icc-demo",
             "index": "projects/icc-demo/src/index.html",
             "main": "projects/icc-demo/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/icc-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -119,19 +114,14 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/icc-demo/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/icc-demo/src/favicon.ico",
               "projects/icc-demo/src/assets"
             ],
-            "styles": [
-              "projects/icc-demo/src/styles.scss"
-            ],
+            "styles": ["projects/icc-demo/src/styles.scss"],
             "scripts": []
           }
         }

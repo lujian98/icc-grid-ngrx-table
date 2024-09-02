@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IccColumnConfig, IccColumnFilter, IccGridConfig, IccGridData, IccSortField } from '../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccColumnFilter,
+  IccGridConfig,
+  IccGridData,
+  IccSortField,
+} from '../models/grid-column.model';
 import { IccFilterFactory } from './filter/filter_factory';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 
@@ -8,9 +14,15 @@ import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
   providedIn: 'root',
 })
 export class IccGridinMemoryService {
-
-  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[], inMemoryData: any[]): Observable<IccGridData<T>> {
-    const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
+  getGridData<T>(
+    gridConfig: IccGridConfig,
+    columns: IccColumnConfig[],
+    inMemoryData: any[],
+  ): Observable<IccGridData<T>> {
+    const filterParams = this.getFilterParams(
+      gridConfig.columnFilters,
+      columns,
+    );
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
@@ -31,7 +43,9 @@ export class IccGridinMemoryService {
         const searches = params.value;
         //console.log( ' value=', searches)
         const search =
-          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches.toLowerCase() : searches;
+          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1
+            ? searches.toLowerCase()
+            : searches;
 
         //console.log( ' filterKey=', filterKey)
         //console.log( ' value=', search)
@@ -41,9 +55,18 @@ export class IccGridinMemoryService {
           const filter = this.getTypedValue(search, val, search);
           switch (compareKey) {
             case 'cont':
-              return value && value.toString().toLowerCase().includes(filter.toString());
+              return (
+                value &&
+                value.toString().toLowerCase().includes(filter.toString())
+              );
             case 'i_cont':
-              return value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
+              return (
+                value &&
+                value
+                  .toString()
+                  .toLowerCase()
+                  .includes(filter.toString().toLowerCase())
+              );
             case 'in':
             case 'in[]':
               return searches.includes(val);
@@ -143,10 +166,17 @@ export class IccGridinMemoryService {
   }
 
   private isNumeric(num: any): boolean {
-    return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
+    return (
+      (typeof num === 'number' ||
+        (typeof num === 'string' && num.trim() !== '')) &&
+      !isNaN(num as number)
+    );
   }
 
-  private getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
+  private getFilterParams(
+    columnFilters: IccColumnFilter[],
+    columns: IccColumnConfig[],
+  ): any[] {
     const params: any[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
@@ -169,7 +199,7 @@ export class IccGridinMemoryService {
           });
         });
       }
-    })
+    });
     return params;
   }
 }

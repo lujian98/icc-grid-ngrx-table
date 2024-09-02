@@ -11,15 +11,20 @@ import {
 } from '@angular/core';
 
 import { IccPopoverComponent } from './popover.component';
-import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
-
+import {
+  IccPosition,
+  IccTrigger,
+  IccDynamicOverlayService,
+} from '@icc/ui/overlay';
 
 @Directive({
   selector: '[iccPopover]',
   exportAs: 'iccPopover',
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
+export class IccPopoverDirective
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 
@@ -35,7 +40,10 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   @Input('iccPopoverStyle')
   style: string | undefined;
 
-  constructor(protected elementRef: ElementRef, protected dyanmicOverlayService: IccDynamicOverlayService) {}
+  constructor(
+    protected elementRef: ElementRef,
+    protected dyanmicOverlayService: IccDynamicOverlayService,
+  ) {}
 
   ngAfterViewInit() {
     this.dyanmicOverlayService.build(
@@ -46,7 +54,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       this.content,
       this.context,
       this.dyanmicOverlayService,
-      this.style
+      this.style,
     );
   }
 

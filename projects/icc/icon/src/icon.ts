@@ -5,7 +5,11 @@ export interface IccIcon {
   getContent(): string | null;
 }
 export class IccSvgIcon implements IccIcon {
-  constructor(protected name: string, protected content: any, protected params: IccIconPackParams = {}) {}
+  constructor(
+    protected name: string,
+    protected content: any,
+    protected params: IccIconPackParams = {},
+  ) {}
 
   getClasses(): string[] {
     const classes = [];
@@ -22,7 +26,10 @@ export class IccSvgIcon implements IccIcon {
 }
 
 export class IccFontIcon implements IccIcon {
-  constructor(protected name: string, protected params: IccIconPackParams = {}) {}
+  constructor(
+    protected name: string,
+    protected params: IccIconPackParams = {},
+  ) {}
 
   getClasses(): string[] {
     const classes = [];
@@ -31,7 +38,9 @@ export class IccFontIcon implements IccIcon {
       classes.push(this.params.packClass);
     }
 
-    const name = this.params.iconClassPrefix ? `${this.params.iconClassPrefix}-${this.name}` : this.name;
+    const name = this.params.iconClassPrefix
+      ? `${this.params.iconClassPrefix}-${this.name}`
+      : this.name;
     classes.push(name);
 
     return classes;

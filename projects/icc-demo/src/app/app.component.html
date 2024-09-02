@@ -1,30 +1,27 @@
 <icc-layout>
   <icc-layout-header>
     Top Nav Bar
-    <div (click)="toggleTheme()">
-      Toggle Theme
-    </div>
-    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+    <div (click)="toggleTheme()">Toggle Theme</div>
+    <icc-icon
+      [config]="{ icon: 'exclamation-circle', status: 'primary' }"
+    ></icc-icon>
   </icc-layout-header>
-
 
   <div class="icc-left-side-bar">
     <icc-accordion [items]="items"></icc-accordion>
 
     <icc-checkbox
-    [checked]="true"
-    [disabled]="true"
-    (change)="onCheckboxChange($event)"
+      [checked]="true"
+      [disabled]="true"
+      (change)="onCheckboxChange($event)"
     >
-    <icc-icon config="exclamation-circle" ></icc-icon>
-    <span > Test Checkbox </span>
-  </icc-checkbox>
+      <icc-icon config="exclamation-circle"></icc-icon>
+      <span> Test Checkbox </span>
+    </icc-checkbox>
   </div>
   <div class="icc-center-view">
     <router-outlet></router-outlet>
   </div>
 
-  <icc-layout-footer>
-    Footer Bar
-  </icc-layout-footer>
+  <icc-layout-footer> Footer Bar </icc-layout-footer>
 </icc-layout>

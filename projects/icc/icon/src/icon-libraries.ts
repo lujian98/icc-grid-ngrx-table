@@ -35,7 +35,11 @@ export class IccIconLibraries {
   protected packs: Map<string, IccIconPack> = new Map();
   protected defaultPack!: IccIconPack | undefined;
 
-  registerSvgPack(name: string, icons: IccIcons, params: IccIconPackParams = {}) {
+  registerSvgPack(
+    name: string,
+    icons: IccIcons,
+    params: IccIconPackParams = {},
+  ) {
     this.packs.set(name, {
       name,
       icons: new Map(Object.entries(icons)),

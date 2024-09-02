@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ViewContainerRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccTextFilterComponent } from './text/text-filter.component';
 import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
@@ -8,10 +15,7 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
   templateUrl: 'column-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccTextFilterComponent,
-  ],
+  imports: [CommonModule, IccTextFilterComponent],
 })
 export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
@@ -23,7 +27,7 @@ export class IccColumnFilterComponent implements OnInit {
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
-    if(this._componentRef) {
+    if (this._componentRef) {
       this._componentRef.instance.gridConfig = this.gridConfig;
     }
   }

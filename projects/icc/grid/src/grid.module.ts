@@ -14,11 +14,7 @@ import { IccOverlayModule } from '@icc/ui/overlay';
     IccGridViewComponent,
     IccGridFooterComponent,
   ],
-  declarations: [
-    IccGridComponent,
-  ],
-  exports: [
-    IccGridComponent,
-  ],
+  declarations: [IccGridComponent],
+  exports: [IccGridComponent],
 })
-export class IccGridModule { }
+export class IccGridModule {}

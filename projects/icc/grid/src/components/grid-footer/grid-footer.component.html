@@ -2,10 +2,11 @@
   <i class="fa-solid fa-backward-step"></i>
 </button>
 
-<button (click)="getGridPageData(page-1)" [disabled]="page === 1">
+<button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
   <i class="fa-solid fa-caret-left"></i>
 </button>
-<span> Page:
+<span>
+  Page:
   <input
     type="number"
     min="1"
@@ -14,12 +15,11 @@
     autocomplete="off"
     (click)="$event.stopPropagation()"
     (input)="valueChanged($event)"
-    style="text-align:center;"
-  >
-
+    style="text-align: center"
+  />
 </span>
-<span> of {{lastPage}} </span>
-<button (click)="getGridPageData(page+1)" [disabled]="page === lastPage">
+<span> of {{ lastPage }} </span>
+<button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
   <i class="fa-solid fa-caret-right"></i>
 </button>
 
@@ -31,7 +31,8 @@
   <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 
-<span>Page Size:
+<span
+  >Page Size:
   <input
     type="number"
     min="1"
@@ -39,8 +40,8 @@
     [value]="gridConfig.pageSize"
     autocomplete="off"
     readonly
-    style="text-align:right;"
-  >
+    style="text-align: right"
+  />
 </span>
 
-<span class="grid-footer-displaying">{{displaying}}</span>
+<span class="grid-footer-displaying">{{ displaying }}</span>

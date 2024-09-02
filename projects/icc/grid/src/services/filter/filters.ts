@@ -9,7 +9,7 @@ export class IccFilters {
   get filters(): Array<IccFilter> {
     return this._filters;
   }
-/*
+  /*
   setFilters(columns: IccColumnConfig[]) {
     const factory = new IccFilterFactory();
     columns.forEach((column: IccColumnConfig, index) => {
@@ -28,15 +28,15 @@ export class IccFilters {
         f.range = filteredValues[key];
       } else {
         */
-        if (filteredValues[key]) {
-          let value = filteredValues[key];
-          if (value instanceof Array) {
-            value = value.join();
-          }
-          filter.search = value;
-        } else {
-          filter.search = '';
+      if (filteredValues[key]) {
+        let value = filteredValues[key];
+        if (value instanceof Array) {
+          value = value.join();
         }
+        filter.search = value;
+      } else {
+        filter.search = '';
+      }
       //}
     });
   }

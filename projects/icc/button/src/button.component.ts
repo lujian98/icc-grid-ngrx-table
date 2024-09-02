@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+  ElementRef,
+} from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 //import { SunUtils } from '../utils/utils';
@@ -14,7 +20,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 })
 export class IccButtonComponent {
   //@Input() size: SunButtonSize = 'standard';
- // @Input() status: SunButtonStatus = 'default';
+  // @Input() status: SunButtonStatus = 'default';
   @Input() appearance!: string;
 
   /*

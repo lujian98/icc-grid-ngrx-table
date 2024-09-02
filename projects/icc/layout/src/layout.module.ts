@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
-import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent} from './layout.component';
+import {
+  IccLayoutComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutFooterComponent,
+} from './layout.component';
 
 @NgModule({
   declarations: [

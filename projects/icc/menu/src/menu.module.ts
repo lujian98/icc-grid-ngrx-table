@@ -4,13 +4,8 @@ import { IccMenuComponent } from './menu.component';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 
 @NgModule({
-  declarations: [
-    IccMenuComponent,
-  ],
-  imports: [
-    CommonModule,
-    IccMenuItemComponent,
-  ],
+  declarations: [IccMenuComponent],
+  imports: [CommonModule, IccMenuItemComponent],
   exports: [IccMenuComponent],
 })
-export class IccMenuModule { }
+export class IccMenuModule {}

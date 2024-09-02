@@ -1,25 +1,31 @@
 <div class="grid-header-container">
-<icc-grid-header [ngStyle]="gridHeaderStyle"
-  [gridConfig]="gridConfig"
-  [columns]="columns"
-  [columnWidths]="columnWidths"
-  (cdkDropListDropped)="onColumnDragDrop($event)"
-  (columnResizing)="onColumnResizing($event)"
-  (columnResized)="onColumnResized($event)"
-  cdkDropListOrientation="horizontal"
-  cdkDropList>
-</icc-grid-header>
+  <icc-grid-header
+    [ngStyle]="gridHeaderStyle"
+    [gridConfig]="gridConfig"
+    [columns]="columns"
+    [columnWidths]="columnWidths"
+    (cdkDropListDropped)="onColumnDragDrop($event)"
+    (columnResizing)="onColumnResizing($event)"
+    (columnResized)="onColumnResized($event)"
+    cdkDropListOrientation="horizontal"
+    cdkDropList
+  >
+  </icc-grid-header>
 </div>
 
-<cdk-virtual-scroll-viewport
-  itemSize="24"
-  (scroll)="onViewportScroll($event)">
+<cdk-virtual-scroll-viewport itemSize="24" (scroll)="onViewportScroll($event)">
   <ng-container *ngIf="gridData$ | async as gridData">
-    <icc-grid-row *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index;"
+    <icc-grid-row
+      *cdkVirtualFor="
+        let record of gridData;
+        trackBy: trackByIndex;
+        let index = index
+      "
       [gridConfig]="gridConfig"
       [columns]="columns"
       [columnWidths]="columnWidths"
-      [record]="record">
+      [record]="record"
+    >
     </icc-grid-row>
   </ng-container>
 </cdk-virtual-scroll-viewport>

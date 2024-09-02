@@ -1,10 +1,23 @@
-import { Injectable, ComponentRef, ElementRef, Type, TemplateRef } from '@angular/core';
+import {
+  Injectable,
+  ComponentRef,
+  ElementRef,
+  Type,
+  TemplateRef,
+} from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 
 import { IccOverlayRef } from './mapping';
-import { IccTriggerStrategy, IccTrigger, IccTriggerStrategyBuilderService } from './overlay-trigger';
+import {
+  IccTriggerStrategy,
+  IccTrigger,
+  IccTriggerStrategyBuilderService,
+} from './overlay-trigger';
 import { IccRenderableContainer } from './overlay-container.component';
-import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
+import {
+  IccPositionBuilderService,
+  Point,
+} from './overlay-position-builder.service';
 import { IccPosition } from './overlay-position';
 import { IccOverlayService } from './overlay.service';
 
@@ -20,13 +33,16 @@ export class IccDynamicOverlayService {
   protected customStyle: string | undefined;
 
   protected overlayRef!: IccOverlayRef | null;
-  protected containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  protected containerRef!:
+    | ComponentRef<IccRenderableContainer>
+    | null
+    | undefined;
   protected triggerStrategy!: IccTriggerStrategy;
 
   constructor(
     private overlayPositionBuilder: IccPositionBuilderService,
     private overlayService: IccOverlayService,
-    private triggerStrategyBuilder: IccTriggerStrategyBuilderService
+    private triggerStrategyBuilder: IccTriggerStrategyBuilderService,
   ) {}
 
   build(
@@ -37,7 +53,7 @@ export class IccDynamicOverlayService {
     content: Type<any> | TemplateRef<any> | string,
     context: {},
     dynamicOverlayService: IccDynamicOverlayService,
-    customStyle?: string
+    customStyle?: string,
   ) {
     this.componentType = componentType;
     this.hostElement = hostElement;
@@ -56,10 +72,12 @@ export class IccDynamicOverlayService {
       this.hostElement.nativeElement,
       // @ts-ignore
       () => this.container(),
-      this.trigger
+      this.trigger,
     );
     // @ts-ignore
-    this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
+    this.triggerStrategy.show$.subscribe((event: MouseEvent) =>
+      this.show(event),
+    );
     this.triggerStrategy.hide$.subscribe(() => this.hide());
   }
 
@@ -99,7 +117,10 @@ export class IccDynamicOverlayService {
       };
       this.position = IccPosition.BOTTOMRIGHT;
     }
-    return this.overlayPositionBuilder.flexibleConnectedTo(origin, this.position);
+    return this.overlayPositionBuilder.flexibleConnectedTo(
+      origin,
+      this.position,
+    );
   }
 
   // @ts-ignore
@@ -120,7 +141,9 @@ export class IccDynamicOverlayService {
     if (!this.overlayRef) {
       this.createOverlay(event);
     }
-    this.containerRef = this.overlayRef?.attach(new ComponentPortal(this.componentType, null, null));
+    this.containerRef = this.overlayRef?.attach(
+      new ComponentPortal(this.componentType, null, null),
+    );
     this.updateContext();
   }
 

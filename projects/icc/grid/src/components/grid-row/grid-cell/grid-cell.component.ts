@@ -7,10 +7,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
 })
-export class IccGridCellComponent {
-
-}
+export class IccGridCellComponent {}

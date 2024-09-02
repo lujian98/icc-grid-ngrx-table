@@ -21,7 +21,7 @@ export class IccFilterFactory {
     const componentRef = new component(column, column.name);
     return componentRef;
   }
-//   constructor(column: IccColumnConfig, key: string) {
+  //   constructor(column: IccColumnConfig, key: string) {
   /*
   getFilter(column: IccColumnConfig, columns: IccColumnConfig[]) {
     let type = 'text';
@@ -44,7 +44,10 @@ export class IccFilterFactory {
   }
     */
 
-  private getFilterType(filterField: string, columns: IccColumnConfig[]): string {
+  private getFilterType(
+    filterField: string,
+    columns: IccColumnConfig[],
+  ): string {
     let type = 'text';
     columns.forEach((column) => {
       if (column.name === filterField) {

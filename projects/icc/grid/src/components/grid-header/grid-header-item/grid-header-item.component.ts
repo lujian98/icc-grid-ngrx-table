@@ -7,9 +7,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./grid-header-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
 })
-export class IccGridHeaderItemComponent {
-}
+export class IccGridHeaderItemComponent {}

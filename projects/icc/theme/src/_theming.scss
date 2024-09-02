@@ -7,15 +7,17 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
-@import 'core/common';
-@import 'core/functions';
-@import 'core/variants';
-@import 'core/variables';
-@import 'components';
-@import 'reset';
-@import 'typography';
-@import 'themes';
+@import "core/common";
+@import "core/functions";
+@import "core/variants";
+@import "core/variables";
+@import "components";
+@import "reset";
+@import "typography";
+@import "themes";

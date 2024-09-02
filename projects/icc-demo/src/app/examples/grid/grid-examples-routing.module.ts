@@ -21,23 +21,44 @@ const routes: Route[] = [
   {
     path: '',
     children: [
-      { path: 'remote-simple-grid', component: AppSimpleGridComponent, },
-      { path: 'remote-grid-sort', component: AppGridSortComponent, },
-      { path: 'remote-grid-filter', component: AppGridFilterComponent, },
-      { path: 'remote-grid-column-resize', component: AppGridColumnResizeComponent, },
-      { path: 'remote-grid-column-reorder', component: AppGridColumnReorderComponent, },
-      { path: 'remote-grid-column-menu', component: AppGridColumnMenuComponent, },
-      { path: 'remote-grid-column-hidden', component: AppGridColumnHiddenComponent, },
-      { path: 'remote-grid-remote-column-config', component: AppGridRemoteColumnConfigComponent, },
-      { path: 'remote-grid-row-selection', component: AppGridRowSelectionComponent, },
-      { path: 'remote-grid-page', component: AppGridPageComponent, },
-      { path: 'remote-grid-horizontal-scroll', component: AppGridHorizontalScrollComponent, },
-      { path: 'remote-grid-overall', component: AppGridOverallComponent, },
+      { path: 'remote-simple-grid', component: AppSimpleGridComponent },
+      { path: 'remote-grid-sort', component: AppGridSortComponent },
+      { path: 'remote-grid-filter', component: AppGridFilterComponent },
+      {
+        path: 'remote-grid-column-resize',
+        component: AppGridColumnResizeComponent,
+      },
+      {
+        path: 'remote-grid-column-reorder',
+        component: AppGridColumnReorderComponent,
+      },
+      {
+        path: 'remote-grid-column-menu',
+        component: AppGridColumnMenuComponent,
+      },
+      {
+        path: 'remote-grid-column-hidden',
+        component: AppGridColumnHiddenComponent,
+      },
+      {
+        path: 'remote-grid-remote-column-config',
+        component: AppGridRemoteColumnConfigComponent,
+      },
+      {
+        path: 'remote-grid-row-selection',
+        component: AppGridRowSelectionComponent,
+      },
+      { path: 'remote-grid-page', component: AppGridPageComponent },
+      {
+        path: 'remote-grid-horizontal-scroll',
+        component: AppGridHorizontalScrollComponent,
+      },
+      { path: 'remote-grid-overall', component: AppGridOverallComponent },
       {
         path: 'grid-test2',
         component: AppGridTest2Component,
       },
-      { path: 'in-memory-grid-test', component: AppGridinMemoryTestComponent, },
+      { path: 'in-memory-grid-test', component: AppGridinMemoryTestComponent },
       {
         path: '**',
         redirectTo: 'remote-grid-overall',
@@ -50,4 +71,4 @@ const routes: Route[] = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AppGridExamplesRoutingModule { }
+export class AppGridExamplesRoutingModule {}

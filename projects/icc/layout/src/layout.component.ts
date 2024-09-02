@@ -32,14 +32,13 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
     this.themeService.changeWindowWidth(event.target.innerWidth);
   }
 */
-  constructor(
-    /*
+  constructor() /*
     protected themeService: IccThemeService,
     protected renderer: Renderer2,
     @Inject(ICC_DOCUMENT) protected document: Document,
     @Inject(ICC_WINDOW) protected window: Window
     */
-  ) {}
+  {}
 
   ngOnInit() {
     /*
@@ -59,7 +58,7 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-   // this.alive = false;
+    // this.alive = false;
   }
 }
 
@@ -68,7 +67,6 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
   template: ` <ng-content></ng-content> `,
 })
 export class IccLayoutHeaderComponent {}
-
 
 @Component({
   selector: 'icc-layout-footer',

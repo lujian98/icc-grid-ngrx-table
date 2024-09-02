@@ -1,9 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core';
 import { IccMenuItem, IccMenuModule } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+} from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -11,10 +19,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccMenuModule,
-  ],
+  imports: [CommonModule, IccMenuModule],
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
@@ -30,16 +35,14 @@ export class IccGridColumnMenuComponent {
     this.columnMenus$ = combineLatest([
       this.gridFacade.selectGridConfig(this.gridName),
       this.gridFacade.selectColumnsConfig(this.gridName),
-    ])
-      .pipe(
-        map(([gridConfig, columns]) => {
-          this.gridConfig = gridConfig;
-          this.columns = columns;
-          this.setMenuItems();
-          return [gridConfig, columns];
-        })
-      );
-
+    ]).pipe(
+      map(([gridConfig, columns]) => {
+        this.gridConfig = gridConfig;
+        this.columns = columns;
+        this.setMenuItems();
+        return [gridConfig, columns];
+      }),
+    );
   }
   get gridName(): string {
     return this._gridName;
@@ -55,25 +58,29 @@ export class IccGridColumnMenuComponent {
   }
 
   private setMenuItems(): void {
-    const menuItems = [{
-      name: 'asc',
-      title: 'Sort ASC',
-      icon: 'arrow-up-short-wide',
-      disabled: this.sortDisabled('asc'),
-    }, {
-      name: 'desc',
-      title: 'Sort DESC',
-      icon: 'arrow-down-wide-short',
-      disabled: this.sortDisabled('desc'),
-    }];
+    const menuItems = [
+      {
+        name: 'asc',
+        title: 'Sort ASC',
+        icon: 'arrow-up-short-wide',
+        disabled: this.sortDisabled('asc'),
+      },
+      {
+        name: 'desc',
+        title: 'Sort DESC',
+        icon: 'arrow-down-wide-short',
+        disabled: this.sortDisabled('desc'),
+      },
+    ];
     const columnItems = [...this.columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
-        disabled: !this.gridConfig.columnHidden || this.column.sortField === false
-      }
+        disabled:
+          !this.gridConfig.columnHidden || this.column.sortField === false,
+      };
     });
     this.menuItems = [...menuItems, ...columnItems];
   }
@@ -87,8 +94,14 @@ export class IccGridColumnMenuComponent {
   }
 
   private sortDisabled(dir: string): boolean {
-    const sortField = this.gridConfig.sortFields.find((field) => field.field === this.column.name);
-    return (!this.gridConfig.columnSort) || (this.column.sortField === false) || (!!sortField && sortField.dir === dir);
+    const sortField = this.gridConfig.sortFields.find(
+      (field) => field.field === this.column.name,
+    );
+    return (
+      !this.gridConfig.columnSort ||
+      this.column.sortField === false ||
+      (!!sortField && sortField.dir === dir)
+    );
   }
 
   private columnSort(dir: string): void {

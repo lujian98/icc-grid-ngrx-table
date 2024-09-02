@@ -37,10 +37,13 @@ export class IccMediaBreakpointsService {
   private breakpointsMap: { [breakpoint: string]: number };
 
   constructor() {
-    this.breakpointsMap = DEFAULT_MEDIA_BREAKPOINTS.reduce((res: any, b: IccMediaBreakpoint) => {
-      res[b.name] = b.width;
-      return res;
-    }, {});
+    this.breakpointsMap = DEFAULT_MEDIA_BREAKPOINTS.reduce(
+      (res: any, b: IccMediaBreakpoint) => {
+        res[b.name] = b.width;
+        return res;
+      },
+      {},
+    );
   }
 
   getByWidth(width: number): IccMediaBreakpoint {

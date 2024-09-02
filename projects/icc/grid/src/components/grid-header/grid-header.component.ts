@@ -1,9 +1,19 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
-import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccColumnWidth,
+} from '../../models/grid-column.model';
 import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccGridHeaderCellComponent } from './grid-header-cell/grid-header-cell.component';
@@ -47,7 +57,8 @@ export class IccGridHeaderComponent {
     return index;
   }
 
-  get dragDisabled(): boolean { // TODO add each column enable/disable
+  get dragDisabled(): boolean {
+    // TODO add each column enable/disable
     return !this.gridConfig.columnReorder;
   }
 

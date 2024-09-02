@@ -9,4 +9,4 @@ import { IccMenuModule } from '@icc/ui/menu';
   declarations: [IccAccordionComponent],
   exports: [IccAccordionComponent],
 })
-export class IccAccordionModule { }
+export class IccAccordionModule {}

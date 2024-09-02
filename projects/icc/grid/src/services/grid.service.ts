@@ -1,8 +1,18 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccGridData,
+  IccSortField,
+  IccColumnFilter,
+} from '../models/grid-column.model';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 import { IccFilterFactory } from './filter/filter_factory';
 import { CARSDATA3 } from '../spec-helpers/cars-large';
@@ -13,7 +23,10 @@ import { CARSDATA3 } from '../spec-helpers/cars-large';
 export class IccGridService {
   private http = inject(HttpClient);
 
-  getGridConfig(gridName: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
+  getGridConfig(
+    gridName: string,
+    gridConfig: IccGridConfig,
+  ): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig)
     return of(gridConfig);
     /*
@@ -23,24 +36,33 @@ export class IccGridService {
       */
   }
 
-  getGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    console.log(' get remote service columnConfig =', gridName)
-    const config: IccColumnConfig[] = [{
-      name: 'ID',
-      width: 50,
-      align: 'center',
-    }, {
-      name: 'vin',
-    }, {
-      name: 'brand',
-      hidden: false,
-      filterField: false,
-    }, {
-      name: 'year',
-      sortField: false,
-    }, {
-      name: 'color',
-    }];
+  getGridColumnsConfig(
+    gridName: string,
+    columnsConfig: IccColumnConfig[],
+  ): Observable<IccColumnConfig[]> {
+    console.log(' get remote service columnConfig =', gridName);
+    const config: IccColumnConfig[] = [
+      {
+        name: 'ID',
+        width: 50,
+        align: 'center',
+      },
+      {
+        name: 'vin',
+      },
+      {
+        name: 'brand',
+        hidden: false,
+        filterField: false,
+      },
+      {
+        name: 'year',
+        sortField: false,
+      },
+      {
+        name: 'color',
+      },
+    ];
 
     return of(config);
     /*
@@ -50,15 +72,25 @@ export class IccGridService {
       */
   }
 
-  getGridInMemoeryData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
+  getGridInMemoeryData<T>(
+    gridConfig: IccGridConfig,
+    columns: IccColumnConfig[],
+  ): Observable<IccGridData<T>> {
     // TODO where to store local data and process these data?
     return of(CARSDATA3);
   }
 
-  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
+  getGridData<T>(
+    gridConfig: IccGridConfig,
+    columns: IccColumnConfig[],
+  ): Observable<IccGridData<T>> {
     let params = new HttpParams();
 
-    params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
+    params = this.appendFilterHttpParams(
+      gridConfig.columnFilters,
+      columns,
+      params,
+    );
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
 
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
@@ -68,21 +100,23 @@ export class IccGridService {
     //console.log(' service getGridData gridConfig =', gridConfig);
     //console.log(' params =', params);
     const urlKey = gridConfig.urlKey || gridConfig.gridName;
-    return this.http
-      .get<IccGridData<T>>(`/api/${urlKey}`, { params })
-      .pipe(
-        map((res) => {
-          console.log(' res=', res)
-          return res;
-        })
-      );
+    return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
+      map((res) => {
+        console.log(' res=', res);
+        return res;
+      }),
+    );
   }
 
-  appendFilterHttpParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[], params: HttpParams): HttpParams {
+  appendFilterHttpParams(
+    columnFilters: IccColumnFilter[],
+    columns: IccColumnConfig[],
+    params: HttpParams,
+  ): HttpParams {
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
-    columnFilters.forEach((col)=>{
-      const column = columns.find((item)=>item.name === col.name);
+    columnFilters.forEach((col) => {
+      const column = columns.find((item) => item.name === col.name);
       const filter = filterFactory.getFilter(column!);
       filter.search = col.value;
       const ransackFilter = ransackFilterFactory.getFilter(filter);
@@ -96,7 +130,7 @@ export class IccGridService {
           });
         });
       }
-    })
+    });
     return params;
   }
 
@@ -205,5 +239,4 @@ export class IccGridService {
   }
 
     */
-
 }

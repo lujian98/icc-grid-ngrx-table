@@ -18,11 +18,8 @@ import { AppComponent } from './app.component';
 import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import { InMemoryService } from './mock/in-memory-service';
 
-
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -47,6 +44,6 @@ import { InMemoryService } from './mock/in-memory-service';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

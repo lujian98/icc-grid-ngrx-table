@@ -3,7 +3,10 @@ import { ReplaySubject, Observable } from 'rxjs';
 import { share, map, pairwise, filter, startWith } from 'rxjs/operators';
 
 import { ICC_THEME_OPTIONS, ICC_DOCUMENT } from './theme.options';
-import { IccMediaBreakpointsService, IccMediaBreakpoint } from './media-breakpoints.service';
+import {
+  IccMediaBreakpointsService,
+  IccMediaBreakpoint,
+} from './media-breakpoints.service';
 import { Platform } from '@angular/cdk/platform';
 
 @Injectable()
@@ -67,12 +70,15 @@ export class IccThemeService {
       startWith(<number>undefined),
       pairwise(),
       map(([prevWidth, width]: [number, number]) => {
-        return [this.breakpointService.getByWidth(prevWidth), this.breakpointService.getByWidth(width)];
+        return [
+          this.breakpointService.getByWidth(prevWidth),
+          this.breakpointService.getByWidth(width),
+        ];
       }),
       filter(([prevBreakpoint, breakpoint]) => {
         return prevBreakpoint.name !== breakpoint.name;
       }),
-      share()
+      share(),
     );
   }
 }

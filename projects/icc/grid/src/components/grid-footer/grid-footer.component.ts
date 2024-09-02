@@ -1,7 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  skip,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
 
@@ -11,9 +23,7 @@ import { IccGridConfig } from '../../models/grid-column.model';
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
 })
 export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
@@ -38,7 +48,9 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   get lastPage(): number {
-    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0;
+    return (
+      Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0
+    );
   }
 
   get displaying(): string {
@@ -58,7 +70,7 @@ export class IccGridFooterComponent implements OnDestroy {
         distinctUntilChanged(),
         switchMap((page) => {
           return of(page).pipe(takeUntil(this.valueChanged$.pipe(skip(1))));
-        })
+        }),
       )
       .subscribe((page) => {
         this.getGridPageData(this.page);

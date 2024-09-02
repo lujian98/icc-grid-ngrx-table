@@ -11,7 +11,12 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IccIconLibraries, IccIconDefinition } from './icon-libraries';
 
-export type IccIconStatus = 'default' | 'primary' | 'warning' | 'danger' | 'success';
+export type IccIconStatus =
+  | 'default'
+  | 'primary'
+  | 'warning'
+  | 'danger'
+  | 'success';
 
 export interface IccIconConfig {
   icon: string;
@@ -92,7 +97,7 @@ export class IccIconComponent implements OnChanges, OnInit {
     protected iconLibrary: IccIconLibraries,
     protected el: ElementRef,
     protected renderer: Renderer2,
-    protected sanitizer: DomSanitizer
+    protected sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit() {

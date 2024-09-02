@@ -1,6 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  IccColumnConfig,
+  IccColumnWidth,
+  IccGridConfig,
+} from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
 import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';

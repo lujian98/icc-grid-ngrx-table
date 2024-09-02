@@ -23,7 +23,7 @@
     user-select: none;
 
     &::after {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       bottom: 0;
@@ -33,10 +33,11 @@
       height: 20px;
       width: 1px;
       margin: auto;
-     //background-color: red;
+      //background-color: red;
     }
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       cursor: ew-resize;
     }
   }

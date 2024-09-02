@@ -8,10 +8,7 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccGridModule,
-  ],
+  imports: [CommonModule, IccGridModule],
 })
 export class AppGridRemoteColumnConfigComponent {
   gridConfig: IccGridConfig = {

@@ -1,6 +1,5 @@
 @mixin icc-grid-theme() {
   icc-grid {
-
     icc-grid-header {
       background-color: icc-theme(icc-grid-header-background-color);
     }
@@ -13,7 +12,7 @@
       }
     }
 
-    icc-grid-row:nth-child(even)  {
+    icc-grid-row:nth-child(even) {
       background-color: icc-theme(icc-grid-row-even-background-color);
       &:focus,
       &:hover {

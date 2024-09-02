@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  defaultGridConfig,
+} from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 import { IccThemeService } from '@icc/ui/theme';
 import { IccAccordion } from '@icc/ui/accordion';
@@ -14,53 +18,85 @@ export class AppComponent {
   private themeService = inject(IccThemeService);
   title = 'icc-demo';
 
-  items: IccAccordion[] = [{
-    name: 'Grid Remote Data',
-    items: [
-      { name: '1: Simple Grid', link: 'grid/remote-simple-grid', },
-      { name: '2: Grid Sort', link: 'grid/remote-grid-sort', },
-      { name: '3: Grid Filter', link: 'grid/remote-grid-filter', },
-      { name: '4: Grid Column Resize', link: 'grid/remote-grid-column-resize', },
-      { name: '5: Grid Column Reorder', link: 'grid/remote-grid-column-reorder', },
-      { name: '6: Grid Column Menu', link: 'grid/remote-grid-column-menu', },
-      { name: '7: Grid Column Hidden', link: 'grid/remote-grid-column-hidden', },
-      { name: '8: Grid Remote Column Config', link: 'grid/remote-grid-remote-column-config', },
-      { name: '9: Grid Row Seletion', link: 'grid/remote-grid-row-selection', },
-      { name: '10: Grid Page', link: 'grid/remote-grid-page', },
-      { name: '11: Grid Horizontal Scroll', link: 'grid/remote-grid-horizontal-scroll', },
-      { name: '12: Grid Overall', link: 'grid/remote-grid-overall', },
-      { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate', },
-    ]
-  }, {
-    name: 'Grid in-memory Data',
-    items: [
-      { name: 'Grid In-Memory Test', link: 'grid/in-memory-grid-test', icon: 'arrows-rotate', },
-    ]
-  }]
+  items: IccAccordion[] = [
+    {
+      name: 'Grid Remote Data',
+      items: [
+        { name: '1: Simple Grid', link: 'grid/remote-simple-grid' },
+        { name: '2: Grid Sort', link: 'grid/remote-grid-sort' },
+        { name: '3: Grid Filter', link: 'grid/remote-grid-filter' },
+        {
+          name: '4: Grid Column Resize',
+          link: 'grid/remote-grid-column-resize',
+        },
+        {
+          name: '5: Grid Column Reorder',
+          link: 'grid/remote-grid-column-reorder',
+        },
+        { name: '6: Grid Column Menu', link: 'grid/remote-grid-column-menu' },
+        {
+          name: '7: Grid Column Hidden',
+          link: 'grid/remote-grid-column-hidden',
+        },
+        {
+          name: '8: Grid Remote Column Config',
+          link: 'grid/remote-grid-remote-column-config',
+        },
+        {
+          name: '9: Grid Row Seletion',
+          link: 'grid/remote-grid-row-selection',
+        },
+        { name: '10: Grid Page', link: 'grid/remote-grid-page' },
+        {
+          name: '11: Grid Horizontal Scroll',
+          link: 'grid/remote-grid-horizontal-scroll',
+        },
+        { name: '12: Grid Overall', link: 'grid/remote-grid-overall' },
+        { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate' },
+      ],
+    },
+    {
+      name: 'Grid in-memory Data',
+      items: [
+        {
+          name: 'Grid In-Memory Test',
+          link: 'grid/in-memory-grid-test',
+          icon: 'arrows-rotate',
+        },
+      ],
+    },
+  ];
 
-
-  columnsConfig: IccColumnConfig[] = [{
-    name: 'ID',
-    width: 50,
-    align: 'center',
-  }, {
-    name: 'vin',
-    width: 50,
-  }, {
-    name: 'brand',
-  }, {
-    name: 'year',
-  }, {
-    name: 'color',
-  }];
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+      width: 50,
+    },
+    {
+      name: 'brand',
+    },
+    {
+      name: 'year',
+    },
+    {
+      name: 'color',
+    },
+  ];
 
   gridData = CARSDATA3;
 
   toggleTheme(): void {
-    this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
+    this.themeService.changeTheme(
+      this.themeService.currentTheme === 'light' ? 'dark' : 'light',
+    );
   }
 
   onCheckboxChange(event: any): void {
-    console.log( ' 999999 event=', event)
+    console.log(' 999999 event=', event);
   }
 }

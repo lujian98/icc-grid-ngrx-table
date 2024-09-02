@@ -42,8 +42,8 @@ export class IccCheckboxComponent implements ControlValueAccessor {
 
   @Output() change = new EventEmitter<boolean>();
 
-  protected onChange = (value: any) => { };
-  protected onTouched = () => { };
+  protected onChange = (value: any) => {};
+  protected onTouched = () => {};
 
   @Input()
   get checked(): boolean {
@@ -69,7 +69,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     this._indeterminate = coerceBooleanProperty(value);
   }
 
-  constructor(private readonly changeDetector: ChangeDetectorRef) { }
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;

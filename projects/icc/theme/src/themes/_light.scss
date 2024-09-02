@@ -62,7 +62,6 @@ $theme: (
   icc-grid-row-odd-background-color: #fbfbfb,
   icc-grid-row-even-background-color: #ffffff,
   icc-grid-row-hover-background-color: #fdeede,
-
 );
 
 $icc-themes: icc-register-theme($theme, light);

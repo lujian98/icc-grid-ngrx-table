@@ -6,10 +6,10 @@
   align-items: center;
 
   .grid-header-cell {
-     display: flex;
-     justify-content: center;
-     width: 100%;
-     align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
 
     .grid-header-cell-title {
       display: inline-block;
@@ -22,7 +22,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-  /*
+      /*
       &.ellipsis {
         overflow: hidden;
         text-overflow: ellipsis;

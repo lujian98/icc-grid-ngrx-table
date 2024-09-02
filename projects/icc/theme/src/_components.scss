@@ -1,9 +1,9 @@
-@import '../../about/src/about.component.theme';
-@import '../../checkbox/src/checkbox.component.theme';
-@import '../../grid/src/grid.component.theme';
-@import '../../icon/src/icon.component.theme';
-@import '../../layout/src/layout.component.theme';
-@import '../../menu//src/menu.component.theme';
+@import "../../about/src/about.component.theme";
+@import "../../checkbox/src/checkbox.component.theme";
+@import "../../grid/src/grid.component.theme";
+@import "../../icon/src/icon.component.theme";
+@import "../../layout/src/layout.component.theme";
+@import "../../menu//src/menu.component.theme";
 
 @mixin icc-theme-components() {
   @include icc-about-theme();

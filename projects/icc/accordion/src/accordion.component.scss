@@ -1,5 +1,6 @@
 :host {
-  cdk-accordion-item { // FOR scrollbar move
+  cdk-accordion-item {
+    // FOR scrollbar move
     position: relative;
     z-index: 10;
     background-color: #eee;
@@ -34,7 +35,6 @@
     padding: 8px 10px;
   }
 
-
   .example-accordion-item-header:hover {
     cursor: pointer;
     background-color: #eee;
@@ -56,6 +56,4 @@
 }
 
 */
-
-
 }

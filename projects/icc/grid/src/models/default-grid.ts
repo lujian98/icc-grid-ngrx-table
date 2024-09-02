@@ -1,4 +1,3 @@
-
 import { IccGridConfig, GridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
@@ -22,7 +21,7 @@ export const defaultGridConfig: IccGridConfig = {
 
   viewportWidth: 1000,
   hasScrollY: false,
-}
+};
 
 export const defaultState: GridState = {
   gridConfig: defaultGridConfig,
@@ -30,4 +29,4 @@ export const defaultState: GridState = {
   data: [],
   totalCounts: 0,
   inMemoryData: [],
-}
+};

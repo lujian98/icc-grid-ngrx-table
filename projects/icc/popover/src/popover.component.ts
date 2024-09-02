@@ -1,6 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  Type,
+  ViewChild,
+  HostBinding,
+} from '@angular/core';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { IccOverlayContainerComponent, IccRenderableContainer, IccDynamicOverlayService } from '@icc/ui/overlay';
+import {
+  IccOverlayContainerComponent,
+  IccRenderableContainer,
+  IccDynamicOverlayService,
+} from '@icc/ui/overlay';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
@@ -19,7 +31,8 @@ export class IccPopoverComponent implements IccRenderableContainer {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
   }
 
-  @ViewChild(IccOverlayContainerComponent, { static: true }) overlayContainer!: IccOverlayContainerComponent;
+  @ViewChild(IccOverlayContainerComponent, { static: true })
+  overlayContainer!: IccOverlayContainerComponent;
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -50,14 +63,16 @@ export class IccPopoverComponent implements IccRenderableContainer {
       new TemplatePortal(this.content, null, <any>{
         $implicit: this.context,
         close: this.close.bind(this),
-      })
+      }),
     );
   }
 
   protected attachComponent() {
     const portal = new ComponentPortal(this.content, null, null);
 
-    let context = Object.assign({}, this.context, { close: this.close.bind(this) });
+    let context = Object.assign({}, this.context, {
+      close: this.close.bind(this),
+    });
 
     const ref = this.overlayContainer.attachComponentPortal(portal, context);
     ref.changeDetectorRef.detectChanges();

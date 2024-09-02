@@ -1,10 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
-import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  inject,
+} from '@angular/core';
+import {
+  IccDynamicOverlayService,
+  IccPosition,
+  IccTrigger,
+} from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverModule } from '@icc/ui/popover';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccSortField,
+} from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 @Component({
@@ -28,11 +42,15 @@ export class IccGridHeaderCellComponent {
   @Input() gridConfig!: IccGridConfig;
 
   get title(): string {
-    return this.column.title === undefined ? this.column.name : this.column.title;
+    return this.column.title === undefined
+      ? this.column.name
+      : this.column.title;
   }
 
   get findSortField(): IccSortField | undefined {
-    return this.gridConfig.sortFields.find((field) => field.field === this.column.name);
+    return this.gridConfig.sortFields.find(
+      (field) => field.field === this.column.name,
+    );
   }
 
   get isSortField(): boolean {
@@ -44,7 +62,7 @@ export class IccGridHeaderCellComponent {
   }
 
   headCellClick(event: MouseEvent): void {
-    if(this.gridConfig.columnSort && this.column.sortField !== false) {
+    if (this.gridConfig.columnSort && this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
       if (find) {
@@ -53,7 +71,7 @@ export class IccGridHeaderCellComponent {
       } else {
         sort = {
           field: this.column.name,
-          dir: 'asc'
+          dir: 'asc',
         };
       }
       this.gridFacade.setGridSortFields(this.gridConfig.gridName, [sort]);
@@ -62,7 +80,10 @@ export class IccGridHeaderCellComponent {
 
   onClickColumnMenu(event: MouseEvent): void {
     const fakeElement = this.getFakeElement(event);
-    const popoverContext = { gridName: this.gridConfig.gridName, column: this.column };
+    const popoverContext = {
+      gridName: this.gridConfig.gridName,
+      column: this.column,
+    };
     this.buildPopover(fakeElement, popoverContext);
     this.show();
   }
@@ -98,7 +119,7 @@ export class IccGridHeaderCellComponent {
       IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,
-      this.dynamicOverlayService
+      this.dynamicOverlayService,
     );
   }
 }

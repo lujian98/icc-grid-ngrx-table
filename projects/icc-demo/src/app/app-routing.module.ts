@@ -7,7 +7,10 @@ const routes: Routes = [
     children: [
       {
         path: 'grid',
-        loadChildren: () => import('./examples/grid/grid-examples.module').then((m) => m.AppGridExamplesModule),
+        loadChildren: () =>
+          import('./examples/grid/grid-examples.module').then(
+            (m) => m.AppGridExamplesModule,
+          ),
       },
       {
         path: '**',
@@ -19,6 +22,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

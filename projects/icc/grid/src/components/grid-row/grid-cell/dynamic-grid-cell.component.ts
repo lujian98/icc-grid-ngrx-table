@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ViewContainerRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccGridCellViewComponent } from './grid-cell-view.component';
 import { IccColumnConfig } from '../../../models/grid-column.model';
@@ -9,10 +16,7 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   styleUrls: ['dynamic-grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccGridCellViewComponent,
-  ],
+  imports: [CommonModule, IccGridCellViewComponent],
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
@@ -24,7 +28,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   @Input()
   set record(data: T) {
     this._record = data;
-    if(this._componentRef) {
+    if (this._componentRef) {
       this._componentRef.instance.record = this.record;
     }
   }

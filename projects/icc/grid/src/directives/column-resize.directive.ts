@@ -1,7 +1,19 @@
-import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, inject } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer2,
+  inject,
+} from '@angular/core';
 import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
+import {
+  IccColumnConfig,
+  IccColumnWidth,
+  IccGridConfig,
+} from '../models/grid-column.model';
 import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
@@ -34,7 +46,9 @@ export class IccColumnResizeDirective {
   }
 
   onMouseDown(event: MouseEvent): void {
-    this.currentIndex = this.columns.findIndex((item) => item.name === this.column.name);
+    this.currentIndex = this.columns.findIndex(
+      (item) => item.name === this.column.name,
+    );
     this.columnWidths = [...this.columns].map((column) => ({
       name: column.name,
       width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
@@ -61,24 +75,37 @@ export class IccColumnResizeDirective {
   }
 
   private registerMouseEvents(): void {
-    const unregisterMouseMove = this.renderer.listen(EventTargetTypes.Document, EventTypes.MouseMove, (mouseMoveEvent: MouseEvent) => {
-      this.onMouseMove(mouseMoveEvent);
-    });
+    const unregisterMouseMove = this.renderer.listen(
+      EventTargetTypes.Document,
+      EventTypes.MouseMove,
+      (mouseMoveEvent: MouseEvent) => {
+        this.onMouseMove(mouseMoveEvent);
+      },
+    );
 
-    const unregisterContextMenu = this.renderer.listen(EventTargetTypes.Document, EventTypes.ContextMenu, (contextmenu: MouseEvent) => {
-      contextmenu.preventDefault();
-    });
+    const unregisterContextMenu = this.renderer.listen(
+      EventTargetTypes.Document,
+      EventTypes.ContextMenu,
+      (contextmenu: MouseEvent) => {
+        contextmenu.preventDefault();
+      },
+    );
 
-    const unregisterMouseUp = this.renderer.listen(EventTargetTypes.Document, EventTypes.MouseUp, (mouseUpEvent: MouseEvent) => {
-      this.onMouseUp(mouseUpEvent);
-      unregisterMouseUp();
-      unregisterMouseMove();
-      unregisterContextMenu();
-    });
+    const unregisterMouseUp = this.renderer.listen(
+      EventTargetTypes.Document,
+      EventTypes.MouseUp,
+      (mouseUpEvent: MouseEvent) => {
+        this.onMouseUp(mouseUpEvent);
+        unregisterMouseUp();
+        unregisterMouseMove();
+        unregisterContextMenu();
+      },
+    );
   }
 
   private getColumnResizeEventData(currentPositionX: number): IccColumnWidth[] {
-    const width = this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
+    const width =
+      this.currentWidth - Number(this.resizeStartPositionX - currentPositionX);
     let dx = width - this.columnWidths[this.currentIndex].width;
     let nextIndex = this.currentIndex + 1;
 
@@ -94,7 +121,7 @@ export class IccColumnResizeDirective {
         width = column.width! - dx;
         if (width < MIN_GRID_COLUMN_WIDTH) {
           width = MIN_GRID_COLUMN_WIDTH;
-          if(nextIndex === this.columnWidths.length-1) {
+          if (nextIndex === this.columnWidths.length - 1) {
             dx = 0;
           }
           nextIndex++;
@@ -103,7 +130,7 @@ export class IccColumnResizeDirective {
       return {
         name: column.name,
         width: width!,
-      }
+      };
     });
     return this.columnWidths;
   }
