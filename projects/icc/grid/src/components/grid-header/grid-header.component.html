@@ -7,9 +7,7 @@
   </icc-row-select>
   <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter"></div>
 </icc-grid-header-item>
-<!--
-   [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
--->
+
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"
@@ -36,6 +34,7 @@
     <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>
+
 <!--
       [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }"
 -->
