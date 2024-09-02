@@ -11,7 +11,6 @@
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"
-    [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }"
     [cdkDragDisabled]="dragDisabled"
     [column]="column"
     [columns]="columns"
@@ -35,3 +34,6 @@
     <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>
+<!--
+      [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }"
+-->

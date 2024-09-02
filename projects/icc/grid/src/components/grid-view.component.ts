@@ -122,21 +122,24 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
-    if (clientHeight > 0) {
-      const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-      const pageSize = Math.floor(clientHeight / 24);
-      this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
-      this.gridFacade.getGridData(this.gridConfig.gridName);
-    }
+    //if (clientHeight > 0) {
+    const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
+    const pageSize = Math.floor(clientHeight / 24);
+    this.gridFacade.setViewportPageSize(this.gridConfig.gridName, 20, clientWidth);
+    this.gridFacade.getGridData(this.gridConfig.gridName);
+    // }
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
+    /*
     if (this.gridConfig.horizontalScroll) {
     }
     this.columnWidths = columnWidths;
+    */
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
+    /*
     this.columnWidths = columnWidths;
     const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
       return {
@@ -145,6 +148,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       };
     });
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+    */
   }
 
   onColumnDragDrop(events: DragDropEvent): void {

@@ -1,8 +1,4 @@
-<icc-grid-cell
-  *ngIf="gridConfig.rowSelection"
-  class="icc-grid-cell-row-select"
-  [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
->
+<icc-grid-cell *ngIf="gridConfig.rowSelection" class="icc-grid-cell-row-select">
   <icc-row-select [isSelected]="selected" (selected)="toggleRowSelection()"> </icc-row-select>
 </icc-grid-cell>
 
@@ -12,7 +8,9 @@
   </icc-grid-cell>
 </ng-container>
 
-<!-- justify-content: center
+<!--
+    [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
+  justify-content: center
 <ngrx-grid-cell *ngIf="selectionType">
   <ngrx-row-select [isSelected]="selected"
                    [id]="rowIndex"
