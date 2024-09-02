@@ -18,7 +18,7 @@ import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } 
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
-import { viewportWidthRatio } from '../utils/viewport-width-ratio';
+import { viewportWidthRatio, getTableWidth } from '../utils/viewport-width-ratio';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
@@ -52,9 +52,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
-  tableWidth: number = 1700;
-  // viewportWidth: number = 1200;
-  headerwidth = 1000;
+  tableWidth: number = 100;
+  //eaderwidth = 1000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -97,18 +96,18 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return this._gridTemplateColumns;
   }
 
-  //       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
-  get gridHeaderStyle(): Object {
-    if (this.gridConfig.horizontalScroll) {
-      return {
-        display: '-webkit-inline-box',
-        width: this.headerwidth + 'px',
-        left: this.columnHeaderPosition + 'px',
-      };
-    } else {
-      return { display: 'flex' };
-    }
-  }
+  /*
+    get gridHeaderStyle(): Object {
+      if (this.gridConfig.horizontalScroll) {
+        return {
+          display: '-webkit-inline-box',
+          width: this.headerwidth + 'px',
+          left: this.columnHeaderPosition + 'px',
+        };
+      } else {
+        return { display: 'flex' };
+      }
+    }*/
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   viewport!: CdkVirtualScrollViewport;
@@ -165,19 +164,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
-  onColumnResized0(columnWidths: IccColumnWidth[]): void {
-    /*
-    this.columnWidths = columnWidths;
-    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
-      return {
-        ...column,
-        width: this.columnWidths[index].width / viewportWidthRatio(this.gridConfig, this.columns),
-      };
-    });
-    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
-    */
-  }
-
   onColumnDragDrop(events: DragDropEvent): void {
     const previousIndex = this.indexCorrection(events.previousIndex);
     const currentIndex = this.indexCorrection(events.currentIndex);
@@ -192,6 +178,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   private setColumWidths(columns: any[], widthRatio: number): void {
     //if(this.gridConfig.viewReady) {
+    if (this.gridConfig.horizontalScroll) {
+      this.tableWidth = getTableWidth(this.columns);
+    } else {
+      this.tableWidth = this.gridConfig.viewportWidth;
+    }
     const colWidths = [...columns]
       .map((column) => {
         return widthRatio * column.width! + 'px';
