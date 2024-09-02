@@ -8,7 +8,8 @@
     "build:lib:scss": "scss-bundle -c ./scss-bundle.config.json",
     "watch": "ng build icc --watch --configuration development",
     "format:check": "prettier --list-different 'projects/**/*{.ts,.js,.json,.css,.scss,.html}'",
-    "test": "ng test"
+    "test": "ng test",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +38,7 @@
     "@ngrx/store-devtools": "^18.0.2",
     "@types/jasmine": "~4.3.0",
     "angular-in-memory-web-api": "^0.18.0",
+    "husky": "^9.1.5",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -48,5 +50,17 @@
     "prettier": "^3.3.3",
     "scss-bundle": "^3.1.2",
     "typescript": "~5.4.5"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "projects/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
