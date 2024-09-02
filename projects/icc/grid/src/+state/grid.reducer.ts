@@ -62,6 +62,7 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           sortFields: action.sortFields,
+          page: 1,
         },
       };
       //console.log(' setGridSortField=', newState)
@@ -78,6 +79,7 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           columnFilters: action.columnFilters,
+          page: 1,
         },
       };
       //console.log(' setGridSortField=', newState)
