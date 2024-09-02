@@ -32,13 +32,12 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
     this.themeService.changeWindowWidth(event.target.innerWidth);
   }
 */
-  constructor() /*
+  constructor /*
     protected themeService: IccThemeService,
     protected renderer: Renderer2,
     @Inject(ICC_DOCUMENT) protected document: Document,
     @Inject(ICC_WINDOW) protected window: Window
-    */
-  {}
+    */() {}
 
   ngOnInit() {
     /*

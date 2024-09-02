@@ -53,10 +53,7 @@
             "polyfills": ["zone.js"],
             "tsConfig": "projects/icc-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/icc-demo/src/favicon.ico",
-              "projects/icc-demo/src/assets"
-            ],
+            "assets": ["projects/icc-demo/src/favicon.ico", "projects/icc-demo/src/assets"],
             "styles": [
               "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
@@ -117,10 +114,7 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/icc-demo/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/icc-demo/src/favicon.ico",
-              "projects/icc-demo/src/assets"
-            ],
+            "assets": ["projects/icc-demo/src/favicon.ico", "projects/icc-demo/src/assets"],
             "styles": ["projects/icc-demo/src/styles.scss"],
             "scripts": []
           }
