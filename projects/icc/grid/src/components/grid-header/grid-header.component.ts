@@ -29,7 +29,7 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 })
 export class IccGridHeaderComponent {
   @Input() columns: IccColumnConfig[] = [];
-  @Input() columnWidths: IccColumnWidth[] = [];
+  //@Input() columnWidths: IccColumnWidth[] = [];
   @Input() gridConfig!: IccGridConfig;
 
   @Input() allSelected = false;
@@ -39,9 +39,10 @@ export class IccGridHeaderComponent {
 
   rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
 
+  /*
   getColumnWidth(index: number): number {
     return this.columnWidths[index].width;
-  }
+  }*/
 
   trackByIndex(index: number): number {
     return index;

@@ -1,4 +1,4 @@
-<icc-grid-header-item *ngIf="gridConfig.rowSelection" [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }">
+<icc-grid-header-item *ngIf="gridConfig.rowSelection">
   <icc-row-select
     class="icc-header-row-select"
     [isSelected]="allSelected"
@@ -7,7 +7,9 @@
   </icc-row-select>
   <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter"></div>
 </icc-grid-header-item>
-
+<!--
+   [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
+-->
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"

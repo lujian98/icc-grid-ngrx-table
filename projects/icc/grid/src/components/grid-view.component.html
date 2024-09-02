@@ -1,10 +1,12 @@
-<div class="grid-header-container" [ngStyle]="{ width: '1200px' }">
+<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
   <icc-grid-header
-    [ngStyle]="{ width: '1500px !important' }"
-    [ngStyle]="{ 'grid-template-columns': '160px 450px 300px 400px 350px 50px' }"
+    [ngStyle]="{
+      width: tableWidth + 'px',
+      'grid-template-columns': gridTemplateColumns,
+      left: columnHeaderPosition + 'px',
+    }"
     [gridConfig]="gridConfig"
     [columns]="columns"
-    [columnWidths]="columnWidths"
     (cdkDropListDropped)="onColumnDragDrop($event)"
     (columnResizing)="onColumnResizing($event)"
     (columnResized)="onColumnResized($event)"
@@ -17,11 +19,10 @@
 <cdk-virtual-scroll-viewport itemSize="24" (scroll)="onViewportScroll($event)">
   <ng-container *ngIf="gridData$ | async as gridData">
     <icc-grid-row
-      [ngStyle]="{ 'grid-template-columns': '160px 450px 300px 400px 350px 50px' }"
+      [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
       *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index"
       [gridConfig]="gridConfig"
       [columns]="columns"
-      [columnWidths]="columnWidths"
       [record]="record"
     >
     </icc-grid-row>
@@ -30,4 +31,5 @@
 
 <!--
       [ngStyle]="{ 'grid-template-columns': '160px 250px 100px 100px 350px 50px' }"
+          [columnWidths]="columnWidths"
 -->

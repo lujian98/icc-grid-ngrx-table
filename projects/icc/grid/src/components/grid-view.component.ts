@@ -46,17 +46,21 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private renderer = inject(Renderer2);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
+  private _gridTemplateColumns: string = '160px 450px 300px 400px 350px 50px';
   private _columnWidths: IccColumnWidth[] = [];
   private firstTimeLoadColumnsConfig = true;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
+  tableWidth: number = 1700;
+  // viewportWidth: number = 1200;
   headerwidth = 1000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
     this._columns = val;
-    this.setColumWidths();
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    this.setColumWidths(this.columns, widthRatio);
   }
   get columns(): IccColumnConfig[] {
     return this._columns;
@@ -70,7 +74,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
-    this.setColumWidths();
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    this.setColumWidths(this.columns, widthRatio);
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -83,6 +88,15 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
   }
+
+  set gridTemplateColumns(value: string) {
+    this._gridTemplateColumns = value;
+  }
+
+  get gridTemplateColumns(): string {
+    return this._gridTemplateColumns;
+  }
+
   //       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
   get gridHeaderStyle(): Object {
     if (this.gridConfig.horizontalScroll) {
@@ -131,6 +145,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
+    this.setColumWidths(columnWidths, 1);
     /*
     if (this.gridConfig.horizontalScroll) {
     }
@@ -139,6 +154,18 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
+      return {
+        ...column,
+        width: columnWidths[index].width / widthRatio,
+      };
+    });
+    this.setColumWidths(columnWidths, widthRatio);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+  }
+
+  onColumnResized0(columnWidths: IccColumnWidth[]): void {
     /*
     this.columnWidths = columnWidths;
     const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
@@ -163,15 +190,30 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnHeaderPosition = -event.target.scrollLeft;
   }
 
-  private setColumWidths(): void {
+  private setColumWidths(columns: any[], widthRatio: number): void {
+    //if(this.gridConfig.viewReady) {
+    const colWidths = [...columns]
+      .map((column) => {
+        return widthRatio * column.width! + 'px';
+      })
+      .join(' ');
+    this.gridTemplateColumns = this.gridConfig.rowSelection ? '60px ' + colWidths : colWidths;
+    console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
+    //}
+  }
+
+  private setColumWidths0(): void {
     this.columnWidths = [...this.columns].map((column) => ({
       name: column.name,
       width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
     }));
-    this.headerwidth = this.gridConfig.viewportWidth;
+    console.log(' this.gridConfig=', this.gridConfig);
+
+    /*
+    // this.headerwidth = this.gridConfig.viewportWidth;
     if (this.gridConfig.horizontalScroll) {
       const viewWidth = this.setViewportWidth(this.columns);
-    }
+    }*/
   }
 
   private setViewportWidth(columns: any[]): number {
