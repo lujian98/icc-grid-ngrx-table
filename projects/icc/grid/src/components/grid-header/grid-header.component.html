@@ -5,6 +5,8 @@
     (selected)="onToggleSelectAllRowsOnCurrentPage()"
   >
   </icc-row-select>
+  <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter">
+  </div>
 </icc-grid-header-item>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index;">
@@ -27,6 +29,8 @@
       [column]="column"
     >
     </icc-column-filter>
+    <div class="icc-header-no-filter-border" *ngIf="!(gridConfig.columnFilter && column.filterField !==false)">
+    </div>
 
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
     <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>

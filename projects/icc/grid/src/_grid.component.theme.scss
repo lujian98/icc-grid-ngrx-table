@@ -31,6 +31,12 @@
       border-right: solid 1px icc-theme(border-basic-color-1);
     }
 
+    .icc-header-no-filter-border {
+      display: flex;
+      width: 100%;
+      height: 30px;
+    }
+
     icc-text-filter {
       border-top: 1px solid icc-theme(border-basic-color-1);
     }
