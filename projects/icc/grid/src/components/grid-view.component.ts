@@ -5,11 +5,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   HostListener,
   Input,
   OnDestroy,
-  Renderer2,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -18,7 +16,7 @@ import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } 
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
-import { viewportWidthRatio, getTableWidth } from '../utils/viewport-width-ratio';
+import { getTableWidth, viewportWidthRatio } from '../utils/viewport-width-ratio';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
@@ -42,8 +40,6 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
-  //private elementRef = inject(ElementRef);
-  //private renderer = inject(Renderer2);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
   private _gridTemplateColumns: string = '';
@@ -128,12 +124,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
+    //console.log( ' columnWidths=', columnWidths)
     this.setColumWidths(columnWidths, 1);
-    /*
     if (this.gridConfig.horizontalScroll) {
+      this.tableWidth = getTableWidth(columnWidths);
     }
-    this.columnWidths = columnWidths;
-    */
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
@@ -167,12 +162,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       this.tableWidth = this.gridConfig.viewportWidth;
     }
     const colWidths = [...columns]
+      .filter((column) => column.hidden !== true)
       .map((column) => {
         return widthRatio * column.width! + 'px';
       })
       .join(' ');
     this.gridTemplateColumns = this.gridConfig.rowSelection ? '60px ' + colWidths : colWidths;
-    console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
+    //console.log(' this.tableWidth=', this.tableWidth);
+    //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
   }
 
   private indexCorrection(idx: number): number {

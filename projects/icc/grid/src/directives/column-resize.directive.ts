@@ -25,6 +25,10 @@ export class IccColumnResizeDirective {
   private resizeStartPositionX!: number;
   private currentWidth!: number;
 
+  get displayedColumns(): IccColumnConfig[] {
+    return this.columns.filter((column) => column.hidden !== true);
+  }
+
   get element(): HTMLBaseElement {
     return this.elementRef.nativeElement;
   }
@@ -34,10 +38,10 @@ export class IccColumnResizeDirective {
   }
 
   onMouseDown(event: MouseEvent): void {
-    this.currentIndex = this.columns.findIndex((item) => item.name === this.column.name);
-    this.columnWidths = [...this.columns].map((column) => ({
+    this.currentIndex = this.displayedColumns.findIndex((item) => item.name === this.column.name);
+    this.columnWidths = [...this.displayedColumns].map((column) => ({
       name: column.name,
-      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
+      width: viewportWidthRatio(this.gridConfig, this.displayedColumns) * column.width!,
     }));
     event.stopPropagation();
     this.columnInResizeMode = true;
