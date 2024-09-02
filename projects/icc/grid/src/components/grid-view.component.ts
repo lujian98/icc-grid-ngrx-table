@@ -42,18 +42,17 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
+  //private elementRef = inject(ElementRef);
+  //private renderer = inject(Renderer2);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
-  private _gridTemplateColumns: string = '160px 450px 300px 400px 350px 50px';
+  private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
   private firstTimeLoadColumnsConfig = true;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
   tableWidth: number = 100;
-  //eaderwidth = 1000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -96,19 +95,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return this._gridTemplateColumns;
   }
 
-  /*
-    get gridHeaderStyle(): Object {
-      if (this.gridConfig.horizontalScroll) {
-        return {
-          display: '-webkit-inline-box',
-          width: this.headerwidth + 'px',
-          left: this.columnHeaderPosition + 'px',
-        };
-      } else {
-        return { display: 'flex' };
-      }
-    }*/
-
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   viewport!: CdkVirtualScrollViewport;
 
@@ -135,12 +121,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
-    //if (clientHeight > 0) {
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const pageSize = Math.floor(clientHeight / 24);
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
-    // }
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
@@ -177,7 +161,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setColumWidths(columns: any[], widthRatio: number): void {
-    //if(this.gridConfig.viewReady) {
     if (this.gridConfig.horizontalScroll) {
       this.tableWidth = getTableWidth(this.columns);
     } else {
@@ -190,41 +173,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       .join(' ');
     this.gridTemplateColumns = this.gridConfig.rowSelection ? '60px ' + colWidths : colWidths;
     console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
-    //}
-  }
-
-  private setColumWidths0(): void {
-    this.columnWidths = [...this.columns].map((column) => ({
-      name: column.name,
-      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
-    }));
-    console.log(' this.gridConfig=', this.gridConfig);
-
-    /*
-    // this.headerwidth = this.gridConfig.viewportWidth;
-    if (this.gridConfig.horizontalScroll) {
-      const viewWidth = this.setViewportWidth(this.columns);
-    }*/
-  }
-
-  private setViewportWidth(columns: any[]): number {
-    console.log(' thiselementRef=', this.elementRef);
-    const viewportEl = this.viewport.elementRef.nativeElement; // as HTMLElement;
-    const element = this.viewport.elementRef.nativeElement.firstChild as HTMLElement;
-    const totalWidth = columns
-      //.filter((column) => !column.hidden)
-      .map((column) => column.width)
-      .reduce((prev, curr) => prev + curr, 0);
-
-    console.log(' totalWidth=', totalWidth);
-
-    const viewWidth = this.elementRef.nativeElement.clientWidth;
-    console.log(' viewWidth=', viewWidth);
-    console.log(' this.viewport.elementRef=', this.viewport.elementRef);
-    //this.headerwidth = totalWidth;
-    this.renderer.setStyle(element, 'width', `${totalWidth}px`);
-    //this.renderer.setStyle(viewportEl, 'max-width', `${viewWidth}px`);
-    return totalWidth;
   }
 
   private indexCorrection(idx: number): number {
