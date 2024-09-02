@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
   Input,
   OnDestroy,
@@ -39,6 +40,7 @@ import { IccRowSelectComponent } from './row-select/row-select.component';
   ],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
+  private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
@@ -116,6 +118,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setViewportPageSize(): void {
+    console.log(' ViewportPageSize resize ');
+    console.log(' ViewportPageSize resize =this.elementRef', this.elementRef);
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const pageSize = Math.floor(clientHeight / 24);
