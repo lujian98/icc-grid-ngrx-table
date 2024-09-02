@@ -8,13 +8,13 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  HostListener,
   ElementRef,
+  HostListener,
   Input,
   OnDestroy,
+  Renderer2,
   ViewChild,
   inject,
-  Renderer2,
 } from '@angular/core';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import {
