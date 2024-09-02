@@ -73,7 +73,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
   }
-//       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
+  //       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
   get gridHeaderStyle(): Object {
     if (this.gridConfig.horizontalScroll) {
       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
@@ -98,7 +98,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
         })
       )
-      .subscribe(() =>this.setViewportPageSize());
+      .subscribe(() => this.setViewportPageSize());
   }
 
   trackByIndex(index: number): number {
@@ -146,52 +146,33 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setColumWidths(): void {
+    this.columnWidths = [...this.columns].map((column) => ({
+      name: column.name,
+      width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
+    }));
     this.headerwidth = this.gridConfig.viewportWidth;
     if (this.gridConfig.horizontalScroll) {
       const viewWidth = this.setViewportWidth(this.columns);
-     // this.headerwidth = viewWidth;
-      /*
-      const totalWidth: number = this.columns
-      .filter((column) => !column.hidden)
-      .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
-      .reduce((prev, curr) => prev + curr, 0);
-      const viewportWidth = viewWidth - (this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0);
-      const ration = viewportWidth / totalWidth;
-      */
-
-      this.columnWidths = [...this.columns].map((column) => ({
-        name: column.name,
-        width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
-      }));
-
-    } else {
-      this.columnWidths = [...this.columns].map((column) => ({
-        name: column.name,
-        width: viewportWidthRatio(this.gridConfig, this.columns) * column.width!,
-      }));
     }
-
   }
 
   private setViewportWidth(columns: any[]): number {
-    console.log( ' thiselementRef=',this.elementRef);
+    console.log(' thiselementRef=', this.elementRef);
     const viewportEl = this.viewport.elementRef.nativeElement; // as HTMLElement;
     const element = this.viewport.elementRef.nativeElement.firstChild as HTMLElement;
     const totalWidth = columns
-    //.filter((column) => !column.hidden)
-    .map((column) => (column.width))
-    .reduce((prev, curr) => prev + curr, 0);
+      //.filter((column) => !column.hidden)
+      .map((column) => (column.width))
+      .reduce((prev, curr) => prev + curr, 0);
 
-    console.log( ' totalWidth=', totalWidth)
+    console.log(' totalWidth=', totalWidth)
 
     const viewWidth = this.elementRef.nativeElement.clientWidth;
-    console.log( ' viewWidth=', viewWidth)
-    console.log( ' this.viewport.elementRef=',this.viewport.elementRef);
+    console.log(' viewWidth=', viewWidth)
+    console.log(' this.viewport.elementRef=', this.viewport.elementRef);
     //this.headerwidth = totalWidth;
     this.renderer.setStyle(element, 'width', `${totalWidth}px`);
-    this.renderer.setStyle(viewportEl, 'max-width', `${viewWidth}px`);
-
-
+    //this.renderer.setStyle(viewportEl, 'max-width', `${viewWidth}px`);
     return totalWidth;
   }
 
