@@ -29,7 +29,7 @@
       [column]="column"
     >
     </icc-column-filter>
-    <div class="icc-header-no-filter-border" *ngIf="!(gridConfig.columnFilter && column.filterField !==false)">
+    <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter && column.filterField ===false">
     </div>
 
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
