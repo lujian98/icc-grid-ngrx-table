@@ -16,7 +16,14 @@
   </icc-grid-header>
 </div>
 
-<cdk-virtual-scroll-viewport itemSize="24" (scroll)="onViewportScroll($event)">
+<cdk-virtual-scroll-viewport
+  itemSize="24"
+  [ngStyle]="{
+    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'auto',
+    'overflow-y': gridConfig.fitVertical ? 'hidden' : 'auto',
+  }"
+  (scroll)="onViewportScroll($event)"
+>
   <ng-container *ngIf="gridData$ | async as gridData">
     <icc-grid-row
       [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
