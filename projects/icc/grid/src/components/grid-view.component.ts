@@ -1,7 +1,7 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, ViewChild, inject, Renderer2 } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, ElementRef, Input, OnDestroy, ViewChild, inject, Renderer2 } from '@angular/core';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
@@ -32,6 +32,7 @@ import { MIN_GRID_COLUMN_WIDTH, ROW_SELECTION_CELL_WIDTH } from '../models/const
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
+  private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
@@ -72,7 +73,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
   }
-
+//       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
   get gridHeaderStyle(): Object {
     if (this.gridConfig.horizontalScroll) {
       return { display: '-webkit-inline-box', width: this.headerwidth + 'px', left: this.columnHeaderPosition + 'px' };
@@ -148,13 +149,15 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.headerwidth = this.gridConfig.viewportWidth;
     if (this.gridConfig.horizontalScroll) {
       const viewWidth = this.setViewportWidth(this.columns);
-
+     // this.headerwidth = viewWidth;
+      /*
       const totalWidth: number = this.columns
       .filter((column) => !column.hidden)
       .map((column) => (column.width || MIN_GRID_COLUMN_WIDTH))
       .reduce((prev, curr) => prev + curr, 0);
       const viewportWidth = viewWidth - (this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0);
       const ration = viewportWidth / totalWidth;
+      */
 
       this.columnWidths = [...this.columns].map((column) => ({
         name: column.name,
@@ -171,14 +174,24 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setViewportWidth(columns: any[]): number {
-    console.log( ' this.viewport.elementRef=', this.viewport.elementRef);
+    console.log( ' thiselementRef=',this.elementRef);
+    const viewportEl = this.viewport.elementRef.nativeElement; // as HTMLElement;
     const element = this.viewport.elementRef.nativeElement.firstChild as HTMLElement;
     const totalWidth = columns
     //.filter((column) => !column.hidden)
     .map((column) => (column.width))
     .reduce((prev, curr) => prev + curr, 0);
+
     console.log( ' totalWidth=', totalWidth)
+
+    const viewWidth = this.elementRef.nativeElement.clientWidth;
+    console.log( ' viewWidth=', viewWidth)
+    console.log( ' this.viewport.elementRef=',this.viewport.elementRef);
+    //this.headerwidth = totalWidth;
     this.renderer.setStyle(element, 'width', `${totalWidth}px`);
+    this.renderer.setStyle(viewportEl, 'max-width', `${viewWidth}px`);
+
+
     return totalWidth;
   }
 
