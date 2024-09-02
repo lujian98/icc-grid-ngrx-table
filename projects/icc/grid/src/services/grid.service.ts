@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -23,10 +19,7 @@ import { CARSDATA3 } from '../spec-helpers/cars-large';
 export class IccGridService {
   private http = inject(HttpClient);
 
-  getGridConfig(
-    gridName: string,
-    gridConfig: IccGridConfig,
-  ): Observable<IccGridConfig> {
+  getGridConfig(gridName: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig)
     return of(gridConfig);
     /*
@@ -36,10 +29,7 @@ export class IccGridService {
       */
   }
 
-  getGridColumnsConfig(
-    gridName: string,
-    columnsConfig: IccColumnConfig[],
-  ): Observable<IccColumnConfig[]> {
+  getGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
     console.log(' get remote service columnConfig =', gridName);
     const config: IccColumnConfig[] = [
       {
@@ -72,25 +62,15 @@ export class IccGridService {
       */
   }
 
-  getGridInMemoeryData<T>(
-    gridConfig: IccGridConfig,
-    columns: IccColumnConfig[],
-  ): Observable<IccGridData<T>> {
+  getGridInMemoeryData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
     // TODO where to store local data and process these data?
     return of(CARSDATA3);
   }
 
-  getGridData<T>(
-    gridConfig: IccGridConfig,
-    columns: IccColumnConfig[],
-  ): Observable<IccGridData<T>> {
+  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
     let params = new HttpParams();
 
-    params = this.appendFilterHttpParams(
-      gridConfig.columnFilters,
-      columns,
-      params,
-    );
+    params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
 
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
@@ -108,11 +88,7 @@ export class IccGridService {
     );
   }
 
-  appendFilterHttpParams(
-    columnFilters: IccColumnFilter[],
-    columns: IccColumnConfig[],
-    params: HttpParams,
-  ): HttpParams {
+  appendFilterHttpParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[], params: HttpParams): HttpParams {
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
     columnFilters.forEach((col) => {

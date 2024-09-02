@@ -1,16 +1,6 @@
 import { ComponentRef, Injectable, Inject } from '@angular/core';
 import { Observable, fromEvent, EMPTY, merge } from 'rxjs';
-import {
-  switchMap,
-  debounceTime,
-  filter,
-  takeUntil,
-  takeWhile,
-  delay,
-  repeat,
-  map,
-  share,
-} from 'rxjs/operators';
+import { switchMap, debounceTime, filter, takeUntil, takeWhile, delay, repeat, map, share } from 'rxjs/operators';
 
 import { ICC_DOCUMENT } from './document';
 //import { IccFormFieldComponent } from '../../form-field/form-field/form-field.component';
@@ -60,10 +50,7 @@ export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
 export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   show$ = EMPTY;
   private firstTime: boolean = true;
-  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(
-    this.document,
-    'click',
-  ).pipe(
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.container(), event] as [boolean, Event]),
     share(),
     takeWhile(() => this.alive),
@@ -77,9 +64,7 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
         return shouldShow; // && !container;
       }
       let show = true;
-      const box =
-        this.container() &&
-        this.container().location.nativeElement.getBoundingClientRect();
+      const box = this.container() && this.container().location.nativeElement.getBoundingClientRect();
       if (box) {
         const { x, y } = event as MouseEvent;
         show = box.top < y && y < box.bottom && box.left < x && x < box.right;
@@ -92,17 +77,8 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
 }
 
 export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
-  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(
-    this.document,
-    'click',
-  ).pipe(
-    map(
-      (event: Event) =>
-        [
-          !this.container() && this.host.contains(event.target as Node),
-          event,
-        ] as [boolean, Event],
-    ),
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => [!this.container() && this.host.contains(event.target as Node), event] as [boolean, Event]),
     share(),
     takeWhile(() => this.alive),
   );
@@ -116,11 +92,7 @@ export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
   hide$ = this.click$.pipe(
     filter(
       ([shouldShow, event]) =>
-        !shouldShow &&
-        !(
-          this.container() &&
-          this.container().location.nativeElement.contains(event.target)
-        ),
+        !shouldShow && !(this.container() && this.container().location.nativeElement.contains(event.target)),
     ),
     map(([, event]) => event),
     takeWhile(() => this.alive),
@@ -161,20 +133,12 @@ export class IccTooltipTriggerStrategy extends IccTriggerStrategyBase {
     takeWhile(() => this.alive),
   );
 
-  hide$ = fromEvent<Event>(this.host, 'mouseleave').pipe(
-    takeWhile(() => this.alive),
-  );
+  hide$ = fromEvent<Event>(this.host, 'mouseleave').pipe(takeWhile(() => this.alive));
 }
 
 export class IccContextmenuTriggerStrategy extends IccTriggerStrategyBase {
-  protected rightClick$: Observable<[boolean, Event]> = fromEvent<Event>(
-    this.document,
-    'contextmenu',
-  ).pipe(
-    map(
-      (event: Event) =>
-        [this.host.contains(event.target as Node), event] as [boolean, Event],
-    ),
+  protected rightClick$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
+    map((event: Event) => [this.host.contains(event.target as Node), event] as [boolean, Event]),
     share(),
     takeWhile(() => this.alive),
   );
@@ -197,13 +161,7 @@ export class IccContextmenuTriggerStrategy extends IccTriggerStrategyBase {
   );
 
   hide$ = this.merged$.pipe(
-    filter(
-      (event) =>
-        !(
-          this.container() &&
-          this.container().location.nativeElement.contains(event.target)
-        ),
-    ),
+    filter((event) => !(this.container() && this.container().location.nativeElement.contains(event.target))),
     map((event) => event),
     takeWhile(() => this.alive),
   );
@@ -220,10 +178,7 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
     filter((event) => {
       const clickTarget = event.target as HTMLElement;
       const notOrigin = clickTarget !== this.host;
-      const notOverlay = !(
-        this.container() &&
-        this.container().location.nativeElement.contains(clickTarget)
-      );
+      const notOverlay = !(this.container() && this.container().location.nativeElement.contains(clickTarget));
       // const formField = this.formField ? this.formField.elementRef.nativeElement : null;
       // const notFormfield = !formField?.contains(clickTarget);
       return notOrigin && notOverlay; // && notFormfield;
@@ -237,12 +192,7 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
 export class IccTriggerStrategyBuilderService {
   constructor(@Inject(ICC_DOCUMENT) protected document: Document) {}
 
-  build(
-    host: HTMLElement,
-    container: () => ComponentRef<any>,
-    trigger: IccTrigger,
-    formField?: any,
-  ) {
+  build(host: HTMLElement, container: () => ComponentRef<any>, trigger: IccTrigger, formField?: any) {
     switch (trigger) {
       case IccTrigger.CLICK:
         return new IccClickTriggerStrategy(this.document, host, container);
@@ -253,11 +203,7 @@ export class IccTriggerStrategyBuilderService {
       case IccTrigger.HOVER:
         return new IccHoverTriggerStrategy(this.document, host, container);
       case IccTrigger.CONTEXTMENU:
-        return new IccContextmenuTriggerStrategy(
-          this.document,
-          host,
-          container,
-        );
+        return new IccContextmenuTriggerStrategy(this.document, host, container);
       case IccTrigger.TOOLTIP:
         return new IccTooltipTriggerStrategy(this.document, host, container);
       //case IccTrigger.FOCUS:

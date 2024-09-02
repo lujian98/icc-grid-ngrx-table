@@ -101,8 +101,6 @@ export class IccPositionBuilderService {
     const connectedPosition = POSITIONS[position](offset);
     const positions = [];
     positions.push(connectedPosition);
-    return this.overlayPositionBuilder
-      .flexibleConnectedTo(elementRef)
-      .withPositions(positions);
+    return this.overlayPositionBuilder.flexibleConnectedTo(elementRef).withPositions(positions);
   }
 }

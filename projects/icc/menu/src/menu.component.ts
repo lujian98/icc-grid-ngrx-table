@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
@@ -22,9 +16,7 @@ export class IccMenuComponent {
   set items(val: IccMenuItem[]) {
     this._items = val;
     if (this.selected) {
-      this.items.forEach(
-        (item) => (item.selected = item.name === this.selected!.name),
-      );
+      this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
     }
   }
   get items(): IccMenuItem[] {
@@ -60,9 +52,7 @@ export class IccMenuComponent {
   }
 
   private setSelected(selectedItem: IccMenuItem): void {
-    this.items.forEach(
-      (item) => (item.selected = item.name === selectedItem.name),
-    );
+    this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
     this.selected = selectedItem;
   }
 }

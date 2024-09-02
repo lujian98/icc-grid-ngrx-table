@@ -1,17 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import {
-  IccGridConfig,
-  IccColumnConfig,
-} from '../../../models/grid-column.model';
+import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-text-filter',
@@ -34,9 +26,7 @@ export class IccTextFilterComponent {
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     //console.log(' gridConfig=', value, ' column=', this.column)
-    const find = this.gridConfig.columnFilters.find(
-      (column) => column.name === this.column.name,
-    );
+    const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
       this.value = find.value as string;
     }
@@ -74,13 +64,9 @@ export class IccTextFilterComponent {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 
-    const find = this.gridConfig.columnFilters.find(
-      (column) => column.name === this.column.name,
-    );
+    const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
-      columnFilters = columnFilters.filter(
-        (col) => col.name !== this.column.name,
-      );
+      columnFilters = columnFilters.filter((col) => col.name !== this.column.name);
     }
     if (this.value) {
       columnFilters.push({
@@ -88,9 +74,6 @@ export class IccTextFilterComponent {
         value: this.value,
       });
     }
-    this.gridFacade.setGridColumnFilters(
-      this.gridConfig.gridName,
-      columnFilters,
-    );
+    this.gridFacade.setGridColumnFilters(this.gridConfig.gridName, columnFilters);
   }
 }

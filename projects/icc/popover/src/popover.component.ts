@@ -1,18 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  TemplateRef,
-  Type,
-  ViewChild,
-  HostBinding,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import {
-  IccOverlayContainerComponent,
-  IccRenderableContainer,
-  IccDynamicOverlayService,
-} from '@icc/ui/overlay';
+import { IccOverlayContainerComponent, IccRenderableContainer, IccDynamicOverlayService } from '@icc/ui/overlay';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({

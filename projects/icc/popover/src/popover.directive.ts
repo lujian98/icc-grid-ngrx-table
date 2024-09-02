@@ -11,20 +11,14 @@ import {
 } from '@angular/core';
 
 import { IccPopoverComponent } from './popover.component';
-import {
-  IccPosition,
-  IccTrigger,
-  IccDynamicOverlayService,
-} from '@icc/ui/overlay';
+import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
 
 @Directive({
   selector: '[iccPopover]',
   exportAs: 'iccPopover',
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective
-  implements AfterViewInit, OnChanges, OnDestroy
-{
+export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 

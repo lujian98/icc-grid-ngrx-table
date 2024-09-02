@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  IccGridData,
-} from './models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
 
 @Component({
@@ -31,12 +21,8 @@ export class IccGridComponent<T> implements OnDestroy {
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
-    this.gridConfig$ = this.gridFacade.selectGridConfig(
-      this.gridConfig.gridName,
-    );
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(
-      this.gridConfig.gridName,
-    );
+    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridConfig.gridName);
+    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridConfig.gridName);
     this.gridFacade.setupGridConfig(value);
   }
   get gridConfig(): IccGridConfig {
@@ -47,10 +33,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(
-        this.gridConfig.gridName,
-        this.columnsConfig,
-      );
+      this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {
@@ -61,10 +44,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set gridData(val: IccGridData<T>) {
     this._gridData = val;
     if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(
-        this.gridConfig.gridName,
-        this.gridData,
-      );
+      this.gridFacade.setGridInMemoryData(this.gridConfig.gridName, this.gridData);
     }
   }
   get gridData(): IccGridData<T> {

@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  defaultGridConfig,
-} from '@icc/ui/grid';
+import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 import { IccThemeService } from '@icc/ui/theme';
 import { IccAccordion } from '@icc/ui/accordion';
@@ -91,9 +87,7 @@ export class AppComponent {
   gridData = CARSDATA3;
 
   toggleTheme(): void {
-    this.themeService.changeTheme(
-      this.themeService.currentTheme === 'light' ? 'dark' : 'light',
-    );
+    this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
   }
 
   onCheckboxChange(event: any): void {

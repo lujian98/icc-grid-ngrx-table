@@ -1,8 +1,6 @@
 import { InjectionToken, ViewContainerRef } from '@angular/core';
 
-export const ICC_DIALOG_CONFIG = new InjectionToken<IccDialogConfig>(
-  'Default dialog options',
-);
+export const ICC_DIALOG_CONFIG = new InjectionToken<IccDialogConfig>('Default dialog options');
 
 export class IccDialogConfig<D = any> {
   hasBackdrop = true;

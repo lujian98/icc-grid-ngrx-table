@@ -19,10 +19,7 @@ export class IccGridinMemoryService {
     columns: IccColumnConfig[],
     inMemoryData: any[],
   ): Observable<IccGridData<T>> {
-    const filterParams = this.getFilterParams(
-      gridConfig.columnFilters,
-      columns,
-    );
+    const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
@@ -43,9 +40,7 @@ export class IccGridinMemoryService {
         const searches = params.value;
         //console.log( ' value=', searches)
         const search =
-          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1
-            ? searches.toLowerCase()
-            : searches;
+          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches.toLowerCase() : searches;
 
         //console.log( ' filterKey=', filterKey)
         //console.log( ' value=', search)
@@ -55,18 +50,9 @@ export class IccGridinMemoryService {
           const filter = this.getTypedValue(search, val, search);
           switch (compareKey) {
             case 'cont':
-              return (
-                value &&
-                value.toString().toLowerCase().includes(filter.toString())
-              );
+              return value && value.toString().toLowerCase().includes(filter.toString());
             case 'i_cont':
-              return (
-                value &&
-                value
-                  .toString()
-                  .toLowerCase()
-                  .includes(filter.toString().toLowerCase())
-              );
+              return value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
             case 'in':
             case 'in[]':
               return searches.includes(val);
@@ -166,17 +152,10 @@ export class IccGridinMemoryService {
   }
 
   private isNumeric(num: any): boolean {
-    return (
-      (typeof num === 'number' ||
-        (typeof num === 'string' && num.trim() !== '')) &&
-      !isNaN(num as number)
-    );
+    return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
-  private getFilterParams(
-    columnFilters: IccColumnFilter[],
-    columns: IccColumnConfig[],
-  ): any[] {
+  private getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
     const params: any[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();

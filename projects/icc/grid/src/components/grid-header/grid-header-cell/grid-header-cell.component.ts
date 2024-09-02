@@ -1,24 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  inject,
-} from '@angular/core';
-import {
-  IccDynamicOverlayService,
-  IccPosition,
-  IccTrigger,
-} from '@icc/ui/overlay';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
+import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverModule } from '@icc/ui/popover';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  IccSortField,
-} from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 @Component({
@@ -27,12 +13,7 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccPopoverModule,
-    IccIconModule,
-    IccGridColumnMenuComponent,
-  ],
+  imports: [CommonModule, IccPopoverModule, IccIconModule, IccGridColumnMenuComponent],
   providers: [IccDynamicOverlayService],
 })
 export class IccGridHeaderCellComponent {
@@ -42,15 +23,11 @@ export class IccGridHeaderCellComponent {
   @Input() gridConfig!: IccGridConfig;
 
   get title(): string {
-    return this.column.title === undefined
-      ? this.column.name
-      : this.column.title;
+    return this.column.title === undefined ? this.column.name : this.column.title;
   }
 
   get findSortField(): IccSortField | undefined {
-    return this.gridConfig.sortFields.find(
-      (field) => field.field === this.column.name,
-    );
+    return this.gridConfig.sortFields.find((field) => field.field === this.column.name);
   }
 
   get isSortField(): boolean {

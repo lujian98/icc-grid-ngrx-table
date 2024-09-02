@@ -11,27 +11,17 @@ import { IccDialogContainerComponent } from './dialog-container/dialog-container
   declarations: [IccDialogContainerComponent],
 })
 export class IccDialogModule {
-  static forRoot(
-    dialogConfig: Partial<IccDialogConfig> = {},
-  ): ModuleWithProviders<IccDialogModule> {
+  static forRoot(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccDialogModule> {
     return {
       ngModule: IccDialogModule,
-      providers: [
-        IccDialogService,
-        { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig },
-      ],
+      providers: [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
     };
   }
 
-  static forChild(
-    dialogConfig: Partial<IccDialogConfig> = {},
-  ): ModuleWithProviders<IccDialogModule> {
+  static forChild(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccDialogModule> {
     return {
       ngModule: IccDialogModule,
-      providers: [
-        IccDialogService,
-        { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig },
-      ],
+      providers: [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
     };
   }
 }

@@ -6,11 +6,7 @@ import {
   ComponentRef,
   EmbeddedViewRef,
 } from '@angular/core';
-import {
-  CdkPortalOutlet,
-  ComponentPortal,
-  TemplatePortal,
-} from '@angular/cdk/portal';
+import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 
 export interface IccRenderableContainer {
   // @ts-ignore
@@ -27,10 +23,7 @@ export class IccOverlayContainerComponent {
 
   constructor(protected elementRef: ElementRef) {}
 
-  attachComponentPortal<T>(
-    portal: ComponentPortal<T>,
-    context?: Object,
-  ): ComponentRef<T> {
+  attachComponentPortal<T>(portal: ComponentPortal<T>, context?: Object): ComponentRef<T> {
     const componentRef = this.portalOutlet.attachComponentPortal(portal);
     if (context) {
       // @ts-ignore

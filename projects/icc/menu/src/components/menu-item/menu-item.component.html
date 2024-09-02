@@ -6,11 +6,7 @@
   [routerLinkActiveOptions]="menuItem.routerOptions || {}"
   routerLinkActive="active"
 >
-  <icc-icon
-    *ngIf="menuItem.icon"
-    class="icc-menu-icon"
-    [config]="menuItem.icon"
-  ></icc-icon>
+  <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>
 </a>
 
@@ -20,19 +16,11 @@
   [disabled]="!!menuItem.disabled"
   (change)="onCheckboxChange($event)"
 >
-  <icc-icon
-    *ngIf="menuItem.icon"
-    class="icc-menu-icon"
-    [config]="menuItem.icon"
-  ></icc-icon>
+  <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>
 </icc-checkbox>
 
 <div *ngIf="!menuItem.link && !menuItem.checkbox" class="icc-menu-item">
-  <icc-icon
-    *ngIf="menuItem.icon"
-    class="icc-menu-icon"
-    [config]="menuItem.icon"
-  ></icc-icon>
+  <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>
 </div>

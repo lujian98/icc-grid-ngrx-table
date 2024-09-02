@@ -9,12 +9,7 @@ import {
   IccColumnFilter,
 } from '../models/grid-column.model';
 import * as gridActions from './grid.actions';
-import {
-  selectGridConfig,
-  selectColumnsConfig,
-  selectGridData,
-  selectGridInMemoryData,
-} from './grid.selectors';
+import { selectGridConfig, selectColumnsConfig, selectGridData, selectGridInMemoryData } from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -24,61 +19,34 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
-  setupGridColumnsConfig(
-    gridName: string,
-    columnsConfig: IccColumnConfig[],
-  ): void {
-    this.store.dispatch(
-      gridActions.setupGridColumnsConfig({ gridName, columnsConfig }),
-    );
+  setupGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnsConfig }));
   }
 
-  setGridColumnsConfig(
-    gridName: string,
-    columnsConfig: IccColumnConfig[],
-  ): void {
-    this.store.dispatch(
-      gridActions.setupGridColumnsConfigSuccess({ gridName, columnsConfig }),
-    );
+  setGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridName, columnsConfig }));
   }
 
-  setViewportPageSize(
-    gridName: string,
-    pageSize: number,
-    viewportWidth: number,
-  ): void {
-    this.store.dispatch(
-      gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }),
-    );
+  setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
+    this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }));
   }
 
   setViewportScrollY(gridName: string, hasScrollY: boolean): void {
-    this.store.dispatch(
-      gridActions.setViewportScrollY({ gridName, hasScrollY }),
-    );
+    this.store.dispatch(gridActions.setViewportScrollY({ gridName, hasScrollY }));
   }
 
   setGridSortFields(gridName: string, sortFields: IccSortField[]): void {
-    this.store.dispatch(
-      gridActions.setGridSortFields({ gridName, sortFields }),
-    );
+    this.store.dispatch(gridActions.setGridSortFields({ gridName, sortFields }));
     this.getGridData(gridName);
   }
 
-  setGridColumnFilters(
-    gridName: string,
-    columnFilters: IccColumnFilter[],
-  ): void {
-    this.store.dispatch(
-      gridActions.setGridColumnFilters({ gridName, columnFilters }),
-    );
+  setGridColumnFilters(gridName: string, columnFilters: IccColumnFilter[]): void {
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridName, columnFilters }));
     this.getGridData(gridName);
   }
 
   setGridColumnConfig(gridName: string, columnsConfig: IccColumnConfig): void {
-    this.store.dispatch(
-      gridActions.setGridColumnsConfig({ gridName, columnsConfig }),
-    );
+    this.store.dispatch(gridActions.setGridColumnsConfig({ gridName, columnsConfig }));
   }
 
   getGridPageData(gridName: string, page: number): void {
@@ -95,9 +63,7 @@ export class IccGridFacade {
   }
 
   setGridInMemoryData(gridName: string, gridData: IccGridData<any>): void {
-    this.store.dispatch(
-      gridActions.setGridInMemoryData({ gridName, gridData }),
-    );
+    this.store.dispatch(gridActions.setGridInMemoryData({ gridName, gridData }));
   }
 
   clearGridDataStore(gridName: string): void {

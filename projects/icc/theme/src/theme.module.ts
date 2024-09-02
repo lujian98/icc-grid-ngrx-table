@@ -1,12 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 
-import {
-  IccThemeOptions,
-  ICC_THEME_OPTIONS,
-  ICC_DOCUMENT,
-  ICC_WINDOW,
-} from './theme.options';
+import { IccThemeOptions, ICC_THEME_OPTIONS, ICC_DOCUMENT, ICC_WINDOW } from './theme.options';
 import { IccThemeService } from './theme.service';
 import { IccMediaBreakpointsService } from './media-breakpoints.service';
 
@@ -18,9 +13,7 @@ export function iccWindowFactory() {
   imports: [CommonModule],
 })
 export class IccThemeModule {
-  static forRoot(
-    iccThemeOptions: IccThemeOptions = { name: 'light' },
-  ): ModuleWithProviders<IccThemeModule> {
+  static forRoot(iccThemeOptions: IccThemeOptions = { name: 'light' }): ModuleWithProviders<IccThemeModule> {
     return {
       ngModule: IccThemeModule,
       providers: [

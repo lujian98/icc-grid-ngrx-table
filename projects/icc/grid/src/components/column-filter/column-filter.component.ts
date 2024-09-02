@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-  inject,
-  ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccTextFilterComponent } from './text/text-filter.component';
 import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';

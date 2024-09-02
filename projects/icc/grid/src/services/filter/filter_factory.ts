@@ -44,10 +44,7 @@ export class IccFilterFactory {
   }
     */
 
-  private getFilterType(
-    filterField: string,
-    columns: IccColumnConfig[],
-  ): string {
+  private getFilterType(filterField: string, columns: IccColumnConfig[]): string {
     let type = 'text';
     columns.forEach((column) => {
       if (column.name === filterField) {

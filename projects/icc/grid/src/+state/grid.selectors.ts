@@ -9,9 +9,7 @@ export const selectGridConfig = (gridName: string) =>
     // @ts-ignore
     featureSelector,
     (state: IccGridState) => {
-      return state[gridName]
-        ? state[gridName].gridConfig
-        : defaultState.gridConfig;
+      return state[gridName] ? state[gridName].gridConfig : defaultState.gridConfig;
     },
   );
 

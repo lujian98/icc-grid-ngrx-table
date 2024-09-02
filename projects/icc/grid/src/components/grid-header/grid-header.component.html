@@ -1,22 +1,14 @@
-<icc-grid-header-item
-  *ngIf="gridConfig.rowSelection"
-  [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
->
+<icc-grid-header-item *ngIf="gridConfig.rowSelection" [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }">
   <icc-row-select
     class="icc-header-row-select"
     [isSelected]="allSelected"
     (selected)="onToggleSelectAllRowsOnCurrentPage()"
   >
   </icc-row-select>
-  <div
-    class="icc-header-no-filter-border"
-    *ngIf="gridConfig.columnFilter"
-  ></div>
+  <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter"></div>
 </icc-grid-header-item>
 
-<ng-container
-  *ngFor="let column of columns; trackBy: trackByIndex; let index = index"
->
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"
     [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }"
@@ -29,8 +21,7 @@
     cdkDrag
     iccColumnResize
   >
-    <icc-grid-header-cell [column]="column" [gridConfig]="gridConfig">
-    </icc-grid-header-cell>
+    <icc-grid-header-cell [column]="column" [gridConfig]="gridConfig"> </icc-grid-header-cell>
 
     <icc-column-filter
       *ngIf="gridConfig.columnFilter && column.filterField !== false"
@@ -38,16 +29,9 @@
       [column]="column"
     >
     </icc-column-filter>
-    <div
-      class="icc-header-no-filter-border"
-      *ngIf="gridConfig.columnFilter && column.filterField === false"
-    ></div>
+    <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter && column.filterField === false"></div>
 
     <div class="drag-placeholder" *cdkDragPlaceholder></div>
-    <div
-      *ngIf="gridConfig.columnResize"
-      class="resize-action"
-      iccColumnResizeTrigger
-    ></div>
+    <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>

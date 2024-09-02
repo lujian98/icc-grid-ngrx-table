@@ -33,16 +33,14 @@ export class IccGridEffects {
       ofType(gridActions.setupGridColumnsConfig),
       switchMap((action) => {
         const gridName = action.gridName;
-        return this.gridService
-          .getGridColumnsConfig(gridName, action.columnsConfig)
-          .pipe(
-            map((columnsConfig) => {
-              return gridActions.setupGridColumnsConfigSuccess({
-                gridName,
-                columnsConfig,
-              });
-            }),
-          );
+        return this.gridService.getGridColumnsConfig(gridName, action.columnsConfig).pipe(
+          map((columnsConfig) => {
+            return gridActions.setupGridColumnsConfigSuccess({
+              gridName,
+              columnsConfig,
+            });
+          }),
+        );
       }),
     ),
   );
@@ -66,13 +64,11 @@ export class IccGridEffects {
             }),
           );
         } else {
-          return this.gridinMemoryService
-            .getGridData(gridConfig, columns, inMemoryData)
-            .pipe(
-              map((gridData) => {
-                return gridActions.getGridDataSuccess({ gridName, gridData });
-              }),
-            );
+          return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
+            map((gridData) => {
+              return gridActions.getGridDataSuccess({ gridName, gridData });
+            }),
+          );
         }
       }),
     ),

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  GhostCheckboxDirective,
-  IccCheckboxComponent,
-} from './checkbox.component';
+import { GhostCheckboxDirective, IccCheckboxComponent } from './checkbox.component';
 import { IccIconModule } from '@icc/ui/icon';
 
 @NgModule({

@@ -1,8 +1,5 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import {
-  CdkVirtualScrollViewport,
-  ScrollingModule,
-} from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -17,21 +14,10 @@ import {
   inject,
 } from '@angular/core';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  skip,
-  switchMap,
-  take,
-  takeUntil,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { DragDropEvent } from '../models/drag-drop-event';
-import {
-  IccColumnConfig,
-  IccColumnWidth,
-  IccGridConfig,
-} from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
@@ -79,10 +65,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = val;
-    if (
-      this.gridConfig.remoteColumnsConfig &&
-      this.firstTimeLoadColumnsConfig
-    ) {
+    if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
       this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
     }
@@ -142,11 +125,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     if (clientHeight > 0) {
       const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
       const pageSize = Math.floor(clientHeight / 24);
-      this.gridFacade.setViewportPageSize(
-        this.gridConfig.gridName,
-        pageSize,
-        clientWidth,
-      );
+      this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
       this.gridFacade.getGridData(this.gridConfig.gridName);
     }
   }
@@ -159,16 +138,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
     this.columnWidths = columnWidths;
-    const columns: IccColumnConfig[] = [...this.columns].map(
-      (column, index) => {
-        return {
-          ...column,
-          width:
-            this.columnWidths[index].width /
-            viewportWidthRatio(this.gridConfig, this.columns),
-        };
-      },
-    );
+    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
+      return {
+        ...column,
+        width: this.columnWidths[index].width / viewportWidthRatio(this.gridConfig, this.columns),
+      };
+    });
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
@@ -198,8 +173,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportWidth(columns: any[]): number {
     console.log(' thiselementRef=', this.elementRef);
     const viewportEl = this.viewport.elementRef.nativeElement; // as HTMLElement;
-    const element = this.viewport.elementRef.nativeElement
-      .firstChild as HTMLElement;
+    const element = this.viewport.elementRef.nativeElement.firstChild as HTMLElement;
     const totalWidth = columns
       //.filter((column) => !column.hidden)
       .map((column) => column.width)

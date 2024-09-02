@@ -1,15 +1,5 @@
-import {
-  Component,
-  ViewChild,
-  ElementRef,
-  ComponentRef,
-  EmbeddedViewRef,
-} from '@angular/core';
-import {
-  CdkPortalOutlet,
-  ComponentPortal,
-  TemplatePortal,
-} from '@angular/cdk/portal';
+import { Component, ViewChild, ElementRef, ComponentRef, EmbeddedViewRef } from '@angular/core';
+import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
   selector: 'icc-dialog-container',

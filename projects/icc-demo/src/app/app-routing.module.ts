@@ -7,10 +7,7 @@ const routes: Routes = [
     children: [
       {
         path: 'grid',
-        loadChildren: () =>
-          import('./examples/grid/grid-examples.module').then(
-            (m) => m.AppGridExamplesModule,
-          ),
+        loadChildren: () => import('./examples/grid/grid-examples.module').then((m) => m.AppGridExamplesModule),
       },
       {
         path: '**',

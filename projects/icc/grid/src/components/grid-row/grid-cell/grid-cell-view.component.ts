@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  Input,
-  inject,
-} from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { IccColumnConfig } from '../../../models/grid-column.model';

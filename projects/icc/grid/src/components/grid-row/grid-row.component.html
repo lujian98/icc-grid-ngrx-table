@@ -3,19 +3,12 @@
   class="icc-grid-cell-row-select"
   [ngStyle]="{ flex: '0 ' + rowSelectionCellWidth + 'px' }"
 >
-  <icc-row-select [isSelected]="selected" (selected)="toggleRowSelection()">
-  </icc-row-select>
+  <icc-row-select [isSelected]="selected" (selected)="toggleRowSelection()"> </icc-row-select>
 </icc-grid-cell>
 
-<ng-container
-  *ngFor="let column of columns; trackBy: trackByIndex; let index = index"
->
-  <icc-grid-cell
-    *ngIf="!column.hidden"
-    [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }"
-  >
-    <icc-dynamic-grid-cell [record]="record" [column]="column">
-    </icc-dynamic-grid-cell>
+<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
+  <icc-grid-cell *ngIf="!column.hidden" [ngStyle]="{ flex: '1 ' + getColumnWidth(index) + 'px' }">
+    <icc-dynamic-grid-cell [record]="record" [column]="column"> </icc-dynamic-grid-cell>
   </icc-grid-cell>
 </ng-container>
 

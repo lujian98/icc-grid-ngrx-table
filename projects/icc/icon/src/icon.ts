@@ -38,9 +38,7 @@ export class IccFontIcon implements IccIcon {
       classes.push(this.params.packClass);
     }
 
-    const name = this.params.iconClassPrefix
-      ? `${this.params.iconClassPrefix}-${this.name}`
-      : this.name;
+    const name = this.params.iconClassPrefix ? `${this.params.iconClassPrefix}-${this.name}` : this.name;
     classes.push(name);
 
     return classes;

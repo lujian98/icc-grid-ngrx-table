@@ -1,10 +1,4 @@
-import {
-  getStatusText,
-  InMemoryDbService,
-  RequestInfo,
-  ResponseOptions,
-  STATUS,
-} from 'angular-in-memory-web-api';
+import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 import { CARSDATA } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
@@ -19,9 +13,7 @@ export class InMemoryService extends InMemoryDbService {
 
   patch(reqInfo: RequestInfo): Observable<ResponseOptions> {
     const body = reqInfo.collection;
-    body.data.attributes = reqInfo.utils.getJsonBody(reqInfo.req)[
-      body.data.type
-    ];
+    body.data.attributes = reqInfo.utils.getJsonBody(reqInfo.req)[body.data.type];
     return reqInfo.utils.createResponse$(() => {
       const options: ResponseOptions = {
         body: {},
@@ -44,9 +36,7 @@ export class InMemoryService extends InMemoryDbService {
 
   put(reqInfo: RequestInfo): Observable<ResponseOptions> {
     const body = reqInfo.collection ? reqInfo.collection : { data: {} };
-    body.data.attributes = reqInfo.utils.getJsonBody(reqInfo.req)[
-      body.data.type
-    ];
+    body.data.attributes = reqInfo.utils.getJsonBody(reqInfo.req)[body.data.type];
     return reqInfo.utils.createResponse$(() => {
       const options: ResponseOptions = {
         body: body,
@@ -134,9 +124,7 @@ export class InMemoryService extends InMemoryDbService {
         const filterKey = key.substring(0, key.length - compareKey.length - 1);
         const searches = reqInfo.query.get(key)!;
         const search =
-          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1
-            ? searches[0].toLowerCase()
-            : searches;
+          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches[0].toLowerCase() : searches;
 
         data = data.filter((item) => {
           const val = item[filterKey];
@@ -144,18 +132,9 @@ export class InMemoryService extends InMemoryDbService {
           const filter = this.getTypedValue(search, val, search);
           switch (compareKey) {
             case 'cont':
-              return (
-                value &&
-                value.toString().toLowerCase().includes(filter.toString())
-              );
+              return value && value.toString().toLowerCase().includes(filter.toString());
             case 'i_cont':
-              return (
-                value &&
-                value
-                  .toString()
-                  .toLowerCase()
-                  .includes(filter.toString().toLowerCase())
-              );
+              return value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
             case 'in':
             case 'in[]':
               return searches.includes(val);
@@ -185,11 +164,7 @@ export class InMemoryService extends InMemoryDbService {
   }
 
   private isNumeric(num: any): boolean {
-    return (
-      (typeof num === 'number' ||
-        (typeof num === 'string' && num.trim() !== '')) &&
-      !isNaN(num as number)
-    );
+    return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
   private isDate(date: any): boolean {
@@ -244,8 +219,7 @@ export class InMemoryService extends InMemoryDbService {
     return reqInfo.utils.createResponse$(() => {
       const collection = reqInfo.collection.data.slice();
       const id = reqInfo.id;
-      const data =
-        id == undefined ? collection : reqInfo.utils.findById(collection, id);
+      const data = id == undefined ? collection : reqInfo.utils.findById(collection, id);
       const body = { data: data };
       const options: ResponseOptions = data
         ? {
@@ -260,10 +234,7 @@ export class InMemoryService extends InMemoryDbService {
     });
   }
 
-  private finishOptions(
-    options: ResponseOptions,
-    { headers, url }: RequestInfo,
-  ) {
+  private finishOptions(options: ResponseOptions, { headers, url }: RequestInfo) {
     options.statusText = getStatusText(options.status!);
     options.headers = headers;
     options.url = url;

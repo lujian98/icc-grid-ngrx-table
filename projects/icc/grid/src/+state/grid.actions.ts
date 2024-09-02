@@ -7,10 +7,7 @@ import {
   IccColumnFilter,
 } from '../models/grid-column.model';
 
-export const setupGridConfig = createAction(
-  '[Grid] Setup Grid Config',
-  props<{ gridConfig: IccGridConfig }>(),
-);
+export const setupGridConfig = createAction('[Grid] Setup Grid Config', props<{ gridConfig: IccGridConfig }>());
 
 export const setupGridConfigSuccess = createAction(
   '[Grid] Setup Grid Config Success',
@@ -57,10 +54,7 @@ export const setGridColumnsConfig = createAction(
   props<{ gridName: string; columnsConfig: IccColumnConfig }>(),
 );
 
-export const getGridData = createAction(
-  '[Grid] Get Grid Data',
-  props<{ gridName: string }>(),
-);
+export const getGridData = createAction('[Grid] Get Grid Data', props<{ gridName: string }>());
 
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
@@ -72,7 +66,4 @@ export const setGridInMemoryData = createAction(
   props<{ gridName: string; gridData: IccGridData<any> }>(),
 );
 
-export const clearGridDataStore = createAction(
-  '[Grid] Clear Grid Data Store',
-  props<{ gridName: string }>(),
-);
+export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridName: string }>());

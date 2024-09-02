@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, Output, EventEmitter } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
@@ -43,9 +36,7 @@ export class IccMenuItemComponent {
   }
 
   get title(): string {
-    return this.menuItem.title === undefined
-      ? this.menuItem.name
-      : this.menuItem.title;
+    return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
 
   onCheckboxChange(event: boolean | MouseEvent): void {

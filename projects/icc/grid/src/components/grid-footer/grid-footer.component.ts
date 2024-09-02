@@ -1,19 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  skip,
-  switchMap,
-  takeUntil,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
 
@@ -48,9 +36,7 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   get lastPage(): number {
-    return (
-      Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0
-    );
+    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0;
   }
 
   get displaying(): string {

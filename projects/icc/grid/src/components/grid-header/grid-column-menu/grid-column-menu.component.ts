@@ -1,17 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccMenuItem, IccMenuModule } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-} from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -78,8 +70,7 @@ export class IccGridColumnMenuComponent {
         title: column.title,
         checkbox: true,
         checked: !column.hidden,
-        disabled:
-          !this.gridConfig.columnHidden || this.column.sortField === false,
+        disabled: !this.gridConfig.columnHidden || this.column.sortField === false,
       };
     });
     this.menuItems = [...menuItems, ...columnItems];
@@ -94,14 +85,8 @@ export class IccGridColumnMenuComponent {
   }
 
   private sortDisabled(dir: string): boolean {
-    const sortField = this.gridConfig.sortFields.find(
-      (field) => field.field === this.column.name,
-    );
-    return (
-      !this.gridConfig.columnSort ||
-      this.column.sortField === false ||
-      (!!sortField && sortField.dir === dir)
-    );
+    const sortField = this.gridConfig.sortFields.find((field) => field.field === this.column.name);
+    return !this.gridConfig.columnSort || this.column.sortField === false || (!!sortField && sortField.dir === dir);
   }
 
   private columnSort(dir: string): void {

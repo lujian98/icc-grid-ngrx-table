@@ -1,21 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-  IccGridConfig,
-  IccGridModule,
-  IccColumnConfig,
-  defaultGridConfig,
-  IccGridData,
-} from '@icc/ui/grid';
+import { IccGridConfig, IccGridModule, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
   selector: 'app-grid-in-memory-test',
-  template: `<icc-grid
-    [gridConfig]="gridConfig"
-    [columnsConfig]="columnsConfig"
-    [gridData]="gridData"
-  ></icc-grid>`,
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,

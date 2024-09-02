@@ -7,13 +7,7 @@ import { IccGridStateModule } from './+state/grid-state.module';
 import { IccOverlayModule } from '@icc/ui/overlay';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IccOverlayModule.forRoot(),
-    IccGridStateModule,
-    IccGridViewComponent,
-    IccGridFooterComponent,
-  ],
+  imports: [CommonModule, IccOverlayModule.forRoot(), IccGridStateModule, IccGridViewComponent, IccGridFooterComponent],
   declarations: [IccGridComponent],
   exports: [IccGridComponent],
 })

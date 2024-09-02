@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 //import { SunUtils } from '../utils/utils';

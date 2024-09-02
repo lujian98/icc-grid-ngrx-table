@@ -6,10 +6,7 @@ import { IccGridFacade } from './grid.facade';
 import { iccGridFeature } from './grid.reducer';
 
 @NgModule({
-  imports: [
-    StoreModule.forFeature(iccGridFeature),
-    EffectsModule.forFeature([IccGridEffects]),
-  ],
+  imports: [StoreModule.forFeature(iccGridFeature), EffectsModule.forFeature([IccGridEffects])],
   providers: [IccGridFacade],
 })
 export class IccGridStateModule {}

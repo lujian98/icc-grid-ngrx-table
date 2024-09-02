@@ -16,11 +16,7 @@
 <cdk-virtual-scroll-viewport itemSize="24" (scroll)="onViewportScroll($event)">
   <ng-container *ngIf="gridData$ | async as gridData">
     <icc-grid-row
-      *cdkVirtualFor="
-        let record of gridData;
-        trackBy: trackByIndex;
-        let index = index
-      "
+      *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index"
       [gridConfig]="gridConfig"
       [columns]="columns"
       [columnWidths]="columnWidths"
