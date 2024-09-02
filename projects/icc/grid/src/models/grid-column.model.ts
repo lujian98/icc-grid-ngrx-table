@@ -5,7 +5,7 @@ export interface IccSortField {
 
 export interface IccGridConfig {
   gridName: string;
-  urlKey?: string;
+  urlKey?: string; // Only for remote. if not defined, use gridName
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;
@@ -15,16 +15,14 @@ export interface IccGridConfig {
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
   horizontalScroll: boolean;
-  viewReady: boolean;
+  viewportWidth: number;
+  viewReady: boolean; // NOT used
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
   page: number;
   pageSize: number;
   totalCounts: number;
   remoteGridData: boolean;
-
-  viewportWidth: number;
-  hasScrollY: boolean;
 }
 
 export interface IccGridState {

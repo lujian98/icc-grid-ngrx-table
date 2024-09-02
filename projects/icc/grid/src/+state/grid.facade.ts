@@ -31,10 +31,6 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }));
   }
 
-  setViewportScrollY(gridName: string, hasScrollY: boolean): void {
-    this.store.dispatch(gridActions.setViewportScrollY({ gridName, hasScrollY }));
-  }
-
   setGridSortFields(gridName: string, sortFields: IccSortField[]): void {
     this.store.dispatch(gridActions.setGridSortFields({ gridName, sortFields }));
     this.getGridData(gridName);

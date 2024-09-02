@@ -11,6 +11,7 @@ export const defaultGridConfig: IccGridConfig = {
   remoteColumnsConfig: false,
   rowSelection: false,
   horizontalScroll: false,
+  viewportWidth: 1000,
   viewReady: false,
   sortFields: [],
   columnFilters: [],
@@ -18,9 +19,6 @@ export const defaultGridConfig: IccGridConfig = {
   pageSize: 20,
   totalCounts: 0,
   remoteGridData: false,
-
-  viewportWidth: 1000,
-  hasScrollY: false,
 };
 
 export const defaultState: GridState = {

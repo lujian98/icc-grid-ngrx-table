@@ -34,11 +34,6 @@ export const setViewportPage = createAction(
   props<{ gridName: string; page: number }>(),
 );
 
-export const setViewportScrollY = createAction(
-  '[Grid] Setup Grid Viewport Page',
-  props<{ gridName: string; hasScrollY: boolean }>(),
-);
-
 export const setGridSortFields = createAction(
   '[Grid] Set Grid Sort Fields',
   props<{ gridName: string; sortFields: IccSortField[] }>(),
