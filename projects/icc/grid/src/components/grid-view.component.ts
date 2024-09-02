@@ -12,7 +12,6 @@ import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccRowSelectComponent } from './row-select/row-select.component';
-import { MIN_GRID_COLUMN_WIDTH, ROW_SELECTION_CELL_WIDTH } from '../models/constants';
 
 @Component({
   selector: 'icc-grid-view',
