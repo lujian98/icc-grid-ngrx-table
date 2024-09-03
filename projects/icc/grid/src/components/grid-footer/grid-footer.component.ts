@@ -39,7 +39,8 @@ export class IccGridFooterComponent implements OnDestroy {
     return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0;
   }
 
-  get displaying(): string { // TODO display with vertical scroll
+  get displaying(): string {
+    // TODO display with vertical scroll
     const start = (this.gridConfig.page - 1) * this.gridConfig.pageSize + 1;
     let end = start + this.gridConfig.pageSize - 1;
     if (end > this.gridConfig.totalCounts) {
@@ -64,7 +65,7 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   refreshData(page: number): void {
-    if(this.gridConfig.virtualScroll) {
+    if (this.gridConfig.virtualScroll) {
       this.getGridPageData(1);
     } else {
       this.getGridPageData(page);

@@ -126,7 +126,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / 24);
-    const pageSize = !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
+    const pageSize =
+      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
   }
@@ -159,12 +160,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onScrolledIndexChange(index: number): void {
-    if(this.gridConfig.virtualScroll) {
+    if (this.gridConfig.virtualScroll) {
       const nextPage = this.gridConfig.page + 1;
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
-      if (((displayTotal - index) < (pageSize - 10)) && displayTotal < this.gridConfig.totalCounts) {
-        console.log('load next page =', nextPage)
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
+        console.log('load next page =', nextPage);
         this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
       }
     }
