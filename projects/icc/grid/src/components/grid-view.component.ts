@@ -5,7 +5,6 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   HostListener,
   Input,
   OnDestroy,
@@ -29,7 +28,6 @@ import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  //changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [
     CommonModule,
@@ -42,7 +40,6 @@ import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
   ],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
-  private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
@@ -74,9 +71,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
-    //console.log(' this.viewport =', this.viewport);
-    //this.viewport.setTotalContentSize(this.gridConfig.totalCounts * 2400);
-    //window.dispatchEvent(new Event('resize'));
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -141,12 +135,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
-    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => {
-      return {
-        ...column,
-        width: columnWidths[index].width / widthRatio,
-      };
-    });
+    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => ({
+      ...column,
+      width: columnWidths[index].width / widthRatio,
+    }));
     this.setColumWidths(columnWidths, widthRatio);
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
@@ -165,7 +157,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
-        console.log('load next page =', nextPage);
         this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
       }
     }
@@ -183,13 +174,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
     const colWidths = [...columns]
       .filter((column) => column.hidden !== true)
-      .map((column) => {
-        return widthRatio * column.width! + 'px';
-      })
+      .map((column) => widthRatio * column.width! + 'px')
       .join(' ');
     this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
-    //console.log(' this.tableWidth=', this.tableWidth);
-    //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns);
   }
 
   private indexCorrection(idx: number): number {
