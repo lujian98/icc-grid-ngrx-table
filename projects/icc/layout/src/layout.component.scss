@@ -13,27 +13,32 @@
       min-height: 50px;
       justify-content: center;
       align-items: center;
+      border: 1px solid green;
     }
 
     icc-layout-sidebar {
+      display: flex;
+      flex-direction: column;
       width: 250px;
       max-width: 400px;
       min-width: 250px;
-      padding-right: 10px;
+      padding-right: 5px;
     }
 
     icc-layout-center {
       display: flex;
       width: calc(100vw - 250px);
-      padding-right: 10px;
+      padding-right: 5px;
     }
 
     icc-layout-footer {
       display: flex;
+      z-index: 2;
       height: 30px;
       min-height: 30px;
       justify-content: center;
       align-items: center;
+      border: 1px solid green;
       //color: orange;
     }
   }

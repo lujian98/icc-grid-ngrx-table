@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccColumnConfig, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
-import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
-import { IccThemeService } from '@icc/ui/theme';
 import { IccAccordion } from '@icc/ui/accordion';
+import { IccThemeService } from '@icc/ui/theme';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
@@ -69,34 +66,11 @@ export class AppComponent {
     },
   ];
 
-  columnsConfig: IccColumnConfig[] = [
-    {
-      name: 'ID',
-      width: 50,
-      align: 'center',
-    },
-    {
-      name: 'vin',
-      width: 50,
-    },
-    {
-      name: 'brand',
-    },
-    {
-      name: 'year',
-    },
-    {
-      name: 'color',
-    },
-  ];
-
-  gridData = CARSDATA3;
-
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
   }
 
   onCheckboxChange(event: any): void {
-    console.log(' 999999 event=', event);
+    //console.log(' 999999 event=', event);
   }
 }
