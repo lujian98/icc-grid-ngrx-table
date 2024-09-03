@@ -28,7 +28,8 @@ import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [
     CommonModule,
@@ -73,6 +74,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
+    console.log(' this.viewport =', this.viewport);
+    //this.viewport.setTotalContentSize(this.gridConfig.totalCounts * 2400);
+    //window.dispatchEvent(new Event('resize'));
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -126,8 +130,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     //console.log(' ViewportPageSize resize clientHeight=', clientHeight, 'clientHeightv=', clientHeightv);
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const pageSize = this.gridConfig.fitVertical ? Math.floor(clientHeight / 24) : this.gridConfig.pageSize;
+    //if( (pageSize !== this.gridConfig.pageSize && clientWidth !== this.gridConfig.viewportWidth) ) {
+    //  this.firstTimeLoadColumnsConfig = false;
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
+    //}
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
@@ -157,10 +164,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
-  onViewportScroll(event: any): void {
-    this.columnHeaderPosition = -event.target.scrollLeft;
+  onScrolledIndexChange(event: any): void {
     const range = this.viewport.getRenderedRange();
     console.log('view port range =', range);
+    console.log('onScrolledIndexChange =', event);
+  }
+
+  onViewportScroll(event: any): void {
+    this.columnHeaderPosition = -event.target.scrollLeft;
   }
 
   private setColumWidths(columns: any[], widthRatio: number): void {
