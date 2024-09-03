@@ -28,8 +28,6 @@ export class IccGridRowComponent<T> {
 
   @Output() toggleRow = new EventEmitter<any>();
 
-  // rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
-
   trackByIndex(index: number): number {
     return index;
   }

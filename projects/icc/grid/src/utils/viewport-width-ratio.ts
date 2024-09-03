@@ -7,7 +7,6 @@ export function viewportWidthRatio(gridConfig: IccGridConfig, columns: IccColumn
   }
   const totalWidth = getTableWidth(columns);
   const viewportWidth = gridConfig.viewportWidth - (gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0);
-  //console.log(' totalWidth=', totalWidth);
   return viewportWidth / totalWidth;
 }
 

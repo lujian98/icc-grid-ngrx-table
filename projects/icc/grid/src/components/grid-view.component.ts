@@ -14,14 +14,12 @@ import {
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
+import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
 import { DragDropEvent } from '../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { getTableWidth, viewportWidthRatio } from '../utils/viewport-width-ratio';
-import { IccGridHeaderItemComponent } from './grid-header/grid-header-item/grid-header-item.component';
 import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
-import { IccRowSelectComponent } from './row-select/row-select.component';
-import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
 
 @Component({
   selector: 'icc-grid-view',
@@ -29,15 +27,7 @@ import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    DragDropModule,
-    ScrollingModule,
-    IccGridHeaderComponent,
-    IccGridHeaderItemComponent,
-    IccRowSelectComponent,
-    IccGridRowComponent,
-  ],
+  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
