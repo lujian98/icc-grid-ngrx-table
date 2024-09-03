@@ -123,22 +123,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setViewportPageSize(): void {
-    // page size is incorrect when height is less than accordion contents
-    //console.log(' ViewportPageSize resize =this.elementRef', this.elementRef);
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
-    //const clientHeight = this.elementRef.nativeElement.clientHeight - 32;
-    //console.log(' ViewportPageSize resize clientHeight=', clientHeight, 'clientHeightv=', clientHeightv);
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    console.log(' 00000ViewportPageSize pageSize', this.gridConfig.pageSize);
     const fitPageSize = Math.floor(clientHeight / 24);
     const pageSize = !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    //if( (pageSize !== this.gridConfig.pageSize && clientWidth !== this.gridConfig.viewportWidth) ) {
-    //  this.firstTimeLoadColumnsConfig = false;
-
-    console.log(' ViewportPageSize pageSize', pageSize);
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
-    //}
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
