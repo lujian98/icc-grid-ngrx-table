@@ -47,14 +47,18 @@ export class AppComponent {
           name: '11: Grid Horizontal Scroll',
           link: 'grid/remote-grid-horizontal-scroll',
         },
-        { name: '12: Grid Overall', link: 'grid/remote-grid-overall' },
+        {
+          name: '12: Grid Remote Virtual Scroll',
+          link: 'grid/remote-grid-vertical-scroll',
+        },
+        { name: '13: Grid Overall', link: 'grid/remote-grid-overall' },
         { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate' },
       ],
     },
     {
       name: 'Grid in-memory Data',
       items: [
-        { name: 'Grid Vertical Scroll', link: 'grid/in-memory-grid-vertical-scroll', icon: 'arrows-rotate' },
+        { name: 'Grid In-Memory Vertical Scroll', link: 'grid/in-memory-grid-vertical-scroll', icon: 'arrows-rotate' },
         {
           name: 'Grid In-Memory Test',
           link: 'grid/in-memory-grid-test',

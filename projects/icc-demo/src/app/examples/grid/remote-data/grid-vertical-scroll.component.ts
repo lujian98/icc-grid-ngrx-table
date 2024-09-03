@@ -3,17 +3,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
-  selector: 'app-grid-overall',
+  selector: 'app-grid-remote-vertical-scroll',
   template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridModule],
 })
-export class AppGridOverallComponent {
+export class AppGridRemoteVerticalScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR14',
+    gridName: 'INM12',
     urlKey: 'DCR',
     columnSort: true,
     columnFilter: true,
@@ -21,16 +21,9 @@ export class AppGridOverallComponent {
     columnReorder: true,
     columnMenu: true,
     columnHidden: true,
+    rowSelection: true,
+    virtualScroll: true,
     remoteColumnsConfig: true,
     remoteGridData: true,
-
-    sortFields: [
-      {
-        field: 'ID',
-        dir: 'desc',
-      },
-    ],
-    columnFilters: [{ name: 'vin', value: '9' }],
-    rowSelection: true,
   };
 }
