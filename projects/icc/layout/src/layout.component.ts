@@ -68,6 +68,18 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
 export class IccLayoutHeaderComponent {}
 
 @Component({
+  selector: 'icc-layout-sidebar',
+  template: ` <ng-content></ng-content> `,
+})
+export class IccLayoutSidebarComponent {}
+
+@Component({
+  selector: 'icc-layout-center',
+  template: ` <ng-content></ng-content> `,
+})
+export class IccLayoutCenterComponent {}
+
+@Component({
   selector: 'icc-layout-footer',
   template: ` <ng-content></ng-content> `,
 })
