@@ -27,6 +27,7 @@
 
   .icc-main-container {
     display: flex;
+    height: -webkit-fill-available;
     max-height: calc(100vh - 80px);
   }
 }
