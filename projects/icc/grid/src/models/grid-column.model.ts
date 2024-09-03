@@ -15,7 +15,8 @@ export interface IccGridConfig {
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
   horizontalScroll: boolean;
-  fitVertical: boolean;
+  //fitVertical: boolean;
+  virtualScroll: boolean;
   viewportWidth: number;
   viewReady: boolean; // NOT used
   sortFields: IccSortField[];

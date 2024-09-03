@@ -52,7 +52,11 @@ export class IccGridComponent<T> implements OnDestroy {
   }
 
   refresh(): void {
-    this.gridFacade.getGridData(this.gridConfig.gridName);
+    if (this.gridConfig.virtualScroll) {
+      this.gridFacade.getGridPageData(this.gridConfig.gridName, 1);
+    } else {
+      this.gridFacade.getGridData(this.gridConfig.gridName);
+    }
   }
 
   ngOnDestroy(): void {

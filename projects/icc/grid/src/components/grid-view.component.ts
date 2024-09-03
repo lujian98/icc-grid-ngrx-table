@@ -28,8 +28,8 @@ import { ROW_SELECTION_CELL_WIDTH } from '../models/constants';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.Default,
   standalone: true,
   imports: [
     CommonModule,
@@ -74,7 +74,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridData$ = this.gridFacade.selectGridData(val.gridName);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
-    console.log(' this.viewport =', this.viewport);
+    //console.log(' this.viewport =', this.viewport);
     //this.viewport.setTotalContentSize(this.gridConfig.totalCounts * 2400);
     //window.dispatchEvent(new Event('resize'));
   }
@@ -129,7 +129,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     //const clientHeight = this.elementRef.nativeElement.clientHeight - 32;
     //console.log(' ViewportPageSize resize clientHeight=', clientHeight, 'clientHeightv=', clientHeightv);
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const pageSize = this.gridConfig.fitVertical ? Math.floor(clientHeight / 24) : this.gridConfig.pageSize;
+    const pageSize = !this.gridConfig.virtualScroll ? Math.floor(clientHeight / 24) : this.gridConfig.pageSize;
     //if( (pageSize !== this.gridConfig.pageSize && clientWidth !== this.gridConfig.viewportWidth) ) {
     //  this.firstTimeLoadColumnsConfig = false;
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
@@ -164,10 +164,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
   }
 
-  onScrolledIndexChange(event: any): void {
-    const range = this.viewport.getRenderedRange();
-    console.log('view port range =', range);
-    console.log('onScrolledIndexChange =', event);
+  onScrolledIndexChange(index: number): void {
+    const nextPage = this.gridConfig.page + 1;
+    const pageSize = this.gridConfig.pageSize;
+    const displayTotal = (nextPage - 1) * pageSize;
+    if (((displayTotal - index) < (pageSize - 10)) && displayTotal < this.gridConfig.totalCounts) {
+      console.log('load next page =', nextPage)
+      this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
+    }
   }
 
   onViewportScroll(event: any): void {

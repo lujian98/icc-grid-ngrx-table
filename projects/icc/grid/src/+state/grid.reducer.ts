@@ -15,7 +15,7 @@ export const iccGridFeature = createFeature({
       const newState: IccGridState = { ...state };
       const gridConfig = {
         ...action.gridConfig,
-        pageSize: action.gridConfig.fitVertical ? action.gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
+        pageSize: !action.gridConfig.virtualScroll ? action.gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
       };
       newState[key] = {
         ...defaultState,
@@ -128,14 +128,17 @@ export const iccGridFeature = createFeature({
       const key = action.gridName;
       const newState: IccGridState = { ...state };
       //console.log(' old state=', state)
+      const oldState = state[key];
+      const gridConfig = oldState.gridConfig;
+      const data = gridConfig.virtualScroll && gridConfig.page > 1 ? [...oldState.data, ...action.gridData.data] : [...action.gridData.data];
       newState[key] = {
-        ...state[key],
+        ...oldState,
         gridConfig: {
-          ...state[key].gridConfig,
+          ...gridConfig,
           totalCounts: action.gridData.totalCounts,
         },
         totalCounts: action.gridData.totalCounts,
-        data: action.gridData.data,
+        data: data,
       };
       //console.log(' new load data setup grid data = ', newState)
       return {
