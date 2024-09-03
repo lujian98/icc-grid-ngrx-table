@@ -159,6 +159,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onViewportScroll(event: any): void {
     this.columnHeaderPosition = -event.target.scrollLeft;
+    const range = this.viewport.getRenderedRange();
+    console.log('view port range =', range);
   }
 
   private setColumWidths(columns: any[], widthRatio: number): void {
