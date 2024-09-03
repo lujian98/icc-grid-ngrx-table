@@ -23,7 +23,6 @@ export class AppGridVerticalScrollComponent {
     columnHidden: true,
     rowSelection: true,
     fitVertical: false,
-    pageSize: 50,
     //sortFields: [],
     //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,

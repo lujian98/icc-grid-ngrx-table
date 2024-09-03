@@ -2,7 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import * as gridActions from './grid.actions';
 import { IccGridState } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
-import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
+import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 
 export const initialState: IccGridState = {};
 
@@ -13,9 +13,13 @@ export const iccGridFeature = createFeature({
     on(gridActions.setupGridConfigSuccess, (state, action) => {
       const key = action.gridName;
       const newState: IccGridState = { ...state };
+      const gridConfig = {
+        ...action.gridConfig,
+        pageSize: action.gridConfig.fitVertical ? action.gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
+      };
       newState[key] = {
         ...defaultState,
-        gridConfig: action.gridConfig,
+        gridConfig,
       };
       return {
         ...newState,
