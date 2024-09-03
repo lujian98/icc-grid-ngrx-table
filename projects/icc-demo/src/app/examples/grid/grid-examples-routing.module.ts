@@ -10,14 +10,15 @@ import { AppGridColumnHiddenComponent } from './remote-data/grid-column-hidden.c
 import { AppGridRemoteColumnConfigComponent } from './remote-data/grid-remote-column-config.component';
 import { AppGridRowSelectionComponent } from './remote-data/grid-row-selection.component';
 import { AppGridPageComponent } from './remote-data/grid-page.component';
+import { AppGridVerticalScrollComponent } from './remote-data/grid-vertical-scroll.component';
 import { AppGridHorizontalScrollComponent } from './remote-data/grid-horizontal-scroll.component';
-import { AppGridRemoteVerticalScrollComponent } from './remote-data/grid-vertical-scroll.component';
+import { AppGridRemoteVirtualScrollComponent } from './remote-data/grid-virtual-scroll.component';
 import { AppGridOverallComponent } from './remote-data/grid-overall.component';
 
 import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
 import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-test.component';
-import { AppGridVerticalScrollComponent } from './in-memory-data/grid-vertical-scroll.component';
+import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scroll.component';
 
 const routes: Route[] = [
   {
@@ -51,13 +52,14 @@ const routes: Route[] = [
         component: AppGridRowSelectionComponent,
       },
       { path: 'remote-grid-page', component: AppGridPageComponent },
+      { path: 'remote-grid-vertical-scroll', component: AppGridVerticalScrollComponent },
       {
         path: 'remote-grid-horizontal-scroll',
         component: AppGridHorizontalScrollComponent,
       },
       {
-        path: 'remote-grid-vertical-scroll',
-        component: AppGridRemoteVerticalScrollComponent,
+        path: 'remote-grid-virtual-scroll',
+        component: AppGridRemoteVirtualScrollComponent,
       },
       { path: 'remote-grid-overall', component: AppGridOverallComponent },
       {
@@ -65,7 +67,7 @@ const routes: Route[] = [
         component: AppGridTest2Component,
       },
       { path: 'in-memory-grid-test', component: AppGridinMemoryTestComponent },
-      { path: 'in-memory-grid-vertical-scroll', component: AppGridVerticalScrollComponent },
+      { path: 'in-memory-grid-virtual-scroll', component: AppGridVirtualScrollComponent },
       {
         path: '**',
         redirectTo: 'remote-grid-overall',

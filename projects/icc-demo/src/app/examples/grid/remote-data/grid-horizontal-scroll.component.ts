@@ -13,7 +13,7 @@ import { IccColumnConfig, IccGridConfig, IccGridModule, defaultGridConfig } from
 export class AppGridHorizontalScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR11',
+    gridName: 'DCR12',
     urlKey: 'DCR',
     horizontalScroll: true,
     columnResize: true,

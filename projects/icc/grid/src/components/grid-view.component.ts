@@ -129,9 +129,13 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     //const clientHeight = this.elementRef.nativeElement.clientHeight - 32;
     //console.log(' ViewportPageSize resize clientHeight=', clientHeight, 'clientHeightv=', clientHeightv);
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const pageSize = !this.gridConfig.virtualScroll ? Math.floor(clientHeight / 24) : this.gridConfig.pageSize;
+    console.log(' 00000ViewportPageSize pageSize', this.gridConfig.pageSize);
+    const fitPageSize = Math.floor(clientHeight / 24);
+    const pageSize = !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
     //if( (pageSize !== this.gridConfig.pageSize && clientWidth !== this.gridConfig.viewportWidth) ) {
     //  this.firstTimeLoadColumnsConfig = false;
+
+    console.log(' ViewportPageSize pageSize', pageSize);
     this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
     this.gridFacade.getGridData(this.gridConfig.gridName);
     //}
@@ -165,12 +169,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onScrolledIndexChange(index: number): void {
-    const nextPage = this.gridConfig.page + 1;
-    const pageSize = this.gridConfig.pageSize;
-    const displayTotal = (nextPage - 1) * pageSize;
-    if (((displayTotal - index) < (pageSize - 10)) && displayTotal < this.gridConfig.totalCounts) {
-      console.log('load next page =', nextPage)
-      this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
+    if(this.gridConfig.virtualScroll) {
+      const nextPage = this.gridConfig.page + 1;
+      const pageSize = this.gridConfig.pageSize;
+      const displayTotal = (nextPage - 1) * pageSize;
+      if (((displayTotal - index) < (pageSize - 10)) && displayTotal < this.gridConfig.totalCounts) {
+        console.log('load next page =', nextPage)
+        this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
+      }
     }
   }
 

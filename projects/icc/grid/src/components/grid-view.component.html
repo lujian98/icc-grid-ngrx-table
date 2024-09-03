@@ -20,7 +20,7 @@
   itemSize="24"
   [ngStyle]="{
     'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'hidden',
-    'overflow-y': gridConfig.virtualScroll ? 'auto' : 'hidden',
+    'overflow-y': gridConfig.virtualScroll || gridConfig.verticalScroll ? 'auto' : 'hidden',
   }"
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"

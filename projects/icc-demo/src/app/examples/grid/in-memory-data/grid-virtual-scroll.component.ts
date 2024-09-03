@@ -4,14 +4,14 @@ import { IccGridConfig, IccGridModule, IccColumnConfig, defaultGridConfig, IccGr
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
-  selector: 'app-grid-vertical-scroll',
+  selector: 'app-grid-virtual-scroll',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridModule],
 })
-export class AppGridVerticalScrollComponent {
+export class AppGridVirtualScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     gridName: 'INM12',

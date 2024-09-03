@@ -1,29 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
-  selector: 'app-grid-remote-vertical-scroll',
-  template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
+  selector: 'app-grid-vertical-scroll',
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridModule],
 })
-export class AppGridRemoteVerticalScrollComponent {
+export class AppGridVerticalScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'INM12',
+    gridName: 'DCR11',
     urlKey: 'DCR',
-    columnSort: true,
-    columnFilter: true,
-    columnResize: true,
-    columnReorder: true,
+    verticalScroll: true,
+    pageSize: 50,
     columnMenu: true,
+    columnSort: true,
     columnHidden: true,
-    rowSelection: true,
-    virtualScroll: true,
-    remoteColumnsConfig: true,
     remoteGridData: true,
   };
+
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+    },
+    {
+      name: 'brand',
+    },
+    {
+      name: 'year',
+      width: 50,
+      align: 'right',
+    },
+    {
+      name: 'color',
+      width: 80,
+      align: 'center',
+    },
+  ];
 }

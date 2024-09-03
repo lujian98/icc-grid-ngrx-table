@@ -17,6 +17,7 @@ export const iccGridFeature = createFeature({
         ...action.gridConfig,
         pageSize: !action.gridConfig.virtualScroll ? action.gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
       };
+      console.log( ' 2222222222 gridConfig=', gridConfig)
       newState[key] = {
         ...defaultState,
         gridConfig,
