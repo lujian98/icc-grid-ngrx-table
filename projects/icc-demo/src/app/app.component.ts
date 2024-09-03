@@ -54,6 +54,7 @@ export class AppComponent {
     {
       name: 'Grid in-memory Data',
       items: [
+        { name: 'Grid Vertical Scroll', link: 'grid/in-memory-grid-vertical-scroll', icon: 'arrows-rotate' },
         {
           name: 'Grid In-Memory Test',
           link: 'grid/in-memory-grid-test',
