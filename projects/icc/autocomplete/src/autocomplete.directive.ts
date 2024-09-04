@@ -25,7 +25,7 @@ import {
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
-//import { IccFormFieldComponent } from '../form-field/form-field/form-field.component';
+import { IccFormFieldComponent } from '@icc/ui/form-field';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccAutocompleteComponent } from './autocomplete.component';
 
@@ -49,7 +49,6 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   private triggerStrategy!: IccTriggerStrategy;
   private trigger: IccTrigger = IccTrigger.FOCUS;
   private isShow: boolean = false;
-  private formField: any = null; // TODO formfield
 
   @Input('iccAutocompleteClose')
   set autocompleteClose(value: boolean) {
@@ -84,7 +83,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     private overlay: Overlay,
     private overlayPositionBuilder: IccPositionBuilderService,
     private triggerStrategyBuilder: IccTriggerStrategyBuilderService,
-    //@Optional() @Host() private formField: IccFormFieldComponent
+    @Optional() @Host() private formField: IccFormFieldComponent,
   ) {}
 
   ngOnInit(): void {
@@ -95,7 +94,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       this.host.nativeElement,
       () => this.container(),
       this.trigger,
-      //this.formField
+      this.formField,
     );
     this.triggerStrategy.show$.subscribe(() => this.show());
   }

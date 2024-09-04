@@ -1,0 +1,22 @@
+@mixin icc-form-field-theme() {
+  .unpadded-form-field .icc-form-field {
+    padding-left: 0;
+  }
+  /*
+  .icc-form-field-suffix {
+    border-bottom-width: 1px;
+    border-color: icc-theme(form-field-input-border-color);
+  }
+
+  .icc-form-field-suffix-focus {
+    background-color: icc-theme(form-field-focus-bkg-color);
+    border-color: icc-theme(form-field-focus-border-color);
+  }
+
+  icc-error {
+    color: icc-theme(text-danger-color);
+    icc-icon {
+      padding-right: .375rem;
+    }
+  }*/
+}

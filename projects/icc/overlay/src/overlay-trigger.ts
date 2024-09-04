@@ -3,7 +3,7 @@ import { Observable, fromEvent, EMPTY, merge } from 'rxjs';
 import { switchMap, debounceTime, filter, takeUntil, takeWhile, delay, repeat, map, share } from 'rxjs/operators';
 
 import { ICC_DOCUMENT } from './document';
-//import { IccFormFieldComponent } from '../../form-field/form-field/form-field.component';
+import { IccFormFieldComponent } from '@icc/ui/form-field';
 
 export enum IccTrigger {
   CLICK = 'click',
@@ -37,7 +37,7 @@ export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
     protected document: Document,
     protected host: HTMLElement,
     protected container: () => ComponentRef<any>,
-    //protected formField?: IccFormFieldComponent
+    protected formField?: IccFormFieldComponent,
   ) {}
 }
 
@@ -179,8 +179,8 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
       const clickTarget = event.target as HTMLElement;
       const notOrigin = clickTarget !== this.host;
       const notOverlay = !(this.container() && this.container().location.nativeElement.contains(clickTarget));
-      // const formField = this.formField ? this.formField.elementRef.nativeElement : null;
-      // const notFormfield = !formField?.contains(clickTarget);
+      const formField = this.formField ? this.formField.elementRef.nativeElement : null;
+      const notFormfield = !formField?.contains(clickTarget);
       return notOrigin && notOverlay; // && notFormfield;
     }),
     map((event) => event),
@@ -201,13 +201,13 @@ export class IccTriggerStrategyBuilderService {
       case IccTrigger.POINT:
         return new IccPointTriggerStrategy(this.document, host, container);
       case IccTrigger.HOVER:
-        return new IccHoverTriggerStrategy(this.document, host, container);
+        return new IccHoverTriggerStrategy(this.document, host, container, formField);
       case IccTrigger.CONTEXTMENU:
         return new IccContextmenuTriggerStrategy(this.document, host, container);
       case IccTrigger.TOOLTIP:
-        return new IccTooltipTriggerStrategy(this.document, host, container);
-      //case IccTrigger.FOCUS:
-      //  return new IccFocusTriggerStrategy(this.document, host, container, formField);
+        return new IccTooltipTriggerStrategy(this.document, host, container, formField);
+      case IccTrigger.FOCUS:
+        return new IccFocusTriggerStrategy(this.document, host, container, formField);
       default:
         throw new Error('Unknown trigger provided.');
     }

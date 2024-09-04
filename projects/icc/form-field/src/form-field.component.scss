@@ -1,0 +1,85 @@
+.icc-form-field {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+  padding-left: 0.6875rem;
+  position: relative;
+}
+
+.icc-form-field-flex {
+  display: flex;
+  width: 100%;
+}
+
+.icc-form-field-wrapper {
+  width: 100%;
+}
+
+.icc-form-field-container {
+  flex: 1 0 66%;
+  flex-grow: 1;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.icc-form-field-wrapper:has(input[type="hidden"]) {
+  display: none;
+}
+
+.icc-form-field-infix {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icc-form-field-label {
+  line-height: 1.75rem;
+  font-size: 0.6875rem;
+  font-weight: 500 !important;
+}
+
+.icc-form-field-suffix {
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  font-size: 0.6875rem;
+}
+
+.icc-form-field-required-marker {
+  position: absolute;
+  left: 0;
+  color: #ff4f4f;
+}
+
+.icc-form-field-hint {
+  display: flex;
+  flex-direction: column;
+  line-height: 1rem;
+  justify-content: flex-start;
+
+  ::ng-deep {
+    icc-icon {
+      padding-right: 0.375rem;
+    }
+
+    icc-hint {
+      width: 66%;
+      padding: 3px;
+    }
+  }
+}
+
+::ng-deep icc-hint,
+::ng-deep icc-error {
+  font-size: 0.6875rem;
+}
+
+label {
+  flex: 0 0 33%;
+
+  padding: 0 0.375rem;
+  margin-right: 4px;
+  margin-bottom: 0;
+  background-color: #f6f1ed;
+}

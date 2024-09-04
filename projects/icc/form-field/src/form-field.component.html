@@ -1,0 +1,22 @@
+<div class="icc-form-field">
+  <div class="icc-form-field-flex" (click)="_control && _control.onContainerClick($event)">
+    <label class="icc-form-field-label" #label>
+      <span class="icc-form-field-required-marker" *ngIf="_control && _control.required && !_control.disabled">*</span>
+      <ng-content select="icc-label"></ng-content>
+    </label>
+    <div class="icc-form-field-wrapper">
+      <div class="icc-form-field-container">
+        <div class="icc-form-field-infix" #inputContainer>
+          <ng-content></ng-content>
+        </div>
+        <div class="icc-form-field-suffix" [ngClass]="{ 'icc-form-field-suffix-focus': _control && _control.focused }">
+          <ng-content select="[iccSuffix]"></ng-content>
+        </div>
+      </div>
+      <div class="icc-form-field-hint">
+        <ng-content select="icc-error"></ng-content>
+        <ng-content select="icc-hint"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>
