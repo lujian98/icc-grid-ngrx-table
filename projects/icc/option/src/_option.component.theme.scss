@@ -1,0 +1,16 @@
+@mixin icc-option-theme() {
+  icc-option {
+    font-size: 0.6875rem;
+
+    /*
+    &.selected {
+      color: icc-theme(option-selected-text-color);
+      font-weight: bold;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: icc-theme(option-hover-background-color);
+    }*/
+  }
+}
