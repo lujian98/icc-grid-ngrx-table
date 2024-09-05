@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+// TODO move to core and/or utils
 @Pipe({
   name: 'filter',
   standalone: true,
