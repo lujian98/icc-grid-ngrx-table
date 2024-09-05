@@ -1,7 +1,0 @@
-// this is theme test
-@mixin icc-about-theme() {
-  .icc-about-color {
-    color: icc-theme(color-primary-default);
-    background-color: icc-theme(color-basic-100);
-  }
-}
