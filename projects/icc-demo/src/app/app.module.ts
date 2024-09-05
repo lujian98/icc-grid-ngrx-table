@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IccAccordionModule } from '@icc/ui/accordion';
+import { IccAccordionComponent } from '@icc/ui/accordion';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccIconModule } from '@icc/ui/icon';
@@ -35,7 +35,7 @@ import { InMemoryService } from './mock/in-memory-service';
     IccLayoutModule,
     IccIconModule,
     IccDialogModule.forRoot(),
-    IccAccordionModule,
+    IccAccordionComponent,
   ],
   providers: [
     {

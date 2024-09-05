@@ -1,4 +1,7 @@
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IccMenuModule } from '@icc/ui/menu';
 import { IccAccordion } from './models/accordion.model';
 
 @Component({
@@ -6,6 +9,8 @@ import { IccAccordion } from './models/accordion.model';
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, CdkAccordionModule, IccMenuModule],
 })
 export class IccAccordionComponent {
   @Input() items: IccAccordion[] = [];

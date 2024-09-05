@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   HostBinding,
   ContentChild,
@@ -8,12 +9,17 @@ import {
   Directive,
   Optional,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IccFormFieldControlDirective } from './form-field-control';
 import { IccLabelDirective } from './directive/label.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
+import { IccHintDirective } from './directive/hint.directive';
+import { IccErrorDirective } from './directive/error.directive';
+import { IccSuffix } from './directive/suffix';
 
 @Directive({
   selector: '[unpadded]',
+  standalone: true,
 })
 export class IccUnpadFormFieldDirective {
   @HostBinding('class.unpadded-form-field')
@@ -24,6 +30,17 @@ export class IccUnpadFormFieldDirective {
   selector: 'icc-form-field',
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    IccErrorDirective,
+    IccHintDirective,
+    IccLabelDirective,
+    IccLabelWidthDirective,
+    IccUnpadFormFieldDirective,
+    IccSuffix,
+  ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
   focused = false;
