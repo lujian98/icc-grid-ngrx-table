@@ -1,0 +1,20 @@
+:host {
+  .autocomplete-remove {
+    padding: 0 0.625rem;
+    font-size: 0.6rem;
+  }
+  input {
+    text-overflow: ellipsis;
+  }
+}
+
+.app-select-option-divider {
+  display: block;
+  padding: 0rem 0.625rem;
+  .app-select-option-checkbox {
+    display: flex;
+  }
+  .icc-dropdown-divider {
+    margin: 0px;
+  }
+}

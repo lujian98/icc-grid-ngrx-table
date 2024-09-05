@@ -36,8 +36,8 @@ import { IccOverlayModule } from '@icc/ui/overlay';
   ],
 })
 export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy {
-  @Input() displayWith: ((value: T) => string) | null = null;
-  @Input() compareWith: ((value: T | null, option: T) => boolean) | null = null;
+  @Input() displayWith!: (value: T) => string;
+  @Input() compareWith!: (value: T, option: T) => boolean;
   private _selection = new SelectionModel<IccOptionComponent>(this.multiSelection, []);
   private _multiSelection: boolean = false;
   private _value: T | null = null;
@@ -175,7 +175,7 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
       }
     } else {
       this.selection.clear();
-      const option = this.options.find((item: IccOptionComponent) => this.compareValue(value, item.value));
+      const option = this.options.find((item: IccOptionComponent) => this.compareValue(value!, item.value));
       if (option) {
         option.select();
         this.selection.select(option);
@@ -188,7 +188,7 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
     this.changeDetectorRef.markForCheck();
   }
 
-  private compareValue(value: T | null, item: T): boolean {
+  private compareValue(value: T, item: T): boolean {
     return this.compareWith ? this.compareWith(value, item) : value === item;
   }
 

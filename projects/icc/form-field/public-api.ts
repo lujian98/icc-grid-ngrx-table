@@ -5,3 +5,4 @@ export * from './src/directive/label.directive';
 export * from './src/directive/label-width.directive';
 export * from './src/directive/suffix';
 export * from './src/form-field-control';
+export * from './src/fields/select-field/select-field.component';

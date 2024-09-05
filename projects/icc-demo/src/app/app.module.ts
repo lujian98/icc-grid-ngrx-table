@@ -15,6 +15,7 @@ import {
   IccLayoutCenterComponent,
   IccLayoutFooterComponent,
 } from '@icc/ui/layout';
+import { SelectFieldComponent } from '@icc/ui/form-field';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -48,6 +49,7 @@ import { InMemoryService } from './mock/in-memory-service';
     IccOverlayModule.forRoot(),
     IccDialogModule.forRoot(),
     IccAccordionComponent,
+    SelectFieldComponent,
   ],
   providers: [
     {
