@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,15 +9,19 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'icc-option',
+  templateUrl: './option.component.html',
+  styleUrls: ['./option.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
   host: {
     role: 'option',
   },
-  templateUrl: './option.component.html',
-  styleUrls: ['./option.component.scss'],
 })
 export class IccOptionComponent implements OnDestroy {
   selected: boolean = false;

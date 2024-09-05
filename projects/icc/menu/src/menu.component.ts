@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IccMenuItem } from './models/menu-item.model';
+import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 
 @Component({
   selector: 'icc-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccMenuItemComponent],
 })
 export class IccMenuComponent {
   private _items: IccMenuItem[] = [];

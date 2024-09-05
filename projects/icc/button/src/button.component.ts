@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 //import { SunUtils } from '../utils/utils';
@@ -11,6 +12,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class IccButtonComponent {
   //@Input() size: SunButtonSize = 'standard';

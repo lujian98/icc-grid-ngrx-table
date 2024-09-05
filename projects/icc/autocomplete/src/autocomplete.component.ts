@@ -11,18 +11,29 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SelectionModel } from '@angular/cdk/collections';
 import { merge, Observable } from 'rxjs';
 import { filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
-import { IccOptionComponent } from '@icc/ui/option';
+import { IccAutocompleteDirective } from './autocomplete.directive';
 import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
+import { IccOptionComponent } from '@icc/ui/option';
+import { IccOverlayModule } from '@icc/ui/overlay';
 
 @Component({
   selector: 'icc-autocomplete',
   templateUrl: './autocomplete.component.html',
   exportAs: 'iccAutocomplete',
   styleUrls: ['./autocomplete.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    IccOptionComponent,
+    IccOverlayModule,
+    IccAutocompleteDirective,
+    IccAutocompleteContentDirective,
+  ],
 })
 export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy {
   @Input() displayWith: ((value: T) => string) | null = null;

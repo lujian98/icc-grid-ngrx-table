@@ -16,6 +16,7 @@ import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overl
 @Directive({
   selector: '[iccPopover]',
   exportAs: 'iccPopover',
+  standalone: true,
   providers: [IccDynamicOverlayService],
 })
 export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {

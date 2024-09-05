@@ -11,11 +11,14 @@ import {
   HostBinding,
   HostListener,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { IccIconModule } from '@icc/ui/icon';
 
 @Directive({
   selector: '[ghost]',
+  standalone: true,
 })
 export class GhostCheckboxDirective {
   @HostBinding('class.ghost-checkbox')
@@ -26,6 +29,8 @@ export class GhostCheckboxDirective {
   selector: 'icc-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IccIconModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

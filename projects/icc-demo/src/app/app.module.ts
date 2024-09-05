@@ -3,12 +3,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IccAccordionComponent } from '@icc/ui/accordion';
-import { IccCheckboxModule } from '@icc/ui/checkbox';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccThemeModule } from '@icc/ui/theme';
-import { IccLayoutModule } from '@icc/ui/layout';
+import {
+  IccLayoutComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutSidebarComponent,
+  IccLayoutCenterComponent,
+  IccLayoutFooterComponent,
+} from '@icc/ui/layout';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -32,8 +38,12 @@ import { InMemoryService } from './mock/in-memory-service';
     HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 }),
     AppRoutingModule,
     IccThemeModule.forRoot({ name: 'light' }),
-    IccCheckboxModule,
-    IccLayoutModule,
+    IccCheckboxComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
+    IccLayoutSidebarComponent,
+    IccLayoutCenterComponent,
+    IccLayoutFooterComponent,
     IccIconModule,
     IccOverlayModule.forRoot(),
     IccDialogModule.forRoot(),

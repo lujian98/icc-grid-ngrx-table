@@ -10,6 +10,7 @@ import {
   ElementRef,
   AfterContentChecked,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 /*
 import { takeWhile } from 'rxjs/operators';
 
@@ -17,11 +18,52 @@ import { IccThemeService } from '../theming/theme.service';
 import { ICC_DOCUMENT, ICC_WINDOW } from '../theming/theme.options';
 import { IccUtils } from '../utils/utils';
 */
+
+@Component({
+  selector: 'icc-layout-header',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
+  imports: [CommonModule],
+})
+export class IccLayoutHeaderComponent {}
+
+@Component({
+  selector: 'icc-layout-sidebar',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
+  imports: [CommonModule],
+})
+export class IccLayoutSidebarComponent {}
+
+@Component({
+  selector: 'icc-layout-center',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
+  imports: [CommonModule],
+})
+export class IccLayoutCenterComponent {}
+
+@Component({
+  selector: 'icc-layout-footer',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
+  imports: [CommonModule],
+})
+export class IccLayoutFooterComponent {}
+
 @Component({
   selector: 'icc-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    IccLayoutHeaderComponent,
+    IccLayoutSidebarComponent,
+    IccLayoutCenterComponent,
+    IccLayoutFooterComponent,
+  ],
 })
 export class IccLayoutComponent implements OnInit, OnDestroy {
   /*
@@ -60,27 +102,3 @@ export class IccLayoutComponent implements OnInit, OnDestroy {
     // this.alive = false;
   }
 }
-
-@Component({
-  selector: 'icc-layout-header',
-  template: ` <ng-content></ng-content> `,
-})
-export class IccLayoutHeaderComponent {}
-
-@Component({
-  selector: 'icc-layout-sidebar',
-  template: ` <ng-content></ng-content> `,
-})
-export class IccLayoutSidebarComponent {}
-
-@Component({
-  selector: 'icc-layout-center',
-  template: ` <ng-content></ng-content> `,
-})
-export class IccLayoutCenterComponent {}
-
-@Component({
-  selector: 'icc-layout-footer',
-  template: ` <ng-content></ng-content> `,
-})
-export class IccLayoutFooterComponent {}

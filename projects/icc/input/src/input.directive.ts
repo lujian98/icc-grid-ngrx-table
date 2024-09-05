@@ -5,6 +5,7 @@ import { IccFormFieldControlDirective } from '@icc/ui/form-field';
 
 @Directive({
   selector: 'input[iccInput], textarea[iccInput]',
+  standalone: true,
   providers: [{ provide: IccFormFieldControlDirective, useExisting: IccInputDirective }],
 })
 export class IccInputDirective extends IccFormFieldControlDirective<any> implements DoCheck {

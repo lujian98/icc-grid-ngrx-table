@@ -3,10 +3,10 @@ import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } 
 
 @Component({
   selector: 'icc-filter-highlight',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './filter-highlight.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class IccFilterHighlightComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);

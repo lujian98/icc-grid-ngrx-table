@@ -7,8 +7,8 @@ import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
 import { IccDialogContainerComponent } from './dialog-container/dialog-container.component';
 
 @NgModule({
-  imports: [PortalModule, IccOverlayModule],
-  declarations: [IccDialogContainerComponent],
+  imports: [PortalModule, IccOverlayModule, IccDialogContainerComponent],
+  //declarations: [IccDialogContainerComponent],
 })
 export class IccDialogModule {
   static forRoot(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccDialogModule> {
