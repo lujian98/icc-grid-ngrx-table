@@ -6,6 +6,7 @@
     <input
       iccInput
       autocomplete="off"
+      [readonly]="selectOnly"
       [formControlName]="optionId"
       (isOverlayOpen)="overlayOpen($event)"
       (change)="selectChange($event)"

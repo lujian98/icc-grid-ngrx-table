@@ -43,20 +43,20 @@ import { FilterPipe } from './filter.pipe';
 })
 export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  private _value!: any;
+  private _value!: { [key: string]: T };
   private _optionId: string = '';
   private _multiSelection: boolean = false;
   form: FormGroup | null = null;
 
+  @Input() selectOnly: boolean = false;
   @Input() fieldLabel: string | undefined;
-
   @Input() optionLabel!: string;
 
   @Input()
   set optionId(val: string) {
     this._optionId = val;
     this.form = new FormGroup({
-      [this.optionId]: new FormControl<any>({}),
+      [this.optionId]: new FormControl<{ [key: string]: T }>({}),
     });
   }
 
@@ -64,15 +64,15 @@ export class SelectFieldComponent<T> {
     return this._optionId;
   }
 
-  @Input() options: any[] = [];
+  @Input() options: { [key: string]: T }[] = [];
 
   @Input()
-  set value(val: any) {
+  set value(val: { [key: string]: T }) {
     this._value = val;
     this.selectedField.setValue(val);
   }
 
-  get value(): any {
+  get value(): { [key: string]: T } {
     return this._value;
   }
 
@@ -103,9 +103,11 @@ export class SelectFieldComponent<T> {
     return this.autocomplete.toDisplay;
   }
 
-  @ViewChild(IccAutocompleteComponent, { static: true }) autocomplete!: IccAutocompleteComponent<any | any[]>;
+  @ViewChild(IccAutocompleteComponent, { static: true }) autocomplete!: IccAutocompleteComponent<
+    { [key: string]: T } | { [key: string]: T }[]
+  >;
 
-  displayFn(value: any | any[]): string {
+  displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
     if (Array.isArray(value)) {
       return value.length > 0
@@ -119,7 +121,7 @@ export class SelectFieldComponent<T> {
     }
   }
 
-  compareFn(s1: any, s2: any): boolean {
+  compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
     return s1 && s2 ? s1[this.optionId] === s2[this.optionId] : s1 === s2;
   }
 
@@ -131,7 +133,7 @@ export class SelectFieldComponent<T> {
     }
   }
 
-  selectChange(options: any | (any | string)[]): void {
+  selectChange(options: { [key: string]: T } | ({ [key: string]: T } | string)[]): void {
     //this.value = options;
   }
 
