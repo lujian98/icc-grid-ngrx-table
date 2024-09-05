@@ -1,78 +1,52 @@
-<form [formGroup]="form">
-  <icc-form-field>
-    <!--
-
-        <icc-label>
-          Select State(s)
-        </icc-label>
-                -->
-    <input
-      iccInput
-      autocomplete="off"
-      formControlName="state"
-      (isOverlayOpen)="overlayOpen($event)"
-      (change)="selectChange($event)"
-      (blur)="onBlur()"
-      [iccAutocomplete]="autocomplete"
-      [iccAutocompleteClose]="autocompleteClose"
-    />
-    <icc-icon
-      *ngIf="hasValue"
-      icon="remove"
-      iconClass="autocomplete-remove"
-      iccSuffix
-      (click)="clearSelected()"
-    ></icc-icon>
-    <icc-icon
-      icon="angle-down"
-      iconClass="autocomplete-angle-up-down"
-      iccSuffix
-      [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"
-    ></icc-icon>
-    <icc-icon
-      *ngIf="isOverlayOpen"
-      icon="angle-up"
-      iconClass="autocomplete-angle-up-down"
-      iccSuffix
-      (click)="closeOverlay()"
-    ></icc-icon>
-    <icc-autocomplete
-      #autocomplete="iccAutocomplete"
-      [multiSelection]="multiSelection"
-      [displayWith]="displayFn.bind(this)"
-      [compareWith]="compareFn"
-    >
-      <ng-template iccAutocompleteContent>
-        <ng-container *ngIf="states | filter: form.get('state')?.value : 'state' as result">
-          <icc-option
-            *ngIf="multiSelection"
-            class="app-select-option-divider"
-            [value]="selectFilterValue.CHECK_ALL"
-            #refCheckAll
-          >
-            <icc-checkbox class="app-select-option-checkbox" [checked]="isAllChecked(refCheckAll)">
-              {{ "Check All" }}
-            </icc-checkbox>
-          </icc-option>
-          <icc-option
-            *ngIf="multiSelection"
-            class="app-select-option-divider"
-            [value]="selectFilterValue.UNCHECK_ALL"
-            #refUnCheckAll
-          >
-            <icc-checkbox class="app-select-option-checkbox" [checked]="isAllUnChecked(refUnCheckAll)">
-              {{ "Uncheck All" }}
-            </icc-checkbox>
-            <div class="icc-dropdown-divider"></div>
-          </icc-option>
-
-          <icc-option *ngFor="let option of result" [value]="option" #ref>
-            <icc-checkbox *ngIf="multiSelection" [checked]="ref.selected"></icc-checkbox>
-            <icc-filter-highlight [value]="option.state" [filterValue]="filterValue"> </icc-filter-highlight>
-          </icc-option>
-          <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
-        </ng-container>
-      </ng-template>
-    </icc-autocomplete>
-  </icc-form-field>
-</form>
+<icc-form-field>
+  <icc-label *ngIf="label !== undefined">
+    {{ label }}
+  </icc-label>
+  <input
+    iccInput
+    autocomplete="off"
+    readonly
+    [value]="value"
+    formControlName="state"
+    (isOverlayOpen)="overlayOpen($event)"
+    (change)="selectChange($event)"
+    (blur)="onBlur()"
+    [iccAutocomplete]="autocomplete"
+    [iccAutocompleteClose]="autocompleteClose"
+  />
+  <icc-icon
+    *ngIf="hasValue"
+    icon="remove"
+    iconClass="autocomplete-remove"
+    iccSuffix
+    (click)="clearSelected()"
+  ></icc-icon>
+  <icc-icon
+    icon="angle-down"
+    iconClass="autocomplete-angle-up-down"
+    iccSuffix
+    [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"
+  ></icc-icon>
+  <icc-icon
+    *ngIf="isOverlayOpen"
+    icon="angle-up"
+    iconClass="autocomplete-angle-up-down"
+    iccSuffix
+    (click)="closeOverlay()"
+  ></icc-icon>
+  <icc-autocomplete
+    #autocomplete="iccAutocomplete"
+    [multiSelection]="multiSelection"
+    [displayWith]="displayFn.bind(this)"
+    [compareWith]="compareFn"
+  >
+    <ng-template iccAutocompleteContent>
+      <ng-container *ngIf="states | filter: value : 'state' as result">
+        <icc-option *ngFor="let option of result" [value]="option" #ref>
+          {{ option.state }}
+        </icc-option>
+        <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
+      </ng-container>
+    </ng-template>
+  </icc-autocomplete>
+</icc-form-field>

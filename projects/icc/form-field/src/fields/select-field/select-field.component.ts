@@ -18,12 +18,6 @@ import { IccFormFieldComponent } from '../../form-field.component';
 import { FilterPipe } from './filter.pipe';
 import { State, STATES } from './states';
 
-export enum SelectFilterValue {
-  CHECK_ALL = 'Check All',
-  UNCHECK_ALL = '',
-  IS_EMPTY = 'Is Empty',
-}
-
 @Component({
   selector: 'icc-select-field',
   templateUrl: './select-field.component.html',
@@ -50,8 +44,19 @@ export enum SelectFilterValue {
 })
 export class SelectFieldComponent {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  protected _value!: any;
   private _multiSelection: boolean = false;
-  //tooltipPosition = IccPosition.BOTTOM;
+
+  @Input() label: string | undefined;
+
+  @Input()
+  set value(val: any) {
+    this._value = val;
+  }
+
+  get value(): any {
+    return this._value;
+  }
 
   @Input()
   get multiSelection(): boolean {
@@ -59,52 +64,15 @@ export class SelectFieldComponent {
   }
   set multiSelection(val: boolean) {
     this._multiSelection = coerceBooleanProperty(val);
-    if (this._multiSelection) {
-      const states = [this.states[10], this.states[18], this.states[25]];
-      this.state.setValue(states);
-    } else {
-      this.state.setValue(this.states[18]);
-    }
-  }
-
-  get selectionType(): string {
-    return this.multiSelection ? 'Multi' : 'Single';
-  }
-
-  get selectFilterValue() {
-    return SelectFilterValue;
-  }
-
-  isAllChecked(ref: IccOptionComponent): boolean {
-    const isAllChecked = this.state.value.length === this.states.length;
-    isAllChecked ? ref.select() : ref.deselect();
-    return isAllChecked;
-  }
-
-  isAllUnChecked(ref: IccOptionComponent): boolean {
-    const isAllUnChecked = this.state.value.length === 0;
-    isAllUnChecked ? ref.select() : ref.deselect();
-    return isAllUnChecked;
+    this.value = this.states[18];
   }
 
   states = STATES;
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
-  form: FormGroup = new FormGroup({
-    state: new FormControl<State[]>([]),
-  });
-
-  get state(): AbstractControl {
-    return this.form.get('state')!;
-  }
-
-  get filterValue(): string {
-    return typeof this.state.value === 'object' ? '' : this.state.value;
-  }
-
   get hasValue(): boolean {
-    return this.multiSelection ? this.state.value.length > 0 : !!this.state.value;
+    return !!this.value;
   }
 
   get toDisplay(): string {
@@ -136,6 +104,7 @@ export class SelectFieldComponent {
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
     } else {
+      /*
       console.log(' overlay close event =', this.state.value);
 
       const value = this.state.value;
@@ -150,25 +119,11 @@ export class SelectFieldComponent {
           this.states.splice(0, 0, newState);
         }
         this.state.setValue(selection);
-      }
+      }*/
     }
   }
 
-  selectChange(states: State | (State | string)[]): void {
-    if (this.multiSelection && Array.isArray(states)) {
-      const hasCheckAll = states.find((state) => (state as string) === SelectFilterValue.CHECK_ALL);
-      const haiccCheckAll = states.filter((state) => (state as string) === SelectFilterValue.UNCHECK_ALL);
-      if (hasCheckAll) {
-        const value = this.states.filter((state) => state && state.state);
-        this.state.setValue(value);
-        this.autocomplete.selectValue(value);
-      } else if (haiccCheckAll.length === 1) {
-        this.state.setValue([]);
-        this.autocomplete.selectValue([]);
-      }
-      this.changeDetectorRef.markForCheck();
-    }
-  }
+  selectChange(states: State | (State | string)[]): void {}
 
   onBlur(): void {}
 
@@ -177,11 +132,14 @@ export class SelectFieldComponent {
   }
 
   clearSelected(): void {
+    this.value = '';
+    /*
     if (this.multiSelection) {
       this.state.setValue([]);
     } else {
       this.state.setValue('');
     }
     this.changeDetectorRef.markForCheck();
+    */
   }
 }
