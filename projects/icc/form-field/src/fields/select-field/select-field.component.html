@@ -38,7 +38,7 @@
       #autocomplete="iccAutocomplete"
       [multiSelection]="multiSelection"
       [displayWith]="displayFn.bind(this)"
-      [compareWith]="compareFn"
+      [compareWith]="compareFn.bind(this)"
     >
       <ng-template iccAutocompleteContent>
         <ng-container *ngIf="options | filter: selectedField.value : optionLabel as result">
