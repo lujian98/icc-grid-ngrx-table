@@ -9,13 +9,13 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccFilterPipe } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccInputDirective } from '../../input/input.directive';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
-import { FilterPipe } from './filter.pipe';
+import { IccInputDirective } from '../../input/input.directive';
 
 @Component({
   selector: 'icc-select-field',
@@ -38,7 +38,7 @@ import { FilterPipe } from './filter.pipe';
     IccOptionComponent,
     IccIconModule,
     IccCheckboxComponent,
-    FilterPipe,
+    IccFilterPipe,
   ],
 })
 export class SelectFieldComponent<T> {
