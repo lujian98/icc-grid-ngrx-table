@@ -1,14 +1,20 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
+import { IccGridViewComponent } from './components/grid-view.component';
+import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
+import { IccGridStateModule } from './+state/grid-state.module';
 
 @Component({
   selector: 'icc-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccGridStateModule, IccGridViewComponent, IccGridFooterComponent],
 })
 export class IccGridComponent<T> implements OnDestroy {
   private gridFacade = inject(IccGridFacade);

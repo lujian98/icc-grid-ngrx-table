@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid-remote-virtual-scroll',
@@ -8,7 +8,7 @@ import { IccGridConfig, IccGridModule, defaultGridConfig } from '@icc/ui/grid';
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccGridModule],
+  imports: [CommonModule, IccGridComponent],
 })
 export class AppGridRemoteVirtualScrollComponent {
   gridConfig: IccGridConfig = {

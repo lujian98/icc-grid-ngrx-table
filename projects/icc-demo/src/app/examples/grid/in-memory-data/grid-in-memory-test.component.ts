@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridModule, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
 import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 @Component({
@@ -9,7 +9,7 @@ import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccGridModule],
+  imports: [CommonModule, IccGridComponent],
 })
 export class AppGridinMemoryTestComponent {
   gridConfig: IccGridConfig = {
