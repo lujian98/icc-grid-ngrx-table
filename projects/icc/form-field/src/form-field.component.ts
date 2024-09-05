@@ -15,7 +15,7 @@ import { IccLabelDirective } from './directive/label.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
-import { IccSuffix } from './directive/suffix';
+import { IccSuffixDirective } from './directive/suffix.directive';
 
 @Directive({
   selector: '[unpadded]',
@@ -39,7 +39,7 @@ export class IccUnpadFormFieldDirective {
     IccLabelDirective,
     IccLabelWidthDirective,
     IccUnpadFormFieldDirective,
-    IccSuffix,
+    IccSuffixDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {

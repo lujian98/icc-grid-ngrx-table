@@ -10,10 +10,10 @@ import {
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccInputDirective } from '@icc/ui/input';
+import { IccInputDirective } from '../../input/input.directive';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccLabelDirective } from '../../directive/label.directive';
-import { IccSuffix } from '../../directive/suffix';
+import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
 import { FilterPipe } from './filter.pipe';
 
@@ -28,7 +28,7 @@ import { FilterPipe } from './filter.pipe';
     ReactiveFormsModule,
     FormsModule,
     IccFormFieldComponent,
-    IccSuffix,
+    IccSuffixDirective,
     IccLabelDirective,
     IccInputDirective,
     IccAutocompleteComponent,

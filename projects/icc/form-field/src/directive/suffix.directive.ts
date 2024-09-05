@@ -5,4 +5,4 @@ import { Directive } from '@angular/core';
   selector: '[iccSuffix]',
   standalone: true,
 })
-export class IccSuffix {}
+export class IccSuffixDirective {}
