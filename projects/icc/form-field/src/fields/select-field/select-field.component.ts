@@ -16,7 +16,6 @@ import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffix } from '../../directive/suffix';
 import { IccFormFieldComponent } from '../../form-field.component';
 import { FilterPipe } from './filter.pipe';
-import { State, STATES } from './states';
 
 @Component({
   selector: 'icc-select-field',
@@ -42,16 +41,35 @@ import { State, STATES } from './states';
     FilterPipe,
   ],
 })
-export class SelectFieldComponent {
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  protected _value!: any;
+export class SelectFieldComponent<T> {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private _value!: any;
+  private _optionId: string = '';
   private _multiSelection: boolean = false;
+  form: FormGroup | null = null;
 
-  @Input() label: string | undefined;
+  @Input() fieldLabel: string | undefined;
+
+  @Input() optionLabel!: string;
+
+  @Input()
+  set optionId(val: string) {
+    this._optionId = val;
+    this.form = new FormGroup({
+      [this.optionId]: new FormControl<any>({}),
+    });
+  }
+
+  get optionId(): string {
+    return this._optionId;
+  }
+
+  @Input() options: any[] = [];
 
   @Input()
   set value(val: any) {
     this._value = val;
+    this.selectedField.setValue(val);
   }
 
   get value(): any {
@@ -64,39 +82,45 @@ export class SelectFieldComponent {
   }
   set multiSelection(val: boolean) {
     this._multiSelection = coerceBooleanProperty(val);
-    this.value = this.states[18];
   }
 
-  states = STATES;
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
+  get selectedField(): AbstractControl {
+    return this.form!.get(this.optionId)!;
+  }
+
   get hasValue(): boolean {
-    return !!this.value;
+    return this.multiSelection ? this.selectedField.value.length > 0 : !!this.selectedField.value;
+  }
+
+  get filterValue(): string {
+    return typeof this.selectedField.value === 'object' ? '' : this.selectedField.value;
   }
 
   get toDisplay(): string {
     return this.autocomplete.toDisplay;
   }
 
-  @ViewChild(IccAutocompleteComponent, { static: true }) autocomplete!: IccAutocompleteComponent<State | State[]>;
+  @ViewChild(IccAutocompleteComponent, { static: true }) autocomplete!: IccAutocompleteComponent<any | any[]>;
 
-  displayFn(value: State | State[]): string {
+  displayFn(value: any | any[]): string {
     this.changeDetectorRef.markForCheck();
     if (Array.isArray(value)) {
       return value.length > 0
         ? value
-            .map((item) => item.state)
+            .map((item) => item[this.optionLabel])
             .sort((a, b) => a.localeCompare(b))
             .join(', ')
         : '';
     } else {
-      return value ? value.state : '';
+      return value ? value[this.optionLabel] : '';
     }
   }
 
-  compareFn(s1: State, s2: State): boolean {
-    return s1 && s2 ? s1.state === s2.state : s1 === s2;
+  compareFn(s1: any, s2: any): boolean {
+    return s1 && s2 ? s1[this.optionId] === s2[this.optionId] : s1 === s2;
   }
 
   overlayOpen(event: boolean): void {
@@ -104,26 +128,12 @@ export class SelectFieldComponent {
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
     } else {
-      /*
-      console.log(' overlay close event =', this.state.value);
-
-      const value = this.state.value;
-      if (!value) {
-        this.state.setValue(this.autocomplete.value);
-      } else if (this.multiSelection && !Array.isArray(value)) {
-        const find = this.states.find((item) => item.state === value);
-        const selection = this.autocomplete.value as State[];
-        if (!find) {
-          const newState = { state: value };
-          selection.push(newState);
-          this.states.splice(0, 0, newState);
-        }
-        this.state.setValue(selection);
-      }*/
     }
   }
 
-  selectChange(states: State | (State | string)[]): void {}
+  selectChange(options: any | (any | string)[]): void {
+    //this.value = options;
+  }
 
   onBlur(): void {}
 
@@ -132,14 +142,11 @@ export class SelectFieldComponent {
   }
 
   clearSelected(): void {
-    this.value = '';
-    /*
     if (this.multiSelection) {
-      this.state.setValue([]);
+      this.selectedField.setValue([]);
     } else {
-      this.state.setValue('');
+      this.selectedField.setValue('');
     }
     this.changeDetectorRef.markForCheck();
-    */
   }
 }

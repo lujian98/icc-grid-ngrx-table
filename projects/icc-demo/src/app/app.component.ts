@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccAccordion } from '@icc/ui/accordion';
 import { IccThemeService } from '@icc/ui/theme';
+import { State, STATES } from './data/states';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { IccThemeService } from '@icc/ui/theme';
 export class AppComponent {
   private themeService = inject(IccThemeService);
   title = 'icc-demo';
+  states = STATES;
 
   items: IccAccordion[] = [
     {
