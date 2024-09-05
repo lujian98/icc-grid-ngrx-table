@@ -14,7 +14,7 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccPopoverModule, IccIconModule, IccGridColumnMenuComponent],
-  providers: [IccDynamicOverlayService],
+  providers: [IccDynamicOverlayService, IccGridFacade],
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);

@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IccAccordionComponent } from '@icc/ui/accordion';
 import { IccCheckboxModule } from '@icc/ui/checkbox';
 import { IccDialogModule } from '@icc/ui/dialog';
+import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccThemeModule } from '@icc/ui/theme';
 import { IccLayoutModule } from '@icc/ui/layout';
@@ -34,6 +35,7 @@ import { InMemoryService } from './mock/in-memory-service';
     IccCheckboxModule,
     IccLayoutModule,
     IccIconModule,
+    IccOverlayModule.forRoot(),
     IccDialogModule.forRoot(),
     IccAccordionComponent,
   ],
