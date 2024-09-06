@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccTextFilterComponent } from './text/text-filter.component';
+import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
 
 @Component({
@@ -8,9 +9,15 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
   templateUrl: 'column-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccTextFilterComponent],
+  imports: [CommonModule, IccTextFilterComponent, IccSelectFilterComponent],
 })
 export class IccColumnFilterComponent implements OnInit {
+  private componentMapper: { [index: string]: any } = {
+    text: IccTextFilterComponent,
+    number: IccTextFilterComponent,
+    select: IccSelectFilterComponent,
+  };
+
   private viewContainerRef = inject(ViewContainerRef);
   private _componentRef: any;
   private _gridConfig!: IccGridConfig;
@@ -35,7 +42,9 @@ export class IccColumnFilterComponent implements OnInit {
 
   private loadComponent(): void {
     console.log(' this.column=', this.column);
-    const cellComponent = IccTextFilterComponent; // TODO this.column.component || // to dynamic components
+    const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
+    // TODO if pass this.column.component  to dynamic components
+    const cellComponent = this.componentMapper[filterType]; //IccTextFilterComponent;
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.gridConfig = this.gridConfig;
