@@ -171,6 +171,11 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
   show$ = merge(
     fromEvent<Event>(this.host, 'focus'),
     fromEvent<Event>(this.host, 'click'),
+    fromEvent<Event>(this.document, 'click').pipe(
+      filter(
+        (event) => this.formField && this.formField.elementRef.nativeElement.contains(event.target as HTMLElement),
+      ),
+    ),
     fromEvent<Event>(this.host, 'keydown'),
   ).pipe(takeWhile(() => this.alive));
 
@@ -181,7 +186,7 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
       const notOverlay = !(this.container() && this.container().location.nativeElement.contains(clickTarget));
       const formField = this.formField ? this.formField.elementRef.nativeElement : null;
       const notFormfield = !formField?.contains(clickTarget);
-      return notOrigin && notOverlay; // && notFormfield;
+      return notOrigin && notOverlay && notFormfield;
     }),
     map((event) => event),
     takeWhile(() => this.alive),

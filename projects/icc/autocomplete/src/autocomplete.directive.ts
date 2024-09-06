@@ -58,14 +58,6 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     }
   }
 
-  @Input('iccAutocompleteOpen')
-  set autocompleteOpen(value: boolean) {
-    if (coerceBooleanProperty(value)) {
-      this.show();
-    }
-    //this.autocompleteClose = false;
-  }
-
   get origin(): HTMLInputElement {
     return this.host.nativeElement;
   }
@@ -132,9 +124,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   }
 
   private show(): void {
-    console.log(' 11111 show');
     if (!this.overlayRef) {
-      console.log(' 2222 show');
       this.showOverlay();
       this.isOverlayOpen.emit(true);
     }
@@ -150,12 +140,9 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     });
     const template = new TemplatePortal(this.autocomplete.rootTemplate, this.vcr);
     this.overlayRef.attach(template);
-
-    //TODO click outside to hide
-    /*
     this.triggerStrategy.hide$
       .pipe(takeUntil(this.overlayRef.detachments().pipe(tap(() => this.hide()))))
-      .subscribe(() => this.hide());*/
+      .subscribe(() => this.hide());
 
     this.autocomplete
       .optionsClick()

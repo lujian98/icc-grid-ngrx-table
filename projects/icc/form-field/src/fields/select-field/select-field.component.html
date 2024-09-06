@@ -13,15 +13,9 @@
       (blur)="onBlur()"
       [iccAutocomplete]="autocomplete"
       [iccAutocompleteClose]="autocompleteClose"
-      [iccAutocompleteOpen]="autocompleteOpen"
     />
     <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
-    <icc-icon
-      icon="angle-down"
-      iccSuffix
-      [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"
-      (click)="openOverlay()"
-    ></icc-icon>
+    <icc-icon icon="angle-down" iccSuffix [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"></icc-icon>
     <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
     <icc-autocomplete
       #autocomplete="iccAutocomplete"
