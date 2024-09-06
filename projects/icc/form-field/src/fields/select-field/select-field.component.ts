@@ -86,6 +86,7 @@ export class SelectFieldComponent<T> {
 
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
+  autocompleteOpen!: boolean;
 
   get selectedField(): AbstractControl {
     return this.form!.get(this.optionId)!;
@@ -103,7 +104,7 @@ export class SelectFieldComponent<T> {
     return this.autocomplete.toDisplay;
   }
 
-  @ViewChild(IccAutocompleteComponent, { static: true }) autocomplete!: IccAutocompleteComponent<
+  @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
     { [key: string]: T } | { [key: string]: T }[]
   >;
 
@@ -128,6 +129,7 @@ export class SelectFieldComponent<T> {
   overlayOpen(event: boolean): void {
     this.isOverlayOpen = event;
     if (this.isOverlayOpen) {
+      this.autocompleteOpen = false;
       this.autocompleteClose = false;
     } else {
     }
@@ -138,6 +140,14 @@ export class SelectFieldComponent<T> {
   }
 
   onBlur(): void {}
+
+  openOverlay(): void {
+    console.log(' this.autocomplete=', this.autocomplete);
+    //this.autocomplete.optionsClick();
+    this.autocompleteClose = false;
+    this.autocompleteOpen = true;
+    this.changeDetectorRef.markForCheck();
+  }
 
   closeOverlay(): void {
     this.autocompleteClose = true;

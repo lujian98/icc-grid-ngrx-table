@@ -1,8 +1,9 @@
 :host {
-  .autocomplete-remove {
-    padding: 0 0.625rem;
-    font-size: 0.6rem;
+  icc-icon {
+    padding-left: 5px;
+    font-size: 12px;
   }
+
   input {
     text-overflow: ellipsis;
   }

@@ -1,4 +1,6 @@
 @import "../../checkbox/src/checkbox.component.theme";
+@import "../../form-field/src/form-field.component.theme";
+@import "../../form-field/src/input/input.component.theme";
 @import "../../grid/src/grid.component.theme";
 @import "../../icon/src/icon.component.theme";
 @import "../../layout/src/layout.component.theme";
@@ -7,9 +9,11 @@
 
 @mixin icc-theme-components() {
   @include icc-checkbox-theme();
+  @include icc-form-field-theme();
   @include icc-grid-theme();
   @include icc-icon-theme();
   @include icc-layout-theme();
   @include icc-menu-theme();
   @include icc-option-theme();
+  @include icc-input-theme();
 }
