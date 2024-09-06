@@ -10,6 +10,11 @@ icc-layout,
   line-height: 1.25rem;
 }
 
+// ::ng-deep
+.cdk-overlay-pane {
+  min-height: 320px;
+}
+
 fieldset {
   padding: 0.35em 0.75em 0.625em 0;
 }

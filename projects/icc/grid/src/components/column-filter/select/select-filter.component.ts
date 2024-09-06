@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SelectFieldComponent } from '@icc/ui/form-field';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
+import { State, STATES } from './states';
 
 @Component({
   selector: 'icc-select-filter',
@@ -11,10 +13,11 @@ import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.mode
   styleUrls: ['select-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SelectFieldComponent],
 })
 export class IccSelectFilterComponent {
   private gridFacade = inject(IccGridFacade);
+  states = STATES;
   //private _gridName!: string;
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;

@@ -1,4 +1,15 @@
-<div class="icc-select-filter">
+<icc-select-field
+  [selectOnly]="false"
+  [multiSelection]="false"
+  [value]="states[16]"
+  [options]="states"
+  optionLabel="state"
+  optionId="abbr"
+>
+</icc-select-field>
+
+<!--
+
   <input
     type="text"
     [value]="value"
@@ -7,8 +18,6 @@
     (keyup)="applyFilter($event)"
     placeholder="{{ filterPlaceholder }}"
   />
-</div>
-<!--
 
 <mat-form-field *ngIf="filterType" [ngClass]="'sun-grid-form-field'" [ngStyle]="{'height': rowHeight+'px'}">
   <input matInput type="text" [value]="value" autocomplete="off"
