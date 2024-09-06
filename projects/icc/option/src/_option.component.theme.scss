@@ -2,7 +2,6 @@
   icc-option {
     font-size: 0.6875rem;
 
-    /*
     &.selected {
       color: icc-theme(option-selected-text-color);
       font-weight: bold;
@@ -11,6 +10,19 @@
     &:hover {
       cursor: pointer;
       background-color: icc-theme(option-hover-background-color);
-    }*/
+    }
+  }
+
+  .icc-option-list {
+    background-color: #fbfbfb; //sun-theme(select-options-background-color);
+    /*
+    background: sun-theme(select-options-background-color);
+
+  */
+    border: 1px solid sun-theme(select-border-color);
+    color: sun-theme(select-text-color);
+    height: 100%;
+    max-height: 320px;
+    overflow: auto;
   }
 }

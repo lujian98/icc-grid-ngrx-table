@@ -3,6 +3,7 @@
 @import "../../icon/src/icon.component.theme";
 @import "../../layout/src/layout.component.theme";
 @import "../../menu//src/menu.component.theme";
+@import "../../option//src/option.component.theme";
 
 @mixin icc-theme-components() {
   @include icc-checkbox-theme();
@@ -10,4 +11,5 @@
   @include icc-icon-theme();
   @include icc-layout-theme();
   @include icc-menu-theme();
+  @include icc-option-theme();
 }
