@@ -49,7 +49,7 @@ export class SelectFieldComponent<T> {
   form: FormGroup | null = null;
 
   @Input() selectOnly: boolean = false;
-  @Input() fieldLabel: string | undefined = '';
+  @Input() fieldLabel: string | undefined;
   @Input() optionLabel!: string;
 
   @Input()
