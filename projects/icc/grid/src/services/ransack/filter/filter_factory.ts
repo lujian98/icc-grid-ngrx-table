@@ -3,6 +3,7 @@ import { IccFilters } from '../../filter/filters';
 import { IccRansackFilter } from './filter';
 import { IccRansackTextFilter } from './text_filter';
 import { IccRansackNumberFilter } from './number_filter';
+import { IccRansackSelectFilter } from './select_filter';
 
 export class IccRansackFilterFactory<T> {
   componentMapper: { [index: string]: any };
@@ -11,7 +12,7 @@ export class IccRansackFilterFactory<T> {
     this.componentMapper = {
       text: IccRansackTextFilter,
       number: IccRansackNumberFilter,
-      select: IccRansackTextFilter,
+      select: IccRansackSelectFilter,
     };
   }
 

@@ -1,15 +1,17 @@
 <icc-select-field
   [selectOnly]="false"
   [multiSelection]="false"
-  [value]="states[16]"
-  [options]="states"
-  optionLabel="state"
-  optionId="abbr"
+  [value]="value"
+  [options]="options"
+  optionLabel="label"
+  optionId="value"
+  (selectionChange)="onSelectionChange($event)"
 >
 </icc-select-field>
 
 <!--
 
+  [value]="states[16]"
   <input
     type="text"
     [value]="value"

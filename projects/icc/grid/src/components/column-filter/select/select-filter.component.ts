@@ -22,26 +22,41 @@ export class IccSelectFilterComponent {
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
   //gridConfig$!: Observable<IccGridConfig>;
-  private _value: string = '';
+  private _value: any;
   filterPlaceholder: string = 'Filter ...';
 
+  options = [
+    { label: '', value: '' },
+    { label: 'Audi', value: 'Audi' },
+    { label: 'BMW', value: 'BMW' },
+    { label: 'Mercedes', value: 'Mercedes' },
+    { label: 'Renault', value: 'Renault' },
+    { label: 'Volvo', value: 'Volvo' },
+    { label: 'Fiat', value: 'Fiat' },
+    { label: 'Chrysler', value: 'Chrysler' },
+    { label: 'Ford', value: 'Ford' },
+    { label: 'GM', value: 'GM' },
+    { label: 'Honda', value: 'Honda' },
+    { label: 'Jaguar', value: 'Jaguar' },
+    { label: 'VW', value: 'VW' },
+  ];
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
-      this.value = find.value as string;
+      //this.value = find.value;
     }
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
   }
 
-  set value(val: string) {
+  set value(val: any) {
     this._value = val;
   }
-  get value(): string {
+  get value(): any {
     return this._value;
   }
 
@@ -60,10 +75,12 @@ export class IccSelectFilterComponent {
   }
   */
 
-  applyFilter(event: KeyboardEvent) {
-    // @ts-ignore
-    const filterValue: T = event.target.value;
-    event.stopPropagation();
+  onSelectionChange<T>(value: any): void {
+    console.log(' filtr select change options=', value);
+    this.applyFilter(value.label);
+  }
+
+  private applyFilter(filterValue: any): void {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 

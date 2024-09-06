@@ -1,6 +1,15 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   IccAutocompleteComponent,
@@ -84,6 +93,7 @@ export class SelectFieldComponent<T> {
     this._multiSelection = coerceBooleanProperty(val);
   }
 
+  @Output() selectionChange = new EventEmitter<{ [key: string]: T } | ({ [key: string]: T } | string)[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
@@ -133,8 +143,9 @@ export class SelectFieldComponent<T> {
     }
   }
 
-  selectChange(options: { [key: string]: T } | ({ [key: string]: T } | string)[]): void {
-    //this.value = options;
+  onChange(options: { [key: string]: T } | ({ [key: string]: T } | string)[]): void {
+    //console.log( ' options=', options)
+    this.selectionChange.emit(options);
   }
 
   onBlur(): void {}
