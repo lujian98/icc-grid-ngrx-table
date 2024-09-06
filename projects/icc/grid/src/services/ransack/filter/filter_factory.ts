@@ -11,6 +11,7 @@ export class IccRansackFilterFactory<T> {
     this.componentMapper = {
       text: IccRansackTextFilter,
       number: IccRansackNumberFilter,
+      select: IccRansackTextFilter,
     };
   }
 

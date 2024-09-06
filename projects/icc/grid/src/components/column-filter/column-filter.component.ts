@@ -34,7 +34,8 @@ export class IccColumnFilterComponent implements OnInit {
   }
 
   private loadComponent(): void {
-    const cellComponent = IccTextFilterComponent; // this.column.component || // to dynamic components
+    console.log(' this.column=', this.column);
+    const cellComponent = IccTextFilterComponent; // TODO this.column.component || // to dynamic components
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.gridConfig = this.gridConfig;

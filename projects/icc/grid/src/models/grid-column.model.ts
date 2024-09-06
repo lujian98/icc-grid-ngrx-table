@@ -57,23 +57,63 @@ export enum FilterType {
 }
 */
 
+export type SunFilterField = boolean | string;
+
 export interface IccColumnFilter {
   name: string;
   //type: string;
   value: string | number | boolean; // string[] | number[];
 }
 
+export type fieldType = 'text' | 'number' | 'select';
+
+export interface SunFieldType {
+  type: fieldType;
+  allowBlank?: boolean;
+}
+
+export interface SunTextFieldType extends SunFieldType {
+  minLength?: number;
+  maxLength?: number;
+}
+
+export interface SunNumberFieldType extends SunFieldType {
+  minValue?: number;
+  maxValue?: number;
+}
+
+/*
+export interface SunSelectOption {
+  label: string;
+  value: string | number;
+  children?: SunSelectOption[];
+  optionFields?: string[];
+}*/
+
+export interface SunSelectFieldType extends SunFieldType {
+  key?: string;
+  value?: string;
+  options?: any[];
+  multiSelect?: boolean;
+  filterMultiSelect?: boolean;
+  /*
+  showCheckAll?: boolean;
+  showUncheckAll?: boolean;
+  showIsEmpty?: boolean;
+  */
+}
+
 export interface IccColumnConfig {
   name: string;
   title?: string;
-  fieldType?: string; // | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
+  fieldType?: string | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
   sortField?: boolean;
-  filterField?: boolean;
+  filterField?: SunFilterField;
 
   //field: string;
   //index?: number;

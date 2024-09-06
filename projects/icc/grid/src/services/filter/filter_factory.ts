@@ -9,12 +9,13 @@ export class IccFilterFactory {
     this.componentMapper = {
       text: IccTextFilter,
       number: IccNumberFilter,
+      select: IccTextFilter,
     };
   }
 
   getFilter(column: IccColumnConfig) {
-    const fieldType = column.fieldType!;
-    let component = this.componentMapper[fieldType];
+    const filerType = typeof column.filterField === 'string' ? column.filterField : 'text';
+    let component = this.componentMapper[filerType];
     if (!component) {
       component = this.componentMapper['text'];
     }

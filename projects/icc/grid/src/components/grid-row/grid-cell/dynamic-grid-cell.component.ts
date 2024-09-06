@@ -35,7 +35,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   }
 
   private loadComponent(): void {
-    const cellComponent = IccGridCellViewComponent; // this.column.component || // to dynamic components
+    const cellComponent = IccGridCellViewComponent; // TODO this.column.component || // to dynamic components
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.record = this.record;
