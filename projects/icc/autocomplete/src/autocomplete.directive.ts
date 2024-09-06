@@ -68,6 +68,10 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       : this.formField.elementRef.nativeElement.querySelector('.icc-form-field-wrapper');
   }
 
+  get formfieldWrapper(): HTMLInputElement {
+    return this.formField.elementRef.nativeElement.querySelector('.icc-form-field-wrapper');
+  }
+
   get width(): number {
     return !this.formField ? this.origin.offsetWidth : this._getFormfieldWidth('.icc-form-field-wrapper');
   }
@@ -92,7 +96,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       this.triggerStrategy.destroy();
     }
     this.triggerStrategy = this.triggerStrategyBuilder.build(
-      this.host.nativeElement,
+      !this.formField ? this.origin : this.formfieldWrapper,
       () => this.container(),
       this.trigger,
       this.formField,

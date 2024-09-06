@@ -171,11 +171,6 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
   show$ = merge(
     fromEvent<Event>(this.host, 'focus'),
     fromEvent<Event>(this.host, 'click'),
-    fromEvent<Event>(this.document, 'click').pipe(
-      filter(
-        (event) => this.formField && this.formField.elementRef.nativeElement.contains(event.target as HTMLElement),
-      ),
-    ),
     fromEvent<Event>(this.host, 'keydown'),
   ).pipe(takeWhile(() => this.alive));
 
