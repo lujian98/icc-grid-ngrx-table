@@ -13,6 +13,7 @@
       (blur)="onBlur()"
       [iccAutocomplete]="autocomplete"
       [iccAutocompleteClose]="autocompleteClose"
+      placeholder="{{ placeholder }}"
     />
     <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
     <icc-icon icon="angle-down" iccSuffix [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"></icc-icon>

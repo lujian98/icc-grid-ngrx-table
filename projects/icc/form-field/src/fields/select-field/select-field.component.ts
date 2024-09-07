@@ -62,6 +62,7 @@ export class SelectFieldComponent<T> {
   @Input() selectOnly: boolean = false;
   @Input() fieldLabel: string | undefined;
   @Input() title: string = 'title';
+  @Input() placeholder: string = '';
 
   @Input()
   set name(val: string) {

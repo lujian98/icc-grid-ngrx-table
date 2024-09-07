@@ -5,7 +5,6 @@ import { SelectFieldComponent } from '@icc/ui/form-field';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
-import { State, STATES } from './states';
 
 @Component({
   selector: 'icc-select-filter',
@@ -17,7 +16,6 @@ import { State, STATES } from './states';
 })
 export class IccSelectFilterComponent {
   private gridFacade = inject(IccGridFacade);
-  states = STATES;
   //private _gridName!: string;
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
