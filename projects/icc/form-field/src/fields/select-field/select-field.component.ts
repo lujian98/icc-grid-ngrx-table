@@ -107,7 +107,8 @@ export class SelectFieldComponent<T> {
   }
 
   get hasValue(): boolean {
-    return this.multiSelection ? this.selectedField.value.length > 0 : !!this.selectedField.value;
+    const value = this.selectedField.value;
+    return value instanceof Array ? value.length > 0 : !!value;
   }
 
   get filterValue(): string {
