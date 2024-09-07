@@ -33,7 +33,7 @@ export class AppGridTest2Component {
     ], // { title: 'BMW', name: 'BMW' }
     columnFilters: [
       { name: 'vin', value: '9' },
-      { name: 'brand', value: [{ title: 'BMW', name: 'BMW' }] },
+      { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
     ],
     rowSelection: true,
   };
@@ -49,7 +49,9 @@ export class AppGridTest2Component {
     },
     {
       name: 'brand',
+      title: 'this s s     sssssssssssssssssss sssssssssssssss',
       filterField: 'select',
+      width: 50,
     },
     {
       name: 'year',
