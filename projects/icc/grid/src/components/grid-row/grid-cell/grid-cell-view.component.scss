@@ -1,34 +1,13 @@
 :host {
   display: flex;
-  flex: 1;
-  //position: relative;
-  //table-layout: fixed;
   width: 100%;
-  /*
-  :before {
-    content: ' ';
-    visibility: hidden;
-  }*/
 
   .grid-cell {
-    display: flex;
+    //display: flex;
     align-items: center;
-
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow-x: hidden;
     white-space: nowrap;
-
-    //white-space: nowrap;
-    //overflow-x: hidden;
-    //text-overflow: ellipsis;
-    // text-wrap:;
-    /*
-    position: absolute;
-    left: 0;
-    right: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;*/
   }
 
   &.grid-cell-view-align-center {
