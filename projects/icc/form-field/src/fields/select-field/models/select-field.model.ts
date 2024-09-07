@@ -1,6 +1,7 @@
 export interface IccSelectFieldConfig {
   fieldName: string;
   urlKey?: string; // Only for remote. if not defined, use gridName
+  fieldLabel?: string;
   selectOnly: boolean; // false select, true autocomplete
   multiSelection: boolean;
   value: any; //array???
@@ -11,6 +12,6 @@ export interface IccSelectFieldConfig {
 }
 
 export interface IccSelectFieldState<T extends object = object> {
-  selectFieldConfig: IccSelectFieldConfig;
+  fieldConfig: IccSelectFieldConfig;
   data: T[];
 }

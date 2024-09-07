@@ -10,6 +10,10 @@ export const iccSelectFieldFeature = createFeature({
   name: 'iccSelectField',
   reducer: createReducer(
     initialState,
+    on(selectFieldActions.setupFieldConfig, (state, { fieldConfig }) => ({
+      ...state,
+      fieldConfig,
+    })),
     /*
     on(selectfieldActions.setupSelectFieldConfigSuccess, (state, action) => {
       const key = action.selectfieldName;

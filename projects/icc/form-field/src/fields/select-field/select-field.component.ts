@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
@@ -25,6 +26,10 @@ import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
 import { IccInputDirective } from '../../input/input.directive';
+import { IccSelectFieldStateModule } from './+state/select-field-state.module';
+import { IccSelectFieldFacade } from './+state/select-field.facade';
+import { defaultSelectFieldConfig } from './models/default-select-field';
+import { IccSelectFieldConfig } from './models/select-field.model';
 
 @Component({
   selector: 'icc-select-field',
@@ -36,6 +41,7 @@ import { IccInputDirective } from '../../input/input.directive';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    IccSelectFieldStateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
@@ -52,10 +58,25 @@ import { IccInputDirective } from '../../input/input.directive';
 })
 export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private selectFieldFacade = inject(IccSelectFieldFacade);
+  private _selectFieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
+
+  //fieldConfig$!: Observable<IccSelectFieldConfig>;
+  fieldConfig$ = this.selectFieldFacade.selectFieldConfig$;
   private _value!: { [key: string]: T };
   private _fieldName: string = '';
   private _multiSelection: boolean = false;
   form!: FormGroup;
+
+  @Input()
+  set selectFieldConfig(value: IccSelectFieldConfig) {
+    this._selectFieldConfig = value;
+    // this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig();
+    this.selectFieldFacade.setupFieldConfig(value);
+  }
+  get selectFieldConfig(): IccSelectFieldConfig {
+    return this._selectFieldConfig;
+  }
 
   @Input() selectOnly: boolean = false;
   @Input() fieldLabel: string | undefined;

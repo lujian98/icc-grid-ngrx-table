@@ -12,6 +12,6 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {
-  selectFieldConfig: defaultSelectFieldConfig,
+  fieldConfig: defaultSelectFieldConfig,
   data: [],
 };

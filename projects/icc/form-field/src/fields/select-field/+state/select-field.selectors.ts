@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-//import { IccSelectFieldState } from '../models/selectfield-column.model';
-//import { defaultState } from '../models/default-selectfield';
+//const featureSelector = createFeatureSelector('iccSelectField');
+import { iccSelectFieldFeature } from './select-field.reducer';
 
-const featureSelector = createFeatureSelector('iccSelectField');
+export const { selectFieldConfig, selectData } = iccSelectFieldFeature;
