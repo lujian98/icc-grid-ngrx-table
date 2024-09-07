@@ -22,8 +22,13 @@ export class IccSelectFilter<T> extends IccFilter {
 
   // since the set search can only call at parent, the choices need to set when call
   get choices(): any[] {
-    console.log(' this.search=', this.search);
-    this._choices = this.search ? this.search.split(',') : [];
+    console.log(' 2222 this.search=', this.search);
+    if (this.search instanceof Array) {
+      this._choices = this.search.map((item) => item.value);
+    } else {
+      this._choices = [];
+    }
+    console.log(' 2222 this._choices=', this._choices);
     return this._choices;
   }
 

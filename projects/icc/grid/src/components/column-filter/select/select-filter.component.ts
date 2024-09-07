@@ -77,7 +77,7 @@ export class IccSelectFilterComponent {
 
   onSelectionChange<T>(value: any): void {
     console.log(' filtr select change options=', value);
-    this.applyFilter(value.label);
+    this.applyFilter([value]);
   }
 
   private applyFilter(filterValue: any): void {

@@ -6,7 +6,7 @@ export abstract class IccFilter {
   private _field!: string;
   private _type!: string;
   private _enabled!: boolean;
-  protected _search!: string;
+  protected _search!: any;
 
   set column(val: IccColumnConfig) {
     this._column = val;
@@ -48,11 +48,11 @@ export abstract class IccFilter {
     return this._enabled;
   }
 
-  set search(val: string) {
+  set search(val: any) {
     this._search = val;
   }
 
-  get search(): string {
+  get search(): any {
     return this._search;
   }
 
