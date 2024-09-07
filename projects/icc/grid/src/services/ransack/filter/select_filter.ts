@@ -16,14 +16,13 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
   }
 
   getParams(): T[] {
-    console.log(' eeeeeeeeeeee 111 select get params');
     const choices = this.filter.choices;
     const params: T[] = [];
-    console.log(' 2222 choices=', choices);
+    //console.log(' 2222 choices=', choices);
     if (choices.length > 0) {
       const column = this.filter.column;
       const key = this.filter.field + (this.filter.multiSelect ? '_in[]' : '_in');
-      console.log(' 2222 key=', key);
+      //console.log(' 2222 key=', key);
       choices.forEach((value) => {
         const p: { [index: string]: any } = {};
         const val = value;

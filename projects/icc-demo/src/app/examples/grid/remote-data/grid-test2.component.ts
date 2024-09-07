@@ -21,7 +21,7 @@ export class AppGridTest2Component {
     columnReorder: true,
     columnMenu: true,
     columnHidden: true,
-    page: 5,
+    //page: 5,
 
     remoteColumnsConfig: false,
     remoteGridData: true,
@@ -30,8 +30,11 @@ export class AppGridTest2Component {
         field: 'ID',
         dir: 'asc',
       },
+    ], // { title: 'BMW', name: 'BMW' }
+    columnFilters: [
+      { name: 'vin', value: '9' },
+      { name: 'brand', value: [{ title: 'BMW', name: 'BMW' }] },
     ],
-    columnFilters: [],
     rowSelection: true,
   };
 

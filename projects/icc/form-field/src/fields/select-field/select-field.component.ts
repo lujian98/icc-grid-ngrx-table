@@ -53,24 +53,27 @@ import { IccInputDirective } from '../../input/input.directive';
 export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _value!: { [key: string]: T };
-  private _optionId: string = '';
+  private _name: string = 'name';
   private _multiSelection: boolean = false;
-  form: FormGroup | null = null;
+  form: FormGroup = new FormGroup({
+    [this.name]: new FormControl<{ [key: string]: T }>({}),
+  });
 
   @Input() selectOnly: boolean = false;
   @Input() fieldLabel: string | undefined;
-  @Input() optionLabel!: string;
+  @Input() title: string = 'title';
 
   @Input()
-  set optionId(val: string) {
-    this._optionId = val;
+  set name(val: string) {
+    this._name = val;
+    //TODO remove default
     this.form = new FormGroup({
-      [this.optionId]: new FormControl<{ [key: string]: T }>({}),
+      [this.name]: new FormControl<{ [key: string]: T }>({}),
     });
   }
 
-  get optionId(): string {
-    return this._optionId;
+  get name(): string {
+    return this._name;
   }
 
   @Input() options: { [key: string]: T }[] = [];
@@ -93,12 +96,13 @@ export class SelectFieldComponent<T> {
     this._multiSelection = coerceBooleanProperty(val);
   }
 
-  @Output() selectionChange = new EventEmitter<{ [key: string]: T } | ({ [key: string]: T } | string)[]>(true);
+  @Output() selectionChange = new EventEmitter<any[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
   get selectedField(): AbstractControl {
-    return this.form!.get(this.optionId)!;
+    //console.log( 'this.name=', this.name)
+    return this.form!.get(this.name)!;
   }
 
   get hasValue(): boolean {
@@ -122,17 +126,17 @@ export class SelectFieldComponent<T> {
     if (Array.isArray(value)) {
       return value.length > 0
         ? value
-            .map((item) => item[this.optionLabel])
+            .map((item) => item[this.title])
             .sort((a, b) => a.localeCompare(b))
             .join(', ')
         : '';
     } else {
-      return value ? value[this.optionLabel] : '';
+      return value ? value[this.title] : '';
     }
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    return s1 && s2 ? s1[this.optionId] === s2[this.optionId] : s1 === s2;
+    return s1 && s2 ? s1[this.name] === s2[this.name] : s1 === s2;
   }
 
   overlayOpen(event: boolean): void {
@@ -143,9 +147,9 @@ export class SelectFieldComponent<T> {
     }
   }
 
-  onChange(options: { [key: string]: T } | ({ [key: string]: T } | string)[]): void {
-    //console.log( ' options=', options)
-    this.selectionChange.emit(options);
+  onChange(options: any): void {
+    // console.log( 'qqqqqqqqqqqqqqq options=', options)
+    this.selectionChange.emit([options]);
   }
 
   onBlur(): void {}
@@ -161,5 +165,7 @@ export class SelectFieldComponent<T> {
       this.selectedField.setValue('');
     }
     this.changeDetectorRef.markForCheck();
+
+    this.selectionChange.emit([]);
   }
 }

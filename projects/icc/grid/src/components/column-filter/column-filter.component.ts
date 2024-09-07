@@ -41,7 +41,7 @@ export class IccColumnFilterComponent implements OnInit {
   }
 
   private loadComponent(): void {
-    console.log(' this.column=', this.column);
+    //console.log(' this.column=', this.column);
     const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
     // TODO if pass this.column.component  to dynamic components
     const cellComponent = this.componentMapper[filterType]; //IccTextFilterComponent;

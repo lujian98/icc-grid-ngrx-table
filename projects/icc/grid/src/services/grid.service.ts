@@ -78,7 +78,7 @@ export class IccGridService {
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
     //console.log(' service getGridData gridConfig =', gridConfig);
-    console.log(' params =', params);
+    //console.log(' params =', params);
     const urlKey = gridConfig.urlKey || gridConfig.gridName;
     return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
       map((res) => {
@@ -89,7 +89,7 @@ export class IccGridService {
   }
 
   appendFilterHttpParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[], params: HttpParams): HttpParams {
-    console.log(' gridConfig.columnFilters=', columnFilters, ' columns=', columns);
+    //console.log(' 888888888 gridConfig.columnFilters=', columnFilters, ' columns=', columns);
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
     columnFilters.forEach((col) => {

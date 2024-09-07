@@ -62,7 +62,7 @@ export type SunFilterField = boolean | string;
 export interface IccColumnFilter {
   name: string;
   //type: string;
-  value: string | number | boolean; // string[] | number[];
+  value: any; //string | number | boolean; // string[] | number[];
 }
 
 export type fieldType = 'text' | 'number' | 'select';

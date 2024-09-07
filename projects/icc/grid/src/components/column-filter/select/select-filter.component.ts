@@ -26,19 +26,19 @@ export class IccSelectFilterComponent {
   filterPlaceholder: string = 'Filter ...';
 
   options = [
-    { label: '', value: '' },
-    { label: 'Audi', value: 'Audi' },
-    { label: 'BMW', value: 'BMW' },
-    { label: 'Mercedes', value: 'Mercedes' },
-    { label: 'Renault', value: 'Renault' },
-    { label: 'Volvo', value: 'Volvo' },
-    { label: 'Fiat', value: 'Fiat' },
-    { label: 'Chrysler', value: 'Chrysler' },
-    { label: 'Ford', value: 'Ford' },
-    { label: 'GM', value: 'GM' },
-    { label: 'Honda', value: 'Honda' },
-    { label: 'Jaguar', value: 'Jaguar' },
-    { label: 'VW', value: 'VW' },
+    { title: '', name: '' },
+    { title: 'Audi', name: 'Audi' },
+    { title: 'BMW', name: 'BMW' },
+    { title: 'Mercedes', name: 'Mercedes' },
+    { title: 'Renault', name: 'Renault' },
+    { title: 'Volvo', name: 'Volvo' },
+    { title: 'Fiat', name: 'Fiat' },
+    { title: 'Chrysler', name: 'Chrysler' },
+    { title: 'Ford', name: 'Ford' },
+    { title: 'GM', name: 'GM' },
+    { title: 'Honda', name: 'Honda' },
+    { title: 'Jaguar', name: 'Jaguar' },
+    { title: 'VW', name: 'VW' },
   ];
   @Input()
   set gridConfig(value: IccGridConfig) {
@@ -46,7 +46,7 @@ export class IccSelectFilterComponent {
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
-      //this.value = find.value;
+      this.value = find.value;
     }
   }
   get gridConfig(): IccGridConfig {
@@ -76,8 +76,8 @@ export class IccSelectFilterComponent {
   */
 
   onSelectionChange<T>(value: any): void {
-    console.log(' filtr select change options=', value);
-    this.applyFilter([value]);
+    //console.log(' filtr select change options=', value);
+    this.applyFilter(value);
   }
 
   private applyFilter(filterValue: any): void {
