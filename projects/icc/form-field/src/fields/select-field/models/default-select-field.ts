@@ -5,7 +5,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   selectOnly: false, // false select, true autocomplete
   multiSelection: false,
   value: undefined,
-  options: [],
+  //options: [],
   optionLabel: 'name',
   optionKey: 'title',
   placeholder: '',
@@ -13,5 +13,5 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
 
 export const defaultSelectFieldState: IccSelectFieldState = {
   fieldConfig: defaultSelectFieldConfig,
-  data: [],
+  options: [],
 };

@@ -5,7 +5,7 @@ export interface IccSelectFieldConfig {
   selectOnly: boolean; // false select, true autocomplete
   multiSelection: boolean;
   value: any; //array???
-  options: any[];
+  //options: any[];
   optionLabel: string;
   optionKey: string;
   placeholder: string;
@@ -13,5 +13,5 @@ export interface IccSelectFieldConfig {
 
 export interface IccSelectFieldState<T extends object = object> {
   fieldConfig: IccSelectFieldConfig;
-  data: T[];
+  options: T[];
 }
