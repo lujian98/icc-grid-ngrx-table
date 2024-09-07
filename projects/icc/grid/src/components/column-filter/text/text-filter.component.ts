@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
+import { TextFieldComponent } from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-text-filter',
@@ -11,7 +12,7 @@ import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.mode
   styleUrls: ['text-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TextFieldComponent],
 })
 export class IccTextFilterComponent {
   private gridFacade = inject(IccGridFacade);
@@ -57,10 +58,11 @@ export class IccTextFilterComponent {
   }
   */
 
-  applyFilter(event: KeyboardEvent) {
-    // @ts-ignore
-    const filterValue: T = event.target.value;
-    event.stopPropagation();
+  onValueChange(value: string): void {
+    this.applyFilter(value);
+  }
+
+  private applyFilter(filterValue: string) {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 

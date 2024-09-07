@@ -5,9 +5,10 @@
     </icc-label>
     <input
       iccInput
+      type="text"
       autocomplete="off"
       [readonly]="selectOnly"
-      [formControlName]="name"
+      [formControlName]="fieldName"
       (isOverlayOpen)="overlayOpen($event)"
       (change)="onChange($event)"
       (blur)="onBlur()"
@@ -25,9 +26,9 @@
       [compareWith]="compareFn.bind(this)"
     >
       <ng-template iccAutocompleteContent>
-        <ng-container *ngIf="options | filter: selectedField.value : title as result">
+        <ng-container *ngIf="options | filter: selectedField.value : optionLabel as result">
           <icc-option *ngFor="let option of result" [value]="option" #ref>
-            <icc-filter-highlight [value]="option[title]" [filterValue]="filterValue"> </icc-filter-highlight>
+            <icc-filter-highlight [value]="option[optionLabel]" [filterValue]="filterValue"> </icc-filter-highlight>
           </icc-option>
           <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
         </ng-container>

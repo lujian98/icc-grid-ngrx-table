@@ -2,21 +2,11 @@
   icc-icon {
     padding-left: 5px;
     font-size: 12px;
+    cursor: pointer;
   }
 
   input {
     width: 100%;
     text-overflow: ellipsis;
-  }
-}
-
-.app-select-option-divider {
-  display: block;
-  padding: 0rem 0.625rem;
-  .app-select-option-checkbox {
-    display: flex;
-  }
-  .icc-dropdown-divider {
-    margin: 0px;
   }
 }

@@ -8,3 +8,4 @@ export * from './src/form-field-control';
 
 export * from './src/input/input.directive';
 export * from './src/fields/select-field/select-field.component';
+export * from './src/fields/text-field/text-field.component';

@@ -4,11 +4,8 @@
   height: 30px; //TODO move to theme?
   align-items: center;
 
-  .icc-text-filter {
-    display: flex;
+  icc-text-field {
     width: 100%;
-    padding: 0 10px;
-
     input {
       width: 100%;
     }

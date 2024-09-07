@@ -53,28 +53,27 @@ import { IccInputDirective } from '../../input/input.directive';
 export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _value!: { [key: string]: T };
-  private _name: string = 'name';
+  private _fieldName: string = '';
   private _multiSelection: boolean = false;
-  form: FormGroup = new FormGroup({
-    [this.name]: new FormControl<{ [key: string]: T }>({}),
-  });
+  form!: FormGroup;
 
   @Input() selectOnly: boolean = false;
   @Input() fieldLabel: string | undefined;
-  @Input() title: string = 'title';
+
+  @Input() optionKey: string = 'name';
+  @Input() optionLabel: string = 'title';
   @Input() placeholder: string = '';
 
   @Input()
-  set name(val: string) {
-    this._name = val;
-    //TODO remove default
+  set fieldName(val: string) {
+    this._fieldName = val;
     this.form = new FormGroup({
-      [this.name]: new FormControl<{ [key: string]: T }>({}),
+      [this.fieldName]: new FormControl<{ [key: string]: T }>({}),
     });
   }
 
-  get name(): string {
-    return this._name;
+  get fieldName(): string {
+    return this._fieldName;
   }
 
   @Input() options: { [key: string]: T }[] = [];
@@ -102,8 +101,7 @@ export class SelectFieldComponent<T> {
   autocompleteClose!: boolean;
 
   get selectedField(): AbstractControl {
-    //console.log( 'this.name=', this.name)
-    return this.form!.get(this.name)!;
+    return this.form!.get(this.fieldName)!;
   }
 
   get hasValue(): boolean {
@@ -128,17 +126,17 @@ export class SelectFieldComponent<T> {
     if (Array.isArray(value)) {
       return value.length > 0
         ? value
-            .map((item) => item[this.title])
+            .map((item) => item[this.optionLabel])
             .sort((a, b) => a.localeCompare(b))
             .join(', ')
         : '';
     } else {
-      return value ? value[this.title] : '';
+      return value ? value[this.optionLabel] : '';
     }
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    return s1 && s2 ? s1[this.name] === s2[this.name] : s1 === s2;
+    return s1 && s2 ? s1[this.optionKey] === s2[this.optionKey] : s1 === s2;
   }
 
   overlayOpen(event: boolean): void {
