@@ -1,8 +1,18 @@
 @mixin icc-form-field-theme() {
-  .unpadded-form-field .icc-form-field {
-    padding-left: 0;
+  icc-form-field {
+    .unpadded-form-field .icc-form-field {
+      padding-left: 0;
+    }
+
+    .icc-form-field-container {
+      margin-bottom: 2px;
+      border-bottom: 1px solid;
+      border-color: icc-theme(color-primary-default);
+      background-color: icc-theme(icc-grid-row-hover-background-color);
+    }
   }
 
+  /*
   .icc-form-field-suffix {
     border-bottom-width: 1px;
     border-color: icc-theme(form-field-input-border-color);
@@ -11,10 +21,10 @@
   .icc-form-field-suffix-focus {
     background-color: icc-theme(form-field-focus-bkg-color);
     border-color: icc-theme(form-field-focus-border-color);
-  }
+  }*/
 
   icc-error {
-    color: icc-theme(text-danger-color);
+    // color: icc-theme(text-danger-color);
     icc-icon {
       padding-right: 0.375rem;
     }

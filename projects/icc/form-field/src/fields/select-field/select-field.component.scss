@@ -20,3 +20,7 @@
     margin: 0px;
   }
 }
+
+::ng-deep .cdk-overlay-pane {
+  min-height: 320px;
+}
