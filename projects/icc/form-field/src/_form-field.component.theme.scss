@@ -7,12 +7,15 @@
     .icc-form-field-container {
       margin-bottom: 2px;
       border-bottom: 1px solid;
-      border-color: icc-theme(color-primary-default);
-      background-color: icc-theme(icc-grid-row-hover-background-color);
+      border-color: icc-theme(checkbox-hover-border-color);
+      //background-color: icc-theme(icc-grid-row-hover-background-color);
     }
   }
 
   /*
+
+        border-color: icc-theme(color-primary-default);
+
   .icc-form-field-suffix {
     border-bottom-width: 1px;
     border-color: icc-theme(form-field-input-border-color);
