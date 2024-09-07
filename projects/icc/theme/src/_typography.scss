@@ -12,7 +12,7 @@ icc-layout,
 
 // ::ng-deep
 .cdk-overlay-pane {
-  // min-height: 320px;
+  height: auto !important;
 }
 
 fieldset {
