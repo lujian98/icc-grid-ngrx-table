@@ -3,19 +3,8 @@
     Top Nav Bar
     <div (click)="toggleTheme()">Toggle Theme</div>
     <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
-    <!--
 
-
-    <icc-select-field
-      fieldName="test"
-      [selectOnly]="false"
-      [multiSelection]="false"
-      [value]="states[16]"
-      [options]="states"
-      optionLabel="state"
-      optionKey="abbr"
-    ></icc-select-field>
-        -->
+    <icc-select-field [fieldConfig]="fieldConfig" [value]="states[16]" [options]="states"></icc-select-field>
   </icc-layout-header>
 
   <icc-layout-sidebar>

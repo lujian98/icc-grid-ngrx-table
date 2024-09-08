@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccAccordion } from '@icc/ui/accordion';
 import { IccThemeService } from '@icc/ui/theme';
+import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
 import { State, STATES } from './data/states';
 
 @Component({
@@ -12,6 +13,11 @@ export class AppComponent {
   private themeService = inject(IccThemeService);
   title = 'icc-demo';
   states = STATES;
+  fieldConfig: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    optionLabel: 'state',
+    optionKey: 'abbr',
+  };
 
   items: IccAccordion[] = [
     {
