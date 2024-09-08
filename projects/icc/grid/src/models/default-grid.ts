@@ -1,7 +1,8 @@
 import { IccGridConfig, GridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
-  gridName: 'icc-grid',
+  gridId: '191cf2bb6b8', // auto generated unique id
+  urlKey: 'grid', // Only for remote grid config and data
   columnSort: false,
   columnFilter: false,
   columnResize: false,

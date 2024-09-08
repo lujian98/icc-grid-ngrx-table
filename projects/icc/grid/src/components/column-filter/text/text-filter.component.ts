@@ -16,7 +16,7 @@ import { TextFieldComponent } from '@icc/ui/form-field';
 })
 export class IccTextFilterComponent {
   private gridFacade = inject(IccGridFacade);
-  //private _gridName!: string;
+  //private _gridId!: string;
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
   //gridConfig$!: Observable<IccGridConfig>;
@@ -45,16 +45,16 @@ export class IccTextFilterComponent {
 
   /*
   @Input()
-  set gridName(value: string) {
-    this._gridName = value;
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
+  set gridId(value: string) {
+    this._gridId = value;
+    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
   }
-  get gridName(): string {
-    return this._gridName;
+  get gridId(): string {
+    return this._gridId;
   }
-    setGridColumnFilters(gridName: string, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridName, columnFilters }));
-    //this.getGridData(gridName);
+    setGridColumnFilters(gridId: string, columnFilters: IccColumnFilter[]): void {
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, columnFilters }));
+    //this.getGridData(gridId);
   }
   */
 
@@ -76,6 +76,6 @@ export class IccTextFilterComponent {
         value: this.value,
       });
     }
-    this.gridFacade.setGridColumnFilters(this.gridConfig.gridName, columnFilters);
+    this.gridFacade.setGridColumnFilters(this.gridConfig.gridId, columnFilters);
   }
 }

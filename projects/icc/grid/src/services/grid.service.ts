@@ -19,7 +19,7 @@ import { CARSDATA3 } from '../spec-helpers/cars-large';
 export class IccGridService {
   private http = inject(HttpClient);
 
-  getGridConfig(gridName: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
+  getGridConfig(gridId: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig)
     return of(gridConfig);
     /*
@@ -29,8 +29,8 @@ export class IccGridService {
       */
   }
 
-  getGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    console.log(' get remote service columnConfig =', gridName);
+  getGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
+    console.log(' get remote service columnConfig =', gridId);
     const config: IccColumnConfig[] = [
       {
         name: 'ID',
@@ -79,7 +79,7 @@ export class IccGridService {
     params = params.append('limit', limit.toString());
     //console.log(' service getGridData gridConfig =', gridConfig);
     //console.log(' params =', params);
-    const urlKey = gridConfig.urlKey || gridConfig.gridName;
+    const urlKey = gridConfig.urlKey;
     return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
       map((res) => {
         console.log(' res=', res);

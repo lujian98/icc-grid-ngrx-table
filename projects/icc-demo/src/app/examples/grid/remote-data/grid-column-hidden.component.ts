@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridColumnHiddenComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR7',
     urlKey: 'DCR',
     columnMenu: true,
     columnSort: true,

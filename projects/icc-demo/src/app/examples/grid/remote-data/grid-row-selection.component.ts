@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridRowSelectionComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR9',
     urlKey: 'DCR',
     rowSelection: true,
     columnMenu: true,

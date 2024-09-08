@@ -73,7 +73,7 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   getGridPageData(page: number): void {
-    this.gridFacade.getGridPageData(this.gridConfig.gridName, page);
+    this.gridFacade.getGridPageData(this.gridConfig.gridId, page);
   }
 
   valueChanged(event: any): void {

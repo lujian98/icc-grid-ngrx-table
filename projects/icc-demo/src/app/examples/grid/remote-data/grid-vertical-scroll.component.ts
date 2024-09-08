@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridVerticalScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR11',
     urlKey: 'DCR',
     verticalScroll: true,
     pageSize: 50,

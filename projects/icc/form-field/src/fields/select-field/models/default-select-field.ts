@@ -1,8 +1,9 @@
 import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model';
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
-  fieldId: '191cf2bb6b5',
-  fieldName: 'icc-select',
+  fieldId: '191cf2bb6b5', // auto generated unique id
+  fieldName: 'selectfield', // form field name need set
+  urlKey: 'select', // Only for remote field config and options
   fieldLabel: undefined,
   remoteOptions: false,
   selectOnly: false, // false select, true autocomplete

@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridPageComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR10',
     urlKey: 'DCR',
     page: 5,
     columnMenu: true,

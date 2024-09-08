@@ -19,66 +19,66 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
-  setupGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridName, columnsConfig }));
+  setupGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridId, columnsConfig }));
   }
 
-  setGridColumnsConfig(gridName: string, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridName, columnsConfig }));
+  setGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridId, columnsConfig }));
   }
 
-  setViewportPageSize(gridName: string, pageSize: number, viewportWidth: number): void {
-    this.store.dispatch(gridActions.setViewportPageSize({ gridName, pageSize, viewportWidth }));
+  setViewportPageSize(gridId: string, pageSize: number, viewportWidth: number): void {
+    this.store.dispatch(gridActions.setViewportPageSize({ gridId, pageSize, viewportWidth }));
   }
 
-  setGridSortFields(gridName: string, sortFields: IccSortField[]): void {
-    this.store.dispatch(gridActions.setGridSortFields({ gridName, sortFields }));
-    this.getGridData(gridName);
+  setGridSortFields(gridId: string, sortFields: IccSortField[]): void {
+    this.store.dispatch(gridActions.setGridSortFields({ gridId, sortFields }));
+    this.getGridData(gridId);
   }
 
-  setGridColumnFilters(gridName: string, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridName, columnFilters }));
-    this.getGridData(gridName);
+  setGridColumnFilters(gridId: string, columnFilters: IccColumnFilter[]): void {
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, columnFilters }));
+    this.getGridData(gridId);
   }
 
-  setGridColumnConfig(gridName: string, columnsConfig: IccColumnConfig): void {
-    this.store.dispatch(gridActions.setGridColumnsConfig({ gridName, columnsConfig }));
+  setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnsConfig({ gridId, columnsConfig }));
   }
 
-  getGridPageData(gridName: string, page: number): void {
-    this.store.dispatch(gridActions.setViewportPage({ gridName, page }));
-    this.getGridData(gridName);
+  getGridPageData(gridId: string, page: number): void {
+    this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
+    this.getGridData(gridId);
   }
 
-  getGridData(gridName: string): void {
-    this.store.dispatch(gridActions.getGridData({ gridName }));
+  getGridData(gridId: string): void {
+    this.store.dispatch(gridActions.getGridData({ gridId }));
   }
 
-  setGridData(gridName: string, gridData: IccGridData<any>): void {
-    this.store.dispatch(gridActions.getGridDataSuccess({ gridName, gridData }));
+  setGridData(gridId: string, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.getGridDataSuccess({ gridId, gridData }));
   }
 
-  setGridInMemoryData(gridName: string, gridData: IccGridData<any>): void {
-    this.store.dispatch(gridActions.setGridInMemoryData({ gridName, gridData }));
+  setGridInMemoryData(gridId: string, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.setGridInMemoryData({ gridId, gridData }));
   }
 
-  clearGridDataStore(gridName: string): void {
-    this.store.dispatch(gridActions.clearGridDataStore({ gridName }));
+  clearGridDataStore(gridId: string): void {
+    this.store.dispatch(gridActions.clearGridDataStore({ gridId }));
   }
 
-  selectGridConfig(gridName: string): Observable<IccGridConfig> {
-    return this.store.select(selectGridConfig(gridName));
+  selectGridConfig(gridId: string): Observable<IccGridConfig> {
+    return this.store.select(selectGridConfig(gridId));
   }
 
-  selectColumnsConfig(gridName: string): Observable<IccColumnConfig[]> {
-    return this.store.select(selectColumnsConfig(gridName));
+  selectColumnsConfig(gridId: string): Observable<IccColumnConfig[]> {
+    return this.store.select(selectColumnsConfig(gridId));
   }
 
-  selectGridData(gridName: string): Observable<any[]> {
-    return this.store.select(selectGridData(gridName));
+  selectGridData(gridId: string): Observable<any[]> {
+    return this.store.select(selectGridData(gridId));
   }
 
-  selectGridInMemoryData(gridName: string): Observable<any[]> {
-    return this.store.select(selectGridInMemoryData(gridName));
+  selectGridInMemoryData(gridId: string): Observable<any[]> {
+    return this.store.select(selectGridInMemoryData(gridId));
   }
 }

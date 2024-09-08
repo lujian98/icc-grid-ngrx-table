@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridColumnResizeComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR4',
     urlKey: 'DCR',
     columnResize: true,
     remoteGridData: true,

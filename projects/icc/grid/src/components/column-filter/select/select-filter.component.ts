@@ -66,6 +66,6 @@ export class IccSelectFilterComponent {
         value: this.value,
       });
     }
-    this.gridFacade.setGridColumnFilters(this.gridConfig.gridName, columnFilters);
+    this.gridFacade.setGridColumnFilters(this.gridConfig.gridId, columnFilters);
   }
 }

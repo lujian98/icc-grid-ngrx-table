@@ -21,19 +21,19 @@ export class IccGridComponent<T> implements OnDestroy {
   private _gridConfig: IccGridConfig = defaultGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
-  private gridName = Date.now().toString(16);
+  private gridId = Date.now().toString(16);
   gridConfig$!: Observable<IccGridConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    //console.log( ' kkkkkkkk grid config = this.gridName', this.gridName)
+    //console.log( ' kkkkkkkk grid config = this.gridId', this.gridId)
     this._gridConfig = {
       ...value,
-      gridName: this.gridName,
+      gridId: this.gridId,
     };
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridName);
+    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
+    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
     this.gridFacade.setupGridConfig(this.gridConfig);
   }
   get gridConfig(): IccGridConfig {
@@ -44,7 +44,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.gridName, this.columnsConfig);
+      this.gridFacade.setGridColumnsConfig(this.gridId, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {
@@ -55,7 +55,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set gridData(val: IccGridData<T>) {
     this._gridData = val;
     if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridName, this.gridData);
+      this.gridFacade.setGridInMemoryData(this.gridId, this.gridData);
     }
   }
   get gridData(): IccGridData<T> {
@@ -64,13 +64,13 @@ export class IccGridComponent<T> implements OnDestroy {
 
   refresh(): void {
     if (this.gridConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(this.gridName, 1);
+      this.gridFacade.getGridPageData(this.gridId, 1);
     } else {
-      this.gridFacade.getGridData(this.gridName);
+      this.gridFacade.getGridData(this.gridId);
     }
   }
 
   ngOnDestroy(): void {
-    this.gridFacade.clearGridDataStore(this.gridName);
+    this.gridFacade.clearGridDataStore(this.gridId);
   }
 }

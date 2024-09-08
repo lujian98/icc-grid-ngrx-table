@@ -51,14 +51,14 @@ export class IccGridHeaderCellComponent {
           dir: 'asc',
         };
       }
-      this.gridFacade.setGridSortFields(this.gridConfig.gridName, [sort]);
+      this.gridFacade.setGridSortFields(this.gridConfig.gridId, [sort]);
     }
   }
 
   onClickColumnMenu(event: MouseEvent): void {
     const fakeElement = this.getFakeElement(event);
     const popoverContext = {
-      gridName: this.gridConfig.gridName,
+      gridId: this.gridConfig.gridId,
       column: this.column,
     };
     this.buildPopover(fakeElement, popoverContext);

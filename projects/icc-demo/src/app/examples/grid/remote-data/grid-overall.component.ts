@@ -13,7 +13,6 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid
 export class AppGridOverallComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR14',
     urlKey: 'DCR',
     columnSort: true,
     columnFilter: true,

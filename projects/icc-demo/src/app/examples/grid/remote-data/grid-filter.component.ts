@@ -13,7 +13,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridFilterComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR3',
     urlKey: 'DCR',
     columnFilter: true,
     columnFilters: [{ name: 'vin', value: '9' }],

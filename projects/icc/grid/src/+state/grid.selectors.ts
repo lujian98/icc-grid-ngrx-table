@@ -4,38 +4,38 @@ import { defaultState } from '../models/default-grid';
 
 const featureSelector = createFeatureSelector('iccGrid');
 
-export const selectGridConfig = (gridName: string) =>
+export const selectGridConfig = (gridId: string) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: IccGridState) => {
-      return state[gridName] ? state[gridName].gridConfig : defaultState.gridConfig;
+      return state[gridId] ? state[gridId].gridConfig : defaultState.gridConfig;
     },
   );
 
-export const selectColumnsConfig = (gridName: string) =>
+export const selectColumnsConfig = (gridId: string) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: IccGridState) => {
-      return state[gridName] ? state[gridName].columnsConfig : [];
+      return state[gridId] ? state[gridId].columnsConfig : [];
     },
   );
 
-export const selectGridData = (gridName: string) =>
+export const selectGridData = (gridId: string) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: IccGridState) => {
-      return state[gridName] ? state[gridName].data : [];
+      return state[gridId] ? state[gridId].data : [];
     },
   );
 
-export const selectGridInMemoryData = (gridName: string) =>
+export const selectGridInMemoryData = (gridId: string) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: IccGridState) => {
-      return state[gridName] ? state[gridName].inMemoryData : [];
+      return state[gridId] ? state[gridId].inMemoryData : [];
     },
   );

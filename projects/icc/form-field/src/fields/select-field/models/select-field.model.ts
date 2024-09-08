@@ -1,7 +1,7 @@
 export interface IccSelectFieldConfig {
   fieldId: string; // auto generated unique id
   fieldName: string;
-  urlKey?: string; // Only for remote. if not defined, use gridName
+  urlKey: string; // Only for remote field config and options
   fieldLabel?: string;
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete

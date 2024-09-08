@@ -14,7 +14,6 @@ import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
 export class AppGridinMemoryTestComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'INM12',
     columnSort: true,
     columnFilter: true,
     columnResize: true,

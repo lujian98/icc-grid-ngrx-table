@@ -13,7 +13,6 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } f
 export class AppGridTest2Component {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR2',
     urlKey: 'DCR',
     columnSort: true,
     columnFilter: true,

@@ -13,7 +13,6 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid
 export class AppGridRemoteVirtualScrollComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'INM13',
     urlKey: 'DCR',
     columnSort: true,
     columnFilter: true,

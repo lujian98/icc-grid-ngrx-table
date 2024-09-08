@@ -13,7 +13,6 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid
 export class AppGridRemoteColumnConfigComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    gridName: 'DCR8',
     urlKey: 'DCR',
     remoteColumnsConfig: true,
     columnMenu: true,

@@ -56,9 +56,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this._gridConfig = val;
     if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
-      this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridName, []);
+      this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridId, []);
     }
-    this.gridData$ = this.gridFacade.selectGridData(val.gridName);
+    this.gridData$ = this.gridFacade.selectGridData(val.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -112,8 +112,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const fitPageSize = Math.floor(clientHeight / 24);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.gridConfig.gridName, pageSize, clientWidth);
-    this.gridFacade.getGridData(this.gridConfig.gridName);
+    this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
+    this.gridFacade.getGridData(this.gridConfig.gridId);
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
@@ -130,7 +130,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       width: columnWidths[index].width / widthRatio,
     }));
     this.setColumWidths(columnWidths, widthRatio);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridId, columns);
   }
 
   onColumnDragDrop(events: DragDropEvent): void {
@@ -138,7 +138,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const currentIndex = this.indexCorrection(events.currentIndex);
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridName, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridId, columns);
   }
 
   onScrolledIndexChange(index: number): void {
@@ -147,7 +147,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
-        this.gridFacade.getGridPageData(this.gridConfig.gridName, nextPage);
+        this.gridFacade.getGridPageData(this.gridConfig.gridId, nextPage);
       }
     }
   }

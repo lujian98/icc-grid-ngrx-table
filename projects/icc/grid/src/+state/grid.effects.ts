@@ -18,10 +18,10 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.setupGridConfig),
       switchMap((action) => {
-        const gridName = action.gridConfig.gridName;
-        return this.gridService.getGridConfig(gridName, action.gridConfig).pipe(
+        const gridId = action.gridConfig.gridId;
+        return this.gridService.getGridConfig(gridId, action.gridConfig).pipe(
           map((gridConfig) => {
-            return gridActions.setupGridConfigSuccess({ gridName, gridConfig });
+            return gridActions.setupGridConfigSuccess({ gridId, gridConfig });
           }),
         );
       }),
@@ -32,11 +32,11 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.setupGridColumnsConfig),
       switchMap((action) => {
-        const gridName = action.gridName;
-        return this.gridService.getGridColumnsConfig(gridName, action.columnsConfig).pipe(
+        const gridId = action.gridId;
+        return this.gridService.getGridColumnsConfig(gridId, action.columnsConfig).pipe(
           map((columnsConfig) => {
             return gridActions.setupGridColumnsConfigSuccess({
-              gridName,
+              gridId,
               columnsConfig,
             });
           }),
@@ -50,23 +50,23 @@ export class IccGridEffects {
       ofType(gridActions.getGridData),
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.gridName),
-          this.gridFacade.selectColumnsConfig(action.gridName),
-          this.gridFacade.selectGridInMemoryData(action.gridName),
+          this.gridFacade.selectGridConfig(action.gridId),
+          this.gridFacade.selectColumnsConfig(action.gridId),
+          this.gridFacade.selectGridInMemoryData(action.gridId),
         ];
       }),
       switchMap(([action, gridConfig, columns, inMemoryData]) => {
-        const gridName = action.gridName;
+        const gridId = action.gridId;
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
             map((gridData) => {
-              return gridActions.getGridDataSuccess({ gridName, gridData });
+              return gridActions.getGridDataSuccess({ gridId, gridData });
             }),
           );
         } else {
           return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
             map((gridData) => {
-              return gridActions.getGridDataSuccess({ gridName, gridData });
+              return gridActions.getGridDataSuccess({ gridId, gridData });
             }),
           );
         }
