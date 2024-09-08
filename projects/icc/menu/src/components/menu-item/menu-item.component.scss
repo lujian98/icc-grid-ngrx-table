@@ -5,7 +5,29 @@
 
   .icc-menu-item {
     padding: 0px 10px;
+    width: 100%;
   }
+
+  .icc-menu-title {
+    //display: inline-block;
+    //align-items: center;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+
+  /*
+     display: inline-block;
+      cursor: default;
+      font-size: 13px; //TODO move to theme?
+      font-weight: 600; //TODO move to theme?
+      padding-right: 6px;
+      //margin: 0 $size-xs 0 0;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      */
 
   align-items: center;
   border-top: 1px solid gray;

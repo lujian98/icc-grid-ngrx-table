@@ -4,12 +4,18 @@
   padding: 0px 10px;
   label {
     display: inline-flex;
+    width: 100%;
     position: relative;
     align-items: center;
     cursor: pointer;
 
     input {
       margin: 0px;
+    }
+
+    .icc-checkbox-label {
+      display: inline-flex;
+      width: 100%;
     }
   }
 
