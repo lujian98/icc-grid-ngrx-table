@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { IccSelectFieldConfig } from '../models/select-field.model';
 import * as selectFieldActions from './select-field.actions';
 import { selectFieldConfig, selectOptions } from './select-field.selectors';
@@ -7,17 +8,27 @@ import { selectFieldConfig, selectOptions } from './select-field.selectors';
 @Injectable()
 export class IccSelectFieldFacade {
   private store = inject(Store);
-  selectFieldConfig$ = this.store.select(selectFieldConfig);
-  selectOptions$ = this.store.select(selectOptions);
 
-  setupFieldConfig(fieldConfig: IccSelectFieldConfig): void {
-    this.store.dispatch(selectFieldActions.setupFieldConfig({ fieldConfig }));
+  setupFieldConfig(fieldId: string, fieldConfig: IccSelectFieldConfig): void {
+    this.store.dispatch(selectFieldActions.setupFieldConfig({ fieldId, fieldConfig }));
     if (fieldConfig.remoteOptions) {
-      this.store.dispatch(selectFieldActions.getSelectFieldOptions({ fieldConfig }));
+      this.store.dispatch(selectFieldActions.getSelectFieldOptions({ fieldId, fieldConfig }));
     }
   }
 
-  setSelectFieldOptions(options: any[]): void {
-    this.store.dispatch(selectFieldActions.setSelectFieldOptions({ options }));
+  setSelectFieldOptions(fieldId: string, options: any[]): void {
+    this.store.dispatch(selectFieldActions.setSelectFieldOptions({ fieldId, options }));
+  }
+
+  clearSelectFieldStore(fieldId: string): void {
+    this.store.dispatch(selectFieldActions.clearSelectFieldStore({ fieldId }));
+  }
+
+  selectFieldConfig(fieldId: string): Observable<IccSelectFieldConfig | undefined> {
+    return this.store.select(selectFieldConfig(fieldId));
+  }
+
+  selectOptions(fieldId: string): Observable<any[]> {
+    return this.store.select(selectOptions(fieldId));
   }
 }

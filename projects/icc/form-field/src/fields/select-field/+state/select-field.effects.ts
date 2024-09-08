@@ -15,10 +15,10 @@ export class IccSelectFieldEffects {
   setupSelectFieldConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectFieldActions.getSelectFieldOptions),
-      switchMap(({ fieldConfig }) => {
+      switchMap(({ fieldId, fieldConfig }) => {
         return this.selectfieldService.getSelectFieldOptions(fieldConfig).pipe(
           map((options) => {
-            return selectFieldActions.setSelectFieldOptions({ options });
+            return selectFieldActions.setSelectFieldOptions({ fieldId, options });
           }),
         );
       }),

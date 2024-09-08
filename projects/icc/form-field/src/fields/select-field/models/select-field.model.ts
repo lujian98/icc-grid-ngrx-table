@@ -11,6 +11,10 @@ export interface IccSelectFieldConfig {
   placeholder: string;
 }
 
+export interface SelectFieldState {
+  [key: string]: IccSelectFieldState;
+}
+
 export interface IccSelectFieldState<T extends object = object> {
   fieldConfig: IccSelectFieldConfig;
   options: T[];

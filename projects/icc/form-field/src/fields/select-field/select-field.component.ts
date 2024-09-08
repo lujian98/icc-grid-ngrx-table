@@ -9,6 +9,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -56,30 +57,39 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFilterPipe,
   ],
 })
-export class SelectFieldComponent<T> {
+export class SelectFieldComponent<T> implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-  //private _options: { [key: string]: T }[] = [];
   private _value!: { [key: string]: T };
-  fieldConfig$ = this.selectFieldFacade.selectFieldConfig$;
-  selectOptions$ = this.selectFieldFacade.selectOptions$;
-  form!: FormGroup;
   private fieldId = Date.now().toString(16);
+  private firstTimeLoad = true;
 
+  fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
+  selectOptions$!: Observable<any[]>;
+
+  form!: FormGroup;
   @Input()
   set fieldConfig(fieldConfig: IccSelectFieldConfig) {
-    this._fieldConfig = {
-      ...fieldConfig,
-      fieldId: this.fieldId,
-    };
-    //console.log( ' this._selectFieldConfig=', this._fieldConfig)
-    console.log(' fieldId=', this.fieldId);
-    this.selectFieldFacade.setupFieldConfig(this.fieldConfig);
-    this.form = new FormGroup({
-      [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-    });
-    this.selectedField.setValue(this.value);
+    if (this.firstTimeLoad) {
+      this.firstTimeLoad = false;
+      this._fieldConfig = {
+        ...fieldConfig,
+        fieldId: this.fieldId,
+      };
+      //console.log( ' this._selectFieldConfig=', this._fieldConfig)
+      console.log(' fieldId=', this.fieldId);
+
+      this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId);
+      this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
+      this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
+      this.form = new FormGroup({
+        [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
+      });
+      this.selectedField.setValue(this.value);
+    } else {
+      this._fieldConfig = fieldConfig;
+    }
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
@@ -88,14 +98,12 @@ export class SelectFieldComponent<T> {
   @Input()
   set options(val: { [key: string]: T }[]) {
     //local set option only, not used here
-    //this._options = val;
-    this.selectFieldFacade.setSelectFieldOptions(val);
+    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
 
   @Input()
   set value(val: { [key: string]: T }) {
     this._value = val;
-    //console.log( ' mmmmm val =', val)
     if (this.form && val !== undefined) {
       this.selectedField.setValue(val);
     }
@@ -176,5 +184,9 @@ export class SelectFieldComponent<T> {
     this.changeDetectorRef.markForCheck();
 
     this.selectionChange.emit([]);
+  }
+
+  ngOnDestroy(): void {
+    this.selectFieldFacade.clearSelectFieldStore(this.fieldId);
   }
 }
