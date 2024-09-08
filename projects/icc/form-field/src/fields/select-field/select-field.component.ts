@@ -31,6 +31,15 @@ import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccSelectFieldConfig } from './models/select-field.model';
 
+const uniqueId = (length = 16) => {
+  const rand = Math.random();
+  const now11 = Date.now();
+  console.log(' rand =', rand);
+  console.log(' now11 =', now11);
+  return (Math.random() * 100000000 + Date.now()).toString(length).slice(2).replace('.', '');
+  //return (Math.ceil(Math.random()) + Date.now()).toString(16).replace(".", "");
+};
+
 @Component({
   selector: 'icc-select-field',
   templateUrl: './select-field.component.html',
@@ -61,8 +70,54 @@ export class SelectFieldComponent<T> implements OnDestroy {
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
   private _value!: { [key: string]: T };
-  private fieldId = Date.now().toString(16);
+  private fieldId = uniqueId(16);
   private firstTimeLoad = true;
+
+  /*
+
+var uniq = 'id' + (new Date()).getTime();
+  private fieldId = Date.now().toString(16);
+const uniqueId = (length=16) => {
+  return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
+}
+
+  // var id = "id" + Math.random().toString(16).slice(2)
+
+    const uid = function(){
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+
+
+  const random = Math.random(); // id = 0.1930028261207366
+const s = random.toString(16);  // s  = '0.3168a21a39612'
+const id = s.slice(2);          // id = '3168a21a39612'
+
+// In one line
+const id = Math.random().toString(16).slice(2);
+
+const generateUniqueId = (length)=> {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let id = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        id += characters[randomIndex];
+    }
+    return id;
+}
+
+
+const generateUniqueId = (length)=> {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let id = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        id += characters[randomIndex];
+    }
+    return Date.now().toString(16) + id;
+}
+
+*/
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
