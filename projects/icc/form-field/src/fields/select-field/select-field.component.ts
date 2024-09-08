@@ -60,17 +60,22 @@ export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-  private _options: { [key: string]: T }[] = [];
+  //private _options: { [key: string]: T }[] = [];
   private _value!: { [key: string]: T };
   fieldConfig$ = this.selectFieldFacade.selectFieldConfig$;
   selectOptions$ = this.selectFieldFacade.selectOptions$;
   form!: FormGroup;
+  private fieldId = Date.now().toString(16);
 
   @Input()
-  set fieldConfig(value: IccSelectFieldConfig) {
-    this._fieldConfig = value;
+  set fieldConfig(fieldConfig: IccSelectFieldConfig) {
+    this._fieldConfig = {
+      ...fieldConfig,
+      fieldId: this.fieldId,
+    };
     //console.log( ' this._selectFieldConfig=', this._fieldConfig)
-    this.selectFieldFacade.setupFieldConfig(value);
+    console.log(' fieldId=', this.fieldId);
+    this.selectFieldFacade.setupFieldConfig(this.fieldConfig);
     this.form = new FormGroup({
       [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
     });
@@ -83,7 +88,7 @@ export class SelectFieldComponent<T> {
   @Input()
   set options(val: { [key: string]: T }[]) {
     //local set option only, not used here
-    this._options = val;
+    //this._options = val;
     this.selectFieldFacade.setSelectFieldOptions(val);
   }
 

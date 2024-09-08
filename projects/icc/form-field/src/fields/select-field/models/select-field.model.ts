@@ -1,4 +1,5 @@
 export interface IccSelectFieldConfig {
+  fieldId: string; // auto generated
   fieldName: string;
   urlKey?: string; // Only for remote. if not defined, use gridName
   fieldLabel?: string;

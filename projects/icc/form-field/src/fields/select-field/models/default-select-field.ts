@@ -1,6 +1,7 @@
 import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model';
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
+  fieldId: '191cf2bb6b5',
   fieldName: 'icc-select',
   fieldLabel: undefined,
   remoteOptions: false,
