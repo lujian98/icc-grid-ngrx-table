@@ -1,40 +1,43 @@
-<ng-container *ngIf="form" [formGroup]="form">
-  <icc-form-field>
-    <icc-label *ngIf="fieldLabel !== undefined">
-      {{ fieldLabel }}
-    </icc-label>
-    <input
-      iccInput
-      type="text"
-      autocomplete="off"
-      [readonly]="selectOnly"
-      [formControlName]="fieldName"
-      (isOverlayOpen)="overlayOpen($event)"
-      (change)="onChange($event)"
-      (blur)="onBlur()"
-      [iccAutocomplete]="autocomplete"
-      [iccAutocompleteClose]="autocompleteClose"
-      placeholder="{{ placeholder }}"
-    />
-    <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
-    <icc-icon icon="angle-down" iccSuffix [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"></icc-icon>
-    <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
-    <icc-autocomplete
-      #autocomplete="iccAutocomplete"
-      [multiSelection]="multiSelection"
-      [displayWith]="displayFn.bind(this)"
-      [compareWith]="compareFn.bind(this)"
-    >
-      <ng-template iccAutocompleteContent>
-        <ng-container *ngIf="options | filter: selectedField.value : optionLabel as result">
-          <icc-option *ngFor="let option of result" [value]="option" #ref>
-            <icc-filter-highlight [value]="option[optionLabel]" [filterValue]="filterValue"> </icc-filter-highlight>
-          </icc-option>
-          <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
-        </ng-container>
-      </ng-template>
-    </icc-autocomplete>
-  </icc-form-field>
+<ng-container *ngIf="fieldConfig$ | async as fieldConfig">
+  <ng-container *ngIf="form" [formGroup]="form">
+    <icc-form-field>
+      <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+        {{ fieldConfig.fieldLabel }}
+      </icc-label>
+      <input
+        iccInput
+        type="text"
+        autocomplete="off"
+        [readonly]="fieldConfig.selectOnly"
+        [formControlName]="fieldConfig.fieldName"
+        (isOverlayOpen)="overlayOpen($event)"
+        (change)="onChange($event)"
+        (blur)="onBlur()"
+        [iccAutocomplete]="autocomplete"
+        [iccAutocompleteClose]="autocompleteClose"
+        placeholder="{{ fieldConfig.placeholder }}"
+      />
+      <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
+      <icc-icon icon="angle-down" iccSuffix [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"></icc-icon>
+      <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
+      <icc-autocomplete
+        #autocomplete="iccAutocomplete"
+        [multiSelection]="fieldConfig.multiSelection"
+        [displayWith]="displayFn.bind(this)"
+        [compareWith]="compareFn.bind(this)"
+      >
+        <ng-template iccAutocompleteContent>
+          <ng-container *ngIf="options | filter: selectedField.value : fieldConfig.optionLabel as result">
+            <icc-option *ngFor="let option of result" [value]="option" #ref>
+              <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+              </icc-filter-highlight>
+            </icc-option>
+            <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
+          </ng-container>
+        </ng-template>
+      </icc-autocomplete>
+    </icc-form-field>
+  </ng-container>
 </ng-container>
 
 <!--

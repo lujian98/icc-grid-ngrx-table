@@ -59,42 +59,23 @@ import { IccSelectFieldConfig } from './models/select-field.model';
 export class SelectFieldComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _selectFieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-
-  //fieldConfig$!: Observable<IccSelectFieldConfig>;
+  private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
   fieldConfig$ = this.selectFieldFacade.selectFieldConfig$;
-  private _value!: { [key: string]: T };
-  private _fieldName: string = '';
-  private _multiSelection: boolean = false;
   form!: FormGroup;
+  private _value!: { [key: string]: T };
 
   @Input()
-  set selectFieldConfig(value: IccSelectFieldConfig) {
-    this._selectFieldConfig = value;
-    // this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig();
+  set fieldConfig(value: IccSelectFieldConfig) {
+    this._fieldConfig = value;
+    //console.log( ' this._selectFieldConfig=', this._fieldConfig)
     this.selectFieldFacade.setupFieldConfig(value);
-  }
-  get selectFieldConfig(): IccSelectFieldConfig {
-    return this._selectFieldConfig;
-  }
-
-  @Input() selectOnly: boolean = false;
-  @Input() fieldLabel: string | undefined;
-
-  @Input() optionKey: string = 'name';
-  @Input() optionLabel: string = 'title';
-  @Input() placeholder: string = '';
-
-  @Input()
-  set fieldName(val: string) {
-    this._fieldName = val;
     this.form = new FormGroup({
-      [this.fieldName]: new FormControl<{ [key: string]: T }>({}),
+      [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
     });
+    this.selectedField.setValue(this.value);
   }
-
-  get fieldName(): string {
-    return this._fieldName;
+  get fieldConfig(): IccSelectFieldConfig {
+    return this._fieldConfig;
   }
 
   @Input() options: { [key: string]: T }[] = [];
@@ -102,19 +83,14 @@ export class SelectFieldComponent<T> {
   @Input()
   set value(val: { [key: string]: T }) {
     this._value = val;
-    this.selectedField.setValue(val);
+    //console.log( ' mmmmm val =', val)
+    if (this.form && val !== undefined) {
+      this.selectedField.setValue(val);
+    }
   }
 
   get value(): { [key: string]: T } {
     return this._value;
-  }
-
-  @Input()
-  get multiSelection(): boolean {
-    return this._multiSelection;
-  }
-  set multiSelection(val: boolean) {
-    this._multiSelection = coerceBooleanProperty(val);
   }
 
   @Output() selectionChange = new EventEmitter<any[]>(true);
@@ -122,7 +98,7 @@ export class SelectFieldComponent<T> {
   autocompleteClose!: boolean;
 
   get selectedField(): AbstractControl {
-    return this.form!.get(this.fieldName)!;
+    return this.form!.get(this.fieldConfig.fieldName)!;
   }
 
   get hasValue(): boolean {
@@ -147,17 +123,17 @@ export class SelectFieldComponent<T> {
     if (Array.isArray(value)) {
       return value.length > 0
         ? value
-            .map((item) => item[this.optionLabel])
+            .map((item) => item[this.fieldConfig.optionLabel])
             .sort((a, b) => a.localeCompare(b))
             .join(', ')
         : '';
     } else {
-      return value ? value[this.optionLabel] : '';
+      return value ? value[this.fieldConfig.optionLabel] : '';
     }
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    return s1 && s2 ? s1[this.optionKey] === s2[this.optionKey] : s1 === s2;
+    return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
   }
 
   overlayOpen(event: boolean): void {
@@ -180,7 +156,7 @@ export class SelectFieldComponent<T> {
   }
 
   clearSelected(): void {
-    if (this.multiSelection) {
+    if (this.fieldConfig.multiSelection) {
       this.selectedField.setValue([]);
     } else {
       this.selectedField.setValue('');

@@ -1,27 +1,13 @@
 <icc-select-field
-  [fieldName]="column.name"
-  [selectOnly]="false"
-  [multiSelection]="false"
+  *ngIf="fieldConfig"
+  [fieldConfig]="fieldConfig"
   [value]="value"
   [options]="options"
-  [placeholder]="filterPlaceholder"
   (selectionChange)="onSelectionChange($event)"
 >
 </icc-select-field>
 
 <!--
-    title="label"
-  name="value"
-
-  [value]="states[16]"
-  <input
-    type="text"
-    [value]="value"
-    autocomplete="off"
-    (click)="$event.stopPropagation()"
-    (keyup)="applyFilter($event)"
-    placeholder="{{ filterPlaceholder }}"
-  />
 
 <mat-form-field *ngIf="filterType" [ngClass]="'sun-grid-form-field'" [ngStyle]="{'height': rowHeight+'px'}">
   <input matInput type="text" [value]="value" autocomplete="off"

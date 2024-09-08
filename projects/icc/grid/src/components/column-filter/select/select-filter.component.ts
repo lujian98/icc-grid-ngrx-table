@@ -5,6 +5,7 @@ import { SelectFieldComponent } from '@icc/ui/form-field';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
+import { defaultSelectFieldConfig, IccSelectFieldConfig } from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-select-filter',
@@ -22,6 +23,7 @@ export class IccSelectFilterComponent {
   //gridConfig$!: Observable<IccGridConfig>;
   private _value: any;
   filterPlaceholder: string = 'Filter ...';
+  fieldConfig!: IccSelectFieldConfig;
 
   options = [
     { title: '', name: '' },
@@ -41,6 +43,15 @@ export class IccSelectFilterComponent {
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
+    this.fieldConfig = {
+      ...defaultSelectFieldConfig,
+      fieldName: this.column.name,
+      //fieldLabel: undefined,
+      //selectOnly: false,
+      //multiSelection: false,
+      placeholder: 'Filter ...',
+    };
+    console.log(' fieldConfig=', this.fieldConfig, ' column=', this.column);
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
