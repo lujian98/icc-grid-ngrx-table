@@ -1,6 +1,6 @@
 <ng-container *ngIf="fieldConfig$ | async as fieldConfig">
   <ng-container *ngIf="form" [formGroup]="form">
-    <icc-form-field>
+    <icc-form-field *ngIf="selectOptions$ | async as selectOptions">
       <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
         {{ fieldConfig.fieldLabel }}
       </icc-label>
@@ -27,7 +27,7 @@
         [compareWith]="compareFn.bind(this)"
       >
         <ng-template iccAutocompleteContent>
-          <ng-container *ngIf="options | filter: selectedField.value : fieldConfig.optionLabel as result">
+          <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
             <icc-option *ngFor="let option of result" [value]="option" #ref>
               <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
               </icc-filter-highlight>
@@ -41,7 +41,5 @@
 </ng-container>
 
 <!--
-          {{ getOptionDisplay(option) }}
-  <ng-container *ngIf="(states | filter: form.get('state').value:'state' ) as result">
-        <ng-container *ngIf="options | filter: value : 'state' as result">
+
 -->

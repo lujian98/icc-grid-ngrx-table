@@ -1,11 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { SelectFieldComponent } from '@icc/ui/form-field';
-//import { SunTextField } from '../../../../fields/text_field';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
-import { defaultSelectFieldConfig, IccSelectFieldConfig } from '@icc/ui/form-field';
+import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-select-filter',
@@ -22,30 +19,13 @@ export class IccSelectFilterComponent {
   private _value: any;
   fieldConfig!: IccSelectFieldConfig;
 
-  options = [
-    { title: '', name: '' },
-    { title: 'Audi', name: 'Audi' },
-    { title: 'BMW', name: 'BMW' },
-    { title: 'Mercedes', name: 'Mercedes' },
-    { title: 'Renault', name: 'Renault' },
-    { title: 'Volvo', name: 'Volvo' },
-    { title: 'Fiat', name: 'Fiat' },
-    { title: 'Chrysler', name: 'Chrysler' },
-    { title: 'Ford', name: 'Ford' },
-    { title: 'GM', name: 'GM' },
-    { title: 'Honda', name: 'Honda' },
-    { title: 'Jaguar', name: 'Jaguar' },
-    { title: 'VW', name: 'VW' },
-  ];
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     this.fieldConfig = {
       ...defaultSelectFieldConfig,
       fieldName: this.column.name,
-      //fieldLabel: undefined,
-      //selectOnly: false,
-      //multiSelection: false,
+      remoteOptions: true,
       placeholder: 'Filter ...',
     };
     //console.log(' fieldConfig=', this.fieldConfig, ' column=', this.column);
@@ -62,24 +42,10 @@ export class IccSelectFilterComponent {
   set value(val: any) {
     this._value = val;
   }
+
   get value(): any {
     return this._value;
   }
-
-  /*
-  @Input()
-  set gridName(value: string) {
-    this._gridName = value;
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridName);
-  }
-  get gridName(): string {
-    return this._gridName;
-  }
-    setGridColumnFilters(gridName: string, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridName, columnFilters }));
-    //this.getGridData(gridName);
-  }
-  */
 
   onSelectionChange<T>(value: any): void {
     //console.log(' filtr select change options=', value);
