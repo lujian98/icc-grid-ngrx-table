@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@a
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
+import { uniqueId } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
@@ -21,13 +22,13 @@ export class IccGridComponent<T> implements OnDestroy {
   private _gridConfig: IccGridConfig = defaultGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
-  private gridId = Date.now().toString(16);
+  private gridId = uniqueId(16);
   gridConfig$!: Observable<IccGridConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    //console.log( ' kkkkkkkk grid config = this.gridId', this.gridId)
+    console.log('grid config = this.gridId', this.gridId);
     this._gridConfig = {
       ...value,
       gridId: this.gridId,
