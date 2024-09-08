@@ -4,12 +4,12 @@ import * as selectFieldActions from './select-field.actions';
 import { IccSelectFieldState } from '../models/select-field.model';
 import { defaultSelectFieldState } from '../models/default-select-field';
 
-const initialState: IccSelectFieldState = defaultSelectFieldState;
+//const initialState: IccSelectFieldState = defaultSelectFieldState;
 
 export const iccSelectFieldFeature = createFeature({
   name: 'iccSelectField',
   reducer: createReducer(
-    initialState,
+    defaultSelectFieldState,
     on(selectFieldActions.setupFieldConfig, (state, { fieldConfig }) => ({
       ...state,
       fieldConfig,

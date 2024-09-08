@@ -17,12 +17,9 @@ import { defaultSelectFieldConfig, IccSelectFieldConfig } from '@icc/ui/form-fie
 })
 export class IccSelectFilterComponent {
   private gridFacade = inject(IccGridFacade);
-  //private _gridName!: string;
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
-  //gridConfig$!: Observable<IccGridConfig>;
   private _value: any;
-  filterPlaceholder: string = 'Filter ...';
   fieldConfig!: IccSelectFieldConfig;
 
   options = [
@@ -51,7 +48,7 @@ export class IccSelectFilterComponent {
       //multiSelection: false,
       placeholder: 'Filter ...',
     };
-    console.log(' fieldConfig=', this.fieldConfig, ' column=', this.column);
+    //console.log(' fieldConfig=', this.fieldConfig, ' column=', this.column);
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {

@@ -10,16 +10,3 @@ import { iccSelectFieldFeature } from './select-field.reducer';
   providers: [IccSelectFieldFacade],
 })
 export class IccSelectFieldStateModule {}
-/*
-@NgModule({
-  imports: [
-    SunI18nModule,
-    StoreModule.forFeature(userGroupFeature),
-    EffectsModule.forFeature([UserGroupEffects]),
-    SunToastModule.forChild(),
-  ],
-  providers: [UserGroupFacade],
-})
-export class UserGroupStateModule {}
-
-*/
