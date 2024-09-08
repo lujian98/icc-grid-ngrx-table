@@ -25,6 +25,7 @@ export class IccSelectFilterComponent {
     this.fieldConfig = {
       ...defaultSelectFieldConfig,
       fieldName: this.column.name,
+      urlKey: this.gridConfig.urlKey,
       remoteOptions: true,
       placeholder: 'Filter ...',
     };

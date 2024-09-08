@@ -33,6 +33,7 @@ export class AppGridTest2Component {
     columnFilters: [
       { name: 'vin', value: '9' },
       { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
+      { name: 'color', value: [{ name: 'Orange' }] },
     ],
     rowSelection: true,
   };
@@ -60,6 +61,7 @@ export class AppGridTest2Component {
     {
       name: 'color',
       width: 80,
+      filterField: 'select',
       align: 'center',
     },
   ];

@@ -76,7 +76,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
         ...fieldConfig,
         fieldId: this.fieldId,
       };
-      //console.log( ' this._selectFieldConfig=', this._fieldConfig)
+      console.log(' this._selectFieldConfig=', this._fieldConfig);
       console.log(' fieldId=', this.fieldId);
 
       this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId);
