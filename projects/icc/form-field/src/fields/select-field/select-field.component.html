@@ -8,7 +8,7 @@
         iccInput
         type="text"
         autocomplete="off"
-        [readonly]="fieldConfig.selectOnly"
+        [readonly]="!!fieldConfig.selectOnly"
         [formControlName]="fieldConfig.fieldName"
         (isOverlayOpen)="overlayOpen($event)"
         (change)="onChange($event)"

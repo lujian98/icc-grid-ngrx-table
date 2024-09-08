@@ -10,6 +10,10 @@ const routes: Routes = [
         loadChildren: () => import('./examples/grid/grid-examples.module').then((m) => m.AppGridExamplesModule),
       },
       {
+        path: 'select',
+        loadChildren: () => import('./examples/select/select-examples.module').then((m) => m.AppSelectExamplesModule),
+      },
+      {
         path: '**',
         redirectTo: '/grid',
       },

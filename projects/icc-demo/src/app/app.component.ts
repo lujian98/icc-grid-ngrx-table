@@ -72,6 +72,10 @@ export class AppComponent {
         },
       ],
     },
+    {
+      name: 'Select Demos',
+      items: [{ name: 'Simple Select', link: 'select/simple-select' }],
+    },
   ];
 
   toggleTheme(): void {
