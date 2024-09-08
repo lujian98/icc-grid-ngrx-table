@@ -29,6 +29,7 @@
         <ng-template iccAutocompleteContent>
           <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
             <icc-option *ngFor="let option of result" [value]="option" #ref>
+              <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected"></icc-checkbox>
               <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
               </icc-filter-highlight>
             </icc-option>
