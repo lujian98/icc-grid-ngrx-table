@@ -4,7 +4,7 @@ export interface IccSortField {
 }
 
 export interface IccGridConfig {
-  gridName: string;
+  gridName: string; // generated unique id
   urlKey?: string; // Only for remote. if not defined, use gridName
   columnSort: boolean;
   columnFilter: boolean;

@@ -1,18 +1,16 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  inject,
-  Input,
-  Output,
   EventEmitter,
-  ViewChild,
+  Input,
   OnDestroy,
+  Output,
+  ViewChild,
+  inject,
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
 import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
@@ -23,6 +21,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccFilterPipe } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
+import { Observable } from 'rxjs';
 import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
