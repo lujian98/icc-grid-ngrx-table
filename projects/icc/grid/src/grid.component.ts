@@ -28,7 +28,7 @@ export class IccGridComponent<T> implements OnDestroy {
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    console.log('grid config = this.gridId', this.gridId);
+    console.log('0000000000gridId', this.gridId);
     this._gridConfig = {
       ...value,
       gridId: this.gridId,
