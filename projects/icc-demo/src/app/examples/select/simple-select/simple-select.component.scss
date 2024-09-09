@@ -1,9 +1,11 @@
 :host {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 
   div {
+    display: flex;
+    flex-direction: column;
     width: 600px;
   }
 }
