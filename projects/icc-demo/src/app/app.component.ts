@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccAccordion } from '@icc/ui/accordion';
 import { IccThemeService } from '@icc/ui/theme';
 import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
-import { State, STATES } from './data/states';
+import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
 
 @Component({
   selector: 'app-root',
