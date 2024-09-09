@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { map, switchMap } from 'rxjs/operators';
@@ -9,6 +10,7 @@ import { IccGridFacade } from './grid.facade';
 
 @Injectable()
 export class IccGridEffects {
+  private store = inject(Store);
   private actions$ = inject(Actions);
   private gridFacade = inject(IccGridFacade);
   private gridService = inject(IccGridService);
@@ -35,10 +37,9 @@ export class IccGridEffects {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig, action.columnsConfig).pipe(
           map((columnsConfig) => {
-            return gridActions.setupGridColumnsConfigSuccess({
-              gridConfig,
-              columnsConfig,
-            });
+            this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+            return gridActions.getGridData({ gridId: gridConfig.gridId });
+            //return gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig });
           }),
         );
       }),

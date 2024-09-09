@@ -46,13 +46,13 @@ export class IccGridFacade {
   }
 
   getGridPageData(gridId: string, page: number): void {
-    console.log(' 222222 getGridPageData');
+    //console.log(' 222222 getGridPageData');
     this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
     this.getGridData(gridId);
   }
 
   getGridData(gridId: string): void {
-    console.log(' 11111 getGridData');
+    //console.log(' 11111 getGridData');
     this.store.dispatch(gridActions.getGridData({ gridId }));
   }
 
