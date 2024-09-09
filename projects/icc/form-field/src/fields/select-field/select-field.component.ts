@@ -60,7 +60,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-  private _value!: { [key: string]: T };
+  private _value!: { [key: string]: T } | { [key: string]: T }[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
 
@@ -101,7 +101,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set value(val: { [key: string]: T }) {
+  set value(val: { [key: string]: T } | { [key: string]: T }[]) {
     this._value = val;
     if (this.form && val !== undefined) {
       console.log(' 555555 set form value =', val);
@@ -109,7 +109,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
     }
   }
 
-  get value(): { [key: string]: T } {
+  get value(): { [key: string]: T } | { [key: string]: T }[] {
     return this._value;
   }
 
@@ -164,28 +164,14 @@ export class SelectFieldComponent<T> implements OnDestroy {
     }
   }
 
-  onInputClick(checked: boolean, option: any, ref: any): void {
-    console.log(' 88888888888888888 event=', checked);
+  onInputClick(checked: boolean, option: { [key: string]: T }, ref: any): void {
     const value = this.selectedField.value;
-    const find = [...value].find(
-      (item: any) => item[this.fieldConfig.optionKey] === option[this.fieldConfig.optionKey],
-    );
-    console.log(' 88888888888888888 find=', find, ' keyval=', option[this.fieldConfig.optionKey]);
+    const find = [...value].find((item) => item[this.fieldConfig.optionKey] === option[this.fieldConfig.optionKey]);
     if (find && !checked) {
-      const newvalue = [...value].filter(
-        (item: any) => item[this.fieldConfig.optionKey] !== option[this.fieldConfig.optionKey],
-      ) as any;
-      console.log('  value=', value);
-      console.log('  this.option=', option);
-      console.log('  newvalue=', newvalue);
-      this.value = [...newvalue] as any;
-      console.log(' this.value=', newvalue);
-      this.autocomplete.value = newvalue;
+      this.value = [...value].filter((item) => item[this.fieldConfig.optionKey] !== option[this.fieldConfig.optionKey]);
     } else if (!find && checked) {
-      this.value = [...value, option] as any;
+      this.value = [...value, option];
     }
-    // this.selectedField.setValue(this.value);
-
     ref.selected = checked;
     this.changeDetectorRef.markForCheck();
   }

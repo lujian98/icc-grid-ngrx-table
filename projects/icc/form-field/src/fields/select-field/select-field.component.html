@@ -32,7 +32,7 @@
               <icc-checkbox
                 *ngIf="fieldConfig.multiSelection"
                 [checked]="ref.selected"
-                (onInputClick)="onInputClick($event, option, ref)"
+                (inputClick)="onInputClick($event, option, ref)"
               >
                 <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
                 </icc-filter-highlight>

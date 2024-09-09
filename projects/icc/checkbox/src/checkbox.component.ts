@@ -1,29 +1,18 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { CommonModule } from '@angular/common';
 import {
-  Component,
-  forwardRef,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  inject,
   Input,
   Output,
-  EventEmitter,
   ViewChild,
-  ElementRef,
-  Directive,
-  HostBinding,
-  HostListener,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IccIconModule } from '@icc/ui/icon';
-
-@Directive({
-  selector: '[ghost]',
-  standalone: true,
-})
-export class GhostCheckboxDirective {
-  @HostBinding('class.ghost-checkbox')
-  private ghostCheckbox: boolean = true;
-}
 
 @Component({
   selector: 'icc-checkbox',
@@ -40,13 +29,15 @@ export class GhostCheckboxDirective {
   ],
 })
 export class IccCheckboxComponent implements ControlValueAccessor {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private _checked = false;
   private _disabled = false;
   private _indeterminate = false;
-  //@ViewChild('inputEl') inputEl!: ElementRef;
 
   @Output() change = new EventEmitter<boolean>();
-  @Output() onInputClick = new EventEmitter<boolean>();
+  @Output() inputClick = new EventEmitter<boolean>();
+  @ViewChild('input') private inputEl!: ElementRef<HTMLInputElement>;
+  //@ViewChild('label') private labelEl!: ElementRef<HTMLInputElement>;
 
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
@@ -56,7 +47,6 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     return this._checked;
   }
   set checked(value: boolean) {
-    console.log(' 6666666 set checked=', value);
     this._checked = value;
   }
 
@@ -75,12 +65,6 @@ export class IccCheckboxComponent implements ControlValueAccessor {
   set indeterminate(value: boolean) {
     this._indeterminate = coerceBooleanProperty(value);
   }
-
-  @ViewChild('input') _inputElement!: ElementRef<HTMLInputElement>;
-
-  @ViewChild('label') _labelElement!: ElementRef<HTMLInputElement>;
-
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -101,96 +85,39 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     //on a destroyed view (such as when toggling control
     //enabled/disabled from a parent form group)
     //https://github.com/SAP/fundamental-ngx/issues/2364
-    if (!(this.changeDetector as any).destroyed) {
-      this.changeDetector.detectChanges();
+    if (!(this.changeDetectorRef as any).destroyed) {
+      this.changeDetectorRef.detectChanges();
     }
   }
 
-  _onInputClick(event: Event) {
-    this._handleInputClick();
-    //event.stopPropagation();
-    this.onInputClick.emit(this.checked);
+  onInputClick(event: Event): void {
+    this.handleInputClick();
+    this.inputClick.emit(this.checked);
   }
 
-  _onInteractionEvent(event: Event) {
+  onChangeEvent(event: Event): void {
     // We always have to stop propagation on the change event.
     // Otherwise the change event, from the input element, will bubble up and
     // emit its event object to the `change` output.
     event.stopPropagation();
   }
 
-  private _handleInputClick() {
-    //const clickAction = this._options?.clickAction;
-
-    // If resetIndeterminate is false, and the current state is indeterminate, do nothing on click
-    //if (!this.disabled && clickAction !== 'noop') {
+  private handleInputClick(): void {
     if (!this.disabled) {
-      // When user manually click on the checkbox, `indeterminate` is set to false.
-      /*
-      if (this.indeterminate && clickAction !== 'check') {
-        Promise.resolve().then(() => {
-          this._indeterminate = false;
-          this.indeterminateChange.emit(this._indeterminate);
-        });
-      }*/
-
       this._checked = !this._checked;
-
-      // Emit our custom change event if the native input emitted one.
-      // It is important to only emit it, if the native input triggered one, because
-      // we don't want to trigger a change event, when the `checked` variable changes for example.
-      this._emitChangeEvent();
-    } /*
-    else if (!this.disabled && clickAction === 'noop') {
-      // Reset native input when clicked with noop. The native checkbox becomes checked after
-      // click, reset it to be align with `checked` value of `mat-checkbox`.
-      this._inputElement.nativeElement.checked = this.checked;
-      this._inputElement.nativeElement.indeterminate = this.indeterminate;
-    }*/
-  }
-
-  private _emitChangeEvent() {
-    this.onChange(this.checked);
-    this.change.emit(this.checked);
-    // this.indeterminate = input.indeterminate;
-    // this.change.emit(this._createChangeEvent(this.checked));
-
-    // Assigning the value again here is redundant, but we have to do it in case it was
-    // changed inside the `change` listener which will cause the input to be out of sync.
-    if (this._inputElement) {
-      this._inputElement.nativeElement.checked = this.checked;
+      this.onChange(this.checked);
+      this.change.emit(this.checked);
+      if (this.inputEl) {
+        this.inputEl.nativeElement.checked = this.checked;
+      }
     }
   }
 
-  _preventBubblingFromLabel(event: MouseEvent) {
-    console.log('444444 click =');
-    if (!!event.target && this._inputElement.nativeElement.contains(event.target as HTMLElement)) {
+  preventBubbling(event: MouseEvent): void {
+    if (!!event.target && this.inputEl.nativeElement.contains(event.target as HTMLElement)) {
       event.stopPropagation();
     } else {
-      this._handleInputClick();
+      this.handleInputClick();
     }
-    // this._handleInputClick();
   }
-
-  /*
-  updateValueAndIndeterminate(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.checked = input.checked;
-    this.change.emit(this.checked);
-    this.onChange(this.checked);
-    this.indeterminate = input.indeterminate;
-  }
-
-  focus(): void {
-    this.inputEl.nativeElement.focus();
-  }
-
-  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    if (!this.disabled && event.type === 'click') {
-      //event.stopPropagation();
-      this.checked = !this.checked;
-      this.change.emit(this.checked);
-      this.onChange(this.checked);
-    }
-  }*/
 }
