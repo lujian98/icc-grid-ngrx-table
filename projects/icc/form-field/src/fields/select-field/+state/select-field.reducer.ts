@@ -19,7 +19,7 @@ export const iccSelectFieldFeature = createFeature({
           ...action.fieldConfig,
         },
       };
-      console.log(' 11111111 newState=', newState);
+      //console.log(' 11111111 newState=', newState);
       return {
         ...newState,
       };
@@ -31,6 +31,7 @@ export const iccSelectFieldFeature = createFeature({
         ...state[key],
         options: [...action.options],
       };
+      //console.log(' 222222 newState option=', newState);
       return {
         ...newState,
       };
@@ -39,7 +40,7 @@ export const iccSelectFieldFeature = createFeature({
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       delete newState[key];
-      console.log(' 333333  clear State=', newState);
+      //console.log(' 333333  clear State=', newState);
       return {
         ...newState,
       };

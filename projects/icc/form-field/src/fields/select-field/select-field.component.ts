@@ -60,7 +60,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-  private _value!: { [key: string]: T } | { [key: string]: T }[];
+  private _value!: string | { [key: string]: T }[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
 
@@ -76,8 +76,8 @@ export class SelectFieldComponent<T> implements OnDestroy {
         ...fieldConfig,
         fieldId: this.fieldId,
       };
-      console.log(' this._selectFieldConfig=', this._fieldConfig);
-      console.log(' fieldId=', this.fieldId);
+      //console.log(' this._selectFieldConfig=', this._fieldConfig);
+      //console.log(' fieldId=', this.fieldId);
 
       this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId);
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
@@ -85,6 +85,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
       this.form = new FormGroup({
         [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
       });
+      //console.log(' uuuuuu set value =', this.value)
       this.selectedField.setValue(this.value);
     } else {
       this._fieldConfig = fieldConfig;
@@ -95,21 +96,34 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set options(val: { [key: string]: T }[]) {
+  set options(val: { [key: string]: T }[] | string[]) {
     //local set option only, not used here
-    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-  }
-
-  @Input()
-  set value(val: { [key: string]: T } | { [key: string]: T }[]) {
-    this._value = val;
-    if (this.form && val !== undefined) {
-      console.log(' 555555 set form value =', val);
-      this.selectedField.setValue(val);
+    if (this.fieldConfig.singleListOption) {
+      const options = (val as string[]).map((item: string) => {
+        return {
+          name: item,
+          title: item,
+        };
+      });
+      //console.log( ' set optionss =', options)
+      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
+    } else {
+      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
     }
   }
 
-  get value(): { [key: string]: T } | { [key: string]: T }[] {
+  @Input()
+  set value(val: string | { [key: string]: T }[]) {
+    const value = typeof val === 'string' ? [{ name: val, title: val }] : val;
+    this._value = value as { [key: string]: T }[];
+    if (this.form && value !== undefined) {
+      //console.log(' 555555 set form value =', this._value);
+      this.selectedField.setValue(this._value);
+    }
+  }
+
+  get value(): string | { [key: string]: T }[] {
+    //console.log( ' 666666 get value = ', this._value)
     return this._value;
   }
 
@@ -140,7 +154,10 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
+    //console.log( ' displayfn value=', value)
     if (Array.isArray(value)) {
+      //console.log( ' 2222displayfn value=', value)
+      //console.log( ' 2222this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
       return value.length > 0
         ? value
             .map((item) => item[this.fieldConfig.optionLabel])
@@ -153,6 +170,10 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
+    /*
+    console.log(' this.fieldConfig.optionKey=', this.fieldConfig.optionKey)
+    console.log(' s1=', s1)
+    console.log(' s2=', s2)*/
     return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
   }
 

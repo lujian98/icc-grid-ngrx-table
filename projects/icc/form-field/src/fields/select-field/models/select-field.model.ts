@@ -6,6 +6,7 @@ export interface IccSelectFieldConfig {
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete
   multiSelection: boolean;
+  singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
   placeholder: string;

@@ -8,8 +8,9 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   remoteOptions: false,
   selectOnly: true, // false select, true autocomplete
   multiSelection: false,
-  optionLabel: 'name',
-  optionKey: 'title',
+  singleListOption: false,
+  optionLabel: 'title',
+  optionKey: 'name',
   placeholder: '',
 };
 

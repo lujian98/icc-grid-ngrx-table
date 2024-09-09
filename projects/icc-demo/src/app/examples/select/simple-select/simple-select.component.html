@@ -1,15 +1,55 @@
-<div class="single-selection">
-  <icc-select-field [fieldConfig]="singleSelection" [value]="states[16]" [options]="states"></icc-select-field>
+<div>
+  Local field config and local data with Object Data
+  <div class="single-selection">
+    <icc-select-field [fieldConfig]="singleSelection" [value]="[states[16]]" [options]="states"></icc-select-field>
+  </div>
+
+  <div class="multi-selection">
+    <icc-select-field [fieldConfig]="multiSelection" [value]="[states[16]]" [options]="states"></icc-select-field>
+  </div>
+
+  <div class="single-autocomplete">
+    <icc-select-field [fieldConfig]="singleAutocomplete" [value]="[states[16]]" [options]="states"></icc-select-field>
+  </div>
+
+  <div class="multi-autocomplete">
+    <icc-select-field [fieldConfig]="multiAutocomplete" [value]="[states[16]]" [options]="states"></icc-select-field>
+  </div>
 </div>
 
-<div class="multi-selection">
-  <icc-select-field [fieldConfig]="multiSelection" [value]="[states[16]]" [options]="states"></icc-select-field>
-</div>
+<div><br /></div>
 
-<div class="single-autocomplete">
-  <icc-select-field [fieldConfig]="singleAutocomplete" [value]="states[16]" [options]="states"></icc-select-field>
-</div>
+<div>
+  Local field config and local data with list option Data
+  <div class="single-selection">
+    <icc-select-field
+      [fieldConfig]="singleSelectionList"
+      [value]="selectState"
+      [options]="listStates"
+    ></icc-select-field>
+  </div>
 
-<div class="multi-autocomplete">
-  <icc-select-field [fieldConfig]="multiAutocomplete" [value]="[states[16]]" [options]="states"></icc-select-field>
+  <div class="multi-selection">
+    <icc-select-field
+      [fieldConfig]="multiSelectionList"
+      [value]="selectState"
+      [options]="listStates"
+    ></icc-select-field>
+  </div>
+
+  <div class="single-autocomplete">
+    <icc-select-field
+      [fieldConfig]="singleAutocompleteList"
+      [value]="selectState"
+      [options]="listStates"
+    ></icc-select-field>
+  </div>
+
+  <div class="multi-autocomplete">
+    <icc-select-field
+      [fieldConfig]="multiAutocompleteList"
+      [value]="selectState"
+      [options]="listStates"
+    ></icc-select-field>
+  </div>
 </div>
