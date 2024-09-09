@@ -2,7 +2,10 @@ import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS 
 import { Observable } from 'rxjs';
 import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig } from '@icc/ui/grid/src/spec-helpers/cars-large';
 import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
-import { SingleSelectConfig } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/select-field-helpers';
+import {
+  SingleSelectConfig,
+  MultiSelectConfig,
+} from '@icc/ui/form-field/src/fields/select-field/spec-helpers/select-field-helpers';
 
 export class InMemoryService extends InMemoryDbService {
   createDb(): {
@@ -14,6 +17,8 @@ export class InMemoryService extends InMemoryDbService {
     usa_statelist: string[];
     usa_SingleRemote: State[];
     usa_SingleRemoteFieldConfig: any;
+    usa_MultiRemote: State[];
+    usa_MultiRemoteFieldConfig: any;
   } {
     return {
       DCR: CARSDATA,
@@ -24,6 +29,8 @@ export class InMemoryService extends InMemoryDbService {
       usa_statelist: STATES.map((state) => state.state),
       usa_SingleRemote: STATES,
       usa_SingleRemoteFieldConfig: SingleSelectConfig,
+      usa_MultiRemote: STATES,
+      usa_MultiRemoteFieldConfig: MultiSelectConfig,
     };
   }
 

@@ -18,6 +18,7 @@ export class IccSelectFieldService {
         return {
           ...fieldConfig,
           ...config,
+          remoteOptions: true, // remote config requires remote options
         };
       }),
     );

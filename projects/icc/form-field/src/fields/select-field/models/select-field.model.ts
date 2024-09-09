@@ -3,7 +3,7 @@ export interface IccSelectFieldConfig {
   fieldName: string;
   urlKey: string; // Only for remote field config and options
   fieldLabel?: string;
-  remoteConfig: boolean;
+  remoteConfig: boolean; // remote config requires remote options
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete
   multiSelection: boolean;

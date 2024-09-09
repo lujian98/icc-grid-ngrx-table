@@ -5,7 +5,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   fieldName: 'selectfield', // form field name need set
   urlKey: 'select', // Only for remote field config and options
   fieldLabel: undefined,
-  remoteConfig: false,
+  remoteConfig: false, // remote config requires remote options
   remoteOptions: false,
   selectOnly: true, // false select, true autocomplete
   multiSelection: false,

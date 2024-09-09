@@ -31,6 +31,12 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
     if (req.url === '/api/usa/SingleRemoteFieldConfig') {
       newreq.url = newreq.urlWithParams = '/api/usa_SingleRemoteFieldConfig';
     }
+    if (req.url === '/api/usa/MultiRemote') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiRemote';
+    }
+    if (req.url === '/api/usa/MultiRemoteFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiRemoteFieldConfig';
+    }
 
     // usa/SingleRemoteFieldConfig
 

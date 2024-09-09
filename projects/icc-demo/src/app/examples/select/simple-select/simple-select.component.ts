@@ -184,61 +184,32 @@ export class AppSimpleSelectComponent {
   singleRemote: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     remoteConfig: true,
-    remoteOptions: true,
     urlKey: 'usa',
     fieldName: 'SingleRemote',
   };
 
   multiRemote: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    remoteOptions: true,
+    remoteConfig: true,
     urlKey: 'usa',
-    fieldName: 'state',
-    multiSelection: true,
-    fieldLabel: 'Multi Selection (Object)',
-    optionLabel: 'state',
-    optionKey: 'abbr',
-    placeholder: 'Select One or More...',
+    fieldName: 'MultiRemote',
   };
 
   singleAutocompleteRemotes: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    remoteOptions: true,
+    remoteConfig: true,
     urlKey: 'usa',
-    fieldName: 'state',
-    selectOnly: false,
-    fieldLabel: 'Single Autocomplete (Object)',
-    optionLabel: 'state',
-    optionKey: 'abbr',
-    placeholder: 'Select One...',
+    fieldName: 'SingleAutocompleteRemotes',
   };
 
   multiAutocompleteRemotes: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    remoteOptions: true,
+    remoteConfig: true,
     urlKey: 'usa',
-    fieldName: 'state',
-    multiSelection: true,
-    selectOnly: false,
-    fieldLabel: 'Multi Autocomplete (Object)',
-    optionLabel: 'state',
-    optionKey: 'abbr',
-    placeholder: 'Select One or More...',
+    fieldName: 'MultiAutocompleteRemotes',
   };
 
   constructor() {
     //console.log(' listStates=', this.listStates)
   }
 }
-
-/*
-  fieldName: 'selectfield', // form field name need set
-  urlKey: 'select', // Only for remote field config and options
-
-  remoteOptions: false,
-
-
-
-  placeholder: '',
-};
-*/
