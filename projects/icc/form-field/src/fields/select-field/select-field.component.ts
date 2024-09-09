@@ -21,7 +21,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
@@ -76,10 +76,16 @@ export class SelectFieldComponent<T> implements OnDestroy {
         ...fieldConfig,
         fieldId: this.fieldId,
       };
-      //console.log(' this._selectFieldConfig=', this._fieldConfig);
+      //console.log('0000 this._selectFieldConfig=', this._fieldConfig);
       //console.log(' fieldId=', this.fieldId);
 
-      this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId);
+      this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
+        map((fieldConfig) => {
+          //console.log(' ccccccccccccc =', fieldConfig);
+          this._fieldConfig = fieldConfig!;
+          return fieldConfig;
+        }),
+      );
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
       this.form = new FormGroup({
@@ -87,8 +93,10 @@ export class SelectFieldComponent<T> implements OnDestroy {
       });
       //console.log(' uuuuuu set value =', this.value)
       this.selectedField.setValue(this.value);
+      //console.log('333333 this._selectFieldConfig=', this._fieldConfig);
     } else {
       this._fieldConfig = fieldConfig;
+      //console.log('22222 this._selectFieldConfig=', this._fieldConfig);
     }
   }
   get fieldConfig(): IccSelectFieldConfig {
@@ -116,6 +124,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   set value(val: any) {
     this._value = this.getInitValue(val);
     if (this.form && val !== undefined) {
+      //console.log(' uuuuuu set value =', this.value)
       this.selectedField.setValue(this._value);
     }
   }
@@ -165,7 +174,9 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
+    //console.log( 'ddddddddd  this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
     if (Array.isArray(value)) {
+      //console.log( 'eeeeeeeeee  value=', value)
       return value.length > 0
         ? value
             .map((item) => item[this.fieldConfig.optionLabel])

@@ -25,6 +25,15 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
       newreq.url = newreq.urlWithParams = '/api/usa_statelist';
     }
 
+    if (req.url === '/api/usa/SingleRemote') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleRemote';
+    }
+    if (req.url === '/api/usa/SingleRemoteFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleRemoteFieldConfig';
+    }
+
+    // usa/SingleRemoteFieldConfig
+
     return next.handle(newreq as HttpRequest<any>);
   }
 }

@@ -10,8 +10,23 @@ import { IccSelectFieldConfig } from '../models/select-field.model';
 export class IccSelectFieldService {
   private http = inject(HttpClient);
 
+  getRemoteFieldConfig(fieldConfig: IccSelectFieldConfig): Observable<IccSelectFieldConfig> {
+    // console.log( ' fieldConfig=', fieldConfig)
+    const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`;
+    return this.http.get<IccSelectFieldConfig>(url).pipe(
+      map((config) => {
+        return {
+          ...fieldConfig,
+          ...config,
+        };
+      }),
+    );
+  }
+
   getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
+    //console.log( ' 777777 fieldConfig=', fieldConfig)
     const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
+    //console.log( ' 777777 url=', url)
     return this.http.get<any[]>(url).pipe(
       map((res) => {
         if (fieldConfig.singleListOption) {

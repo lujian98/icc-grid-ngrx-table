@@ -10,7 +10,7 @@ export const iccSelectFieldFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(selectFieldActions.setupFieldConfig, (state, action) => {
-      const key = action.fieldId;
+      const key = action.fieldConfig.fieldId;
       const newState: SelectFieldState = { ...state };
 
       newState[key] = {
@@ -19,7 +19,10 @@ export const iccSelectFieldFeature = createFeature({
           ...action.fieldConfig,
         },
       };
-      //console.log(' 11111111 newState=', newState);
+      if (action.fieldConfig.remoteConfig) {
+        console.log(' 11111111 fieldConfig=', action.fieldConfig);
+        console.log(' 11111111 newState=', newState);
+      }
       return {
         ...newState,
       };

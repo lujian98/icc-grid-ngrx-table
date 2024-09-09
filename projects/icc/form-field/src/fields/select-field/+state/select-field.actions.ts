@@ -3,7 +3,12 @@ import { IccSelectFieldConfig } from '../models/select-field.model';
 
 export const setupFieldConfig = createAction(
   '[SelectField] Setup Field Config',
-  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldConfig: IccSelectFieldConfig }>(),
+);
+
+export const getRemoteFieldConfig = createAction(
+  '[SelectField] get Remote Field Config',
+  props<{ fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const setSelectFieldOptions = createAction(
@@ -13,7 +18,7 @@ export const setSelectFieldOptions = createAction(
 
 export const getSelectFieldOptions = createAction(
   '[SelectField] Get Select Field Options',
-  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const clearSelectFieldStore = createAction('[Grid] Clear Select Field Store', props<{ fieldId: string }>());
