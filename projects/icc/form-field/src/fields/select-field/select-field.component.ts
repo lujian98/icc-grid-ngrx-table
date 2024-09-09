@@ -104,6 +104,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   set value(val: { [key: string]: T }) {
     this._value = val;
     if (this.form && val !== undefined) {
+      console.log(' 555555 set form value =', val);
       this.selectedField.setValue(val);
     }
   }
@@ -161,6 +162,32 @@ export class SelectFieldComponent<T> implements OnDestroy {
       this.autocompleteClose = false;
     } else {
     }
+  }
+
+  onInputClick(checked: boolean, option: any, ref: any): void {
+    console.log(' 88888888888888888 event=', checked);
+    const value = this.selectedField.value;
+    const find = [...value].find(
+      (item: any) => item[this.fieldConfig.optionKey] === option[this.fieldConfig.optionKey],
+    );
+    console.log(' 88888888888888888 find=', find, ' keyval=', option[this.fieldConfig.optionKey]);
+    if (find && !checked) {
+      const newvalue = [...value].filter(
+        (item: any) => item[this.fieldConfig.optionKey] !== option[this.fieldConfig.optionKey],
+      ) as any;
+      console.log('  value=', value);
+      console.log('  this.option=', option);
+      console.log('  newvalue=', newvalue);
+      this.value = [...newvalue] as any;
+      console.log(' this.value=', newvalue);
+      this.autocomplete.value = newvalue;
+    } else if (!find && checked) {
+      this.value = [...value, option] as any;
+    }
+    // this.selectedField.setValue(this.value);
+
+    ref.selected = checked;
+    this.changeDetectorRef.markForCheck();
   }
 
   onChange(options: any): void {

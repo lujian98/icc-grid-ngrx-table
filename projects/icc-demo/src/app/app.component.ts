@@ -7,6 +7,7 @@ import { State, STATES } from './data/states';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
@@ -83,6 +84,6 @@ export class AppComponent {
   }
 
   onCheckboxChange(event: any): void {
-    //console.log(' 999999 event=', event);
+    console.log(' 999999 onCheckboxChange=', event);
   }
 }

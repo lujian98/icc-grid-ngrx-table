@@ -1,23 +1,47 @@
-<label>
+<div class="form-field-checkbox" (click)="_preventBubblingFromLabel($event)">
   <input
-    #inputEl
+    #input
     type="checkbox"
     class="cdk-visually-hidden"
     [checked]="checked"
     [disabled]="disabled"
     [indeterminate]="indeterminate"
-    (change)="updateValueAndIndeterminate($event)"
-    (click)="$event.stopPropagation()"
+    (click)="_onInputClick($event)"
+    (change)="_onInteractionEvent($event)"
   />
   <!--
+
+             [checked]="checked"
+           [indeterminate]="indeterminate"
+           [disabled]="disabled"
+           [id]="inputId"
+           [required]="required"
+           [tabIndex]="tabIndex"
+           (blur)="_onBlur()"
+           (click)="_onInputClick()"
+           (change)="_onInteractionEvent($event)"/>
+
+               (change)="updateValueAndIndeterminate($event)"
+    (click)="$event.stopPropagation()"
 
     (click)="$event.stopPropagation()"
   <span class="icc-checkbox-container">
     <icc-icon *ngIf="indeterminate" icon="minus"></icc-icon>
     <icc-icon [ngClass]="checked? 'checked': ''" *ngIf="!indeterminate" icon="check"></icc-icon>
   </span>
-      -->
-  <span class="icc-checkbox-label" (click)="$event.stopPropagation()">
+
+    <label class="mdc-label"
+         #label
+         [for]="inputId">
+    <ng-content></ng-content>
+  </label>
+
+    <span class="icc-checkbox-label" (click)="$event.stopPropagation()">
     <ng-content></ng-content>
   </span>
-</label>
+
+      -->
+  <label #label class="icc-checkbox-label">
+    <ng-content></ng-content>
+  </label>
+</div>

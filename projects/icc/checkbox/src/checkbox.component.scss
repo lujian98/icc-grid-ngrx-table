@@ -1,8 +1,9 @@
 :host {
   display: flex;
   //width: 100%;
-  padding: 0px 10px;
-  label {
+
+  .form-field-checkbox {
+    padding: 0px 10px;
     display: inline-flex;
     width: 100%;
     position: relative;

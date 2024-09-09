@@ -29,9 +29,18 @@
         <ng-template iccAutocompleteContent>
           <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
             <icc-option *ngFor="let option of result" [value]="option" #ref>
-              <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected"></icc-checkbox>
-              <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
-              </icc-filter-highlight>
+              <icc-checkbox
+                *ngIf="fieldConfig.multiSelection"
+                [checked]="ref.selected"
+                (onInputClick)="onInputClick($event, option, ref)"
+              >
+                <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                </icc-filter-highlight>
+              </icc-checkbox>
+              <ng-container *ngIf="!fieldConfig.multiSelection">
+                <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                </icc-filter-highlight>
+              </ng-container>
             </icc-option>
             <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
           </ng-container>
