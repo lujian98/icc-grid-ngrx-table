@@ -14,8 +14,14 @@ export class IccSelectFieldService {
     const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
     return this.http.get<any[]>(url).pipe(
       map((res) => {
-        console.log(' SelectFieldOptions res=', res);
-        return res;
+        if (fieldConfig.singleListOption) {
+          return res.map((item) => ({
+            name: item,
+            title: item,
+          }));
+        } else {
+          return res;
+        }
       }),
     );
   }

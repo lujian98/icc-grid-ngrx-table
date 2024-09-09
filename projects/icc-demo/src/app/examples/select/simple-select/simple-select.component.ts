@@ -135,6 +135,50 @@ export class AppSimpleSelectComponent {
     placeholder: 'Select One or More...',
   };
 
+  // ******************
+  singleRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    singleListOption: true,
+    urlKey: 'usa',
+    fieldName: 'statelist',
+    fieldLabel: 'Single Selection (list)',
+    placeholder: 'Select One...',
+  };
+
+  multiRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    singleListOption: true,
+    urlKey: 'usa',
+    fieldName: 'statelist',
+    multiSelection: true,
+    fieldLabel: 'Multi Selection (list)',
+    placeholder: 'Select One or More...',
+  };
+
+  singleAutocompleteRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    singleListOption: true,
+    urlKey: 'usa',
+    fieldName: 'statelist',
+    selectOnly: false,
+    fieldLabel: 'Single Autocomplete (list)',
+    placeholder: 'Select One...',
+  };
+
+  multiAutocompleteRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    singleListOption: true,
+    urlKey: 'usa',
+    fieldName: 'statelist',
+    multiSelection: true,
+    selectOnly: false,
+    fieldLabel: 'Multi Autocomplete (list)',
+    placeholder: 'Select One or More...',
+  };
   constructor() {
     //console.log(' listStates=', this.listStates)
   }

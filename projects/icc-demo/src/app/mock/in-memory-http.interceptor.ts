@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class InMemoryHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
     const newreq = { ...req };
-    //console.log( ' req=', req) // columnConfig
+    //console.log( ' req=', req) // columnConfig statelist
     if (req.url === '/api/DCR/brand') {
       newreq.url = newreq.urlWithParams = '/api/DCR_brand';
     }
@@ -20,6 +20,9 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
 
     if (req.url === '/api/usa/state') {
       newreq.url = newreq.urlWithParams = '/api/usa_state';
+    }
+    if (req.url === '/api/usa/statelist') {
+      newreq.url = newreq.urlWithParams = '/api/usa_statelist';
     }
 
     return next.handle(newreq as HttpRequest<any>);

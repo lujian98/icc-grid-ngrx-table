@@ -30,7 +30,7 @@
 <div>
   <div><br /></div>
   <div>
-    Local field config and local list options (non-object) TODO need test mutiple value
+    Local field config and local list options (non-object)
     <icc-select-field
       [fieldConfig]="singleSelectionList"
       [value]="singleListState"
@@ -51,5 +51,15 @@
       [value]="multiListStates"
       [options]="listStates"
     ></icc-select-field>
+  </div>
+
+  <div><br /></div>
+
+  <div>
+    Local field config and remote object list options (non-object)
+    <icc-select-field [fieldConfig]="singleRemoteList" [value]="singleListState"></icc-select-field>
+    <icc-select-field [fieldConfig]="multiRemoteList" [value]="multiListStates"></icc-select-field>
+    <icc-select-field [fieldConfig]="singleAutocompleteRemoteList" [value]="singleListState"></icc-select-field>
+    <icc-select-field [fieldConfig]="multiAutocompleteRemoteList" [value]="multiListStates"></icc-select-field>
   </div>
 </div>

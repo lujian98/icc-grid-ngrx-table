@@ -10,6 +10,7 @@ export class InMemoryService extends InMemoryDbService {
     DCR_color: any[];
     DCR_columnConfig: any;
     usa_state: State[];
+    usa_statelist: string[];
   } {
     return {
       DCR: CARSDATA,
@@ -17,6 +18,7 @@ export class InMemoryService extends InMemoryDbService {
       DCR_color: DCRColors,
       DCR_columnConfig: DCRColumnConfig,
       usa_state: STATES,
+      usa_statelist: STATES.map((state) => state.state),
     };
   }
 

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, debounceTime } from 'rxjs/operators';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
@@ -49,6 +49,7 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
+      //debounceTime(10),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridId),
