@@ -21,45 +21,18 @@ export class IccGridService {
 
   getGridConfig(gridId: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig)
+    //TODO need a flag to tell if gridConfig or default saved in the remote database, read from here, otherwise return client side gridConfig
     return of(gridConfig);
-    /*
-    return this.http
-      .get<EmailResponse>(this.endpointService.buildUrl('smtp_settings'))
-      .pipe(map(this.adapter.adapt));
-      */
   }
 
-  getGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    console.log(' get remote service columnConfig =', gridId);
-    const config: IccColumnConfig[] = [
-      {
-        name: 'ID',
-        width: 50,
-        align: 'center',
-      },
-      {
-        name: 'vin',
-      },
-      {
-        name: 'brand',
-        hidden: false,
-        filterField: false,
-      },
-      {
-        name: 'year',
-        sortField: false,
-      },
-      {
-        name: 'color',
-      },
-    ];
-
-    return of(config);
-    /*
-    return this.http
-      .get<EmailResponse>(this.endpointService.buildUrl('smtp_settings'))
-      .pipe(map(this.adapter.adapt));
-      */
+  getGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
+    const url = `/api/${gridConfig.urlKey}/columnConfig`;
+    return this.http.get<any[]>(url).pipe(
+      map((res) => {
+        console.log(' DCRColumnConfig res=', res);
+        return res;
+      }),
+    );
   }
 
   getGridInMemoeryData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {

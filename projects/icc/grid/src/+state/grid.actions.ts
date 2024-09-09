@@ -16,12 +16,12 @@ export const setupGridConfigSuccess = createAction(
 
 export const setupGridColumnsConfig = createAction(
   '[Grid] Setup Grid Columns Config',
-  props<{ gridId: string; columnsConfig: IccColumnConfig[] }>(),
+  props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
 );
 
 export const setupGridColumnsConfigSuccess = createAction(
   '[Grid] Setup Grid Columns Config Success',
-  props<{ gridId: string; columnsConfig: IccColumnConfig[] }>(),
+  props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
 );
 
 export const setViewportPageSize = createAction(

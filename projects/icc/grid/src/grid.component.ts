@@ -45,7 +45,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.gridId, this.columnsConfig);
+      this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {

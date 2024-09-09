@@ -33,7 +33,7 @@ export class AppGridTest2Component {
     columnFilters: [
       { name: 'vin', value: '9' },
       { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
-      { name: 'color', value: [{ name: 'Orange' }] },
+      { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
     ],
     rowSelection: true,
   };

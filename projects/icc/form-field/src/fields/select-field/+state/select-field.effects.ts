@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, exhaustMap, concatMap } from 'rxjs/operators';
 
 import { IccSelectFieldService } from '../services/select-field.service';
 import * as selectFieldActions from './select-field.actions';
@@ -15,7 +15,7 @@ export class IccSelectFieldEffects {
   setupSelectFieldConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectFieldActions.getSelectFieldOptions),
-      switchMap(({ fieldId, fieldConfig }) => {
+      concatMap(({ fieldId, fieldConfig }) => {
         return this.selectfieldService.getSelectFieldOptions(fieldConfig).pipe(
           map((options) => {
             return selectFieldActions.setSelectFieldOptions({ fieldId, options });

@@ -1,13 +1,19 @@
 import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
-import { CARSDATA } from '@icc/ui/grid/src/spec-helpers/cars-large';
+import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig } from '@icc/ui/grid/src/spec-helpers/cars-large';
 
 export class InMemoryService extends InMemoryDbService {
   createDb(): {
     DCR: any;
+    DCR_brand: any[];
+    DCR_color: any[];
+    DCR_columnConfig: any;
   } {
     return {
       DCR: CARSDATA,
+      DCR_brand: DCRBrands,
+      DCR_color: DCRColors,
+      DCR_columnConfig: DCRColumnConfig,
     };
   }
 

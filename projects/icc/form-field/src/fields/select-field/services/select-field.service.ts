@@ -11,40 +11,36 @@ export class IccSelectFieldService {
   private http = inject(HttpClient);
 
   getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
-    //console.log(' get mmmmmmmmmmmmmmm option fieldConfig=', fieldConfig);
-    let options: any = [];
-    const fieldName = fieldConfig.fieldName;
-    if (fieldName === 'brand') {
-      options = [
-        { title: '', name: '' },
-        { title: 'Audi', name: 'Audi' },
-        { title: 'BMW', name: 'BMW' },
-        { title: 'Mercedes', name: 'Mercedes' },
-        { title: 'Renault', name: 'Renault' },
-        { title: 'Volvo', name: 'Volvo' },
-        { title: 'Fiat', name: 'Fiat' },
-        { title: 'Chrysler', name: 'Chrysler' },
-        { title: 'Ford', name: 'Ford' },
-        { title: 'GM', name: 'GM' },
-        { title: 'Honda', name: 'Honda' },
-        { title: 'Jaguar', name: 'Jaguar' },
-        { title: 'VW', name: 'VW' },
-      ];
-    } else if (fieldName === 'color') {
-      options = [
-        { title: '', name: '' },
-        { title: 'Black', name: 'Black' },
-        { title: 'Blue', name: 'Blue' },
-        { title: 'Brown', name: 'Brown' },
-        { title: 'Green', name: 'Green' },
-        { title: 'Maroon', name: 'Maroon' },
-        { title: 'Orange', name: 'Orange' },
-        { title: 'Red', name: 'Red' },
-        { title: 'Silver', name: 'Silver' },
-        { title: 'Yellow', name: 'Yellow' },
-        { title: 'White', name: 'White' },
-      ];
-    }
-    return of(options);
+    const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
+    return this.http.get<any[]>(url).pipe(
+      map((res) => {
+        console.log(' SelectFieldOptions res=', res);
+        return res;
+      }),
+    );
   }
 }
+
+/*
+  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
+    let params = new HttpParams();
+
+    params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
+    params = this.appendSortHttpParams(gridConfig.sortFields, params);
+
+    const offset = (gridConfig.page - 1) * gridConfig.pageSize;
+    const limit = gridConfig.pageSize;
+    params = params.append('offset', offset.toString());
+    params = params.append('limit', limit.toString());
+    //console.log(' service getGridData gridConfig =', gridConfig);
+    //console.log(' params =', params);
+    const urlKey = gridConfig.urlKey;
+    return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
+      map((res) => {
+        console.log(' res=', res);
+        return res;
+      }),
+    );
+  }
+
+  */

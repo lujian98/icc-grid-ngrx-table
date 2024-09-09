@@ -32,11 +32,11 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.setupGridColumnsConfig),
       switchMap((action) => {
-        const gridId = action.gridId;
-        return this.gridService.getGridColumnsConfig(gridId, action.columnsConfig).pipe(
+        const gridConfig = action.gridConfig;
+        return this.gridService.getGridColumnsConfig(gridConfig, action.columnsConfig).pipe(
           map((columnsConfig) => {
             return gridActions.setupGridColumnsConfigSuccess({
-              gridId,
+              gridConfig,
               columnsConfig,
             });
           }),

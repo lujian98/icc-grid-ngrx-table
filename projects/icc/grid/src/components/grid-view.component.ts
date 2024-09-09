@@ -56,7 +56,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this._gridConfig = val;
     if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
-      this.gridFacade.setupGridColumnsConfig(this.gridConfig.gridId, []);
+      this.gridFacade.setupGridColumnsConfig(this.gridConfig, []);
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
@@ -130,7 +130,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       width: columnWidths[index].width / widthRatio,
     }));
     this.setColumWidths(columnWidths, widthRatio);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridId, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
   }
 
   onColumnDragDrop(events: DragDropEvent): void {
@@ -138,7 +138,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const currentIndex = this.indexCorrection(events.currentIndex);
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig.gridId, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
   }
 
   onScrolledIndexChange(index: number): void {

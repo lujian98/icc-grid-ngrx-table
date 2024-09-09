@@ -19,12 +19,12 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
   }
 
-  setupGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridId, columnsConfig }));
+  setupGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridConfig, columnsConfig }));
   }
 
-  setGridColumnsConfig(gridId: string, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridId, columnsConfig }));
+  setGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
   }
 
   setViewportPageSize(gridId: string, pageSize: number, viewportWidth: number): void {

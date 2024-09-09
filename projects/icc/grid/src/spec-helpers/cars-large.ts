@@ -1,3 +1,64 @@
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccGridData,
+  IccSortField,
+  IccColumnFilter,
+} from '../models/grid-column.model';
+
+export const DCRBrands = [
+  { title: '', name: '' },
+  { title: 'Audi', name: 'Audi' },
+  { title: 'BMW', name: 'BMW' },
+  { title: 'Mercedes', name: 'Mercedes' },
+  { title: 'Renault', name: 'Renault' },
+  { title: 'Volvo', name: 'Volvo' },
+  { title: 'Fiat', name: 'Fiat' },
+  { title: 'Chrysler', name: 'Chrysler' },
+  { title: 'Ford', name: 'Ford' },
+  { title: 'GM', name: 'GM' },
+  { title: 'Honda', name: 'Honda' },
+  { title: 'Jaguar', name: 'Jaguar' },
+  { title: 'VW', name: 'VW' },
+];
+
+export const DCRColors = [
+  { title: '', name: '' },
+  { title: 'Black', name: 'Black' },
+  { title: 'Blue', name: 'Blue' },
+  { title: 'Brown', name: 'Brown' },
+  { title: 'Green', name: 'Green' },
+  { title: 'Maroon', name: 'Maroon' },
+  { title: 'Orange', name: 'Orange' },
+  { title: 'Red', name: 'Red' },
+  { title: 'Silver', name: 'Silver' },
+  { title: 'Yellow', name: 'Yellow' },
+  { title: 'White', name: 'White' },
+];
+
+export const DCRColumnConfig: IccColumnConfig[] = [
+  {
+    name: 'ID',
+    width: 50,
+    align: 'center',
+  },
+  {
+    name: 'vin',
+  },
+  {
+    name: 'brand',
+    hidden: false,
+    filterField: false,
+  },
+  {
+    name: 'year',
+    sortField: false,
+  },
+  {
+    name: 'color',
+  },
+];
+
 export const CARSDATA0 = {
   //"TotalCounts": 200,
   data: [
