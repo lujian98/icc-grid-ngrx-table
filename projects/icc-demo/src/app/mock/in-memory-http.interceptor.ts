@@ -18,6 +18,10 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
       newreq.url = newreq.urlWithParams = '/api/DCR_columnConfig';
     }
 
+    if (req.url === '/api/usa/state') {
+      newreq.url = newreq.urlWithParams = '/api/usa_state';
+    }
+
     return next.handle(newreq as HttpRequest<any>);
   }
 }

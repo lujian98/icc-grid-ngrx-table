@@ -20,27 +20,3 @@ export class IccSelectFieldService {
     );
   }
 }
-
-/*
-  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
-    let params = new HttpParams();
-
-    params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
-    params = this.appendSortHttpParams(gridConfig.sortFields, params);
-
-    const offset = (gridConfig.page - 1) * gridConfig.pageSize;
-    const limit = gridConfig.pageSize;
-    params = params.append('offset', offset.toString());
-    params = params.append('limit', limit.toString());
-    //console.log(' service getGridData gridConfig =', gridConfig);
-    //console.log(' params =', params);
-    const urlKey = gridConfig.urlKey;
-    return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
-      map((res) => {
-        console.log(' res=', res);
-        return res;
-      }),
-    );
-  }
-
-  */

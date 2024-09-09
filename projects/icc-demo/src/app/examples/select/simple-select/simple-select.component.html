@@ -1,55 +1,48 @@
 <div>
-  Local field config and local data with Object Data
-  <div class="single-selection">
-    <icc-select-field [fieldConfig]="singleSelection" [value]="[states[16]]" [options]="states"></icc-select-field>
-  </div>
-
-  <div class="multi-selection">
-    <icc-select-field [fieldConfig]="multiSelection" [value]="[states[16]]" [options]="states"></icc-select-field>
-  </div>
-
-  <div class="single-autocomplete">
-    <icc-select-field [fieldConfig]="singleAutocomplete" [value]="[states[16]]" [options]="states"></icc-select-field>
-  </div>
-
-  <div class="multi-autocomplete">
-    <icc-select-field [fieldConfig]="multiAutocomplete" [value]="[states[16]]" [options]="states"></icc-select-field>
-  </div>
+  Local field config and local object options
+  <icc-select-field [fieldConfig]="singleSelection" [value]="singleObjectState" [options]="states"></icc-select-field>
+  <icc-select-field [fieldConfig]="multiSelection" [value]="multiObjectStates" [options]="states"></icc-select-field>
+  <icc-select-field
+    [fieldConfig]="singleAutocomplete"
+    [value]="singleObjectState"
+    [options]="states"
+  ></icc-select-field>
+  <icc-select-field [fieldConfig]="multiAutocomplete" [value]="multiObjectStates" [options]="states"></icc-select-field>
 </div>
 
 <div><br /></div>
 
 <div>
-  Local field config and local data with list option Data
-  <div class="single-selection">
-    <icc-select-field
-      [fieldConfig]="singleSelectionList"
-      [value]="selectState"
-      [options]="listStates"
-    ></icc-select-field>
-  </div>
+  Local field config and local list options (non-object) TODO need test mutiple value
+  <icc-select-field
+    [fieldConfig]="singleSelectionList"
+    [value]="singleListState"
+    [options]="listStates"
+  ></icc-select-field>
+  <icc-select-field
+    [fieldConfig]="multiSelectionList"
+    [value]="singleListState"
+    [options]="listStates"
+  ></icc-select-field>
+  <icc-select-field
+    [fieldConfig]="singleAutocompleteList"
+    [value]="singleListState"
+    [options]="listStates"
+  ></icc-select-field>
+  <icc-select-field
+    [fieldConfig]="multiAutocompleteList"
+    [value]="singleListState"
+    [options]="listStates"
+  ></icc-select-field>
+</div>
 
-  <div class="multi-selection">
-    <icc-select-field
-      [fieldConfig]="multiSelectionList"
-      [value]="selectState"
-      [options]="listStates"
-    ></icc-select-field>
-  </div>
+<div><br /></div>
 
-  <div class="single-autocomplete">
-    <icc-select-field
-      [fieldConfig]="singleAutocompleteList"
-      [value]="selectState"
-      [options]="listStates"
-    ></icc-select-field>
-  </div>
+<div>
+  Local field config and remote object options
+  <icc-select-field [fieldConfig]="singleSelectionRemote" [value]="singleObjectState"></icc-select-field>
+  <icc-select-field [fieldConfig]="multiSelectionRemote" [value]="multiObjectStates"></icc-select-field>
 
-  <div class="multi-autocomplete">
-    <icc-select-field
-      [fieldConfig]="multiAutocompleteList"
-      [value]="selectState"
-      [options]="listStates"
-    ></icc-select-field>
-  </div>
+  <icc-select-field [fieldConfig]="singleAutocompleteRemote" [value]="singleObjectState"></icc-select-field>
+  <icc-select-field [fieldConfig]="multiAutocompleteRemote" [value]="multiObjectStates"></icc-select-field>
 </div>

@@ -13,6 +13,11 @@ import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-h
 })
 export class AppSimpleSelectComponent {
   states = STATES;
+  listStates = [...STATES].map((state) => state.state);
+  singleObjectState = [STATES[32]];
+  multiObjectStates = [STATES[32], STATES[36]];
+  singleListState = 'Louisiana';
+
   singleSelection: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     fieldLabel: 'Single Selection (Object)',
@@ -49,10 +54,6 @@ export class AppSimpleSelectComponent {
     placeholder: 'Select One or More...',
   };
 
-  listStates = [...STATES].map((state) => state.state);
-
-  selectState = 'Louisiana';
-
   singleSelectionList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     singleListOption: true,
@@ -82,6 +83,54 @@ export class AppSimpleSelectComponent {
     multiSelection: true,
     selectOnly: false,
     fieldLabel: 'Multi Autocomplete (list)',
+    placeholder: 'Select One or More...',
+  };
+
+  singleSelectionRemote: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    urlKey: 'usa',
+    fieldName: 'state',
+    fieldLabel: 'Single Selection (Object)',
+    optionLabel: 'state',
+    optionKey: 'abbr',
+    placeholder: 'Select One...',
+  };
+
+  multiSelectionRemote: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    urlKey: 'usa',
+    fieldName: 'state',
+    multiSelection: true,
+    fieldLabel: 'Multi Selection (Object)',
+    optionLabel: 'state',
+    optionKey: 'abbr',
+    placeholder: 'Select One or More...',
+  };
+
+  singleAutocompleteRemote: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    urlKey: 'usa',
+    fieldName: 'state',
+    selectOnly: false,
+    fieldLabel: 'Single Autocomplete (Object)',
+    optionLabel: 'state',
+    optionKey: 'abbr',
+    placeholder: 'Select One...',
+  };
+
+  multiAutocompleteRemote: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteOptions: true,
+    urlKey: 'usa',
+    fieldName: 'state',
+    multiSelection: true,
+    selectOnly: false,
+    fieldLabel: 'Multi Autocomplete (Object)',
+    optionLabel: 'state',
+    optionKey: 'abbr',
     placeholder: 'Select One or More...',
   };
 
