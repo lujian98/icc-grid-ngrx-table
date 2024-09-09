@@ -29,7 +29,7 @@ export class AppGridOverallComponent {
         dir: 'desc',
       },
     ],
-    columnFilters: [{ name: 'vin', value: '9' }],
+    //columnFilters: [{ name: 'vin', value: '9' }], // TODO remoteColumnsConfig true load first, then load data
     rowSelection: true,
   };
 }

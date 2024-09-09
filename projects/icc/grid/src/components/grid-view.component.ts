@@ -57,6 +57,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
       this.gridFacade.setupGridColumnsConfig(this.gridConfig, []);
+      //TODO need load data after load the remote column config otherwise filter is not working
     }
     this.gridData$ = this.gridFacade.selectGridData(val.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);

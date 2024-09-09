@@ -20,12 +20,13 @@ export class IccGridService {
   private http = inject(HttpClient);
 
   getGridConfig(gridId: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    //console.log(' service config =', gridConfig)
+    //console.log(' service config =', gridConfig)//
     //TODO need a flag to tell if gridConfig or default saved in the remote database, read from here, otherwise return client side gridConfig
     return of(gridConfig);
   }
 
   getGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
+    // TODO load gridconfig and columnConfig at the same time???
     const url = `/api/${gridConfig.urlKey}/columnConfig`;
     return this.http.get<any[]>(url).pipe(
       map((res) => {
@@ -41,6 +42,7 @@ export class IccGridService {
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
+    console.log(' service getGridData gridConfig =', gridConfig);
     let params = new HttpParams();
 
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
@@ -50,7 +52,6 @@ export class IccGridService {
     const limit = gridConfig.pageSize;
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
-    //console.log(' service getGridData gridConfig =', gridConfig);
     //console.log(' params =', params);
     const urlKey = gridConfig.urlKey;
     return this.http.get<IccGridData<T>>(`/api/${urlKey}`, { params }).pipe(
