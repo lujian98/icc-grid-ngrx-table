@@ -60,7 +60,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
-  private _value!: string | { [key: string]: T }[];
+  private _value!: any;
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
 
@@ -113,18 +113,29 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set value(val: string | { [key: string]: T }[]) {
-    const value = typeof val === 'string' ? [{ name: val, title: val }] : val;
-    this._value = value as { [key: string]: T }[];
-    if (this.form && value !== undefined) {
-      //console.log(' 555555 set form value =', this._value);
+  set value(val: any) {
+    this._value = this.getInitValue(val);
+    if (this.form && val !== undefined) {
       this.selectedField.setValue(this._value);
     }
   }
 
-  get value(): string | { [key: string]: T }[] {
-    //console.log( ' 666666 get value = ', this._value)
+  get value(): any {
     return this._value;
+  }
+
+  private getInitValue(val: any): any {
+    let value: any = val;
+    if (typeof val === 'string') {
+      value = [val];
+    }
+    if (this.fieldConfig.singleListOption && Array.isArray(value)) {
+      value = [...value].map((item) => ({
+        name: item,
+        title: item,
+      }));
+    }
+    return value;
   }
 
   @Output() selectionChange = new EventEmitter<any[]>(true);
@@ -154,10 +165,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
-    //console.log( ' displayfn value=', value)
     if (Array.isArray(value)) {
-      //console.log( ' 2222displayfn value=', value)
-      //console.log( ' 2222this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
       return value.length > 0
         ? value
             .map((item) => item[this.fieldConfig.optionLabel])
@@ -170,10 +178,6 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    /*
-    console.log(' this.fieldConfig.optionKey=', this.fieldConfig.optionKey)
-    console.log(' s1=', s1)
-    console.log(' s2=', s2)*/
     return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
   }
 
