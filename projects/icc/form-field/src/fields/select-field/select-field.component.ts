@@ -89,7 +89,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
 
-      console.log(' this.fieldConfig.fieldName=', this.fieldConfig.fieldName);
+      //console.log(' this.fieldConfig.fieldName=', this.fieldConfig.fieldName);
       this.form = new FormGroup({
         [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
       });
@@ -145,6 +145,8 @@ export class SelectFieldComponent<T> implements OnDestroy {
         name: item,
         title: item,
       }));
+    } else {
+      value = [...value];
     }
     return value;
   }
@@ -199,6 +201,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
     } else {
+      //console.log( '5555555  close overlay this.form=', this.form)
     }
   }
 
