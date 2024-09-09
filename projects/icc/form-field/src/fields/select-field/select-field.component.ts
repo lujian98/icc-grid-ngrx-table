@@ -88,6 +88,8 @@ export class SelectFieldComponent<T> implements OnDestroy {
       );
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
+
+      console.log(' this.fieldConfig.fieldName=', this.fieldConfig.fieldName);
       this.form = new FormGroup({
         [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
       });

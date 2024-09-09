@@ -5,6 +5,8 @@ import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-h
 import {
   SingleSelectConfig,
   MultiSelectConfig,
+  SingleAutocompleteConfig,
+  MultiAutocompleteConfig,
 } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/select-field-helpers';
 
 export class InMemoryService extends InMemoryDbService {
@@ -19,6 +21,10 @@ export class InMemoryService extends InMemoryDbService {
     usa_SingleRemoteFieldConfig: any;
     usa_MultiRemote: State[];
     usa_MultiRemoteFieldConfig: any;
+    usa_SingleAutocompleteRemotes: State[];
+    usa_SingleAutocompleteRemotesFieldConfig: any;
+    usa_MultiAutocompleteRemotes: State[];
+    usa_MultiAutocompleteRemotesFieldConfig: any;
   } {
     return {
       DCR: CARSDATA,
@@ -31,6 +37,10 @@ export class InMemoryService extends InMemoryDbService {
       usa_SingleRemoteFieldConfig: SingleSelectConfig,
       usa_MultiRemote: STATES,
       usa_MultiRemoteFieldConfig: MultiSelectConfig,
+      usa_SingleAutocompleteRemotes: STATES,
+      usa_SingleAutocompleteRemotesFieldConfig: SingleAutocompleteConfig,
+      usa_MultiAutocompleteRemotes: STATES,
+      usa_MultiAutocompleteRemotesFieldConfig: MultiAutocompleteConfig,
     };
   }
 
