@@ -37,7 +37,6 @@ export const DCRColors = [
 ];
 
 export const DCRGridConfig: Partial<IccGridConfig> = {
-  //urlKey: 'DCR',
   columnSort: true,
   columnFilter: true,
   columnResize: true,
@@ -53,7 +52,7 @@ export const DCRGridConfig: Partial<IccGridConfig> = {
     },
   ],
   columnFilters: [
-    // { name: 'vin', value: '9' },
+    { name: 'vin', value: '9' },
     { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
     { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
   ],

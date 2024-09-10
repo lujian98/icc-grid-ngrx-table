@@ -56,7 +56,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this._gridConfig = val;
     if (this.gridConfig.remoteGridConfig && !this.isConfigReady && this.gridConfig.configReady) {
       this.isConfigReady = true;
-      this.setViewportPageSize();
+      window.dispatchEvent(new Event('resize'));
     }
     this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
@@ -112,7 +112,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const fitPageSize = Math.floor(clientHeight / 24);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    // console.log(' tttttttttttttt this.gridConfig=', this.gridConfig);
+    // console.log(' tttttttttttttt pageSize=', pageSize);
     this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
     if (this.gridConfig.configReady && this.gridConfig.viewReady) {
       this.gridFacade.getGridData(this.gridConfig.gridId);

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid-remote-virtual-scroll',
@@ -25,27 +25,4 @@ export class AppGridRemoteVirtualScrollComponent {
     remoteColumnsConfig: true,
     remoteGridData: true,
   };
-
-  columnsConfig: IccColumnConfig[] = [
-    {
-      name: 'ID',
-      width: 50,
-      align: 'center',
-    },
-    {
-      name: 'vin',
-    },
-    {
-      name: 'brand',
-      hidden: false,
-      filterField: false,
-    },
-    {
-      name: 'year',
-      sortField: false,
-    },
-    {
-      name: 'color',
-    },
-  ];
 }

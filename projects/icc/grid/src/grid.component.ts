@@ -71,6 +71,10 @@ export class IccGridComponent<T> implements OnDestroy {
     }
   }
 
+  clearFilters(): void {
+    this.gridFacade.setGridColumnFilters(this.gridId, []);
+  }
+
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.gridId);
   }

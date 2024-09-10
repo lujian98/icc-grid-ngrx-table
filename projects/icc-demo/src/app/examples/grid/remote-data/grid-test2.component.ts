@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid-test2',
@@ -16,61 +16,4 @@ export class AppGridTest2Component {
     urlKey: 'DCR',
     remoteGridConfig: true,
   };
-  /*
-   [columnsConfig]="columnsConfig"
-  gridConfig: IccGridConfig = {
-    ...defaultGridConfig,
-    urlKey: 'DCR',
-    columnSort: true,
-    columnFilter: true,
-    columnResize: true,
-    columnReorder: true,
-    columnMenu: true,
-    columnHidden: true,
-    //page: 5,
-
-    remoteColumnsConfig: false,
-    remoteGridData: true,
-    sortFields: [
-      {
-        field: 'ID',
-        dir: 'asc',
-      },
-    ], // { title: 'BMW', name: 'BMW' }
-    columnFilters: [
-      { name: 'vin', value: '9' },
-      { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
-      { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
-    ],
-    rowSelection: true,
-  };
-
-  columnsConfig: IccColumnConfig[] = [
-    {
-      name: 'ID',
-      width: 50,
-      align: 'center',
-    },
-    {
-      name: 'vin',
-    },
-    {
-      name: 'brand',
-      title: 'this s s     sssssssssssssssssss sssssssssssssss',
-      filterField: 'select',
-      width: 50,
-    },
-    {
-      name: 'year',
-      width: 50,
-      align: 'right',
-    },
-    {
-      name: 'color',
-      width: 80,
-      filterField: 'select',
-      align: 'center',
-    },
-  ];
-  */
 }

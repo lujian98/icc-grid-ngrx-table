@@ -23,8 +23,8 @@ export class IccGridEffects {
         return this.gridService.getGridConfig(action.gridConfig).pipe(
           map((gridConfig) => {
             if (gridConfig.remoteColumnsConfig) {
-              const columnsConfig: any[] = [];
               this.store.dispatch(gridActions.loadGridConfigSuccess({ gridConfig }));
+              //console.log( ' gridConfig loaded ')
               return gridActions.loadGridColumnsConfig({ gridConfig });
             } else {
               return gridActions.loadGridConfigSuccess({ gridConfig });
@@ -43,6 +43,7 @@ export class IccGridEffects {
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
             this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+            //console.log( ' loadGridColumnsConfig loaded ')
             return gridActions.getGridData({ gridId: gridConfig.gridId });
           }),
         );
@@ -66,6 +67,7 @@ export class IccGridEffects {
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
             map((gridData) => {
+              //console.log( ' remoteGridData loaded ')
               return gridActions.getGridDataSuccess({ gridId, gridData });
             }),
           );

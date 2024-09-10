@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 //import { SunTextField } from '../../../../fields/text_field';
@@ -15,6 +15,7 @@ import { TextFieldComponent } from '@icc/ui/form-field';
   imports: [CommonModule, TextFieldComponent],
 })
 export class IccTextFilterComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private gridFacade = inject(IccGridFacade);
   //private _gridId!: string;
   private _gridConfig!: IccGridConfig;
@@ -30,7 +31,10 @@ export class IccTextFilterComponent {
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
       this.value = find.value as string;
+    } else {
+      this.value = '';
     }
+    this.changeDetectorRef.markForCheck();
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;

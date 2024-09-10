@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
@@ -13,6 +13,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   imports: [CommonModule, SelectFieldComponent],
 })
 export class IccSelectFilterComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
@@ -29,12 +30,15 @@ export class IccSelectFilterComponent {
       remoteOptions: true,
       placeholder: 'Filter ...',
     };
-    //console.log(' fieldConfig=', this.fieldConfig, ' column=', this.column);
+    console.log(' 666666666666 fieldConfig=', this.fieldConfig, ' column=', this.column);
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
       this.value = find.value;
+    } else {
+      this.value = '';
     }
+    this.changeDetectorRef.markForCheck();
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;

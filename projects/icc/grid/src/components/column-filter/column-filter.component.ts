@@ -28,6 +28,7 @@ export class IccColumnFilterComponent implements OnInit {
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     if (this._componentRef) {
+      //console.log( ' reset gridconfig=',  this.gridConfig)
       this._componentRef.instance.gridConfig = this.gridConfig;
     }
   }

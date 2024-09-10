@@ -2,6 +2,7 @@
   <ng-container *ngIf="columnsConfig$ | async as columns">
     <div class="icc-grid-toolbar">
       <button (click)="refresh()">Refresh</button>
+      <button (click)="clearFilters()">Clear All Filters</button>
     </div>
     <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
 
