@@ -1,18 +1,17 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   IccColumnConfig,
+  IccColumnFilter,
   IccGridConfig,
   IccGridData,
   IccSortField,
-  IccColumnFilter,
 } from '../models/grid-column.model';
-import { defaultGridConfig } from '../models/default-grid';
-import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
-import { IccFilterFactory } from './filter/filter_factory';
 import { CARSDATA3 } from '../spec-helpers/cars-large';
+import { IccFilterFactory } from './filter/filter_factory';
+import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 
 @Injectable({
   providedIn: 'root',
@@ -20,58 +19,26 @@ import { CARSDATA3 } from '../spec-helpers/cars-large';
 export class IccGridService {
   private http = inject(HttpClient);
 
-  getGridConfig(gridId: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    console.log(' service config =', gridConfig);
-
+  getGridConfig(gridConfig: IccGridConfig): Observable<IccGridConfig> {
+    //console.log(' service config =', gridConfig);
     const url = `/api/${gridConfig.urlKey}/gridConfig`;
-    const config2: Partial<IccGridConfig> = {
-      //urlKey: 'DCR',
-      columnSort: true,
-      columnFilter: true,
-      columnResize: true,
-      columnReorder: true,
-      columnMenu: true,
-      columnHidden: true,
-      remoteColumnsConfig: true,
-      remoteGridData: true,
-      sortFields: [
-        {
-          field: 'ID',
-          dir: 'asc',
-        },
-      ],
-      columnFilters: [
-        // { name: 'vin', value: '9' },
-        { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
-        { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
-      ],
-      rowSelection: true,
-    };
-    console.log(' get service config =', config2);
-
     return this.http.get<IccGridConfig>(url).pipe(
       map((config) => {
-        console.log(' DCR Grid config gridConfig=', gridConfig);
-        console.log(' DCR Grid config res=', config);
+        //console.log(' DCR Grid config gridConfig=', gridConfig);
+        //console.log(' DCR Grid config res=', config);
         return {
           ...gridConfig,
-          ...config2,
-          configReady: true,
+          ...config,
         };
       }),
     );
-
-    return of({
-      ...gridConfig,
-      ...config2,
-    });
   }
 
   getGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
     const url = `/api/${gridConfig.urlKey}/columnConfig`;
     return this.http.get<any[]>(url).pipe(
       map((res) => {
-        console.log(' DCRColumnConfig res=', res);
+        //console.log(' DCRColumnConfig res=', res);
         return res;
       }),
     );

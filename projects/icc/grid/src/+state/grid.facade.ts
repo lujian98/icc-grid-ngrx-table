@@ -15,12 +15,10 @@ import { selectGridConfig, selectColumnsConfig, selectGridData, selectGridInMemo
 export class IccGridFacade {
   private store = inject(Store);
 
-  setupGridConfig(gridConfig: IccGridConfig): void {
-    const gridId = gridConfig.gridId;
-    this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
-
+  initGridConfig(gridConfig: IccGridConfig): void {
+    this.store.dispatch(gridActions.initGridConfig({ gridConfig }));
     if (gridConfig.remoteGridConfig) {
-      this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
+      this.store.dispatch(gridActions.loadGridConfig({ gridConfig }));
     }
   }
 
@@ -51,13 +49,11 @@ export class IccGridFacade {
   }
 
   getGridPageData(gridId: string, page: number): void {
-    //console.log(' 222222 getGridPageData');
     this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
     this.getGridData(gridId);
   }
 
   getGridData(gridId: string): void {
-    //console.log(' 11111 getGridData');
     this.store.dispatch(gridActions.getGridData({ gridId }));
   }
 

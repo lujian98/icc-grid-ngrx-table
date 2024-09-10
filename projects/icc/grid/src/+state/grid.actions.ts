@@ -7,11 +7,13 @@ import {
   IccColumnFilter,
 } from '../models/grid-column.model';
 
-export const setupGridConfig = createAction('[Grid] Setup Grid Config', props<{ gridConfig: IccGridConfig }>());
+export const initGridConfig = createAction('[Grid] Init Grid Config', props<{ gridConfig: IccGridConfig }>());
 
-export const setupGridConfigSuccess = createAction(
-  '[Grid] Setup Grid Config Success',
-  props<{ gridId: string; gridConfig: IccGridConfig }>(),
+export const loadGridConfig = createAction('[Grid] Load Grid Config', props<{ gridConfig: IccGridConfig }>());
+
+export const loadGridConfigSuccess = createAction(
+  '[Grid] Load Grid Config Success',
+  props<{ gridConfig: IccGridConfig }>(),
 );
 
 export const setupGridColumnsConfig = createAction(

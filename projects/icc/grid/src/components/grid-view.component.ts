@@ -54,18 +54,17 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    console.log(' uuuuuuuuuuuuuu gridConfig=', val);
-    if (!this.isConfigReady && val.configReady) {
+    this._gridConfig = val;
+    if (this.gridConfig.remoteGridConfig && !this.isConfigReady && this.gridConfig.configReady) {
       this.isConfigReady = true;
       this.setViewportPageSize();
     }
-    this._gridConfig = val;
-    if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
+    if (!this.gridConfig.remoteGridConfig && this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
       this.gridFacade.setupGridColumnsConfig(this.gridConfig, []);
       //TODO need load data after load the remote column config otherwise filter is not working
     }
-    this.gridData$ = this.gridFacade.selectGridData(val.gridId);
+    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -90,7 +89,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
-  viewport!: CdkVirtualScrollViewport;
+  private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewInit(): void {
     interval(10)
@@ -120,11 +119,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
 
-    console.log(' tttttttttttttt this.gridConfig=', this.gridConfig);
-    //if (this.gridConfig.configReady) {
+    // console.log(' tttttttttttttt this.gridConfig=', this.gridConfig);
+
     this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
-    //}
-    if (this.gridConfig.viewReady) {
+    if (this.gridConfig.configReady && this.gridConfig.viewReady) {
       this.gridFacade.getGridData(this.gridConfig.gridId);
     }
   }

@@ -18,22 +18,17 @@ export class IccGridEffects {
 
   setupGridConfig$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(gridActions.setupGridConfig),
+      ofType(gridActions.loadGridConfig),
       switchMap((action) => {
-        const gridId = action.gridConfig.gridId;
-        return this.gridService.getGridConfig(gridId, action.gridConfig).pipe(
+        return this.gridService.getGridConfig(action.gridConfig).pipe(
           map((gridConfig) => {
-            return gridActions.setupGridConfigSuccess({ gridId, gridConfig });
-            /*
-            if(gridConfig.remoteColumnsConfig) {
+            if (gridConfig.remoteColumnsConfig) {
               const columnsConfig: any[] = [];
-              console.log(' 111111111111111 columnsConfig=')
-              this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
-              console.log(' 22222222222222222 columnsConfig=')
+              this.store.dispatch(gridActions.loadGridConfigSuccess({ gridConfig }));
               return gridActions.setupGridColumnsConfig({ gridConfig, columnsConfig });
             } else {
-              return gridActions.setupGridConfigSuccess({ gridId, gridConfig });
-            }*/
+              return gridActions.loadGridConfigSuccess({ gridConfig });
+            }
           }),
         );
       }),
@@ -49,7 +44,6 @@ export class IccGridEffects {
           map((columnsConfig) => {
             this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
             return gridActions.getGridData({ gridId: gridConfig.gridId });
-            //return gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig });
           }),
         );
       }),
@@ -59,7 +53,7 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      debounceTime(300),
+      debounceTime(10),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridId),

@@ -10,18 +10,17 @@ export const iccGridFeature = createFeature({
   name: 'iccGrid',
   reducer: createReducer(
     initialState,
-    on(gridActions.setupGridConfigSuccess, (state, action) => {
-      const key = action.gridId;
+    on(gridActions.initGridConfig, (state, action) => {
+      const key = action.gridConfig.gridId;
       const newState: IccGridState = { ...state };
       const gridConfig = {
         ...action.gridConfig,
-        //configReady: true,
       };
-      console.log(' 2222222222 gridConfig=', gridConfig);
       newState[key] = {
         ...defaultState,
         gridConfig: {
           ...gridConfig,
+          configReady: !gridConfig.remoteGridConfig,
           viewReady: !gridConfig.remoteColumnsConfig,
           pageSize: !gridConfig.virtualScroll ? gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
         },
@@ -30,6 +29,22 @@ export const iccGridFeature = createFeature({
         ...newState,
       };
     }),
+
+    on(gridActions.loadGridConfigSuccess, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: IccGridState = { ...state };
+      newState[key] = {
+        ...state[key],
+        gridConfig: {
+          ...action.gridConfig,
+          configReady: true,
+        },
+      };
+      return {
+        ...newState,
+      };
+    }),
+
     on(gridActions.setupGridColumnsConfigSuccess, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: IccGridState = { ...state };
@@ -63,7 +78,7 @@ export const iccGridFeature = createFeature({
           viewportWidth: action.viewportWidth,
         },
       };
-      console.log(' bbbbbbbbbbbb setViewportPageSize=', newState);
+      //console.log(' bbbbbbbbbbbb setViewportPageSize=', newState);
       return {
         ...newState,
       };
@@ -153,7 +168,7 @@ export const iccGridFeature = createFeature({
         totalCounts: action.gridData.totalCounts,
         data: data,
       };
-      console.log(' new load data setup grid data = ', newState);
+      //console.log(' new load data setup grid data = ', newState);
       return {
         ...newState,
       };

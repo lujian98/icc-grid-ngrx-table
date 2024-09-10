@@ -28,14 +28,14 @@ export class IccGridComponent<T> implements OnDestroy {
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    console.log('0000000000gridId', this.gridId);
+    //console.log('0000000000gridId', this.gridId);
     this._gridConfig = {
       ...value,
       gridId: this.gridId,
     };
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
-    this.gridFacade.setupGridConfig(this.gridConfig);
+    this.gridFacade.initGridConfig(this.gridConfig);
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
