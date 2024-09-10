@@ -16,7 +16,12 @@ export class IccGridFacade {
   private store = inject(Store);
 
   setupGridConfig(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
+    if (gridConfig.remoteGridConfig) {
+      this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
+    } else {
+      const gridId = gridConfig.gridId;
+      this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
+    }
   }
 
   setupGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {

@@ -6,6 +6,8 @@ export interface IccSortField {
 export interface IccGridConfig {
   gridId: string; // auto generated unique id
   urlKey: string; // Only for remote grid config and data
+  remoteGridConfig: boolean;
+  configReady: boolean;
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;

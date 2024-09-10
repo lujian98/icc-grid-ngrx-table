@@ -36,6 +36,30 @@ export const DCRColors = [
   { title: 'White', name: 'White' },
 ];
 
+export const DCRGridConfig: Partial<IccGridConfig> = {
+  //urlKey: 'DCR',
+  columnSort: true,
+  columnFilter: true,
+  columnResize: true,
+  columnReorder: true,
+  columnMenu: true,
+  columnHidden: true,
+  remoteColumnsConfig: true,
+  remoteGridData: true,
+  sortFields: [
+    {
+      field: 'ID',
+      dir: 'asc',
+    },
+  ],
+  columnFilters: [
+    // { name: 'vin', value: '9' },
+    { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
+    { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
+  ],
+  rowSelection: true,
+};
+
 export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'ID',
@@ -47,15 +71,20 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   },
   {
     name: 'brand',
-    hidden: false,
-    filterField: false,
+    title: 'this s s     sssssssssssssssssss sssssssssssssss',
+    filterField: 'select',
+    width: 50,
   },
   {
     name: 'year',
-    sortField: false,
+    width: 50,
+    align: 'right',
   },
   {
     name: 'color',
+    width: 80,
+    filterField: 'select',
+    align: 'center',
   },
 ];
 

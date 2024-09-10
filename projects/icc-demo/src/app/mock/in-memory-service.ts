@@ -1,6 +1,13 @@
 import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
-import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig } from '@icc/ui/grid/src/spec-helpers/cars-large';
+import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
+import {
+  CARSDATA,
+  DCRBrands,
+  DCRColors,
+  DCRColumnConfig,
+  DCRGridConfig,
+} from '@icc/ui/grid/src/spec-helpers/cars-large';
 import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
 import {
   SingleSelectConfig,
@@ -18,7 +25,8 @@ export class InMemoryService extends InMemoryDbService {
     DCR: any;
     DCR_brand: any[];
     DCR_color: any[];
-    DCR_columnConfig: any;
+    DCR_columnConfig: IccColumnConfig[];
+    DCR_gridConfig: Partial<IccGridConfig>;
     usa_state: State[];
     usa_statelist: string[];
     usa_SingleRemote: State[];
@@ -43,6 +51,7 @@ export class InMemoryService extends InMemoryDbService {
       DCR_brand: DCRBrands,
       DCR_color: DCRColors,
       DCR_columnConfig: DCRColumnConfig,
+      DCR_gridConfig: DCRGridConfig,
       usa_state: STATES,
       usa_statelist: STATES.map((state) => state.state),
       usa_SingleRemote: STATES,

@@ -24,6 +24,16 @@ export class IccGridEffects {
         return this.gridService.getGridConfig(gridId, action.gridConfig).pipe(
           map((gridConfig) => {
             return gridActions.setupGridConfigSuccess({ gridId, gridConfig });
+            /*
+            if(gridConfig.remoteColumnsConfig) {
+              const columnsConfig: any[] = [];
+              console.log(' 111111111111111 columnsConfig=')
+              this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
+              console.log(' 22222222222222222 columnsConfig=')
+              return gridActions.setupGridColumnsConfig({ gridConfig, columnsConfig });
+            } else {
+              return gridActions.setupGridConfigSuccess({ gridId, gridConfig });
+            }*/
           }),
         );
       }),
@@ -49,7 +59,7 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      //debounceTime(10),
+      debounceTime(10),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridId),

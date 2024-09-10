@@ -4,13 +4,20 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } f
 
 @Component({
   selector: 'app-grid-test2',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
+  template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridTest2Component {
+  gridConfig: IccGridConfig = {
+    ...defaultGridConfig,
+    urlKey: 'DCR',
+    remoteGridConfig: true,
+  };
+  /*
+   [columnsConfig]="columnsConfig"
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     urlKey: 'DCR',
@@ -65,4 +72,5 @@ export class AppGridTest2Component {
       align: 'center',
     },
   ];
+  */
 }

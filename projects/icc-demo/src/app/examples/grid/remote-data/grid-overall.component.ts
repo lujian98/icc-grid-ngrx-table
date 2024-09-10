@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid-overall',
-  template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -20,7 +20,7 @@ export class AppGridOverallComponent {
     columnReorder: true,
     columnMenu: true,
     columnHidden: true,
-    remoteColumnsConfig: true,
+    remoteColumnsConfig: false,
     remoteGridData: true,
 
     sortFields: [
@@ -32,4 +32,27 @@ export class AppGridOverallComponent {
     columnFilters: [{ name: 'vin', value: '9' }], // TODO remoteColumnsConfig true load first, then load data
     rowSelection: true,
   };
+
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+    },
+    {
+      name: 'brand',
+      hidden: false,
+      filterField: false,
+    },
+    {
+      name: 'year',
+      sortField: false,
+    },
+    {
+      name: 'color',
+    },
+  ];
 }

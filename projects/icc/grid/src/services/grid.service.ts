@@ -9,6 +9,7 @@ import {
   IccSortField,
   IccColumnFilter,
 } from '../models/grid-column.model';
+import { defaultGridConfig } from '../models/default-grid';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 import { IccFilterFactory } from './filter/filter_factory';
 import { CARSDATA3 } from '../spec-helpers/cars-large';
@@ -20,13 +21,52 @@ export class IccGridService {
   private http = inject(HttpClient);
 
   getGridConfig(gridId: string, gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    //console.log(' service config =', gridConfig)//
-    //TODO need a flag to tell if gridConfig or default saved in the remote database, read from here, otherwise return client side gridConfig
-    return of(gridConfig);
+    console.log(' service config =', gridConfig);
+
+    const url = `/api/${gridConfig.urlKey}/gridConfig`;
+    const config2: Partial<IccGridConfig> = {
+      //urlKey: 'DCR',
+      columnSort: true,
+      columnFilter: true,
+      columnResize: true,
+      columnReorder: true,
+      columnMenu: true,
+      columnHidden: true,
+      remoteColumnsConfig: true,
+      remoteGridData: true,
+      sortFields: [
+        {
+          field: 'ID',
+          dir: 'asc',
+        },
+      ],
+      columnFilters: [
+        // { name: 'vin', value: '9' },
+        { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
+        { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
+      ],
+      rowSelection: true,
+    };
+    console.log(' get service config =', config2);
+
+    return this.http.get<IccGridConfig>(url).pipe(
+      map((config) => {
+        console.log(' DCR Grid config gridConfig=', gridConfig);
+        console.log(' DCR Grid config res=', config);
+        return {
+          ...gridConfig,
+          ...config2,
+        };
+      }),
+    );
+
+    return of({
+      ...gridConfig,
+      ...config2,
+    });
   }
 
   getGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
-    // TODO load gridconfig and columnConfig at the same time???
     const url = `/api/${gridConfig.urlKey}/columnConfig`;
     return this.http.get<any[]>(url).pipe(
       map((res) => {
@@ -42,7 +82,8 @@ export class IccGridService {
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
-    console.log(' service getGridData gridConfig =', gridConfig);
+    //console.log(' service getGridData gridConfig =', gridConfig);
+    //console.log(' 66666666666 service getGridData gridConfig =', columns);
     let params = new HttpParams();
 
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
