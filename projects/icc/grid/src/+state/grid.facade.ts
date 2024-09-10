@@ -28,8 +28,11 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
   }
 
-  setViewportPageSize(gridId: string, pageSize: number, viewportWidth: number): void {
-    this.store.dispatch(gridActions.setViewportPageSize({ gridId, pageSize, viewportWidth }));
+  setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
+    this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
+    if (gridConfig.configReady && gridConfig.viewReady) {
+      this.getGridData(gridConfig.gridId);
+    }
   }
 
   setGridSortFields(gridId: string, sortFields: IccSortField[]): void {

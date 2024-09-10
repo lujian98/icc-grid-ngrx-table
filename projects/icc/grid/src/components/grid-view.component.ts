@@ -95,28 +95,13 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         skip(1),
         debounceTime(250),
         distinctUntilChanged(),
-        switchMap((event) => {
-          return of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))));
-        }),
+        switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
       )
       .subscribe(() => this.setViewportPageSize());
   }
 
   trackByIndex(index: number): number {
     return index;
-  }
-
-  private setViewportPageSize(): void {
-    const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
-    const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / 24);
-    const pageSize =
-      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    // console.log(' tttttttttttttt pageSize=', pageSize);
-    this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
-    if (this.gridConfig.configReady && this.gridConfig.viewReady) {
-      this.gridFacade.getGridData(this.gridConfig.gridId);
-    }
   }
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
@@ -179,6 +164,15 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       }
     });
     return idx;
+  }
+
+  private setViewportPageSize(): void {
+    const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
+    const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
+    const fitPageSize = Math.floor(clientHeight / 24);
+    const pageSize =
+      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
+    this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);
   }
 
   @HostListener('window:resize', ['$event'])
