@@ -183,11 +183,12 @@ export class SelectFieldComponent<T> implements OnDestroy {
     this.changeDetectorRef.markForCheck();
     //console.log( 'ddddddddd  this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
     if (Array.isArray(value)) {
-      //console.log( 'eeeeeeeeee  value=', value)
+      //console.log('eeeeeeeeee  value=', value)
       return value.length > 0
         ? value
             .map((item) => item[this.fieldConfig.optionLabel])
-            .sort((a, b) => a.localeCompare(b))
+            .sort()
+            //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
             .join(', ')
         : '';
     } else {
