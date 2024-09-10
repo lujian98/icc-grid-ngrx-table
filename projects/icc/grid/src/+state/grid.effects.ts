@@ -25,7 +25,7 @@ export class IccGridEffects {
             if (gridConfig.remoteColumnsConfig) {
               const columnsConfig: any[] = [];
               this.store.dispatch(gridActions.loadGridConfigSuccess({ gridConfig }));
-              return gridActions.setupGridColumnsConfig({ gridConfig, columnsConfig });
+              return gridActions.loadGridColumnsConfig({ gridConfig });
             } else {
               return gridActions.loadGridConfigSuccess({ gridConfig });
             }
@@ -35,14 +35,14 @@ export class IccGridEffects {
     ),
   );
 
-  setupGridColumnConfig$ = createEffect(() =>
+  loadGridColumnsConfig$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(gridActions.setupGridColumnsConfig),
+      ofType(gridActions.loadGridColumnsConfig),
       switchMap((action) => {
         const gridConfig = action.gridConfig;
-        return this.gridService.getGridColumnsConfig(gridConfig, action.columnsConfig).pipe(
+        return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
-            this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+            this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
             return gridActions.getGridData({ gridId: gridConfig.gridId });
           }),
         );

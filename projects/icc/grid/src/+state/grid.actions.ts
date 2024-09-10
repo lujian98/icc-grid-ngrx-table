@@ -16,13 +16,13 @@ export const loadGridConfigSuccess = createAction(
   props<{ gridConfig: IccGridConfig }>(),
 );
 
-export const setupGridColumnsConfig = createAction(
-  '[Grid] Setup Grid Columns Config',
-  props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
+export const loadGridColumnsConfig = createAction(
+  '[Grid] Load Grid Columns Config',
+  props<{ gridConfig: IccGridConfig }>(),
 );
 
-export const setupGridColumnsConfigSuccess = createAction(
-  '[Grid] Setup Grid Columns Config Success',
+export const loadGridColumnsConfigSuccess = createAction(
+  '[Grid] Load Grid Columns Config Success',
   props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
 );
 

@@ -35,7 +35,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private _columns: IccColumnConfig[] = [];
   private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
-  private firstTimeLoadColumnsConfig = true;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
@@ -58,11 +57,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     if (this.gridConfig.remoteGridConfig && !this.isConfigReady && this.gridConfig.configReady) {
       this.isConfigReady = true;
       this.setViewportPageSize();
-    }
-    if (!this.gridConfig.remoteGridConfig && this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
-      this.firstTimeLoadColumnsConfig = false;
-      this.gridFacade.setupGridColumnsConfig(this.gridConfig, []);
-      //TODO need load data after load the remote column config otherwise filter is not working
     }
     this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
@@ -118,9 +112,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const fitPageSize = Math.floor(clientHeight / 24);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-
     // console.log(' tttttttttttttt this.gridConfig=', this.gridConfig);
-
     this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
     if (this.gridConfig.configReady && this.gridConfig.viewReady) {
       this.gridFacade.getGridData(this.gridConfig.gridId);

@@ -19,15 +19,13 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.initGridConfig({ gridConfig }));
     if (gridConfig.remoteGridConfig) {
       this.store.dispatch(gridActions.loadGridConfig({ gridConfig }));
+    } else if (gridConfig.remoteColumnsConfig) {
+      this.store.dispatch(gridActions.loadGridColumnsConfig({ gridConfig }));
     }
   }
 
-  setupGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfig({ gridConfig, columnsConfig }));
-  }
-
   setGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.setupGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+    this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
   }
 
   setViewportPageSize(gridId: string, pageSize: number, viewportWidth: number): void {

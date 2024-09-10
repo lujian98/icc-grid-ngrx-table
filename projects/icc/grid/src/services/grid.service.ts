@@ -34,7 +34,7 @@ export class IccGridService {
     );
   }
 
-  getGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): Observable<IccColumnConfig[]> {
+  getGridColumnsConfig(gridConfig: IccGridConfig): Observable<IccColumnConfig[]> {
     const url = `/api/${gridConfig.urlKey}/columnConfig`;
     return this.http.get<any[]>(url).pipe(
       map((res) => {
