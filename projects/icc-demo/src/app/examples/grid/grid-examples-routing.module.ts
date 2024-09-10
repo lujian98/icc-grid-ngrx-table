@@ -72,7 +72,7 @@ const routes: Route[] = [
       { path: 'in-memory-grid-virtual-scroll', component: AppGridVirtualScrollComponent },
       {
         path: '**',
-        redirectTo: 'remote-grid-overall',
+        redirectTo: 'grid-test2',
       },
     ],
   },
