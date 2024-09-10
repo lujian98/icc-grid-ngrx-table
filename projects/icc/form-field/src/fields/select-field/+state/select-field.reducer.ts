@@ -9,19 +9,32 @@ export const iccSelectFieldFeature = createFeature({
   name: 'iccSelectField',
   reducer: createReducer(
     initialState,
-    on(selectFieldActions.setupFieldConfig, (state, action) => {
+    on(selectFieldActions.initFieldConfig, (state, action) => {
       const key = action.fieldConfig.fieldId;
       const newState: SelectFieldState = { ...state };
       newState[key] = {
         ...defaultSelectFieldState,
         fieldConfig: {
           ...action.fieldConfig,
+          viewportReady: !action.fieldConfig.remoteConfig,
         },
       };
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
+
+    on(selectFieldActions.loadFieldConfigSuccess, (state, action) => {
+      const key = action.fieldConfig.fieldId;
+      const newState: SelectFieldState = { ...state };
+      newState[key] = {
+        ...state[key],
+        fieldConfig: {
+          ...action.fieldConfig,
+          viewportReady: true,
+        },
+      };
+      return { ...newState };
+    }),
+
     on(selectFieldActions.setSelectFieldOptions, (state, action) => {
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
@@ -30,18 +43,14 @@ export const iccSelectFieldFeature = createFeature({
         options: [...action.options],
       };
       //console.log(' 222222 newState option=', newState);
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(selectFieldActions.clearSelectFieldStore, (state, action) => {
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       delete newState[key];
       //console.log(' 333333  clear State=', newState);
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
   ),
 });

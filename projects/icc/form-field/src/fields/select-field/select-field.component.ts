@@ -76,31 +76,30 @@ export class SelectFieldComponent<T> implements OnDestroy {
         ...fieldConfig,
         fieldId: this.fieldId,
       };
-      //console.log('0000 this._selectFieldConfig=', this._fieldConfig);
-      //console.log(' fieldId=', this.fieldId);
-
       this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
         map((fieldConfig) => {
           this._fieldConfig = fieldConfig!;
-          if (fieldConfig && fieldConfig.remoteConfig && fieldConfig.singleListOption) {
-            this.value = this.value;
-          }
+          this.initSelectField();
           return fieldConfig;
         }),
       );
-      this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
-
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-      });
-      this.setFormvalue();
     } else {
       this._fieldConfig = fieldConfig;
     }
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
+  }
+
+  private initSelectField(): void {
+    if (this.fieldConfig?.viewportReady && !this.form) {
+      this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
+      this.form = new FormGroup({
+        [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
+      });
+      this.setFormvalue();
+    }
   }
 
   @Input()

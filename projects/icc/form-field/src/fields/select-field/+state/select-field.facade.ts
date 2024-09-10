@@ -10,10 +10,9 @@ export class IccSelectFieldFacade {
   private store = inject(Store);
 
   setupFieldConfig(fieldId: string, fieldConfig: IccSelectFieldConfig): void {
+    this.store.dispatch(selectFieldActions.initFieldConfig({ fieldConfig }));
     if (fieldConfig.remoteConfig) {
-      this.store.dispatch(selectFieldActions.getRemoteFieldConfig({ fieldConfig }));
-    } else {
-      this.store.dispatch(selectFieldActions.setupFieldConfig({ fieldConfig }));
+      this.store.dispatch(selectFieldActions.loadRemoteFieldConfig({ fieldConfig }));
     }
 
     if (fieldConfig.remoteOptions && !fieldConfig.remoteConfig) {

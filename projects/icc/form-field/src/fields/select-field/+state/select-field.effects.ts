@@ -16,11 +16,13 @@ export class IccSelectFieldEffects {
 
   getRemoteFieldConfig$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(selectFieldActions.getRemoteFieldConfig),
+      ofType(selectFieldActions.loadRemoteFieldConfig),
       concatMap(({ fieldConfig }) => {
         return this.selectfieldService.getRemoteFieldConfig(fieldConfig).pipe(
           map((fieldConfig) => {
-            this.store.dispatch(selectFieldActions.setupFieldConfig({ fieldConfig }));
+            console.log(' load remote fieldconfig=', fieldConfig);
+            this.store.dispatch(selectFieldActions.loadFieldConfigSuccess({ fieldConfig }));
+            //return selectFieldActions.loadFieldConfigSuccess({ fieldConfig });
             return selectFieldActions.getSelectFieldOptions({ fieldConfig });
           }),
         );

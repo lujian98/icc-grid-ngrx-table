@@ -8,7 +8,8 @@ export const selectFieldConfig = (fieldId: string) =>
     // @ts-ignore
     featureSelector,
     (state: SelectFieldState) => {
-      return state[fieldId] ? state[fieldId].fieldConfig : undefined;
+      const fieldConfig = state[fieldId] ? state[fieldId].fieldConfig : undefined;
+      return fieldConfig && fieldConfig.viewportReady ? fieldConfig : undefined;
     },
   );
 

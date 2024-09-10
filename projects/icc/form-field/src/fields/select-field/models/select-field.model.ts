@@ -2,6 +2,7 @@ export interface IccSelectFieldConfig {
   fieldId: string; // auto generated unique id
   fieldName: string;
   urlKey: string; // Only for remote field config and options
+  viewportReady: boolean;
   fieldLabel?: string;
   remoteConfig: boolean; // remote config requires remote options
   remoteOptions: boolean;
