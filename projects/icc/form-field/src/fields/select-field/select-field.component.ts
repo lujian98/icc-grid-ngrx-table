@@ -81,24 +81,22 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
       this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
         map((fieldConfig) => {
-          //console.log(' ccccccccccccc =', fieldConfig);
           this._fieldConfig = fieldConfig!;
+          if (fieldConfig && fieldConfig.remoteConfig && fieldConfig.singleListOption) {
+            this.value = this.value;
+          }
           return fieldConfig;
         }),
       );
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
 
-      //console.log(' this.fieldConfig.fieldName=', this.fieldConfig.fieldName);
       this.form = new FormGroup({
         [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
       });
-      //console.log(' uuuuuu set value =', this.value)
-      this.selectedField.setValue(this.value);
-      //console.log('333333 this._selectFieldConfig=', this._fieldConfig);
+      this.setFormvalue();
     } else {
       this._fieldConfig = fieldConfig;
-      //console.log('22222 this._selectFieldConfig=', this._fieldConfig);
     }
   }
   get fieldConfig(): IccSelectFieldConfig {
@@ -115,7 +113,6 @@ export class SelectFieldComponent<T> implements OnDestroy {
           title: item,
         };
       });
-      //console.log( ' set optionss =', options)
       this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
     } else {
       this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
@@ -126,13 +123,16 @@ export class SelectFieldComponent<T> implements OnDestroy {
   set value(val: any) {
     this._value = this.getInitValue(val);
     if (this.form && val !== undefined) {
-      //console.log(' uuuuuu set value =', this.value)
-      this.selectedField.setValue(this._value);
+      this.setFormvalue();
     }
   }
 
   get value(): any {
     return this._value;
+  }
+
+  private setFormvalue(): void {
+    this.selectedField.setValue(this.value);
   }
 
   private getInitValue(val: any): any {

@@ -7,6 +7,10 @@ import {
   MultiSelectConfig,
   SingleAutocompleteConfig,
   MultiAutocompleteConfig,
+  SingleListConfig,
+  MultiListConfig,
+  SingleAutocompleteLisConfig,
+  MultiAutocompleteListConfig,
 } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/select-field-helpers';
 
 export class InMemoryService extends InMemoryDbService {
@@ -25,6 +29,14 @@ export class InMemoryService extends InMemoryDbService {
     usa_SingleAutocompleteRemotesFieldConfig: any;
     usa_MultiAutocompleteRemotes: State[];
     usa_MultiAutocompleteRemotesFieldConfig: any;
+    usa_SingleAllRemoteList: string[];
+    usa_SingleAllRemoteListFieldConfig: any;
+    usa_MultiAllRemoteList: string[];
+    usa_MultiAllRemoteListFieldConfig: any;
+    usa_SingleAllAutocompleteRemoteList: string[];
+    usa_SingleAllAutocompleteRemoteListFieldConfig: any;
+    usa_MultiAllAutocompleteRemotes: string[];
+    usa_MultiAllAutocompleteRemotesFieldConfig: any;
   } {
     return {
       DCR: CARSDATA,
@@ -41,6 +53,14 @@ export class InMemoryService extends InMemoryDbService {
       usa_SingleAutocompleteRemotesFieldConfig: SingleAutocompleteConfig,
       usa_MultiAutocompleteRemotes: STATES,
       usa_MultiAutocompleteRemotesFieldConfig: MultiAutocompleteConfig,
+      usa_SingleAllRemoteList: [...STATES].map((state) => state.state),
+      usa_SingleAllRemoteListFieldConfig: SingleListConfig,
+      usa_MultiAllRemoteList: [...STATES].map((state) => state.state),
+      usa_MultiAllRemoteListFieldConfig: MultiListConfig,
+      usa_SingleAllAutocompleteRemoteList: [...STATES].map((state) => state.state),
+      usa_SingleAllAutocompleteRemoteListFieldConfig: SingleAutocompleteLisConfig,
+      usa_MultiAllAutocompleteRemotes: [...STATES].map((state) => state.state),
+      usa_MultiAllAutocompleteRemotesFieldConfig: MultiAutocompleteListConfig,
     };
   }
 

@@ -12,17 +12,12 @@ export const iccSelectFieldFeature = createFeature({
     on(selectFieldActions.setupFieldConfig, (state, action) => {
       const key = action.fieldConfig.fieldId;
       const newState: SelectFieldState = { ...state };
-
       newState[key] = {
         ...defaultSelectFieldState,
         fieldConfig: {
           ...action.fieldConfig,
         },
       };
-      if (action.fieldConfig.remoteConfig) {
-        console.log(' 11111111 fieldConfig=', action.fieldConfig);
-        console.log(' 11111111 newState=', newState);
-      }
       return {
         ...newState,
       };

@@ -209,7 +209,34 @@ export class AppSimpleSelectComponent {
     fieldName: 'MultiAutocompleteRemotes',
   };
 
-  constructor() {
-    //console.log(' listStates=', this.listStates)
-  }
+  // all remotes
+  singleAllRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteConfig: true,
+    urlKey: 'usa',
+    fieldName: 'SingleAllRemoteList',
+  };
+
+  multiAllRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteConfig: true,
+    urlKey: 'usa',
+    fieldName: 'MultiAllRemoteList',
+  };
+
+  singleAllAutocompleteRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteConfig: true,
+    urlKey: 'usa',
+    fieldName: 'SingleAllAutocompleteRemoteList',
+  };
+
+  multiAllAutocompleteRemotes: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteConfig: true,
+    urlKey: 'usa',
+    fieldName: 'MultiAllAutocompleteRemotes',
+  };
+
+  constructor() {}
 }

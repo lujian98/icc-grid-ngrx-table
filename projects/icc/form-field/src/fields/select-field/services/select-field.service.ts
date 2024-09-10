@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IccSelectFieldConfig } from '../models/select-field.model';
 
 @Injectable({
@@ -11,7 +11,6 @@ export class IccSelectFieldService {
   private http = inject(HttpClient);
 
   getRemoteFieldConfig(fieldConfig: IccSelectFieldConfig): Observable<IccSelectFieldConfig> {
-    // console.log( ' fieldConfig=', fieldConfig)
     const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`;
     return this.http.get<IccSelectFieldConfig>(url).pipe(
       map((config) => {
@@ -25,18 +24,16 @@ export class IccSelectFieldService {
   }
 
   getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
-    //console.log( ' 777777 fieldConfig=', fieldConfig)
     const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
-    //console.log( ' 777777 url=', url)
     return this.http.get<any[]>(url).pipe(
-      map((res) => {
+      map((options) => {
         if (fieldConfig.singleListOption) {
-          return res.map((item) => ({
+          return options.map((item) => ({
             name: item,
             title: item,
           }));
         } else {
-          return res;
+          return options;
         }
       }),
     );

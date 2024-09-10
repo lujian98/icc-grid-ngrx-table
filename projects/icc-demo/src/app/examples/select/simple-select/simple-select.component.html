@@ -1,5 +1,6 @@
 <div>
   <div><br /></div>
+
   <div>
     Local field config and local object options
     <icc-select-field [fieldConfig]="singleSelection" [value]="singleObjectState" [options]="states"></icc-select-field>
@@ -69,5 +70,14 @@
     <icc-select-field [fieldConfig]="multiRemoteList" [value]="multiListStates"></icc-select-field>
     <icc-select-field [fieldConfig]="singleAutocompleteRemoteList" [value]="singleListState"></icc-select-field>
     <icc-select-field [fieldConfig]="multiAutocompleteRemoteList" [value]="multiListStates"></icc-select-field>
+  </div>
+
+  <div><br /></div>
+  <div>
+    Remote field config and remote list options
+    <icc-select-field [fieldConfig]="singleAllRemoteList" [value]="singleListState"></icc-select-field>
+    <icc-select-field [fieldConfig]="multiAllRemoteList" [value]="multiListStates"></icc-select-field>
+    <icc-select-field [fieldConfig]="singleAllAutocompleteRemoteList" [value]="singleListState"></icc-select-field>
+    <icc-select-field [fieldConfig]="multiAllAutocompleteRemotes" [value]="multiListStates"></icc-select-field>
   </div>
 </div>

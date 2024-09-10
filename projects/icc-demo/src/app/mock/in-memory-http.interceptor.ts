@@ -51,6 +51,34 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
       newreq.url = newreq.urlWithParams = '/api/usa_MultiAutocompleteRemotesFieldConfig';
     }
 
+    if (req.url === '/api/usa/SingleAllRemoteList') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleAllRemoteList';
+    }
+    if (req.url === '/api/usa/SingleAllRemoteListFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleAllRemoteListFieldConfig';
+    }
+
+    if (req.url === '/api/usa/MultiAllRemoteList') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiAllRemoteList';
+    }
+    if (req.url === '/api/usa/MultiAllRemoteListFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiAllRemoteListFieldConfig';
+    }
+
+    if (req.url === '/api/usa/SingleAllAutocompleteRemoteList') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleAllAutocompleteRemoteList';
+    }
+    if (req.url === '/api/usa/SingleAllAutocompleteRemoteListFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_SingleAllAutocompleteRemoteListFieldConfig';
+    }
+
+    if (req.url === '/api/usa/MultiAllAutocompleteRemotes') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiAllAutocompleteRemotes';
+    }
+    if (req.url === '/api/usa/MultiAllAutocompleteRemotesFieldConfig') {
+      newreq.url = newreq.urlWithParams = '/api/usa_MultiAllAutocompleteRemotesFieldConfig';
+    }
+
     return next.handle(newreq as HttpRequest<any>);
   }
 }
