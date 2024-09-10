@@ -56,6 +56,7 @@ export class IccGridService {
         return {
           ...gridConfig,
           ...config2,
+          configReady: true,
         };
       }),
     );

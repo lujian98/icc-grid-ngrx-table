@@ -40,6 +40,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
   tableWidth: number = 100;
+  private isConfigReady = false;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -54,6 +55,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     console.log(' uuuuuuuuuuuuuu gridConfig=', val);
+    if (!this.isConfigReady && val.configReady) {
+      this.isConfigReady = true;
+      this.setViewportPageSize();
+    }
     this._gridConfig = val;
     if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;

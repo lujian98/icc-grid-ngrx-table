@@ -59,7 +59,7 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      debounceTime(10),
+      debounceTime(300),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridId),

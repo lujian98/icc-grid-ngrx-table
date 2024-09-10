@@ -15,7 +15,7 @@ export const iccGridFeature = createFeature({
       const newState: IccGridState = { ...state };
       const gridConfig = {
         ...action.gridConfig,
-        configReady: true,
+        //configReady: true,
       };
       console.log(' 2222222222 gridConfig=', gridConfig);
       newState[key] = {
