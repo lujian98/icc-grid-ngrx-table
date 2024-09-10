@@ -146,7 +146,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
         title: item,
       }));
     } else {
-      value = [...value];
+      value = value ? [...value] : value;
     }
     return value;
   }

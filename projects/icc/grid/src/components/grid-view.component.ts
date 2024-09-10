@@ -53,6 +53,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
+    console.log(' uuuuuuuuuuuuuu gridConfig=', val);
     this._gridConfig = val;
     if (this.gridConfig.remoteColumnsConfig && this.firstTimeLoadColumnsConfig) {
       this.firstTimeLoadColumnsConfig = false;
@@ -115,9 +116,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
 
     console.log(' tttttttttttttt this.gridConfig=', this.gridConfig);
-    if (this.gridConfig.configReady) {
-      this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
-    }
+    //if (this.gridConfig.configReady) {
+    this.gridFacade.setViewportPageSize(this.gridConfig.gridId, pageSize, clientWidth);
+    //}
     if (this.gridConfig.viewReady) {
       this.gridFacade.getGridData(this.gridConfig.gridId);
     }

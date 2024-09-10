@@ -4,7 +4,7 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } f
 
 @Component({
   selector: 'app-grid-overall',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
+  template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -20,7 +20,7 @@ export class AppGridOverallComponent {
     columnReorder: true,
     columnMenu: true,
     columnHidden: true,
-    remoteColumnsConfig: false,
+    remoteColumnsConfig: true,
     remoteGridData: true,
 
     sortFields: [

@@ -16,11 +16,11 @@ export class IccGridFacade {
   private store = inject(Store);
 
   setupGridConfig(gridConfig: IccGridConfig): void {
+    const gridId = gridConfig.gridId;
+    this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
+
     if (gridConfig.remoteGridConfig) {
       this.store.dispatch(gridActions.setupGridConfig({ gridConfig }));
-    } else {
-      const gridId = gridConfig.gridId;
-      this.store.dispatch(gridActions.setupGridConfigSuccess({ gridId, gridConfig }));
     }
   }
 

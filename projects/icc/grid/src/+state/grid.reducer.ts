@@ -63,6 +63,7 @@ export const iccGridFeature = createFeature({
           viewportWidth: action.viewportWidth,
         },
       };
+      console.log(' bbbbbbbbbbbb setViewportPageSize=', newState);
       return {
         ...newState,
       };
