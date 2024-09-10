@@ -22,9 +22,7 @@ export const iccGridFeature = createFeature({
           pageSize: !gridConfig.virtualScroll ? gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
         },
       };
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
 
     on(gridActions.loadGridConfigSuccess, (state, action) => {
@@ -38,9 +36,7 @@ export const iccGridFeature = createFeature({
           viewportReady: !action.gridConfig.remoteColumnsConfig,
         },
       };
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
 
     on(gridActions.loadGridColumnsConfigSuccess, (state, action) => {
@@ -61,9 +57,7 @@ export const iccGridFeature = createFeature({
         }),
       };
       //console.log(' setupGridColumnConfigSuccess=', newState)
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.setViewportPageSize, (state, action) => {
       const key = action.gridConfig.gridId;
@@ -77,9 +71,7 @@ export const iccGridFeature = createFeature({
         },
       };
       //console.log(' bbbbbbbbbbbb setViewportPageSize=', newState);
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.setGridSortFields, (state, action) => {
       const key = action.gridId;
@@ -93,9 +85,7 @@ export const iccGridFeature = createFeature({
         },
       };
       //console.log(' setGridSortField=', newState)
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
 
     on(gridActions.setGridColumnFilters, (state, action) => {
@@ -110,9 +100,7 @@ export const iccGridFeature = createFeature({
         },
       };
       //console.log(' setGridSortField=', newState)
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
 
     on(gridActions.setViewportPage, (state, action) => {
@@ -125,9 +113,7 @@ export const iccGridFeature = createFeature({
           page: action.page,
         },
       };
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.setGridColumnsConfig, (state, action) => {
       const key = action.gridId;
@@ -142,9 +128,7 @@ export const iccGridFeature = createFeature({
           }
         }),
       };
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridId;
@@ -166,9 +150,7 @@ export const iccGridFeature = createFeature({
         data: data,
       };
       //console.log(' new load data setup grid data = ', newState);
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {
       const key = action.gridId;
@@ -184,18 +166,14 @@ export const iccGridFeature = createFeature({
         inMemoryData: action.gridData.data,
       };
       //console.log(' new load data setup grid data = ', newState)
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
     on(gridActions.removeGridDataStore, (state, action) => {
       const key = action.gridId;
       const newState: IccGridState = { ...state };
       delete newState[key];
       //console.log(' remove grid data store = ', newState)
-      return {
-        ...newState,
-      };
+      return { ...newState };
     }),
   ),
 });
