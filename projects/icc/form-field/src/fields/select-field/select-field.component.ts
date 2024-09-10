@@ -125,6 +125,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
     if (this.form && val !== undefined) {
       this.setFormvalue();
     }
+    //console.log( ' this.value =', this.value)
   }
 
   get value(): any {
@@ -161,6 +162,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   get hasValue(): boolean {
     const value = this.selectedField.value;
+    //console.log( ' hasValue=', value)
     return value instanceof Array ? value.length > 0 : !!value;
   }
 

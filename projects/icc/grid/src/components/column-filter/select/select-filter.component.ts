@@ -30,13 +30,13 @@ export class IccSelectFilterComponent {
       remoteOptions: true,
       placeholder: 'Filter ...',
     };
-    console.log(' 666666666666 fieldConfig=', this.fieldConfig, ' column=', this.column);
+    //console.log(' 666666666666 fieldConfig=', this.fieldConfig, ' column=', this.column);
     //console.log(' gridConfig=', value, ' column=', this.column)
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
       this.value = find.value;
     } else {
-      this.value = '';
+      this.value = [];
     }
     this.changeDetectorRef.markForCheck();
   }
