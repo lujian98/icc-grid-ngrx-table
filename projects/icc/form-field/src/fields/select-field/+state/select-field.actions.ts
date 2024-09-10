@@ -16,14 +16,14 @@ export const loadFieldConfigSuccess = createAction(
   props<{ fieldConfig: IccSelectFieldConfig }>(),
 );
 
-export const setSelectFieldOptions = createAction(
-  '[SelectField] Set Select Field Options',
-  props<{ fieldId: string; options: any[] }>(),
+export const loadSelectFieldOptions = createAction(
+  '[SelectField] Load Select Field Options',
+  props<{ fieldConfig: IccSelectFieldConfig }>(),
 );
 
-export const getSelectFieldOptions = createAction(
-  '[SelectField] Get Select Field Options',
-  props<{ fieldConfig: IccSelectFieldConfig }>(),
+export const loadSelectFieldOptionsSuccess = createAction(
+  '[SelectField] Load Select Field Options Success',
+  props<{ fieldId: string; options: any[] }>(),
 );
 
 export const clearSelectFieldStore = createAction('[Grid] Clear Select Field Store', props<{ fieldId: string }>());

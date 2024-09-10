@@ -76,6 +76,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
         ...fieldConfig,
         fieldId: this.fieldId,
       };
+      this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
       this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
         map((fieldConfig) => {
           this._fieldConfig = fieldConfig!;
@@ -83,7 +84,6 @@ export class SelectFieldComponent<T> implements OnDestroy {
           return fieldConfig;
         }),
       );
-      this.selectFieldFacade.setupFieldConfig(this.fieldId, this.fieldConfig);
     } else {
       this._fieldConfig = fieldConfig;
     }
@@ -98,6 +98,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
       this.form = new FormGroup({
         [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
       });
+      this.value = this.getInitValue(this.value);
       this.setFormvalue();
     }
   }
@@ -120,11 +121,12 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   @Input()
   set value(val: any) {
-    this._value = this.getInitValue(val);
     if (this.form && val !== undefined) {
+      this._value = this.getInitValue(this.value);
       this.setFormvalue();
+    } else {
+      this._value = val;
     }
-    //console.log( ' this.value =', this.value)
   }
 
   get value(): any {

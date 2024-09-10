@@ -35,7 +35,7 @@ export const iccSelectFieldFeature = createFeature({
       };
       return { ...newState };
     }),
-    on(selectFieldActions.setSelectFieldOptions, (state, action) => {
+    on(selectFieldActions.loadSelectFieldOptionsSuccess, (state, action) => {
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       newState[key] = {
@@ -46,7 +46,7 @@ export const iccSelectFieldFeature = createFeature({
         },
         options: [...action.options],
       };
-      console.log(' rrrrrrrrrr newState option=', newState);
+      //console.log(' rrrrrrrrrr newState option=', newState);
       return { ...newState };
     }),
     on(selectFieldActions.clearSelectFieldStore, (state, action) => {

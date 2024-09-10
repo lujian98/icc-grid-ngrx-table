@@ -20,24 +20,22 @@ export class IccSelectFieldEffects {
       concatMap(({ fieldConfig }) => {
         return this.selectfieldService.getRemoteFieldConfig(fieldConfig).pipe(
           map((fieldConfig) => {
-            console.log(' load remote fieldconfig=', fieldConfig);
             this.store.dispatch(selectFieldActions.loadFieldConfigSuccess({ fieldConfig }));
-            //return selectFieldActions.loadFieldConfigSuccess({ fieldConfig });
-            return selectFieldActions.getSelectFieldOptions({ fieldConfig });
+            return selectFieldActions.loadSelectFieldOptions({ fieldConfig });
           }),
         );
       }),
     ),
   );
 
-  getSelectFieldOptions$ = createEffect(() =>
+  loadSelectFieldOptions$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(selectFieldActions.getSelectFieldOptions),
+      ofType(selectFieldActions.loadSelectFieldOptions),
       concatMap(({ fieldConfig }) => {
         return this.selectfieldService.getSelectFieldOptions(fieldConfig).pipe(
           map((options) => {
             const fieldId = fieldConfig.fieldId;
-            return selectFieldActions.setSelectFieldOptions({ fieldId, options });
+            return selectFieldActions.loadSelectFieldOptionsSuccess({ fieldId, options });
           }),
         );
       }),

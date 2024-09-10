@@ -9,19 +9,19 @@ import { selectFieldConfig, selectOptions } from './select-field.selectors';
 export class IccSelectFieldFacade {
   private store = inject(Store);
 
-  setupFieldConfig(fieldId: string, fieldConfig: IccSelectFieldConfig): void {
+  initFieldConfig(fieldId: string, fieldConfig: IccSelectFieldConfig): void {
     this.store.dispatch(selectFieldActions.initFieldConfig({ fieldConfig }));
     if (fieldConfig.remoteConfig) {
       this.store.dispatch(selectFieldActions.loadRemoteFieldConfig({ fieldConfig }));
     }
 
     if (fieldConfig.remoteOptions && !fieldConfig.remoteConfig) {
-      this.store.dispatch(selectFieldActions.getSelectFieldOptions({ fieldConfig }));
+      this.store.dispatch(selectFieldActions.loadSelectFieldOptions({ fieldConfig }));
     }
   }
 
   setSelectFieldOptions(fieldId: string, options: any[]): void {
-    this.store.dispatch(selectFieldActions.setSelectFieldOptions({ fieldId, options }));
+    this.store.dispatch(selectFieldActions.loadSelectFieldOptionsSuccess({ fieldId, options }));
   }
 
   clearSelectFieldStore(fieldId: string): void {
