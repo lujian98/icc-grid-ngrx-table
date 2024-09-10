@@ -38,7 +38,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
-  tableWidth: number = 100;
+  tableWidth: number = 2000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
