@@ -44,7 +44,8 @@ export class IccGridEffects {
           map((columnsConfig) => {
             //console.log( ' loadGridColumnsConfig loaded ')
             if (gridConfig.remoteGridConfig) {
-              // remote config will trigger window resize to load data
+              // remote config will need trigger window resize to load data
+              window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
             } else {
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));

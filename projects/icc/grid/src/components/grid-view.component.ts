@@ -39,7 +39,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   gridData$!: Observable<T[]>;
   columnHeaderPosition = 0;
   tableWidth: number = 100;
-  private isConfigReady = false;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
@@ -54,10 +53,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = val;
-    if (this.gridConfig.remoteGridConfig && !this.isConfigReady && this.gridConfig.configReady) {
-      this.isConfigReady = true;
-      window.dispatchEvent(new Event('resize'));
-    }
     this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);

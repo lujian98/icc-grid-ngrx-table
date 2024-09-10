@@ -30,7 +30,7 @@ export class IccGridFacade {
 
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
-    if (gridConfig.configReady && gridConfig.viewReady) {
+    if (gridConfig.viewportReady) {
       this.getGridData(gridConfig.gridId);
     }
   }

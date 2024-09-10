@@ -4,23 +4,22 @@ export interface IccSortField {
 }
 
 export interface IccGridConfig {
-  gridId: string; // auto generated unique id
+  gridId: string; // auto generated unique id internal use
   urlKey: string; // Only for remote grid config and data
-  remoteGridConfig: boolean;
-  configReady: boolean;
+  viewportReady: boolean; // internal use
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
+  remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
   horizontalScroll: boolean;
   verticalScroll: boolean;
   virtualScroll: boolean;
-  viewportWidth: number;
-  viewReady: boolean; //used for remote column loaded
+  viewportWidth: number; // internal use
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
   page: number;

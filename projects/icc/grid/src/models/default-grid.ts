@@ -1,23 +1,22 @@
 import { IccGridConfig, GridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
-  gridId: '191cf2bb6b8', // auto generated unique id
+  gridId: '191cf2bb6b8', // auto generated unique id internal use
   urlKey: 'grid', // Only for remote grid config and data
-  remoteGridConfig: false,
-  configReady: false,
+  viewportReady: false, // internal use
   columnSort: false,
   columnFilter: false,
   columnResize: false,
   columnReorder: false,
   columnMenu: false,
   columnHidden: false,
+  remoteGridConfig: false,
   remoteColumnsConfig: false,
   rowSelection: false,
   horizontalScroll: false,
   verticalScroll: false,
   virtualScroll: false,
-  viewportWidth: 1000,
-  viewReady: false,
+  viewportWidth: 1000, // internal use
   sortFields: [],
   columnFilters: [],
   page: 1,

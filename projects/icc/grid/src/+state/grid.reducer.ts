@@ -11,17 +11,14 @@ export const iccGridFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(gridActions.initGridConfig, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const gridConfig = { ...action.gridConfig };
+      const key = gridConfig.gridId;
       const newState: IccGridState = { ...state };
-      const gridConfig = {
-        ...action.gridConfig,
-      };
       newState[key] = {
         ...defaultState,
         gridConfig: {
           ...gridConfig,
-          configReady: !gridConfig.remoteGridConfig,
-          viewReady: !gridConfig.remoteColumnsConfig,
+          viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
           pageSize: !gridConfig.virtualScroll ? gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
         },
       };
@@ -31,13 +28,14 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.loadGridConfigSuccess, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const gridConfig = { ...action.gridConfig };
+      const key = gridConfig.gridId;
       const newState: IccGridState = { ...state };
       newState[key] = {
         ...state[key],
         gridConfig: {
-          ...action.gridConfig,
-          configReady: true,
+          ...gridConfig,
+          viewportReady: !action.gridConfig.remoteColumnsConfig,
         },
       };
       return {
@@ -52,7 +50,7 @@ export const iccGridFeature = createFeature({
         ...state[key],
         gridConfig: {
           ...state[key].gridConfig,
-          viewReady: true,
+          viewportReady: true,
         },
         columnsConfig: action.columnsConfig.map((column) => {
           return {
@@ -125,7 +123,6 @@ export const iccGridFeature = createFeature({
         gridConfig: {
           ...state[key].gridConfig,
           page: action.page,
-          //viewReady: true,
         },
       };
       return {
