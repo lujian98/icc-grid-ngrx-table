@@ -26,4 +26,11 @@ export const loadSelectFieldOptionsSuccess = createAction(
   props<{ fieldId: string; options: any[] }>(),
 );
 
-export const clearSelectFieldStore = createAction('[Grid] Clear Select Field Store', props<{ fieldId: string }>());
+export const clearSelectFieldStore = createAction(
+  '[SelectField]] Clear Select Field Store',
+  props<{ fieldId: string }>(),
+);
+export const removeSelectFieldStore = createAction(
+  '[SelectField]] Remove Select Field Store',
+  props<{ fieldId: string }>(),
+);

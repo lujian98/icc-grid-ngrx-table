@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { debounceTime, exhaustMap, map, of, switchMap } from 'rxjs';
+import { debounceTime, concatMap, delay, map, of, switchMap } from 'rxjs';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
@@ -91,8 +91,8 @@ export class IccGridEffects {
   clearGridDataStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.clearGridDataStore),
-      debounceTime(250), // wait 250 after destory the component to clear data store
-      exhaustMap(({ gridId }) => of(gridId).pipe(map((gridId) => gridActions.removeGridDataStore({ gridId })))),
+      delay(250), // wait 250 after destory the component to clear data store
+      concatMap(({ gridId }) => of(gridId).pipe(map((gridId) => gridActions.removeGridDataStore({ gridId })))),
     ),
   );
 }

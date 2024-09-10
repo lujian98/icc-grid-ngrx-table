@@ -2,8 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
-import { map, switchMap, exhaustMap, concatMap } from 'rxjs/operators';
-
+import { debounceTime, exhaustMap, map, of, delay, switchMap, mergeMap, concatMap } from 'rxjs';
 import { IccSelectFieldService } from '../services/select-field.service';
 import * as selectFieldActions from './select-field.actions';
 import { IccSelectFieldFacade } from './select-field.facade';
@@ -39,6 +38,16 @@ export class IccSelectFieldEffects {
           }),
         );
       }),
+    ),
+  );
+
+  clearSelectFieldStore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(selectFieldActions.clearSelectFieldStore),
+      delay(250), // wait 250 after destory the component to clear data store
+      concatMap(({ fieldId }) =>
+        of(fieldId).pipe(map((gridId) => selectFieldActions.removeSelectFieldStore({ fieldId }))),
+      ),
     ),
   );
 }
