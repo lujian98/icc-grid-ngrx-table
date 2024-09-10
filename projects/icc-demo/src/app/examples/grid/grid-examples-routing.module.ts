@@ -14,6 +14,7 @@ import { AppGridVerticalScrollComponent } from './remote-data/grid-vertical-scro
 import { AppGridHorizontalScrollComponent } from './remote-data/grid-horizontal-scroll.component';
 import { AppGridRemoteVirtualScrollComponent } from './remote-data/grid-virtual-scroll.component';
 import { AppGridOverallComponent } from './remote-data/grid-overall.component';
+import { AppGridRemoteConfigComponent } from './remote-data/grid-remote-config.component';
 
 import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
@@ -62,6 +63,7 @@ const routes: Route[] = [
         component: AppGridRemoteVirtualScrollComponent,
       },
       { path: 'remote-grid-overall', component: AppGridOverallComponent },
+      { path: 'remote-grid-remote-config', component: AppGridRemoteConfigComponent },
       {
         path: 'grid-test2',
         component: AppGridTest2Component,

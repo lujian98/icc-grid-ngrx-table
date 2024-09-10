@@ -59,9 +59,16 @@ export class AppComponent {
           link: 'grid/remote-grid-virtual-scroll',
         },
         { name: '14: Grid Overall', link: 'grid/remote-grid-overall' },
-        { name: 'Grid Test 2', link: 'grid/grid-test2', icon: 'arrows-rotate' },
+        { name: '15: Grid Remote Config All', link: 'grid/remote-grid-remote-config' },
+        { name: '16: Grid Test 2', link: 'grid/grid-test2' },
+        { name: '17: Grid In-Memory Virtual Scroll', link: 'grid/in-memory-grid-virtual-scroll' },
+        {
+          name: '18: Grid In-Memory Test',
+          link: 'grid/in-memory-grid-test',
+        },
       ],
     },
+    /*
     {
       name: 'Grid in-memory Data',
       items: [
@@ -72,7 +79,7 @@ export class AppComponent {
           icon: 'arrows-rotate',
         },
       ],
-    },
+    },*/
     {
       name: 'Select Demos',
       items: [{ name: 'Simple Select', link: 'select/simple-select' }],

@@ -191,10 +191,11 @@ export const iccGridFeature = createFeature({
         ...newState,
       };
     }),
-    on(gridActions.clearGridDataStore, (state, action) => {
+    on(gridActions.removeGridDataStore, (state, action) => {
       const key = action.gridId;
       const newState: IccGridState = { ...state };
       delete newState[key];
+      //console.log(' remove grid data store = ', newState)
       return {
         ...newState,
       };

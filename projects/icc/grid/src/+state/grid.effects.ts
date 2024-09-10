@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
-import { map, switchMap, debounceTime } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { debounceTime, exhaustMap, map, of, switchMap } from 'rxjs';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
@@ -42,9 +42,14 @@ export class IccGridEffects {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
-            this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
             //console.log( ' loadGridColumnsConfig loaded ')
-            return gridActions.getGridData({ gridId: gridConfig.gridId });
+            if (gridConfig.remoteGridConfig) {
+              // remote config will trigger window resize to load data
+              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
+            } else {
+              this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+              return gridActions.getGridData({ gridId: gridConfig.gridId });
+            }
           }),
         );
       }),
@@ -79,6 +84,14 @@ export class IccGridEffects {
           );
         }
       }),
+    ),
+  );
+
+  clearGridDataStore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.clearGridDataStore),
+      debounceTime(250), // wait 250 after destory the component to clear data store
+      exhaustMap(({ gridId }) => of(gridId).pipe(map((gridId) => gridActions.removeGridDataStore({ gridId })))),
     ),
   );
 }
