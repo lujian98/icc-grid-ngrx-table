@@ -20,6 +20,15 @@ export class AppComponent {
     optionKey: 'abbr',
   };
 
+  multiListStates = ['Louisiana', 'Nevada'];
+
+  multiAllRemoteList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    remoteConfig: true,
+    urlKey: 'usa',
+    fieldName: 'MultiAllRemoteList',
+  };
+
   items: IccAccordion[] = [
     {
       name: 'Grid Remote Data',
