@@ -55,7 +55,7 @@ export const iccSelectFieldFeature = createFeature({
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       delete newState[key];
-      //console.log(' 333333  clear State key=', key);
+      console.log(' 333333  clear State key=', key);
       return { ...newState };
     }),
   ),

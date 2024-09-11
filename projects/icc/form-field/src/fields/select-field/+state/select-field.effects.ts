@@ -45,7 +45,7 @@ export class IccSelectFieldEffects {
     this.actions$.pipe(
       ofType(selectFieldActions.clearSelectFieldStore),
       delay(250), // wait 250 after destory the component to clear data store
-      concatMap(({ fieldId }) =>
+      mergeMap(({ fieldId }) =>
         of(fieldId).pipe(map((gridId) => selectFieldActions.removeSelectFieldStore({ fieldId }))),
       ),
     ),
