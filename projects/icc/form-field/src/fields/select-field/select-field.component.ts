@@ -138,18 +138,26 @@ export class SelectFieldComponent<T> implements OnDestroy {
   }
 
   private getInitValue(val: any): any {
+    //console.log('aaaaaaa val=', val)
     let value: any = val;
     if (typeof val === 'string') {
       value = [val];
     }
     if (this.fieldConfig.singleListOption && Array.isArray(value)) {
-      value = [...value].map((item) => ({
-        name: item,
-        title: item,
-      }));
+      value = [...value].map((item) => {
+        if (typeof item === 'string') {
+          return {
+            name: item,
+            title: item,
+          };
+        } else {
+          return item;
+        }
+      });
     } else {
       value = value ? [...value] : value;
     }
+    //console.log('bbbbbbbbbbbb val=', value)
     return value;
   }
 
@@ -163,7 +171,6 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   get hasValue(): boolean {
     const value = this.selectedField.value;
-    //console.log( ' hasValue=', value)
     return value instanceof Array ? value.length > 0 : !!value;
   }
 
@@ -181,16 +188,20 @@ export class SelectFieldComponent<T> implements OnDestroy {
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
-    //console.log( 'ddddddddd  this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
+    //console.log('ddddddddd  this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
     if (Array.isArray(value)) {
       //console.log('eeeeeeeeee  value=', value)
-      return value.length > 0
-        ? value
+      if (value.length > 0) {
+        return (
+          value
             .map((item) => item[this.fieldConfig.optionLabel])
             .sort()
             //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
             .join(', ')
-        : '';
+        );
+      } else {
+        return '';
+      }
     } else {
       return value ? value[this.fieldConfig.optionLabel] : '';
     }
