@@ -287,6 +287,10 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.form.disable() : this.form.enable();
+  }
+
   writeValue(value: any): void {
     //TODO value formant use setFormvalue ??
     this.form.patchValue(value, { emitEvent: false });

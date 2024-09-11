@@ -4,12 +4,26 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
-  Output,
+  forwardRef,
   inject,
+  Input,
+  OnDestroy,
+  Output,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 import { IccIconModule } from '@icc/ui/icon';
+import { Subject, takeUntil } from 'rxjs';
 import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
@@ -19,6 +33,18 @@ import { IccInputDirective } from '../../input/input.directive';
   selector: 'icc-text-field',
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextFieldComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => TextFieldComponent),
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -32,8 +58,9 @@ import { IccInputDirective } from '../../input/input.directive';
     IccIconModule,
   ],
 })
-export class TextFieldComponent {
+export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   private _value!: string;
   private _fieldName: string = '';
   form!: FormGroup;
@@ -73,7 +100,7 @@ export class TextFieldComponent {
   }
 
   onChange(): void {
-    console.log('qqqqqqqqqqqqqqq onChange=', this.field.value);
+    //console.log('qqqqqqqqqqqqqqq onChange=', this.field.value);
     this.valueChange.emit(this.field.value);
   }
 
@@ -81,5 +108,31 @@ export class TextFieldComponent {
 
   clearSelected(): void {
     this.valueChange.emit('');
+  }
+
+  registerOnChange(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.form.disable() : this.form.enable();
+  }
+
+  writeValue(value: any): void {
+    this.form.patchValue(value, { emitEvent: false });
+    this.changeDetectorRef.markForCheck();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.form.valid ? null : { [this.fieldName]: true };
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
