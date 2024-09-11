@@ -19,7 +19,7 @@ export class IccGridEffects {
   setupGridConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.loadGridConfig),
-      switchMap((action) => {
+      concatMap((action) => {
         return this.gridService.getGridConfig(action.gridConfig).pipe(
           map((gridConfig) => {
             if (gridConfig.remoteColumnsConfig) {
@@ -38,7 +38,7 @@ export class IccGridEffects {
   loadGridColumnsConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.loadGridColumnsConfig),
-      switchMap((action) => {
+      concatMap((action) => {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
