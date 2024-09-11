@@ -122,7 +122,7 @@ export class SelectFieldComponent<T> implements OnDestroy {
   @Input()
   set value(val: any) {
     if (this.form && val !== undefined) {
-      this._value = this.getInitValue(this.value);
+      this._value = this.getInitValue(val);
       this.setFormvalue();
     } else {
       this._value = val;
