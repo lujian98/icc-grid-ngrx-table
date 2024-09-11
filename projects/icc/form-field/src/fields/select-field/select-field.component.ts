@@ -8,9 +8,21 @@ import {
   OnDestroy,
   Output,
   ViewChild,
+  forwardRef,
   inject,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
@@ -21,7 +33,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { IccLabelDirective } from '../../directive/label.directive';
 import { IccSuffixDirective } from '../../directive/suffix.directive';
 import { IccFormFieldComponent } from '../../form-field.component';
@@ -35,6 +47,18 @@ import { IccSelectFieldConfig } from './models/select-field.model';
   selector: 'icc-select-field',
   templateUrl: './select-field.component.html',
   styleUrls: ['./select-field.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectFieldComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => SelectFieldComponent),
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -56,8 +80,9 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFilterPipe,
   ],
 })
-export class SelectFieldComponent<T> implements OnDestroy {
+export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
   private _value!: any;
@@ -254,7 +279,27 @@ export class SelectFieldComponent<T> implements OnDestroy {
     this.selectionChange.emit([]);
   }
 
+  registerOnChange(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  writeValue(value: any): void {
+    //TODO value formant use setFormvalue ??
+    this.form.patchValue(value, { emitEvent: false });
+    this.changeDetectorRef.markForCheck();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.form.valid ? null : { [this.fieldConfig.fieldName]: true };
+  }
+
   ngOnDestroy(): void {
     this.selectFieldFacade.clearSelectFieldStore(this.fieldId);
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
