@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import { InMemoryService } from './mock/in-memory-service';
+import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,6 +49,7 @@ import { InMemoryService } from './mock/in-memory-service';
     IccIconModule,
     IccOverlayModule.forRoot(),
     IccDialogModule.forRoot(),
+    IccUiModulesModule,
     IccAccordionComponent,
     SelectFieldComponent,
   ],
