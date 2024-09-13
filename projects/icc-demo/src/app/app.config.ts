@@ -11,6 +11,7 @@ import { IccDialogModule } from '@icc/ui/dialog';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccThemeModule } from '@icc/ui/theme';
 import { InMemoryService } from './mock/in-memory-service';
+import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -32,17 +33,17 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(IccThemeModule.forRoot({ name: 'light' })),
     importProvidersFrom(IccOverlayModule.forRoot()),
     importProvidersFrom(IccDialogModule.forRoot()),
-
+    importProvidersFrom(IccUiModulesModule),
     //[provideHttpClient()],
   ],
 };
 
 /*
-
+// IccUiModulesModule
     IccOverlayModule.forRoot(),
     IccDialogModule.forRoot(),
- 
-     
+
+
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
 
