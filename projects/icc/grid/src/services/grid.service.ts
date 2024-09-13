@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IccBackendService } from '@icc/ui/core';
-
 import {
   IccColumnConfig,
   IccColumnFilter,
