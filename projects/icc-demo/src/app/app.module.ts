@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,13 +53,28 @@ import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
     IccAccordionComponent,
     SelectFieldComponent,
   ],
+  // providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), [provideHttpClient()]]
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InMemoryHttpInterceptor,
       multi: true,
     },
+    // [provideHttpClient()],
   ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+/*
+
+https://dev.to/ngrx/using-ngrx-packages-with-standalone-angular-features-53d8
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    importProvidersFrom(InMemoryWebApiModule.forRoot(AppData, { delay: 1000 })),
+    provideRouter(routes, withComponentInputBinding())
+  ]
+};
+*/

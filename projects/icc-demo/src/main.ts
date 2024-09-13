@@ -13,6 +13,15 @@ platformBrowserDynamic()
   .catch((err) => console.error(err));
 
 /*
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), [provideHttpClient()]]
+};
+
+bootstrapApplication(AppComponent, appConfig)
+  .catch((err) => console.error(err));
+  
+
   import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
