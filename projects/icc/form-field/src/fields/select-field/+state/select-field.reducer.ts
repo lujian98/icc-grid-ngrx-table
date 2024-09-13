@@ -10,7 +10,6 @@ export const iccSelectFieldFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(selectFieldActions.initFieldConfig, (state, action) => {
-      //console.log(' 00000 init  State=', state);
       const fieldConfig = { ...action.fieldConfig };
       const key = fieldConfig.fieldId;
       const newState: SelectFieldState = { ...state };
@@ -51,17 +50,15 @@ export const iccSelectFieldFeature = createFeature({
           options: [...action.options],
         };
       }
-      //console.log(' rrrrrrrrrr newState option=', newState);
       return { ...newState };
     }),
     on(selectFieldActions.removeSelectFieldStore, (state, action) => {
-      // TODO clear store after 250ms
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       if (state[key]) {
         delete newState[key];
       }
-      console.log(' 333333  clear State key=', key);
+      //console.log(' 333333  clear State key=', key);
       return { ...newState };
     }),
   ),

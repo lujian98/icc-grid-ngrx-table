@@ -1,18 +1,18 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { IccDialogModule } from '@icc/ui/dialog';
+import { IccOverlayModule } from '@icc/ui/overlay';
+import { IccThemeModule } from '@icc/ui/theme';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientInMemoryWebApiModule, InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
-import { IccDialogModule } from '@icc/ui/dialog';
-import { IccOverlayModule } from '@icc/ui/overlay';
-import { IccThemeModule } from '@icc/ui/theme';
-import { InMemoryService } from './mock/in-memory-service';
-import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
 import { routes } from './app.routes';
+import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
+import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
+import { InMemoryService } from './mock/in-memory-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,24 +34,5 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(IccOverlayModule.forRoot()),
     importProvidersFrom(IccDialogModule.forRoot()),
     importProvidersFrom(IccUiModulesModule),
-    //[provideHttpClient()],
   ],
 };
-
-/*
-// IccUiModulesModule
-    IccOverlayModule.forRoot(),
-    IccDialogModule.forRoot(),
-
-
-    EffectsModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25 }),
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(),
-    importProvidersFrom(InMemoryWebApiModule.forRoot(AppData, { delay: 1000 })),
-    provideRouter(routes, withComponentInputBinding())
-  ]
-};
-*/

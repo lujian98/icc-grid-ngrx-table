@@ -187,7 +187,6 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         delete newState[key];
       }
-      //console.log(' remove grid data store = ', newState)
       return { ...newState };
     }),
   ),

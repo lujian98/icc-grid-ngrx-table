@@ -1,23 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { IccAccordion } from '@icc/ui/accordion';
 import { CommonModule } from '@angular/common';
-import { IccThemeService } from '@icc/ui/theme';
-import { IccAccordionComponent } from '@icc/ui/accordion';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
+import { STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
 import { IccIconModule } from '@icc/ui/icon';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
 import {
+  IccLayoutCenterComponent,
   IccLayoutComponent,
+  IccLayoutFooterComponent,
   IccLayoutHeaderComponent,
   IccLayoutSidebarComponent,
-  IccLayoutCenterComponent,
-  IccLayoutFooterComponent,
 } from '@icc/ui/layout';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
-//import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
-import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
+import { IccThemeService } from '@icc/ui/theme';
 
 @Component({
   selector: 'app-root',
@@ -35,18 +31,9 @@ import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-h
     IccLayoutCenterComponent,
     IccLayoutFooterComponent,
     IccIconModule,
-    //IccUiModulesModule,
     IccAccordionComponent,
     SelectFieldComponent,
   ],
-  /*
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InMemoryHttpInterceptor,
-      multi: true,
-    },
-  ],*/
 })
 export class AppComponent {
   private themeService = inject(IccThemeService);
@@ -115,18 +102,6 @@ export class AppComponent {
         },
       ],
     },
-    /*
-    {
-      name: 'Grid in-memory Data',
-      items: [
-        { name: 'Grid In-Memory Virtual Scroll', link: 'grid/in-memory-grid-virtual-scroll', icon: 'arrows-rotate' },
-        {
-          name: 'Grid In-Memory Test',
-          link: 'grid/in-memory-grid-test',
-          icon: 'arrows-rotate',
-        },
-      ],
-    },*/
     {
       name: 'Select Demos',
       items: [{ name: 'Simple Select', link: 'select/simple-select' }],
