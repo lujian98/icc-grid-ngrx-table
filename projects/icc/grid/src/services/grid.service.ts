@@ -22,14 +22,11 @@ export class IccGridService {
   private backendService = inject(IccBackendService);
 
   getGridConfig(gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    //console.log(' service config =', gridConfig);
     const url = this.backendService.getUrl(`${gridConfig.urlKey}/gridConfig`);
     //const url = `/api/${gridConfig.urlKey}/gridConfig`;
-    console.log(' url =', url);
+    //console.log(' url =', url);
     return this.http.get<IccGridConfig>(url).pipe(
       map((config) => {
-        //console.log(' DCR Grid config gridConfig=', gridConfig);
-        //console.log(' DCR Grid config res=', config);
         return {
           ...gridConfig,
           ...config,
@@ -43,7 +40,6 @@ export class IccGridService {
     const url = this.backendService.getUrl(`${gridConfig.urlKey}/columnConfig`);
     return this.http.get<any[]>(url).pipe(
       map((res) => {
-        //console.log(' DCRColumnConfig res=', res);
         return res;
       }),
     );
