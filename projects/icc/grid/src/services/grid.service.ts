@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IccBackendService } from '@icc/ui/core';
+//import { IccBackendService } from '@icc/ui/core';
 import {
   IccColumnConfig,
   IccColumnFilter,
@@ -19,12 +19,12 @@ import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 })
 export class IccGridService {
   private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  // private backendService = inject(IccBackendService);
 
   getGridConfig(gridConfig: IccGridConfig): Observable<IccGridConfig> {
     //console.log(' service config =', gridConfig);
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}/gridConfig`);
-    //const url = `/api/${gridConfig.urlKey}/gridConfig`;
+    //const url = this.backendService.getUrl(`${gridConfig.urlKey}/gridConfig`);
+    const url = `/api/${gridConfig.urlKey}/gridConfig`;
     console.log(' url =', url);
     return this.http.get<IccGridConfig>(url).pipe(
       map((config) => {
@@ -39,8 +39,8 @@ export class IccGridService {
   }
 
   getGridColumnsConfig(gridConfig: IccGridConfig): Observable<IccColumnConfig[]> {
-    // const url = `/api/${gridConfig.urlKey}/columnConfig`;
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}/columnConfig`);
+    const url = `/api/${gridConfig.urlKey}/columnConfig`;
+    //const url = this.backendService.getUrl(`${gridConfig.urlKey}/columnConfig`);
     return this.http.get<any[]>(url).pipe(
       map((res) => {
         //console.log(' DCRColumnConfig res=', res);
@@ -67,8 +67,8 @@ export class IccGridService {
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
     //console.log(' params =', params);
-    // const urlKey = gridConfig.urlKey;
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}`);
+    const url = `/api/${gridConfig.urlKey}`;
+    //const url = this.backendService.getUrl(`${gridConfig.urlKey}`);
     return this.http.get<IccGridData<T>>(url, { params }).pipe(
       map((res) => {
         console.log(' res=', res);

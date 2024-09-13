@@ -1,14 +1,52 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { IccAccordion } from '@icc/ui/accordion';
+import { CommonModule } from '@angular/common';
 import { IccThemeService } from '@icc/ui/theme';
+import { IccAccordionComponent } from '@icc/ui/accordion';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccIconModule } from '@icc/ui/icon';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { InMemoryHttpInterceptor } from './mock/in-memory-http.interceptor';
+import {
+  IccLayoutComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutSidebarComponent,
+  IccLayoutCenterComponent,
+  IccLayoutFooterComponent,
+} from '@icc/ui/layout';
 import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
+//import { IccUiModulesModule } from './icc-ui-modules/icc-ui-modules.module';
 import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    RouterModule,
+    IccCheckboxComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
+    IccLayoutSidebarComponent,
+    IccLayoutCenterComponent,
+    IccLayoutFooterComponent,
+    IccIconModule,
+    //IccUiModulesModule,
+    IccAccordionComponent,
+    SelectFieldComponent,
+  ],
+  /*
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InMemoryHttpInterceptor,
+      multi: true,
+    },
+  ],*/
 })
 export class AppComponent {
   private themeService = inject(IccThemeService);
