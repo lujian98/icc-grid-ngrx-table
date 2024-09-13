@@ -58,7 +58,9 @@ export const iccSelectFieldFeature = createFeature({
       // TODO clear store after 250ms
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
-      delete newState[key];
+      if (state[key]) {
+        delete newState[key];
+      }
       console.log(' 333333  clear State key=', key);
       return { ...newState };
     }),
