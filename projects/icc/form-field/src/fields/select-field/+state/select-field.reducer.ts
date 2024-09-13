@@ -27,26 +27,30 @@ export const iccSelectFieldFeature = createFeature({
       const fieldConfig = { ...action.fieldConfig };
       const key = fieldConfig.fieldId;
       const newState: SelectFieldState = { ...state };
-      newState[key] = {
-        ...state[key],
-        fieldConfig: {
-          ...fieldConfig,
-          viewportReady: !fieldConfig.remoteOptions,
-        },
-      };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          fieldConfig: {
+            ...fieldConfig,
+            viewportReady: !fieldConfig.remoteOptions,
+          },
+        };
+      }
       return { ...newState };
     }),
     on(selectFieldActions.loadSelectFieldOptionsSuccess, (state, action) => {
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
-      newState[key] = {
-        ...state[key],
-        fieldConfig: {
-          ...state[key].fieldConfig,
-          viewportReady: true,
-        },
-        options: [...action.options],
-      };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          fieldConfig: {
+            ...state[key].fieldConfig,
+            viewportReady: true,
+          },
+          options: [...action.options],
+        };
+      }
       //console.log(' rrrrrrrrrr newState option=', newState);
       return { ...newState };
     }),

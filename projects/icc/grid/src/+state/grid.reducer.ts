@@ -28,32 +28,36 @@ export const iccGridFeature = createFeature({
       const gridConfig = { ...action.gridConfig };
       const key = gridConfig.gridId;
       const newState: IccGridState = { ...state };
-      newState[key] = {
-        ...state[key],
-        gridConfig: {
-          ...gridConfig,
-          viewportReady: !action.gridConfig.remoteColumnsConfig,
-        },
-      };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          gridConfig: {
+            ...gridConfig,
+            viewportReady: !action.gridConfig.remoteColumnsConfig,
+          },
+        };
+      }
       return { ...newState };
     }),
     on(gridActions.loadGridColumnsConfigSuccess, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: IccGridState = { ...state };
-      newState[key] = {
-        ...state[key],
-        gridConfig: {
-          ...state[key].gridConfig,
-          viewportReady: true,
-        },
-        columnsConfig: action.columnsConfig.map((column) => {
-          return {
-            ...column,
-            fieldType: column.fieldType || 'text',
-            width: column.width || MIN_GRID_COLUMN_WIDTH,
-          };
-        }),
-      };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          gridConfig: {
+            ...state[key].gridConfig,
+            viewportReady: true,
+          },
+          columnsConfig: action.columnsConfig.map((column) => {
+            return {
+              ...column,
+              fieldType: column.fieldType || 'text',
+              width: column.width || MIN_GRID_COLUMN_WIDTH,
+            };
+          }),
+        };
+      }
       //console.log(' setupGridColumnConfigSuccess=', newState)
       return { ...newState };
     }),
@@ -129,22 +133,23 @@ export const iccGridFeature = createFeature({
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridId;
       const newState: IccGridState = { ...state };
-      //console.log(' old state=', state)
-      const oldState = state[key];
-      const gridConfig = oldState.gridConfig;
-      const data =
-        gridConfig.virtualScroll && gridConfig.page > 1
-          ? [...oldState.data, ...action.gridData.data]
-          : [...action.gridData.data];
-      newState[key] = {
-        ...oldState,
-        gridConfig: {
-          ...gridConfig,
+      if (state[key]) {
+        const oldState = state[key];
+        const gridConfig = oldState.gridConfig;
+        const data =
+          gridConfig.virtualScroll && gridConfig.page > 1
+            ? [...oldState.data, ...action.gridData.data]
+            : [...action.gridData.data];
+        newState[key] = {
+          ...oldState,
+          gridConfig: {
+            ...gridConfig,
+            totalCounts: action.gridData.totalCounts,
+          },
           totalCounts: action.gridData.totalCounts,
-        },
-        totalCounts: action.gridData.totalCounts,
-        data: data,
-      };
+          data: data,
+        };
+      }
       //console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
