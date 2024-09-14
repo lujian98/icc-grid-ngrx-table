@@ -7,19 +7,32 @@ import { Injectable } from '@angular/core';
 export class InMemoryHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
     const newreq = { ...req };
-    //console.log(' req=', req); // columnConfig statelist
+    const keyName = req.params.get('keyName');
+    const action = req.params.get('action');
+    const path = req.params.get('path');
+    console.log(' req=', req); // gridConfig
+    console.log(' req.params=', req.params);
+    console.log(' keyName=', req.params.get('keyName'));
+    if (keyName && action === 'gridData') {
+      newreq.url = newreq.urlWithParams = `/api/${keyName}`;
+    } else if (keyName && action === 'columnConfig') {
+      newreq.url = newreq.urlWithParams = `/api/${keyName}_${action}`;
+    } else if (keyName && action === 'gridConfig') {
+      newreq.url = newreq.urlWithParams = `/api/${keyName}_${action}`;
+    }
+
     if (req.url === '/api/DCR/brand') {
       newreq.url = newreq.urlWithParams = '/api/DCR_brand';
     }
     if (req.url === '/api/DCR/color') {
       newreq.url = newreq.urlWithParams = '/api/DCR_color';
     }
-    if (req.url === '/api/DCR/columnConfig') {
-      newreq.url = newreq.urlWithParams = '/api/DCR_columnConfig';
-    }
-    if (req.url === '/api/DCR/gridConfig') {
-      newreq.url = newreq.urlWithParams = '/api/DCR_gridConfig';
-    }
+    //if (req.url === '/api/DCR/columnConfig') {
+    //  newreq.url = newreq.urlWithParams = '/api/DCR_columnConfig';
+    //}
+    //if (req.url === '/api/DCR/gridConfig') {
+    //  newreq.url = newreq.urlWithParams = '/api/DCR_gridConfig';
+    //}
 
     if (req.url === '/api/usa/state') {
       newreq.url = newreq.urlWithParams = '/api/usa_state';

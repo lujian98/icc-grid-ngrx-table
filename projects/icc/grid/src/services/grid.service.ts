@@ -22,10 +22,14 @@ export class IccGridService {
   private backendService = inject(IccBackendService);
 
   getGridConfig(gridConfig: IccGridConfig): Observable<IccGridConfig> {
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}/gridConfig`);
+    let params = new HttpParams();
+    params = params.append('keyName', gridConfig.urlKey);
+    params = params.append('action', 'gridConfig');
+    //const url = this.backendService.getUrl(`${gridConfig.urlKey}/gridConfig`);
+    const url = this.backendService.getUrl(`index.php`);
     //const url = `/api/${gridConfig.urlKey}/gridConfig`;
     //console.log(' url =', url);
-    return this.http.get<IccGridConfig>(url).pipe(
+    return this.http.get<IccGridConfig>(url, { params }).pipe(
       map((config) => {
         return {
           ...gridConfig,
@@ -37,8 +41,14 @@ export class IccGridService {
 
   getGridColumnsConfig(gridConfig: IccGridConfig): Observable<IccColumnConfig[]> {
     //const url = `/api/${gridConfig.urlKey}/columnConfig`;
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}/columnConfig`);
-    return this.http.get<any[]>(url).pipe(
+    let params = new HttpParams();
+    params = params.append('keyName', gridConfig.urlKey);
+    params = params.append('action', 'columnConfig');
+    //params = params.append('path', 'columnConfig');
+
+    //const url = this.backendService.getUrl(`${gridConfig.urlKey}/columnConfig`);
+    const url = this.backendService.getUrl(`index.php`);
+    return this.http.get<any[]>(url, { params }).pipe(
       map((res) => {
         return res;
       }),
@@ -54,7 +64,8 @@ export class IccGridService {
     //console.log(' service getGridData gridConfig =', gridConfig);
     //console.log(' 66666666666 service getGridData gridConfig =', columns);
     let params = new HttpParams();
-
+    params = params.append('keyName', gridConfig.urlKey);
+    params = params.append('action', 'gridData');
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
 
@@ -64,7 +75,8 @@ export class IccGridService {
     params = params.append('limit', limit.toString());
     //console.log(' params =', params);
     //const url = `/api/${gridConfig.urlKey}`;
-    const url = this.backendService.getUrl(`${gridConfig.urlKey}`);
+    // const url = this.backendService.getUrl(`${gridConfig.urlKey}`);
+    const url = this.backendService.getUrl(`index.php`);
     return this.http.get<IccGridData<T>>(url, { params }).pipe(
       map((res) => {
         console.log(' res=', res);
