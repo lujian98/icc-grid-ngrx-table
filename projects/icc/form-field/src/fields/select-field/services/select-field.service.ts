@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,8 +14,13 @@ export class IccSelectFieldService {
 
   getRemoteFieldConfig(fieldConfig: IccSelectFieldConfig): Observable<IccSelectFieldConfig> {
     //const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`;
-    const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`);
-    return this.http.get<IccSelectFieldConfig>(url).pipe(
+    let params = new HttpParams();
+    params = params.append('keyName', fieldConfig.urlKey);
+    params = params.append('action', 'selectFieldConfig');
+    params = params.append('path', fieldConfig.fieldName);
+    //const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`);
+    const url = this.backendService.getUrl(`index.php`);
+    return this.http.get<IccSelectFieldConfig>(url, { params }).pipe(
       map((config) => {
         return {
           ...fieldConfig,
@@ -27,9 +32,14 @@ export class IccSelectFieldService {
   }
 
   getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
+    let params = new HttpParams();
+    params = params.append('keyName', fieldConfig.urlKey);
+    params = params.append('action', 'select');
+    params = params.append('path', fieldConfig.fieldName);
     //const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
-    const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}`);
-    return this.http.get<any[]>(url).pipe(
+    //const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}`);
+    const url = this.backendService.getUrl(`index.php`);
+    return this.http.get<any[]>(url, { params }).pipe(
       map((options) => {
         if (fieldConfig.singleListOption) {
           return options.map((item) => ({
