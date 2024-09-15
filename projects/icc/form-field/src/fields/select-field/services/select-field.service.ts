@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,13 +13,8 @@ export class IccSelectFieldService {
   private backendService = inject(IccBackendService);
 
   getRemoteFieldConfig(fieldConfig: IccSelectFieldConfig): Observable<IccSelectFieldConfig> {
-    //const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`;
-    let params = new HttpParams();
-    params = params.append('keyName', fieldConfig.urlKey);
-    params = params.append('action', 'selectFieldConfig');
-    params = params.append('path', fieldConfig.fieldName);
-    //const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}FieldConfig`);
-    const url = this.backendService.getUrl(`index.php`);
+    const params = this.backendService.getParams(fieldConfig.urlKey, 'selectFieldConfig', fieldConfig.fieldName);
+    const url = this.backendService.apiUrl;
     return this.http.get<IccSelectFieldConfig>(url, { params }).pipe(
       map((config) => {
         return {
@@ -32,13 +27,8 @@ export class IccSelectFieldService {
   }
 
   getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
-    let params = new HttpParams();
-    params = params.append('keyName', fieldConfig.urlKey);
-    params = params.append('action', 'select');
-    params = params.append('path', fieldConfig.fieldName);
-    //const url = `/api/${fieldConfig.urlKey}/${fieldConfig.fieldName}`;
-    //const url = this.backendService.getUrl(`${fieldConfig.urlKey}/${fieldConfig.fieldName}`);
-    const url = this.backendService.getUrl(`index.php`);
+    const params = this.backendService.getParams(fieldConfig.urlKey, 'select', fieldConfig.fieldName);
+    const url = this.backendService.apiUrl;
     return this.http.get<any[]>(url, { params }).pipe(
       map((options) => {
         if (fieldConfig.singleListOption) {
