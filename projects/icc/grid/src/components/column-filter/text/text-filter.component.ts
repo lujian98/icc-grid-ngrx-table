@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 //import { SunTextField } from '../../../../fields/text_field';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridConfig, IccColumnConfig } from '../../../models/grid-column.model';
-import { TextFieldComponent } from '@icc/ui/form-field';
+import { TextFieldComponent } from '@icc/ui/fields';
 
 @Component({
   selector: 'icc-text-filter',

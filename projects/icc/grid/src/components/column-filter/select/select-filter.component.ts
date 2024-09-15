@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
+import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 

@@ -8,7 +8,7 @@ import {
   DCRColumnConfig,
   DCRGridConfig,
 } from '@icc/ui/grid/src/spec-helpers/cars-large';
-import { State, STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
+import { State, STATES } from '@icc/ui/fields/src/select-field/spec-helpers/states';
 import {
   SingleSelectConfig,
   MultiSelectConfig,
@@ -18,7 +18,7 @@ import {
   MultiListConfig,
   SingleAutocompleteLisConfig,
   MultiAutocompleteListConfig,
-} from '@icc/ui/form-field/src/fields/select-field/spec-helpers/select-field-helpers';
+} from '@icc/ui/fields/src/select-field/spec-helpers/select-field-helpers';
 
 export class InMemoryService extends InMemoryDbService {
   createDb(): {

@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/form-field';
-import { STATES } from '@icc/ui/form-field/src/fields/select-field/spec-helpers/states';
+import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { STATES } from '@icc/ui/fields/src/select-field/spec-helpers/states';
 import { IccIconModule } from '@icc/ui/icon';
 import {
   IccLayoutCenterComponent,

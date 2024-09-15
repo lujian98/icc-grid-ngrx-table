@@ -24,10 +24,7 @@ import {
 } from '@angular/forms';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
-import { IccLabelDirective } from '../../directive/label.directive';
-import { IccSuffixDirective } from '../../directive/suffix.directive';
-import { IccFormFieldComponent } from '../../form-field.component';
-import { IccInputDirective } from '../../input/input.directive';
+import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-text-field',
