@@ -25,6 +25,7 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridConfig>(url, { params }).pipe(
       map((config) => {
+        console.log(' gridConfig res=', config);
         return {
           ...gridConfig,
           ...config,
@@ -38,6 +39,7 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<any[]>(url, { params }).pipe(
       map((res) => {
+        console.log(' columnConfig res=', res);
         return res;
       }),
     );
