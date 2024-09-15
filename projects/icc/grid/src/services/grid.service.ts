@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, catchError, map, throwError } from 'rxjs';
 import { IccBackendService } from '@icc/ui/core';
 import {
   IccColumnConfig,
@@ -66,6 +65,12 @@ export class IccGridService {
         console.log(' res=', res);
         return res;
       }),
+      catchError((error) =>
+        throwError(() => {
+          console.log(' error=', error);
+          return error;
+        }),
+      ),
     );
   }
 
