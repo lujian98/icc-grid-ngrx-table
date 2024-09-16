@@ -5,28 +5,3 @@
   (valueChange)="onValueChange($event)"
 >
 </icc-text-field>
-<!--
-
-
-  <div class="icc-text-filter">
-  <input
-    type="text"
-    [value]="value"
-    autocomplete="off"
-    (click)="$event.stopPropagation()"
-    (keyup)="applyFilter($event)"
-    placeholder="{{ filterPlaceholder }}"
-  />
-</div>
-
-<mat-form-field *ngIf="filterType" [ngClass]="'sun-grid-form-field'" [ngStyle]="{'height': rowHeight+'px'}">
-  <input matInput type="text" [value]="value" autocomplete="off"
-    (click)="$event.stopPropagation()"
-    (keyup)="applyFilter($event)"
-    placeholder="{{filterPlaceholder | translate}}...">
-
-  <button *ngIf="value" matSuffix sun-button [ghost]="true" (click)="clearFilter($event)">
-    <sun-icon icon="times-circle-o"></sun-icon>
-  </button>
-</mat-form-field>
--->
