@@ -27,6 +27,8 @@
     "@ngrx/router-store": "^18.0.2",
     "@ngrx/schematics": "^18.0.2",
     "@ngrx/store": "^18.0.2",
+    "@types/d3": "^7.4.3",
+    "d3": "^7.9.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
