@@ -36,6 +36,10 @@ export const iccGridFeature = createFeature({
             viewportReady: !action.gridConfig.remoteColumnsConfig,
           },
         };
+        const pageSize = newState[key].gridConfig.pageSize;
+        if (gridConfig.virtualScroll && pageSize < VIRTUAL_SCROLL_PAGE_SIZE) {
+          newState[key].gridConfig.pageSize = VIRTUAL_SCROLL_PAGE_SIZE;
+        }
       }
       return { ...newState };
     }),

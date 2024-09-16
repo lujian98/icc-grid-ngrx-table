@@ -25,6 +25,7 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridConfig>(url, { params }).pipe(
       map((config) => {
+        console.log(' gridConfig default =', gridConfig);
         console.log(' gridConfig res=', config);
         return {
           ...gridConfig,
@@ -51,7 +52,7 @@ export class IccGridService {
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
-    //console.log(' service getGridData gridConfig =', gridConfig);
+    console.log(' service getGridData gridConfig =', gridConfig);
     let params = this.backendService.getParams(gridConfig.urlKey, 'gridData');
 
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
