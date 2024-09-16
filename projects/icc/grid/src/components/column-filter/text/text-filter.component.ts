@@ -15,7 +15,6 @@ export class IccTextFilterComponent extends IccFieldFilterComponent {
   filterPlaceholder: string = 'Filter ...';
 
   onValueChange(value: string): void {
-    console.log(' 11111 change value=', value);
     this.filterChanged$.next(value);
   }
 }

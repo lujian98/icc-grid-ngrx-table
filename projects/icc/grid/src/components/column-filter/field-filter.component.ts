@@ -13,7 +13,6 @@ import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 
 @Component({
-  selector: 'icc-field-filter',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -81,7 +80,6 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
         value: this.value,
       });
     }
-    console.log(' 22222 call  change value=', filterValue);
     this.gridFacade.setGridColumnFilters(this.gridConfig.gridId, columnFilters);
   }
 

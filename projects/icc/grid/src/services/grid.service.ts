@@ -69,7 +69,7 @@ export class IccGridService {
       }),
       catchError((error) =>
         throwError(() => {
-          console.log(' error=', error);
+          //console.log(' error=', error);
           return error;
         }),
       ),
