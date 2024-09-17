@@ -64,7 +64,7 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.portalOutlet.hasAttached()) {
+    if (this.portalOutlet?.hasAttached()) {
       this.portalOutlet.detach();
     }
   }
