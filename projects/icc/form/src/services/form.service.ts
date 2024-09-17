@@ -8,7 +8,7 @@ import { IccBackendService } from '@icc/ui/core';
 @Injectable({
   providedIn: 'root',
 })
-export class IccFormPanelService {
+export class IccFormService {
   private http = inject(HttpClient);
   private backendService = inject(IccBackendService);
 

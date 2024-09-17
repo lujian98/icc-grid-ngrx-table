@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccFormPanelComponent, defaultFormPanelConfig } from '@icc/ui/form-panel';
+import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 
 @Component({
   selector: 'app-simple-form',
   //styles: [':host {width: 100%; height: 100%; display: flex; flex-direction: column;}'],
-  template: `
-    <icc-form-panel [formPanelConfig]="formPanelConfig" [formFields]="formFields" [values]="values"></icc-form-panel>
-  `,
+  template: ` <icc-form [formConfig]="formConfig" [formFields]="formFields" [values]="values"></icc-form> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormPanelComponent],
+  imports: [CommonModule, IccFormComponent],
 })
 export class AppSimpleFromDemoComponent {
-  formPanelConfig = {
-    ...defaultFormPanelConfig,
+  formConfig = {
+    ...defaultFormConfig,
   };
   formFields = [
     {

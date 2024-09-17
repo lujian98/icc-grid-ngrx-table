@@ -16,19 +16,19 @@ import {
 import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IccFormPanelConfig } from '../models/form-panel.model';
+import { IccFormConfig } from '../models/form.model';
 
 @Component({
-  selector: 'icc-form-panel-view',
-  templateUrl: './form-panel-view.component.html',
+  selector: 'icc-form-view',
+  templateUrl: './form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
-export class IccFormPanelViewComponent {
+export class IccFormViewComponent {
   private _formFields: any[] = [];
 
-  @Input() formPanelConfig!: IccFormPanelConfig; // TODO readonly or edit???
+  @Input() formConfig!: IccFormConfig; // TODO readonly or edit???
 
   @Input()
   set formFields(val: any[]) {
