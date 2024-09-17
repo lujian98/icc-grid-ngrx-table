@@ -5,7 +5,7 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
 
 @Component({
   selector: 'app-line-chart-demo',
-  styles: [':host {height: 100%; display: flex; flex-direction: column;}'],
+  styles: [':host {width: 100%; height: 100%; display: flex; flex-direction: column;}'],
   template: `
     <div style="height: 100%; display: flex;">
       <icc-d3 [options]="options" [chartConfigs]="chartConfigs1" [dataSource]="data"></icc-d3>
