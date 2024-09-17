@@ -1,5 +1,7 @@
 import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, TemplateRef, Type, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PortalModule } from '@angular/cdk/portal';
 import { IccPortalContent } from './model';
 import { IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
 
@@ -7,6 +9,8 @@ import { IccOverlayComponentRef } from '../../services/overlay/overlay-component
   selector: 'icc-portal',
   templateUrl: './portal.component.html',
   styleUrls: ['./portal.component.scss'],
+  standalone: true,
+  imports: [CommonModule, PortalModule],
 })
 export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() content!: IccPortalContent<T>;

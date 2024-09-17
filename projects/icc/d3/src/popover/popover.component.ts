@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IccOverlayComponentRef, IccPopoverModule, IccPortalModule } from '@icc/ui/tooltip';
+import { IccPopoverDirective, IccPopoverModule } from '../shared/tooltip/directives/popover';
+import { IccPortalComponent } from '../shared/tooltip/components/portal/portal.component';
+import { IccOverlayComponentRef } from '../shared/tooltip/services/overlay/overlay-component-ref';
+
 import { CommonModule } from '@angular/common';
 import { IccD3Popover } from '../model';
 
@@ -7,7 +10,7 @@ import { IccD3Popover } from '../model';
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   standalone: true,
-  imports: [CommonModule, IccPopoverModule, IccPortalModule],
+  imports: [CommonModule, IccPopoverModule, IccPortalComponent],
 })
 export class IccD3PopoverComponent implements OnInit {
   data!: IccD3Popover; // TODO hover border color

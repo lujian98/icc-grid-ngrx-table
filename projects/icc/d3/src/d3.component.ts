@@ -35,11 +35,11 @@ import {
   DEFAULT_PIE_CHART_CONFIGS,
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './model';
-import { IccPopoverDirective } from '@icc/ui/tooltip';
+
 import { IccD3PopoverComponent } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-
-import { IccPopoverModule, IccPortalModule } from '@icc/ui/tooltip';
+import { IccPopoverDirective, IccPopoverModule } from './shared/tooltip/directives/popover';
+import { IccPortalComponent } from './shared/tooltip/components/portal/portal.component';
 
 @Component({
   selector: 'icc-d3',
@@ -47,7 +47,7 @@ import { IccPopoverModule, IccPortalModule } from '@icc/ui/tooltip';
   styleUrls: ['./d3.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CommonModule, IccPopoverModule, IccPortalModule, IccD3PopoverComponent, IccD3LegendComponent],
+  imports: [CommonModule, IccPopoverModule, IccPortalComponent, IccD3PopoverComponent, IccD3LegendComponent],
   providers: [IccDrawServie],
 })
 export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
