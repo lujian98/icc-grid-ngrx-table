@@ -11,7 +11,7 @@ export class IccScaleFactory<T> {
     band: IccBandScale,
   };
 
-  componentRef: IccAbstractScale<T>;
+  componentRef!: IccAbstractScale<T>;
 
   constructor(
     private scaleType: string,
@@ -21,6 +21,7 @@ export class IccScaleFactory<T> {
   }
 
   setComponentRef(): void {
+    // @ts-ignore
     let component = this.componentMapper[this.scaleType];
     if (!component) {
       component = this.componentMapper.linear;
@@ -36,10 +37,12 @@ export class IccScaleFactory<T> {
     this.componentRef.updateRange(scale, range, reverse);
   }
 
+  // @ts-ignore
   setXDomain(scale: IccScale, data: T[], type: string = null): void {
     this.componentRef.setXDomain(scale, data, type);
   }
 
+  // @ts-ignore
   setYDomain(scale: IccScale, data: T[], type: string = null): void {
     this.componentRef.setYDomain(scale, data, type);
   }

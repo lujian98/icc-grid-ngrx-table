@@ -14,9 +14,10 @@ export class IccCandleStickBarChart<T> extends IccAbstractDraw<T> {
       .select(drawName)
       .selectAll('g')
       .selectAll('rect')
-      .data((d) => this.chart.y0(d))
+      .data((d) => this.chart.y0!(d))
       .join('rect')
       .attr('class', 'candlestick draw')
+      // @ts-ignore
       .attr('x', (d, i) => scaleX(this.chart.x(d)))
       .attr('y', (d: any) => scaleY(Math.max(d.open, d.close)))
       .attr('width', barWidth)
@@ -29,33 +30,35 @@ export class IccCandleStickBarChart<T> extends IccAbstractDraw<T> {
       .select(drawName)
       .selectAll('g')
       .selectAll('line')
-      .data((d) => this.chart.y0(d))
+      .data((d) => this.chart.y0!(d))
       .join('line')
       .attr('class', 'candlestick stem')
+      // @ts-ignore
       .attr('x1', (d, i) => scaleX(this.chart.x(d)) + barWidth / 2)
+      // @ts-ignore
       .attr('x2', (d, i) => scaleX(this.chart.x(d)) + barWidth / 2)
       .attr('y1', (d: any) => scaleY(d.high))
       .attr('y2', (d: any) => scaleY(d.low))
       .attr('stroke', (d: any) => (d.open === d.close ? 'white' : d.open > d.close ? 'red' : 'green'));
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
       .select('.draw')
       .filter(
         (d: any) =>
-          this.chart.x0(d) === this.chart.x0(data) &&
-          ((!this.chart.y0(data) && this.chart.y(d) === this.chart.y(data)) || this.chart.y0(data)),
+          this.chart.x0!(d) === this.chart.x0!(data) &&
+          ((!this.chart.y0!(data) && this.chart.y!(d) === this.chart.y!(data)) || this.chart.y0!(data)),
       )
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }
 
-  getBarWidth(drawName: string, scaleX: IccScale): number {
+  getBarWidth(drawName: string, scaleX: IccScale): any {
     if (this.data.length > 0) {
       const range = scaleX.range();
-      const barWidth = (range[1] / this.chart.y0(this.data[0]).length) * 0.45;
+      const barWidth = (range[1] / this.chart.y0!(this.data[0]).length) * 0.45;
       let scale = 1;
       if (drawName === `.${this.chartType}`) {
         const xdomain = scaleX.domain() as any[];

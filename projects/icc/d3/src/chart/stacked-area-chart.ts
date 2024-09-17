@@ -4,6 +4,7 @@ import { IccStackedData } from '../data/stacked-data';
 import { IccScale, IccScaleLinear } from '../model';
 
 export class IccStackedAreaChart<T> extends IccAbstractDraw<T> {
+  // @ts-ignore
   drawChart(data: T[]): void {
     this.isStacked = true;
     this.reverse = true;
@@ -37,7 +38,7 @@ export class IccStackedAreaChart<T> extends IccAbstractDraw<T> {
   redrawContent(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {
     const drawContent = d3Shape
       .area()
-      .x((d: any) => scaleX(this.chart.x(d.data)))
+      .x((d: any) => scaleX(this.chart.x!(d.data))!)
       .y0((d) => scaleY(d[0]))
       .y1((d) => scaleY(d[1]));
     this.drawPanel
@@ -45,10 +46,11 @@ export class IccStackedAreaChart<T> extends IccAbstractDraw<T> {
       .selectAll('g')
       .select('.draw')
       .attr('fill', (d, i) => this.getStackeddrawColor(d, i))
+      // @ts-ignore
       .attr('d', drawContent);
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     if (e) {
       this.hoveredKey = mouseover ? data.key : null;
     }
@@ -56,7 +58,7 @@ export class IccStackedAreaChart<T> extends IccAbstractDraw<T> {
       .select(`.${this.chartType}`)
       .selectAll('g')
       .select('.draw')
-      .filter((d: any) => d.key === this.chart.x0(data)) // key is from stacked data
+      .filter((d: any) => d.key === this.chart.x0!(data)) // key is from stacked data
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.5));
   }
 }

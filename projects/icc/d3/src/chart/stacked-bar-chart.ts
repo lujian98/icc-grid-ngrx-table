@@ -3,16 +3,18 @@ import { IccStackedData } from '../data/stacked-data';
 import { IccScale, IccScaleLinear } from '../model';
 
 export class IccStackedBarChart<T> extends IccAbstractDraw<T> {
+  // @ts-ignore
   protected hoveredIndex = -1;
-  drawData: T[];
+  drawData!: T[];
 
-  setHovered(e, d): void {
+  setHovered(e: any, d: any): void {
     const index = this.getHoveredIndex(e);
     const data: any = this.data[index.idx];
     this.hoveredKey = data.key; // this only difference
     this.hoveredIndex = index.jdx;
   }
 
+  // @ts-ignore
   drawChart(data: T[]): void {
     this.drawData = data;
     this.isStacked = true;
@@ -48,8 +50,10 @@ export class IccStackedBarChart<T> extends IccAbstractDraw<T> {
       .data((d: any) => d)
       .join('rect')
       .attr('class', 'stackedbar draw')
-      .attr('x', (d: any) => scaleX(this.chart.x(d.data)))
+      .attr('x', (d: any) => scaleX(this.chart.x!(d.data))!)
+      // @ts-ignore
       .attr('y', (d) => scaleY(d[1]))
+      // @ts-ignore
       .attr('height', (d) => scaleY(d[0]) - scaleY(d[1]))
       .attr('width', barWidth);
     if (drawName === `.${this.chartType}`) {
@@ -59,7 +63,7 @@ export class IccStackedBarChart<T> extends IccAbstractDraw<T> {
     }
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
@@ -69,14 +73,15 @@ export class IccStackedBarChart<T> extends IccAbstractDraw<T> {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('.series')
-      .filter((d: any) => d.key === this.chart.x0(data)) // key is from stacked data
+      .filter((d: any) => d.key === this.chart.x0!(data)) // key is from stacked data
       .style('fill-opacity', (d) => (mouseover ? 0.9 : null));
   }
 
-  drawMouseover(e, data, mouseover: boolean): void {
+  drawMouseover(e: any, data: any, mouseover: boolean): void {
     if (mouseover) {
       this.setHovered(e, data);
     } else {
+      // @ts-ignore
       this.hoveredKey = null;
       this.hoveredIndex = -1;
     }
@@ -84,7 +89,7 @@ export class IccStackedBarChart<T> extends IccAbstractDraw<T> {
       .select(`.${this.chartType}`)
       .selectAll('g')
       .selectAll('.draw')
-      .filter((d: any) => data.data && this.chart.x(d.data) === this.chart.x(data.data))
+      .filter((d: any) => data.data && this.chart.x!(d.data) === this.chart.x!(data.data))
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }
 }

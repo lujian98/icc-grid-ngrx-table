@@ -4,20 +4,22 @@ import { IccPieData } from '../data/pie-data';
 import { IccScale, IccScaleLinear, IccD3Interactive, IccPosition } from '../model';
 
 export class IccPieChart<T> extends IccAbstractDraw<T> {
-  private sxy: IccPosition;
-  private outterRadius: number;
+  private sxy!: IccPosition;
+  private outterRadius!: number;
 
+  // @ts-ignore
   getDrawData(idx: number, data: T): IccD3Interactive[] {
+    // @ts-ignore
     return this.chart
       .y0(data)
-      .filter((d) => idx > -1 && !d.disabled)
-      .map((d, i) => {
+      .filter((d: any) => idx > -1 && !d.disabled)
+      .map((d: any, i: number) => {
         return {
-          key: this.chart.x(d),
+          key: this.chart.x!(d),
           value: d,
           color: d.color || this.getdrawColor(d, i),
           valueX: null,
-          valueY: this.chart.y(d),
+          valueY: this.chart.y!(d),
           cy: null,
           hovered: i === idx,
           hasSummary: true,
@@ -25,14 +27,16 @@ export class IccPieChart<T> extends IccAbstractDraw<T> {
       });
   }
 
+  // @ts-ignore
   drawChart(data: T[]): void {
     const pie = new IccPieData(this.chart);
+    // @ts-ignore
     pie.pieOptions = this.chart.pie;
     this.sxy = pie.setPieScaleXY();
     this.outterRadius = Math.round(
       Math.min((Math.abs(this.sxy.x) + 1) * this.panelWidth, (Math.abs(this.sxy.y) + 1) * this.panelHeight) / 2,
     );
-    const piedata = pie.getPieData(this.chart.y0(data[0]));
+    const piedata = pie.getPieData(this.chart.y0!(data[0]));
     this.createDrawElement('pieChartLabel');
     super.drawChart(piedata);
   }
@@ -57,13 +61,14 @@ export class IccPieChart<T> extends IccAbstractDraw<T> {
   }
 
   redrawContent(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {
-    const cx = ((this.sxy.x + 1) * this.panelWidth) / 2 + this.outterRadius * this.chart.pie.centerOffsetX;
-    const cy = ((this.sxy.y + 1) * this.panelHeight) / 2 + this.outterRadius * this.chart.pie.centerOffsetY;
+    const cx = ((this.sxy.x + 1) * this.panelWidth) / 2 + this.outterRadius * this.chart.pie!.centerOffsetX!;
+    const cy = ((this.sxy.y + 1) * this.panelHeight) / 2 + this.outterRadius * this.chart.pie!.centerOffsetY!;
     const drawContents = this.drawPanel
       .select(drawName)
       .selectAll('g')
       .select('.draw')
       .attr('transform', () => `translate(${cx}, ${cy})`)
+      // @ts-ignore
       .attr('d', this.drawArc())
       .attr('fill', (d: any, i) => this.getdrawColor(d.data, i));
 
@@ -72,12 +77,12 @@ export class IccPieChart<T> extends IccAbstractDraw<T> {
         .on('mouseover', (e, d) => this.drawMouseover(e, d, true))
         .on('mouseout', (e, d) => this.drawMouseover(e, d, false));
     }
-    const textSize = this.outterRadius * this.chart.pie.labelTextSize;
+    const textSize = this.outterRadius * this.chart.pie!.labelTextSize!;
     this.drawPanel
       .select(`${drawName}Label`)
       .selectAll('g')
       .select('.drawlabel')
-      .text((d: any) => this.chart.x(d.data))
+      .text((d: any) => this.chart.x!(d.data))
       .style('font', `${textSize}px Courier`)
       .attr('text-anchor', 'middle')
       .attr('alignment-baseline', 'middle')
@@ -95,21 +100,23 @@ export class IccPieChart<T> extends IccAbstractDraw<T> {
   drawArc(grow: number = 0): d3Shape.Arc<any, d3Shape.DefaultArcObject> {
     return d3Shape
       .arc()
-      .innerRadius(this.outterRadius * Math.min(0.95, this.chart.pie.donut))
+      .innerRadius(this.outterRadius * Math.min(0.95, this.chart.pie!.donut!))
       .outerRadius(this.outterRadius - 10 + grow);
   }
 
-  drawMouseover(e, data, mouseover: boolean): void {
+  drawMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
       .select('.draw')
+      // @ts-ignore
       .filter((d: any) => {
         if (d.index === data.index) {
           if (mouseover) {
-            this.hoveredKey = this.chart.x(d.data);
+            this.hoveredKey = this.chart.x!(d.data);
             this.hoveredIndex = d.index;
           } else {
+            // @ts-ignore
             this.hoveredKey = null;
             this.hoveredIndex = -1;
           }
@@ -119,16 +126,18 @@ export class IccPieChart<T> extends IccAbstractDraw<T> {
       .transition()
       .duration(50)
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75))
+      // @ts-ignore
       .attr('d', mouseover ? this.drawArc(7) : this.drawArc());
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
       .select('.draw')
       .filter((d: any) => [d.data].indexOf(data) !== -1)
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75))
+      // @ts-ignore
       .attr('d', mouseover ? this.drawArc(5) : this.drawArc());
   }
 }

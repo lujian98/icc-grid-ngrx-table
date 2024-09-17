@@ -17,13 +17,15 @@ export class IccBandScale<T> extends IccAbstractScale<T> {
     scale.rangeRound(range);
   }
 
+  // @ts-ignore
   setXDomain(scale: IccScaleBand, data: T[], type: string = null): void {
-    const xdomain = this.configs.y0(data[0]).map((d) => this.configs.x(d));
+    const xdomain = this.configs.y0!(data[0]).map((d: any) => this.configs.x!(d));
     scale.domain(xdomain);
   }
 
+  // @ts-ignore
   setYDomain(scale: IccScaleBand, data: T[], type: string = null): void {
-    const ydomain = this.configs.y0(data[0]).map((d) => this.configs.y(d));
+    const ydomain = this.configs.y0!(data[0]).map((d: any) => this.configs.y!(d));
     scale.domain(ydomain);
   }
 }

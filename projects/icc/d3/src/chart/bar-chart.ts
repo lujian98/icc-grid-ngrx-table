@@ -2,11 +2,12 @@ import { IccAbstractDraw } from '../draw/abstract-draw';
 import { IccScale, IccScaleLinear } from '../model';
 
 export class IccBarChart<T> extends IccAbstractDraw<T> {
+  // @ts-ignore
   protected hoveredIndex = -1;
 
-  setHovered(e, d): void {
+  setHovered(e: any, d: any): void {
     const index = this.getHoveredIndex(e);
-    this.hoveredKey = this.chart.x0(this.data[index.idx]);
+    this.hoveredKey = this.chart.x0!(this.data[index.idx]);
     this.hoveredIndex = index.jdx;
   }
 
@@ -30,33 +31,34 @@ export class IccBarChart<T> extends IccAbstractDraw<T> {
       .select(drawName)
       .selectAll('g')
       .selectAll('rect')
-      .data((d) => this.chart.y0(d))
+      .data((d) => this.chart.y0!(d))
       .join('rect')
       .attr('class', 'bar draw')
       .attr('fill', (d, i) => this.getBarColor(d, i))
-      .attr('x', (d, i) => scaleX(this.chart.x(d)))
+      // @ts-ignore
+      .attr('x', (d: any, i: number) => scaleX(this.chart.x(d)))
       .attr('width', barWidth);
     if (drawName === `.${this.chartType}`) {
       drawContents
         .on('mouseover', (e, d) => this.drawMouseover(e, d, true))
         .on('mouseout', (e, d) => this.drawMouseover(e, d, false));
     }
-    if (this.isAnimation && this.chart.duration > 0) {
+    if (this.isAnimation && this.chart.duration! > 0) {
       drawContents
         .attr('y', (d, i) => scaleY(0))
         .attr('height', (d, i) => 0)
         .transition()
-        .duration(this.chart.duration)
-        .attr('y', (d, i) => scaleY(Math.max(0, this.chart.y(d))))
-        .attr('height', (d, i) => scaleY(0) - scaleY(Math.abs(this.chart.y(d))));
+        .duration(this.chart.duration!)
+        .attr('y', (d, i) => scaleY(Math.max(0, this.chart.y!(d))))
+        .attr('height', (d, i) => scaleY(0) - scaleY(Math.abs(this.chart.y!(d))));
     } else {
       drawContents
-        .attr('y', (d, i) => scaleY(Math.max(0, this.chart.y(d))))
-        .attr('height', (d, i) => scaleY(0) - scaleY(Math.abs(this.chart.y(d))));
+        .attr('y', (d, i) => scaleY(Math.max(0, this.chart.y!(d))))
+        .attr('height', (d, i) => scaleY(0) - scaleY(Math.abs(this.chart.y!(d))));
     }
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
@@ -66,14 +68,15 @@ export class IccBarChart<T> extends IccAbstractDraw<T> {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('.series')
-      .filter((d, i) => this.chart.x0(d) === this.chart.x0(data))
+      .filter((d, i) => this.chart.x0!(d) === this.chart.x0!(data))
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }
 
-  drawMouseover(e, data, mouseover: boolean): void {
+  drawMouseover(e: any, data: any, mouseover: boolean): void {
     if (mouseover) {
       this.setHovered(e, data);
     } else {
+      // @ts-ignore
       this.hoveredKey = null;
       this.hoveredIndex = -1;
     }
@@ -81,7 +84,7 @@ export class IccBarChart<T> extends IccAbstractDraw<T> {
       .select(`.${this.chartType}`)
       .selectAll('g')
       .selectAll('.draw')
-      .filter((d) => this.chart.x(d) === this.chart.x(data))
+      .filter((d) => this.chart.x!(d) === this.chart.x!(data))
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }
 }

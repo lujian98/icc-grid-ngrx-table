@@ -20,9 +20,9 @@ export const DEFAULT_BULLET_CHART_OPTIONS: IccD3Options = {
 export const DEFAULT_BULLET_CHART_CONFIGS: IccD3ChartConfig = {
   xScaleType: 'linear',
   yScaleType: 'linear',
-  y0: (d) => d.measures,
-  x: (d) => d.value,
-  y: (d) => d.label,
+  y0: (d: any) => d.measures,
+  x: (d: any) => d.value,
+  y: (d: any) => d.label,
   bullet: {
     type: 'horizontal',
     markerLineWidth: 2,
@@ -46,9 +46,9 @@ export const DEFAULT_VERTICAL_BULLET_CHART_OPTIONS: IccD3Options = {
 export const DEFAULT_VERTICAL_BULLET_CHART_CONFIGS: IccD3ChartConfig = {
   xScaleType: 'linear',
   yScaleType: 'linear',
-  y0: (d) => d.measures,
-  x: (d) => d.label,
-  y: (d) => d.value,
+  y0: (d: any) => d.measures,
+  x: (d: any) => d.label,
+  y: (d: any) => d.value,
   bullet: {
     type: 'vertical',
     markerLineWidth: 2,

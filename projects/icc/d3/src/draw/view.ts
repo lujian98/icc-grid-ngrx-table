@@ -13,9 +13,9 @@ import {
 } from '../model';
 
 export class IccView {
-  private height: number;
-  private _svg: d3.Selection<d3.BaseType, {}, HTMLElement, any>;
-  private chartConfigs: IccD3ChartConfig[];
+  private height!: number;
+  private _svg!: d3.Selection<d3.BaseType, {}, HTMLElement, any>;
+  private chartConfigs!: IccD3ChartConfig[];
 
   get svg(): d3.Selection<d3.BaseType, {}, HTMLElement, any> {
     return this._svg;
@@ -32,6 +32,7 @@ export class IccView {
 
   public clearElement(): void {
     d3.select(this.elementRef.nativeElement).select('g').remove();
+    // @ts-ignore
     this.svg = null;
   }
 
@@ -50,11 +51,11 @@ export class IccView {
   }
 
   get width(): number {
-    return this.options.drawWidth;
+    return this.options.drawWidth!;
   }
 
   get margin(): IccMargin {
-    return this.options.margin;
+    return this.options.margin!;
   }
 
   getPanelHeight(panelId: string): number {
@@ -63,19 +64,20 @@ export class IccView {
   }
 
   getBrushXHeight(panelId: string): number {
-    return this.options.drawHeight2;
+    return this.options.drawHeight2!;
   }
 
   getPanelWidth(panelId: string): number {
-    return this.options.drawWidth;
+    return this.options.drawWidth!;
   }
 
   getBrushYWidth(panelId: string): number {
-    return this.options.brushYWidth;
+    return this.options.brushYWidth!;
   }
 
   private initSvg(): void {
     const drawID = Math.floor(Math.random() * 100000);
+    // @ts-ignore
     this.svg = d3.select(this.elementRef.nativeElement).select('svg').attr('class', `mainSvg${drawID}`).append('g');
 
     const panels = [...new Set(this.chartConfigs.map((chart) => chart.panelId))];
@@ -89,11 +91,12 @@ export class IccView {
         drawPanel.append('g').attr('class', 'yAxisDraw');
       }
       let brushDraw: d3.Selection<d3.BaseType, {}, HTMLElement, any>;
-      if (pchart.zoom.enabled && pchart.axisEnabled) {
+      if (pchart.zoom!.enabled && pchart.axisEnabled) {
         // TODO brush enable options
+        // @ts-ignore
         brushDraw = drawPanel.append('g').attr('class', 'brushDraw');
       }
-      if (pchart.zoom.enabled) {
+      if (pchart.zoom!.enabled) {
         drawArea.append('rect').attr('class', 'zoom');
       }
       drawArea.append('defs').append('clipPath').attr('id', `clip${drawID}`).append('rect');
@@ -103,23 +106,23 @@ export class IccView {
         if (chart.yAxisId === 'RIGHT') {
           type += 'RIGHT';
         }
-        drawArea.append('g').attr('class', type).attr('clip-path', `url(#clip${drawID})`);
-        if (chart.zoom.enabled && chart.axisEnabled) {
+        drawArea.append('g').attr('class', type!).attr('clip-path', `url(#clip${drawID})`);
+        if (chart.zoom!.enabled && chart.axisEnabled) {
           // TODO change chart.yAxisId !== 'RIGHT'
           brushDraw.append('g').attr('class', `${type}Brush`);
           brushDraw.append('g').attr('class', `${type}BrushY`);
         }
       });
 
-      if (pchart.zoom.enabled && pchart.axisEnabled) {
-        brushDraw.append('g').attr('class', 'context');
-        brushDraw.append('g').attr('class', 'contextBrushY');
+      if (pchart.zoom!.enabled && pchart.axisEnabled) {
+        brushDraw!.append('g').attr('class', 'context');
+        brushDraw!.append('g').attr('class', 'contextBrushY');
       }
     });
   }
 
   updateViewDimension(): void {
-    this.svg.attr('transform', `translate(${this.options.margin.left},${this.options.margin.top})`);
+    this.svg.attr('transform', `translate(${this.options.margin!.left},${this.options.margin!.top})`);
     const panels = [...new Set(this.chartConfigs.map((chart) => chart.panelId))];
     panels.forEach((panelId) => {
       const drawPanel = this.svg.select(`.panel${panelId}`);
@@ -128,14 +131,14 @@ export class IccView {
       drawArea
         .select('clipPath')
         .select('rect')
-        .attr('width', this.options.drawWidth)
-        .attr('height', this.options.drawHeight)
+        .attr('width', this.options.drawWidth!)
+        .attr('height', this.options.drawHeight!)
         .attr('x', 0)
         .attr('y', 0);
-      drawArea.select('.zoom').attr('width', this.options.drawWidth).attr('height', this.options.drawHeight);
+      drawArea.select('.zoom').attr('width', this.options.drawWidth!).attr('height', this.options.drawHeight!);
 
-      const top = this.height - this.options.drawHeight2 - this.options.margin.bottom;
-      const yBrushPos = this.options.drawWidth + 10; // 10 for the gap
+      const top = this.height - this.options.drawHeight2! - this.options.margin!.bottom!;
+      const yBrushPos = this.options.drawWidth! + 10; // 10 for the gap
       this.chartConfigs.forEach((chart) => {
         let type = chart.chartType;
         if (chart.yAxisId === 'RIGHT') {
@@ -175,8 +178,9 @@ export class IccView {
     const width = elRef.clientWidth || 300;
     const height = elRef.clientHeight || 300;
     const drawDimension = {
-      drawWidth: width - margin.left - margin.right - (zoom.verticalBrushShow ? this.options.brushYWidth + 30 : 0),
-      drawHeight: height - margin.top - margin.bottom - (zoom.horizontalBrushShow ? this.options.drawHeight2 + 30 : 0),
+      drawWidth: width - margin!.left! - margin!.right! - (zoom.verticalBrushShow ? this.options.brushYWidth! + 30 : 0),
+      drawHeight:
+        height - margin!.top! - margin!.bottom! - (zoom.horizontalBrushShow ? this.options.drawHeight2! + 30 : 0),
     };
     this.options = { ...this.options, ...drawDimension };
 
@@ -185,7 +189,9 @@ export class IccView {
 
   private getOptions(option1: IccD3Options, option2: IccD3Options): IccD3Options {
     for (const [key, value] of Object.entries(option1)) {
+      // @ts-ignore
       if (typeof value === 'object' && value !== null && option2[key]) {
+        // @ts-ignore
         option1[key] = { ...option2[key], ...option1[key] };
       }
     }

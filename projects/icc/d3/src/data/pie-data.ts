@@ -2,29 +2,29 @@ import * as d3Shape from 'd3-shape';
 import { IccD3Options, IccPosition, IccD3ChartConfig, IccD3PieChartOptions } from '../model';
 
 export class IccPieData {
-  pieOptions: IccD3PieChartOptions;
+  pieOptions!: IccD3PieChartOptions;
   constructor(private chart: IccD3ChartConfig) {}
 
   getPieData(data: any[], withRange: boolean = false): any[] {
     const pie = d3Shape
       .pie()
-      .padAngle(this.pieOptions.padAngle)
+      .padAngle(this.pieOptions.padAngle!)
       .sort(null)
-      .value((d: any) => (withRange ? d.maxv - d.minv : this.chart.y(d)))
-      .startAngle(this.pieOptions.startAngle)
-      .endAngle(this.pieOptions.endAngle);
+      .value((d: any) => (withRange ? d.maxv - d.minv : this.chart.y!(d)))
+      .startAngle(this.pieOptions.startAngle!)
+      .endAngle(this.pieOptions.endAngle!);
     const mdata = data.filter((d) => !d.disabled);
     return pie([...mdata]);
   }
 
   setPieScaleXY(): IccPosition {
-    const dAngle = Math.abs(this.pieOptions.endAngle - this.pieOptions.startAngle);
+    const dAngle = Math.abs(this.pieOptions.endAngle! - this.pieOptions.startAngle!);
     const sxy: IccPosition = { x: 0, y: 0 };
     if (dAngle <= Math.PI) {
-      const sinStart = +Math.sin(this.pieOptions.startAngle).toFixed(4);
-      const sinEnd = +Math.sin(this.pieOptions.endAngle).toFixed(4);
-      const cosStart = +Math.cos(this.pieOptions.startAngle).toFixed(4);
-      const cosEnd = +Math.cos(this.pieOptions.endAngle).toFixed(4);
+      const sinStart = +Math.sin(this.pieOptions.startAngle!).toFixed(4);
+      const sinEnd = +Math.sin(this.pieOptions.endAngle!).toFixed(4);
+      const cosStart = +Math.cos(this.pieOptions.startAngle!).toFixed(4);
+      const cosEnd = +Math.cos(this.pieOptions.endAngle!).toFixed(4);
       if (dAngle <= Math.PI / 2) {
         if (sinStart <= 0 && cosStart >= 0 && sinEnd <= 0 && cosEnd >= 0) {
           sxy.x = 1;

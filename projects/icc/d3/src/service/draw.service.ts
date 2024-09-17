@@ -55,6 +55,7 @@ export class IccDrawServie<T> {
     dispatch: d3Dispatch.Dispatch<{}>,
     chart: IccD3ChartConfig,
   ): IccAbstractDraw<T> {
+    // @ts-ignore
     let component = this.componentMapper[chart.chartType];
     if (!component) {
       component = this.componentMapper.lineChart;

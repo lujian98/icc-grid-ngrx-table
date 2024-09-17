@@ -12,18 +12,21 @@ export class IccLinearScale<T> extends IccAbstractScale<T> {
     scale.range(range);
   }
 
+  // @ts-ignore
   setXDomain(scale: IccScaleLinear, data: [], type: string = null): void {
     let minv;
     let maxv;
     if (type === 'stacked') {
+      // @ts-ignore
       minv = d3Array.min(data, (c) => d3Array.min(c, (d) => d[0]));
+      // @ts-ignore
       maxv = d3Array.max(data, (c) => d3Array.max(c, (d) => d[1]));
     } else if (type === 'normalized') {
       minv = 0;
       maxv = 1;
     } else {
-      minv = d3Array.min(data, (c) => d3Array.min(this.configs.y0(c), (d) => +this.configs.x(d)));
-      maxv = d3Array.max(data, (c) => d3Array.max(this.configs.y0(c), (d) => +this.configs.x(d)));
+      minv = d3Array.min(data, (c) => d3Array.min(this.configs.y0!(c), (d) => +this.configs.x!(d)));
+      maxv = d3Array.max(data, (c) => d3Array.max(this.configs.y0!(c), (d) => +this.configs.x!(d)));
     }
     if (this.configs.chartType === 'horizontalBarChart' || this.configs.chartType === 'groupedHorizontalBarChart') {
       minv = minv > 0 ? 0 : minv;
@@ -32,19 +35,22 @@ export class IccLinearScale<T> extends IccAbstractScale<T> {
     scale.domain([minv, maxv]).nice();
   }
 
+  // @ts-ignore
   setYDomain(scale: IccScaleLinear, data: [], type: string = null): void {
     let minv;
     let maxv;
     if (type === 'stacked') {
+      // @ts-ignore
       minv = d3Array.min(data, (c) => d3Array.min(c, (d) => d[0]));
+      // @ts-ignore
       maxv = d3Array.max(data, (c) => d3Array.max(c, (d) => d[1]));
     } else if (type === 'normalized') {
       // possible negative?
       minv = 0;
       maxv = 1;
     } else {
-      minv = d3Array.min(data, (c) => d3Array.min(this.configs.y0(c), (d) => +this.configs.y(d)));
-      maxv = d3Array.max(data, (c) => d3Array.max(this.configs.y0(c), (d) => +this.configs.y(d)));
+      minv = d3Array.min(data, (c) => d3Array.min(this.configs.y0!(c), (d) => +this.configs.y!(d)));
+      maxv = d3Array.max(data, (c) => d3Array.max(this.configs.y0!(c), (d) => +this.configs.y!(d)));
     }
     if (this.configs.chartType === 'barChart' || this.configs.chartType === 'groupedBarChart') {
       minv = minv > 0 ? 0 : minv;

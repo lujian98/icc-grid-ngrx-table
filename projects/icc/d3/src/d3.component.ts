@@ -21,6 +21,7 @@ import * as d3Transition from 'd3-transition';
 import { IccD3DataSource } from './d3-data-source';
 import { IccDrawServie } from './service';
 import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from './draw';
+import { CommonModule } from '@angular/common';
 import {
   IccD3Options,
   IccD3ChartConfig,
@@ -33,37 +34,43 @@ import {
   DEFAULT_PIE_CHART_CONFIGS,
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './model';
-import { IccPopoverDirective } from '../tooltip/directives/popover/popover.directive';
+import { IccPopoverDirective } from '@icc/ui/tooltip';
 import { IccD3PopoverComponent } from './popover/popover.component';
+import { IccD3LegendComponent } from './legend/legend.component';
+
+import { IccPopoverModule, IccPortalModule } from '@icc/ui/tooltip';
 
 @Component({
   selector: 'icc-d3',
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [CommonModule, IccPopoverModule, IccPortalModule, IccD3PopoverComponent, IccD3LegendComponent],
+  providers: [IccDrawServie],
 })
 export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
-  @Input() options: IccD3Options; // TODO use as input in the future
+  @Input() options!: IccD3Options; // TODO use as input in the future
   @Input() chartConfigs: IccD3ChartConfig[] = [];
-  @Input() dataSource: IccD3DataSource<T[]> | Observable<T[]> | T[];
-  @Input() data: T[];
+  @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
+  @Input() data!: T[];
 
-  dispatch: d3Dispatch.Dispatch<{}>;
+  dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
   scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
   scale$ = new Subject<IccScaleDraw<T>>();
   draws: IccAbstractDraw<T>[] = [];
-  zoom: IccZoomDraw<T>;
-  interactive: IccInteractiveDraw<T>;
-  drawAxis: IccAxisDraw<T>;
-  private _dataSubscription: Subscription | null;
+  zoom!: IccZoomDraw<T>;
+  interactive!: IccInteractiveDraw<T>;
+  drawAxis!: IccAxisDraw<T>;
+  private _dataSubscription!: Subscription | null;
   private alive = true;
   private isViewReady = false;
   isWindowReszie$: Subject<{}> = new Subject();
-  @ViewChild(IccPopoverDirective) popover: IccPopoverDirective<T>;
+  @ViewChild(IccPopoverDirective) popover!: IccPopoverDirective<T>;
   d3Popover = IccD3PopoverComponent;
 
-  @HostBinding('style.flex-direction') get flexDirection(): string {
+  @HostBinding('style.flex-direction') get flexDirection(): any {
     if (this.legend) {
       switch (this.legend.position) {
         case 'top':
@@ -76,17 +83,20 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
     }
   }
 
+  // @ts-ignore
   get chartConfig(): IccD3ChartConfig {
     if (this.chartConfigs && this.chartConfigs[0]) {
       return this.chartConfigs[0];
     }
   }
+  // @ts-ignore
   get legend(): IccD3LegendOptions {
     if (this.chartConfigs && this.chartConfigs[0] && this.chartConfigs[0].legend) {
       return this.chartConfigs[0].legend;
     }
   }
 
+  // @ts-ignore
   get zoomConfig(): IccD3ZoomOptions {
     if (this.chartConfigs && this.chartConfigs[0] && this.chartConfigs[0].zoom) {
       return this.chartConfigs[0].zoom;
@@ -123,17 +133,21 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // @ts-ignore
     if (changes.chartConfigs || changes.options) {
       this.view.initOptions(this.options, this.chartConfig);
       this.setChartConfigs();
 
       this._clearDataSource(true);
+      // @ts-ignore
       if (changes.chartConfigs && !changes.chartConfigs.firstChange && this.data) {
         this._setDataSource(this.data);
       }
     }
+    // @ts-ignore
     if (changes.dataSource) {
       this._setDataSource(this.dataSource);
+      // @ts-ignore
     } else if (changes.data) {
       this._setDataSource(this.data);
     }
@@ -187,7 +201,9 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
 
   private getOptions(option1: IccD3ChartConfig, option2: IccD3ChartConfig): IccD3ChartConfig {
     for (const [key, value] of Object.entries(option1)) {
+      // @ts-ignore
       if (typeof value === 'object' && value !== null && option2[key]) {
+        // @ts-ignore
         option1[key] = { ...option2[key], ...option1[key] };
       }
     }
@@ -319,6 +335,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
       dataStream = of(dataSource);
     }
     if (dataStream) {
+      // @ts-ignore
       this._dataSubscription = dataStream.pipe(takeWhile(() => this.alive)).subscribe((data: T[]) => {
         if (data) {
           this.data = data;
@@ -359,7 +376,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   private checkData<T>(data: T[]): any[] {
     const configs = this.chartConfigs[0];
     data = this.cloneData(data);
-    return data && configs.chartType === 'pieChart' && !configs.y0(data[0])
+    return data && configs.chartType === 'pieChart' && !configs.y0!(data[0])
       ? [
           {
             key: 'Pie Chart',

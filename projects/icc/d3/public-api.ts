@@ -1,4 +1,4 @@
-export * from './src/d3.module';
+//export * from './src/d3.module';
 export * from './src/d3.component';
 export * from './src/d3-data-source';
 

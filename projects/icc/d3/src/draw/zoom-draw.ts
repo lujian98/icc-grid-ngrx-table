@@ -9,8 +9,8 @@ export class IccZoomDraw<T> {
   zoom: any; // TODO define types
   brush: any;
   brushY: any;
-  xRange: any[];
-  yRange: any[];
+  xRange!: any[];
+  yRange!: any[];
 
   constructor(
     protected view: IccView,
@@ -32,27 +32,27 @@ export class IccZoomDraw<T> {
   }
 
   get panelHeight(): number {
-    return this.view.getPanelHeight(this.configs.panelId);
+    return this.view.getPanelHeight(this.configs.panelId!);
   }
 
   get panelWidth(): number {
-    return this.view.getPanelWidth(this.configs.panelId);
+    return this.view.getPanelWidth(this.configs.panelId!);
   }
 
   get brushXHeight(): number {
-    return this.view.getBrushXHeight(this.configs.panelId);
+    return this.view.getBrushXHeight(this.configs.panelId!);
   }
 
   get brushYWidth(): number {
-    return this.view.getBrushYWidth(this.configs.panelId);
+    return this.view.getBrushYWidth(this.configs.panelId!);
   }
 
   init(): void {
     this.initZoom();
-    if (this.configs.zoom.horizontalBrushShow) {
+    if (this.configs.zoom!.horizontalBrushShow) {
       this.initHorizontalBrush();
     }
-    if (this.configs.zoom.verticalBrushShow) {
+    if (this.configs.zoom!.verticalBrushShow) {
       this.initVerticalBrush();
     }
     this.update();
@@ -60,10 +60,10 @@ export class IccZoomDraw<T> {
 
   update(): void {
     this.updateZoom();
-    if (this.configs.zoom.horizontalBrushShow) {
+    if (this.configs.zoom!.horizontalBrushShow) {
       this.updateHorizontalBrush();
     }
-    if (this.configs.zoom.verticalBrushShow) {
+    if (this.configs.zoom!.verticalBrushShow) {
       this.updateVerticalBrush();
     }
   }
@@ -88,7 +88,7 @@ export class IccZoomDraw<T> {
 
   private initHorizontalBrush(): void {
     const context = this.drawPanel.select('.context');
-    context.append('g').attr('class', 'axis axis--x').call(this.scale.scaleX.brushXAxis);
+    context.append('g').attr('class', 'axis axis--x').call(this.scale.scaleX.brushXAxis!);
     context.append('g').attr('class', 'brush');
   }
 
@@ -99,13 +99,13 @@ export class IccZoomDraw<T> {
       [this.panelWidth, this.brushXHeight],
     ]);
     context.select('.axis--x').attr('transform', 'translate(0,' + this.brushXHeight + ')');
-    context.select('.brush').call(this.brush).call(this.brush.move, this.scale.scaleX.value.range());
+    context.select('.brush').call(this.brush).call(this.brush.move, this.scale.scaleX.value!.range());
     this.brush.on('brush end', this.brushed.bind(this));
   }
 
   private initVerticalBrush(): void {
     const context = this.drawPanel.select('.contextBrushY');
-    context.append('g').attr('class', 'axis axis--y').call(this.scale.scaleY.brushYAxis);
+    context.append('g').attr('class', 'axis axis--y').call(this.scale.scaleY.brushYAxis!);
     context.append('g').attr('class', 'brush');
   }
 
@@ -116,7 +116,7 @@ export class IccZoomDraw<T> {
       [this.brushXHeight, this.panelHeight],
     ]);
     context.select('.axis--y').attr('transform', 'translate(50,0)');
-    const range = this.scale.scaleY.brushY.range();
+    const range = this.scale.scaleY.brushY!.range();
     context
       .select('.brush')
       .call(this.brushY)
@@ -126,17 +126,17 @@ export class IccZoomDraw<T> {
 
   setZoomRange(): void {
     if (this.xRange) {
-      const xrange = this.scale.scaleX.value.range();
+      const xrange = this.scale.scaleX.value!.range();
       const x1 = Math.min(xrange[1], this.xRange[1]);
       const x0 = Math.max(xrange[0], this.xRange[0] - (this.xRange[1] - x1));
       const range = [x0, x1];
       this.setBrushedRange(range);
-      if (this.configs.zoom.horizontalBrushShow) {
+      if (this.configs.zoom!.horizontalBrushShow) {
         this.drawPanel.select('.context').select('.brush').call(this.brush.move, range);
       }
     }
     if (this.yRange) {
-      const yrange = this.scale.scaleY.value.range();
+      const yrange = this.scale.scaleY.value!.range();
       if (yrange[1] < yrange[0]) {
         yrange.reverse();
       }
@@ -144,28 +144,28 @@ export class IccZoomDraw<T> {
       const y0 = Math.max(yrange[0], this.yRange[0] - (this.yRange[1] - y1));
       const range = [y0, y1];
       this.setBrushedYRange(range);
-      if (this.configs.zoom.verticalBrushShow) {
+      if (this.configs.zoom!.verticalBrushShow) {
         this.drawPanel.select('.contextBrushY').select('.brush').call(this.brushY.move, range);
       }
     }
   }
 
-  private zoomed(event): void {
+  private zoomed(event: any): void {
     if (event.sourceEvent) {
-      if (!this.configs.zoom.horizontalOff) {
+      if (!this.configs.zoom!.horizontalOff) {
         if (this.configs.xScaleType === 'linear' || this.configs.xScaleType === 'time') {
           const t = event.transform;
-          this.scale.scaleX.value.domain(t.rescaleX(this.scale.scaleX.brushX).domain());
+          this.scale.scaleX.value!.domain(t.rescaleX(this.scale.scaleX.brushX).domain());
           this.redraw();
-          this.xRange = this.scale.scaleX.value.range().map(t.invertX, t);
+          this.xRange = this.scale.scaleX.value!.range().map(t.invertX, t);
           if (this.brush) {
             this.drawPanel.select('.context').select('.brush').call(this.brush.move, this.xRange);
           }
         } else if (this.configs.xScaleType === 'band') {
           const t = event.transform;
-          const x0 = this.scale.scaleX.brushX.range();
+          const x0 = this.scale.scaleX.brushX!.range();
           const x = x0.map((d) => t.applyX(d));
-          this.scale.scaleX.value.range(x);
+          this.scale.scaleX.value!.range(x);
           this.redraw();
           this.xRange = [x0[0] + (x0[0] - x[0]) / t.k, x0[1] + (x0[1] - x[1]) / t.k];
           if (this.brush) {
@@ -173,20 +173,20 @@ export class IccZoomDraw<T> {
           }
         }
       }
-      if (!this.configs.zoom.verticalOff) {
+      if (!this.configs.zoom!.verticalOff) {
         if (this.configs.yScaleType === 'linear' || this.configs.yScaleType === 'time') {
           const t = event.transform;
-          this.scale.scaleY.value.domain(t.rescaleY(this.scale.scaleY.brushY).domain());
+          this.scale.scaleY.value!.domain(t.rescaleY(this.scale.scaleY.brushY).domain());
           this.redraw();
-          this.yRange = this.scale.scaleY.brushY.range().map(t.invertY, t).reverse();
+          this.yRange = this.scale.scaleY.brushY!.range().map(t.invertY, t).reverse();
           if (this.brushY) {
             this.drawPanel.select('.contextBrushY').select('.brush').call(this.brushY.move, this.yRange);
           }
         } else if (this.configs.yScaleType === 'band') {
           const t = event.transform;
-          const y0 = this.scale.scaleY.brushY.range();
+          const y0 = this.scale.scaleY.brushY!.range();
           const y = y0.map((d) => t.applyY(d));
-          this.scale.scaleY.value.range(y);
+          this.scale.scaleY.value!.range(y);
           this.redraw();
           this.yRange = [y0[0] + (y0[0] - y[0]) / t.k, y0[1] + (y0[1] - y[1]) / t.k];
           if (this.brushY) {
@@ -198,23 +198,23 @@ export class IccZoomDraw<T> {
     }
   }
 
-  private brueshedY(event): void {
+  private brueshedY(event: any): void {
     if (event.sourceEvent) {
-      this.yRange = event.selection || this.scale.scaleY.brushY.range();
+      this.yRange = event.selection || this.scale.scaleY.brushY!.range();
       this.setBrushedYRange(this.yRange);
     }
   }
 
-  private setBrushedYRange(range): void {
+  private setBrushedYRange(range: any): void {
     if (this.configs.yScaleType === 'linear' || this.configs.yScaleType === 'time') {
       const yBrushYScale = this.scale.scaleY.brushY as IccScaleLinear;
       const ydoman = range.map(yBrushYScale.invert, this.scale.scaleY.brushY).reverse();
-      this.scale.scaleY.value.domain(ydoman);
+      this.scale.scaleY.value!.domain(ydoman);
     } else if (this.configs.yScaleType === 'band') {
-      const x0 = this.scale.scaleY.brushY.range();
+      const x0 = this.scale.scaleY.brushY!.range();
       const scale = this.panelHeight / (range[1] - range[0]);
       const x = [x0[0] + (x0[0] - range[0]) * scale, x0[1] + (x0[1] - range[1]) * scale];
-      this.scale.scaleY.value.range(x);
+      this.scale.scaleY.value!.range(x);
     }
     this.redraw();
     const sx0 = this.xRange ? -this.xRange[0] : 0;
@@ -227,14 +227,14 @@ export class IccZoomDraw<T> {
       );
   }
 
-  private brushed(event): void {
+  private brushed(event: any): void {
     if (event.sourceEvent) {
-      this.xRange = event.selection || this.scale.scaleX.brushX.range();
+      this.xRange = event.selection || this.scale.scaleX.brushX!.range();
       this.setBrushedRange(this.xRange);
     }
   }
 
-  private setBrushedRange(range): void {
+  private setBrushedRange(range: any): void {
     if (this.configs.xScaleType === 'linear' || this.configs.xScaleType === 'time') {
       this.brushXScaleLinear(range);
     } else if (this.configs.xScaleType === 'band') {
@@ -251,23 +251,27 @@ export class IccZoomDraw<T> {
       );
   }
 
-  private brushXScaleLinear(range): void {
+  private brushXScaleLinear(range: any): void {
     const xBrushXScale = this.scale.scaleX.brushX as IccScaleLinear;
-    this.scale.scaleX.value.domain(range.map(xBrushXScale.invert, this.scale.scaleX.brushX));
+    this.scale.scaleX.value!.domain(range.map(xBrushXScale.invert, this.scale.scaleX.brushX));
   }
 
-  private brushXScaleBand(range): void {
-    const x0 = this.scale.scaleX.brushX.range();
+  private brushXScaleBand(range: any): void {
+    const x0 = this.scale.scaleX.brushX!.range();
     const scale = this.panelWidth / (range[1] - range[0]);
     const x = [x0[0] + (x0[0] - range[0]) * scale, x0[1] + (x0[1] - range[1]) * scale];
-    this.scale.scaleX.value.range(x);
+    this.scale.scaleX.value!.range(x);
   }
 
   private redraw(): void {
     this.draw.redraw();
+    // @ts-ignore
     this.drawPanel.select('.axis--x').call(this.scale.scaleX.axis);
+    // @ts-ignore
     this.drawPanel.select('.axis--xgrid').call(this.scale.scaleX.grid);
+    // @ts-ignore
     this.drawPanel.select('.axis--y').call(this.scale.scaleY.axis);
+    // @ts-ignore
     this.drawPanel.select('.axis--ygrid').call(this.scale.scaleY.grid);
   }
 }

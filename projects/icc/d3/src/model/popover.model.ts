@@ -23,8 +23,8 @@ export interface IccD3PopoverOptions {
 
 export const DEFAULT_D3POPOVER_OPTIONS: IccD3PopoverOptions = {
   totalLable: 'Total',
-  axisFormatter: (d) => d,
-  serieFormatter: (d) => d,
-  valueFormatter: (d) => d3Format.format(',.2f')(d),
-  normalizedFormatter: (d) => d3Format.format(',.2f')(d),
+  axisFormatter: (d: any) => d,
+  serieFormatter: (d: any) => d,
+  valueFormatter: (d: any) => d3Format.format(',.2f')(d),
+  normalizedFormatter: (d: any) => d3Format.format(',.2f')(d),
 };

@@ -31,11 +31,11 @@ export const DEFAULT_RADIAL_GAUGE_OPTIONS: IccD3Options = {
 
 export const DEFAULT_RADIAL_GAUGE_CONFIGS: IccD3ChartConfig = {
   // x0: (d) => d.key,
-  y0: (d) => d.values,
+  y0: (d: any) => d.values,
   // x: (d) => d.x,
   // y: (d) => d.y,
   axisEnabled: false,
-  drawColor: (d, i) => i, // use default colors or defined colors if range colors are not defined
+  drawColor: (d: any, i: number) => i, // use default colors or defined colors if range colors are not defined
   radialGauge: {
     range: [],
     startAngle: (Math.PI * -2) / 3,
@@ -63,6 +63,7 @@ export const DEFAULT_RADIAL_GAUGE_CONFIGS: IccD3ChartConfig = {
     needleCenterRadius: 6 / 150,
   },
   popover: {
+    // @ts-ignore
     valueFormatter: null,
   },
   legend: {

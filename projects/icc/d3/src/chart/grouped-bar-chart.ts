@@ -3,17 +3,20 @@ import { IccGroupedData } from '../data/grouped-data';
 import { IccScaleLinear, IccScaleBand } from '../model';
 
 export class IccGroupedBarChart<T> extends IccAbstractDraw<T> {
+  // @ts-ignore
   protected hoveredIndex = -1;
+  // @ts-ignore
   protected isGrouped = true;
 
-  setHovered(e, d): void {
+  setHovered(e: any, d: any): void {
     const index = this.getHoveredIndex(e);
     const pd = this.data[index.idx];
-    const nd = this.chart.y0(pd);
+    const nd = this.chart.y0!(pd);
     this.hoveredIndex = index.idx;
-    this.hoveredKey = this.chart.x0(nd[index.jdx]);
+    this.hoveredKey = this.chart.x0!(nd[index.jdx]);
   }
 
+  // @ts-ignore
   drawChart(data: T[]): void {
     const grouped = new IccGroupedData(this.chart);
     const groupeddata = grouped.getGroupedData(data, true);
@@ -35,21 +38,21 @@ export class IccGroupedBarChart<T> extends IccAbstractDraw<T> {
 
     this.drawPanel
       .selectAll(`${drawName}Group`)
-      .attr('transform', (d) => 'translate(' + scaleX(this.chart.x(d)) + ',0)');
+      .attr('transform', (d) => 'translate(' + scaleX(this.chart.x!(d)) + ',0)');
 
     const drawContents = this.drawPanel
       .select(drawName)
       .selectAll('g')
       .selectAll('rect')
-      .data((d) => this.chart.y0(d))
+      .data((d) => this.chart.y0!(d))
       .join('rect')
       .attr('class', 'groupbar draw')
       .style('fill-opacity', 0.75)
       .attr('fill', (d, i) => this.getdrawColor(d, i))
-      .attr('x', (d) => xGroup(this.chart.x0(d)))
-      .attr('y', (d) => scaleY(Math.max(0, this.chart.y(d))))
+      .attr('x', (d) => xGroup(this.chart.x0!(d))!)
+      .attr('y', (d) => scaleY(Math.max(0, this.chart.y!(d))))
       .attr('width', xGroup.bandwidth())
-      .attr('height', (d) => scaleY(0) - scaleY(Math.abs(this.chart.y(d))));
+      .attr('height', (d) => scaleY(0) - scaleY(Math.abs(this.chart.y!(d))));
 
     if (drawName === `.${this.chartType}`) {
       drawContents
@@ -58,11 +61,12 @@ export class IccGroupedBarChart<T> extends IccAbstractDraw<T> {
     }
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     if (e) {
       if (mouseover) {
         this.setHovered(e, data);
       } else {
+        // @ts-ignore
         this.hoveredKey = null;
         this.hoveredIndex = -1;
       }
@@ -73,8 +77,8 @@ export class IccGroupedBarChart<T> extends IccAbstractDraw<T> {
       .selectAll('.draw')
       .filter(
         (d) =>
-          this.chart.x0(d) === this.chart.x0(data) &&
-          ((!this.chart.y0(data) && this.chart.y(d) === this.chart.y(data)) || this.chart.y0(data)),
+          this.chart.x0!(d) === this.chart.x0!(data) &&
+          ((!this.chart.y0!(data) && this.chart.y!(d) === this.chart.y!(data)) || this.chart.y0!(data)),
       )
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }

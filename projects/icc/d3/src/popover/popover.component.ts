@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { IccOverlayComponentRef } from '../../tooltip/services/overlay/overlay-component-ref';
+import { IccOverlayComponentRef, IccPopoverModule, IccPortalModule } from '@icc/ui/tooltip';
+import { CommonModule } from '@angular/common';
 import { IccD3Popover } from '../model';
 
 @Component({
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IccOverlayComponentRef, IccPopoverModule, IccPortalModule],
 })
 export class IccD3PopoverComponent implements OnInit {
-  data: IccD3Popover; // TODO hover border color
+  data!: IccD3Popover; // TODO hover border color
 
   constructor(private overlayComponentRef: IccOverlayComponentRef<any>) {}
 

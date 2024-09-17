@@ -23,9 +23,10 @@ export class IccLineChart<T> extends IccAbstractDraw<T> {
   redrawContent(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {
     const drawLine = d3Shape
       .line()
-      .x((d) => scaleX(this.chart.x(d)))
-      .y((d) => scaleY(this.chart.y(d)));
-    const drawContent = (d) => drawLine(this.chart.y0(d));
+      // @ts-ignore
+      .x((d) => scaleX(this.chart.x!(d)))
+      .y((d) => scaleY(this.chart.y!(d)));
+    const drawContent = (d: any) => drawLine(this.chart.y0!(d));
     this.drawPanel
       .select(drawName)
       .selectAll('g')
@@ -34,15 +35,15 @@ export class IccLineChart<T> extends IccAbstractDraw<T> {
       .attr('d', drawContent);
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     if (e) {
-      this.hoveredKey = mouseover ? this.chart.x0(data) : null;
+      this.hoveredKey = mouseover ? this.chart.x0!(data) : null;
     }
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
       .select('.draw')
-      .filter((d) => this.chart.x0(d) === this.chart.x0(data))
+      .filter((d) => this.chart.x0!(d) === this.chart.x0!(data))
       .attr('stroke-width', (d) => (mouseover ? 2.0 : 1.0));
   }
 }

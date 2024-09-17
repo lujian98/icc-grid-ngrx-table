@@ -25,28 +25,28 @@ export class IccStackedData<T> {
     }
   }
 
-  public getStackedData(data: T[], isStackedY): any[] {
-    let ndata = [];
+  public getStackedData(data: T[], isStackedY: boolean): any[] {
+    let ndata: any[] = [];
     data.forEach((d) => {
-      ndata = this.chart.y0(d).map((v, i) => {
+      ndata = this.chart.y0!(d).map((v: any, i: number) => {
         if (ndata.length === i) {
           ndata.push({});
         }
         const o = ndata[i];
         if (isStackedY) {
           for (const [key, value] of Object.entries(v)) {
-            if (this.chart.x(v) === value) {
+            if (this.chart.x!(v) === value) {
               o[key] = value;
             }
           }
-          o[this.chart.x0(d)] = this.chart.y(v);
+          o[this.chart.x0!(d)] = this.chart.y!(v);
         } else {
           for (const [key, value] of Object.entries(v)) {
-            if (this.chart.y(v) === value) {
+            if (this.chart.y!(v) === value) {
               o[key] = value;
             }
           }
-          o[this.chart.x0(d)] = this.chart.x(v);
+          o[this.chart.x0!(d)] = this.chart.x!(v);
         }
         return o;
       });
@@ -64,16 +64,24 @@ export class IccStackedData<T> {
   }
 
   setStackedYDomain(data: T[]): void {
+    // @ts-ignore
     this.scale.setYDomain(data, this.normalized ? 'normalized' : 'stacked');
+    // @ts-ignore
     this.drawPanel.select('.axis--y').call(this.scale.scaleY.axis);
+    // @ts-ignore
     this.drawPanel.select('.axis--ygrid').call(this.scale.scaleY.grid);
+    // @ts-ignore
     this.drawPanel.select('.contextBrushY').select('.axis--y').call(this.scale.scaleY.brushYAxis);
   }
 
   setStackedXDomain(data: T[]): void {
+    // @ts-ignore
     this.scale.setXDomain(data, this.normalized ? 'normalized' : 'stacked');
+    // @ts-ignore
     this.drawPanel.select('.axis--x').call(this.scale.scaleX.axis);
+    // @ts-ignore
     this.drawPanel.select('.axis--xgrid').call(this.scale.scaleX.grid);
+    // @ts-ignore
     this.drawPanel.select('.context').select('.axis--x').call(this.scale.scaleX.brushXAxis);
   }
 }

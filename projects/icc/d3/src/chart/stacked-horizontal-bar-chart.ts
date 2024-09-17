@@ -3,20 +3,23 @@ import { IccStackedData } from '../data/stacked-data';
 import { IccScale, IccScaleLinear, IccD3Interactive } from '../model';
 
 export class IccStackedHorizontalBarChart<T> extends IccAbstractDraw<T> {
+  // @ts-ignore
   protected hoveredIndex = -1;
-  drawData: T[];
+  drawData!: T[];
 
-  setHovered(e, d): void {
+  setHovered(e: any, d: any): void {
     const index = this.getHoveredIndex(e);
     const data: any = this.data[index.idx];
     this.hoveredKey = data.key;
     this.hoveredIndex = index.jdx;
   }
 
+  // @ts-ignore
   setValueXY(r: IccD3Interactive, idx: number): void {
-    r.valueX = this.chart.y(r.value.data);
+    r.valueX = this.chart.y!(r.value.data);
   }
 
+  // @ts-ignore
   drawChart(data: T[]): void {
     this.drawData = data;
     this.isStacked = true;
@@ -51,9 +54,11 @@ export class IccStackedHorizontalBarChart<T> extends IccAbstractDraw<T> {
       .data((d: any) => d)
       .join('rect')
       .attr('class', 'stackedhorizontalbar draw')
+      // @ts-ignore
       .attr('x', (d) => scaleX(d[0]))
-      .attr('y', (d: any) => scaleY(this.chart.y(d.data)))
+      .attr('y', (d: any) => scaleY(this.chart.y!(d.data))!)
       .attr('height', height)
+      // @ts-ignore
       .attr('width', (d, i) => scaleX(d[1]) - scaleX(d[0]));
 
     if (drawName === `.${this.chartType}`) {
@@ -63,7 +68,7 @@ export class IccStackedHorizontalBarChart<T> extends IccAbstractDraw<T> {
     }
   }
 
-  legendMouseover(e, data, mouseover: boolean): void {
+  legendMouseover(e: any, data: any, mouseover: boolean): void {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('g')
@@ -73,14 +78,15 @@ export class IccStackedHorizontalBarChart<T> extends IccAbstractDraw<T> {
     this.drawPanel
       .select(`.${this.chartType}`)
       .selectAll('.series')
-      .filter((d: any) => d.key === this.chart.x0(data))
+      .filter((d: any) => d.key === this.chart.x0!(data))
       .style('fill-opacity', (d) => (mouseover ? 0.9 : null));
   }
 
-  drawMouseover(e, data, mouseover: boolean): void {
+  drawMouseover(e: any, data: any, mouseover: boolean): void {
     if (mouseover) {
       this.setHovered(e, data);
     } else {
+      // @ts-ignore
       this.hoveredKey = null;
       this.hoveredIndex = -1;
     }
@@ -88,7 +94,7 @@ export class IccStackedHorizontalBarChart<T> extends IccAbstractDraw<T> {
       .select(`.${this.chartType}`)
       .selectAll('g')
       .selectAll('.draw')
-      .filter((d: any) => data.data && this.chart.y(d.data) === this.chart.y(data.data))
+      .filter((d: any) => data.data && this.chart.y!(d.data) === this.chart.y!(data.data))
       .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75));
   }
 }
