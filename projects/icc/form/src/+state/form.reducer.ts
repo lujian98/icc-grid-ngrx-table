@@ -34,6 +34,21 @@ export const iccFormFeature = createFeature({
       return { ...newState };
     }),
 
+    on(formActions.getFormDataSuccess, (state, action) => {
+      const key = action.formConfig.formId;
+      const newState: FormState = { ...state };
+      if (state[key]) {
+        //const oldState = state[key];
+        //const formConfig = oldState.formConfig;
+        newState[key] = {
+          ...state[key],
+          formData: { ...action.formData },
+        };
+      }
+      console.log('load remote formData = ', newState[key]);
+      return { ...newState };
+    }),
+
     on(formActions.removeFormDataStore, (state, action) => {
       const key = action.formId;
       const newState: FormState = { ...state };

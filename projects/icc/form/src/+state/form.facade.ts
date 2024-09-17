@@ -15,7 +15,7 @@ export class IccFormFacade {
     if (formConfig.remoteFormConfig) {
       //this.store.dispatch(formActions.loadformConfig({ formConfig }));
     } else if (formConfig.remoteFieldsConfig) {
-      //this.store.dispatch(formActions.loadformColumnsConfig({ formConfig }));
+      this.store.dispatch(formActions.loadFormFieldsConfig({ formConfig }));
     }
   }
 

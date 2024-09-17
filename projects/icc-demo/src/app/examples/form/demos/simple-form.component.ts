@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 
 @Component({
   selector: 'app-simple-form',
-  //styles: [':host {width: 100%; height: 100%; display: flex; flex-direction: column;}'],
-  template: ` <icc-form [formFields]="formFields" [values]="values"></icc-form> `,
+  templateUrl: './simple-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccFormComponent],
@@ -13,7 +12,25 @@ import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 export class AppSimpleFromDemoComponent {
   formConfig = {
     ...defaultFormConfig,
-  }; //[formConfig]="formConfig"
+  };
+
+  remoteFormFields = {
+    ...defaultFormConfig,
+    urlKey: 'DCR',
+    remoteFieldsConfig: true,
+  };
+
+  remoteFormFieldsAndValues = {
+    ...defaultFormConfig,
+    urlKey: 'DCR',
+    remoteFieldsConfig: true,
+    remoteValues: true,
+  };
+  /*
+remoteValues
+  remoteFormConfig: boolean;
+  remoteFieldsConfig: boolean;
+  */
   formFields = [
     {
       fieldType: 'text',

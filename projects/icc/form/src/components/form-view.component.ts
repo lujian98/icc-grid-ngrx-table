@@ -62,8 +62,7 @@ export class IccFormViewComponent {
   checkForm(): void {
     console.log(' form=', this.form);
     const field = this.form.get('userName');
-    console.log(' field=', field);
-    console.log(' value=', field?.value);
+    console.log(' values =', this.form.value);
   }
 
   submit(): void {

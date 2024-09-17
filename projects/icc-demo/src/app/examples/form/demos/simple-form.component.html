@@ -1,0 +1,19 @@
+<fieldset>
+  <legend>Local form config, fields and values</legend>
+  <icc-form [formConfig]="formConfig" [formFields]="formFields" [values]="values"></icc-form>
+</fieldset>
+
+<fieldset>
+  <legend>Local form fields and values with default formConfig</legend>
+  <icc-form [formFields]="formFields" [values]="values"></icc-form>
+</fieldset>
+
+<fieldset>
+  <legend>Remote form fields, and local values</legend>
+  <icc-form [formConfig]="remoteFormFields" [values]="values"></icc-form>
+</fieldset>
+
+<fieldset>
+  <legend>Remote form fields and values</legend>
+  <icc-form [formConfig]="remoteFormFieldsAndValues"></icc-form>
+</fieldset>

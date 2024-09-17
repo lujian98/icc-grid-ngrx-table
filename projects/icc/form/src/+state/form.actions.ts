@@ -23,13 +23,15 @@ export const loadFormConfigSuccess = createAction(
   props<{ formConfig: IccFormConfig }>(),
 );
 
+
+*/
+
 export const getFormData = createAction('[Form] Get Form Data', props<{ formId: string }>());
 
 export const getFormDataSuccess = createAction(
   '[Form] Get Form Data Success',
-  props<{ formId: string; formData: IccFormData<any> }>(),
+  props<{ formConfig: IccFormConfig; formData: any }>(),
 );
-*/
 
 export const clearFormDataStore = createAction('[Form] Clear Form Panel Data Store', props<{ formId: string }>());
 export const removeFormDataStore = createAction('[Form] Remove Form Panel Data Store', props<{ formId: string }>());

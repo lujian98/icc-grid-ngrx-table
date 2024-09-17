@@ -15,6 +15,44 @@ export class IccFormEffects {
   private formFacade = inject(IccFormFacade);
   private formService = inject(IccFormService);
 
+  loadFormFieldsConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(formActions.loadFormFieldsConfig),
+      concatMap((action) => {
+        const formConfig = action.formConfig;
+        return this.formService.getFormFieldsConfig(formConfig).pipe(
+          map((formFields) => {
+            if (formConfig.remoteValues) {
+              this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
+              const formId = formConfig.formId;
+              return formActions.getFormData({ formId });
+            } else {
+              return formActions.loadFormFieldsConfigSuccess({ formConfig, formFields });
+            }
+          }),
+        );
+      }),
+    ),
+  );
+
+  getFormData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(formActions.getFormData),
+      debounceTime(10),
+      concatLatestFrom((action) => {
+        return [this.formFacade.selectFormConfig(action.formId)];
+      }),
+      switchMap(([_, formConfig]) => {
+        return this.formService.getFormData(formConfig).pipe(
+          map(({ formConfig, formData }) => {
+            console.log(' remoteGridData loaded =', formData);
+            return formActions.getFormDataSuccess({ formConfig, formData });
+          }),
+        );
+      }),
+    ),
+  );
+
   clearFormDataStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.clearFormDataStore),
