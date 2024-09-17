@@ -1,1 +1,4 @@
-<icc-form-panel-view [formFields]="formFields" [values]="values"></icc-form-panel-view>
+<ng-container *ngIf="formPanelConfig$ | async as formPanelConfig">
+  <icc-form-panel-view [formPanelConfig]="formPanelConfig" [formFields]="formFields" [values]="values">
+  </icc-form-panel-view>
+</ng-container>

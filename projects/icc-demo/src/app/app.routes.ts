@@ -13,6 +13,10 @@ export const routes: Routes = [
         loadChildren: () => import('./examples/select/select-examples.module').then((m) => m.AppSelectExamplesModule),
       },
       {
+        path: 'form',
+        loadChildren: () => import('./examples/form/form-examples.module').then((m) => m.AppFormExamplesModule),
+      },
+      {
         path: 'd3',
         loadChildren: () => import('./examples/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
       },

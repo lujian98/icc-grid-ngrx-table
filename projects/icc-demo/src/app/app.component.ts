@@ -109,6 +109,10 @@ export class AppComponent {
       items: [{ name: 'Simple Select', link: 'select/simple-select' }],
     },
     {
+      name: 'Form Page',
+      items: [{ name: 'Simple Form', link: 'form/simple-form' }],
+    },
+    {
       name: 'D3 Demos',
       items: [{ name: 'Line Chart', link: 'd3/line-chart' }],
     },

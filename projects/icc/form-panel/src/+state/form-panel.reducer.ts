@@ -17,6 +17,7 @@ export const iccFormPanelFeature = createFeature({
         ...defaultFormPanelState,
         formPanelConfig,
       };
+      console.log(' init form state =', newState);
       return { ...newState };
     }),
 

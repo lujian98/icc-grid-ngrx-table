@@ -9,7 +9,7 @@ import { selectFormPanelConfig } from './form-panel.selectors';
 export class IccFormPanelFacade {
   private store = inject(Store);
 
-  initformPanelConfig(formPanelConfig: IccFormPanelConfig): void {
+  initFormPanelConfig(formPanelConfig: IccFormPanelConfig): void {
     this.store.dispatch(formPanelActions.initFormPanelConfig({ formPanelConfig }));
     /*
     if (formPanelConfig.remoteformPanelConfig) {

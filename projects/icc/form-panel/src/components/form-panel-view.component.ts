@@ -16,6 +16,7 @@ import {
 import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { IccFormPanelConfig } from '../models/form-panel.model';
 
 @Component({
   selector: 'icc-form-panel-view',
@@ -26,6 +27,8 @@ import { tap } from 'rxjs/operators';
 })
 export class IccFormPanelViewComponent {
   private _formFields: any[] = [];
+
+  @Input() formPanelConfig!: IccFormPanelConfig; // TODO readonly or edit???
 
   @Input()
   set formFields(val: any[]) {
