@@ -47,7 +47,7 @@ export class IccFormService {
     };
     // TODO partial formConfig from api readonly, edit, etc.
     return of({
-      formConfig: formConfig,
+      formConfig: { ...formConfig, readonly: true },
       formData: formData,
     });
     /*

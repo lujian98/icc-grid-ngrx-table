@@ -38,11 +38,10 @@ export const iccFormFeature = createFeature({
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
-        //TODO update formConfig
-        //const oldState = state[key];
-        //const formConfig = oldState.formConfig;
+        const formConfig = { ...state[key].formConfig, ...action.formConfig };
         newState[key] = {
           ...state[key],
+          formConfig,
           formData: { ...action.formData },
         };
       }
