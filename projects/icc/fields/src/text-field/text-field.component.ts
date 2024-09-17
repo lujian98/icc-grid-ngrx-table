@@ -60,7 +60,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   private destroy$ = new Subject<void>();
   private _value!: string;
   private _fieldName: string = '';
-  form!: FormGroup;
+  @Input() form!: FormGroup;
 
   @Input() fieldLabel: string | undefined;
   @Input() placeholder: string = '';
@@ -68,9 +68,11 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   @Input()
   set fieldName(val: string) {
     this._fieldName = val;
-    this.form = new FormGroup({
-      [this.fieldName]: new FormControl<string>(''),
-    });
+    if (!this.form) {
+      this.form = new FormGroup({
+        [this.fieldName]: new FormControl<string>(''),
+      });
+    }
   }
 
   get fieldName(): string {

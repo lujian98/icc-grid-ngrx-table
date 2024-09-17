@@ -14,6 +14,7 @@ import {
   IccLayoutSidebarComponent,
 } from '@icc/ui/layout';
 import { IccThemeService } from '@icc/ui/theme';
+import { IccFormPanelComponent } from '@icc/ui/form-panel';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ import { IccThemeService } from '@icc/ui/theme';
     IccIconModule,
     IccAccordionComponent,
     SelectFieldComponent,
+    IccFormPanelComponent,
   ],
 })
 export class AppComponent {

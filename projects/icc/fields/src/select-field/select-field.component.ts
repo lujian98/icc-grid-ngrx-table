@@ -89,7 +89,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
 
-  form!: FormGroup;
+  @Input() form!: FormGroup;
   @Input()
   set fieldConfig(fieldConfig: IccSelectFieldConfig) {
     if (this.firstTimeLoad) {
@@ -117,9 +117,11 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   private initSelectField(): void {
     if (this.fieldConfig?.viewportReady && !this.form) {
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-      });
+      if (!this.form) {
+        this.form = new FormGroup({
+          [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
+        });
+      }
       this.value = this.getInitValue(this.value);
       this.setFormvalue();
     }
