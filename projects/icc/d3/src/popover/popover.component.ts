@@ -7,7 +7,7 @@ import { IccD3Popover } from '../model';
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   standalone: true,
-  imports: [CommonModule, IccOverlayComponentRef, IccPopoverModule, IccPortalModule],
+  imports: [CommonModule, IccPopoverModule, IccPortalModule],
 })
 export class IccD3PopoverComponent implements OnInit {
   data!: IccD3Popover; // TODO hover border color
