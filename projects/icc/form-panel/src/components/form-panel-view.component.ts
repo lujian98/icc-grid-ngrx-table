@@ -25,18 +25,22 @@ import { tap } from 'rxjs/operators';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
 export class IccFormPanelViewComponent {
-  private _fieldConfigs: any[] = [];
+  private _formFields: any[] = [];
 
   @Input()
-  set fieldConfigs(val: any[]) {
-    this._fieldConfigs = val;
-    this.fieldConfigs.forEach((field) => {
-      this.form.addControl(field.fieldName, new FormControl<string>('', []));
+  set formFields(val: any[]) {
+    this._formFields = val;
+    this.formFields.forEach((field) => {
+      if (!this.form.get(field.fieldName)) {
+        this.form.addControl(field.fieldName, new FormControl<string>('', []));
+      }
     });
   }
-  get fieldConfigs(): any[] {
-    return this._fieldConfigs;
+  get formFields(): any[] {
+    return this._formFields;
   }
+
+  // const formControl = this.employeeForm.get(field);
 
   @Input()
   set values(values: any) {

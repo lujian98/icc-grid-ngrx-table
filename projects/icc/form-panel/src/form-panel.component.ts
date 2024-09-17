@@ -26,7 +26,7 @@ import { IccFormPanelStateModule } from './+state/form-panel-state.module';
 export class IccFormPanelComponent {
   private formPanelFacade = inject(IccFormPanelFacade);
 
-  fieldConfigs = [
+  formFields = [
     {
       fieldType: 'text',
       fieldName: 'userName',
