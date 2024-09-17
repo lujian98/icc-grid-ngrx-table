@@ -16,6 +16,7 @@ import { isDataSource } from '@angular/cdk/collections';
 import { Observable, of, Subscription, Subject } from 'rxjs';
 import { debounceTime, delay, takeWhile } from 'rxjs/operators';
 import * as d3 from 'd3-selection';
+// @ts-ignore
 import * as d3Dispatch from 'd3-dispatch';
 import * as d3Transition from 'd3-transition';
 import { IccD3DataSource } from './d3-data-source';
@@ -300,22 +301,22 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
       'legendMouseout',
       'stateChange',
     );
-    this.dispatch.on('legendClick', (d) => {
+    this.dispatch.on('legendClick', (d: any) => {
       this.legendMouseover(d, !d.disabled);
       this.stateChangeDraw();
       this.legendMouseover(d, !d.disabled);
     });
-    this.dispatch.on('legendResize', (d) => this.resizeChart(this.data));
-    this.dispatch.on('legendMouseover', (d) => this.legendMouseover(d, true));
-    this.dispatch.on('legendMouseout', (d) => this.legendMouseover(d, false));
-    this.dispatch.on('drawMouseover', (p) => {
+    this.dispatch.on('legendResize', (d: any) => this.resizeChart(this.data));
+    this.dispatch.on('legendMouseover', (d: any) => this.legendMouseover(d, true));
+    this.dispatch.on('legendMouseout', (d: any) => this.legendMouseover(d, false));
+    this.dispatch.on('drawMouseover', (p: any) => {
       this.popover.closePopover();
       if (p.data && p.data.series.length > 0) {
         this.popover.context = { data: p.data };
         this.popover.openPopover(p.event);
       }
     });
-    this.dispatch.on('drawMouseout', (p) => this.popover.closePopover());
+    this.dispatch.on('drawMouseout', (p: any) => this.popover.closePopover());
   }
 
   legendMouseover(data: T[], mouseover: boolean): void {

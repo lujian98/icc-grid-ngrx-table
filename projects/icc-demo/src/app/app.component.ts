@@ -106,6 +106,10 @@ export class AppComponent {
       name: 'Select Demos',
       items: [{ name: 'Simple Select', link: 'select/simple-select' }],
     },
+    {
+      name: 'D3 Demos',
+      items: [{ name: 'Line Chart', link: 'd3/line-chart' }],
+    },
   ];
 
   toggleTheme(): void {
