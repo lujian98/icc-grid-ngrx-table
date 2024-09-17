@@ -1,0 +1,18 @@
+<table>
+  <thead *ngIf="data.value !== null" style="text-align: left">
+    <th colspan="3">{{ data.value }}</th>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of data.series">
+      <tr [ngClass]="item.hovered ? 'highlight' : ''">
+        <td [ngStyle]="{ 'border-bottom-color': item.color, 'border-top-color': item.color }">
+          <div class="legend-color-guide" [ngStyle]="{ 'background-color': item.color }"></div>
+        </td>
+        <td [ngStyle]="{ 'border-bottom-color': item.color, 'border-top-color': item.color }">{{ item.key }}</td>
+        <td [ngStyle]="{ 'border-bottom-color': item.color, 'border-top-color': item.color, 'text-align': 'right' }">
+          {{ item.value }}
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
