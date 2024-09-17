@@ -5,7 +5,7 @@ import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 @Component({
   selector: 'app-simple-form',
   //styles: [':host {width: 100%; height: 100%; display: flex; flex-direction: column;}'],
-  template: ` <icc-form [formConfig]="formConfig" [formFields]="formFields" [values]="values"></icc-form> `,
+  template: ` <icc-form [formFields]="formFields" [values]="values"></icc-form> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccFormComponent],
@@ -13,7 +13,7 @@ import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 export class AppSimpleFromDemoComponent {
   formConfig = {
     ...defaultFormConfig,
-  };
+  }; //[formConfig]="formConfig"
   formFields = [
     {
       fieldType: 'text',

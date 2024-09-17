@@ -4,6 +4,16 @@ import { IccFormConfig } from '../models/form.model';
 
 export const initFormConfig = createAction('[Form] Init Form Panel Config', props<{ formConfig: IccFormConfig }>());
 
+export const loadFormFieldsConfig = createAction(
+  '[Form] Load Form Fields Config',
+  props<{ formConfig: IccFormConfig }>(),
+);
+
+export const loadFormFieldsConfigSuccess = createAction(
+  '[Form] Load Form Fields Config Success',
+  props<{ formConfig: IccFormConfig; formFields: any[] }>(),
+);
+
 /*
 
 export const loadFormConfig = createAction('[Form] Load Form Config', props<{ formConfig: IccFormConfig }>());

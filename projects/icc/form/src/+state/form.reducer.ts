@@ -21,6 +21,19 @@ export const iccFormFeature = createFeature({
       return { ...newState };
     }),
 
+    on(formActions.loadFormFieldsConfigSuccess, (state, action) => {
+      const key = action.formConfig.formId;
+      const newState: FormState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          formFields: [...action.formFields],
+        };
+      }
+      console.log(' FormFieldsConfig sucess=', newState);
+      return { ...newState };
+    }),
+
     on(formActions.removeFormDataStore, (state, action) => {
       const key = action.formId;
       const newState: FormState = { ...state };

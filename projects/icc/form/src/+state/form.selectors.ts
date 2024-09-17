@@ -12,3 +12,12 @@ export const selectFormConfig = (formId: string) =>
       return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
     },
   );
+
+export const selectFormFieldsConfig = (formId: string) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: FormState) => {
+      return state[formId] ? state[formId].formFields : [];
+    },
+  );

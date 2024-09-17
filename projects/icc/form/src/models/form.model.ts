@@ -2,6 +2,8 @@ export interface IccFormConfig {
   formId: string; // auto generated unique id
   formName: string;
   urlKey: string; // Only for remote config
+  remoteFormConfig: boolean;
+  remoteFieldsConfig: boolean;
 }
 
 export interface FormState {
