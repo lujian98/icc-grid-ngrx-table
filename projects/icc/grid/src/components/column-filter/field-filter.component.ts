@@ -29,9 +29,9 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
-    if (this.column.filterField === 'select') {
-      this.checkSelectField();
-    }
+    //if (this.column.filterField === 'select') {
+    this.checkField();
+    // }
 
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {
@@ -64,7 +64,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
       .subscribe((filterValue) => this.applyFilter(filterValue));
   }
 
-  checkSelectField(): void {}
+  checkField(): void {}
 
   applyFilter(filterValue: string): void {
     this.value = filterValue;

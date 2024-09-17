@@ -14,7 +14,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
   fieldConfig!: IccSelectFieldConfig;
 
-  override checkSelectField(): void {
+  override checkField(): void {
     this.fieldConfig = {
       ...defaultSelectFieldConfig,
       fieldName: this.column.name,

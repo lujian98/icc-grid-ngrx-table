@@ -21,33 +21,12 @@ import { IccFormPanelStateModule } from './+state/form-panel-state.module';
   styleUrls: ['./form-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccFormPanelStateModule,
-    IccFormPanelViewComponent,
-    /*
-    ReactiveFormsModule,
-    FormsModule,
-    IccSelectFieldStateModule,
-    IccFormFieldComponent,
-    IccSuffixDirective,
-    IccLabelDirective,
-    IccInputDirective,
-    IccAutocompleteComponent,
-    IccAutocompleteDirective,
-    IccAutocompleteContentDirective,
-    IccFilterHighlightComponent,
-    IccOptionComponent,
-    IccIconModule,
-    IccCheckboxComponent,
-    IccFilterPipe,
-    */
-  ],
+  imports: [CommonModule, IccFormPanelStateModule, IccFormPanelViewComponent],
 })
 export class IccFormPanelComponent {
   private formPanelFacade = inject(IccFormPanelFacade);
 
-  fields = [
+  fieldConfigs = [
     {
       fieldType: 'text',
       fieldName: 'userName',
@@ -64,17 +43,4 @@ export class IccFormPanelComponent {
     userName: 'user 77 2222',
     loginName: 'test login88',
   };
-  /*
-  private facade = inject(ProxyFacade);
-  proxy$ = this.facade.proxy$;
-
-
-  ngOnInit(): void {
-    this.facade.loadProxy();
-  }
-
-  saveProxy(proxy: Proxy): void {
-    this.facade.saveProxy(proxy);
-  }
-*/
 }

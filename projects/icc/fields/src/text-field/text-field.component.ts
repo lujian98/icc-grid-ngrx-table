@@ -25,6 +25,7 @@ import {
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
+import { IccTextFieldConfig, defaultTextFieldConfig } from './models/text-field.model';
 
 @Component({
   selector: 'icc-text-field',
@@ -58,26 +59,23 @@ import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent, IccInputD
 export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
+  private _fieldConfig!: IccTextFieldConfig;
   private _value!: string;
-  private _fieldName: string = '';
   @Input() form!: FormGroup;
 
-  @Input() fieldLabel: string | undefined;
-  @Input() placeholder: string = '';
-
   @Input()
-  set fieldName(val: string) {
-    this._fieldName = val;
+  set fieldConfig(fieldConfig: IccTextFieldConfig) {
+    this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
     if (!this.form) {
       this.form = new FormGroup({
-        [this.fieldName]: new FormControl<string>(''),
+        [this.fieldConfig.fieldName]: new FormControl<string>(''),
       });
     }
   }
-
-  get fieldName(): string {
-    return this._fieldName;
+  get fieldConfig(): IccTextFieldConfig {
+    return this._fieldConfig;
   }
+
   @Input()
   set value(val: string) {
     this._value = val;
@@ -91,7 +89,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   @Output() valueChange = new EventEmitter<string>(true);
 
   get field(): AbstractControl {
-    return this.form!.get(this.fieldName)!;
+    return this.form!.get(this.fieldConfig.fieldName)!;
   }
 
   get hasValue(): boolean {
@@ -127,7 +125,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldName]: true };
+    return this.form.valid ? null : { [this.fieldConfig.fieldName]: true };
   }
 
   ngOnDestroy(): void {

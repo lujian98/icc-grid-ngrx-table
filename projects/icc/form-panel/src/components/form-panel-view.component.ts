@@ -25,17 +25,17 @@ import { tap } from 'rxjs/operators';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
 export class IccFormPanelViewComponent {
-  private _fields: any[] = [];
+  private _fieldConfigs: any[] = [];
 
   @Input()
-  set fields(val: any[]) {
-    this._fields = val;
-    this.fields.forEach((field) => {
+  set fieldConfigs(val: any[]) {
+    this._fieldConfigs = val;
+    this.fieldConfigs.forEach((field) => {
       this.form.addControl(field.fieldName, new FormControl<string>('', []));
     });
   }
-  get fields(): any[] {
-    return this._fields;
+  get fieldConfigs(): any[] {
+    return this._fieldConfigs;
   }
 
   @Input()
@@ -47,6 +47,9 @@ export class IccFormPanelViewComponent {
 
   constructor() {}
 
+  trackByIndex(index: number): number {
+    return index;
+  }
   //@Output() submitEvent = new EventEmitter<Proxy>();
 
   checkForm(): void {

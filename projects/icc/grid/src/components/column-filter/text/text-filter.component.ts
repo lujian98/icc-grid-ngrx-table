@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TextFieldComponent } from '@icc/ui/fields';
+import { TextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -12,7 +12,17 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   imports: [CommonModule, TextFieldComponent, IccFieldFilterComponent],
 })
 export class IccTextFilterComponent extends IccFieldFilterComponent {
-  filterPlaceholder: string = 'Filter ...';
+  //filterPlaceholder: string = 'Filter ...';
+
+  fieldConfig!: IccTextFieldConfig;
+
+  override checkField(): void {
+    this.fieldConfig = {
+      ...defaultTextFieldConfig,
+      fieldName: this.column.name,
+      placeholder: 'Filter ...',
+    };
+  }
 
   onValueChange(value: string): void {
     this.filterChanged$.next(value);

@@ -1,17 +1,17 @@
 <ng-container *ngIf="form" [formGroup]="form">
   <icc-form-field>
-    <icc-label *ngIf="fieldLabel !== undefined">
-      {{ fieldLabel }}
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
     </icc-label>
     <input
       iccInput
       type="text"
       autocomplete="off"
-      [formControlName]="fieldName"
+      [formControlName]="fieldConfig.fieldName"
       (click)="$event.stopPropagation()"
       (keyup)="onChange()"
       (blur)="onBlur()"
-      placeholder="{{ placeholder }}"
+      placeholder="{{ fieldConfig.placeholder }}"
     />
     <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
   </icc-form-field>

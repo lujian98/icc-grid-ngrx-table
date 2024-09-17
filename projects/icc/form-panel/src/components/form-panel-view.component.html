@@ -1,6 +1,7 @@
 <form [formGroup]="form">
-  <ng-container *ngFor="let field of fields; let index = index">
-    <icc-text-field [form]="form" [fieldLabel]="field.fieldLabel" [fieldName]="field.fieldName"> </icc-text-field>
+  <ng-container *ngFor="let fieldConfig of fieldConfigs; trackBy: trackByIndex; let index = index">
+    <icc-text-field *ngIf="fieldConfig.fieldType === 'text'" [form]="form" [fieldConfig]="fieldConfig">
+    </icc-text-field>
   </ng-container>
 </form>
 
