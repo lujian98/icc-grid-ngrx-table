@@ -20,17 +20,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
   standalone: true,
   imports: [CommonModule, IccD3Component],
 })
-
-/*
-  <div style="height: 100%; display: flex;">
-    <icc-d3 [options]="options" [chartConfigs]="chartConfigs1" [dataSource]="data"></icc-d3>
-    <icc-d3 [options]="options2" [chartConfigs]="chartConfigs2" [dataSource]="data"></icc-d3>
-  </div>
-  <div style="height: 100%; display: flex; margin-top: 20px;">
-    <icc-d3 [chartConfigs]="chartConfigs3" [dataSource]="data"></icc-d3>
-    <icc-d3 [chartConfigs]="chartConfigs4" [dataSource]="data"></icc-d3>
-  </div>
-  */
 export class AppLineChartDemoComponent implements OnInit {
   data: any;
   options: IccD3Options = {
