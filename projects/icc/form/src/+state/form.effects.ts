@@ -2,8 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { debounceTime, concatMap, delay, map, of, mergeMap, switchMap } from 'rxjs';
-
+import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
 import { IccFormService } from '../services/form.service';
 import * as formActions from './form.actions';
 import { IccFormFacade } from './form.facade';
@@ -45,7 +44,7 @@ export class IccFormEffects {
       switchMap(([_, formConfig]) => {
         return this.formService.getFormData(formConfig).pipe(
           map(({ formConfig, formData }) => {
-            console.log(' remoteGridData loaded =', formData);
+            //console.log(' remoteGridData loaded =', formData);
             return formActions.getFormDataSuccess({ formConfig, formData });
           }),
         );

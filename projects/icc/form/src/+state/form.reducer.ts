@@ -38,6 +38,7 @@ export const iccFormFeature = createFeature({
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
+        //TODO update formConfig
         //const oldState = state[key];
         //const formConfig = oldState.formConfig;
         newState[key] = {

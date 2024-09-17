@@ -26,11 +26,7 @@ export class AppSimpleFromDemoComponent {
     remoteFieldsConfig: true,
     remoteValues: true,
   };
-  /*
-remoteValues
-  remoteFormConfig: boolean;
-  remoteFieldsConfig: boolean;
-  */
+
   formFields = [
     {
       fieldType: 'text',

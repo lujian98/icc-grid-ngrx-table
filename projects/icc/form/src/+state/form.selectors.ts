@@ -21,3 +21,12 @@ export const selectFormFieldsConfig = (formId: string) =>
       return state[formId] ? state[formId].formFields : [];
     },
   );
+
+export const selectFormData = (formId: string) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: FormState) => {
+      return state[formId] ? state[formId].formData : [];
+    },
+  );

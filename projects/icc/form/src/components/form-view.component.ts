@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -16,6 +15,7 @@ import {
 import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
 
 @Component({
@@ -28,8 +28,7 @@ import { IccFormConfig } from '../models/form.model';
 export class IccFormViewComponent {
   private _formFields: any[] = [];
 
-  @Input() formConfig!: IccFormConfig; // TODO readonly or edit???
-
+  @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: any[]) {
     this._formFields = val;
@@ -42,8 +41,6 @@ export class IccFormViewComponent {
   get formFields(): any[] {
     return this._formFields;
   }
-
-  // const formControl = this.employeeForm.get(field);
 
   @Input()
   set values(values: any) {

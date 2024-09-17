@@ -1,21 +1,12 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  HostListener,
-  ViewChild,
-  inject,
-  Input,
-  OnDestroy,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { IccFormViewComponent } from './components/form-view.component';
-import { IccFormFacade } from './+state/form.facade';
+import { Observable } from 'rxjs';
 import { IccFormStateModule } from './+state/form-state.module';
-import { IccFormConfig } from './models/form.model';
+import { IccFormFacade } from './+state/form.facade';
+import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
+import { IccFormConfig } from './models/form.model';
 @Component({
   selector: 'icc-form',
   templateUrl: './form.component.html',
@@ -26,16 +17,12 @@ import { defaultFormConfig } from './models/default-form';
 })
 export class IccFormComponent {
   private formFacade = inject(IccFormFacade);
-
-  private _formConfig!: IccFormConfig; //= defaultFormConfig;
+  private _formConfig!: IccFormConfig;
   private _formFields: any[] = [];
-  /*
-
-  private _gridData!: IccGridData<T>;
-  */
   private formId = uniqueId(16);
   formConfig$!: Observable<IccFormConfig>;
   formFieldsConfig$!: Observable<any[]>;
+  formData$!: Observable<any>;
 
   @Input()
   set formConfig(value: IccFormConfig) {
@@ -52,6 +39,7 @@ export class IccFormComponent {
     };
     this.formConfig$ = this.formFacade.selectFormConfig(this.formId); // selectFormFieldConfig
     this.formFieldsConfig$ = this.formFacade.selectFormFieldsConfig(this.formId);
+    this.formData$ = this.formFacade.selectFormData(this.formConfig.formId);
     this.formFacade.initFormConfig(this.formConfig);
   }
 
@@ -69,5 +57,8 @@ export class IccFormComponent {
     return this._formFields;
   }
 
-  @Input() values: any;
+  @Input()
+  set values(val: any) {
+    this.formFacade.setFormData(this.formConfig, val);
+  }
 }

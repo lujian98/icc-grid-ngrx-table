@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccFormConfig } from '../models/form.model';
 import * as formActions from './form.actions';
-import { selectFormConfig, selectFormFieldsConfig } from './form.selectors';
+import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
 
 @Injectable()
 export class IccFormFacade {
@@ -23,6 +23,10 @@ export class IccFormFacade {
     this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
   }
 
+  setFormData(formConfig: IccFormConfig, formData: any): void {
+    this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
+  }
+
   clearformDataStore(formId: string): void {
     this.store.dispatch(formActions.clearFormDataStore({ formId }));
   }
@@ -33,5 +37,9 @@ export class IccFormFacade {
 
   selectFormFieldsConfig(formId: string): Observable<any[]> {
     return this.store.select(selectFormFieldsConfig(formId));
+  }
+
+  selectFormData(formId: string): Observable<any> {
+    return this.store.select(selectFormData(formId));
   }
 }
