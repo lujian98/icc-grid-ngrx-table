@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { IccD3StateModule } from './+state/d3-state.module';
+import { IccD3Facade } from './+state/d3.facade';
 import { uniqueId } from '@icc/ui/core';
 import {
   IccD3Options,
@@ -22,10 +24,10 @@ import { IccD3ViewComponent } from './components/d3-view.component';
   styleUrls: ['./d3.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccD3ViewComponent],
+  imports: [CommonModule, IccD3StateModule, IccD3ViewComponent],
 })
 export class IccD3Component<T> implements OnDestroy {
-  //private gridFacade = inject(IccGridFacade);
+  private d3Facade = inject(IccD3Facade);
   private _d3Config: any; // IccGridConfig = defaultD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private d3Id = uniqueId(16);
