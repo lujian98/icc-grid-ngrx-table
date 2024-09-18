@@ -24,7 +24,7 @@ export const loadFormFieldsConfigSuccess = createAction(
   props<{ formConfig: IccFormConfig; formFields: any[] }>(),
 );
 
-export const getFormData = createAction('[Form] Get Form Data', props<{ formId: string }>());
+export const getFormData = createAction('[Form] Get Form Data', props<{ formConfig: IccFormConfig }>());
 
 export const getFormDataSuccess = createAction(
   '[Form] Get Form Data Success',

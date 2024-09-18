@@ -68,7 +68,7 @@ export class IccFormService {
       loginName: 'R test login88',
     };
     // TODO partial formConfig from api readonly, edit, etc.
-    console.log(' 00000000 servvi form data=', formData);
+    //console.log(' 00000000 servvi form data=', formData);
     return of({
       formConfig: { ...formConfig, readonly: true },
       formData: { ...formData },

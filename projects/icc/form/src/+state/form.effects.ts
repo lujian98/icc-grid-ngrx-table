@@ -11,7 +11,6 @@ import { IccFormFacade } from './form.facade';
 export class IccFormEffects {
   private store = inject(Store);
   private actions$ = inject(Actions);
-  private formFacade = inject(IccFormFacade);
   private formService = inject(IccFormService);
 
   loadRemoteFormConfig$ = createEffect(() =>
@@ -20,7 +19,6 @@ export class IccFormEffects {
       concatMap(({ formConfig }) => {
         return this.formService.getRemoteFormConfig(formConfig).pipe(
           map((formConfig) => {
-            //console.log('111 formConfig=', formConfig)
             if (formConfig.remoteFieldsConfig) {
               this.store.dispatch(formActions.loadRemoteFormConfigSuccess({ formConfig }));
               return formActions.loadFormFieldsConfig({ formConfig });
@@ -42,9 +40,7 @@ export class IccFormEffects {
           map((formFields) => {
             if (formConfig.remoteFormData) {
               this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
-              const formId = formConfig.formId;
-              console.log(' load kkkkkkkkkkkkk formId=', formId);
-              return formActions.getFormData({ formId });
+              return formActions.getFormData({ formConfig });
             } else {
               return formActions.loadFormFieldsConfigSuccess({ formConfig, formFields });
             }
@@ -57,16 +53,9 @@ export class IccFormEffects {
   getFormData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.getFormData),
-      //debounceTime(10),
-      concatLatestFrom((action) => {
-        console.log(' mmmmmmmmmmmmm call service=', action);
-        return [this.formFacade.selectFormConfig(action.formId)];
-      }),
-      mergeMap(([_, formConfig]) => {
-        console.log(' ssssssssssssss call service=', formConfig);
+      switchMap(({ formConfig }) => {
         return this.formService.getFormData(formConfig).pipe(
           map(({ formConfig, formData }) => {
-            console.log(' llllll remoteGridData loaded =', formData);
             return formActions.getFormDataSuccess({ formConfig, formData });
           }),
         );

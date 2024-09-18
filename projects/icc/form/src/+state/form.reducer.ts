@@ -17,7 +17,7 @@ export const iccFormFeature = createFeature({
         ...defaultFormState,
         formConfig,
       };
-      console.log(' init form state =', newState);
+      //console.log(' init form state =', newState);
       return { ...newState };
     }),
     on(formActions.loadRemoteFormConfigSuccess, (state, action) => {
@@ -41,7 +41,7 @@ export const iccFormFeature = createFeature({
           formFields: [...action.formFields],
         };
       }
-      console.log(' FormFieldsConfig sucess=', newState);
+      //console.log(' FormFieldsConfig sucess=', newState);
       return { ...newState };
     }),
     on(formActions.getFormDataSuccess, (state, action) => {
@@ -54,7 +54,7 @@ export const iccFormFeature = createFeature({
           formData: { ...action.formData },
         };
       }
-      console.log('load remote formData = ', newState[key]);
+      //console.log('load remote formData = ', newState[key]);
       return { ...newState };
     }),
     on(formActions.removeFormDataStore, (state, action) => {
