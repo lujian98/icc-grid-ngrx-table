@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ChangeDetectorRef,
+  inject,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -26,7 +34,9 @@ import { IccFormConfig } from '../models/form.model';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
 export class IccFormViewComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private _formFields: any[] = [];
+  private _values: any;
 
   @Input() formConfig!: IccFormConfig;
   @Input()
@@ -37,6 +47,10 @@ export class IccFormViewComponent {
         this.form.addControl(field.fieldName, new FormControl<string>('', []));
       }
     });
+    if (this.formConfig.remoteFieldsConfig && !this.formConfig.remoteFormData) {
+      this.form.patchValue({ ...this.values });
+      //this.changeDetectorRef.markForCheck();
+    }
   }
   get formFields(): any[] {
     return this._formFields;
@@ -44,9 +58,14 @@ export class IccFormViewComponent {
 
   @Input()
   set values(values: any) {
-    //console.log(' zzzz set vallues=', values);
-    //console.log(' zzzz set formConfig=', this.formConfig);
-    this.form.patchValue({ ...values });
+    this._values = values;
+    if (this.form) {
+      this.form.patchValue({ ...values });
+    }
+    //this.changeDetectorRef.markForCheck();
+  }
+  get values(): any {
+    return this._values;
   }
 
   form: FormGroup = new FormGroup({});

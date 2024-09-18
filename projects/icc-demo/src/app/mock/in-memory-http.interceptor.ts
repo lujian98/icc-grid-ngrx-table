@@ -25,6 +25,9 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
       newreq.url = newreq.urlWithParams = `/api/${keyName}_${path}`;
     } else if (keyName && action === 'selectFieldConfig') {
       newreq.url = newreq.urlWithParams = `/api/${keyName}_${path}FieldConfig`;
+    } else {
+      newreq.url = newreq.urlWithParams = `/api/${keyName}_${action}`;
+      //console.log( ' newreq.url=', newreq.url)
     }
 
     return next.handle(newreq as HttpRequest<any>);

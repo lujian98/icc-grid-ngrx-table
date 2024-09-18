@@ -19,6 +19,7 @@ import {
   SingleAutocompleteLisConfig,
   MultiAutocompleteListConfig,
 } from '@icc/ui/fields/src/select-field/spec-helpers/select-field-helpers';
+import { DCRFormConfig, DCRFormFields, DCRFormData } from '../data/form-helper';
 
 export class InMemoryService extends InMemoryDbService {
   createDb(): {
@@ -45,6 +46,9 @@ export class InMemoryService extends InMemoryDbService {
     usa_SingleAllAutocompleteRemoteListFieldConfig: any;
     usa_MultiAllAutocompleteRemotes: string[];
     usa_MultiAllAutocompleteRemotesFieldConfig: any;
+    DCR_formConfig: any;
+    DCR_formFields: any[];
+    DCR_formData: any;
   } {
     return {
       DCR: CARSDATA,
@@ -70,6 +74,9 @@ export class InMemoryService extends InMemoryDbService {
       usa_SingleAllAutocompleteRemoteListFieldConfig: SingleAutocompleteLisConfig,
       usa_MultiAllAutocompleteRemotes: [...STATES].map((state) => state.state),
       usa_MultiAllAutocompleteRemotesFieldConfig: MultiAutocompleteListConfig,
+      DCR_formConfig: DCRFormConfig,
+      DCR_formFields: DCRFormFields,
+      DCR_formData: DCRFormData,
     };
   }
 

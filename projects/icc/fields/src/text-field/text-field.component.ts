@@ -7,8 +7,10 @@ import {
   forwardRef,
   inject,
   Input,
+  OnChanges,
   OnDestroy,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -56,7 +58,7 @@ import { IccTextFieldConfig, defaultTextFieldConfig } from './models/text-field.
     IccIconModule,
   ],
 })
-export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+export class TextFieldComponent implements OnChanges, OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccTextFieldConfig;
@@ -94,6 +96,11 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
 
   get hasValue(): boolean {
     return !!this.field.value;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //console.log( ' on change dddddddddddddddd')
+    //this.changeDetectorRef.markForCheck();
   }
 
   onChange(): void {
