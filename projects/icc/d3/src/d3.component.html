@@ -8,4 +8,18 @@
   [dispatch]="dispatch"
 >
 </icc-d3-legend>
+<span
+  [iccPopover]="d3Popover"
+  [iccPopoverTrigger]="trigger"
+  [iccPopoverContext]="{ data: popoverContext2 }"
+  style="display: none"
+></span>
+<!--
+
+      [sunPopoverContext]="{ record: record }"
+      [sunPopoverTrigger]="popoverTrigger"
+
+[sunPopoverContext]="{text: 'Custom message!'}"
+sunPopoverTrigger="click"
 <span [iccPopover2]="d3Popover" popoverType="point" style="display: none"></span>
+-->

@@ -6,7 +6,7 @@ import { IccD3Popover } from '../models';
 @Component({
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule],
 })
