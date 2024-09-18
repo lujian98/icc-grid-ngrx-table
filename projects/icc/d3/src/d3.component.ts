@@ -43,8 +43,6 @@ import { IccD3LegendComponent } from './legend/legend.component';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccTrigger } from '@icc/ui/overlay';
 
-// IccPopoverDirective
-
 @Component({
   selector: 'icc-d3',
   templateUrl: './d3.component.html',

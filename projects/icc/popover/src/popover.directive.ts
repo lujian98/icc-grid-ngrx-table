@@ -53,6 +53,20 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     );
   }
 
+  private getFakeElement(event: MouseEvent): ElementRef {
+    return new ElementRef({
+      // @ts-ignore
+      getBoundingClientRect: (): ClientRect => ({
+        bottom: event.clientY,
+        height: 0,
+        left: event.clientX,
+        right: event.clientX,
+        top: event.clientY,
+        width: 0,
+      }),
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     // @ts-ignore
     if (changes.context) {
@@ -64,9 +78,25 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     this.dyanmicOverlayService.destroy();
   }
 
+  private rebuildPopover(mouseEvent: MouseEvent): void {
+    this.dyanmicOverlayService.destroy();
+    const fakeElement = this.getFakeElement(mouseEvent);
+    this.dyanmicOverlayService.build(
+      IccPopoverComponent,
+      fakeElement,
+      this.position,
+      this.trigger,
+      this.content,
+      this.context,
+      this.dyanmicOverlayService,
+      this.style,
+    );
+  }
+
   openPopover(mouseEvent: MouseEvent): void {
     console.log(' openoooooooooooooooooooooooooo this.context=', this.context);
-    this.dyanmicOverlayService.rebuild(this.context, this.content);
+    //this.dyanmicOverlayService.rebuild(this.context, this.content);
+    this.rebuildPopover(mouseEvent);
     this.dyanmicOverlayService.show();
   }
 
