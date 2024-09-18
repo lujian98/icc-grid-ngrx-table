@@ -99,7 +99,7 @@ export class TextFieldComponent implements OnChanges, OnDestroy, ControlValueAcc
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //console.log( ' on change dddddddddddddddd')
+    // console.log( ' on change dddddddddddddddd')
     //this.changeDetectorRef.markForCheck();
   }
 

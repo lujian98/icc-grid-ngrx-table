@@ -49,7 +49,6 @@ export class IccFormViewComponent {
     });
     if (this.formConfig.remoteFieldsConfig && !this.formConfig.remoteFormData) {
       this.form.patchValue({ ...this.values });
-      //this.changeDetectorRef.markForCheck();
     }
   }
   get formFields(): any[] {

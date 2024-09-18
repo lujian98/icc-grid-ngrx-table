@@ -12,5 +12,5 @@ export const defaultFormConfig: IccFormConfig = {
 export const defaultFormState: IccFormState = {
   formConfig: defaultFormConfig,
   formFields: [],
-  formData: {},
+  formData: undefined,
 };

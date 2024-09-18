@@ -11,14 +11,8 @@ export interface FormState {
   [key: string]: IccFormState;
 }
 
-/*
-export interface IccFormData<T> {
-  formConfig: IccFormConfig;
-  formData: T;
-}*/
-
 export interface IccFormState<T extends object = object> {
   formConfig: IccFormConfig;
   formFields: T[];
-  formData: T;
+  formData: T | undefined;
 }
