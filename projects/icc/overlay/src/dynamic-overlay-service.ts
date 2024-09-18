@@ -57,7 +57,6 @@ export class IccDynamicOverlayService {
       // @ts-ignore
       () => this.container(),
       this.trigger,
-      this.hostElement, //IccTrigger.POINTLEAVE need parent element
     );
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));

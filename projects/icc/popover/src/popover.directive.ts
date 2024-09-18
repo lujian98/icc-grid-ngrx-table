@@ -63,7 +63,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
         top: event.clientY,
         width: 0,
       }),
-      parentElement: this.elementRef.nativeElement.parentElement,
     });
   }
 

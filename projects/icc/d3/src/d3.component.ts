@@ -21,7 +21,7 @@ import * as d3 from 'd3-selection';
 import * as d3Dispatch from 'd3-dispatch';
 import * as d3Transition from 'd3-transition';
 import { IccD3DataSource } from './d3-data-source';
-import { IccDrawServie } from './service';
+import { IccDrawServie } from './services';
 import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from './draws';
 import { CommonModule } from '@angular/common';
 import {
@@ -58,7 +58,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
 
-  trigger = IccTrigger.POINTLEAVE;
+  trigger = IccTrigger.NOOP;
   positopn = IccPosition.BOTTOMRIGHT;
 
   dispatch!: d3Dispatch.Dispatch<{}>;
@@ -73,7 +73,6 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   private alive = true;
   private isViewReady = false;
   isWindowReszie$: Subject<{}> = new Subject();
-  //@ViewChild(IccPopoverDirective2) popover!: IccPopoverDirective2<T>;
   @ViewChild(IccPopoverDirective) popover!: IccPopoverDirective;
   d3Popover = IccD3PopoverComponent2;
 
@@ -203,7 +202,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   */
       return this.getOptions(chart, configs); // TODO options is default chart config
     });
-    console.log(' nnnnnnnn this.chartConfigs=', this.chartConfigs);
+    //console.log(' nnnnnnnn this.chartConfigs=', this.chartConfigs);
   }
 
   private getOptions(option1: IccD3ChartConfig, option2: IccD3ChartConfig): IccD3ChartConfig {
@@ -262,6 +261,10 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
       this.zoom = new IccZoomDraw(this.view, this.scale, this);
     }
     this.interactive = new IccInteractiveDraw(this.view, this.scale, this);
+    this.interactive.drawPanel.select('.drawArea').on('mouseout', (e, d) => {
+      // console.log(' mouseout=', e)
+      this.popover.hide();
+    });
   }
 
   drawChart(data: any[]): void {
@@ -322,9 +325,8 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
         this.popover.openPopover(p.event);
       }
     });
-
     this.dispatch.on('drawMouseout', (p: any) => {
-      this.popover.hide();
+      this.popover.hide(); // NOT WORKING
     });
   }
 
