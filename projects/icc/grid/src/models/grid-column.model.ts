@@ -28,11 +28,11 @@ export interface IccGridConfig {
   remoteGridData: boolean;
 }
 
-export interface IccGridState {
-  [key: string]: GridState;
+export interface GridState {
+  [key: string]: IccGridState;
 }
 
-export interface GridState<T extends object = object> {
+export interface IccGridState<T extends object = object> {
   gridConfig: IccGridConfig;
   columnsConfig: IccColumnConfig[];
   data: T[];

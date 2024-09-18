@@ -1,10 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as gridActions from './grid.actions';
-import { IccGridState } from '../models/grid-column.model';
+import { GridState } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 
-export const initialState: IccGridState = {};
+export const initialState: GridState = {};
 
 export const iccGridFeature = createFeature({
   name: 'iccGrid',
@@ -13,7 +13,7 @@ export const iccGridFeature = createFeature({
     on(gridActions.initGridConfig, (state, action) => {
       const gridConfig = { ...action.gridConfig };
       const key = gridConfig.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       newState[key] = {
         ...defaultState,
         gridConfig: {
@@ -27,7 +27,7 @@ export const iccGridFeature = createFeature({
     on(gridActions.loadGridConfigSuccess, (state, action) => {
       const gridConfig = { ...action.gridConfig };
       const key = gridConfig.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -45,7 +45,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.loadGridColumnsConfigSuccess, (state, action) => {
       const key = action.gridConfig.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -67,7 +67,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setViewportPageSize, (state, action) => {
       const key = action.gridConfig.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -83,7 +83,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setGridSortFields, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -99,7 +99,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setGridColumnFilters, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -115,7 +115,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setViewportPage, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -129,7 +129,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setGridColumnsConfig, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -146,7 +146,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
@@ -169,7 +169,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       //console.log(' old state=', state)
       if (state[key]) {
         newState[key] = {
@@ -187,7 +187,7 @@ export const iccGridFeature = createFeature({
     }),
     on(gridActions.removeGridDataStore, (state, action) => {
       const key = action.gridId;
-      const newState: IccGridState = { ...state };
+      const newState: GridState = { ...state };
       if (state[key]) {
         delete newState[key];
       }

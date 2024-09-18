@@ -1,4 +1,4 @@
-import { IccGridConfig, GridState } from './grid-column.model';
+import { IccGridConfig, IccGridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
@@ -25,7 +25,7 @@ export const defaultGridConfig: IccGridConfig = {
   remoteGridData: false,
 };
 
-export const defaultState: GridState = {
+export const defaultState: IccGridState = {
   gridConfig: defaultGridConfig,
   columnsConfig: [],
   data: [],
