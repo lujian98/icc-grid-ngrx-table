@@ -2,8 +2,8 @@ import * as d3 from 'd3-selection';
 import * as d3Zoom from 'd3-zoom';
 import * as d3Brush from 'd3-brush';
 import { IccD3Component } from '../d3.component';
-import { IccScaleDraw, IccView } from '../draw';
-import { IccScaleLinear, IccD3ChartConfig } from '../model';
+import { IccScaleDraw, IccView } from '.';
+import { IccScaleLinear, IccD3ChartConfig } from '../models';
 
 export class IccZoomDraw<T> {
   zoom: any; // TODO define types

@@ -1,5 +1,5 @@
 import * as d3Shape from 'd3-shape';
-import { IccD3Options, IccPosition, IccD3ChartConfig, IccD3PieChartOptions } from '../model';
+import { IccD3Options, IccPosition, IccD3ChartConfig, IccD3PieChartOptions } from '../models';
 
 export class IccPieData {
   pieOptions!: IccD3PieChartOptions;

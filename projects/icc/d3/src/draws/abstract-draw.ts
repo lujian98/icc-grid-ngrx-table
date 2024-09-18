@@ -1,7 +1,7 @@
 import * as d3 from 'd3-selection';
 import * as d3Dispatch from 'd3-dispatch';
-import { IccScaleDraw, IccView } from '../draw';
-import { IccScale, IccD3Options, IccD3ChartConfig, IccD3Interactive } from '../model';
+import { IccScaleDraw, IccView } from '.';
+import { IccScale, IccD3Options, IccD3ChartConfig, IccD3Interactive } from '../models';
 
 export abstract class IccAbstractDraw<T> {
   chartType: string;

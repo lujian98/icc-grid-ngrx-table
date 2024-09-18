@@ -1,7 +1,7 @@
 import * as d3Shape from 'd3-shape';
-import { IccAbstractDraw } from '../draw/abstract-draw';
+import { IccAbstractDraw } from '../draws/abstract-draw';
 import { IccPieData } from '../data/pie-data';
-import { IccScale, IccScaleLinear, IccD3Interactive, IccPosition } from '../model';
+import { IccScale, IccScaleLinear, IccD3Interactive, IccPosition } from '../models';
 
 export class IccPieChart<T> extends IccAbstractDraw<T> {
   private sxy!: IccPosition;

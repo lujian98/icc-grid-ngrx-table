@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3-selection';
 import * as d3Dispatch from 'd3-dispatch';
-import { IccScaleDraw, IccAbstractDraw, IccView } from '../draw';
-import { IccD3ChartConfig } from '../model';
+import { IccScaleDraw, IccAbstractDraw, IccView } from '../draws';
+import { IccD3ChartConfig } from '../models';
 import {
   IccLineChart,
   IccAreaChart,
@@ -16,7 +16,7 @@ import {
   IccStackedHorizontalBarChart,
   IccPieChart,
   IccCandleStickBarChart,
-} from '../chart';
+} from '../charts';
 
 import { IccRadialGauge } from '../gauge';
 

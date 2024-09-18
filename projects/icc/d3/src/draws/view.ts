@@ -10,7 +10,7 @@ import {
   DEFAULT_RADIAL_GAUGE_OPTIONS,
   IccD3Options,
   IccMargin,
-} from '../model';
+} from '../models';
 
 export class IccView {
   private height!: number;

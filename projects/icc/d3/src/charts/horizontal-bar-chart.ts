@@ -1,5 +1,5 @@
-import { IccAbstractDraw } from '../draw/abstract-draw';
-import { IccScale, IccScaleLinear, IccD3Interactive } from '../model';
+import { IccAbstractDraw } from '../draws/abstract-draw';
+import { IccScale, IccScaleLinear, IccD3Interactive } from '../models';
 
 export class IccHorizontalBarChart<T> extends IccAbstractDraw<T> {
   // @ts-ignore

@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import * as d3Axis from 'd3-axis';
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
-import { IccScaleFactory } from './../scale/scale-factory';
+import { IccScaleFactory } from '../scales/scale-factory';
 import {
   IccScale,
   IccScaleColor,
@@ -12,8 +12,8 @@ import {
   IccD3Options,
   IccD3ChartConfig,
   DEFAULT_CHART_CONFIGS,
-} from '../model';
-import { IccView } from '../draw';
+} from '../models';
+import { IccView } from '.';
 
 export interface AxisScale {
   factory?: IccScaleFactory<any>;

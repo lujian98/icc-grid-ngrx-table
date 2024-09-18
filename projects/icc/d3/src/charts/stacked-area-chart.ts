@@ -1,7 +1,7 @@
 import * as d3Shape from 'd3-shape';
-import { IccAbstractDraw } from '../draw/abstract-draw';
+import { IccAbstractDraw } from '../draws/abstract-draw';
 import { IccStackedData } from '../data/stacked-data';
-import { IccScale, IccScaleLinear } from '../model';
+import { IccScale, IccScaleLinear } from '../models';
 
 export class IccStackedAreaChart<T> extends IccAbstractDraw<T> {
   // @ts-ignore

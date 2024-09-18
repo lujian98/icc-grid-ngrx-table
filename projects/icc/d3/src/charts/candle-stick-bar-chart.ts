@@ -1,5 +1,5 @@
-import { IccAbstractDraw } from '../draw/abstract-draw';
-import { IccScale, IccScaleLinear } from '../model';
+import { IccAbstractDraw } from '../draws/abstract-draw';
+import { IccScale, IccScaleLinear } from '../models';
 
 export class IccCandleStickBarChart<T> extends IccAbstractDraw<T> {
   drawContents(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {

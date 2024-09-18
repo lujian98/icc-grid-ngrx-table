@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IccPopoverDirective, IccPopoverModule } from '../shared/tooltip/directives/popover';
 import { IccPortalComponent } from '../shared/tooltip/components/portal/portal.component';
 import { IccOverlayComponentRef } from '../shared/tooltip/services/overlay/overlay-component-ref';
 
 import { CommonModule } from '@angular/common';
-import { IccD3Popover } from '../model';
+import { IccD3Popover } from '../models';
 
 @Component({
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccPopoverModule, IccPortalComponent],
 })

@@ -2,9 +2,9 @@ import * as d3Shape from 'd3-shape';
 import * as d3Array from 'd3-array';
 import * as d3Scale from 'd3-scale';
 import * as d3Interpolate from 'd3-interpolate';
-import { IccAbstractDraw } from '../draw/abstract-draw';
+import { IccAbstractDraw } from '../draws/abstract-draw';
 import { IccPieData } from '../data/pie-data';
-import { IccScale, IccScaleLinear, IccD3Interactive, IccPosition } from '../model';
+import { IccScale, IccScaleLinear, IccD3Interactive, IccPosition } from '../models';
 
 export class IccRadialGauge<T> extends IccAbstractDraw<T> {
   private values!: T[];

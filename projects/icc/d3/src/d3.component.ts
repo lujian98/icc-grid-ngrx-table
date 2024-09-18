@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ViewChild,
   ElementRef,
@@ -21,7 +22,7 @@ import * as d3Dispatch from 'd3-dispatch';
 import * as d3Transition from 'd3-transition';
 import { IccD3DataSource } from './d3-data-source';
 import { IccDrawServie } from './service';
-import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from './draw';
+import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from './draws';
 import { CommonModule } from '@angular/common';
 import {
   IccD3Options,
@@ -34,7 +35,7 @@ import {
   DEFAULT_VERTICAL_BULLET_CHART_CONFIGS,
   DEFAULT_PIE_CHART_CONFIGS,
   DEFAULT_RADIAL_GAUGE_CONFIGS,
-} from './model';
+} from './models';
 
 import { IccD3PopoverComponent } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
@@ -46,6 +47,7 @@ import { IccPortalComponent } from './shared/tooltip/components/portal/portal.co
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccPopoverModule, IccPortalComponent, IccD3PopoverComponent, IccD3LegendComponent],
   providers: [IccDrawServie],

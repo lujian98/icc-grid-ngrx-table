@@ -1,8 +1,8 @@
 import * as d3Shape from 'd3-shape';
-import { IccAbstractDraw } from '../draw/abstract-draw';
-import { IccScale, IccScaleLinear } from '../model';
+import { IccAbstractDraw } from '../draws/abstract-draw';
+import { IccScale, IccScaleLinear } from '../models';
 
-export class IccAreaChart<T> extends IccAbstractDraw<T> {
+export class IccLineChart<T> extends IccAbstractDraw<T> {
   drawContents(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {
     const drawContents = this.drawPanel
       .select(drawName)
@@ -10,9 +10,8 @@ export class IccAreaChart<T> extends IccAbstractDraw<T> {
       .data(this.data)
       .join('g')
       .append('path')
-      .attr('stroke-width', 1.0)
-      .attr('class', 'area draw')
-      .attr('fill-opacity', 0.5);
+      .attr('class', 'line draw');
+
     if (drawName === `.${this.chartType}`) {
       drawContents
         .on('mouseover', (e, d) => this.legendMouseover(e, d, true))
@@ -22,21 +21,17 @@ export class IccAreaChart<T> extends IccAbstractDraw<T> {
   }
 
   redrawContent(drawName: string, scaleX: IccScale, scaleY: IccScaleLinear): void {
-    const drawArea = d3Shape
-      .area()
-      .curve(d3Shape.curveLinear)
-      .defined((d, i) => !isNaN(this.chart.y!(d)) && this.chart.y!(d) !== null)
+    const drawLine = d3Shape
+      .line()
       // @ts-ignore
       .x((d) => scaleX(this.chart.x!(d)))
-      .y0(() => (scaleY.domain()[0] < 0 ? scaleY(0) : scaleY.range()[0]))
-      .y1((d) => scaleY(this.chart.y!(d)));
-    const drawContent = (d: any) => drawArea(this.chart.y0!(d));
+      .y((d) => scaleY(this.chart.y!(d)));
+    const drawContent = (d: any) => drawLine(this.chart.y0!(d));
     this.drawPanel
       .select(drawName)
       .selectAll('g')
       .select('.draw')
-      .attr('fill', (d, i) => this.getdrawColor(d, i))
-      .attr('fill', (d, i) => this.getdrawColor(d, i))
+      .style('stroke', (d, i) => this.getdrawColor(d, i))
       .attr('d', drawContent);
   }
 
@@ -49,6 +44,6 @@ export class IccAreaChart<T> extends IccAbstractDraw<T> {
       .selectAll('g')
       .select('.draw')
       .filter((d) => this.chart.x0!(d) === this.chart.x0!(data))
-      .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.5));
+      .attr('stroke-width', (d) => (mouseover ? 2.0 : 1.0));
   }
 }

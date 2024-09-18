@@ -1,6 +1,6 @@
 import * as d3Array from 'd3-array';
-import { IccAbstractDraw } from '../draw/abstract-draw';
-import { IccScaleLinear, IccD3Range, IccD3BulletChartData } from '../model';
+import { IccAbstractDraw } from '../draws/abstract-draw';
+import { IccScaleLinear, IccD3Range, IccD3BulletChartData } from '../models';
 import { IccUtils } from '../utils/utils';
 
 export class IccbulletChart<T> extends IccAbstractDraw<T> {

@@ -2,7 +2,7 @@ import { IccAbstractScale } from './abstract-scale';
 import { IccLinearScale } from './linear-scale';
 import { IccTimeScale } from './time-scale';
 import { IccBandScale } from './band-scale';
-import { IccScale, IccD3ChartConfig } from '../model';
+import { IccScale, IccD3ChartConfig } from '../models';
 
 export class IccScaleFactory<T> {
   componentMapper = {

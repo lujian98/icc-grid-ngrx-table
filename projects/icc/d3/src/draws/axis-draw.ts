@@ -1,7 +1,7 @@
 import * as d3 from 'd3-selection';
 import * as d3Axis from 'd3-axis';
-import { IccD3ChartConfig } from '../model';
-import { IccScaleDraw, IccView } from '../draw';
+import { IccD3ChartConfig } from '../models';
+import { IccScaleDraw, IccView } from '.';
 
 export class IccAxisDraw<T> {
   private drawID!: number;

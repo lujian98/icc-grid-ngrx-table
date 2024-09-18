@@ -1,4 +1,4 @@
-import { IccD3Options, IccD3ChartConfig } from '../model';
+import { IccD3Options, IccD3ChartConfig } from '../models';
 
 export class IccGroupedData<T> {
   constructor(private chart: IccD3ChartConfig) {}

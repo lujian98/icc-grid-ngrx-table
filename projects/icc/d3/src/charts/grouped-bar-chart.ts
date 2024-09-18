@@ -1,6 +1,6 @@
-import { IccAbstractDraw } from '../draw/abstract-draw';
+import { IccAbstractDraw } from '../draws/abstract-draw';
 import { IccGroupedData } from '../data/grouped-data';
-import { IccScaleLinear, IccScaleBand } from '../model';
+import { IccScaleLinear, IccScaleBand } from '../models';
 
 export class IccGroupedBarChart<T> extends IccAbstractDraw<T> {
   // @ts-ignore

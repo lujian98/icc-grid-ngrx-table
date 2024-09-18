@@ -1,6 +1,6 @@
 import * as d3 from 'd3-selection';
 import * as d3Array from 'd3-array';
-import { IccScaleDraw, IccView } from '../draw';
+import { IccScaleDraw, IccView } from '.';
 import { IccD3Component } from '../d3.component';
 import {
   IccScaleLinear,
@@ -10,7 +10,7 @@ import {
   IccD3PopoverSerie,
   IccD3Interactive,
   IccD3ChartConfig,
-} from '../model';
+} from '../models';
 
 export class IccInteractiveDraw<T> {
   get configs(): IccD3ChartConfig {
