@@ -8,14 +8,9 @@
   [dispatch]="dispatch"
 >
 </icc-d3-legend>
-<span
-  [iccPopover]="d3Popover"
-  [iccPopoverTrigger]="trigger"
-  [iccPopoverPosition]="positopn"
-  [iccPopoverContext]="{ data: popoverContext }"
-></span>
+<span [iccPopover]="d3Popover" [iccPopoverTrigger]="trigger" [iccPopoverPosition]="positopn"></span>
 <!--
-
+  [iccPopoverContext]="{ data: popoverContext }"
   style="display: none"
 [ngStyle]="{ display: groupHeaderDisplay.length > 0 ? 'flex' : 'none' }"
   [ngStyle]="{ display: isPopoverOpen ? 'flex' : 'none' }"

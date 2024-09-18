@@ -39,7 +39,6 @@ import {
 
 import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-//import { IccPopoverDirective2 } from './shared/tooltip/directives/popover';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccTrigger, IccPosition } from '@icc/ui/overlay';
 
@@ -58,9 +57,10 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input() chartConfigs: IccD3ChartConfig[] = [];
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
+
   trigger = IccTrigger.CLICK;
   positopn = IccPosition.BOTTOMRIGHT;
-  popoverContext: any;
+
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
   scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
@@ -319,7 +319,6 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
       this.popover.closePopover();
       if (p.data && p.data.series.length > 0) {
         this.popover.context = { data: p.data };
-        this.popoverContext = p.data;
         this.popover.openPopover(p.event);
       }
     });
