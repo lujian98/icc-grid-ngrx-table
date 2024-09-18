@@ -1,7 +1,7 @@
 import * as d3 from 'd3-selection';
 import * as d3Array from 'd3-array';
 import { IccScaleDraw, IccView } from '.';
-import { IccD3Component } from '../d3.component';
+import { IccD3ViewComponent } from '../components/d3-view.component';
 import {
   IccScaleLinear,
   IccScaleBand,
@@ -31,7 +31,7 @@ export class IccInteractiveDraw<T> {
   constructor(
     protected view: IccView,
     private scale: IccScaleDraw<T>,
-    private draw: IccD3Component<T>,
+    private draw: IccD3ViewComponent<T>,
   ) {
     this.drawPanel
       .select('.drawArea')

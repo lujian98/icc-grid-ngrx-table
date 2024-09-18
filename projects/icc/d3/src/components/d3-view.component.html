@@ -1,0 +1,16 @@
+<svg width="100%"></svg>
+<icc-d3-legend
+  *ngIf="legend && legend.enabled"
+  [view]="view"
+  [chartConfigs]="chartConfigs"
+  [data]="data"
+  [scale]="scale$ | async"
+  [dispatch]="dispatch"
+>
+</icc-d3-legend>
+<span
+  [iccPopover]="d3Popover"
+  [iccPopoverTrigger]="trigger"
+  [iccPopoverPosition]="positopn"
+  style="display: none"
+></span>

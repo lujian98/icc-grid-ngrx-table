@@ -1,16 +1,16 @@
-<svg width="100%"></svg>
-<icc-d3-legend
-  *ngIf="legend && legend.enabled"
-  [view]="view"
-  [chartConfigs]="chartConfigs"
-  [data]="data"
-  [scale]="scale$ | async"
-  [dispatch]="dispatch"
->
-</icc-d3-legend>
-<span
-  [iccPopover]="d3Popover"
-  [iccPopoverTrigger]="trigger"
-  [iccPopoverPosition]="positopn"
-  style="display: none"
-></span>
+<icc-d3-view [chartConfigs]="chartConfigs" [data]="data"></icc-d3-view>
+
+<!--
+
+<ng-container *ngIf="gridConfig$ | async as gridConfig">
+  <ng-container *ngIf="columnsConfig$ | async as columns">
+    <div class="icc-grid-toolbar">
+      <button (click)="refresh()">Refresh</button>
+      <button (click)="clearFilters()">Clear All Filters</button>
+    </div>
+    <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
+
+    <icc-grid-footer [gridConfig]="gridConfig"> </icc-grid-footer>
+  </ng-container>
+</ng-container>
+-->
