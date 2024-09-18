@@ -39,7 +39,7 @@ import {
 
 import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverDirective2 } from './shared/tooltip/directives/popover';
+//import { IccPopoverDirective2 } from './shared/tooltip/directives/popover';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccTrigger } from '@icc/ui/overlay';
 
@@ -50,9 +50,9 @@ import { IccTrigger } from '@icc/ui/overlay';
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverDirective, IccPopoverDirective2, IccD3PopoverComponent2, IccD3LegendComponent],
+  imports: [CommonModule, IccPopoverDirective, IccD3PopoverComponent2, IccD3LegendComponent],
   providers: [IccDrawServie],
 })
 export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -60,31 +60,8 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input() chartConfigs: IccD3ChartConfig[] = [];
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
-  trigger = IccTrigger.HOVER;
+  trigger = IccTrigger.CLICK;
   popoverContext: any;
-  popoverContext2: any = {
-    value: 50,
-    series: [
-      {
-        key: 'Sine Wave',
-        value: '−0.96',
-        color: '#ff7f0e',
-        hovered: false,
-      },
-      {
-        key: 'Another sine wave',
-        value: '0.26',
-        color: '#7777ff',
-        hovered: true,
-      },
-      {
-        key: 'Cosine Wave',
-        value: '0.47',
-        color: '#2ca02c',
-        hovered: false,
-      },
-    ],
-  };
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
   scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
@@ -343,9 +320,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
       this.popover.closePopover();
       if (p.data && p.data.series.length > 0) {
         this.popover.context = { data: p.data };
-        this.popoverContext = { data: p.data };
-        this.popoverContext2 = p.data;
-        console.log(' this.popoverContext=', this.popoverContext);
+        this.popoverContext = p.data;
         this.popover.openPopover(p.event);
       }
     });

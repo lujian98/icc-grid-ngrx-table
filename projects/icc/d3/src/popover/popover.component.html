@@ -1,9 +1,8 @@
-<div>Test popover</div>
-<table>
-  <thead *ngIf="data && data.value" style="text-align: left">
+<table *ngIf="data">
+  <thead *ngIf="data.value" style="text-align: left">
     <th colspan="3">{{ data.value }}</th>
   </thead>
-  <tbody *ngIf="data && data.series">
+  <tbody *ngIf="data.series">
     <ng-container *ngFor="let item of data.series">
       <tr [ngClass]="item.hovered ? 'highlight' : ''">
         <td [ngStyle]="{ 'border-bottom-color': item.color, 'border-top-color': item.color }">

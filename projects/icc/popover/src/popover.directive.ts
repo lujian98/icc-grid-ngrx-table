@@ -56,7 +56,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   ngOnChanges(changes: SimpleChanges) {
     // @ts-ignore
     if (changes.context) {
-      console.log(' this.context=', this.context);
       this.dyanmicOverlayService.rebuild(this.context, this.content);
     }
   }
@@ -67,6 +66,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
 
   openPopover(mouseEvent: MouseEvent): void {
     console.log(' openoooooooooooooooooooooooooo this.context=', this.context);
+    this.dyanmicOverlayService.rebuild(this.context, this.content);
     this.dyanmicOverlayService.show();
   }
 
