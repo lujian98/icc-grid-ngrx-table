@@ -67,7 +67,7 @@ const POSITIONS = {
       overlayX: 'start',
       overlayY: 'top',
       offsetX: offset,
-      offsetY: -offset,
+      offsetY: offset - 6,
     };
   },
   [IccPosition.RIGHTBOTTOM](offset: number): ConnectionPositionPair {

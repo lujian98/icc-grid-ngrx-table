@@ -41,7 +41,7 @@ import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
 //import { IccPopoverDirective2 } from './shared/tooltip/directives/popover';
 import { IccPopoverDirective } from '@icc/ui/popover';
-import { IccTrigger } from '@icc/ui/overlay';
+import { IccTrigger, IccPosition } from '@icc/ui/overlay';
 
 @Component({
   selector: 'icc-d3',
@@ -59,6 +59,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
   trigger = IccTrigger.CLICK;
+  positopn = IccPosition.BOTTOMRIGHT;
   popoverContext: any;
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
