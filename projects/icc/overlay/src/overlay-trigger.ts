@@ -9,6 +9,7 @@ export enum IccTrigger {
   CLICK = 'click',
   NOOP = 'noop',
   POINT = 'point',
+  POINTLEAVE = 'pointleave',
   HOVER = 'hover',
   CONTEXTMENU = 'contextmenu',
   TOOLTIP = 'tooltip',
@@ -46,7 +47,7 @@ export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
   hide$ = EMPTY;
 }
 
-// ONLY USED???
+// ONLY USED
 export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   show$ = EMPTY;
   private firstTime: boolean = true;
@@ -58,10 +59,9 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
 
   hide$ = this.click$.pipe(
     filter(([shouldShow, event]) => {
-      //const container = this.container() && this.container().location.nativeElement.contains(event.target);
       if (this.firstTime) {
         this.firstTime = false;
-        return shouldShow; // && !container;
+        return shouldShow;
       }
       let show = true;
       const box = this.container() && this.container().location.nativeElement.getBoundingClientRect();
@@ -72,6 +72,36 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
       return !shouldShow && !show;
     }),
     map(([, event]) => event),
+    takeWhile(() => this.alive),
+  );
+}
+
+// ONLY USED
+export class IccPointLeaveTriggerStrategy extends IccTriggerStrategyBase {
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => [!this.container() && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    share(),
+    takeWhile(() => this.alive),
+  );
+  show$ = this.click$.pipe(
+    filter(([shouldShow]) => shouldShow),
+    map(([, event]) => event),
+    takeWhile(() => this.alive),
+  );
+
+  hide$ = fromEvent<Event>(this.document, 'mousemove').pipe(
+    debounceTime(1),
+    takeWhile(() => !!this.container()),
+    filter((event) => {
+      const el = this.formField as any;
+      let show = false;
+      const box = el.nativeElement.parentElement.getBoundingClientRect();
+      if (box) {
+        const { x, y } = event as MouseEvent;
+        show = box.top < y && y < box.bottom && box.left < x && x < box.right;
+      }
+      return !show;
+    }),
     takeWhile(() => this.alive),
   );
 }
@@ -196,6 +226,8 @@ export class IccTriggerStrategyBuilderService {
     switch (trigger) {
       case IccTrigger.CLICK:
         return new IccClickTriggerStrategy(this.document, host, container);
+      case IccTrigger.POINTLEAVE:
+        return new IccPointLeaveTriggerStrategy(this.document, host, container, formField);
       case IccTrigger.NOOP:
         return new IccNoopTriggerStrategy(this.document, host, container);
       case IccTrigger.POINT:

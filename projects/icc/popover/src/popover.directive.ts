@@ -55,8 +55,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
 
   private getFakeElement(event: MouseEvent): ElementRef {
     return new ElementRef({
-      // @ts-ignore
-      getBoundingClientRect: (): ClientRect => ({
+      getBoundingClientRect: () => ({
         bottom: event.clientY,
         height: 0,
         left: event.clientX,
@@ -64,6 +63,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
         top: event.clientY,
         width: 0,
       }),
+      parentElement: this.elementRef.nativeElement.parentElement,
     });
   }
 
@@ -94,18 +94,12 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   openPopover(mouseEvent: MouseEvent): void {
-    console.log(' openoooooooooooooooooooooooooo this.context=', this.context);
-    //this.dyanmicOverlayService.rebuild(this.context, this.content);
     this.rebuildPopover(mouseEvent);
     this.dyanmicOverlayService.show();
   }
 
-  closePopover(): void {
-    console.log(' close iiiiiiiiiiiiiiiiii');
-    this.dyanmicOverlayService.hide();
-  }
-
   show() {
+    this.dyanmicOverlayService.rebuild(this.context, this.content);
     this.dyanmicOverlayService.show();
   }
 

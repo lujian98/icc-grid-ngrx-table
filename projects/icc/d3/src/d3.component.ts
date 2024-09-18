@@ -58,7 +58,7 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
 
-  trigger = IccTrigger.CLICK;
+  trigger = IccTrigger.POINTLEAVE;
   positopn = IccPosition.BOTTOMRIGHT;
 
   dispatch!: d3Dispatch.Dispatch<{}>;
@@ -316,13 +316,16 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
     this.dispatch.on('legendMouseover', (d: any) => this.legendMouseover(d, true));
     this.dispatch.on('legendMouseout', (d: any) => this.legendMouseover(d, false));
     this.dispatch.on('drawMouseover', (p: any) => {
-      this.popover.closePopover();
+      this.popover.hide();
       if (p.data && p.data.series.length > 0) {
         this.popover.context = { data: p.data };
         this.popover.openPopover(p.event);
       }
     });
-    this.dispatch.on('drawMouseout', (p: any) => this.popover.closePopover());
+
+    this.dispatch.on('drawMouseout', (p: any) => {
+      this.popover.hide();
+    });
   }
 
   legendMouseover(data: T[], mouseover: boolean): void {
