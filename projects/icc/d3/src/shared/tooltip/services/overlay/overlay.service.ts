@@ -16,7 +16,7 @@ import { IccPortalContent } from '../../components/portal/model';
 @Injectable({
   providedIn: 'root',
 })
-export class IccOverlayService<T> {
+export class IccOverlayService2<T> {
   overlayComponentRef!: IccOverlayComponentRef<T>;
   protected overlayRef!: OverlayRef;
   containerRef!: ComponentRef<{}>;

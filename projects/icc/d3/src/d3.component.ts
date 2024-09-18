@@ -37,10 +37,10 @@ import {
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './models';
 
-import { IccD3PopoverComponent } from './popover/popover.component';
+import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverDirective, IccPopoverModule } from './shared/tooltip/directives/popover';
-import { IccPortalComponent } from './shared/tooltip/components/portal/portal.component';
+import { IccPopoverDirective2, IccPopoverModule } from './shared/tooltip/directives/popover';
+import { IccPortalComponent2 } from './shared/tooltip/components/portal/portal.component';
 
 @Component({
   selector: 'icc-d3',
@@ -49,7 +49,7 @@ import { IccPortalComponent } from './shared/tooltip/components/portal/portal.co
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverModule, IccPortalComponent, IccD3PopoverComponent, IccD3LegendComponent],
+  imports: [CommonModule, IccPopoverModule, IccPortalComponent2, IccD3PopoverComponent2, IccD3LegendComponent],
   providers: [IccDrawServie],
 })
 export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -70,8 +70,8 @@ export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDe
   private alive = true;
   private isViewReady = false;
   isWindowReszie$: Subject<{}> = new Subject();
-  @ViewChild(IccPopoverDirective) popover!: IccPopoverDirective<T>;
-  d3Popover = IccD3PopoverComponent;
+  @ViewChild(IccPopoverDirective2) popover!: IccPopoverDirective2<T>;
+  d3Popover = IccD3PopoverComponent2;
 
   @HostBinding('style.flex-direction') get flexDirection(): any {
     if (this.legend) {

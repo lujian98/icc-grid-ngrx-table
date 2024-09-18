@@ -12,7 +12,7 @@ import { IccOverlayComponentRef } from '../../services/overlay/overlay-component
   standalone: true,
   imports: [CommonModule, PortalModule],
 })
-export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
+export class IccPortalComponent2<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() content!: IccPortalContent<T>;
   @Input() context!: {};
   @Input() withBackground!: boolean;

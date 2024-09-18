@@ -2,9 +2,9 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, EventEmitter, ElementRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccPortalContent } from '../../components/portal/model';
-import { IccPortalComponent } from '../../components/portal/portal.component';
+import { IccPortalComponent2 } from '../../components/portal/portal.component';
 import { IccOverlayConfig } from '../../services/overlay/overlay.model';
-import { IccOverlayService } from '../../services/overlay/overlay.service';
+import { IccOverlayService2 } from '../../services/overlay/overlay.service';
 import {
   IccBasePopoverStrategy,
   IccPopoverClickStrategy,
@@ -14,10 +14,10 @@ import {
 } from './popover.strategy';
 
 @Directive({
-  selector: '[iccPopover]',
+  selector: '[iccPopover2]',
 })
-export class IccPopoverDirective<T> implements OnInit, OnDestroy {
-  @Input('iccPopover') content!: IccPortalContent<T>;
+export class IccPopoverDirective2<T> implements OnInit, OnDestroy {
+  @Input('iccPopover2') content!: IccPortalContent<T>;
   @Input('iccPopoverContext') context = {};
   @Input() popoverPosition!: string;
   @Input() width!: string | number;
@@ -32,7 +32,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Output() iccItemChangedEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private overlayService: IccOverlayService<T>,
+    private overlayService: IccOverlayService2<T>,
     private elementRef: ElementRef,
   ) {}
 
@@ -81,7 +81,13 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
         popoverType: this.popoverType,
         popoverLevel: this.popoverLevel,
       };
-      this.overlayRef = this.overlayService.open(origin, IccPortalComponent, overlayConfig, this.content, this.context);
+      this.overlayRef = this.overlayService.open(
+        origin,
+        IccPortalComponent2,
+        overlayConfig,
+        this.content,
+        this.context,
+      );
       this.popoverStrategy.isOpened = this.isOpened;
       this.popoverStrategy.overlayRef = this.overlayRef;
       this.popoverStrategy.containerRef = this.overlayService.containerRef;
