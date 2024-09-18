@@ -9,7 +9,6 @@ import {
   IccGridData,
   IccSortField,
 } from '../models/grid-column.model';
-import { CARSDATA3 } from '../../../../icc-demo/src/app/data/cars-large';
 import { IccFilterFactory } from './filter/filter_factory';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 
@@ -48,7 +47,8 @@ export class IccGridService {
 
   getGridInMemoeryData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
     // TODO where to store local data and process these data?
-    return of(CARSDATA3);
+    console.log(' kkkkkkkkkkkkkkkkkkk');
+    return of();
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
