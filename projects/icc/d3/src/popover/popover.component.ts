@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccPopoverDirective2, IccPopoverModule } from '../shared/tooltip/directives/popover';
-//import { IccPortalComponent2 } from '../shared/tooltip/components/portal/portal.component';
-import { IccOverlayComponentRef } from '../shared/tooltip/services/overlay/overlay-component-ref';
-import { IccPopoverComponent } from '@icc/ui/popover';
-
+//import { IccPopoverComponent } from '@icc/ui/popover';
 import { CommonModule } from '@angular/common';
 import { IccD3Popover } from '../models';
 
@@ -12,17 +8,17 @@ import { IccD3Popover } from '../models';
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverComponent, IccPopoverModule],
+  imports: [CommonModule],
 })
 export class IccD3PopoverComponent2 implements OnInit {
   data!: IccD3Popover; // TODO hover border color
 
-  constructor(private overlayComponentRef: IccOverlayComponentRef<any>) {}
+  //constructor(private overlayComponentRef: IccOverlayComponentRef<any>) {}
 
   ngOnInit(): void {}
 
   close(): void {
-    this.overlayComponentRef.close({ id: 1 });
+    // this.overlayComponentRef.close({ id: 1 });
     // TODO this may not be enough to close tooltip need add close events subject to popover directive
   }
 }

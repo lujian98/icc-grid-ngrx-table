@@ -39,8 +39,7 @@ import {
 
 import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverDirective2, IccPopoverModule } from './shared/tooltip/directives/popover';
-import { IccPortalComponent2 } from './shared/tooltip/components/portal/portal.component';
+import { IccPopoverDirective2 } from './shared/tooltip/directives/popover';
 
 @Component({
   selector: 'icc-d3',
@@ -49,7 +48,7 @@ import { IccPortalComponent2 } from './shared/tooltip/components/portal/portal.c
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverModule, IccPortalComponent2, IccD3PopoverComponent2, IccD3LegendComponent],
+  imports: [CommonModule, IccPopoverDirective2, IccD3PopoverComponent2, IccD3LegendComponent],
   providers: [IccDrawServie],
 })
 export class IccD3Component<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {

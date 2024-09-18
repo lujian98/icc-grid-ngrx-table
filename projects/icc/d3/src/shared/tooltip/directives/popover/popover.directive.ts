@@ -15,6 +15,7 @@ import {
 
 @Directive({
   selector: '[iccPopover2]',
+  standalone: true,
 })
 export class IccPopoverDirective2<T> implements OnInit, OnDestroy {
   @Input('iccPopover2') content!: IccPortalContent<T>;
