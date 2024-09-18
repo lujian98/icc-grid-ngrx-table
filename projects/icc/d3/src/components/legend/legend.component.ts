@@ -14,8 +14,8 @@ import { CommonModule } from '@angular/common';
 import { delay, takeWhile } from 'rxjs/operators';
 import * as d3 from 'd3-selection';
 import * as d3Dispatch from 'd3-dispatch';
-import { IccView, IccScaleDraw } from '../draws';
-import { IccD3ChartConfig } from '../models';
+import { IccView, IccScaleDraw } from '../../draws';
+import { IccD3ChartConfig } from '../../models';
 
 @Component({
   selector: 'icc-d3-legend',

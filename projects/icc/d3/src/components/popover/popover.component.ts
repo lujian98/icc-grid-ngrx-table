@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 //import { IccPopoverComponent } from '@icc/ui/popover';
 import { CommonModule } from '@angular/common';
-import { IccD3Popover } from '../models';
+import { IccD3Popover } from '../../models';
 
 @Component({
   templateUrl: './popover.component.html',

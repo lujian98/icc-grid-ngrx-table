@@ -37,8 +37,8 @@ import {
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './models';
 
-import { IccD3PopoverComponent2 } from './popover/popover.component';
-import { IccD3LegendComponent } from './legend/legend.component';
+import { IccD3PopoverComponent2 } from './components/popover/popover.component';
+import { IccD3LegendComponent } from './components/legend/legend.component';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccTrigger, IccPosition } from '@icc/ui/overlay';
 
