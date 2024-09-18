@@ -1,7 +1,91 @@
-export const CARSDATA = {
+import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '@icc/ui/grid';
+
+export const DCRBrands = [
+  { title: '', name: '' },
+  { title: 'Audi', name: 'Audi' },
+  { title: 'BMW', name: 'BMW' },
+  { title: 'Mercedes', name: 'Mercedes' },
+  { title: 'Renault', name: 'Renault' },
+  { title: 'Volvo', name: 'Volvo' },
+  { title: 'Fiat', name: 'Fiat' },
+  { title: 'Chrysler', name: 'Chrysler' },
+  { title: 'Ford', name: 'Ford' },
+  { title: 'GM', name: 'GM' },
+  { title: 'Honda', name: 'Honda' },
+  { title: 'Jaguar', name: 'Jaguar' },
+  { title: 'VW', name: 'VW' },
+];
+
+export const DCRColors = [
+  { title: '', name: '' },
+  { title: 'Black', name: 'Black' },
+  { title: 'Blue', name: 'Blue' },
+  { title: 'Brown', name: 'Brown' },
+  { title: 'Green', name: 'Green' },
+  { title: 'Maroon', name: 'Maroon' },
+  { title: 'Orange', name: 'Orange' },
+  { title: 'Red', name: 'Red' },
+  { title: 'Silver', name: 'Silver' },
+  { title: 'Yellow', name: 'Yellow' },
+  { title: 'White', name: 'White' },
+];
+
+export const DCRGridConfig: Partial<IccGridConfig> = {
+  columnSort: true,
+  columnFilter: true,
+  columnResize: true,
+  columnReorder: true,
+  columnMenu: true,
+  columnHidden: true,
+  remoteColumnsConfig: true,
+  remoteGridData: true,
+  sortFields: [
+    {
+      field: 'ID',
+      dir: 'asc',
+    },
+  ],
+  columnFilters: [
+    { name: 'vin', value: '9' },
+    { name: 'brand', value: [{ title: 'Fiat', name: 'Fiat' }] },
+    { name: 'color', value: [{ name: 'Orange', title: 'Orange' }] },
+  ],
+  rowSelection: true,
+};
+
+export const DCRColumnConfig: IccColumnConfig[] = [
+  {
+    name: 'ID',
+    width: 50,
+    align: 'center',
+  },
+  {
+    name: 'vin',
+  },
+  {
+    name: 'brand',
+    title: 'this s s     sssssssssssssssssss sssssssssssssss',
+    filterField: 'select',
+    width: 50,
+  },
+  {
+    name: 'year',
+    width: 50,
+    align: 'right',
+  },
+  {
+    name: 'color',
+    width: 80,
+    filterField: 'select',
+    align: 'center',
+  },
+];
+
+export const CARSDATA0 = {
+  //"TotalCounts": 200,
   data: [
     {
-      vin: 'ee8a89d8',
+      vin: 'ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8',
       brand: 'Fiat',
       year: 1987,
       color: 'Maroon',
@@ -1202,3 +1286,19 @@ export const CARSDATA = {
     },
   ],
 };
+
+export const CARSDATA = {
+  data: CARSDATA0.data.map((item: any, index) => {
+    item['ID'] = index + 1;
+    return item;
+  }),
+};
+
+export const CARSDATA3 = {
+  data: CARSDATA0.data.map((item: any, index) => {
+    item['ID'] = index + 1;
+    return item;
+  }),
+  totalCounts: 200,
+};
+//console.log( 'CARSDATA= ', CARSDATA)

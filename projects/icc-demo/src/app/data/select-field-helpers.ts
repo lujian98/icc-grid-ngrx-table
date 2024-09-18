@@ -1,4 +1,4 @@
-import { IccSelectFieldConfig } from '../models/select-field.model';
+import { IccSelectFieldConfig } from '@icc/ui/fields';
 
 export const SingleSelectConfig: Partial<IccSelectFieldConfig> = {
   fieldLabel: 'Single Selection (Object)',

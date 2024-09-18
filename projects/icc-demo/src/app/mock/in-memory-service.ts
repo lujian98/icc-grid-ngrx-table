@@ -1,14 +1,8 @@
 import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
-import {
-  CARSDATA,
-  DCRBrands,
-  DCRColors,
-  DCRColumnConfig,
-  DCRGridConfig,
-} from '@icc/ui/grid/src/spec-helpers/cars-large';
-import { State, STATES } from '@icc/ui/fields/src/select-field/spec-helpers/states';
+import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig, DCRGridConfig } from '../data/cars-large';
+import { State, STATES } from '../data/states';
 import {
   SingleSelectConfig,
   MultiSelectConfig,
@@ -18,7 +12,7 @@ import {
   MultiListConfig,
   SingleAutocompleteLisConfig,
   MultiAutocompleteListConfig,
-} from '@icc/ui/fields/src/select-field/spec-helpers/select-field-helpers';
+} from '../data/select-field-helpers';
 import { DCRFormConfig, DCRFormFields, DCRFormData } from '../data/form-helper';
 
 export class InMemoryService extends InMemoryDbService {

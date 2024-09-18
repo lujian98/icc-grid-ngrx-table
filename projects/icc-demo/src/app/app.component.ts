@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
-import { STATES } from '@icc/ui/fields/src/select-field/spec-helpers/states';
+import { STATES } from './data/states';
 import { IccIconModule } from '@icc/ui/icon';
 import {
   IccLayoutCenterComponent,

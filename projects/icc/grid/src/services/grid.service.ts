@@ -9,7 +9,7 @@ import {
   IccGridData,
   IccSortField,
 } from '../models/grid-column.model';
-import { CARSDATA3 } from '../spec-helpers/cars-large';
+import { CARSDATA3 } from '../../../../icc-demo/src/app/data/cars-large';
 import { IccFilterFactory } from './filter/filter_factory';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 

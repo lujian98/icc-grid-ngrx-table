@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
-import { State, STATES } from '@icc/ui/fields/src/select-field/spec-helpers/states';
+import { State, STATES } from '../../../data/states';
 
 @Component({
   selector: 'app-simple-select',

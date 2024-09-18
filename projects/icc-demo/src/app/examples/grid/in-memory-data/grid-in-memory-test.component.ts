@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
-import { CARSDATA3 } from '@icc/ui/grid/src/spec-helpers/cars-large';
+import { CARSDATA3 } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-in-memory-test',
