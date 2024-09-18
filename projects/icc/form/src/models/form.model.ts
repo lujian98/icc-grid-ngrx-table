@@ -3,7 +3,7 @@ export interface IccFormConfig {
   urlKey: string; // Only for remote config
   remoteFormConfig: boolean;
   remoteFieldsConfig: boolean;
-  remoteValues: boolean;
+  remoteFormData: boolean;
   readonly: boolean;
 }
 

@@ -13,7 +13,7 @@ export class IccFormFacade {
     this.store.dispatch(formActions.initFormConfig({ formConfig }));
 
     if (formConfig.remoteFormConfig) {
-      //this.store.dispatch(formActions.loadformConfig({ formConfig }));
+      this.store.dispatch(formActions.loadRemoteFormConfig({ formConfig }));
     } else if (formConfig.remoteFieldsConfig) {
       this.store.dispatch(formActions.loadFormFieldsConfig({ formConfig }));
     }

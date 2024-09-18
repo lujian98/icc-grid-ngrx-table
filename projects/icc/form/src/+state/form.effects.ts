@@ -14,6 +14,25 @@ export class IccFormEffects {
   private formFacade = inject(IccFormFacade);
   private formService = inject(IccFormService);
 
+  loadRemoteFormConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(formActions.loadRemoteFormConfig),
+      concatMap(({ formConfig }) => {
+        return this.formService.getRemoteFormConfig(formConfig).pipe(
+          map((formConfig) => {
+            //console.log('111 formConfig=', formConfig)
+            if (formConfig.remoteFieldsConfig) {
+              this.store.dispatch(formActions.loadRemoteFormConfigSuccess({ formConfig }));
+              return formActions.loadFormFieldsConfig({ formConfig });
+            } else {
+              return formActions.loadRemoteFormConfigSuccess({ formConfig });
+            }
+          }),
+        );
+      }),
+    ),
+  );
+
   loadFormFieldsConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.loadFormFieldsConfig),
@@ -21,9 +40,10 @@ export class IccFormEffects {
         const formConfig = action.formConfig;
         return this.formService.getFormFieldsConfig(formConfig).pipe(
           map((formFields) => {
-            if (formConfig.remoteValues) {
+            if (formConfig.remoteFormData) {
               this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
               const formId = formConfig.formId;
+              console.log(' load kkkkkkkkkkkkk formId=', formId);
               return formActions.getFormData({ formId });
             } else {
               return formActions.loadFormFieldsConfigSuccess({ formConfig, formFields });
@@ -37,14 +57,16 @@ export class IccFormEffects {
   getFormData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.getFormData),
-      debounceTime(10),
+      //debounceTime(10),
       concatLatestFrom((action) => {
+        console.log(' mmmmmmmmmmmmm call service=', action);
         return [this.formFacade.selectFormConfig(action.formId)];
       }),
-      switchMap(([_, formConfig]) => {
+      mergeMap(([_, formConfig]) => {
+        console.log(' ssssssssssssss call service=', formConfig);
         return this.formService.getFormData(formConfig).pipe(
           map(({ formConfig, formData }) => {
-            //console.log(' remoteGridData loaded =', formData);
+            console.log(' llllll remoteGridData loaded =', formData);
             return formActions.getFormDataSuccess({ formConfig, formData });
           }),
         );

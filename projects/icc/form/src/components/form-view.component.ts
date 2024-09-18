@@ -44,6 +44,8 @@ export class IccFormViewComponent {
 
   @Input()
   set values(values: any) {
+    console.log(' zzzz set vallues=', values);
+    console.log(' zzzz set formConfig=', this.formConfig);
     this.form.patchValue({ ...values });
   }
 

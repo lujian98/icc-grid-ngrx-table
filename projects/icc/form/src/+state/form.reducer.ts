@@ -20,7 +20,18 @@ export const iccFormFeature = createFeature({
       console.log(' init form state =', newState);
       return { ...newState };
     }),
-
+    on(formActions.loadRemoteFormConfigSuccess, (state, action) => {
+      const key = action.formConfig.formId;
+      const newState: FormState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          formConfig: { ...state[key].formConfig, ...action.formConfig },
+        };
+      }
+      //console.log('xxxxxxxxxxxxxx load remote formData = ', newState[key]);
+      return { ...newState };
+    }),
     on(formActions.loadFormFieldsConfigSuccess, (state, action) => {
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
@@ -33,22 +44,19 @@ export const iccFormFeature = createFeature({
       console.log(' FormFieldsConfig sucess=', newState);
       return { ...newState };
     }),
-
     on(formActions.getFormDataSuccess, (state, action) => {
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
-        const formConfig = { ...state[key].formConfig, ...action.formConfig };
         newState[key] = {
           ...state[key],
-          formConfig,
+          formConfig: { ...state[key].formConfig, ...action.formConfig },
           formData: { ...action.formData },
         };
       }
       console.log('load remote formData = ', newState[key]);
       return { ...newState };
     }),
-
     on(formActions.removeFormDataStore, (state, action) => {
       const key = action.formId;
       const newState: FormState = { ...state };

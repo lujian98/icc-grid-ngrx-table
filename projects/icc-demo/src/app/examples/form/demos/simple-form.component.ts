@@ -24,7 +24,13 @@ export class AppSimpleFromDemoComponent {
     ...defaultFormConfig,
     urlKey: 'DCR',
     remoteFieldsConfig: true,
-    remoteValues: true,
+    remoteFormData: true,
+  };
+
+  allRemotes = {
+    ...defaultFormConfig,
+    urlKey: 'DCR',
+    remoteFormConfig: true,
   };
 
   formFields = [

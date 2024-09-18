@@ -5,7 +5,7 @@ export const defaultFormConfig: IccFormConfig = {
   urlKey: 'formfields', // Only for remote config
   remoteFormConfig: false,
   remoteFieldsConfig: false,
-  remoteValues: false,
+  remoteFormData: false,
   readonly: false,
 };
 
