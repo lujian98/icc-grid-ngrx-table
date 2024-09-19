@@ -116,10 +116,27 @@ export class AppComponent {
         { name: 'Line Chart', link: 'd3/line-chart' },
         { name: 'Line Chart Remote', link: 'd3/line-chart-remote' },
         { name: 'Multi Series Chart', link: 'd3/multi-series-chart' },
+        { name: 'Area Chart', link: 'd3/area-chart' },
+        { name: 'Stacked Area Chart', link: 'd3/stacked-area-chart' },
+        { name: 'Stream Area Chart', link: 'd3/stream-area-chart' },
+
+        { name: 'Bar Chart', link: 'd3/bar-chart' },
+        { name: 'Historical Bar Chart', link: 'd3/historical-bar-chart' },
+        { name: 'Grouped Bar Chart', link: 'd3/grouped-bar-chart' },
+        { name: 'Stacked Bar Chart', link: 'd3/stacked-bar-chart' },
+        { name: 'Linear Stacked Bar Chart', link: 'd3/linear-stacked-bar-chart' },
       ],
     },
   ];
-  //     <li><a routerLink="multi-series-chart">Multi Series Chart</a></li>
+  /*
+    <li><a routerLink="bar-chart">Bar Chart</a></li>
+    <li><a routerLink="historical-bar-chart">Historical Bar Chart</a></li>
+
+    <li><a routerLink="grouped-bar-chart">Grouped Bar Chart</a></li>
+    <li><a routerLink="stacked-bar-chart">Stacked Bar Chart</a></li>
+    <li><a routerLink="linear-stacked-bar-chart">Linear Stacked Bar Chart</a></li>
+
+    */
 
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
