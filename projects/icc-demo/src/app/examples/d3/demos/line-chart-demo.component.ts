@@ -32,7 +32,9 @@ export class AppLineChartDemoComponent implements OnInit {
 
   d3Config = {
     ...defaultD3Config,
-    options: { ...this.options },
+    remoteD3Config: true,
+    remoteChartConfigs: true,
+    remoteD3Data: true,
   };
 
   chartConfigs1: IccD3ChartConfig[] = [
