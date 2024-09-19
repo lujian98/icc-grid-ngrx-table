@@ -12,7 +12,7 @@ export class IccD3Service {
   private backendService = inject(IccBackendService);
 
   getRemoteD3Config(d3Config: IccD3Config): Observable<IccD3Config> {
-    const params = this.backendService.getParams(d3Config.urlKey, 'd3Config');
+    const params = this.backendService.getParams(d3Config.urlKey, 'd3Config', d3Config.chartName);
     const url = this.backendService.apiUrl;
     return this.http.get<any>(url, { params }).pipe(
       map((res) => {
@@ -25,7 +25,7 @@ export class IccD3Service {
   }
 
   getD3ChartConfigs(d3Config: IccD3Config): Observable<IccD3ChartConfig[]> {
-    const params = this.backendService.getParams(d3Config.urlKey, 'd3ChartConfigs');
+    const params = this.backendService.getParams(d3Config.urlKey, 'd3ChartConfigs', d3Config.chartName);
     const url = this.backendService.apiUrl;
     return this.http.get<IccD3ChartConfig[]>(url, { params }).pipe(
       map((res) => {
@@ -35,7 +35,7 @@ export class IccD3Service {
   }
 
   getD3Data(d3Config: IccD3Config): Observable<any[]> {
-    const params = this.backendService.getParams(d3Config.urlKey, 'd3Data');
+    const params = this.backendService.getParams(d3Config.urlKey, 'd3Data', d3Config.chartName);
     const url = this.backendService.apiUrl;
     return this.http.get<any[]>(url, { params }).pipe(
       map((res) => {

@@ -44,9 +44,9 @@ export class InMemoryService extends InMemoryDbService {
     DCR_formConfig: any;
     DCR_formFields: any[];
     DCR_formData: any;
-    DCR_d3Config: any;
-    DCR_d3ChartConfigs: any[];
-    DCR_d3Data: any[];
+    DCR_d3ConfigP3: any;
+    DCR_d3ChartConfigsP3: any[];
+    DCR_d3DataP3: any[];
   } {
     return {
       DCR: CARSDATA,
@@ -75,9 +75,9 @@ export class InMemoryService extends InMemoryDbService {
       DCR_formConfig: DCRFormConfig,
       DCR_formFields: DCRFormFields,
       DCR_formData: DCRFormData,
-      DCR_d3Config: RemoteD3Config,
-      DCR_d3ChartConfigs: RemoteChartConfigs,
-      DCR_d3Data: RemoteD3Data,
+      DCR_d3ConfigP3: RemoteD3Config,
+      DCR_d3ChartConfigsP3: RemoteChartConfigs,
+      DCR_d3DataP3: RemoteD3Data,
     };
   }
 
