@@ -22,6 +22,9 @@ export class IccD3Facade {
 
   setD3ChartConfigs(d3Config: IccD3Config, chartConfigs: IccD3ChartConfig[]): void {
     this.store.dispatch(d3Actions.loadD3ChartConfigsSuccess({ d3Config, chartConfigs }));
+    if (d3Config.remoteD3Data) {
+      this.store.dispatch(d3Actions.getD3Data({ d3Config }));
+    }
   }
 
   setD3Data(d3Config: IccD3Config, data: any): void {

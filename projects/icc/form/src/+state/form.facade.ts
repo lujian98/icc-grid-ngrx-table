@@ -21,6 +21,9 @@ export class IccFormFacade {
 
   setFormFieldsConfig(formConfig: IccFormConfig, formFields: any[]): void {
     this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
+    if (formConfig.remoteFormData) {
+      this.store.dispatch(formActions.getFormData({ formConfig }));
+    }
   }
 
   setFormData(formConfig: IccFormConfig, formData: any): void {
