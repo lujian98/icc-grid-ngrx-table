@@ -63,7 +63,6 @@ export class IccD3Component<T> implements OnDestroy {
       this.initChartConfigs({ ...defaultD3Config });
     }
     if (!this.d3Config.remoteChartConfigs && this.chartConfigs.length > 0) {
-      console.log(' mmmm dddddddddddd ');
       this.d3Facade.setD3ChartConfigs(this.d3Config, [...this.chartConfigs]);
     }
   }
