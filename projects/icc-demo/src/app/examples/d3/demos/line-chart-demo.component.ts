@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-//import * as d3Format from 'd3-format';
 import { CommonModule } from '@angular/common';
 import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from '@icc/ui/d3';
 
@@ -21,7 +20,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from 
   imports: [CommonModule, IccD3Component],
 })
 export class AppLineChartDemoComponent implements OnInit {
-  // <icc-d3 [d3Config]="d3Config"></icc-d3>
   data: any;
   options: IccD3Options = {
     margin: { top: 50, right: 80, bottom: 10, left: 10 },
@@ -39,15 +37,6 @@ export class AppLineChartDemoComponent implements OnInit {
   d3Config2 = {
     ...defaultD3Config,
     options: this.options2,
-  };
-
-  d3Config = {
-    ...defaultD3Config,
-    urlKey: 'DCR',
-    chartName: 'P3',
-    remoteD3Config: true,
-    remoteChartConfigs: true,
-    remoteD3Data: true,
   };
 
   chartConfigs1: IccD3ChartConfig[] = [
@@ -172,7 +161,6 @@ export class AppLineChartDemoComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.getData();
-    // console.log(' n data =', this.data);
   }
 
   private getData(): any[] {

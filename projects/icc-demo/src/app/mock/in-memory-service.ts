@@ -14,7 +14,17 @@ import {
   MultiAutocompleteListConfig,
 } from '../data/select-field-helpers';
 import { DCRFormConfig, DCRFormFields, DCRFormData } from '../data/form-helper';
-import { RemoteD3Config, RemoteChartConfigs, RemoteD3Data } from '../data/d3-helper';
+import {
+  RemoteD3ConfigP1,
+  RemoteChartConfigsP1,
+  RemoteD3ConfigP2,
+  RemoteChartConfigsP2,
+  RemoteD3ConfigP3,
+  RemoteChartConfigsP3,
+  RemoteD3ConfigP4,
+  RemoteChartConfigsP4,
+  RemoteD3Data,
+} from '../data/d3-helper';
 
 export class InMemoryService extends InMemoryDbService {
   createDb(): {
@@ -44,9 +54,19 @@ export class InMemoryService extends InMemoryDbService {
     DCR_formConfig: any;
     DCR_formFields: any[];
     DCR_formData: any;
+
+    DCR_d3ConfigP1: any;
+    DCR_d3ChartConfigsP1: any[];
+    DCR_d3DataP1: any[];
+    DCR_d3ConfigP2: any;
+    DCR_d3ChartConfigsP2: any[];
+    DCR_d3DataP2: any[];
     DCR_d3ConfigP3: any;
     DCR_d3ChartConfigsP3: any[];
     DCR_d3DataP3: any[];
+    DCR_d3ConfigP4: any;
+    DCR_d3ChartConfigsP4: any[];
+    DCR_d3DataP4: any[];
   } {
     return {
       DCR: CARSDATA,
@@ -75,9 +95,19 @@ export class InMemoryService extends InMemoryDbService {
       DCR_formConfig: DCRFormConfig,
       DCR_formFields: DCRFormFields,
       DCR_formData: DCRFormData,
-      DCR_d3ConfigP3: RemoteD3Config,
-      DCR_d3ChartConfigsP3: RemoteChartConfigs,
-      DCR_d3DataP3: RemoteD3Data,
+
+      DCR_d3ConfigP1: RemoteD3ConfigP1,
+      DCR_d3ChartConfigsP1: RemoteChartConfigsP1,
+      DCR_d3DataP1: [...RemoteD3Data],
+      DCR_d3ConfigP2: RemoteD3ConfigP2,
+      DCR_d3ChartConfigsP2: RemoteChartConfigsP2,
+      DCR_d3DataP2: [...RemoteD3Data],
+      DCR_d3ConfigP3: RemoteD3ConfigP3,
+      DCR_d3ChartConfigsP3: RemoteChartConfigsP3,
+      DCR_d3DataP3: [...RemoteD3Data],
+      DCR_d3ConfigP4: RemoteD3ConfigP4,
+      DCR_d3ChartConfigsP4: RemoteChartConfigsP4,
+      DCR_d3DataP4: [...RemoteD3Data],
     };
   }
 

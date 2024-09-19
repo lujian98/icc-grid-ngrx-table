@@ -1,15 +1,90 @@
 import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from '@icc/ui/d3';
 
-const options: IccD3Options = {
+const options1: IccD3Options = {
   margin: { top: 50, right: 80, bottom: 10, left: 10 },
 };
-
-export const RemoteD3Config = {
-  // only partial do not use default
-  options: { ...options },
+export const RemoteD3ConfigP1 = {
+  options: options1,
 };
 
-export const RemoteChartConfigs: IccD3ChartConfig[] = [
+const options2: IccD3Options = {
+  margin: { left: 80 },
+};
+export const RemoteD3ConfigP2 = {
+  options: options2,
+};
+
+export const RemoteD3ConfigP3 = {
+  options: undefined,
+};
+
+export const RemoteD3ConfigP4 = {
+  options: undefined,
+};
+
+export const RemoteChartConfigsP1: IccD3ChartConfig[] = [
+  {
+    chartType: 'lineChart',
+    xScaleType: 'linear',
+    useInteractiveGuideline: true,
+    x0: (d: any) => d.key,
+    y0: (d: any) => d.values,
+    drawColor: (d: any, i: number) => d.key,
+    xAxis: {
+      position: 'top',
+      axisLabelDistance: -30,
+      axisLabel: 'Time (ms)',
+      // rotate: -90
+    },
+    yAxis: {
+      position: 'right',
+      axisLabelDistance: 50,
+      axisLabel: 'Voltage (v)',
+      rotate: -90,
+    },
+    zoom: {
+      enabled: true,
+      horizontalOff: false,
+      horizontalBrushShow: false,
+      verticalOff: false,
+      verticalBrushShow: false,
+    },
+  },
+  {
+    chartType: 'areaChart',
+  },
+];
+
+export const RemoteChartConfigsP2: IccD3ChartConfig[] = [
+  {
+    chartType: 'lineChart',
+    xScaleType: 'linear',
+    x0: (d: any) => d.key,
+    y0: (d: any) => d.values,
+    drawColor: (d: any, i: number) => d.key,
+
+    xAxis: {
+      axisLabel: 'Time (ms)',
+      textAnchor: 'start',
+    },
+    yAxis: {
+      axisLabel: 'Voltage (v)',
+      textAnchor: 'start',
+    },
+    zoom: {
+      enabled: true,
+      horizontalOff: false,
+      horizontalBrushShow: true,
+      verticalOff: true,
+      verticalBrushShow: false,
+    },
+  },
+  {
+    chartType: 'areaChart',
+  },
+];
+
+export const RemoteChartConfigsP3: IccD3ChartConfig[] = [
   {
     chartType: 'lineChart',
     xScaleType: 'linear',
@@ -31,6 +106,33 @@ export const RemoteChartConfigs: IccD3ChartConfig[] = [
       enabled: true,
       horizontalOff: true,
       horizontalBrushShow: false,
+      verticalOff: false,
+      verticalBrushShow: true,
+    },
+  },
+  {
+    chartType: 'areaChart',
+  },
+];
+
+export const RemoteChartConfigsP4: IccD3ChartConfig[] = [
+  {
+    chartType: 'lineChart',
+    xScaleType: 'linear',
+    useInteractiveGuideline: true,
+    x0: (d: any) => d.key,
+    y0: (d: any) => d.values,
+    drawColor: (d: any, i: number) => d.key,
+    xAxis: {
+      axisLabel: 'Time (ms)',
+    },
+    yAxis: {
+      axisLabel: 'Voltage (v)',
+    },
+    zoom: {
+      enabled: true,
+      horizontalOff: false,
+      horizontalBrushShow: true,
       verticalOff: false,
       verticalBrushShow: true,
     },

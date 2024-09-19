@@ -112,7 +112,10 @@ export class AppComponent {
     },
     {
       name: 'D3 Demos',
-      items: [{ name: 'Line Chart', link: 'd3/line-chart' }],
+      items: [
+        { name: 'Line Chart', link: 'd3/line-chart' },
+        { name: 'Line Chart Remote', link: 'd3/line-chart-remote' },
+      ],
     },
   ];
 
