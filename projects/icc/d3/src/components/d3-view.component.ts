@@ -61,6 +61,9 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   @Input()
   set d3Config(value: IccD3Config) {
     this._d3Config = { ...value };
+    if (value.options) {
+      this.options = { ...value.options };
+    }
   }
   get d3Config(): IccD3Config {
     return this._d3Config;
@@ -83,9 +86,8 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     return this._data;
   }
 
-  @Input() options!: IccD3Options; // TODO use as input in the future
-  @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
-  //@Input() data!: T[];
+  private options!: IccD3Options; // get form d3Config
+  @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[]; // TODO remove not used
 
   trigger = IccTrigger.NOOP;
   positopn = IccPosition.BOTTOMRIGHT;

@@ -19,7 +19,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from 
     </div>
   `,*/
   templateUrl: './line-chart-demo.component.html',
-  // styleUrls: ['./line-chart-demo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccD3Component],
@@ -28,6 +27,20 @@ export class AppLineChartDemoComponent implements OnInit {
   data: any;
   options: IccD3Options = {
     margin: { top: 50, right: 80, bottom: 10, left: 10 },
+  };
+
+  d3Config1 = {
+    ...defaultD3Config,
+    options: this.options,
+  };
+
+  options2: IccD3Options = {
+    margin: { left: 80 },
+  };
+
+  d3Config2 = {
+    ...defaultD3Config,
+    options: this.options2,
   };
 
   d3Config = {
@@ -72,9 +85,6 @@ export class AppLineChartDemoComponent implements OnInit {
     },
   ];
 
-  options2: IccD3Options = {
-    margin: { left: 80 },
-  };
   chartConfigs2: IccD3ChartConfig[] = [
     {
       chartType: 'lineChart',

@@ -1,7 +1,7 @@
 <ng-container *ngIf="d3Config$ | async as d3Config">
   <ng-container *ngIf="chartConfigs$ | async as chartConfigs">
     <ng-container *ngIf="data$ | async as data">
-      <icc-d3-view [chartConfigs]="chartConfigs" [data]="data"></icc-d3-view>
+      <icc-d3-view [d3Config]="d3Config" [chartConfigs]="chartConfigs" [data]="data"></icc-d3-view>
     </ng-container>
   </ng-container>
 </ng-container>

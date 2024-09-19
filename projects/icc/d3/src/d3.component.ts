@@ -56,10 +56,6 @@ export class IccD3Component<T> implements OnDestroy {
     this.d3Facade.initD3Config(this.d3Config);
   }
 
-  options: IccD3Options = {
-    margin: { top: 50, right: 80, bottom: 10, left: 10 },
-  };
-
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
     this._chartConfigs = val;
