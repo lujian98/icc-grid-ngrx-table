@@ -31,26 +31,21 @@ export class IccD3Component<T> implements OnDestroy {
   private d3Facade = inject(IccD3Facade);
   private _d3Config: IccD3Config = defaultD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
+  private _data!: any[];
   private d3Id = uniqueId(16);
   d3Config$!: Observable<IccD3Config>;
   chartConfigs$!: Observable<IccD3ChartConfig[] | undefined>;
-  /*
-  private _gridData!: IccGridData<T>;
-  private gridId = uniqueId(16);
-  gridConfig$!: Observable<IccGridConfig>;
-  columnsConfig$!: Observable<IccColumnConfig[]>;
-  */
+  data$!: Observable<T[]>;
 
   @Input()
   set d3Config(value: IccD3Config) {
-    //console.log('0000000000gridId', this.gridId);
     this._d3Config = {
       ...value,
       d3Id: this.d3Id,
     };
-
     this.d3Config$ = this.d3Facade.selectD3Config(this.d3Id);
     this.chartConfigs$ = this.d3Facade.selectD3ChartConfigs(this.d3Id);
+    this.data$ = this.d3Facade.selectD3Data(this.d3Id);
     this.d3Facade.initD3Config(this.d3Config);
   }
   get d3Config(): IccD3Config {
@@ -61,7 +56,6 @@ export class IccD3Component<T> implements OnDestroy {
   set chartConfigs(val: IccD3ChartConfig[]) {
     this._chartConfigs = val;
     if (!this.d3Config.remoteChartConfigs && this.chartConfigs.length > 0) {
-      console.log(' 22222chartConfigs=', val);
       this.d3Facade.setD3ChartConfigs(this.d3Config, [...this.chartConfigs]);
     }
   }
@@ -69,19 +63,16 @@ export class IccD3Component<T> implements OnDestroy {
     return this._chartConfigs;
   }
 
-  @Input() data!: T[];
-  /*
   @Input()
-  set gridData(val: IccGridData<T>) {
-    this._gridData = val;
-    if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridId, this.gridData);
+  set data(val: T[]) {
+    this._data = val;
+    if (!this.d3Config.remoteD3Data && this.data) {
+      //this.d3Facade.setD3Data(this.d3Config, this.data);
     }
   }
-  get gridData(): IccGridData<T> {
-    return this._gridData;
+  get data(): T[] {
+    return this._data;
   }
-*/
 
   ngOnDestroy(): void {
     //this.gridFacade.clearGridDataStore(this.gridId);

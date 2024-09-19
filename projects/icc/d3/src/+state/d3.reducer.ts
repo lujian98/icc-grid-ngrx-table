@@ -55,7 +55,7 @@ export const iccD3Feature = createFeature({
           data: { ...action.data },
         };
       }
-      //console.log('load remote d3Data = ', newState[key]);
+      //console.log('uuuuuu load remote d3Data = ', newState[key]);
       return { ...newState };
     }),
     on(d3Actions.removeD3DataStore, (state, action) => {
