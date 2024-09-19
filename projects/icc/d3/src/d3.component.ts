@@ -17,6 +17,7 @@ import {
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './models';
 import { IccD3ViewComponent } from './components/d3-view.component';
+import { IccD3Config, defaultD3Config } from './models/d3.model';
 
 @Component({
   selector: 'icc-d3',
@@ -28,9 +29,11 @@ import { IccD3ViewComponent } from './components/d3-view.component';
 })
 export class IccD3Component<T> implements OnDestroy {
   private d3Facade = inject(IccD3Facade);
-  private _d3Config: any; // IccGridConfig = defaultD3Config;
+  private _d3Config: IccD3Config = defaultD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private d3Id = uniqueId(16);
+  d3Config$!: Observable<IccD3Config>;
+  chartConfigs$!: Observable<IccD3ChartConfig[] | undefined>;
   /*
   private _gridData!: IccGridData<T>;
   private gridId = uniqueId(16);
@@ -39,18 +42,18 @@ export class IccD3Component<T> implements OnDestroy {
   */
 
   @Input()
-  set d3Config(value: any) {
+  set d3Config(value: IccD3Config) {
     //console.log('0000000000gridId', this.gridId);
     this._d3Config = {
       ...value,
       d3Id: this.d3Id,
     };
 
-    //this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
-    //this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
-    //this.gridFacade.initGridConfig(this.gridConfig);
+    this.d3Config$ = this.d3Facade.selectD3Config(this.d3Id);
+    this.chartConfigs$ = this.d3Facade.selectD3ChartConfigs(this.d3Id);
+    this.d3Facade.initD3Config(this.d3Config);
   }
-  get d3Config(): IccD3ChartConfig {
+  get d3Config(): IccD3Config {
     return this._d3Config;
   }
 

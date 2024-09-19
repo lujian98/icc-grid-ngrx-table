@@ -41,6 +41,7 @@ import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccTrigger, IccPosition } from '@icc/ui/overlay';
+import { IccD3Config } from '../models/d3.model';
 
 @Component({
   selector: 'icc-d3-view',
@@ -53,8 +54,28 @@ import { IccTrigger, IccPosition } from '@icc/ui/overlay';
   providers: [IccDrawServie],
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  private _d3Config!: IccD3Config;
+  private _chartConfigs: IccD3ChartConfig[] = [];
+
+  @Input()
+  set d3Config(value: IccD3Config) {
+    this._d3Config = { ...value };
+  }
+  get d3Config(): IccD3Config {
+    return this._d3Config;
+  }
+
+  @Input()
+  set chartConfigs(val: IccD3ChartConfig[]) {
+    console.log(' 55555 view chartConfigs=', val);
+    this._chartConfigs = val;
+  }
+  get chartConfigs(): IccD3ChartConfig[] {
+    return this._chartConfigs;
+  }
+
   @Input() options!: IccD3Options; // TODO use as input in the future
-  @Input() chartConfigs: IccD3ChartConfig[] = [];
+  //@Input() chartConfigs: IccD3ChartConfig[] = [];
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
 

@@ -16,7 +16,7 @@ export const iccD3Feature = createFeature({
         ...defaultD3State,
         d3Config,
       };
-      //console.log(' init d3 state =', newState);
+      console.log(' init d3 state =', newState);
       return { ...newState };
     }),
     on(d3Actions.loadRemoteD3ConfigSuccess, (state, action) => {

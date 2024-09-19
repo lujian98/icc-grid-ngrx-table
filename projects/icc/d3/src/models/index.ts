@@ -1,3 +1,4 @@
+export * from './d3.model';
 export * from './axis.model';
 export * from './bullet.model';
 export * from './gauge.model';

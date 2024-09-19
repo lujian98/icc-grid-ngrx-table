@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 //import * as d3Format from 'd3-format';
 import { CommonModule } from '@angular/common';
-import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
+import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from '@icc/ui/d3';
 
 @Component({
   selector: 'app-line-chart-demo',
@@ -28,6 +28,11 @@ export class AppLineChartDemoComponent implements OnInit {
   data: any;
   options: IccD3Options = {
     margin: { top: 50, right: 80, bottom: 10, left: 10 },
+  };
+
+  d3Config = {
+    ...defaultD3Config,
+    options: { ...this.options },
   };
 
   chartConfigs1: IccD3ChartConfig[] = [

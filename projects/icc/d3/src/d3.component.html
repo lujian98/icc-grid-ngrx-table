@@ -1,5 +1,6 @@
-<icc-d3-view [chartConfigs]="chartConfigs" [data]="data"></icc-d3-view>
-
+<ng-container *ngIf="d3Config$ | async as d3Config">
+  <icc-d3-view [chartConfigs]="chartConfigs" [data]="data"></icc-d3-view>
+</ng-container>
 <!--
 
 <ng-container *ngIf="gridConfig$ | async as gridConfig">
