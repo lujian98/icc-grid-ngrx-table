@@ -40,10 +40,12 @@ export class IccbulletChart<T> extends IccAbstractDraw<T> {
 
   private getMeasuredRange(data: IccD3Range[], optionX: Function, minv: number): IccD3Range[] {
     data = IccUtils.dataSortByField(data, optionX, 'asc');
-    data.forEach((d, i) => {
-      d.minv = i === 0 ? minv : optionX(data[i - 1]);
+    const ndata = data.map((d, i) => {
+      const p = { ...d };
+      p.minv = i === 0 ? minv : optionX(data[i - 1]);
+      return p;
     });
-    return data;
+    return ndata;
   }
 
   drawContents(drawName: string, scaleX: IccScaleLinear, scaleY: IccScaleLinear): void {

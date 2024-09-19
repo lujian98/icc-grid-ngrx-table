@@ -6,10 +6,11 @@ import * as d3TimeFormat from 'd3-time-format';
 
 @Component({
   selector: 'd3-bullet-chart-demo',
+  styles: [':host {width: 100%;  display: flex; flex-direction: column;}'],
   template: `
-    <icc-d3 [d3Config]="d3Config" [chartConfigs]="chartConfigs" [data]="data" style="height: 60px"></icc-d3>
-    <icc-d3 [d3Config]="d3Config2" [chartConfigs]="chartConfigs2" [data]="data2" style="height: 60px"></icc-d3>
-    <icc-d3 [d3Config]="d3Config3" [chartConfigs]="chartConfigs3" [data]="data3" style="height: 90px"></icc-d3>
+    <icc-d3 [d3Config]="d3Config" [chartConfigs]="chartConfigs" [data]="data" style="height: 200px"></icc-d3>
+    <icc-d3 [d3Config]="d3Config2" [chartConfigs]="chartConfigs2" [data]="data2" style="height: 260px"></icc-d3>
+    <icc-d3 [d3Config]="d3Config3" [chartConfigs]="chartConfigs3" [data]="data3" style="height: 200px"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,

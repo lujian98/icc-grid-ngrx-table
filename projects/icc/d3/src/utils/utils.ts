@@ -5,7 +5,8 @@ export class IccUtils {
 
   static dataSortByField<T>(data: T[], field: string | Function, direction: string): T[] {
     const order = direction === 'asc' ? 1 : -1;
-    data.sort((d1, d2) => {
+    const forSort = [...data];
+    forSort.sort((d1, d2) => {
       // @ts-ignore
       const v1 = typeof field !== 'function' ? d1[field] : field(d1);
       // @ts-ignore
@@ -24,6 +25,6 @@ export class IccUtils {
       }
       return order * res;
     });
-    return data;
+    return forSort;
   }
 }
