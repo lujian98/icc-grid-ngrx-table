@@ -29,7 +29,7 @@ import { IccD3Config, defaultD3Config } from './models/d3.model';
 })
 export class IccD3Component<T> implements OnDestroy {
   private d3Facade = inject(IccD3Facade);
-  private _d3Config: IccD3Config = defaultD3Config;
+  private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private _data!: any[];
   private d3Id = uniqueId(16);
@@ -39,6 +39,13 @@ export class IccD3Component<T> implements OnDestroy {
 
   @Input()
   set d3Config(value: IccD3Config) {
+    this.initChartConfigs({ ...value });
+  }
+  get d3Config(): IccD3Config {
+    return this._d3Config;
+  }
+
+  private initChartConfigs(value: IccD3Config): void {
     this._d3Config = {
       ...value,
       d3Id: this.d3Id,
@@ -48,13 +55,17 @@ export class IccD3Component<T> implements OnDestroy {
     this.data$ = this.d3Facade.selectD3Data(this.d3Id);
     this.d3Facade.initD3Config(this.d3Config);
   }
-  get d3Config(): IccD3Config {
-    return this._d3Config;
-  }
+
+  options: IccD3Options = {
+    margin: { top: 50, right: 80, bottom: 10, left: 10 },
+  };
 
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
     this._chartConfigs = val;
+    if (!this.d3Config) {
+      this.initChartConfigs({ ...defaultD3Config });
+    }
     if (!this.d3Config.remoteChartConfigs && this.chartConfigs.length > 0) {
       this.d3Facade.setD3ChartConfigs(this.d3Config, [...this.chartConfigs]);
     }
@@ -75,6 +86,6 @@ export class IccD3Component<T> implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.gridFacade.clearGridDataStore(this.gridId);
+    this.d3Facade.clearD3DataStore(this.d3Id);
   }
 }

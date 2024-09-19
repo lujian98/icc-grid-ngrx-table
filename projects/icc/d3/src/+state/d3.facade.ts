@@ -28,7 +28,7 @@ export class IccD3Facade {
     this.store.dispatch(d3Actions.getD3DataSuccess({ d3Config, data }));
   }
 
-  cleard3DataStore(d3Id: string): void {
+  clearD3DataStore(d3Id: string): void {
     this.store.dispatch(d3Actions.clearD3DataStore({ d3Id }));
   }
 
