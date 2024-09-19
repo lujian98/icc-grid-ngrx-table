@@ -6,24 +6,22 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from 
 @Component({
   selector: 'app-line-chart-demo',
   styles: [':host {width: 100%; height: 100%; display: flex; flex-direction: column;}'],
-
-  /*
   template: `
     <div style="height: 100%; display: flex;">
-      <icc-d3 [options]="options" [chartConfigs]="chartConfigs1" [dataSource]="data"></icc-d3>
-      <icc-d3 [options]="options2" [chartConfigs]="chartConfigs2" [dataSource]="data"></icc-d3>
+      <icc-d3 [d3Config]="d3Config1" [chartConfigs]="chartConfigs1" [data]="data"></icc-d3>
+      <icc-d3 [d3Config]="d3Config2" [chartConfigs]="chartConfigs2" [data]="data"></icc-d3>
     </div>
     <div style="height: 100%; display: flex; margin-top: 20px;">
-      <icc-d3 [chartConfigs]="chartConfigs3" [dataSource]="data"></icc-d3>
-      <icc-d3 [chartConfigs]="chartConfigs4" [dataSource]="data"></icc-d3>
+      <icc-d3 [chartConfigs]="chartConfigs3" [data]="data"></icc-d3>
+      <icc-d3 [chartConfigs]="chartConfigs4" [data]="data"></icc-d3>
     </div>
-  `,*/
-  templateUrl: './line-chart-demo.component.html',
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppLineChartDemoComponent implements OnInit {
+  // <icc-d3 [d3Config]="d3Config"></icc-d3>
   data: any;
   options: IccD3Options = {
     margin: { top: 50, right: 80, bottom: 10, left: 10 },
