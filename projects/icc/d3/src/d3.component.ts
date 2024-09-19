@@ -67,7 +67,7 @@ export class IccD3Component<T> implements OnDestroy {
   set data(val: T[]) {
     this._data = val;
     if (!this.d3Config.remoteD3Data && this.data) {
-      //this.d3Facade.setD3Data(this.d3Config, this.data);
+      this.d3Facade.setD3Data(this.d3Config, this.data);
     }
   }
   get data(): T[] {

@@ -56,6 +56,7 @@ import { IccD3Config } from '../models/d3.model';
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
+  private _data!: any[];
 
   @Input()
   set d3Config(value: IccD3Config) {
@@ -67,16 +68,24 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
 
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
-    console.log(' 777777 view chartConfigs=', val);
+    //console.log(' 777777 view chartConfigs=', val);
     this._chartConfigs = [...val];
   }
   get chartConfigs(): IccD3ChartConfig[] {
     return this._chartConfigs;
   }
 
+  @Input()
+  set data(val: T[]) {
+    this._data = [...val];
+  }
+  get data(): T[] {
+    return this._data;
+  }
+
   @Input() options!: IccD3Options; // TODO use as input in the future
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
-  @Input() data!: T[];
+  //@Input() data!: T[];
 
   trigger = IccTrigger.NOOP;
   positopn = IccPosition.BOTTOMRIGHT;

@@ -26,6 +26,6 @@ export const selectD3Data = (d3Id: string) =>
     // @ts-ignore
     featureSelector,
     (state: D3State) => {
-      return state[d3Id] ? state[d3Id].data : [];
+      return state[d3Id] ? state[d3Id].data : undefined;
     },
   );

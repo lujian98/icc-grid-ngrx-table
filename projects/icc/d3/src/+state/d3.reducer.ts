@@ -16,7 +16,7 @@ export const iccD3Feature = createFeature({
         ...defaultD3State,
         d3Config,
       };
-      console.log(' init d3 state =', newState);
+      //console.log(' init d3 state =', newState);
       return { ...newState };
     }),
     on(d3Actions.loadRemoteD3ConfigSuccess, (state, action) => {
@@ -36,13 +36,12 @@ export const iccD3Feature = createFeature({
       const newState: D3State = { ...state };
       if (state[key]) {
         const chartConfigs = state[key].chartConfigs ? state[key].chartConfigs : [];
-        //console.log(' 44444444444 D3ChartConfigs sucess=', action.chartConfigs);
         newState[key] = {
           ...state[key],
           chartConfigs: [...chartConfigs, ...action.chartConfigs],
         };
       }
-      console.log(' reducer D3 ChartConfigs sucess=', newState);
+      //console.log(' reducer D3 ChartConfigs sucess=', newState);
       return { ...newState };
     }),
     on(d3Actions.getD3DataSuccess, (state, action) => {
@@ -52,7 +51,7 @@ export const iccD3Feature = createFeature({
         newState[key] = {
           ...state[key],
           d3Config: { ...state[key].d3Config, ...action.d3Config },
-          data: { ...action.data },
+          data: [...action.data],
         };
       }
       //console.log('uuuuuu load remote d3Data = ', newState[key]);

@@ -60,7 +60,8 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      debounceTime(10),
+      //debounceTime(10),
+      delay(10),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridId),
@@ -68,7 +69,7 @@ export class IccGridEffects {
           this.gridFacade.selectGridInMemoryData(action.gridId),
         ];
       }),
-      switchMap(([action, gridConfig, columns, inMemoryData]) => {
+      concatMap(([action, gridConfig, columns, inMemoryData]) => {
         const gridId = action.gridId;
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(

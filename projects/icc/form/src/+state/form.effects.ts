@@ -53,7 +53,7 @@ export class IccFormEffects {
   getFormData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.getFormData),
-      switchMap(({ formConfig }) => {
+      concatMap(({ formConfig }) => {
         return this.formService.getFormData(formConfig).pipe(
           map(({ formConfig, formData }) => {
             return formActions.getFormDataSuccess({ formConfig, formData });

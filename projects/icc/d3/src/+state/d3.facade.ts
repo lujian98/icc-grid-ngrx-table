@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccD3Config } from '../models/d3.model';
-import { IccD3ChartConfig, IccD3Options } from '../models/options.model';
+import { IccD3ChartConfig } from '../models/options.model';
 import * as d3Actions from './d3.actions';
 import { selectD3Config, selectD3ChartConfigs, selectD3Data } from './d3.selectors';
 
@@ -13,12 +13,11 @@ export class IccD3Facade {
   initD3Config(d3Config: IccD3Config): void {
     this.store.dispatch(d3Actions.initD3Config({ d3Config }));
 
-    /*
     if (d3Config.remoteD3Config) {
       this.store.dispatch(d3Actions.loadRemoteD3Config({ d3Config }));
-    } else if (d3Config.remoteFieldsConfig) {
+    } else if (d3Config.remoteChartConfigs) {
       this.store.dispatch(d3Actions.loadD3ChartConfigs({ d3Config }));
-    }*/
+    }
   }
 
   setD3ChartConfigs(d3Config: IccD3Config, chartConfigs: IccD3ChartConfig[]): void {
