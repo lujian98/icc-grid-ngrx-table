@@ -115,9 +115,11 @@ export class AppComponent {
       items: [
         { name: 'Line Chart', link: 'd3/line-chart' },
         { name: 'Line Chart Remote', link: 'd3/line-chart-remote' },
+        { name: 'Multi Series Chart', link: 'd3/multi-series-chart' },
       ],
     },
   ];
+  //     <li><a routerLink="multi-series-chart">Multi Series Chart</a></li>
 
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
