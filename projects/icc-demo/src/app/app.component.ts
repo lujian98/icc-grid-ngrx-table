@@ -130,18 +130,26 @@ export class AppComponent {
         { name: 'Grouped Horizontal Bar Chart', link: 'd3/grouped-horizontal-bar-chart' },
         { name: 'Stacked Horizontal Bar Chart', link: 'd3/stacked-horizontal-bar-chart' },
         { name: 'Stacked Normalized Horizontal Bar', link: 'd3/stacked-normalized-horizontal-bar-chart' },
-        { name: 'Stock History Bar Chart', link: 'd3/stock-history-demo' },
+        //{ name: 'Stock History Bar Chart', link: 'd3/stock-history-demo' },
 
         { name: 'Bullet Chart Demo', link: 'd3/bullet-chart-demo' },
         { name: 'Vertical Bullet Chart Demo', link: 'd3/vertical-bullet-chart-demo' },
       ],
     },
+    {
+      name: 'D3 Demos2',
+      items: [
+        { name: 'Pie Chart', link: 'd3/pie-chart-demo' },
+        { name: 'Donut Chart', link: 'd3/donut-chart-demo' },
+        { name: 'Radial Gauge Demo', link: 'd3/radial-gauge-demo' },
+        { name: 'Radial Gauge Demo2', link: 'd3/radial-gauge-demo2' },
+        { name: 'Candle Stick Bar Chart', link: 'd3/candle-stick-chart' },
+        { name: 'CPI Inflation', link: 'd3/cpi-chart' },
+        { name: 'SPY Stock', link: 'd3/stock-chart' },
+        { name: 'Stock History Bar Chart', link: 'd3/stock-history-demo' },
+      ],
+    },
   ];
-  /*
-    <li><a routerLink="bullet-chart-demo">Bullet Chart Demo</a></li>
-    <li><a routerLink="vertical-bullet-chart-demo">Vertical Bullet Chart Demo</a></li>
-
-    */
 
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
