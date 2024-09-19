@@ -125,16 +125,21 @@ export class AppComponent {
         { name: 'Grouped Bar Chart', link: 'd3/grouped-bar-chart' },
         { name: 'Stacked Bar Chart', link: 'd3/stacked-bar-chart' },
         { name: 'Linear Stacked Bar Chart', link: 'd3/linear-stacked-bar-chart' },
+
+        { name: 'Horizontal Bar Chart', link: 'd3/horizontal-bar-chart' },
+        { name: 'Grouped Horizontal Bar Chart', link: 'd3/grouped-horizontal-bar-chart' },
+        { name: 'Stacked Horizontal Bar Chart', link: 'd3/stacked-horizontal-bar-chart' },
+        { name: 'Stacked Normalized Horizontal Bar', link: 'd3/stacked-normalized-horizontal-bar-chart' },
+        { name: 'Stock History Bar Chart', link: 'd3/stock-history-demo' },
+
+        { name: 'Bullet Chart Demo', link: 'd3/bullet-chart-demo' },
+        { name: 'Vertical Bullet Chart Demo', link: 'd3/vertical-bullet-chart-demo' },
       ],
     },
   ];
   /*
-    <li><a routerLink="bar-chart">Bar Chart</a></li>
-    <li><a routerLink="historical-bar-chart">Historical Bar Chart</a></li>
-
-    <li><a routerLink="grouped-bar-chart">Grouped Bar Chart</a></li>
-    <li><a routerLink="stacked-bar-chart">Stacked Bar Chart</a></li>
-    <li><a routerLink="linear-stacked-bar-chart">Linear Stacked Bar Chart</a></li>
+    <li><a routerLink="bullet-chart-demo">Bullet Chart Demo</a></li>
+    <li><a routerLink="vertical-bullet-chart-demo">Vertical Bullet Chart Demo</a></li>
 
     */
 
