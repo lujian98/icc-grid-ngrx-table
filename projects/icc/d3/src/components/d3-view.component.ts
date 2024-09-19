@@ -67,15 +67,14 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
 
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
-    console.log(' 55555 view chartConfigs=', val);
-    this._chartConfigs = val;
+    console.log(' 777777 view chartConfigs=', val);
+    this._chartConfigs = [...val];
   }
   get chartConfigs(): IccD3ChartConfig[] {
     return this._chartConfigs;
   }
 
   @Input() options!: IccD3Options; // TODO use as input in the future
-  //@Input() chartConfigs: IccD3ChartConfig[] = [];
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[];
   @Input() data!: T[];
 
@@ -185,7 +184,8 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     if (this.chartConfigs.length === 0) {
       this.chartConfigs.push({});
     }
-    this.chartConfigs = this.chartConfigs.map((chart, index) => {
+    this.chartConfigs = [...this.chartConfigs].map((item, index) => {
+      let chart = { ...item };
       if (chart.panelId === undefined) {
         chart.panelId = '0';
       }

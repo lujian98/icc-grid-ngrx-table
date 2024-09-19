@@ -17,7 +17,7 @@ export const selectD3ChartConfigs = (d3Id: string) =>
     // @ts-ignore
     featureSelector,
     (state: D3State) => {
-      return state[d3Id] ? state[d3Id].chartConfigs : [];
+      return state[d3Id] && state[d3Id].chartConfigs.length > 0 ? state[d3Id].chartConfigs : undefined;
     },
   );
 

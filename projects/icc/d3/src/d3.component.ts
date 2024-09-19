@@ -60,9 +60,10 @@ export class IccD3Component<T> implements OnDestroy {
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
     this._chartConfigs = val;
-    //if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-    //  this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
-    //}
+    if (!this.d3Config.remoteChartConfigs && this.chartConfigs.length > 0) {
+      console.log(' 22222chartConfigs=', val);
+      this.d3Facade.setD3ChartConfigs(this.d3Config, [...this.chartConfigs]);
+    }
   }
   get chartConfigs(): IccD3ChartConfig[] {
     return this._chartConfigs;

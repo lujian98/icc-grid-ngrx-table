@@ -4,6 +4,7 @@ export interface IccD3Config {
   d3Id: string; // auto generated unique id
   urlKey: string; // Only for remote config // options!: IccD3Options
   options?: IccD3Options;
+  remoteChartConfigs: boolean;
 }
 
 export interface D3State {
@@ -20,6 +21,7 @@ export const defaultD3Config: IccD3Config = {
   d3Id: '191cf2bb6b5', // auto generated unique id
   urlKey: 'formfields', // Only for remote config
   options: undefined,
+  remoteChartConfigs: false,
 };
 
 export const defaultD3State: IccD3State = {

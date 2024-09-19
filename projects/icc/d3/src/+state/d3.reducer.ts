@@ -35,12 +35,14 @@ export const iccD3Feature = createFeature({
       const key = action.d3Config.d3Id;
       const newState: D3State = { ...state };
       if (state[key]) {
+        const chartConfigs = state[key].chartConfigs ? state[key].chartConfigs : [];
+        //console.log(' 44444444444 D3ChartConfigs sucess=', action.chartConfigs);
         newState[key] = {
           ...state[key],
-          chartConfigs: [...action.chartConfigs],
+          chartConfigs: [...chartConfigs, ...action.chartConfigs],
         };
       }
-      //console.log(' D3ChartConfigs sucess=', newState);
+      console.log(' reducer D3 ChartConfigs sucess=', newState);
       return { ...newState };
     }),
     on(d3Actions.getD3DataSuccess, (state, action) => {
