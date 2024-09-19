@@ -32,6 +32,7 @@ export class AppLineChartDemoComponent implements OnInit {
 
   d3Config = {
     ...defaultD3Config,
+    urlKey: 'DCR',
     remoteD3Config: true,
     remoteChartConfigs: true,
     remoteD3Data: true,
