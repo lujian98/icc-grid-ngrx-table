@@ -1,11 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { concatMap, delay, map, mergeMap, of } from 'rxjs';
 import { IccD3Service } from '../services/d3.service';
 import * as d3Actions from './d3.actions';
-import { IccD3Facade } from './d3.facade';
 
 @Injectable()
 export class IccD3Effects {
