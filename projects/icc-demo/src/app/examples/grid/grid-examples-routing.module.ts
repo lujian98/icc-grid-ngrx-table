@@ -21,10 +21,12 @@ import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
 import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-test.component';
 import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scroll.component';
+import { AppGridComponent } from './grid.component';
 
 const routes: Route[] = [
   {
     path: '',
+    component: AppGridComponent,
     children: [
       { path: 'app-default-grid', component: AppDefaultGridComponent },
       { path: 'remote-simple-grid', component: AppSimpleGridComponent },
@@ -74,7 +76,7 @@ const routes: Route[] = [
       { path: 'in-memory-grid-virtual-scroll', component: AppGridVirtualScrollComponent },
       {
         path: '**',
-        redirectTo: 'remote-simple-grid',
+        redirectTo: 'app-default-grid',
       },
     ],
   },

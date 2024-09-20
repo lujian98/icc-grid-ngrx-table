@@ -9,6 +9,7 @@ import { IccIconModule } from '@icc/ui/icon';
 import {
   IccLayoutCenterComponent,
   IccLayoutComponent,
+  IccLayoutMainComponent,
   IccLayoutFooterComponent,
   IccLayoutHeaderComponent,
   IccLayoutSidebarComponent,
@@ -26,6 +27,7 @@ import { IccThemeService } from '@icc/ui/theme';
     RouterModule,
     IccCheckboxComponent,
     IccLayoutComponent,
+    IccLayoutMainComponent,
     IccLayoutHeaderComponent,
     IccLayoutSidebarComponent,
     IccLayoutCenterComponent,
@@ -44,6 +46,8 @@ export class AppComponent {
     optionLabel: 'state',
     optionKey: 'abbr',
   };
+
+  gridUrl = `grid2`;
 
   multiListStates = ['Louisiana', 'Nevada'];
 

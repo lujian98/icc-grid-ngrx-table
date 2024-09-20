@@ -28,6 +28,14 @@ import { IccUtils } from '../utils/utils';
 export class IccLayoutHeaderComponent {}
 
 @Component({
+  selector: 'icc-layout-main',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
+  imports: [CommonModule],
+})
+export class IccLayoutMainComponent {}
+
+@Component({
   selector: 'icc-layout-sidebar',
   template: ` <ng-content></ng-content> `,
   standalone: true,

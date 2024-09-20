@@ -1,5 +1,13 @@
 import { Routes } from '@angular/router';
+// import(“./about/about.component”).then((m) => m.AboutComponent),
 
+/*
+loadComponent: () =>
+
+import(“./about/about.component”).then((m) => m.AboutComponent),
+
+},
+*/
 export const routes: Routes = [
   {
     path: '',
@@ -8,6 +16,11 @@ export const routes: Routes = [
         path: 'grid',
         loadChildren: () => import('./examples/grid/grid-examples.module').then((m) => m.AppGridExamplesModule),
       },
+      /*
+      {
+        path: 'grid2',
+        loadComponent: () => import('./examples/grid/grid.component').then((m) => m.AppGridComponent),
+      },*/
       {
         path: 'select',
         loadChildren: () => import('./examples/select/select-examples.module').then((m) => m.AppSelectExamplesModule),

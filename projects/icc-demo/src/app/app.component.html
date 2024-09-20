@@ -1,31 +1,14 @@
 <icc-layout>
   <icc-layout-header>
+    <button [routerLink]="[gridUrl]">Grid Test</button>
     Top Nav Bar
     <div (click)="toggleTheme()">Toggle Theme</div>
     <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
-    <!--
-    <icc-select-field [fieldConfig]="multiAllRemoteList" [value]="multiListStates"></icc-select-field>
-
-
-    <icc-select-field [fieldConfig]="fieldConfig" [value]="[states[16]]" [options]="states"></icc-select-field>
-        -->
   </icc-layout-header>
 
-  <icc-layout-sidebar>
-    <icc-accordion [items]="items"></icc-accordion>
-
-    <!--
-
-    <icc-checkbox [checked]="true" [disabled]="false" (change)="onCheckboxChange($event)">
-      <icc-icon config="exclamation-circle"></icc-icon>
-      <span> Test Checkbox </span>
-    </icc-checkbox>
-        -->
-  </icc-layout-sidebar>
-
-  <icc-layout-center>
+  <icc-layout-main>
     <router-outlet></router-outlet>
-  </icc-layout-center>
+  </icc-layout-main>
 
   <icc-layout-footer> Footer Bar </icc-layout-footer>
 </icc-layout>

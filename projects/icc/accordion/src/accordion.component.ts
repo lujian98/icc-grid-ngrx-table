@@ -14,6 +14,7 @@ import { IccAccordion } from './models/accordion.model';
 })
 export class IccAccordionComponent {
   @Input() items: IccAccordion[] = [];
+  @Input() expendIndex: number = 0;
 
   isExpaneded(index: number): boolean {
     return index === 3;

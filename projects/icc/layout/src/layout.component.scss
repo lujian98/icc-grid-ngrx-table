@@ -41,11 +41,11 @@
       border: 1px solid green;
       //color: orange;
     }
-  }
 
-  .icc-main-container {
-    display: flex;
-    height: -webkit-fill-available;
-    max-height: calc(100vh - 80px);
+    icc-layout-main {
+      display: flex;
+      height: -webkit-fill-available;
+      max-height: calc(100vh - 80px);
+    }
   }
 }
