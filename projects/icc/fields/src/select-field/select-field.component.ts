@@ -81,7 +81,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _fieldConfig: IccSelectFieldConfig = defaultSelectFieldConfig;
+  private _fieldConfig!: IccSelectFieldConfig; // = defaultSelectFieldConfig;
   private _value!: any;
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
@@ -92,26 +92,31 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   @Input() form!: FormGroup;
   @Input()
   set fieldConfig(fieldConfig: IccSelectFieldConfig) {
+    //console.log( ' 00000 fieldConfig =', fieldConfig)
     if (this.firstTimeLoad) {
-      this.firstTimeLoad = false;
-      this._fieldConfig = {
-        ...fieldConfig,
-        fieldId: this.fieldId,
-      };
-      this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
-      this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
-        map((fieldConfig) => {
-          this._fieldConfig = fieldConfig!;
-          this.initSelectField();
-          return fieldConfig;
-        }),
-      );
+      this.initFieldConfig(fieldConfig);
     } else {
       this._fieldConfig = fieldConfig;
     }
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
+  }
+
+  private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
+    this.firstTimeLoad = false;
+    this._fieldConfig = {
+      ...fieldConfig,
+      fieldId: this.fieldId,
+    };
+    this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
+    this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
+      map((fieldConfig) => {
+        this._fieldConfig = fieldConfig!;
+        this.initSelectField();
+        return fieldConfig;
+      }),
+    );
   }
 
   private initSelectField(): void {
@@ -129,8 +134,16 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
 
   @Input()
   set options(val: { [key: string]: T }[] | string[]) {
+    //console.log( ' 1111 options =', val)
     //local set option only, not used here
-    if (this.fieldConfig.singleListOption) {
+    const isStringsArray = val.every((item) => typeof item === 'string');
+    //console.log( ' isStringsArray=', isStringsArray)
+    if (!this.fieldConfig) {
+      //console.log( ' 2222 options =', val)
+      this.initFieldConfig({ ...defaultSelectFieldConfig });
+    }
+
+    if (this.fieldConfig.singleListOption || isStringsArray) {
       const options = (val as string[]).map((item: string) => {
         return {
           name: item,
@@ -145,6 +158,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
 
   @Input()
   set value(val: any) {
+    //console.log( 'eeeeeeeeeeeeee val =', val)
     if (this.form && val !== undefined) {
       this._value = this.getInitValue(val);
       this.setFormvalue();
@@ -158,6 +172,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   }
 
   private setFormvalue(): void {
+    //console.log( ' set form value =', this.value)
     this.selectedField.setValue(this.value);
   }
 
@@ -167,7 +182,8 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
     if (typeof val === 'string') {
       value = [val];
     }
-    if (this.fieldConfig.singleListOption && Array.isArray(value)) {
+    const isStringsArray = value.every((item: any) => typeof item === 'string');
+    if ((this.fieldConfig.singleListOption || isStringsArray) && Array.isArray(value)) {
       value = [...value].map((item) => {
         if (typeof item === 'string') {
           return {

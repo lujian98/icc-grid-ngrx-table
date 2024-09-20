@@ -2,6 +2,12 @@
   <div><br /></div>
 
   <div>
+    No fieldConfig - use default field config with Local field config and local object options
+    <icc-select-field [options]="listDefaultStates" [value]="defaultStateValue"></icc-select-field>
+    <icc-select-field [options]="listStates" [value]="singleListState2"></icc-select-field>
+  </div>
+  <div><br /></div>
+  <div>
     Local field config and local object options
     <icc-select-field [fieldConfig]="singleSelection" [value]="singleObjectState" [options]="states"></icc-select-field>
     <icc-select-field [fieldConfig]="multiSelection" [value]="multiObjectStates" [options]="states"></icc-select-field>

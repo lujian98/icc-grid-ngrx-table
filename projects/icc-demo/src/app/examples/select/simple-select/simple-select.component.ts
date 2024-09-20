@@ -14,6 +14,16 @@ import { State, STATES } from '../../../data/states';
 export class AppSimpleSelectComponent {
   states = STATES;
   listStates = [...STATES].map((state) => state.state);
+
+  defaultStateValue = [{ name: 'Nevada', title: 'Nevada' }];
+  listDefaultStates = [...STATES].map((state) => {
+    return {
+      name: state.state,
+      title: state.state,
+    };
+  });
+  singleListState2 = 'Louisiana';
+
   singleObjectState = [STATES[32]];
   multiObjectStates = [STATES[32], STATES[36]];
   singleListState = 'Louisiana';
