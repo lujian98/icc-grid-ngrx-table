@@ -1,26 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccAccordion } from '@icc/ui/accordion';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
+import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'app-grid2',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  //standalone: true,
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  /*
-  imports: [
-    CommonModule,
-    RouterModule,
-    AppGridExamplesModule,
-    IccCheckboxComponent,
-    IccLayoutComponent,
-    IccLayoutHeaderComponent,
-    IccLayoutSidebarComponent,
-    IccLayoutCenterComponent,
-    IccLayoutFooterComponent,
-    IccIconModule,
-    IccAccordionComponent,
-  ],*/
+  imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
 })
 export class AppGridComponent {
   items: IccAccordion[] = [

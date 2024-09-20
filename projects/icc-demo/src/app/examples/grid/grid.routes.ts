@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AppDefaultGridComponent } from './in-memory-data/default-grid.component';
 import { AppSimpleGridComponent } from './remote-data/simple-grid.component';
 import { AppGridFilterComponent } from './remote-data/grid-filter.component';
@@ -21,12 +20,14 @@ import { AppGridTest2Component } from './remote-data/grid-test2.component';
 
 import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-test.component';
 import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scroll.component';
+
 import { AppGridComponent } from './grid.component';
 
-const routes: Route[] = [
+export const AppGridRoutes: Routes = [
   {
     path: '',
     component: AppGridComponent,
+    providers: [],
     children: [
       { path: 'app-default-grid', component: AppDefaultGridComponent },
       { path: 'remote-simple-grid', component: AppSimpleGridComponent },
@@ -81,9 +82,3 @@ const routes: Route[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AppGridExamplesRoutingModule {}
