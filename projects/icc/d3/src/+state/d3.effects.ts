@@ -50,6 +50,7 @@ export class IccD3Effects {
 
   getD3Data$ = createEffect(() =>
     this.actions$.pipe(
+      // debounceTime(10) and switchMap here???
       ofType(d3Actions.getD3Data),
       concatMap(({ d3Config }) => {
         return this.d3Service.getD3Data(d3Config).pipe(
