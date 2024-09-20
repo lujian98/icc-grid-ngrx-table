@@ -6,19 +6,19 @@ export const routes: Routes = [
     children: [
       {
         path: 'grid',
-        loadChildren: () => import('./examples/grid/grid.routes').then((m) => m.AppGridRoutes),
+        loadChildren: () => import('./views/grid/grid.routes').then((m) => m.AppGridRoutes),
       },
       {
         path: 'select',
-        loadChildren: () => import('./examples/select/select-examples.module').then((m) => m.AppSelectExamplesModule),
+        loadChildren: () => import('./views/select/select-examples.module').then((m) => m.AppSelectExamplesModule),
       },
       {
         path: 'form',
-        loadChildren: () => import('./examples/form/form-examples.module').then((m) => m.AppFormExamplesModule),
+        loadChildren: () => import('./views/form/form-examples.module').then((m) => m.AppFormExamplesModule),
       },
       {
         path: 'd3',
-        loadChildren: () => import('./examples/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
+        loadChildren: () => import('./views/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
       },
       {
         path: '**',
