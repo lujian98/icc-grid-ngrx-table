@@ -56,8 +56,9 @@ export class AppComponent {
 
   items: IccAccordion[] = [
     {
-      name: 'Grid Remote Data',
+      name: 'Grid Demo',
       items: [
+        { name: 'Default Grid', link: 'grid/app-default-grid' },
         { name: '1: Simple Grid', link: 'grid/remote-simple-grid' },
         { name: '2: Grid Sort', link: 'grid/remote-grid-sort' },
         { name: '3: Grid Filter', link: 'grid/remote-grid-filter' },
@@ -103,7 +104,7 @@ export class AppComponent {
       ],
     },
     {
-      name: 'Select Demos',
+      name: 'Select Demo',
       items: [{ name: 'Simple Select', link: 'select/simple-select' }],
     },
     {
@@ -111,7 +112,7 @@ export class AppComponent {
       items: [{ name: 'Simple Form', link: 'form/simple-form' }],
     },
     {
-      name: 'D3 Demos',
+      name: 'D3 Demo',
       items: [
         { name: 'Line Chart', link: 'd3/line-chart' },
         { name: 'Line Chart Remote', link: 'd3/line-chart-remote' },
@@ -130,7 +131,6 @@ export class AppComponent {
         { name: 'Grouped Horizontal Bar Chart', link: 'd3/grouped-horizontal-bar-chart' },
         { name: 'Stacked Horizontal Bar Chart', link: 'd3/stacked-horizontal-bar-chart' },
         { name: 'Stacked Normalized Horizontal Bar', link: 'd3/stacked-normalized-horizontal-bar-chart' },
-        //{ name: 'Stock History Bar Chart', link: 'd3/stock-history-demo' },
 
         { name: 'Bullet Chart Demo', link: 'd3/bullet-chart-demo' },
         { name: 'Vertical Bullet Chart Demo', link: 'd3/vertical-bullet-chart-demo' },

@@ -19,7 +19,7 @@ import { IccGridStateModule } from './+state/grid-state.module';
 })
 export class IccGridComponent<T> implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
-  private _gridConfig: IccGridConfig = defaultGridConfig;
+  private _gridConfig!: IccGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
   private gridId = uniqueId(16);
@@ -28,7 +28,13 @@ export class IccGridComponent<T> implements OnDestroy {
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    //console.log('0000000000gridId', this.gridId);
+    this.initGridConfig(value);
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
+
+  private initGridConfig(value: IccGridConfig): void {
     this._gridConfig = {
       ...value,
       gridId: this.gridId,
@@ -37,13 +43,13 @@ export class IccGridComponent<T> implements OnDestroy {
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
     this.gridFacade.initGridConfig(this.gridConfig);
   }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
-  }
 
   @Input()
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
+    if (!this.gridConfig) {
+      this.initGridConfig(defaultGridConfig);
+    }
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
       this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
     }

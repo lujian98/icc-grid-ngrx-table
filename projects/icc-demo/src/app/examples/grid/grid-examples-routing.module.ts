@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
+import { AppDefaultGridComponent } from './in-memory-data/default-grid.component';
 import { AppSimpleGridComponent } from './remote-data/simple-grid.component';
 import { AppGridFilterComponent } from './remote-data/grid-filter.component';
 import { AppGridSortComponent } from './remote-data/grid-sort.component';
@@ -25,6 +26,7 @@ const routes: Route[] = [
   {
     path: '',
     children: [
+      { path: 'app-default-grid', component: AppDefaultGridComponent },
       { path: 'remote-simple-grid', component: AppSimpleGridComponent },
       { path: 'remote-grid-sort', component: AppGridSortComponent },
       { path: 'remote-grid-filter', component: AppGridFilterComponent },
