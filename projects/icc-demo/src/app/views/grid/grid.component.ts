@@ -5,7 +5,7 @@ import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
 
 @Component({
-  selector: 'app-grid2',
+  selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   standalone: true,

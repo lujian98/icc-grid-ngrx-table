@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AppLineChartDemoComponent } from './demos/line-chart/line-chart-demo.component';
 import { AppLineChartRemoteComponent } from './demos/line-chart/line-chart-remote.component';
 import { AppMultiSeriesDemoComponent } from './demos/line-chart/multi-series-demo.component';
@@ -30,9 +29,13 @@ import { AppCPIChartComponent } from './demos/cpi-chart/cpi-chart.component';
 import { AppStockChartComponent } from './demos/stock-charts/stock-chart.component';
 import { AppStockHistoryDemoComponent } from './demos/horizontal-bar-chart/stock-history-demo.component';
 
-const routes: Route[] = [
+import { AppD3Component } from './d3.component';
+
+export const AppD3Routes: Routes = [
   {
     path: '',
+    component: AppD3Component,
+    providers: [],
     children: [
       { path: 'line-chart', component: AppLineChartDemoComponent },
       { path: 'line-chart-remote', component: AppLineChartRemoteComponent },
@@ -68,9 +71,3 @@ const routes: Route[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AppD3ExamplesRoutingModule {}

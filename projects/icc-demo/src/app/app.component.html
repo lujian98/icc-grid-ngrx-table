@@ -1,9 +1,9 @@
 <icc-layout>
   <icc-layout-header>
-    <button routerLink="['grid']">Grid</button>
+    <button [routerLink]="[gridUrl]">Grid</button>
     <button routerLink="['form']">Form</button>
     <button routerLink="['select']">Select</button>
-    <button routerLink="['d3']">D3</button>
+    <button [routerLink]="[d3Url]">D3</button>
     Top Nav Bar
     <div (click)="toggleTheme()">Toggle Theme</div>
     <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>

@@ -18,8 +18,13 @@ export const routes: Routes = [
       },
       {
         path: 'd3',
-        loadChildren: () => import('./views/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
+        loadChildren: () => import('./views/d3/d3.routes').then((m) => m.AppD3Routes),
       },
+      /*
+      {
+        path: 'd3',
+        loadChildren: () => import('./views/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
+      },*/
       {
         path: '**',
         redirectTo: '/grid',
