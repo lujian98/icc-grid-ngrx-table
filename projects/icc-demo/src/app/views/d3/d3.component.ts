@@ -13,6 +13,7 @@ import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/lay
   imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
 })
 export class AppD3Component {
+  expendIndex = 0;
   items: IccAccordion[] = [
     {
       name: 'D3 Demo',

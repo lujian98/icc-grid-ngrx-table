@@ -1,27 +1,21 @@
-import { Platform } from '@angular/cdk/platform';
-import { Inject, Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
-import { ICC_DOCUMENT, ICC_THEME_OPTIONS } from './theme.options';
+import { Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
+import { ICC_DOCUMENT, ICC_THEME_OPTIONS, IccThemeOptions } from './theme.options';
 
 @Injectable()
 export class IccThemeService {
-  private platform = inject(Platform);
   private rendererFactory = inject(RendererFactory2);
-  currentTheme!: string;
+  private document: Document = inject(ICC_DOCUMENT);
+  private options: IccThemeOptions = inject(ICC_THEME_OPTIONS);
   private renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
+  currentTheme!: string;
 
-  constructor(
-    @Inject(ICC_THEME_OPTIONS) protected options: any,
-    @Inject(ICC_DOCUMENT) protected document: Document,
-  ) {
-    if (options?.name) {
-      this.changeTheme(options.name);
+  constructor() {
+    if (this.options?.name) {
+      this.changeTheme(this.options.name);
     }
   }
 
   changeTheme(current: string): void {
-    if (this.platform.TRIDENT) {
-      current = 'light';
-    }
     const previous = this.currentTheme;
     this.currentTheme = current;
     localStorage.removeItem('currentTheme');

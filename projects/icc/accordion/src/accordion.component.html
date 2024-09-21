@@ -1,7 +1,7 @@
 <cdk-accordion class="example-accordion">
   @for (item of items; track item; let index = $index) {
     <cdk-accordion-item
-      [expanded]="expendIndex"
+      [expanded]="isExpaneded(index)"
       #accordionItem="cdkAccordionItem"
       class="example-accordion-item"
       role="button"

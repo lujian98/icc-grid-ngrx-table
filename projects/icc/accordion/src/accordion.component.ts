@@ -17,7 +17,7 @@ export class IccAccordionComponent {
   @Input() expendIndex: number = 0;
 
   isExpaneded(index: number): boolean {
-    return index === 3;
+    return index === this.expendIndex;
   }
 
   getTitle(item: IccAccordion): string {
