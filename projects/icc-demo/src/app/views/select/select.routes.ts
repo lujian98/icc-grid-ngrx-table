@@ -1,10 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AppSimpleSelectComponent } from './simple-select/simple-select.component';
 
-const routes: Route[] = [
+import { AppSelectComponent } from './select.component';
+
+export const AppSelectRoutes: Routes = [
   {
     path: '',
+    component: AppSelectComponent,
+    providers: [],
     children: [
       { path: 'simple-select', component: AppSimpleSelectComponent },
       {
@@ -14,9 +17,3 @@ const routes: Route[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AppSelectExamplesRoutingModule {}

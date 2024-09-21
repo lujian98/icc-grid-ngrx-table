@@ -10,7 +10,7 @@ export const routes: Routes = [
       },
       {
         path: 'select',
-        loadChildren: () => import('./views/select/select-examples.module').then((m) => m.AppSelectExamplesModule),
+        loadChildren: () => import('.//views/select/select.routes').then((m) => m.AppSelectRoutes),
       },
       {
         path: 'form',
@@ -20,14 +20,9 @@ export const routes: Routes = [
         path: 'd3',
         loadChildren: () => import('./views/d3/d3.routes').then((m) => m.AppD3Routes),
       },
-      /*
-      {
-        path: 'd3',
-        loadChildren: () => import('./views/d3/d3-examples.module').then((m) => m.AppD3ExamplesModule),
-      },*/
       {
         path: '**',
-        redirectTo: '/grid',
+        redirectTo: 'grid',
       },
     ],
   },

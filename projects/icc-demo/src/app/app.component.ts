@@ -40,30 +40,12 @@ import { IccThemeService } from '@icc/ui/theme';
 export class AppComponent {
   private themeService = inject(IccThemeService);
   title = 'icc-demo';
-  states = STATES;
-  fieldConfig: IccSelectFieldConfig = {
-    ...defaultSelectFieldConfig,
-    optionLabel: 'state',
-    optionKey: 'abbr',
-  };
 
   gridUrl = `grid`;
   d3Url = `d3`;
-
-  multiListStates = ['Louisiana', 'Nevada'];
-
-  multiAllRemoteList: IccSelectFieldConfig = {
-    ...defaultSelectFieldConfig,
-    remoteConfig: true,
-    urlKey: 'usa',
-    fieldName: 'MultiAllRemoteList',
-  };
+  selectUrl = `select`;
 
   items: IccAccordion[] = [
-    {
-      name: 'Select Demo',
-      items: [{ name: 'Simple Select', link: 'select/simple-select' }],
-    },
     {
       name: 'Form Page',
       items: [{ name: 'Simple Form', link: 'form/simple-form' }],
