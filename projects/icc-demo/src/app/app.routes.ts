@@ -16,11 +16,6 @@ export const routes: Routes = [
         path: 'form',
         loadChildren: () => import('./views/form/form.routes').then((m) => m.AppFormRoutes),
       },
-      /*
-      {
-        path: 'form2',
-        loadChildren: () => import('./views/form/form-examples.module').then((m) => m.AppFormExamplesModule),
-      },*/
       {
         path: 'd3',
         loadChildren: () => import('./views/d3/d3.routes').then((m) => m.AppD3Routes),
