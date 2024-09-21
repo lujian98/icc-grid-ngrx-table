@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AppSimpleFromDemoComponent } from './demos/simple-form.component';
+import { AppFormComponent } from './form.component';
 
-const routes: Route[] = [
+export const AppFormRoutes: Routes = [
   {
     path: '',
+    component: AppFormComponent,
+    providers: [],
     children: [
       { path: 'simple-form', component: AppSimpleFromDemoComponent },
       {
@@ -14,9 +16,3 @@ const routes: Route[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AppFormExamplesRoutingModule {}

@@ -1,0 +1,22 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
+import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
+
+@Component({
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss'],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
+})
+export class AppFormComponent {
+  items: IccAccordion[] = [
+    {
+      name: 'Form Page',
+      items: [{ name: 'Simple Form', link: 'simple-form' }],
+    },
+  ];
+}

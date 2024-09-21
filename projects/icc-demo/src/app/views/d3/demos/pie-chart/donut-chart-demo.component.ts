@@ -4,7 +4,7 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
 import * as d3Format from 'd3-format';
 
 @Component({
-  selector: 'app-pie-chart-demo',
+  selector: 'app-donut-chart-demo',
   styles: [':host { width: 100%; height: 100%; display: flex; flex-direction: column;}'],
   template: `
     <div style="height: 100%; display: flex;">

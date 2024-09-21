@@ -43,6 +43,7 @@ export class AppComponent {
 
   gridUrl = `grid`;
   d3Url = `d3`;
+  formUrl = `form`;
   selectUrl = `select`;
 
   items: IccAccordion[] = [

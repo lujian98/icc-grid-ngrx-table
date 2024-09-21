@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AppSimpleSelectComponent } from './simple-select/simple-select.component';
+import { AppSimpleSelectComponent } from './demos/simple-select/simple-select.component';
 
 import { AppSelectComponent } from './select.component';
 
