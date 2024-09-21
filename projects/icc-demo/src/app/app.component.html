@@ -4,9 +4,8 @@
     <button [routerLink]="[formUrl]">Form</button>
     <button [routerLink]="[selectUrl]">Select</button>
     <button [routerLink]="[d3Url]">D3</button>
-    Top Nav Bar
-    <div (click)="toggleTheme()">Toggle Theme</div>
-    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+
+    <button (click)="toggleTheme()">Toggle Theme</button>
   </icc-layout-header>
 
   <icc-layout-main>

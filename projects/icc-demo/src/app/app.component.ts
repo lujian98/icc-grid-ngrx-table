@@ -1,18 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
-import { STATES } from './data/states';
-import { IccIconModule } from '@icc/ui/icon';
 import {
-  IccLayoutCenterComponent,
   IccLayoutComponent,
-  IccLayoutMainComponent,
   IccLayoutFooterComponent,
   IccLayoutHeaderComponent,
-  IccLayoutSidebarComponent,
+  IccLayoutMainComponent,
 } from '@icc/ui/layout';
 import { IccThemeService } from '@icc/ui/theme';
 
@@ -25,16 +18,10 @@ import { IccThemeService } from '@icc/ui/theme';
   imports: [
     CommonModule,
     RouterModule,
-    IccCheckboxComponent,
     IccLayoutComponent,
     IccLayoutMainComponent,
     IccLayoutHeaderComponent,
-    IccLayoutSidebarComponent,
-    IccLayoutCenterComponent,
     IccLayoutFooterComponent,
-    IccIconModule,
-    IccAccordionComponent,
-    SelectFieldComponent,
   ],
 })
 export class AppComponent {
@@ -46,18 +33,7 @@ export class AppComponent {
   formUrl = `form`;
   selectUrl = `select`;
 
-  items: IccAccordion[] = [
-    {
-      name: 'Form Page',
-      items: [{ name: 'Simple Form', link: 'form/simple-form' }],
-    },
-  ];
-
   toggleTheme(): void {
     this.themeService.changeTheme(this.themeService.currentTheme === 'light' ? 'dark' : 'light');
-  }
-
-  onCheckboxChange(event: any): void {
-    console.log(' 999999 onCheckboxChange=', event);
   }
 }
