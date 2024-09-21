@@ -1,9 +1,7 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-
-import { IccThemeOptions, ICC_THEME_OPTIONS, ICC_DOCUMENT, ICC_WINDOW } from './theme.options';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ICC_DOCUMENT, ICC_THEME_OPTIONS, ICC_WINDOW, IccThemeOptions } from './theme.options';
 import { IccThemeService } from './theme.service';
-import { IccMediaBreakpointsService } from './media-breakpoints.service';
 
 export function iccWindowFactory() {
   return window;
@@ -21,7 +19,6 @@ export class IccThemeModule {
         { provide: ICC_WINDOW, useFactory: iccWindowFactory },
         { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
         IccThemeService,
-        IccMediaBreakpointsService,
       ],
     };
   }

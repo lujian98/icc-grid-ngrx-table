@@ -1,26 +1,18 @@
-import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
-import { ReplaySubject, Observable } from 'rxjs';
-import { share, map, pairwise, filter, startWith } from 'rxjs/operators';
-
-import { ICC_THEME_OPTIONS, ICC_DOCUMENT } from './theme.options';
-import { IccMediaBreakpointsService, IccMediaBreakpoint } from './media-breakpoints.service';
 import { Platform } from '@angular/cdk/platform';
+import { Inject, Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
+import { ICC_DOCUMENT, ICC_THEME_OPTIONS } from './theme.options';
 
 @Injectable()
 export class IccThemeService {
+  private platform = inject(Platform);
+  private rendererFactory = inject(RendererFactory2);
   currentTheme!: string;
-  //private themeChanges$ = new ReplaySubject(1);
-  private windowWidthChanges$ = new ReplaySubject<number>(2);
-  private renderer!: Renderer2;
+  private renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
 
   constructor(
     @Inject(ICC_THEME_OPTIONS) protected options: any,
-    private breakpointService: IccMediaBreakpointsService,
-    private platform: Platform,
-    private rendererFactory: RendererFactory2,
     @Inject(ICC_DOCUMENT) protected document: Document,
   ) {
-    this.renderer = this.rendererFactory.createRenderer(null, null);
     if (options?.name) {
       this.changeTheme(options.name);
     }
@@ -30,13 +22,10 @@ export class IccThemeService {
     if (this.platform.TRIDENT) {
       current = 'light';
     }
-    //this.themeChanges$.next({ name, previous: this.currentTheme });
     const previous = this.currentTheme;
     this.currentTheme = current;
-
     localStorage.removeItem('currentTheme');
     localStorage.setItem('currentTheme', current);
-
     this.updateTheme(current, previous);
   }
 
@@ -46,33 +35,5 @@ export class IccThemeService {
       this.renderer.removeClass(body, `icc-theme-${previous}`);
     }
     this.renderer.addClass(body, `icc-theme-${current}`);
-  }
-
-  changeWindowWidth(width: number): void {
-    this.windowWidthChanges$.next(width);
-  }
-
-  /*
-  onThemeChange(): Observable<any> {
-    return this.themeChanges$.pipe(share());
-  }*/
-
-  onWindowWidthChange(): Observable<number> {
-    return this.windowWidthChanges$.pipe(share());
-  }
-
-  onMediaQueryChange(): Observable<IccMediaBreakpoint[]> {
-    return this.windowWidthChanges$.pipe(
-      // @ts-ignore
-      startWith(<number>undefined),
-      pairwise(),
-      map(([prevWidth, width]: [number, number]) => {
-        return [this.breakpointService.getByWidth(prevWidth), this.breakpointService.getByWidth(width)];
-      }),
-      filter(([prevBreakpoint, breakpoint]) => {
-        return prevBreakpoint.name !== breakpoint.name;
-      }),
-      share(),
-    );
   }
 }
