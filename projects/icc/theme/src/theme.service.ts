@@ -8,6 +8,7 @@ export class IccThemeService {
   private options: IccThemeOptions = inject(ICC_THEME_OPTIONS);
   private renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
   currentTheme!: string;
+  rangeMax = 20;
 
   constructor() {
     if (this.options?.name) {
@@ -21,6 +22,7 @@ export class IccThemeService {
     localStorage.removeItem('currentTheme');
     localStorage.setItem('currentTheme', current);
     this.updateTheme(current, previous);
+    this.setBackgroundColor(this.rangeMax);
   }
 
   private updateTheme(current: string, previous: string): void {
@@ -29,5 +31,13 @@ export class IccThemeService {
       this.renderer.removeClass(body, `icc-theme-${previous}`);
     }
     this.renderer.addClass(body, `icc-theme-${current}`);
+  }
+
+  setBackgroundColor(value: number): void {
+    const root: any = document.querySelector(':root');
+    const range = this.rangeMax - Number(value);
+    const lightness = this.currentTheme === 'light' ? 100 - range : range;
+    const backgroundColor = `hsl(0 0% ${lightness}%)`;
+    root.style.setProperty('--app-background-color', backgroundColor);
   }
 }

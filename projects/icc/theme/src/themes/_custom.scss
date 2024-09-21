@@ -1,4 +1,5 @@
 $theme: (
+  // TODO not used
   new-background-color: oklch(45.12% 0.267 268.81),
   color-primary-100: #f2f6ff,
   color-basic-100: #0f0f0f,
@@ -71,7 +72,7 @@ $theme: (
   icc-grid-header-background-color: #353535,
   icc-grid-row-odd-background-color: #191919,
   icc-grid-row-even-background-color: #282828,
-  icc-grid-row-hover-background-color: #1c2b41,
+  icc-grid-row-hover-background-color: #1c2b41
 );
 
 $icc-themes: icc-register-theme($theme, custom);
