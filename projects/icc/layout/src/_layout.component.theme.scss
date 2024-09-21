@@ -4,7 +4,10 @@
   icc-layout-sidebar,
   icc-layout-center,
   icc-layout-footer {
-    background-color: icc-theme(background-basic-color-1);
+    // background-color: icc-theme(background-basic-color-1);
     color: icc-theme(text-basic-color);
+    background-color: var(--background-color);
+    // color:  var(--text-basic-color);
   }
 }
+// background-color: var(--background-color);

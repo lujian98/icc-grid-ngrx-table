@@ -16,7 +16,10 @@ export class AppFormComponent {
   items: IccAccordion[] = [
     {
       name: 'Form Page',
-      items: [{ name: 'Simple Form', link: 'simple-form' }],
+      items: [
+        { name: 'Simple Form', link: 'simple-form' },
+        { name: 'Theme Form', link: 'theme-form' },
+      ],
     },
   ];
 }

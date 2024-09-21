@@ -1,6 +1,8 @@
 :root {
   --banner-height: 0px;
   --header-height: 0px;
+  --primary-color: oklch(45.12% 0.267 268.81);
+  --secondary-color: oklch(94.45% 0.03 268.81);
 }
 
 .with-banner {
@@ -10,3 +12,6 @@
 .with-header {
   --header-height: 2.75rem;
 }
+// oklch(100% 0 106.37411429114086); //oklch(45.12% 0.267 268.81);
+// #ffffff, oklch(100% 0 106.37411429114086); //
+//  background-color: hsl(230, 100%, 80%);
