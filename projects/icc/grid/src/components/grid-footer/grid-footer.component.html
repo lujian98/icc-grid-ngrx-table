@@ -8,6 +8,7 @@
 <span>
   Page:
   <input
+    iccInput
     type="number"
     min="1"
     [max]="lastPage"
@@ -15,7 +16,6 @@
     autocomplete="off"
     (click)="$event.stopPropagation()"
     (input)="valueChanged($event)"
-    style="text-align: center"
   />
 </span>
 <span> of {{ lastPage }} </span>
@@ -33,15 +33,7 @@
 
 <span
   >Page Size:
-  <input
-    type="number"
-    min="1"
-    max="10"
-    [value]="gridConfig.pageSize"
-    autocomplete="off"
-    readonly
-    style="text-align: right"
-  />
+  <input iccInput type="number" min="1" max="10" [value]="gridConfig.pageSize" autocomplete="off" readonly />
 </span>
 
 <span class="grid-footer-displaying">{{ displaying }}</span>

@@ -1,5 +1,10 @@
 @mixin icc-grid-theme() {
   icc-grid {
+    .icc-grid-toolbar,
+    icc-grid-footer {
+      background-color: icc-theme(icc-grid-toolbar-background-color);
+    }
+
     icc-grid-header {
       background-color: icc-theme(icc-grid-header-background-color);
     }
@@ -60,9 +65,8 @@
     }
 
     input {
-      // width: 100%;
-      //border: solid 1px icc-theme(app-border-basic-color); // TODO color
-      background-color: icc-theme(icc-grid-row-hover-background-color);
+      background-color: icc-theme(icc-grid-header-background-color);
+      color: icc-theme(app-text-basic-color);
     }
   }
 

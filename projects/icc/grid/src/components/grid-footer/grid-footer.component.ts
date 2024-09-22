@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
+import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
 
@@ -11,7 +12,7 @@ import { IccGridConfig } from '../../models/grid-column.model';
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IccInputDirective],
 })
 export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);

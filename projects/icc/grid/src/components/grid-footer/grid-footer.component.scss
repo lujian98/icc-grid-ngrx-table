@@ -1,7 +1,6 @@
 :host {
   display: flex;
   height: 32px; //TODO move to theme?
-  background-color: gray; // TODO color
   justify-content: left;
   align-items: center;
   padding: 0 10px;
@@ -15,5 +14,9 @@
 
   .grid-footer-displaying {
     margin-left: auto;
+  }
+
+  input {
+    text-align: center;
   }
 }
