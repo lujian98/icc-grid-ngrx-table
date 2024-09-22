@@ -15,6 +15,10 @@ icc-layout,
   height: auto !important;
 }
 
+.cdk-visually-hidden {
+  display: none;
+}
+
 fieldset {
   padding: 0.35em 0.75em 0.625em 0;
 }
