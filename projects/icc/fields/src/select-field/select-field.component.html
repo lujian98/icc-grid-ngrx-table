@@ -17,7 +17,7 @@
         [iccAutocompleteClose]="autocompleteClose"
         placeholder="{{ fieldConfig.placeholder }}"
       />
-      <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected()"></icc-icon>
+      <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearSelected($event)"></icc-icon>
       <icc-icon icon="angle-down" iccSuffix [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"></icc-icon>
       <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
       <icc-autocomplete

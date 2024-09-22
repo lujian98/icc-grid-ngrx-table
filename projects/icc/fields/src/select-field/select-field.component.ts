@@ -271,7 +271,8 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
     this.autocompleteClose = true;
   }
 
-  clearSelected(): void {
+  clearSelected(event: MouseEvent): void {
+    event.stopPropagation();
     if (this.fieldConfig.multiSelection) {
       this.selectedField.setValue([]);
     } else {
