@@ -1,36 +1,59 @@
 @mixin icc-form-field-theme() {
+  [iccInput] {
+    height: 1.75rem;
+    border: none;
+
+    background-color: icc-theme(icc-form-field-input-background-color);
+    color: icc-theme(app-text-basic-color);
+    border-bottom: 1px solid icc-theme(app-border-basic-color);
+
+    &.input-full-width {
+      width: 100%;
+    }
+
+    &:focus {
+      outline: none;
+      background-color: icc-theme(icc-form-field-focus-background-color);
+      border-color: icc-theme(icc-form-field-focus-border-color);
+    }
+
+    &.appearance-ghost {
+      border: none;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+
+  textarea[iccInput] {
+    display: block;
+    height: 3.5rem;
+    background: icc-theme(icc-form-field-input-background-color);
+    border: 1px solid icc-theme(app-border-basic-color);
+    padding: 0.375rem;
+    line-height: 0.9375rem;
+
+    &:focus {
+      background: icc-theme(icc-form-field-focus-background-color);
+      border-color: icc-theme(icc-form-field-focus-border-color);
+    }
+  }
+
+  /* hide input spin with type=number */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
   icc-form-field {
-    .unpadded-form-field .icc-form-field {
-      padding-left: 0;
-    }
-
-    .icc-form-field-container {
-      //margin-bottom: 2px;
-      //padding-bottom: 2px;
-      // border-bottom: 1px solid;
-      // border-color: icc-theme(checkbox-hover-border-color);
-      //background-color: icc-theme(icc-grid-row-hover-background-color);
-    }
-  }
-
-  /*
-
-        border-color: icc-theme(color-primary-default);
-
-  .icc-form-field-suffix {
-    border-bottom-width: 1px;
-    border-color: icc-theme(form-field-input-border-color);
-  }
-
-  .icc-form-field-suffix-focus {
-    background-color: icc-theme(form-field-focus-bkg-color);
-    border-color: icc-theme(form-field-focus-border-color);
-  }*/
-
-  icc-error {
-    // color: icc-theme(text-danger-color);
-    icc-icon {
-      padding-right: 0.375rem;
+    icc-error {
+      color: orange;
+      icc-icon {
+        padding-right: 0.375rem;
+      }
     }
   }
 }

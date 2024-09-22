@@ -25,12 +25,20 @@ $theme: (
   icc-option-item-hover-background-color: #e5e5e5,
   icc-option-item-selected-background-color: #d1d1d6,
 
+  //form field
+  icc-form-field-input-background-color: #ededed,
+  icc-form-field-focus-background-color: #f6f1ed,
+  icc-form-field-focus-border-color: green,
+
+  //#d0c6bc,
+  /*
+
   form-field-input-border-color: #f6f1ed,
   form-field-input-bkg-color: #fff,
-  form-field-focus-border-color: #d0c6bc,
-  form-field-focus-bkg-color: #f6f1ed,
 
-  /*
+  form-field-focus-bkg-color: #f6f1ed,
+  input-focus-background-color: #f6f1ed,
+  input-border-color: #d0c6bc,
   color-primary-100: #f2f6ff,
   color-basic-100: #ffffff,
   color-basic-200: #fbfbfb,

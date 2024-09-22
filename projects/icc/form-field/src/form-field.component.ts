@@ -6,7 +6,6 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  Directive,
   Optional,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,15 +15,6 @@ import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
-
-@Directive({
-  selector: '[unpadded]',
-  standalone: true,
-})
-export class IccUnpadFormFieldDirective {
-  @HostBinding('class.unpadded-form-field')
-  private unpaddedFormField: boolean = true;
-}
 
 @Component({
   selector: 'icc-form-field',
@@ -38,7 +28,6 @@ export class IccUnpadFormFieldDirective {
     IccHintDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
-    IccUnpadFormFieldDirective,
     IccSuffixDirective,
   ],
 })
