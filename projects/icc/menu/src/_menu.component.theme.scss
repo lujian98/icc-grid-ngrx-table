@@ -14,5 +14,9 @@
       background-color: icc-theme(icc-menu-item-selected-background-color);
       font-weight: bold;
     }
+
+    &:last-child {
+      border-bottom: solid 1px icc-theme(app-border-basic-color);
+    }
   }
 }

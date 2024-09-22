@@ -13,5 +13,9 @@
       cursor: pointer;
       background-color: icc-theme(icc-option-item-hover-background-color);
     }
+
+    &:last-child {
+      border-bottom: solid 1px icc-theme(app-border-basic-color);
+    }
   }
 }
