@@ -1,13 +1,13 @@
 :host {
+  &:hover {
+    cursor: pointer;
+  }
+
   .icc-accordion-item-header {
     display: flex;
     align-content: center;
     justify-content: space-between;
     padding: 8px 10px;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   .cdk-accordion-item {

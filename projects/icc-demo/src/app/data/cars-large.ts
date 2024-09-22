@@ -1,7 +1,6 @@
 import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '@icc/ui/grid';
 
 export const DCRBrands = [
-  { title: '', name: '' },
   { title: 'Audi', name: 'Audi' },
   { title: 'BMW', name: 'BMW' },
   { title: 'Mercedes', name: 'Mercedes' },
@@ -17,7 +16,6 @@ export const DCRBrands = [
 ];
 
 export const DCRColors = [
-  { title: '', name: '' },
   { title: 'Black', name: 'Black' },
   { title: 'Blue', name: 'Blue' },
   { title: 'Brown', name: 'Brown' },

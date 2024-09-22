@@ -5,14 +5,13 @@
     border-top: 1px solid icc-theme(app-border-basic-color);
 
     &.selected {
-      background-color: green;
-      color: icc-theme(icc-option-item-selected-text-color);
+      background-color: icc-theme(icc-option-item-selected-background-color);
       font-weight: bold;
     }
 
     &:hover {
       cursor: pointer;
-      background-color: cyan; //icc-theme(icc-option-item-hover-background-color);
+      background-color: icc-theme(icc-option-item-hover-background-color);
     }
   }
 }
