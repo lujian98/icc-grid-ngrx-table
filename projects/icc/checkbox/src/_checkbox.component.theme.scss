@@ -1,68 +1,27 @@
 @mixin icc-checkbox-theme() {
-  /*
-  icc-checkbox.ghost-checkbox {
-    .icc-checkbox-container {
-      border: none;
-      background: icc-theme(checkmark-background-color);
-
-      icc-icon {
-        color: icc-theme(checkmark-color);
-      }
-    }
-
-    input:checked + .icc-checkbox-container {
-      background-color: icc-theme(checkmark-checked-background-color);
-
-      icc-icon {
-        color: icc-theme(checkmark-checked-color);
-      }
-    }
-
-    input:disabled + .icc-checkbox-container {
-      opacity: 0.5;
-    }
-  }
-
   icc-checkbox {
-    .icc-checkbox-container {
-      border: 1px solid;
-      border-color: icc-theme(checkbox-border-color);
-      border-radius: 3px;
-      width: 1.125rem;
-      height: 1.125rem;
-      background: icc-theme(checkbox-background-color);
-      position: relative;
-
-      icc-icon {
-        color: icc-theme(checkbox-checkmark-color);
-      }
+    input[type="checkbox"],
+    input[type="radio"] {
+      accent-color: icc-theme(icc-checkbox-input-color);
     }
 
-    .icc-checkbox-label:not(:empty) {
-      padding-left: 0.5rem;
+    /*
+    input[type='checkbox']:not(:checked):not(:disabled),
+    input[type='radio']:not(:checked):not(:disabled) {
+      //appearance: none;
+      margin-bottom: 0;
+      width: 1em;
+      height: 1em;
+      border: 1px solid icc-theme(app-border-basic-color);
     }
 
-    input:checked + .icc-checkbox-container {
-      icc-icon {
-        color: icc-theme(checkbox-checked-checkmark-color);
-      }
+    input[type='checkbox']:not(:checked):not(:disabled) {
+      border-radius: 2px;
     }
 
-    input:hover + .icc-checkbox-container,
-    input:focus + .icc-checkbox-container {
-      border-color: icc-theme(checkbox-hover-border-color);
+    input[type='radio']:not(:checked):not(:disabled) {
+      border-radius: 100px;
     }
-
-    input:disabled + .icc-checkbox-container {
-      border-color: icc-theme(checkbox-disabled-border-color);
-      background: icc-theme(checkbox-disabled-background-color);
-      icc-icon {
-        color: icc-theme(checkbox-checkmark-color);
-        cursor: default;
-        &.checked {
-          color: icc-theme(checkbox-disabled-checkmark-color);
-        }
-      }
-    }
-  }*/
+      */
+  }
 }

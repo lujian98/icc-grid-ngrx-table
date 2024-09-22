@@ -1,6 +1,5 @@
 :host {
   display: flex;
-  //width: 100%;
 
   .form-field-checkbox {
     padding: 0px 10px;
@@ -8,23 +7,17 @@
     width: 100%;
     position: relative;
     align-items: center;
-    cursor: pointer;
 
     input {
       margin: 0px;
+      cursor: pointer;
     }
 
     .icc-checkbox-label {
       display: inline-flex;
       width: 100%;
+      padding-left: 5px;
+      cursor: pointer;
     }
-  }
-
-  icc-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.75rem;
   }
 }

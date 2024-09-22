@@ -30,79 +30,8 @@ $theme: (
   icc-form-field-focus-background-color: #f6f1ed,
   icc-form-field-focus-border-color: green,
 
-  //#d0c6bc,
-  /*
-
-  form-field-input-border-color: #f6f1ed,
-  form-field-input-bkg-color: #fff,
-
-  form-field-focus-bkg-color: #f6f1ed,
-  input-focus-background-color: #f6f1ed,
-  input-border-color: #d0c6bc,
-  color-primary-100: #f2f6ff,
-  color-basic-100: #ffffff,
-  color-basic-200: #fbfbfb,
-  color-basic-300: #f6f1ed,
-
-  // Status colors
-  color-basic-default: #4b4f54,
-  color-basic-transparent-active: #f1f1f1,
-  color-basic-transparent-hover: #f1f1f1,
-  color-basic-transparent-default: #f6f1ed,
-  color-basic-transparent-default-border: #d0c6bc,
-  color-primary-default: #f18a20,
-  color-warning-default: #eba500,
-  color-danger-default: #ff4f4f,
-  color-success-default: #00b188,
-  color-alternative-active: #863594,
-
-  // Backgrounds and borders
-  background-basic-color-1: color-basic-100,
-  background-basic-color-2: color-basic-200,
-  background-basic-color-3: color-basic-300,
-  border-basic-color-1: #d0c6bc,
-  border-basic-color-2: #d0c6bc,
-  background-alternative-1: #ffffff,
-  background-alternative-2: #ebe5e0,
-  background-alternative-3: #fbfbfb,
-
-  // Checkboxes
-  checkbox-border-color: #adadad,
-  checkbox-hover-border-color: #4b4f54,
-  checkbox-disabled-border-color: #dedede,
-  checkbox-background-color: #ffffff,
-  checkbox-disabled-background-color: #f1f1f1,
-  checkbox-checkmark-color: transparent,
-  checkbox-checked-checkmark-color: color-primary-default,
-  checkbox-disabled-checkmark-color: #dedede,
-
-  // Checkmark (Table checks)
-  checkmark-color: text-alternative-color-3,
-  checkmark-checked-color: color-primary-default,
-  checkmark-background-color: transparent,
-  checkmark-checked-background-color: transparent,
-
-
-
-  // Panel Colors
-  icc-panel-border-color: #f6f1ed,
-
-  // Option colors
-  option-hover-background-color: #f6f1ed,
-  option-selected-text-color: #000000,
-
-  // Text colors
-  text-basic-color: color-basic-default,
-  text-alternative-color-1: color-basic-default,
-  text-alternative-color-2: color-basic-default,
-  text-alternative-color-3: #dedede,
-  text-alternative-color-4: #191919,
-  text-primary-color: color-primary-default,
-  text-secondary-color: #797979,
-  text-alternative-color-green: #3c763d,
-  text-alternative-color-red: #a94442,
-  text-alternative-color-yellow: #8a6d3b,
-*/
+  //checkbox
+  icc-checkbox-input-color: red,
 );
 
 $icc-themes: icc-register-theme($theme, light);
