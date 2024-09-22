@@ -1,18 +1,28 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectorRef,
   Component,
-  ElementRef,
-  EventEmitter,
   forwardRef,
-  inject,
+  ChangeDetectorRef,
   Input,
   Output,
+  EventEmitter,
   ViewChild,
+  ElementRef,
+  Directive,
+  HostBinding,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+
+import { CommonModule } from '@angular/common';
 import { IccIconModule } from '@icc/ui/icon';
+
+@Directive({
+  selector: '[ghost]',
+})
+export class GhostCheckboxDirective {
+  @HostBinding('class.ghost-checkbox')
+  private ghostCheckbox: boolean = true;
+}
 
 @Component({
   selector: 'icc-checkbox',
@@ -29,15 +39,12 @@ import { IccIconModule } from '@icc/ui/icon';
   ],
 })
 export class IccCheckboxComponent implements ControlValueAccessor {
-  private changeDetectorRef = inject(ChangeDetectorRef);
   private _checked = false;
   private _disabled = false;
   private _indeterminate = false;
+  @ViewChild('inputEl') inputEl!: ElementRef;
 
   @Output() change = new EventEmitter<boolean>();
-  @Output() inputClick = new EventEmitter<boolean>();
-  @ViewChild('input') private inputEl!: ElementRef<HTMLInputElement>;
-  //@ViewChild('label') private labelEl!: ElementRef<HTMLInputElement>;
 
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
@@ -66,6 +73,8 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     this._indeterminate = coerceBooleanProperty(value);
   }
 
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -85,39 +94,20 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     //on a destroyed view (such as when toggling control
     //enabled/disabled from a parent form group)
     //https://github.com/SAP/fundamental-ngx/issues/2364
-    if (!(this.changeDetectorRef as any).destroyed) {
-      this.changeDetectorRef.detectChanges();
+    if (!(this.changeDetector as any).destroyed) {
+      this.changeDetector.detectChanges();
     }
   }
 
-  onInputClick(event: Event): void {
-    this.handleInputClick();
-    this.inputClick.emit(this.checked);
+  updateValueAndIndeterminate(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.checked = input.checked;
+    this.change.emit(this.checked);
+    this.onChange(this.checked);
+    this.indeterminate = input.indeterminate;
   }
 
-  onChangeEvent(event: Event): void {
-    // We always have to stop propagation on the change event.
-    // Otherwise the change event, from the input element, will bubble up and
-    // emit its event object to the `change` output.
-    event.stopPropagation();
-  }
-
-  private handleInputClick(): void {
-    if (!this.disabled) {
-      this._checked = !this._checked;
-      this.onChange(this.checked);
-      this.change.emit(this.checked);
-      if (this.inputEl) {
-        this.inputEl.nativeElement.checked = this.checked;
-      }
-    }
-  }
-
-  preventBubbling(event: MouseEvent): void {
-    if (!!event.target && this.inputEl.nativeElement.contains(event.target as HTMLElement)) {
-      event.stopPropagation();
-    } else {
-      this.handleInputClick();
-    }
+  focus(): void {
+    this.inputEl.nativeElement.focus();
   }
 }

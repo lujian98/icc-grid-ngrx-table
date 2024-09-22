@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
-import { IccCheckbox2Component } from '@icc/ui/checkbox2';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
 
 @Component({
   selector: 'app-theme-form',
@@ -9,7 +9,7 @@ import { IccCheckbox2Component } from '@icc/ui/checkbox2';
   styleUrls: ['./theme-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormComponent, IccCheckbox2Component],
+  imports: [CommonModule, IccFormComponent, IccCheckboxComponent],
 })
 export class AppThemeFormDemoComponent {
   checked = true;

@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
 import { RouterModule } from '@angular/router';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccCheckbox2Component } from '@icc/ui/checkbox2';
 import { IccMenuItem } from '../../models/menu-item.model';
 
 @Component({
@@ -12,7 +11,7 @@ import { IccMenuItem } from '../../models/menu-item.model';
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterModule, IccIconModule, IccCheckboxComponent, IccCheckbox2Component],
+  imports: [CommonModule, RouterModule, IccIconModule, IccCheckboxComponent],
 })
 export class IccMenuItemComponent {
   @Input() menuItem!: IccMenuItem;

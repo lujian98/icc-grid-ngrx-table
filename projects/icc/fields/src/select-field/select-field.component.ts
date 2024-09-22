@@ -30,7 +30,6 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccCheckbox2Component } from '@icc/ui/checkbox2';
 import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
@@ -75,7 +74,6 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccOptionComponent,
     IccIconModule,
     IccCheckboxComponent,
-    IccCheckbox2Component,
     IccFilterPipe,
   ],
 })
