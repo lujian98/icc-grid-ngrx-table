@@ -32,7 +32,7 @@ export class IccIconComponent implements OnChanges, OnInit {
 
   @HostBinding('attr.title')
   title!: string | undefined;
-
+  /*
   @HostBinding('class.status-default')
   get default() {
     return this.status === 'default';
@@ -57,7 +57,7 @@ export class IccIconComponent implements OnChanges, OnInit {
   get success() {
     return this.status === 'success';
   }
-
+*/
   @HostBinding('innerHtml')
   html: SafeHtml = '';
 

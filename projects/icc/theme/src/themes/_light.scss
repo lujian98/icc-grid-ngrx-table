@@ -1,5 +1,20 @@
 $theme: (
   --app-background-color: hsl(0, 0%, 100%),
+  app-border-basic-color: #d0c6bc,
+  app-text-basic-color: #4b4f54,
+
+  //grid
+  icc-grid-header-background-color: #f6f1ed,
+  icc-grid-row-odd-background-color: #fbfbfb,
+  icc-grid-row-even-background-color: #ffffff,
+  icc-grid-row-hover-background-color: #fdeede,
+
+  form-field-input-border-color: #f6f1ed,
+  form-field-input-bkg-color: #fff,
+  form-field-focus-border-color: #d0c6bc,
+  form-field-focus-bkg-color: #f6f1ed,
+
+  /*
   color-primary-100: #f2f6ff,
   color-basic-100: #ffffff,
   color-basic-200: #fbfbfb,
@@ -43,10 +58,7 @@ $theme: (
   checkmark-background-color: transparent,
   checkmark-checked-background-color: transparent,
 
-  form-field-input-border-color: #f6f1ed,
-  form-field-input-bkg-color: #fff,
-  form-field-focus-border-color: #d0c6bc,
-  form-field-focus-bkg-color: #f6f1ed,
+
 
   // Panel Colors
   icc-panel-border-color: #f6f1ed,
@@ -66,12 +78,7 @@ $theme: (
   text-alternative-color-green: #3c763d,
   text-alternative-color-red: #a94442,
   text-alternative-color-yellow: #8a6d3b,
-
-  //grid
-  icc-grid-header-background-color: #f6f1ed,
-  icc-grid-row-odd-background-color: #fbfbfb,
-  icc-grid-row-even-background-color: #ffffff,
-  icc-grid-row-hover-background-color: #fdeede,
+*/
 );
 
 $icc-themes: icc-register-theme($theme, light);

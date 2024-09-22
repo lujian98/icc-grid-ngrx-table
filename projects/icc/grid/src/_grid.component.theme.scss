@@ -22,12 +22,12 @@
 
     icc-grid-header-item {
       border-style: solid;
-      border-color: icc-theme(border-basic-color-1);
+      border-color: icc-theme(app-border-basic-color);
       border-width: 1px 0px 1px 1px;
     }
 
     icc-grid-header-item:last-child {
-      border-right: solid 1px icc-theme(border-basic-color-1);
+      border-right: solid 1px icc-theme(app-border-basic-color);
     }
 
     .icc-header-no-filter-border {
@@ -38,17 +38,17 @@
 
     icc-text-filter,
     icc-select-filter {
-      border-top: 1px solid icc-theme(border-basic-color-1);
+      border-top: 1px solid icc-theme(app-border-basic-color);
     }
 
     icc-grid-cell {
       border-style: solid;
-      border-color: icc-theme(border-basic-color-1);
+      border-color: icc-theme(app-border-basic-color);
       border-width: 0px 0px 1px 1px;
     }
 
     icc-grid-cell:last-child {
-      border-right: solid 1px icc-theme(border-basic-color-1);
+      border-right: solid 1px icc-theme(app-border-basic-color);
     }
 
     icc-grid-header {
@@ -61,7 +61,7 @@
 
     input {
       // width: 100%;
-      //border: solid 1px icc-theme(border-basic-color-1); // TODO color
+      //border: solid 1px icc-theme(app-border-basic-color); // TODO color
       background-color: icc-theme(icc-grid-row-hover-background-color);
     }
   }
