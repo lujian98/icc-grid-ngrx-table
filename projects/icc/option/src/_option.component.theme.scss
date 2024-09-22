@@ -9,13 +9,13 @@
 
     &:hover {
       cursor: pointer;
-      //background-color: icc-theme(option-hover-background-color);
+      background-color: icc-theme(option-hover-background-color);
     }
   }
 
   .icc-option-list {
-    background: cyan;
-    //background: icc-theme(select-options-background-color);
+    //background: cyan;
+    background: icc-theme(select-options-background-color);
     //border: 1px solid icc-theme(select-border-color);
     //color: icc-theme(select-text-color);
 
