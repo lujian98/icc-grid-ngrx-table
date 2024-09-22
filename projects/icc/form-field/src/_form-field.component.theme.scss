@@ -1,4 +1,14 @@
 @mixin icc-form-field-theme() {
+  icc-form-field {
+    icc-error {
+      color: orange;
+
+      icc-icon {
+        padding-right: 0.375rem;
+      }
+    }
+  }
+
   [iccInput] {
     height: 1.75rem;
     border: none;
@@ -44,16 +54,8 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
   input[type="number"] {
     -moz-appearance: textfield;
-  }
-
-  icc-form-field {
-    icc-error {
-      color: orange;
-      icc-icon {
-        padding-right: 0.375rem;
-      }
-    }
   }
 }

@@ -2,7 +2,7 @@
   <div class="icc-form-field-flex">
     <label class="icc-form-field-label" #label>
       <span class="icc-form-field-required-marker" *ngIf="_control && _control.required && !_control.disabled">*</span>
-      <ng-content select="icc-label"></ng-content>
+      <ng-content select="icc-label"></ng-content>:
     </label>
     <div class="icc-form-field-wrapper" (click)="_control && _control.onContainerClick($event)">
       <div class="icc-form-field-container">

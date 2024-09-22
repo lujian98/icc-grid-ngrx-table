@@ -6,8 +6,9 @@
 
   icc-text-field {
     width: 100%;
-    input {
+    ::ng-deep input {
       width: 100%;
+      border-bottom: none;
     }
   }
 }
