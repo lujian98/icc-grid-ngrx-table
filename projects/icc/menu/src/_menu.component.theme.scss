@@ -1,6 +1,18 @@
 @mixin icc-menu-theme() {
-  /*
-  .icc-menu-item.menu-item-separator {
-    border-color: icc-theme(menu-separator-color);
-  }*/
+  icc-menu-item {
+    align-items: center;
+    border-top: 1px solid icc-theme(app-border-basic-color);
+    background-color: icc-theme(icc-menu-item-background-color);
+    color: icc-theme(app-text-basic-color);
+
+    &:focus,
+    &:hover {
+      background-color: icc-theme(icc-menu-item-hover-background-color);
+    }
+
+    &.selected {
+      background-color: icc-theme(icc-menu-item-selected-background-color);
+      font-weight: bold;
+    }
+  }
 }

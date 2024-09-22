@@ -1,21 +1,19 @@
-<cdk-accordion class="example-accordion">
+<cdk-accordion class="cdk-accordion">
   @for (item of items; track item; let index = $index) {
     <cdk-accordion-item
       [expanded]="isExpaneded(index)"
       #accordionItem="cdkAccordionItem"
-      class="example-accordion-item"
+      class="icc-accordion-item"
       role="button"
       [tabindex]="index"
       [attr.id]="'accordion-header-' + index"
       [attr.aria-expanded]="accordionItem.expanded"
       [attr.aria-controls]="'accordion-body-' + index"
     >
-      <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+      <div class="icc-accordion-item-header" (click)="accordionItem.toggle()">
         {{ getTitle(item) }}
-        <span class="example-accordion-item-description">
-          <i *ngIf="accordionItem.expanded" class="fa-solid fa-chevron-up"></i>
-          <i *ngIf="!accordionItem.expanded" class="fa-solid fa-chevron-down"></i>
-        </span>
+        <i *ngIf="accordionItem.expanded" class="fa-solid fa-chevron-up"></i>
+        <i *ngIf="!accordionItem.expanded" class="fa-solid fa-chevron-down"></i>
       </div>
 
       <icc-menu *ngIf="accordionItem.expanded" [items]="item.items"></icc-menu>

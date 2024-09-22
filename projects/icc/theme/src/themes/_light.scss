@@ -6,9 +6,19 @@ $theme: (
   //grid
   icc-grid-header-background-color: #ededed,
   icc-grid-row-odd-background-color: #ffffff,
-  icc-grid-row-even-background-color: #fbfbfb,
+  icc-grid-row-even-background-color: #f4f5f5,
   icc-grid-row-hover-background-color: #e5e5e5,
   icc-grid-toolbar-background-color: #d2d2d2,
+
+  //menu
+  icc-menu-item-background-color: #ffffff,
+  icc-menu-item-hover-background-color: #e5e5e9,
+  icc-menu-item-selected-background-color: #d1d1d6,
+
+  //accordion
+  icc-accordion-item-background-color: #ffffff,
+  icc-accordion-item-hover-background-color: #e5e5e9,
+  icc-accordion-item-selected-background-color: #d1d1d6,
 
   form-field-input-border-color: #f6f1ed,
   form-field-input-bkg-color: #fff,

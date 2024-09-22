@@ -1,7 +1,8 @@
 :host {
   display: flex;
-  height: 32px;
+  height: 28px;
   width: 100%;
+  align-items: center;
 
   .icc-menu-item {
     padding: 0px 10px;
@@ -13,38 +14,24 @@
   }
 
   .icc-menu-title {
-    //display: inline-block;
-    //align-items: center;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
   }
 
   /*
-     display: inline-block;
-      cursor: default;
-      font-size: 13px; //TODO move to theme?
-      font-weight: 600; //TODO move to theme?
-      padding-right: 6px;
-      //margin: 0 $size-xs 0 0;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      */
-
-  align-items: center;
   border-top: 1px solid gray;
   &:focus,
   &:hover {
-    background-color: lightgrey;
+    //background-color: lightgrey;
   }
 
   &.selected {
     //color: cyan; //sun-theme(option-selected-text-color);
-    background-color: cyan;
+    //background-color: cyan;
     font-weight: bold;
   }
+    */
 
   &.disabled {
     // TODO may need disabled color?
@@ -64,39 +51,3 @@
   color: inherit;
   text-decoration: none;
 }
-
-/*
-::ng-deep .icc-menu-item.menu-item-separator {
-  margin-top: 0.3125rem;
-  margin-bottom: 0.3125rem;
-  border-top-width: 1px;
-}
-
-ul.icc-menu-items {
-  .icc-menu-item {
-    padding: 0;
-
-    a {
-      flex-grow: 1;
-      padding-left: 0.625rem;
-      padding-right: 1.625rem;
-
-      .icc-menu-title {
-        padding: 0;
-      }
-    }
-
-    &.sub-menu-item {
-      a.active {
-        .icc-menu-title {
-          border: none;
-        }
-      }
-    }
-  }
-}
-
-a {
-  white-space: nowrap;
-}
-*/

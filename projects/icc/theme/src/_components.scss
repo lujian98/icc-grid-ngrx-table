@@ -1,19 +1,23 @@
 @import "../../layout/src/layout.component.theme";
 @import "../../grid/src/grid.component.theme";
+@import "../../menu/src/menu.component.theme";
+@import "../../accordion/src/accordion.component.theme";
 
 @import "../../checkbox/src/checkbox.component.theme";
 @import "../../form-field/src/form-field.component.theme";
 @import "../../form-field/src/input/input.component.theme";
-@import "../../menu//src/menu.component.theme";
+
 @import "../../option//src/option.component.theme";
 
 @mixin icc-theme-components() {
   @include icc-layout-theme();
   @include icc-grid-theme();
+  @include icc-menu-theme();
+  @include icc-accordion-theme();
 
   @include icc-checkbox-theme();
   @include icc-form-field-theme();
-  @include icc-menu-theme();
+
   @include icc-option-theme();
   @include icc-input-theme();
 }

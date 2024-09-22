@@ -1,2 +1,19 @@
-@mixin sun-button-theme() {
+@mixin icc-accordion-theme() {
+  icc-accordion {
+    background-color: icc-theme(icc-menu-item-background-color);
+    color: icc-theme(app-text-basic-color);
+
+    .icc-accordion-item-header {
+      &:focus,
+      &:hover {
+        background-color: icc-theme(icc-menu-item-hover-background-color);
+      }
+
+      /*
+      &.selected {
+        background-color: icc-theme(icc-menu-item-selected-background-color);
+        font-weight: bold;
+      }*/
+    }
+  }
 }
