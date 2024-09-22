@@ -29,14 +29,14 @@
         <ng-template iccAutocompleteContent>
           <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
             <icc-option *ngFor="let option of result" [value]="option" #ref>
-              <icc-checkbox
+              <icc-checkbox2
                 *ngIf="fieldConfig.multiSelection"
                 [checked]="ref.selected"
-                (inputClick)="onInputClick($event, option, ref)"
+                (change)="onInputClick($event, option, ref)"
               >
                 <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
                 </icc-filter-highlight>
-              </icc-checkbox>
+              </icc-checkbox2>
               <ng-container *ngIf="!fieldConfig.multiSelection">
                 <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
                 </icc-filter-highlight>

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccCheckbox2Component } from '@icc/ui/checkbox2';
 //import { SelectionType } from '../../config';
 //import { isCheckboxSelection, isRadioSelection } from '../../util/selection';
 
@@ -10,7 +11,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   styleUrls: ['./row-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccCheckboxComponent],
+  imports: [CommonModule, IccCheckboxComponent, IccCheckbox2Component],
 })
 export class IccRowSelectComponent {
   @Input() isSelected = false;

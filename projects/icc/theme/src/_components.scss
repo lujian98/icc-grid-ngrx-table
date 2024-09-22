@@ -5,6 +5,7 @@
 @import "../../option//src/option.component.theme";
 @import "../../form-field/src/form-field.component.theme";
 @import "../../checkbox/src/checkbox.component.theme";
+@import "../../checkbox2/src/checkbox.component.theme";
 
 @mixin icc-theme-components() {
   @include icc-layout-theme();
@@ -14,4 +15,5 @@
   @include icc-option-theme();
   @include icc-form-field-theme();
   @include icc-checkbox-theme();
+  @include icc-checkbox-theme2();
 }

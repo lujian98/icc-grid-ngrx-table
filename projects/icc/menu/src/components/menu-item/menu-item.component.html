@@ -10,7 +10,7 @@
   <span class="icc-menu-title"> {{ title }} </span>
 </a>
 
-<icc-checkbox
+<icc-checkbox2
   *ngIf="menuItem.checkbox"
   [checked]="!!menuItem.checked"
   [disabled]="!!menuItem.disabled"
@@ -18,7 +18,7 @@
 >
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>
-</icc-checkbox>
+</icc-checkbox2>
 
 <div *ngIf="!menuItem.link && !menuItem.checkbox" class="icc-menu-item">
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>

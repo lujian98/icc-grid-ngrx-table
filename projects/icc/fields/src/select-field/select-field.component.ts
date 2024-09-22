@@ -30,6 +30,7 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccCheckbox2Component } from '@icc/ui/checkbox2';
 import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
@@ -74,6 +75,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccOptionComponent,
     IccIconModule,
     IccCheckboxComponent,
+    IccCheckbox2Component,
     IccFilterPipe,
   ],
 })
@@ -261,6 +263,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   }
 
   onInputClick(checked: boolean, option: { [key: string]: T }, ref: any): void {
+    /*
     const value = this.selectedField.value;
     const find = [...value].find((item) => item[this.fieldConfig.optionKey] === option[this.fieldConfig.optionKey]);
     if (find && !checked) {
@@ -269,7 +272,8 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
       this.value = [...value, option];
     }
     ref.selected = checked;
-    this.changeDetectorRef.markForCheck();
+    */
+    //this.changeDetectorRef.markForCheck();
   }
 
   onChange(options: any): void {

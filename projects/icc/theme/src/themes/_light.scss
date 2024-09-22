@@ -32,6 +32,22 @@ $theme: (
 
   //checkbox
   icc-checkbox-input-color: red,
+
+  // Checkboxes
+  checkbox-border-color: #adadad,
+  checkbox-hover-border-color: #4b4f54,
+  checkbox-disabled-border-color: #dedede,
+  checkbox-background-color: #ffffff,
+  checkbox-disabled-background-color: #f1f1f1,
+  checkbox-checkmark-color: transparent,
+  checkbox-checked-checkmark-color: #f18a20,
+  checkbox-disabled-checkmark-color: #dedede,
+
+  // Checkmark (Table checks)
+  checkmark-color: #dedede,
+  checkmark-checked-color: #f18a20,
+  checkmark-background-color: transparent,
+  checkmark-checked-background-color: transparent,
 );
 
 $icc-themes: icc-register-theme($theme, light);
