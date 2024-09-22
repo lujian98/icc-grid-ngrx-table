@@ -23,29 +23,16 @@
     white-space: nowrap;
   }
 
-  /*
-
-      &:hover {
-      cursor: pointer;
-    }
-  border-top: 1px solid gray;
-  &:focus,
-  &:hover {
-    //background-color: lightgrey;
-  }
-
-  &.selected {
-    //color: cyan; //sun-theme(option-selected-text-color);
-    //background-color: cyan;
-    font-weight: bold;
-  }
-    */
-
   &.disabled {
-    // TODO may need disabled color?
     .icc-menu-title,
     .icc-menu-icon {
       opacity: 0.5;
+    }
+
+    .icc-menu-item {
+      &:hover {
+        cursor: default;
+      }
     }
   }
 
