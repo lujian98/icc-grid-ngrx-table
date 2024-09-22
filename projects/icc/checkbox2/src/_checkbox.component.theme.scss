@@ -27,8 +27,9 @@
       border: 1px solid;
       border-color: icc-theme(checkbox-border-color);
       border-radius: 3px;
-      width: 0.9rem;
-      height: 0.9rem;
+      min-width: 1rem;
+      width: 1rem;
+      height: 1rem;
       background: icc-theme(checkbox-background-color);
       position: relative;
 
@@ -42,8 +43,10 @@
     }
 
     input:checked + .icc-checkbox-container {
+      /*
+      min-width: 1rem;
       width: 1rem;
-      height: 1rem;
+      height: 1rem;*/
       icc-icon {
         color: icc-theme(checkbox-checked-checkmark-color);
       }

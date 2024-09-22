@@ -262,20 +262,6 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
     }
   }
 
-  onInputClick(checked: boolean, option: { [key: string]: T }, ref: any): void {
-    /*
-    const value = this.selectedField.value;
-    const find = [...value].find((item) => item[this.fieldConfig.optionKey] === option[this.fieldConfig.optionKey]);
-    if (find && !checked) {
-      this.value = [...value].filter((item) => item[this.fieldConfig.optionKey] !== option[this.fieldConfig.optionKey]);
-    } else if (!find && checked) {
-      this.value = [...value, option];
-    }
-    ref.selected = checked;
-    */
-    //this.changeDetectorRef.markForCheck();
-  }
-
   onChange(options: any): void {
     // console.log( 'qqqqqqqqqqqqqqq options=', options)
     this.selectionChange.emit([options]);

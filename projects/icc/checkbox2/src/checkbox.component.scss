@@ -1,6 +1,9 @@
 :host {
+  display: flex;
+
   label {
     display: inline-flex;
+    width: 100%;
     //padding: 0.25rem 0;
     position: relative;
     align-items: center;
@@ -18,4 +21,34 @@
     transform: translate(-50%, -50%);
     font-size: 0.75rem;
   }
+
+  .icc-checkbox-label {
+    display: inline-flex;
+    width: 100%;
+    padding-right: 10px;
+  }
 }
+
+/*
+  display: flex;
+
+  .form-field-checkbox {
+    padding: 0px 10px;
+    display: inline-flex;
+    width: 100%;
+    position: relative;
+    align-items: center;
+
+    input {
+      margin: 0px;
+      cursor: pointer;
+    }
+
+    .icc-checkbox-label {
+      display: inline-flex;
+      width: 100%;
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  }
+    */

@@ -29,27 +29,16 @@ export class IccMenuComponent {
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
 
-  onCheckboxChange(selectedItem: IccMenuItem): void {
-    //checkbox emit here
-    this.items = [...this.items].map((item) => {
-      return item.name === selectedItem.name
-        ? {
-            ...selectedItem,
-            selected: true,
-          }
-        : {
-            ...item,
-            selected: false,
-          };
-    });
-    this.selected = selectedItem;
-    this.iccMenuItemChange.emit(selectedItem);
-  }
-
   itemClicked(event: MouseEvent, selectedItem: IccMenuItem): void {
     if (selectedItem.disabled) {
       event.stopPropagation();
     } else {
+      if (selectedItem.checkbox) {
+        selectedItem = {
+          ...selectedItem,
+          checked: !selectedItem.checked,
+        };
+      }
       this.setSelected(selectedItem);
       this.iccMenuItemChange.emit(selectedItem);
     }

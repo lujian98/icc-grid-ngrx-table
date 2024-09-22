@@ -12,9 +12,9 @@
 
 <icc-checkbox2
   *ngIf="menuItem.checkbox"
+  class="icc-menu-item"
   [checked]="!!menuItem.checked"
   [disabled]="!!menuItem.disabled"
-  (change)="onCheckboxChange($event)"
 >
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title }} </span>

@@ -1,9 +1,3 @@
 <ng-container *ngFor="let item of items">
-  <icc-menu-item
-    *ngIf="!item.hidden"
-    [menuItem]="item"
-    (click)="itemClicked($event, item)"
-    (iccCheckboxChange)="onCheckboxChange($event)"
-  >
-  </icc-menu-item>
+  <icc-menu-item *ngIf="!item.hidden" [menuItem]="item" (click)="itemClicked($event, item)"> </icc-menu-item>
 </ng-container>
