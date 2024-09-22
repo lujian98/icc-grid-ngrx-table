@@ -1,10 +1,9 @@
 @mixin icc-layout-theme() {
   icc-layout-header,
   icc-layout-main,
-  icc-layout-sidebar,
-  icc-layout-center,
+  //icc-layout-sidebar,
+  //icc-layout-center,
   icc-layout-footer {
-    // background-color: icc-theme(background-basic-color-1);
     background-color: var(--app-background-color);
     color: icc-theme(app-text-basic-color);
   }

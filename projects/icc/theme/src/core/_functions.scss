@@ -1,5 +1,3 @@
-@import "../themes/mapping";
-
 @function icc-theme($key) {
   $value: ();
 
@@ -17,7 +15,7 @@
 }
 
 @function icc-register-theme($theme, $name) {
-  $theme: map-merge($icc-mapping, $theme);
+  //$theme: map-merge($icc-mapping, $theme);
   $new: (
     $name: $theme,
   );
