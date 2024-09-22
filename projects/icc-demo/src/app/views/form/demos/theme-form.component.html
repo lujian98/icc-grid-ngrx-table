@@ -1,8 +1,13 @@
 <!--
- <input type="range" value="0" min="0" max="100" step="1" (input)="onChange($event)" />
-<input type="range" value="268.8" min="0" max="360" step="0.1" />
+
+<label class="container">One
+  <input type="checkbox" checked="checked">
+  <span class="checkmark"></span>
+</label>
 -->
 
-<div class="theme">
-  <input type="range" value="268.8" min="0" max="360" step="1" (input)="onChange($event)" />
+<div class="form-field-checkbox">
+  <input #input type="checkbox" class="cdk-visually-hidden" [checked]="checked" />
+  <span class="checkmark"></span>
+  <label #label class="icc-checkbox-label"> Test </label>
 </div>

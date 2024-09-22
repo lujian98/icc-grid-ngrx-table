@@ -48,6 +48,7 @@ export class AppThemeFormDemoComponent {
     root.style.setProperty('--background-color', `oklch(${hue}% 0 0)`);
   }
 
+  checked = true;
   /*
 oklch(0% 0 0);
   .danger-alert {
