@@ -7,10 +7,8 @@ import {
   forwardRef,
   inject,
   Input,
-  OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,10 +22,10 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import { IccFormFieldComponent, IccInputDirective, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
-import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
-import { IccTextFieldConfig, defaultTextFieldConfig } from './models/text-field.model';
+import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
 
 @Component({
   selector: 'icc-text-field',
@@ -58,7 +56,7 @@ import { IccTextFieldConfig, defaultTextFieldConfig } from './models/text-field.
     IccIconModule,
   ],
 })
-export class TextFieldComponent implements OnChanges, OnDestroy, ControlValueAccessor, Validator {
+export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccTextFieldConfig;
@@ -98,19 +96,14 @@ export class TextFieldComponent implements OnChanges, OnDestroy, ControlValueAcc
     return !!this.field.value;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log( ' on change dddddddddddddddd')
-    //this.changeDetectorRef.markForCheck();
-  }
-
   onChange(): void {
-    //console.log('qqqqqqqqqqqqqqq onChange=', this.field.value);
     this.valueChange.emit(this.field.value);
   }
 
   onBlur(): void {}
 
-  clearSelected(): void {
+  clearValue(): void {
+    this.value = '';
     this.valueChange.emit('');
   }
 
