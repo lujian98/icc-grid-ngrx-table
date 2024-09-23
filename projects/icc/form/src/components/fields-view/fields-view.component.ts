@@ -27,13 +27,13 @@ import { IccFormFacade } from '../../+state/form.facade';
 import { IccFormConfig } from '../../models/form.model';
 
 @Component({
-  selector: 'icc-form-group',
-  templateUrl: './form-group.component.html',
+  selector: 'icc-fields-view',
+  templateUrl: './fields-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
-export class IccFormGroupComponent {
+export class IccFieldsViewComponent {
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 

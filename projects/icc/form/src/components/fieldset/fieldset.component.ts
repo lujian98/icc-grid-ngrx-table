@@ -25,14 +25,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../../+state/form.facade';
 import { IccFormConfig } from '../../models/form.model';
-import { IccFormGroupComponent } from '../form-group/form-group.component';
+import { IccFieldsViewComponent } from '../fields-view/fields-view.component';
 
 @Component({
   selector: 'icc-fieldset',
   templateUrl: './fieldset.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFormGroupComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsViewComponent],
 })
 export class IccFieldsetComponent {
   @Input() formConfig!: IccFormConfig;

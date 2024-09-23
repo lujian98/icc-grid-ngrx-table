@@ -21,7 +21,7 @@ import {
   Validator,
 } from '@angular/forms';
 import { TextFieldComponent } from '@icc/ui/fields';
-import { IccFormGroupComponent } from './form-group/form-group.component';
+import { IccFieldsViewComponent } from './fields-view/fields-view.component';
 import { IccFieldsetComponent } from './fieldset/fieldset.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -38,8 +38,8 @@ import { IccFormConfig } from '../models/form.model';
     ReactiveFormsModule,
     FormsModule,
     IccFieldsetComponent,
-    IccFormGroupComponent,
-    TextFieldComponent,
+    IccFieldsViewComponent,
+    //TextFieldComponent,
   ],
 })
 export class IccFormViewComponent {
