@@ -49,7 +49,7 @@ export class AppSimpleFromDemoComponent {
   fieldSet1 = [
     {
       fieldType: 'fieldset',
-      fieldLabel: 'Test field set 1234',
+      legend: 'Test field set 1234',
       formFields: this.formFields,
     },
     {

@@ -1,5 +1,5 @@
 <fieldset>
-  <legend>{{ fieldConfig.fieldLabel }}</legend>
+  <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend }}</legend>
 
   <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
     <icc-fields [form]="form" [fieldConfig]="fieldConfig" [formConfig]="formConfig"> </icc-fields>

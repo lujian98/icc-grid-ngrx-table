@@ -25,6 +25,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../../../form/src/+state/form.facade';
 import { IccFormConfig } from '../../../form/src/models/form.model';
+import { IccFieldsetConfig } from './models/fieldset.model';
 import { IccFieldsComponent } from '../fields.component';
 
 @Component({
@@ -38,14 +39,14 @@ export class IccFieldsetComponent {
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
-  private _fieldConfig!: any;
+  private _fieldConfig!: IccFieldsetConfig;
 
   @Input()
-  set fieldConfig(val: any) {
+  set fieldConfig(val: IccFieldsetConfig) {
     console.log(' fielset config=', val);
     this._fieldConfig = val;
   }
-  get fieldConfig(): any {
+  get fieldConfig(): IccFieldsetConfig {
     return this._fieldConfig;
   }
 
