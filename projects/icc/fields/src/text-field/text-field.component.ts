@@ -22,7 +22,8 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent, IccInputDirective, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import { IccInputDirective } from '../input/input.directive';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
