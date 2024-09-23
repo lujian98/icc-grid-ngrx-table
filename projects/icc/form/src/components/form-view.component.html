@@ -1,8 +1,10 @@
 <form [formGroup]="form">
-  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
-    <icc-text-field *ngIf="fieldConfig.fieldType === 'text'" [form]="form" [fieldConfig]="fieldConfig">
-    </icc-text-field>
-  </ng-container>
+  <!--
+
+  <icc-form-group [formConfig]="formConfig" [form]="form" [formFields]="formFields">
+  </icc-form-group>
+  -->
+  <icc-fieldset [formConfig]="formConfig" [form]="form" [formFields]="formFields"></icc-fieldset>
 </form>
 
 <div (click)="checkForm()">Check Form</div>

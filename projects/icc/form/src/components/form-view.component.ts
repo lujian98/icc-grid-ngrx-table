@@ -24,6 +24,8 @@ import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../+state/form.facade';
+import { IccFormGroupComponent } from './form-group/form-group.component';
+import { IccFieldsetComponent } from './fieldset/fieldset.component';
 import { IccFormConfig } from '../models/form.model';
 
 @Component({
@@ -31,7 +33,7 @@ import { IccFormConfig } from '../models/form.model';
   templateUrl: './form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, IccFormGroupComponent, FormsModule, IccFieldsetComponent],
 })
 export class IccFormViewComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
@@ -41,6 +43,7 @@ export class IccFormViewComponent {
   @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: any[]) {
+    // TODO fieldset here
     this._formFields = val;
     this.formFields.forEach((field) => {
       if (!this.form.get(field.fieldName)) {
@@ -70,11 +73,6 @@ export class IccFormViewComponent {
   form: FormGroup = new FormGroup({});
 
   constructor() {}
-
-  trackByIndex(index: number): number {
-    return index;
-  }
-  //@Output() submitEvent = new EventEmitter<Proxy>();
 
   checkForm(): void {
     console.log(' form=', this.form);
