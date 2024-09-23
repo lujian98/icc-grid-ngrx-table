@@ -31,6 +31,7 @@ import { IccFieldsComponent } from '../fields.component';
 @Component({
   selector: 'icc-fieldset',
   templateUrl: './fieldset.component.html',
+  styleUrls: ['./fieldset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsComponent],

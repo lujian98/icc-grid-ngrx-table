@@ -11,6 +11,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  border: 0;
 }
 
 @import "core/common";

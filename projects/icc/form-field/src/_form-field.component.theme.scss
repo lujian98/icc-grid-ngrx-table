@@ -58,4 +58,8 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  legend {
+    border-bottom: 1px solid icc-theme(app-border-basic-color);
+  }
 }
