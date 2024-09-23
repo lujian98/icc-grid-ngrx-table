@@ -20,7 +20,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFieldsViewComponent, IccFieldsetComponent } from '@icc/ui/fields';
+import { IccFieldsComponent, IccFieldsetComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../+state/form.facade';
@@ -31,7 +31,7 @@ import { IccFormConfig } from '../models/form.model';
   templateUrl: './form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsetComponent, IccFieldsViewComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsetComponent, IccFieldsComponent],
 })
 export class IccFormViewComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);

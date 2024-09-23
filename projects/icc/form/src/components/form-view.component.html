@@ -8,13 +8,13 @@
     >
     </icc-fieldset>
 
-    <icc-fields-view
+    <icc-fields
       *ngIf="fieldConfig.fieldType !== 'fieldset'"
       [form]="form"
       [fieldConfig]="fieldConfig"
       [formConfig]="formConfig"
     >
-    </icc-fields-view>
+    </icc-fields>
   </ng-container>
 </form>
 

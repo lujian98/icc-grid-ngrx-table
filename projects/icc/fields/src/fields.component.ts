@@ -23,17 +23,17 @@ import {
 import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IccFormFacade } from '../../../form/src/+state/form.facade';
-import { IccFormConfig } from '../../../form/src/models/form.model';
+import { IccFormFacade } from '../../form/src/+state/form.facade';
+import { IccFormConfig } from '../../form/src/models/form.model';
 
 @Component({
-  selector: 'icc-fields-view',
-  templateUrl: './fields-view.component.html',
+  selector: 'icc-fields',
+  templateUrl: './fields.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
-export class IccFieldsViewComponent {
+export class IccFieldsComponent {
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
