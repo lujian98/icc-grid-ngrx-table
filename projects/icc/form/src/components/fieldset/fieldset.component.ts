@@ -42,9 +42,18 @@ export class IccFieldsetComponent {
 
   @Input()
   set fieldConfig(val: any) {
+    console.log(' fielset config=', val);
     this._fieldConfig = val;
   }
   get fieldConfig(): any {
     return this._fieldConfig;
+  }
+
+  get formFields(): any[] {
+    return this.fieldConfig?.formFields;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }

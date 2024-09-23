@@ -1,5 +1,7 @@
 <fieldset>
-  <legend>Test Field Test</legend>
+  <legend>{{ fieldConfig.fieldLabel }}</legend>
 
-  <icc-form-group [form]="form" [fieldConfig]="fieldConfig" [formConfig]="formConfig"> </icc-form-group>
+  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
+    <icc-form-group [form]="form" [fieldConfig]="fieldConfig" [formConfig]="formConfig"> </icc-form-group>
+  </ng-container>
 </fieldset>

@@ -46,8 +46,21 @@ export class AppSimpleFromDemoComponent {
     },
   ];
 
+  fieldSet1 = [
+    {
+      fieldType: 'fieldset',
+      fieldLabel: 'Test field set 1234',
+      formFields: this.formFields,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+    },
+  ];
   values = {
     userName: 'user 77 2222',
     loginName: 'test login88',
+    email: 'test@email.com',
   };
 }

@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
     <icc-fieldset
-      *ngIf="fieldConfig.fieldName === 'userName'"
+      *ngIf="fieldConfig.fieldType === 'fieldset'"
       [form]="form"
       [fieldConfig]="fieldConfig"
       [formConfig]="formConfig"
@@ -9,7 +9,7 @@
     </icc-fieldset>
 
     <icc-form-group
-      *ngIf="fieldConfig.fieldName !== 'userName'"
+      *ngIf="fieldConfig.fieldType !== 'fieldset'"
       [form]="form"
       [fieldConfig]="fieldConfig"
       [formConfig]="formConfig"

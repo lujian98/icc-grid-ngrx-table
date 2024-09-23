@@ -52,17 +52,24 @@ export class IccFormViewComponent {
   set formFields(val: any[]) {
     console.log(' 111 formFields=', val);
     this._formFields = val;
-    this.formFields.forEach((field) => {
-      if (!this.form.get(field.fieldName)) {
-        this.form.addControl(field.fieldName, new FormControl<string>('', []));
-      }
-    });
+    this.addFormControls(this.formFields);
+
     if (this.formConfig.remoteFieldsConfig && !this.formConfig.remoteFormData) {
       this.form.patchValue({ ...this.values });
     }
   }
   get formFields(): any[] {
     return this._formFields;
+  }
+
+  private addFormControls(formFields: any[]): void {
+    formFields.forEach((field) => {
+      if (field.fieldType === 'fieldset') {
+        this.addFormControls(field.formFields);
+      } else if (!this.form.get(field.fieldName)) {
+        this.form.addControl(field.fieldName, new FormControl<string>('', []));
+      }
+    });
   }
 
   @Input()
