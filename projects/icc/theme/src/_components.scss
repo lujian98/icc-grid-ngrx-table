@@ -4,6 +4,8 @@
 @import "../../accordion/src/accordion.component.theme";
 @import "../../option//src/option.component.theme";
 @import "../../form-field/src/form-field.component.theme";
+@import "../../fields/src/fields.component.theme";
+
 @import "../../checkbox/src/checkbox.component.theme";
 
 @mixin icc-theme-components() {
@@ -13,5 +15,6 @@
   @include icc-accordion-theme();
   @include icc-option-theme();
   @include icc-form-field-theme();
+  @include icc-fields-theme();
   @include icc-checkbox-theme();
 }
