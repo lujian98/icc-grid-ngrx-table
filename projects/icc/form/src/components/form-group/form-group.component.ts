@@ -37,17 +37,13 @@ export class IccFormGroupComponent {
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
-  private _formFields: any[] = [];
+  private _fieldConfig!: any;
 
   @Input()
-  set formFields(val: any[]) {
-    this._formFields = val;
+  set fieldConfig(val: any) {
+    this._fieldConfig = val;
   }
-  get formFields(): any[] {
-    return this._formFields;
-  }
-
-  trackByIndex(index: number): number {
-    return index;
+  get fieldConfig(): any {
+    return this._fieldConfig;
   }
 }

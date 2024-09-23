@@ -35,19 +35,16 @@ import { IccFormGroupComponent } from '../form-group/form-group.component';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFormGroupComponent],
 })
 export class IccFieldsetComponent {
-  private _formFields: any[] = [];
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
-  @Input()
-  set formFields(val: any[]) {
-    this._formFields = val;
-  }
-  get formFields(): any[] {
-    return this._formFields;
-  }
+  private _fieldConfig!: any;
 
-  trackByIndex(index: number): number {
-    return index;
+  @Input()
+  set fieldConfig(val: any) {
+    this._fieldConfig = val;
+  }
+  get fieldConfig(): any {
+    return this._fieldConfig;
   }
 }

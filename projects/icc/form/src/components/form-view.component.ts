@@ -21,11 +21,11 @@ import {
   Validator,
 } from '@angular/forms';
 import { TextFieldComponent } from '@icc/ui/fields';
+import { IccFormGroupComponent } from './form-group/form-group.component';
+import { IccFieldsetComponent } from './fieldset/fieldset.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormGroupComponent } from './form-group/form-group.component';
-import { IccFieldsetComponent } from './fieldset/fieldset.component';
 import { IccFormConfig } from '../models/form.model';
 
 @Component({
@@ -33,7 +33,14 @@ import { IccFormConfig } from '../models/form.model';
   templateUrl: './form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IccFormGroupComponent, FormsModule, IccFieldsetComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccFieldsetComponent,
+    IccFormGroupComponent,
+    TextFieldComponent,
+  ],
 })
 export class IccFormViewComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
@@ -43,7 +50,7 @@ export class IccFormViewComponent {
   @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: any[]) {
-    // TODO fieldset here
+    console.log(' 111 formFields=', val);
     this._formFields = val;
     this.formFields.forEach((field) => {
       if (!this.form.get(field.fieldName)) {
@@ -73,6 +80,11 @@ export class IccFormViewComponent {
   form: FormGroup = new FormGroup({});
 
   constructor() {}
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+  //@Output() submitEvent = new EventEmitter<Proxy>();
 
   checkForm(): void {
     console.log(' form=', this.form);

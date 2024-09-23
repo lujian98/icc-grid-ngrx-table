@@ -1,10 +1,45 @@
 <form [formGroup]="form">
-  <!--
+  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
+    <icc-fieldset
+      *ngIf="fieldConfig.fieldName === 'userName'"
+      [form]="form"
+      [fieldConfig]="fieldConfig"
+      [formConfig]="formConfig"
+    >
+    </icc-fieldset>
 
-  <icc-form-group [formConfig]="formConfig" [form]="form" [formFields]="formFields">
-  </icc-form-group>
-  -->
-  <icc-fieldset [formConfig]="formConfig" [form]="form" [formFields]="formFields"></icc-fieldset>
+    <icc-form-group
+      *ngIf="fieldConfig.fieldName !== 'userName'"
+      [form]="form"
+      [fieldConfig]="fieldConfig"
+      [formConfig]="formConfig"
+    >
+    </icc-form-group>
+  </ng-container>
 </form>
 
 <div (click)="checkForm()">Check Form</div>
+
+<!--
+    <icc-form-group [form]="form" [fieldConfig]="fieldConfig" [formConfig]="formConfig">
+    </icc-form-group>
+
+
+fieldName
+:
+"userName"
+<form [formGroup]="form">
+  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
+    <icc-text-field *ngIf="fieldConfig.fieldType === 'text'" [form]="form" [fieldConfig]="fieldConfig">
+    </icc-text-field>
+  </ng-container>
+</form>
+
+<div (click)="checkForm()">Check Form</div>
+
+
+  <ng-container *ngFor="let formField of formFields; trackBy: trackByIndex; let index = index">
+   <icc-form-group [form]="form" [formField]="formField" [formConfig]="formConfig"
+   ></icc-form-group>
+  </ng-container>
+-->
