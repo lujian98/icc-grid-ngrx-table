@@ -23,17 +23,18 @@ import {
 import { TextFieldComponent } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IccFormFacade } from '../../+state/form.facade';
-import { IccFormConfig } from '../../models/form.model';
+import { IccFormFacade } from '../../../form/src/+state/form.facade';
+import { IccFormConfig } from '../../../form/src/models/form.model';
+import { IccFieldsViewComponent } from '../fields-view/fields-view.component';
 
 @Component({
-  selector: 'icc-fields-view',
-  templateUrl: './fields-view.component.html',
+  selector: 'icc-fieldset',
+  templateUrl: './fieldset.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsViewComponent],
 })
-export class IccFieldsViewComponent {
+export class IccFieldsetComponent {
   @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
@@ -41,9 +42,18 @@ export class IccFieldsViewComponent {
 
   @Input()
   set fieldConfig(val: any) {
+    console.log(' fielset config=', val);
     this._fieldConfig = val;
   }
   get fieldConfig(): any {
     return this._fieldConfig;
+  }
+
+  get formFields(): any[] {
+    return this.fieldConfig?.formFields;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }
