@@ -1,0 +1,25 @@
+<div class="icc-month-header">
+  <button
+    icc-button
+    class="icc-month-header__stepper icc-month-header__stepper--previous"
+    *ngIf="showMonthStepper"
+    (click)="stepMonth(-1)"
+    type="button"
+    appearance="ghost"
+  >
+    <icc-icon icon="chevron-left"></icc-icon>
+  </button>
+  <time class="icc-month-header__caption" [dateTime]="month | date: 'yyyy-MM'">
+    {{ month | monthAndYear: locale : monthAndYearFormat }}
+  </time>
+  <button
+    icc-button
+    class="icc-month-header__stepper icc-month-header__stepper--next"
+    *ngIf="showMonthStepper"
+    (click)="stepMonth(1)"
+    type="button"
+    appearance="ghost"
+  >
+    <icc-icon icon="chevron-right"></icc-icon>
+  </button>
+</div>

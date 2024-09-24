@@ -1,0 +1,23 @@
+@import "../styles/calendar-constants";
+@import "../styles/calendar-mixins";
+
+.icc-month-header {
+  @include calendarGrid();
+
+  &__caption {
+    @include calendarGridCell();
+    flex-grow: 1;
+
+    grid-column: 2 / span 5;
+  }
+
+  &__stepper {
+    @include calendarGridCell();
+
+    height: $cal-cell-size !important;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+  }
+}

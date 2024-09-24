@@ -1,0 +1,5 @@
+@mixin icc-calendar-theme() {
+  .icc-calendar {
+    background-color: icc-theme(calendar-panel-background-color);
+  }
+}

@@ -1,0 +1,25 @@
+@import "utils";
+
+$num-weekdays: 7;
+$cal-cell-size: pxToRem(42);
+
+$first-weekday-to-weekdays: (
+  sunday: (
+    sunday,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+  ),
+  monday: (
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+  ),
+);

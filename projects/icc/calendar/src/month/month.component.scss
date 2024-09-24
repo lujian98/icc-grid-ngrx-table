@@ -1,0 +1,31 @@
+@import "../styles/calendar-constants";
+@import "../styles/calendar-mixins";
+
+.icc-month {
+  @include calendarGrid();
+
+  @each $first-weekday, $weekdays in $first-weekday-to-weekdays {
+    @each $day in $weekdays {
+      :host-context(.icc-calendar--first-weekday-#{$first-weekday}) &--first-day-#{$day} {
+        time:first-child {
+          margin-left: (index($weekdays, $day) - 1) * $cal-cell-size;
+
+          grid-column: index($weekdays, $day);
+          @supports (display: grid) {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &__day {
+    @include calendarGridCell();
+    cursor: pointer;
+    border-radius: 3px;
+
+    &--today {
+      border: 1px solid;
+    }
+  }
+}

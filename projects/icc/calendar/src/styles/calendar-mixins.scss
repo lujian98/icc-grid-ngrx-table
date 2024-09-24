@@ -1,0 +1,32 @@
+@import "calendar-constants";
+
+@mixin calendarGrid() {
+  flex-wrap: wrap;
+  width: $num-weekdays * $cal-cell-size;
+  margin: 0 auto;
+  line-height: $cal-cell-size;
+
+  // grid
+  display: grid;
+  grid-template-columns: repeat($num-weekdays, $cal-cell-size);
+  grid-auto-rows: $cal-cell-size;
+
+  // IE does not support the @supports query
+  @supports (display: grid) {
+    width: auto;
+    margin: 0;
+    line-height: initial;
+    // the flex fallback needs justify-content: flex-start (default)
+    justify-content: center;
+  }
+}
+
+@mixin calendarGridCell() {
+  // flex item fallback
+  flex-basis: $cal-cell-size;
+
+  // grid
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

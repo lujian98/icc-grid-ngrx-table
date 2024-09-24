@@ -1,0 +1,16 @@
+<div
+  class="icc-month"
+  [ngClass]="['icc-month--first-day-' + firstDayOfMonth]"
+  (click)="onDayOfMonthClick($event)"
+  tabindex="-1"
+>
+  <time
+    class="icc-month__day"
+    *ngFor="let day of daysOfMonth"
+    [dateTime]="day | localeDate: 'yyyy-MM-dd'"
+    [class.icc-month__day--today]="isCurrent(day)"
+    [class.icc-month__day--selected]="isSelected(day)"
+    [class.icc-month__day--disabled]="isDisabled(day)"
+    >{{ day | localeDate: "d" }}</time
+  >
+</div>

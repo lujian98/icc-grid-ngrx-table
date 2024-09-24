@@ -16,3 +16,19 @@
 <div>
   <icc-number-field [fieldConfig]="numberConfig" [value]="numberValue"></icc-number-field>
 </div>
+
+<form [formGroup]="showcaseForm">
+  <icc-form-field>
+    <icc-label>Date:</icc-label>
+    <input
+      type="text"
+      iccInput
+      iccCalendarToggle
+      readonly
+      placeholder="Select Date"
+      [calendarModal]="datepicker"
+      [value]="datepickerControl.value | localeDate"
+    />
+    <icc-calendar #datepicker [formControl]="datepickerControl"></icc-calendar>
+  </icc-form-field>
+</form>

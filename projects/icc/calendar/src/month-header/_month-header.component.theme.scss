@@ -1,0 +1,8 @@
+@mixin icc-calendar-month-header-theme() {
+  icc-month-header {
+    .icc-month-header {
+      background-color: icc-theme(calendar-month-header-background-color);
+      color: icc-theme(calendar-month-header-text-color);
+    }
+  }
+}

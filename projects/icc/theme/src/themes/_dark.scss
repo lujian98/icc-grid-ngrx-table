@@ -44,6 +44,19 @@ $theme: (
   checkmark-checked-color: #f18a20,
   checkmark-background-color: transparent,
   checkmark-checked-background-color: transparent,
+
+  calendar-panel-background-color: #191919,
+  calendar-weekdays-text-color: #757575,
+
+  calendar-month-day-text-color: #adadad,
+  calendar-month-today-border-color: #adadad,
+  calendar-month-day-selected-text-color: #4b4f54,
+  calendar-month-day-selected-background-color: #f18a20,
+  calendar-month-day-hover-text-color: #adadad,
+  calendar-month-day-hover-background-color: #4b4f54,
+
+  calendar-month-header-background-color: #4b4f54,
+  calendar-month-header-text-color: #adadad,
 );
 
 $icc-themes: icc-register-theme($theme, dark);

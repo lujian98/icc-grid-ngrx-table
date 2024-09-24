@@ -1,0 +1,21 @@
+@mixin icc-calendar-month-theme() {
+  icc-month {
+    .icc-month__day {
+      color: icc-theme(calendar-month-day-text-color);
+
+      &--today {
+        border-color: icc-theme(calendar-month-today-border-color);
+      }
+
+      &--selected {
+        color: icc-theme(calendar-month-day-selected-text-color);
+        background-color: icc-theme(calendar-month-day-selected-background-color);
+      }
+
+      &:hover {
+        color: icc-theme(calendar-month-day-hover-text-color);
+        background-color: icc-theme(calendar-month-day-hover-background-color);
+      }
+    }
+  }
+}

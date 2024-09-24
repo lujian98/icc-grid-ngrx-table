@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
+import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
 import {
   IccNumberFieldComponent,
   defaultNumberFieldConfig,
@@ -21,11 +25,17 @@ import {
   imports: [
     CommonModule,
     IccFormComponent,
+    ReactiveFormsModule,
     IccNumberFieldComponent,
     IccCheckboxFieldComponent,
     IccDisplayFieldComponent,
     IccHiddenFieldComponent,
     IccCheckboxComponent,
+    IccCalendarModule,
+    IccLocaleDatePipe,
+    IccFormFieldComponent,
+    IccLabelDirective,
+    IccSuffixDirective,
   ],
 })
 export class AppThemeFormDemoComponent {
@@ -51,4 +61,7 @@ export class AppThemeFormDemoComponent {
     fieldName: 'hidden67',
   };
   hiddenValue = 'H773333';
+
+  datepickerControl = new FormControl();
+  showcaseForm = new FormGroup({});
 }

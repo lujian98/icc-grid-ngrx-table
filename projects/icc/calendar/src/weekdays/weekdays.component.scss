@@ -1,0 +1,14 @@
+@import "../styles/calendar-mixins";
+
+.icc-weekdays {
+  @include calendarGrid();
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  &__day {
+    @include calendarGridCell();
+    font-variant: none;
+    text-decoration: none;
+  }
+}

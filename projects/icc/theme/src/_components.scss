@@ -5,8 +5,12 @@
 @import "../../option//src/option.component.theme";
 @import "../../form-field/src/form-field.component.theme";
 @import "../../fields/src/fields.component.theme";
-
 @import "../../checkbox/src/checkbox.component.theme";
+
+@import "../../calendar/src/calendar.component.theme";
+@import "../../calendar/src/weekdays/weekdays.component.theme";
+@import "../../calendar/src/month/month.component.theme";
+@import "../../calendar/src/month-header/month-header.component.theme";
 
 @mixin icc-theme-components() {
   @include icc-layout-theme();
@@ -17,4 +21,9 @@
   @include icc-form-field-theme();
   @include icc-fields-theme();
   @include icc-checkbox-theme();
+
+  @include icc-calendar-theme();
+  @include icc-calendar-weekdays-theme();
+  @include icc-calendar-month-theme();
+  @include icc-calendar-month-header-theme();
 }
