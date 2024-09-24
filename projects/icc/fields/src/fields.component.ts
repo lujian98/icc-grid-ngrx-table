@@ -12,15 +12,15 @@ import { IccFormField } from './models/fields.model';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccTextFieldComponent],
 })
 export class IccFieldsComponent {
+  private _fieldConfig!: Partial<IccFormField>;
+
   @Input() form!: FormGroup;
 
-  private _fieldConfig!: IccFormField;
-
   @Input()
-  set fieldConfig(val: IccFormField) {
-    this._fieldConfig = val;
+  set fieldConfig(val: Partial<IccFormField>) {
+    this._fieldConfig = { ...val };
   }
-  get fieldConfig(): IccFormField {
+  get fieldConfig(): Partial<IccFormField> {
     return this._fieldConfig;
   }
 }

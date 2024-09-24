@@ -20,7 +20,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
 
   @Input()
   set record(data: T) {
-    this._record = data;
+    this._record = { ...data };
     if (this._componentRef) {
       this._componentRef.instance.record = this.record;
     }

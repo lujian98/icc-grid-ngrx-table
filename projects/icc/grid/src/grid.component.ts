@@ -27,8 +27,8 @@ export class IccGridComponent<T> implements OnDestroy {
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   @Input()
-  set gridConfig(value: IccGridConfig) {
-    this.initGridConfig(value);
+  set gridConfig(value: Partial<IccGridConfig>) {
+    this.initGridConfig({ ...defaultGridConfig, ...value });
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -48,7 +48,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
     if (!this.gridConfig) {
-      this.initGridConfig(defaultGridConfig);
+      this.initGridConfig({ ...defaultGridConfig });
     }
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
       this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
@@ -60,7 +60,7 @@ export class IccGridComponent<T> implements OnDestroy {
 
   @Input()
   set gridData(val: IccGridData<T>) {
-    this._gridData = val;
+    this._gridData = { ...val };
     if (!this.gridConfig.remoteGridData && this.gridData) {
       this.gridFacade.setGridInMemoryData(this.gridId, this.gridData);
     }

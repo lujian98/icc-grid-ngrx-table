@@ -38,8 +38,8 @@ export class IccD3Component<T> implements OnDestroy {
   data$!: Observable<T[]>;
 
   @Input()
-  set d3Config(value: IccD3Config) {
-    this.initChartConfigs({ ...value });
+  set d3Config(value: Partial<IccD3Config>) {
+    this.initChartConfigs({ ...defaultD3Config, ...value });
   }
   get d3Config(): IccD3Config {
     return this._d3Config;

@@ -23,7 +23,7 @@ export class IccGridFooterComponent implements OnDestroy {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    this._gridConfig = val;
+    this._gridConfig = { ...val };
     this.page = val.page;
   }
   get gridConfig(): IccGridConfig {

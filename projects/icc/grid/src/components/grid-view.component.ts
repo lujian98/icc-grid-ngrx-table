@@ -42,7 +42,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @Input()
   set columns(val: IccColumnConfig[]) {
-    this._columns = val;
+    this._columns = [...val];
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -52,7 +52,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridConfig(val: IccGridConfig) {
-    this._gridConfig = val;
+    this._gridConfig = { ...val };
     this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);

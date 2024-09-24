@@ -22,7 +22,7 @@ export class AppThemeFormDemoComponent {
   checked = true;
 
   numberConfig = {
-    ...defaultNumberFieldConfig,
+    //...defaultNumberFieldConfig,
     fieldLabel: 'Number Field',
   };
   numberValue = 50;

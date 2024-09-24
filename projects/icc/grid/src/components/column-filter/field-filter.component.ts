@@ -28,7 +28,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    this._gridConfig = value;
+    this._gridConfig = { ...value };
     //if (this.column.filterField === 'select') {
     this.checkField();
     // }

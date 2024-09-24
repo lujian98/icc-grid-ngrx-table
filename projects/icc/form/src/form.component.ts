@@ -27,8 +27,8 @@ export class IccFormComponent {
   formData$!: Observable<any>;
 
   @Input()
-  set formConfig(value: IccFormConfig) {
-    this.initFormConfig({ ...value });
+  set formConfig(formConfig: Partial<IccFormConfig>) {
+    this.initFormConfig({ ...defaultFormConfig, ...formConfig });
   }
   get formConfig(): IccFormConfig {
     return this._formConfig;

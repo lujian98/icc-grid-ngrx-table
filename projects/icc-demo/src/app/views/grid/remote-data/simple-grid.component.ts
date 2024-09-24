@@ -11,8 +11,8 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
   imports: [CommonModule, IccGridComponent],
 })
 export class AppSimpleGridComponent {
-  gridConfig: IccGridConfig = {
-    ...defaultGridConfig,
+  gridConfig: Partial<IccGridConfig> = {
+    //...defaultGridConfig,
     urlKey: 'DCR',
     //columnSort: true,
     //columnFilter: true,

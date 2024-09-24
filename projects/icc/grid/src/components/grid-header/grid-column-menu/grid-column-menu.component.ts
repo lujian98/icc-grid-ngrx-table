@@ -44,7 +44,7 @@ export class IccGridColumnMenuComponent {
   @Input() column!: IccColumnConfig;
 
   set menuItems(val: IccMenuItem[]) {
-    this._menuItems = val;
+    this._menuItems = [...val];
   }
   get menuItems(): IccMenuItem[] {
     return this._menuItems;

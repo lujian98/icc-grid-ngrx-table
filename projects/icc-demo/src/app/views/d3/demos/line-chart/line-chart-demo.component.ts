@@ -26,7 +26,7 @@ export class AppLineChartDemoComponent implements OnInit {
   };
 
   d3Config1 = {
-    ...defaultD3Config,
+    //...defaultD3Config,
     options: this.options,
   };
 
@@ -35,7 +35,7 @@ export class AppLineChartDemoComponent implements OnInit {
   };
 
   d3Config2 = {
-    ...defaultD3Config,
+    //...defaultD3Config,
     options: this.options2,
   };
 
