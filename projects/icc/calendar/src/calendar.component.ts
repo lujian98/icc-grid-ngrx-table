@@ -1,5 +1,5 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { getLocaleFirstDayOfWeek, WeekDay } from '@angular/common';
+import { getLocaleFirstDayOfWeek, WeekDay } from './common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
