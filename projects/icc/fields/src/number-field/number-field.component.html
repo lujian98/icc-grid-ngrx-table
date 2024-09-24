@@ -14,20 +14,6 @@
       (blur)="onBlur()"
       placeholder="{{ fieldConfig.placeholder }}"
     />
-    <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
   </icc-form-field>
 </ng-container>
-
-<!--
-
-  <input  
-    [min]="column.minValue" [max]="column.maxValue" [step]="step"
-
-    (click)="click($event)"
-    (blur)="onBlur()"
-    (focus)="focus($event)"
-    (wheel)="wheel($event)"
-    (keydown)="keydown($event)"
-    (keyup)="valueChanged($event)"
-    (input)="valueChanged($event)" [placeholder]="message">
--->

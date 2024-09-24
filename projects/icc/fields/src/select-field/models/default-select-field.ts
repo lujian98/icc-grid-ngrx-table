@@ -15,6 +15,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   optionLabel: 'title',
   optionKey: 'name',
   placeholder: '',
+  clearValue: true,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {

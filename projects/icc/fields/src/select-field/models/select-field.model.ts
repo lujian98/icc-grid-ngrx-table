@@ -13,6 +13,7 @@ export interface IccSelectFieldConfig {
   optionLabel: string;
   optionKey: string;
   placeholder: string;
+  clearValue?: boolean;
 }
 
 export interface SelectFieldState {
