@@ -7,6 +7,7 @@ import {
   defaultNumberFieldConfig,
   IccDisplayFieldComponent,
   IccCheckboxFieldComponent,
+  IccHiddenFieldComponent,
   IccDisplayFieldConfig,
   defaultDisplayFieldConfig,
 } from '@icc/ui/fields';
@@ -23,6 +24,7 @@ import {
     IccNumberFieldComponent,
     IccCheckboxFieldComponent,
     IccDisplayFieldComponent,
+    IccHiddenFieldComponent,
     IccCheckboxComponent,
   ],
 })
@@ -44,4 +46,9 @@ export class AppThemeFormDemoComponent {
     fieldLabel: 'Checkbox Field',
   };
   checkboxValue = true;
+
+  hiddenConfig = {
+    fieldName: 'hidden67',
+  };
+  hiddenValue = 'H773333';
 }
