@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { IccSelectFieldConfig, IccSelectFieldComponent } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -12,12 +12,12 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   imports: [CommonModule, IccSelectFieldComponent, IccFieldFilterComponent],
 })
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
-  fieldConfig!: IccSelectFieldConfig;
+  fieldConfig!: Partial<IccSelectFieldConfig>;
 
   override checkField(): void {
     this.fieldConfig = {
-      ...defaultSelectFieldConfig,
       fieldName: this.column.name,
+      clearValue: true,
       urlKey: this.gridConfig.urlKey,
       remoteOptions: true,
       placeholder: 'Filter ...',

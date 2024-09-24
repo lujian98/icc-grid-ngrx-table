@@ -13,6 +13,6 @@
       (blur)="onBlur()"
       placeholder="{{ fieldConfig.placeholder }}"
     />
-    <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
   </icc-form-field>
 </ng-container>
