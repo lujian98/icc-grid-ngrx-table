@@ -3,6 +3,17 @@
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
+
+    ::ng-deep input {
+      width: 100%;
+      text-overflow: ellipsis;
+    }
+
+    ::ng-deep icc-icon {
+      padding-left: 5px;
+      font-size: 12px;
+      cursor: pointer;
+    }
   }
 
   .icc-form-field-flex {
