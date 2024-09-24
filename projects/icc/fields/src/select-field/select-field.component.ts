@@ -125,7 +125,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       if (!this.form) {
         this.form = new FormGroup({
-          [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
+          [this.fieldConfig.fieldName!]: new FormControl<{ [key: string]: T }>({}),
         });
       }
       this.value = this.getInitValue(this.value);
@@ -207,7 +207,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   autocompleteClose!: boolean;
 
   get selectedField(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName)!;
+    return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
   get hasValue(): boolean {
@@ -303,7 +303,7 @@ export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor,
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName]: true };
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 
   ngOnDestroy(): void {

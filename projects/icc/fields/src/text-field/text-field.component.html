@@ -7,7 +7,7 @@
       iccInput
       type="text"
       autocomplete="off"
-      [formControlName]="fieldConfig.fieldName"
+      [formControlName]="fieldConfig.fieldName!"
       (click)="$event.stopPropagation()"
       (keyup)="onChange()"
       (blur)="onBlur()"

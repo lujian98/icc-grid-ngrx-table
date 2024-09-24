@@ -1,6 +1,6 @@
 export interface IccTextFieldConfig {
   fieldType: string;
-  fieldName: string;
+  fieldName?: string;
   fieldLabel?: string;
   placeholder?: string;
 }

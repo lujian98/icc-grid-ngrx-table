@@ -2,6 +2,7 @@ import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model'
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   fieldId: '191cf2bb6b5', // auto generated unique id
+  fieldType: 'select',
   fieldName: 'selectfield', // form field name need set
   urlKey: 'select', // Only for remote field config and options
   viewportReady: false,

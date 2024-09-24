@@ -69,7 +69,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
     this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
     if (!this.form) {
       this.form = new FormGroup({
-        [this.fieldConfig.fieldName]: new FormControl<string>(''),
+        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
       });
     }
   }
@@ -90,7 +90,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   @Output() valueChange = new EventEmitter<string>(true);
 
   get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName)!;
+    return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
   get hasValue(): boolean {
@@ -126,7 +126,7 @@ export class TextFieldComponent implements OnDestroy, ControlValueAccessor, Vali
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName]: true };
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 
   ngOnDestroy(): void {

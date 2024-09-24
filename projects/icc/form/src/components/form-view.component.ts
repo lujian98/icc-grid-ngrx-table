@@ -25,6 +25,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
+import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
 @Component({
   selector: 'icc-form-view',
@@ -35,12 +36,12 @@ import { IccFormConfig } from '../models/form.model';
 })
 export class IccFormViewComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  private _formFields: any[] = [];
+  private _formFields: IccFormField[] = [];
   private _values: any;
 
   @Input() formConfig!: IccFormConfig;
   @Input()
-  set formFields(val: any[]) {
+  set formFields(val: IccFormField[]) {
     console.log(' 111 formFields=', val);
     this._formFields = val;
     this.addFormControls(this.formFields);
@@ -53,12 +54,12 @@ export class IccFormViewComponent {
     return this._formFields;
   }
 
-  private addFormControls(formFields: any[]): void {
+  private addFormControls(formFields: IccFormField[]): void {
     formFields.forEach((field) => {
       if (field.fieldType === 'fieldset') {
-        this.addFormControls(field.formFields);
-      } else if (!this.form.get(field.fieldName)) {
-        this.form.addControl(field.fieldName, new FormControl<string>('', []));
+        this.addFormControls((field as IccFieldsetConfig).formFields);
+      } else if (!this.form.get(field.fieldName!)) {
+        this.form.addControl(field.fieldName!, new FormControl<string>('', []));
       }
     });
   }

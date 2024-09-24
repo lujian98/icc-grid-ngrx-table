@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
+import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
 @Component({
   selector: 'app-simple-form',
@@ -33,7 +34,7 @@ export class AppSimpleFromDemoComponent {
     remoteFormConfig: true,
   };
 
-  formFields = [
+  formFields: IccFormField[] = [
     {
       fieldType: 'text',
       fieldName: 'userName',
@@ -46,9 +47,10 @@ export class AppSimpleFromDemoComponent {
     },
   ];
 
-  fieldSet1 = [
+  fieldSet1: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'test',
       legend: 'Test field set 1234',
       formFields: this.formFields,
     },

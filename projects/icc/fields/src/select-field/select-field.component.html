@@ -9,7 +9,7 @@
         type="text"
         autocomplete="off"
         [readonly]="!!fieldConfig.selectOnly"
-        [formControlName]="fieldConfig.fieldName"
+        [formControlName]="fieldConfig.fieldName!"
         (isOverlayOpen)="overlayOpen($event)"
         (change)="onChange($event)"
         (blur)="onBlur()"

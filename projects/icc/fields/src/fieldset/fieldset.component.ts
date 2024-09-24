@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccFieldsComponent } from '../fields.component';
 import { IccFieldsetConfig } from './models/fieldset.model';
+import { IccFormField } from '../models/fields.model';
 
 @Component({
   selector: 'icc-fieldset',
@@ -15,6 +16,7 @@ import { IccFieldsetConfig } from './models/fieldset.model';
 export class IccFieldsetComponent {
   private _fieldConfig!: IccFieldsetConfig;
   @Input() form!: FormGroup;
+
   @Input()
   set fieldConfig(val: IccFieldsetConfig) {
     // console.log(' fielset config=', val);
@@ -24,7 +26,7 @@ export class IccFieldsetComponent {
     return this._fieldConfig;
   }
 
-  get formFields(): any[] {
+  get formFields(): IccFormField[] {
     return this.fieldConfig?.formFields;
   }
 

@@ -7,6 +7,8 @@ import { IccFormFacade } from './+state/form.facade';
 import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
 import { IccFormConfig } from './models/form.model';
+import { IccFormField } from '@icc/ui/fields';
+
 @Component({
   selector: 'icc-form',
   templateUrl: './form.component.html',
@@ -18,10 +20,10 @@ import { IccFormConfig } from './models/form.model';
 export class IccFormComponent {
   private formFacade = inject(IccFormFacade);
   private _formConfig!: IccFormConfig;
-  private _formFields: any[] = [];
+  private _formFields: IccFormField[] = [];
   private formId = uniqueId(16);
   formConfig$!: Observable<IccFormConfig>;
-  formFieldsConfig$!: Observable<any[]>;
+  formFieldsConfig$!: Observable<IccFormField[]>;
   formData$!: Observable<any>;
 
   @Input()
@@ -44,7 +46,7 @@ export class IccFormComponent {
   }
 
   @Input()
-  set formFields(val: any[]) {
+  set formFields(val: IccFormField[]) {
     this._formFields = val;
     if (!this.formConfig) {
       this.initFormConfig({ ...defaultFormConfig });
@@ -53,7 +55,7 @@ export class IccFormComponent {
       this.formFacade.setFormFieldsConfig(this.formConfig, this.formFields);
     }
   }
-  get formFields(): any[] {
+  get formFields(): IccFormField[] {
     return this._formFields;
   }
 

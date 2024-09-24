@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextFieldComponent } from './text-field/text-field.component';
+import { IccFormField } from './models/fields.model';
 
 @Component({
   selector: 'icc-fields',
@@ -13,13 +14,13 @@ import { TextFieldComponent } from './text-field/text-field.component';
 export class IccFieldsComponent {
   @Input() form!: FormGroup;
 
-  private _fieldConfig!: any;
+  private _fieldConfig!: IccFormField;
 
   @Input()
-  set fieldConfig(val: any) {
+  set fieldConfig(val: IccFormField) {
     this._fieldConfig = val;
   }
-  get fieldConfig(): any {
+  get fieldConfig(): IccFormField {
     return this._fieldConfig;
   }
 }
