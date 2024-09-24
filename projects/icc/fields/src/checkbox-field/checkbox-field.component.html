@@ -1,0 +1,8 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field>
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
+  </icc-form-field>
+</ng-container>

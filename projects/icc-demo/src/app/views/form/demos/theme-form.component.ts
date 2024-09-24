@@ -6,6 +6,7 @@ import {
   IccNumberFieldComponent,
   defaultNumberFieldConfig,
   IccDisplayFieldComponent,
+  IccCheckboxFieldComponent,
   IccDisplayFieldConfig,
   defaultDisplayFieldConfig,
 } from '@icc/ui/fields';
@@ -16,7 +17,14 @@ import {
   styleUrls: ['./theme-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormComponent, IccNumberFieldComponent, IccDisplayFieldComponent, IccCheckboxComponent],
+  imports: [
+    CommonModule,
+    IccFormComponent,
+    IccNumberFieldComponent,
+    IccCheckboxFieldComponent,
+    IccDisplayFieldComponent,
+    IccCheckboxComponent,
+  ],
 })
 export class AppThemeFormDemoComponent {
   checked = true;
@@ -31,4 +39,9 @@ export class AppThemeFormDemoComponent {
     fieldLabel: 'Display Field',
   };
   diaplayValue = 'Test Display field';
+
+  checkboxConfig = {
+    fieldLabel: 'Checkbox Field',
+  };
+  checkboxValue = true;
 }
