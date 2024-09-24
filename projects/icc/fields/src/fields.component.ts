@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextFieldComponent } from './text-field/text-field.component';
+import { IccTextFieldComponent } from './text-field/text-field.component';
 import { IccFormField } from './models/fields.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { IccFormField } from './models/fields.model';
   templateUrl: './fields.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccTextFieldComponent],
 })
 export class IccFieldsComponent {
   @Input() form!: FormGroup;

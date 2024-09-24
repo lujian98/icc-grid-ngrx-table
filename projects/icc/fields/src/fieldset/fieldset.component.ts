@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccFieldsComponent } from '../fields.component';
-import { IccFieldsetConfig } from './models/fieldset.model';
 import { IccFormField } from '../models/fields.model';
+import { IccFieldsetConfig } from './models/fieldset.model';
 
 @Component({
   selector: 'icc-fieldset',

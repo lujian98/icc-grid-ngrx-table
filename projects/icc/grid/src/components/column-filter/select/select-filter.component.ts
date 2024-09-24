@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   styleUrls: ['select-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, SelectFieldComponent, IccFieldFilterComponent],
+  imports: [CommonModule, IccSelectFieldComponent, IccFieldFilterComponent],
 })
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
   fieldConfig!: IccSelectFieldConfig;

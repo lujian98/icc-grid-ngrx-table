@@ -1,0 +1,33 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field>
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <input
+      iccInput
+      type="number"
+      autocomplete="off"
+      [formControlName]="fieldConfig.fieldName!"
+      (click)="$event.stopPropagation()"
+      (keyup)="onChange()"
+      (wheel)="onChange()"
+      (blur)="onBlur()"
+      placeholder="{{ fieldConfig.placeholder }}"
+    />
+    <icc-icon *ngIf="hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+  </icc-form-field>
+</ng-container>
+
+<!--
+
+  <input  
+    [min]="column.minValue" [max]="column.maxValue" [step]="step"
+
+    (click)="click($event)"
+    (blur)="onBlur()"
+    (focus)="focus($event)"
+    (wheel)="wheel($event)"
+    (keydown)="keydown($event)"
+    (keyup)="valueChanged($event)"
+    (input)="valueChanged($event)" [placeholder]="message">
+-->

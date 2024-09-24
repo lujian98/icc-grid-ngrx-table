@@ -48,12 +48,12 @@ import { IccSelectFieldConfig } from './models/select-field.model';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectFieldComponent),
+      useExisting: forwardRef(() => IccSelectFieldComponent),
       multi: true,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => SelectFieldComponent),
+      useExisting: forwardRef(() => IccSelectFieldComponent),
       multi: true,
     },
   ],
@@ -78,7 +78,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFilterPipe,
   ],
 })
-export class SelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
+export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);

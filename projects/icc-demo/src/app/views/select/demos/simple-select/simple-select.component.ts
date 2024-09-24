@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccSelectFieldConfig, SelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { State, STATES } from '../../../../data/states';
 
 @Component({
@@ -9,7 +9,7 @@ import { State, STATES } from '../../../../data/states';
   styleUrls: ['./simple-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, SelectFieldComponent],
+  imports: [CommonModule, IccSelectFieldComponent],
 })
 export class AppSimpleSelectComponent {
   states = STATES;

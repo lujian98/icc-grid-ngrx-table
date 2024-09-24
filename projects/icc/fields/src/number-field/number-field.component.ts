@@ -26,21 +26,21 @@ import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@i
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
-import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
+import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-field.model';
 
 @Component({
-  selector: 'icc-text-field',
-  templateUrl: './text-field.component.html',
-  styleUrls: ['./text-field.component.scss'],
+  selector: 'icc-number-field',
+  templateUrl: './number-field.component.html',
+  styleUrls: ['./number-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => IccTextFieldComponent),
+      useExisting: forwardRef(() => IccNumberFieldComponent),
       multi: true,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => IccTextFieldComponent),
+      useExisting: forwardRef(() => IccNumberFieldComponent),
       multi: true,
     },
   ],
@@ -57,44 +57,45 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccIconModule,
   ],
 })
-export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccTextFieldConfig;
-  private _value!: string;
+  private _fieldConfig!: IccNumberFieldConfig;
+  private _value!: number | null;
   @Input() form!: FormGroup;
 
   @Input()
-  set fieldConfig(fieldConfig: IccTextFieldConfig) {
-    this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
+  set fieldConfig(fieldConfig: IccNumberFieldConfig) {
+    this._fieldConfig = { ...defaultNumberFieldConfig, ...fieldConfig };
     if (!this.form) {
       this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
+        [this.fieldConfig.fieldName!]: new FormControl<number | null>(null),
       });
     }
   }
-  get fieldConfig(): IccTextFieldConfig {
+  get fieldConfig(): IccNumberFieldConfig {
     return this._fieldConfig;
   }
 
   @Input()
-  set value(val: string) {
+  set value(val: number | null) {
     this._value = val;
     this.field.setValue(val);
   }
 
-  get value(): string {
+  get value(): number | null {
     return this._value;
   }
 
-  @Output() valueChange = new EventEmitter<string>(true);
+  @Output() valueChange = new EventEmitter<number | null>(true);
 
   get field(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    // TODO zero
+    return !!this.field.value || this.field.value === 0;
   }
 
   onChange(): void {
@@ -104,8 +105,8 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   onBlur(): void {}
 
   clearValue(): void {
-    this.value = '';
-    this.valueChange.emit('');
+    this.value = null;
+    this.valueChange.emit(null);
   }
 
   registerOnChange(fn: any): void {

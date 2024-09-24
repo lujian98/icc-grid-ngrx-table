@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
+import { IccTextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   styleUrls: ['text-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TextFieldComponent, IccFieldFilterComponent],
+  imports: [CommonModule, IccTextFieldComponent, IccFieldFilterComponent],
 })
 export class IccTextFilterComponent extends IccFieldFilterComponent {
   //filterPlaceholder: string = 'Filter ...';
