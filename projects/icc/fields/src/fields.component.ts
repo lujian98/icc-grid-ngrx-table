@@ -1,30 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ChangeDetectorRef,
-  inject,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
-import { TextFieldComponent } from '@icc/ui/fields';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { IccFormFacade } from '../../form/src/+state/form.facade';
-import { IccFormConfig } from '../../form/src/models/form.model';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextFieldComponent } from './text-field/text-field.component';
 
 @Component({
   selector: 'icc-fields',
@@ -34,7 +11,6 @@ import { IccFormConfig } from '../../form/src/models/form.model';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TextFieldComponent],
 })
 export class IccFieldsComponent {
-  @Input() formConfig!: IccFormConfig;
   @Input() form!: FormGroup;
 
   private _fieldConfig!: any;

@@ -1,32 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ChangeDetectorRef,
-  inject,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
-import { TextFieldComponent } from '@icc/ui/fields';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { IccFormFacade } from '../../../form/src/+state/form.facade';
-import { IccFormConfig } from '../../../form/src/models/form.model';
-import { IccFieldsetConfig } from './models/fieldset.model';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccFieldsComponent } from '../fields.component';
+import { IccFieldsetConfig } from './models/fieldset.model';
 
 @Component({
   selector: 'icc-fieldset',
@@ -37,14 +13,11 @@ import { IccFieldsComponent } from '../fields.component';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsComponent],
 })
 export class IccFieldsetComponent {
-  @Input() formConfig!: IccFormConfig;
-  @Input() form!: FormGroup;
-
   private _fieldConfig!: IccFieldsetConfig;
-
+  @Input() form!: FormGroup;
   @Input()
   set fieldConfig(val: IccFieldsetConfig) {
-    console.log(' fielset config=', val);
+    // console.log(' fielset config=', val);
     this._fieldConfig = val;
   }
   get fieldConfig(): IccFieldsetConfig {
