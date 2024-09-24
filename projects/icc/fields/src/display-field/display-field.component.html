@@ -3,6 +3,6 @@
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel }}
     </icc-label>
-    <input iccInput type="text" autocomplete="off" [formControlName]="fieldConfig.fieldName!" readonly />
+    <input iccInput type="text" [formControlName]="fieldConfig.fieldName!" readonly />
   </icc-form-field>
 </ng-container>

@@ -1,15 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  forwardRef,
-  inject,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -24,7 +14,6 @@ import {
 } from '@angular/forms';
 import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
@@ -58,8 +47,8 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
   ],
 })
 export class IccDisplayFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
+  //private changeDetectorRef = inject(ChangeDetectorRef);
+  //private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDisplayFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
@@ -98,28 +87,29 @@ export class IccDisplayFieldComponent implements OnDestroy, ControlValueAccessor
   }
 
   registerOnChange(fn: any): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   registerOnTouched(fn: any): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+    //isDisabled ? this.form.disable() : this.form.enable();
   }
 
   writeValue(value: any): void {
-    this.form.patchValue(value, { emitEvent: false });
-    this.changeDetectorRef.markForCheck();
+    //this.form.patchValue(value, { emitEvent: false });
+    //this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return null;
+    //return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    //this.destroy$.next();
+    //this.destroy$.complete();
   }
 }
