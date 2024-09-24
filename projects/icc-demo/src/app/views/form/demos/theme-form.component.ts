@@ -2,7 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccNumberFieldComponent, defaultNumberFieldConfig } from '@icc/ui/fields';
+import {
+  IccNumberFieldComponent,
+  defaultNumberFieldConfig,
+  IccDisplayFieldComponent,
+  IccDisplayFieldConfig,
+  defaultDisplayFieldConfig,
+} from '@icc/ui/fields';
 
 @Component({
   selector: 'app-theme-form',
@@ -10,14 +16,19 @@ import { IccNumberFieldComponent, defaultNumberFieldConfig } from '@icc/ui/field
   styleUrls: ['./theme-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormComponent, IccNumberFieldComponent, IccCheckboxComponent],
+  imports: [CommonModule, IccFormComponent, IccNumberFieldComponent, IccDisplayFieldComponent, IccCheckboxComponent],
 })
 export class AppThemeFormDemoComponent {
   checked = true;
 
-  fieldConfig = {
+  numberConfig = {
     ...defaultNumberFieldConfig,
     fieldLabel: 'Number Field',
-    placeholder: 'Search ...',
   };
+  numberValue = 50;
+
+  displayConfig = {
+    fieldLabel: 'Display Field',
+  };
+  diaplayValue = 'Test Display field';
 }

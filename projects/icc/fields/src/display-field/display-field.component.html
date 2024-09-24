@@ -1,0 +1,8 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field>
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <input iccInput type="text" autocomplete="off" [formControlName]="fieldConfig.fieldName!" readonly />
+  </icc-form-field>
+</ng-container>
