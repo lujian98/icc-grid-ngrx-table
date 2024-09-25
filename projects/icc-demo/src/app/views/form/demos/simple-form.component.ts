@@ -53,13 +53,14 @@ export class AppSimpleFromDemoComponent {
       fieldType: 'fieldset',
       fieldName: 'test',
       legend: 'Test field set 1234',
-      labelWidth: 120,
+      labelWidth: 80,
+      //flexDirection: 'row',
       formFields: this.formFields,
     },
     {
       fieldType: 'text',
       fieldName: 'email',
-      labelWidth: 150,
+      labelWidth: 80,
       fieldLabel: 'Email Address',
     },
   ];
