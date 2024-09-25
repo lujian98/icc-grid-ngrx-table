@@ -22,7 +22,12 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -31,7 +36,7 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
 @Component({
   selector: 'icc-textarea-field',
   templateUrl: './textarea-field.component.html',
-  //styleUrls: ['./textarea-field.component.scss'],
+  styleUrls: ['./textarea-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -53,6 +58,7 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
+    IccLabelWidthDirective,
     IccInputDirective,
     IccIconModule,
   ],

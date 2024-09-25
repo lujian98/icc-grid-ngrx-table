@@ -5,4 +5,5 @@ export interface IccDisplayFieldConfig extends IccBaseField {}
 export const defaultDisplayFieldConfig: IccDisplayFieldConfig = {
   fieldType: 'display',
   fieldName: 'displayfield',
+  labelWidth: 100,
 };

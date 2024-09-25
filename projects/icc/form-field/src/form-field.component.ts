@@ -67,7 +67,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     if (!this.iccLabel) {
       this.label.nativeElement.remove();
     } else if (this.label && this.labelWidthDirective && this.labelWidthDirective.width) {
-      this.label.nativeElement.style.setProperty('flex-basis', this.labelWidthDirective.width);
+      this.label.nativeElement.style.setProperty('flex', `0 0 ${this.labelWidthDirective.width}`);
     }
   }
 }

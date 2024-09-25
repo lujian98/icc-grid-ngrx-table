@@ -4,5 +4,5 @@ export interface IccBaseField {
   fieldLabel?: string;
   placeholder?: string;
   clearValue?: boolean;
-  width?: number | string;
+  labelWidth?: number | string;
 }

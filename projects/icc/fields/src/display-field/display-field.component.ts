@@ -12,7 +12,12 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
@@ -42,6 +47,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
+    IccLabelWidthDirective,
     IccInputDirective,
     IccIconModule,
   ],

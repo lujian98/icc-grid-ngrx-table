@@ -22,7 +22,12 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -54,6 +59,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
+    IccLabelWidthDirective,
     IccInputDirective,
     IccIconModule,
     IccCheckboxComponent,

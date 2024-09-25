@@ -7,4 +7,5 @@ export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldName: 'datefield',
   placeholder: 'Select Date',
   clearValue: true,
+  labelWidth: 100,
 };

@@ -16,7 +16,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   optionKey: 'name',
   placeholder: '',
   clearValue: true,
-  width: 200,
+  labelWidth: 100,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {
