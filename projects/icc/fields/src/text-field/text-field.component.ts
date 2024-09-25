@@ -80,7 +80,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   private initForm(fieldConfig: IccTextFieldConfig): void {
-    console.log(' fieldConfig=', fieldConfig);
+    //console.log(' fieldConfig=', fieldConfig);
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({
