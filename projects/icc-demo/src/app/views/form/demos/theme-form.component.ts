@@ -16,8 +16,10 @@ import {
   IccDisplayFieldConfig,
   defaultDisplayFieldConfig,
   IccTextFieldComponent,
+  IccSelectFieldComponent,
   IccTextareaFieldComponent,
 } from '@icc/ui/fields';
+import { State, STATES } from '../../../data/states';
 
 @Component({
   selector: 'app-theme-form',
@@ -36,6 +38,7 @@ import {
     IccHiddenFieldComponent,
     IccCheckboxComponent,
     IccCalendarModule,
+    IccSelectFieldComponent,
     IccLocaleDatePipe,
     IccFormFieldComponent,
     IccLabelDirective,
@@ -86,4 +89,18 @@ export class AppThemeFormDemoComponent {
     fieldLabel: 'Textarea Field',
   };
   textareaValue = 'This is textarea value 222';
+
+  states = STATES;
+  multiObjectStates = [STATES[32], STATES[36]];
+  multiSelectionRemote = {
+    fieldType: 'select',
+    remoteOptions: true,
+    urlKey: 'usa',
+    fieldName: 'state',
+    multiSelection: true,
+    fieldLabel: 'Multi Selection (Object)',
+    optionLabel: 'state',
+    optionKey: 'abbr',
+    placeholder: 'Select One or More...',
+  };
 }

@@ -129,8 +129,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private initSelectField(): void {
-    if (this.fieldConfig?.viewportReady && !this.form) {
+    if (this.fieldConfig?.viewportReady && (!this.form || !this.selectOptions$)) {
       this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
+    }
+    if (this.fieldConfig?.viewportReady && !this.form) {
       if (!this.form) {
         this.form = new FormGroup({
           [this.fieldConfig.fieldName!]: new FormControl<{ [key: string]: T }>({}),

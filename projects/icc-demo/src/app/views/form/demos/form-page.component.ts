@@ -18,7 +18,6 @@ export class AppFromPageDemoComponent {
     labelWidth: 100,
   };
 
-  //     <icc-select-field [fieldConfig]="multiSelection" [value]="multiObjectStates" [options]="states"></icc-select-field>
   formFields: IccFormField[] = [
     {
       fieldType: 'text',
@@ -81,7 +80,7 @@ export class AppFromPageDemoComponent {
       urlKey: 'usa',
       fieldName: 'state',
       multiSelection: true,
-      fieldLabel: 'States',
+      fieldLabel: 'Multi Selection (Object)',
       optionLabel: 'state',
       optionKey: 'abbr',
       placeholder: 'Select One or More...',
