@@ -93,7 +93,7 @@ export class AppFromPageDemoComponent {
     email: 'test@email.com',
     age: 18,
     notes: 'This is a notes. ',
-    state: [STATES[32], STATES[36]],
+    state: [STATES[32]],
     display: 'display only',
     createdate: new Date(),
     enabled: false,

@@ -99,7 +99,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @Input() form!: FormGroup;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    console.log(' 0000000000000 fieldConfig =', fieldConfig);
+    //console.log(' 0000000000000 fieldConfig =', fieldConfig);
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);
@@ -122,7 +122,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
       map((fieldConfig) => {
         this._fieldConfig = fieldConfig!;
         this.initSelectField();
-        console.log(' 22222222 fieldConfig =', fieldConfig);
+        //console.log(' 22222222 fieldConfig =', fieldConfig);
         return fieldConfig;
       }),
     );

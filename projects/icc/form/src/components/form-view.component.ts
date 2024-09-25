@@ -1,37 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ChangeDetectorRef,
-  inject,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
-import { IccFieldsComponent, IccFieldsetComponent, IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { IccFormFacade } from '../+state/form.facade';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IccFieldsComponent, IccFieldsetComponent, IccFieldsetConfig, IccFormField } from '@icc/ui/fields';
+import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccFormConfig } from '../models/form.model';
-import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
-  IccFormLabelWidthDirective,
-  IccSuffixDirective,
-} from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-form-view',
