@@ -1,10 +1,6 @@
-export interface IccDateFieldConfig {
-  fieldType: string;
-  fieldName?: string;
-  fieldLabel?: string;
-  placeholder?: string;
-  clearValue?: boolean;
-}
+import { IccBaseField } from '../../models/base-field.model';
+
+export interface IccDateFieldConfig extends IccBaseField {}
 
 export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldType: 'date',

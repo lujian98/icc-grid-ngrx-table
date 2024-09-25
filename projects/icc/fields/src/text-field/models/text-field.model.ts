@@ -1,10 +1,6 @@
-export interface IccTextFieldConfig {
-  fieldType: string;
-  fieldName?: string;
-  fieldLabel?: string;
-  placeholder?: string;
-  clearValue?: boolean;
-}
+import { IccBaseField } from '../../models/base-field.model';
+
+export interface IccTextFieldConfig extends IccBaseField {}
 
 export const defaultTextFieldConfig: IccTextFieldConfig = {
   fieldType: 'text',

@@ -1,8 +1,6 @@
-export interface IccDisplayFieldConfig {
-  fieldType: string;
-  fieldName?: string;
-  fieldLabel?: string;
-}
+import { IccBaseField } from '../../models/base-field.model';
+
+export interface IccDisplayFieldConfig extends IccBaseField {}
 
 export const defaultDisplayFieldConfig: IccDisplayFieldConfig = {
   fieldType: 'display',

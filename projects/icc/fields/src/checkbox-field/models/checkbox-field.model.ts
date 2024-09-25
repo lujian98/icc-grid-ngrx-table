@@ -1,8 +1,6 @@
-export interface IccCheckboxFieldConfig {
-  fieldType: string;
-  fieldName?: string;
-  fieldLabel?: string;
-}
+import { IccBaseField } from '../../models/base-field.model';
+
+export interface IccCheckboxFieldConfig extends IccBaseField {}
 
 export const defaultCheckboxFieldConfig: IccCheckboxFieldConfig = {
   fieldType: 'checkbox',

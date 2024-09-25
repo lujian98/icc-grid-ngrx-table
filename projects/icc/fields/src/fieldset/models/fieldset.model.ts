@@ -1,8 +1,7 @@
+import { IccBaseField } from '../../models/base-field.model';
 import { IccFormField } from '../../models/fields.model';
 
-export interface IccFieldsetConfig {
-  fieldType: string;
-  fieldName?: string; // not used only interface
+export interface IccFieldsetConfig extends IccBaseField {
   legend?: string;
   formFields: IccFormField[];
 }

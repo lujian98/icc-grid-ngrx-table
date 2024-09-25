@@ -1,10 +1,9 @@
-export interface IccSelectFieldConfig {
+import { IccBaseField } from '../../models/base-field.model';
+
+export interface IccSelectFieldConfig extends IccBaseField {
   fieldId: string; // auto generated unique id
-  fieldType: string;
-  fieldName?: string;
   urlKey: string; // Only for remote field config and options
   viewportReady: boolean;
-  fieldLabel?: string;
   remoteConfig: boolean; // remote config requires remote options
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete
@@ -12,8 +11,6 @@ export interface IccSelectFieldConfig {
   singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
-  placeholder: string;
-  clearValue?: boolean;
 }
 
 export interface SelectFieldState {
