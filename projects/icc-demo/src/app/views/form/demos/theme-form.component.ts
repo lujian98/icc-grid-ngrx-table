@@ -12,6 +12,7 @@ import {
   IccDisplayFieldComponent,
   IccCheckboxFieldComponent,
   IccHiddenFieldComponent,
+  IccDateFieldComponent,
   IccDisplayFieldConfig,
   defaultDisplayFieldConfig,
 } from '@icc/ui/fields';
@@ -28,6 +29,7 @@ import {
     ReactiveFormsModule,
     IccNumberFieldComponent,
     IccCheckboxFieldComponent,
+    IccDateFieldComponent,
     IccDisplayFieldComponent,
     IccHiddenFieldComponent,
     IccCheckboxComponent,
@@ -64,4 +66,10 @@ export class AppThemeFormDemoComponent {
 
   datepickerControl = new FormControl();
   showcaseForm = new FormGroup({});
+
+  dateConfig = {
+    fieldName: 'date77',
+    fieldLabel: 'Date Field',
+  };
+  dateValue = new Date();
 }

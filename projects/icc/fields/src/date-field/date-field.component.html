@@ -1,0 +1,22 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field>
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <input
+      type="text"
+      iccInput
+      iccCalendarToggle
+      [calendarModal]="datepicker"
+      [value]="field.value | localeDate"
+      [placeholder]="fieldConfig.placeholder"
+      readonly
+    />
+    <icc-calendar
+      #datepicker
+      [formControlName]="fieldConfig.fieldName!"
+      (valueChange)="onChange($event)"
+    ></icc-calendar>
+    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+  </icc-form-field>
+</ng-container>

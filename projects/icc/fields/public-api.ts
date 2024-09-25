@@ -3,6 +3,7 @@ export * from './src/models/fields.model';
 export * from './src/input/input.directive';
 export * from './src/fieldset';
 export * from './src/checkbox-field';
+export * from './src/date-field';
 export * from './src/display-field';
 export * from './src/hidden-field';
 export * from './src/number-field';

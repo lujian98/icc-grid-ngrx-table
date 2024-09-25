@@ -19,7 +19,7 @@
 
 <form [formGroup]="showcaseForm">
   <icc-form-field>
-    <icc-label>Date:</icc-label>
+    <icc-label>Date</icc-label>
     <input
       type="text"
       iccInput
@@ -32,3 +32,7 @@
     <icc-calendar #datepicker [formControl]="datepickerControl"></icc-calendar>
   </icc-form-field>
 </form>
+
+<div>
+  <icc-date-field [fieldConfig]="dateConfig" [value]="dateValue"></icc-date-field>
+</div>
