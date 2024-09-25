@@ -9,3 +9,4 @@ export * from './src/hidden-field';
 export * from './src/number-field';
 export * from './src/select-field';
 export * from './src/text-field';
+export * from './src/textarea-field';

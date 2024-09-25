@@ -1,0 +1,17 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field>
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <textarea
+      iccInput
+      [formControlName]="fieldConfig.fieldName!"
+      (click)="$event.stopPropagation()"
+      (keyup)="onChange()"
+      spellcheck="false"
+      placeholder="{{ fieldConfig.placeholder }}"
+    >
+    </textarea>
+    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+  </icc-form-field>
+</ng-container>

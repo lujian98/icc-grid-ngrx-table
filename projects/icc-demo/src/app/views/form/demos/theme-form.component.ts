@@ -15,6 +15,8 @@ import {
   IccDateFieldComponent,
   IccDisplayFieldConfig,
   defaultDisplayFieldConfig,
+  IccTextFieldComponent,
+  IccTextareaFieldComponent,
 } from '@icc/ui/fields';
 
 @Component({
@@ -38,6 +40,8 @@ import {
     IccFormFieldComponent,
     IccLabelDirective,
     IccSuffixDirective,
+    IccTextFieldComponent,
+    IccTextareaFieldComponent,
   ],
 })
 export class AppThemeFormDemoComponent {
@@ -72,4 +76,14 @@ export class AppThemeFormDemoComponent {
     fieldLabel: 'Date Field',
   };
   dateValue = new Date();
+
+  textConfig = {
+    fieldLabel: 'Text Field',
+  };
+  textValue = 'text value 222';
+
+  textareaConfig = {
+    fieldLabel: 'Textarea Field',
+  };
+  textareaValue = 'This is textarea value 222';
 }

@@ -1,0 +1,143 @@
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  forwardRef,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
+import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import { IccIconModule } from '@icc/ui/icon';
+import { Subject, takeUntil } from 'rxjs';
+import { IccInputDirective } from '../input/input.directive';
+import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/textarea-field.model';
+
+@Component({
+  selector: 'icc-textarea-field',
+  templateUrl: './textarea-field.component.html',
+  //styleUrls: ['./textarea-field.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IccTextareaFieldComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => IccTextareaFieldComponent),
+      multi: true,
+    },
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccFormFieldComponent,
+    IccSuffixDirective,
+    IccLabelDirective,
+    IccInputDirective,
+    IccIconModule,
+  ],
+})
+export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
+  private _fieldConfig!: IccTextareaFieldConfig;
+  private _value!: string;
+  @Input() form!: FormGroup;
+
+  @Input()
+  set fieldConfig(fieldConfig: Partial<IccTextareaFieldConfig>) {
+    this._fieldConfig = { ...defaultTextareaFieldConfig, ...fieldConfig };
+    this.initForm(this.fieldConfig);
+  }
+  get fieldConfig(): IccTextareaFieldConfig {
+    return this._fieldConfig;
+  }
+
+  private initForm(fieldConfig: IccTextareaFieldConfig): void {
+    if (!this.form) {
+      this._fieldConfig = { ...fieldConfig };
+      this.form = new FormGroup({
+        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
+      });
+    }
+  }
+
+  @Input()
+  set value(val: string) {
+    this._value = val;
+    this.initForm({ ...defaultTextareaFieldConfig });
+    this.field.setValue(val);
+  }
+
+  get value(): string {
+    return this._value;
+  }
+
+  @Output() valueChange = new EventEmitter<string>(undefined);
+
+  get field(): AbstractControl {
+    return this.form!.get(this.fieldConfig.fieldName!)!;
+  }
+
+  get hasValue(): boolean {
+    return !!this.field.value;
+  }
+
+  onChange(): void {
+    console.log(' on change=', this.field.value);
+    this.valueChange.emit(this.field.value);
+  }
+
+  onBlur(): void {}
+
+  clearValue(): void {
+    this.value = '';
+    this.valueChange.emit('');
+  }
+
+  registerOnChange(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.form.disable() : this.form.enable();
+  }
+
+  writeValue(value: any): void {
+    this.form.patchValue(value, { emitEvent: false });
+    this.changeDetectorRef.markForCheck();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
