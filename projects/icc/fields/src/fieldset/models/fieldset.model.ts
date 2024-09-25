@@ -3,6 +3,7 @@ import { IccFormField } from '../../models/fields.model';
 
 export interface IccFieldsetConfig extends IccBaseField {
   legend?: string;
+  labelWidth?: number | string;
   formFields: IccFormField[];
 }
 

@@ -1,7 +1,7 @@
-<fieldset>
+<fieldset [iccFieldsetLabelWidth]="fieldConfig.labelWidth">
   <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend }}</legend>
 
-  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
-    <icc-fields [fieldConfig]="fieldConfig" [form]="form"> </icc-fields>
+  <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
+    <icc-fields [fieldConfig]="config" [form]="form"> </icc-fields>
   </ng-container>
 </fieldset>

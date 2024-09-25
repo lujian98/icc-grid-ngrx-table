@@ -2,14 +2,13 @@ import { Directive, Input } from '@angular/core';
 import { isNumeric } from '@icc/ui/core';
 
 @Directive({
-  //selector: 'form[iccLabelWidth], fieldset[iccLabelWidth], icc-form-field[iccLabelWidth]',
-  selector: 'icc-form-field[iccLabelWidth]',
+  selector: 'fieldset[iccFieldsetLabelWidth]',
   standalone: true,
 })
-export class IccLabelWidthDirective {
+export class IccFieldsetLabeLabelWidthDirective {
   private _width!: string;
 
-  @Input('iccLabelWidth')
+  @Input('iccFieldsetLabelWidth')
   set width(width: number | string | undefined) {
     if (width) {
       this._width = isNumeric(width) ? `${width}px` : (width as string);
