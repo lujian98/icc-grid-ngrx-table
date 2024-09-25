@@ -13,7 +13,16 @@ import {
   SingleAutocompleteLisConfig,
   MultiAutocompleteListConfig,
 } from '../data/select-field-helpers';
-import { DCRFormConfig, DCRFormFields, DCRFormData } from '../data/form-helper';
+import {
+  DCRFormConfig,
+  DCRFormFields,
+  DCRFormData,
+  DCR2FormFields,
+  DCR2FormData,
+  DCR3FormConfig,
+  DCR3FormFields,
+  DCR3FormData,
+} from '../data/form-helper';
 import {
   RemoteD3ConfigP1,
   RemoteChartConfigsP1,
@@ -55,6 +64,13 @@ export class InMemoryService extends InMemoryDbService {
     DCR_formFields: any[];
     DCR_formData: any;
 
+    DCR2_formFields: any[];
+    DCR2_formData: any;
+
+    DCR3_formConfig: any;
+    DCR3_formFields: any[];
+    DCR3_formData: any;
+
     DCR_d3ConfigP1: any;
     DCR_d3ChartConfigsP1: any[];
     DCR_d3DataP1: any[];
@@ -95,6 +111,13 @@ export class InMemoryService extends InMemoryDbService {
       DCR_formConfig: DCRFormConfig,
       DCR_formFields: DCRFormFields,
       DCR_formData: DCRFormData,
+
+      DCR2_formFields: DCR2FormFields,
+      DCR2_formData: DCR2FormData,
+
+      DCR3_formConfig: DCR3FormConfig,
+      DCR3_formFields: DCR3FormFields,
+      DCR3_formData: DCR3FormData,
 
       DCR_d3ConfigP1: RemoteD3ConfigP1,
       DCR_d3ChartConfigsP1: RemoteChartConfigsP1,

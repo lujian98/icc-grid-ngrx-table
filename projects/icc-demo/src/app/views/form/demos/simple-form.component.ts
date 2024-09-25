@@ -25,14 +25,14 @@ export class AppSimpleFromDemoComponent {
 
   remoteFormFieldsAndValues = {
     ...defaultFormConfig,
-    urlKey: 'DCR',
+    urlKey: 'DCR2',
     remoteFieldsConfig: true,
     remoteFormData: true,
   };
 
   allRemotes = {
     ...defaultFormConfig,
-    urlKey: 'DCR',
+    urlKey: 'DCR3',
     remoteFormConfig: true,
   };
 
@@ -53,7 +53,7 @@ export class AppSimpleFromDemoComponent {
     {
       fieldType: 'fieldset',
       fieldName: 'test',
-      legend: 'Test field set 1234',
+      legend: 'Local form config, fields and values',
       labelWidth: 80,
       //flexDirection: 'row',
       formFields: this.formFields,
@@ -70,4 +70,21 @@ export class AppSimpleFromDemoComponent {
     loginName: 'test login88',
     email: 'test@email.com',
   };
+
+  fieldSet2: IccFormField[] = [
+    {
+      fieldType: 'fieldset',
+      fieldName: 'test',
+      legend: 'Local form fields and values with default formConfig',
+      labelWidth: 80,
+      //flexDirection: 'row',
+      formFields: this.formFields,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      labelWidth: 80,
+      fieldLabel: 'Email Address',
+    },
+  ];
 }
