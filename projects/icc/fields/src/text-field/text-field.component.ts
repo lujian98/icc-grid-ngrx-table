@@ -22,7 +22,12 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -53,6 +58,7 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
+    IccLabelWidthDirective,
     IccInputDirective,
     IccIconModule,
   ],
@@ -74,6 +80,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   private initForm(fieldConfig: IccTextFieldConfig): void {
+    console.log(' fieldConfig=', fieldConfig);
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({

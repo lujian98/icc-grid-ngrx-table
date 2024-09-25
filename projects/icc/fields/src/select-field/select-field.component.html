@@ -1,6 +1,6 @@
 <ng-container *ngIf="fieldConfig$ | async as fieldConfig">
   <ng-container *ngIf="form" [formGroup]="form">
-    <icc-form-field *ngIf="selectOptions$ | async as selectOptions">
+    <icc-form-field *ngIf="selectOptions$ | async as selectOptions" [iccLabelWidth]="fieldConfig.width">
       <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
         {{ fieldConfig.fieldLabel }}
       </icc-label>

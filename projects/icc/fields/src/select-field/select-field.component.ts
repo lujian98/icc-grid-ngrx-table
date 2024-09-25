@@ -34,7 +34,12 @@ import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
-import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent } from '@icc/ui/form-field';
+import {
+  IccLabelDirective,
+  IccSuffixDirective,
+  IccLabelWidthDirective,
+  IccFormFieldComponent,
+} from '@icc/ui/form-field';
 import { IccInputDirective } from '../input/input.directive';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
@@ -67,6 +72,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,
+    IccLabelWidthDirective,
     IccInputDirective,
     IccAutocompleteComponent,
     IccAutocompleteDirective,
