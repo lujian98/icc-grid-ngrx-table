@@ -1,1 +1,25 @@
 <icc-text-field *ngIf="fieldConfig.fieldType === 'text'" [fieldConfig]="fieldConfig" [form]="form"> </icc-text-field>
+<icc-number-field *ngIf="fieldConfig.fieldType === 'number'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-number-field>
+
+<icc-checkbox-field *ngIf="fieldConfig.fieldType === 'checkbox'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-checkbox-field>
+
+<icc-date-field *ngIf="fieldConfig.fieldType === 'date'" [fieldConfig]="fieldConfig" [form]="form"> </icc-date-field>
+
+<icc-display-field *ngIf="fieldConfig.fieldType === 'display'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-display-field>
+
+<icc-hidden-field *ngIf="fieldConfig.fieldType === 'hidden'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-hidden-field>
+
+<icc-select-field *ngIf="fieldConfig.fieldType === 'select'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-select-field>
+
+<icc-textarea-field *ngIf="fieldConfig.fieldType === 'textarea'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-textarea-field>
+
+<!--
+<icc-fieldset *ngIf="fieldConfig.fieldType === 'fieldset'" [fieldConfig]="fieldConfig" [form]="form"> </icc-fieldset>
+<icc-fieldset *ngIf="fieldConfig.fieldType === 'fieldset'" [form]="form" [fieldConfig]="fieldConfig"></icc-fieldset>
+-->

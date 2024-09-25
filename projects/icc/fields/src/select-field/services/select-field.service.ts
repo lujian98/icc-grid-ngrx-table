@@ -31,6 +31,7 @@ export class IccSelectFieldService {
     const url = this.backendService.apiUrl;
     return this.http.get<any[]>(url, { params }).pipe(
       map((options) => {
+        console.log('eeeeeeeeee select option=', options);
         if (fieldConfig.singleListOption) {
           return options.map((item) => ({
             name: item,
