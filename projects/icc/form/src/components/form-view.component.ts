@@ -20,19 +20,32 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFieldsComponent, IccFieldsetComponent } from '@icc/ui/fields';
+import { IccFieldsComponent, IccFieldsetComponent, IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
-import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccFormLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-form-view',
   templateUrl: './form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsetComponent, IccFieldsComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccFieldsetComponent,
+    IccFormLabelWidthDirective,
+    IccFieldsComponent,
+  ],
 })
 export class IccFormViewComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);

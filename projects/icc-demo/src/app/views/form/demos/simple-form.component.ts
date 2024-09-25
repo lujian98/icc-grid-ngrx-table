@@ -13,6 +13,7 @@ import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 export class AppSimpleFromDemoComponent {
   formConfig = {
     ...defaultFormConfig,
+    labelWidth: 100,
   };
 
   remoteFormFields = {

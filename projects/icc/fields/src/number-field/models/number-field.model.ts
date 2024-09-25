@@ -7,5 +7,4 @@ export const defaultNumberFieldConfig: IccNumberFieldConfig = {
   fieldName: 'numberfield',
   placeholder: '',
   clearValue: false,
-  labelWidth: 100,
 };

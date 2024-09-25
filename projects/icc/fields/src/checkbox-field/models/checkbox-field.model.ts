@@ -5,5 +5,4 @@ export interface IccCheckboxFieldConfig extends IccBaseField {}
 export const defaultCheckboxFieldConfig: IccCheckboxFieldConfig = {
   fieldType: 'checkbox',
   fieldName: 'checkboxfield',
-  labelWidth: 100,
 };

@@ -7,5 +7,4 @@ export const defaultTextareaFieldConfig: IccTextareaFieldConfig = {
   fieldName: 'textareafield',
   placeholder: '',
   clearValue: true,
-  labelWidth: 100,
 };

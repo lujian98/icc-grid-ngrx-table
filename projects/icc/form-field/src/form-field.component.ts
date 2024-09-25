@@ -12,9 +12,11 @@ import { CommonModule } from '@angular/common';
 import { IccFormFieldControlDirective } from './form-field-control';
 import { IccLabelDirective } from './directive/label.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
+import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
+import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 
 @Component({
   selector: 'icc-form-field',
@@ -29,6 +31,7 @@ import { IccSuffixDirective } from './directive/suffix.directive';
     IccLabelDirective,
     IccLabelWidthDirective,
     IccSuffixDirective,
+    IccFormLabelWidthDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
@@ -61,13 +64,24 @@ export class IccFormFieldComponent implements AfterViewInit {
   constructor(
     public elementRef: ElementRef,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
+    @Optional() private formLabelWidthDirective: IccFormLabelWidthDirective,
   ) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (!this.iccLabel) {
       this.label.nativeElement.remove();
-    } else if (this.label && this.labelWidthDirective && this.labelWidthDirective.width) {
-      this.label.nativeElement.style.setProperty('flex', `0 0 ${this.labelWidthDirective.width}`);
+    } else if (this.label) {
+      let width = '';
+      if (this.formLabelWidthDirective && this.formLabelWidthDirective.width) {
+        width = this.formLabelWidthDirective.width;
+      }
+      if (this.labelWidthDirective && this.labelWidthDirective.width) {
+        width = this.labelWidthDirective.width;
+      }
+      if (!width) {
+        width = DEFAULT_FORM_FIELD_LABEL_WIDTH;
+      }
+      this.label.nativeElement.style.setProperty('flex', `0 0 ${width}`);
     }
   }
 }

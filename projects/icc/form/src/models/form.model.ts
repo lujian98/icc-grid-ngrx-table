@@ -5,6 +5,7 @@ export interface IccFormConfig {
   remoteFieldsConfig: boolean;
   remoteFormData: boolean;
   readonly: boolean;
+  labelWidth?: number | string;
 }
 
 export interface FormState {

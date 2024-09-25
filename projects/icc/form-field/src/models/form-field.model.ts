@@ -1,0 +1,1 @@
+export const DEFAULT_FORM_FIELD_LABEL_WIDTH = '150px';

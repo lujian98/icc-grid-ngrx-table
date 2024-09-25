@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
   <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
     <icc-fieldset *ngIf="fieldConfig.fieldType === 'fieldset'" [form]="form" [fieldConfig]="fieldConfig">
     </icc-fieldset>
