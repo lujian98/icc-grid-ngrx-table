@@ -42,6 +42,10 @@
     line-height: 1.75rem;
     font-size: 0.6875rem;
     font-weight: 500 !important;
+
+    ::ng-deep icc-label {
+      white-space: nowrap;
+    }
   }
 
   .icc-form-field-suffix {
