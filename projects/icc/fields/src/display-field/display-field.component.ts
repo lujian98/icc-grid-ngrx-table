@@ -16,6 +16,7 @@ import {
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
+  IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
@@ -48,6 +49,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
+    IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
   ],

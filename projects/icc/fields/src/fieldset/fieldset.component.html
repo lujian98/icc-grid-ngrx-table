@@ -1,4 +1,8 @@
-<fieldset [iccFieldsetLabelWidth]="fieldConfig.labelWidth" [ngStyle]="{ 'flex-direction': fieldConfig.flexDirection }">
+<fieldset
+  [iccFieldsetLabelWidth]="fieldConfig.labelWidth"
+  [iccFieldWidth]="fieldConfig.fieldWidth"
+  [ngStyle]="{ 'flex-direction': fieldConfig.flexDirection }"
+>
   <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend }}</legend>
 
   <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">

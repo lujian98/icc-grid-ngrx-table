@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IccFieldsetLabeLabelWidthDirective } from '@icc/ui/form-field';
+import { IccFieldsetLabelWidthDirective, IccFieldWidthDirective } from '@icc/ui/form-field';
 import { IccFieldsComponent } from '../fields.component';
 import { IccFormField } from '../models/fields.model';
 import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.model';
@@ -12,7 +12,14 @@ import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.mode
   styleUrls: ['./fieldset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFieldsComponent, IccFieldsetLabeLabelWidthDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccFieldsComponent,
+    IccFieldsetLabelWidthDirective,
+    IccFieldWidthDirective,
+  ],
 })
 export class IccFieldsetComponent {
   private _fieldConfig!: IccFieldsetConfig;

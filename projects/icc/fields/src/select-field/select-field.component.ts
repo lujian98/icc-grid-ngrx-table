@@ -38,6 +38,7 @@ import {
   IccLabelDirective,
   IccSuffixDirective,
   IccLabelWidthDirective,
+  IccFieldWidthDirective,
   IccFormFieldComponent,
 } from '@icc/ui/form-field';
 import { IccInputDirective } from '../input/input.directive';
@@ -73,6 +74,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
+    IccFieldWidthDirective,
     IccInputDirective,
     IccAutocompleteComponent,
     IccAutocompleteDirective,

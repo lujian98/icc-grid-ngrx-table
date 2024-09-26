@@ -15,7 +15,7 @@ import { IccFormFieldControlDirective } from './form-field-control';
 import { IccLabelDirective } from './directive/label.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
-import { IccFieldsetLabeLabelWidthDirective } from './directive/fieldset-label-width.directive';
+import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
@@ -36,7 +36,7 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
     IccLabelWidthDirective,
     IccSuffixDirective,
     IccFormLabelWidthDirective,
-    IccFieldsetLabeLabelWidthDirective,
+    IccFieldsetLabelWidthDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
@@ -71,7 +71,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   constructor(
     public elementRef: ElementRef,
     @Optional() private formLabelWidthDirective: IccFormLabelWidthDirective,
-    @Optional() private fieldsetLabeLabelWidthDirective: IccFieldsetLabeLabelWidthDirective,
+    @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
     @Optional() private fieldWidthDirective: IccFieldWidthDirective,
   ) {}
@@ -84,8 +84,8 @@ export class IccFormFieldComponent implements AfterViewInit {
       if (this.formLabelWidthDirective && this.formLabelWidthDirective.width) {
         width = this.formLabelWidthDirective.width;
       }
-      if (this.fieldsetLabeLabelWidthDirective && this.fieldsetLabeLabelWidthDirective.width) {
-        width = this.fieldsetLabeLabelWidthDirective.width;
+      if (this.fieldsetLabelWidthDirective && this.fieldsetLabelWidthDirective.width) {
+        width = this.fieldsetLabelWidthDirective.width;
       }
       if (this.labelWidthDirective && this.labelWidthDirective.width) {
         width = this.labelWidthDirective.width;

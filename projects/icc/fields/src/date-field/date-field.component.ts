@@ -26,6 +26,7 @@ import {
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
+  IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
@@ -60,6 +61,7 @@ import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
     IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
+    IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
     IccCalendarModule,

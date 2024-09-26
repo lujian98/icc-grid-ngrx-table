@@ -5,7 +5,7 @@ import { isNumeric } from '@icc/ui/core';
   selector: 'fieldset[iccFieldsetLabelWidth]',
   standalone: true,
 })
-export class IccFieldsetLabeLabelWidthDirective {
+export class IccFieldsetLabelWidthDirective {
   private _width!: string;
 
   @Input('iccFieldsetLabelWidth')
