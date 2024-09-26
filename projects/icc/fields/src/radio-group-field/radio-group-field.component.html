@@ -3,7 +3,20 @@
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel }}
     </icc-label>
-    <icc-radio-group
+
+    <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
+      <input type="radio" [value]="group.name" [formControlName]="fieldConfig.fieldName!" />
+    </ng-container>
+  </icc-form-field>
+</ng-container>
+<!--
+    <input type="radio" value="value1" name="group2">
+    <input type="radio" value="value2" name="group2">
+    <input type="radio" value="value3" name="group2">
+
+
+
+        <icc-radio-group
       [formControlName]="fieldConfig.fieldName!"
       *ngFor="let group of groups; trackBy: trackByIndex; let index = index"
     >
@@ -11,5 +24,4 @@
         {{ group.title }}
       </icc-radio>
     </icc-radio-group>
-  </icc-form-field>
-</ng-container>
+    -->
