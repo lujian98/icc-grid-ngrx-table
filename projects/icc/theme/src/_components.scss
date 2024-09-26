@@ -6,6 +6,7 @@
 @import "../../form-field/src/form-field.component.theme";
 @import "../../fields/src/fields.component.theme";
 @import "../../checkbox/src/checkbox.component.theme";
+@import "../../radio/src/radio.component.theme";
 
 @import "../../calendar/src/calendar.component.theme";
 @import "../../calendar/src/weekdays/weekdays.component.theme";
@@ -21,6 +22,7 @@
   @include icc-form-field-theme();
   @include icc-fields-theme();
   @include icc-checkbox-theme();
+  @include icc-radio-theme();
 
   @include icc-calendar-theme();
   @include icc-calendar-weekdays-theme();

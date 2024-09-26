@@ -57,6 +57,13 @@ $theme: (
 
   calendar-month-header-background-color: #4b4f54,
   calendar-month-header-text-color: #adadad,
+
+  radio-background-color: #353535,
+  radio-border-color: #adadad,
+  radio-checked-background-color: #f6f1ed,
+  radio-checked-border-color: #d0c6bc,
+  radio-inner-circle-color: #f18a20,
+  radio-text-color: #adadad,
 );
 
 $icc-themes: icc-register-theme($theme, dark);
