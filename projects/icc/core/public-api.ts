@@ -1,5 +1,7 @@
 export * from './src/pipes/filter.pipe';
 export * from './src/utils/unique-id';
 export * from './src/utils/is-numeric';
+export * from './src/utils/is-equal';
+export * from './src/utils/is-array-equal';
 export * from './src/config/icc-ui-modules-options.tokens';
 export * from './src/backend/services/backend.service';

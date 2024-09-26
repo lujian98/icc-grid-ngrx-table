@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { isEqual } from '@icc/ui/core';
 import { IccFieldsComponent, IccFieldsetComponent, IccFieldsetConfig, IccFormField } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccFormConfig } from '../models/form.model';
@@ -73,11 +74,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         filter(() => this.form.dirty),
         takeUntil(this.destroy$),
       )
-      .subscribe((value) => {
+      .subscribe((values) => {
         console.log('oooo value changed=', this.values);
-        console.log(' value changed=', value);
-        this.checkFormValueChanged();
-        console.log(' is form dirty=', this.form.dirty);
+        console.log(' value changed=', values);
+        this.checkFormValueChanged(values);
+        //console.log(' is form dirty=', this.form.dirty);
       });
   }
 
@@ -85,8 +86,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return index;
   }
 
-  private checkFormValueChanged(): void {
-    const hasChange = this.hasChange(this.form.controls, this.form.getRawValue(), this.values);
+  private checkFormValueChanged(values: any): void {
+    // const hasChange = this.hasChange(this.form.controls, this.form.getRawValue(), this.values);
+    const hasChange = !isEqual(values, this.values);
+    console.log(' xxxx hasChange=', hasChange);
     if (!hasChange) {
       this.form.markAsPristine();
     }
