@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { IccFieldsComponent, IccFieldsetComponent, IccFieldsetConfig, IccFormField } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccFormConfig } from '../models/form.model';
@@ -19,8 +20,9 @@ import { IccFormConfig } from '../models/form.model';
     IccFieldsComponent,
   ],
 })
-export class IccFormViewComponent {
+export class IccFormViewComponent implements OnInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   private _formFields: IccFormField[] = [];
   private _values: any;
 
@@ -65,10 +67,45 @@ export class IccFormViewComponent {
 
   constructor() {}
 
+  ngOnInit(): void {
+    this.form.valueChanges
+      .pipe(
+        filter(() => this.form.dirty),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((value) => {
+        console.log('oooo value changed=', this.values);
+        console.log(' value changed=', value);
+        this.checkFormValueChanged();
+        console.log(' is form dirty=', this.form.dirty);
+      });
+  }
+
   trackByIndex(index: number): number {
     return index;
   }
-  //@Output() submitEvent = new EventEmitter<Proxy>();
+
+  private checkFormValueChanged(): void {
+    const hasChange = this.hasChange(this.form.controls, this.form.getRawValue(), this.values);
+    if (!hasChange) {
+      this.form.markAsPristine();
+    }
+  }
+
+  private hasChange(items: Object, rawValues: any, values: any): boolean {
+    return Object.keys(items).some((key) => {
+      const rawValue = rawValues[key];
+      const value = values ? values[key] : null;
+      return typeof rawValue === 'object' && rawValue
+        ? this.hasChange(rawValue, rawValue, value)
+        : value !== undefined && rawValue !== value;
+    });
+  }
+
+  resetForm(): void {
+    this.form.patchValue({ ...this.values });
+    this.form.markAsPristine();
+  }
 
   checkForm(): void {
     console.log(' form=', this.form);
@@ -84,5 +121,10 @@ export class IccFormViewComponent {
         ...this.form.value,
       });*/
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
