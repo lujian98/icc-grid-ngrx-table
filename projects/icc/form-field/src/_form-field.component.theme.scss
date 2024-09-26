@@ -1,4 +1,21 @@
 @mixin icc-form-field-theme() {
+  .icc-form-field-wrapper {
+    background-color: icc-theme(icc-form-field-input-background-color);
+    color: icc-theme(app-text-basic-color);
+    border-bottom: 1px solid icc-theme(app-border-basic-color);
+
+    :focus,
+    :hover {
+      outline: none;
+      background-color: icc-theme(icc-form-field-focus-background-color);
+      border-color: icc-theme(icc-form-field-focus-border-color);
+    }
+  }
+
+  .icc-form-field-wrapper:has(textarea) {
+    border-bottom: none;
+  }
+
   icc-form-field {
     icc-error {
       color: orange;

@@ -36,6 +36,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'text',
       fieldName: 'userName',
       fieldLabel: 'User Name',
+      clearValue: true,
     },
     {
       fieldType: 'text',

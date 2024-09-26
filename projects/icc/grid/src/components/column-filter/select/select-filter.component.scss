@@ -6,9 +6,15 @@
 
   icc-select-field {
     width: 100%;
+    ::ng-deep .icc-form-field {
+      padding-bottom: 0px;
+    }
+    ::ng-deep .icc-form-field-wrapper {
+      border-bottom: none;
+    }
     ::ng-deep input {
       width: 100%;
-      border-bottom: none;
+      //border-bottom: none;
     }
   }
 }
