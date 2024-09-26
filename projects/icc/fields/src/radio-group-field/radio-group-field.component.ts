@@ -23,17 +23,19 @@ import {
   Validator,
 } from '@angular/forms';
 import {
+  IccFieldWidthDirective,
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
-import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil } from 'rxjs';
-import { IccInputDirective } from '../input/input.directive';
-import { defaultRadioGroupFieldConfig, IccRadioGroupFieldConfig } from './models/radio-group-field.model';
 import { IccRadioComponent } from '@icc/ui/radio';
+import { Subject, takeUntil } from 'rxjs';
+import {
+  defaultRadioGroupFieldConfig,
+  IccRadioGroup,
+  IccRadioGroupFieldConfig,
+} from './models/radio-group-field.model';
 
 @Component({
   selector: 'icc-radio-group-field',
@@ -62,8 +64,6 @@ import { IccRadioComponent } from '@icc/ui/radio';
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,
-    IccInputDirective,
-    IccIconModule,
     IccRadioComponent,
   ],
 })
@@ -109,14 +109,14 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
-  get groups(): any[] {
-    //console.log(' get groups =', this.fieldConfig.groups);
+  get groups(): IccRadioGroup[] {
     return this.fieldConfig.groups;
   }
 
   getChecked(name: string): boolean {
     return name === this.field.value;
   }
+
   onChange(): void {
     this.valueChange.emit(this.field.value);
   }
