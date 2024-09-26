@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class IccRadioComponent implements OnInit {
   @Input() field!: FormControl;
+  @Input() fieldName!: string;
   @Input() value!: string;
   @Input() checked!: boolean;
   @Input() name!: string;

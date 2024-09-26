@@ -5,7 +5,12 @@
     </icc-label>
 
     <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
-      <icc-radio [value]="group.name" [field]="field" [checked]="getChecked(group.name)">
+      <icc-radio
+        [value]="group.name"
+        [field]="field"
+        [fieldName]="fieldConfig.fieldName!"
+        [checked]="getChecked(group.name)"
+      >
         {{ group.title }}
       </icc-radio>
     </ng-container>
