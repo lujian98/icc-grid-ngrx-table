@@ -2,6 +2,7 @@
   .icc-form-field {
     padding-left: 5px;
     padding-right: 5px;
+    margin-bottom: 3px;
     position: relative;
 
     ::ng-deep input {
@@ -27,9 +28,10 @@
     align-items: center;
   }
 
+  /*
   .icc-form-field-wrapper:has(input[type="hidden"]) {
     display: none;
-  }
+  }*/
 
   .icc-form-field-infix {
     flex: 1;
