@@ -18,7 +18,7 @@ import { ControlValueAccessor, NgControl, NgForm, FormGroupDirective } from '@an
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { merge } from 'rxjs';
 import { takeWhile, takeUntil, mergeAll } from 'rxjs/operators';
-import { IccRadioComponent } from './radio.component';
+import { IccRadioComponent } from './tmp/radio.component';
 import { IccFormFieldControlDirective } from '@icc/ui/form-field';
 
 @Component({

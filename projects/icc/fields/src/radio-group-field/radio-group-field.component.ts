@@ -34,7 +34,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultRadioGroupFieldConfig, IccRadioGroupFieldConfig } from './models/radio-group-field.model';
 // import { IccRadioComponent, IccRadioGroupComponent } from '@icc/ui/radio';
-import { AppRadioComponent } from './radio.component';
+import { IccRadioComponent } from '@icc/ui/radio';
 
 @Component({
   selector: 'icc-radio-group-field',
@@ -67,7 +67,7 @@ import { AppRadioComponent } from './radio.component';
     IccIconModule,
     //IccRadioComponent,
     //IccRadioGroupComponent,
-    AppRadioComponent,
+    IccRadioComponent,
   ],
 })
 export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
