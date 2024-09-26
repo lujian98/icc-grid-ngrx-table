@@ -5,6 +5,7 @@ import { IccDisplayFieldConfig } from '../display-field/models/display-field.mod
 import { IccFieldsetConfig } from '../fieldset/models/fieldset.model';
 import { IccHiddenFieldConfig } from '../hidden-field/models/hidden-field.model';
 import { IccNumberFieldConfig } from '../number-field/models/number-field.model';
+import { IccRadioGroupFieldConfig } from '../radio-group-field/models/radio-group-field.model';
 import { IccSelectFieldConfig } from '../select-field/models/select-field.model';
 import { IccTextFieldConfig } from '../text-field/models/text-field.model';
 import { IccTextareaFieldConfig } from '../textarea-field/models/textarea-field.model';
@@ -17,6 +18,7 @@ export type IccFormField =
   | IccFieldsetConfig
   | IccHiddenFieldConfig
   | IccNumberFieldConfig
+  | IccRadioGroupFieldConfig
   | IccSelectFieldConfig
   | IccTextFieldConfig
   | IccTextareaFieldConfig;

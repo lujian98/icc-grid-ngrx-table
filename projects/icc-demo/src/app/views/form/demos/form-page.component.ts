@@ -106,6 +106,25 @@ export class AppFromPageDemoComponent {
       optionKey: 'abbr',
       placeholder: 'Select One or More...',
     },
+    {
+      fieldType: 'radiogroup',
+      fieldName: 'group88',
+      fieldLabel: 'Radio Group',
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
   ];
 
   values = {
@@ -121,5 +140,6 @@ export class AppFromPageDemoComponent {
     totalValue: 123892,
     userName2: 'user 77 A33',
     loginName2: 'test login A33',
+    group88: 'B',
   };
 }

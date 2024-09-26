@@ -1,0 +1,15 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <icc-form-field [iccLabelWidth]="fieldConfig.labelWidth" [iccFieldWidth]="fieldConfig.fieldWidth">
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+      {{ fieldConfig.fieldLabel }}
+    </icc-label>
+    <icc-radio-group
+      [formControlName]="fieldConfig.fieldName!"
+      *ngFor="let group of groups; trackBy: trackByIndex; let index = index"
+    >
+      <icc-radio [value]="group.name">
+        {{ group.title }}
+      </icc-radio>
+    </icc-radio-group>
+  </icc-form-field>
+</ng-container>

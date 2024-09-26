@@ -13,6 +13,9 @@
 <icc-hidden-field *ngIf="fieldConfig.fieldType === 'hidden'" [fieldConfig]="fieldConfig" [form]="form">
 </icc-hidden-field>
 
+<icc-radio-group-field *ngIf="fieldConfig.fieldType === 'radiogroup'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-radio-group-field>
+
 <icc-select-field *ngIf="fieldConfig.fieldType === 'select'" [fieldConfig]="fieldConfig" [form]="form">
 </icc-select-field>
 

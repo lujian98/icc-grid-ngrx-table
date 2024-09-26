@@ -74,6 +74,8 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private checkFormValueChanged(values: any): void {
+    //console.log('is form dirty = ', values);
+    // console.log('is form dirty = ', this.values);
     if (isEqual(values, this.values)) {
       this.form.markAsPristine();
     } else {
@@ -83,6 +85,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   resetForm(): void {
+    console.log('resetForm = ', this.values);
     this.form.patchValue({ ...this.values });
   }
 

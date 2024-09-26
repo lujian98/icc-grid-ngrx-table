@@ -6,6 +6,7 @@ import { IccDateFieldComponent } from './date-field/date-field.component';
 import { IccDisplayFieldComponent } from './display-field/display-field.component';
 import { IccHiddenFieldComponent } from './hidden-field/hidden-field.component';
 import { IccNumberFieldComponent } from './number-field/number-field.component';
+import { IccRadioGroupFieldComponent } from './radio-group-field/radio-group-field.component';
 import { IccSelectFieldComponent } from './select-field/select-field.component';
 import { IccTextFieldComponent } from './text-field/text-field.component';
 import { IccTextareaFieldComponent } from './textarea-field/textarea-field.component';
@@ -29,6 +30,7 @@ import { IccFormField } from './models/fields.model';
     IccDisplayFieldComponent,
     IccDateFieldComponent,
     IccCheckboxFieldComponent,
+    IccRadioGroupFieldComponent,
     IccHiddenFieldComponent,
   ],
 })
