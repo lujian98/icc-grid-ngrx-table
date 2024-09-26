@@ -89,6 +89,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   checkForm(): void {
     console.log(' form=', this.form);
     console.log(' values =', this.form.value);
+    console.log('is form dirty = ', this.form.dirty);
   }
 
   submit(): void {

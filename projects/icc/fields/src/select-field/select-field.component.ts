@@ -102,12 +102,17 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
     //console.log(' 0000000000000 fieldConfig =', fieldConfig);
+    if (fieldConfig.options) {
+      this.options = [...fieldConfig.options];
+      delete fieldConfig.options;
+    }
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);
     } else {
       this._fieldConfig = config;
     }
+    //console.log( 'this.fieldConfig=', this.fieldConfig)
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;

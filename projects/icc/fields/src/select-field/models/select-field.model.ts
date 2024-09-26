@@ -11,6 +11,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
+  options?: any[];
 }
 
 export interface SelectFieldState {

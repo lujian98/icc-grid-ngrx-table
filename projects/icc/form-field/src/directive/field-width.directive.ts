@@ -11,7 +11,6 @@ export class IccFieldWidthDirective {
   @Input('iccFieldWidth')
   set width(width: number | string | undefined) {
     if (width) {
-      console.log(' width=', width);
       this._width = isNumeric(width) ? `${width}px` : (width as string);
     }
   }
