@@ -129,17 +129,19 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private initSelectField(): void {
-    if (this.fieldConfig?.viewportReady && (!this.form || !this.selectOptions$)) {
-      this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-    }
-    if (this.fieldConfig?.viewportReady && !this.form) {
-      if (!this.form) {
-        this.form = new FormGroup({
-          [this.fieldConfig.fieldName!]: new FormControl<{ [key: string]: T }>({}),
-        });
+    if (this.fieldConfig?.viewportReady) {
+      if (!this.selectOptions$) {
+        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
-      this.value = this.getInitValue(this.value);
-      this.setFormvalue();
+      if (!this.form) {
+        if (!this.form) {
+          this.form = new FormGroup({
+            [this.fieldConfig.fieldName!]: new FormControl<{ [key: string]: T }>({}),
+          });
+        }
+        this.value = this.getInitValue(this.value);
+        this.setFormvalue();
+      }
     }
   }
 
