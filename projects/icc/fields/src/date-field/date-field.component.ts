@@ -37,7 +37,7 @@ import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
 @Component({
   selector: 'icc-date-field',
   templateUrl: './date-field.component.html',
-  //styleUrls: ['./date-field.component.scss'],
+  styleUrls: ['./date-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

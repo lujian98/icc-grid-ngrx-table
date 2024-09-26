@@ -36,7 +36,7 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
 @Component({
   selector: 'icc-text-field',
   templateUrl: './text-field.component.html',
-  //styleUrls: ['./text-field.component.scss'],
+  styleUrls: ['./text-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

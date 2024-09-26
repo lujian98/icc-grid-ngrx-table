@@ -18,7 +18,20 @@ export class AppFromPageDemoComponent {
     labelWidth: 100,
   };
 
-  formFields: IccFormField[] = [
+  formFields2: IccFormField[] = [
+    {
+      fieldType: 'text',
+      fieldName: 'userName2',
+      fieldLabel: 'User Name2',
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName2',
+      fieldLabel: 'Login Name2',
+    },
+  ];
+
+  formFields = [
     {
       fieldType: 'text',
       fieldName: 'userName',
@@ -28,6 +41,11 @@ export class AppFromPageDemoComponent {
       fieldType: 'text',
       fieldName: 'loginName',
       fieldLabel: 'Login Name',
+    },
+    {
+      fieldType: 'fieldset',
+      flexDirection: 'row',
+      formFields: this.formFields2,
     },
   ];
 
@@ -98,5 +116,7 @@ export class AppFromPageDemoComponent {
     createdate: new Date(),
     enabled: false,
     totalValue: 123892,
+    userName2: 'user 77 A33',
+    loginName2: 'test login A33',
   };
 }

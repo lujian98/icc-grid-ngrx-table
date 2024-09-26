@@ -37,7 +37,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 @Component({
   selector: 'icc-checkbox-field',
   templateUrl: './checkbox-field.component.html',
-  //styleUrls: ['./checkbox-field.component.scss'],
+  styleUrls: ['./checkbox-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

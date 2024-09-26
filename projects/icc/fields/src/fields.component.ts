@@ -15,6 +15,7 @@ import { IccFormField } from './models/fields.model';
 @Component({
   selector: 'icc-fields',
   templateUrl: './fields.component.html',
+  styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [

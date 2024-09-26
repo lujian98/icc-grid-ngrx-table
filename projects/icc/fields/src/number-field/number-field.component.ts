@@ -36,7 +36,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
 @Component({
   selector: 'icc-number-field',
   templateUrl: './number-field.component.html',
-  //styleUrls: ['./number-field.component.scss'],
+  styleUrls: ['./number-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

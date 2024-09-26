@@ -49,7 +49,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
 @Component({
   selector: 'icc-select-field',
   templateUrl: './select-field.component.html',
-  //styleUrls: ['./select-field.component.scss'],
+  styleUrls: ['./select-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

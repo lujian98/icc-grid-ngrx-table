@@ -25,7 +25,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
 @Component({
   selector: 'icc-display-field',
   templateUrl: './display-field.component.html',
-  //styleUrls: ['./display-field.component.scss'],
+  styleUrls: ['./display-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

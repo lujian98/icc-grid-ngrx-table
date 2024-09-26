@@ -3,6 +3,13 @@
 
   <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
     <icc-fields *ngIf="config.fieldType !== 'fieldset'" [fieldConfig]="config" [form]="form"> </icc-fields>
-    <icc-fieldset *ngIf="config.fieldType === 'fieldset'" [fieldConfig]="fieldConfig" [form]="form"> </icc-fieldset>
+
+    <icc-fieldset *ngIf="config.fieldType === 'fieldset'" [fieldConfig]="config" [form]="form"> </icc-fieldset>
   </ng-container>
 </fieldset>
+
+<!--
+    <ng-container *ngIf="config.fieldType === 'fieldset'">
+      <icc-fieldset [fieldConfig]="config" [form]="form"> </icc-fieldset>
+    </ng-container>
+-->
