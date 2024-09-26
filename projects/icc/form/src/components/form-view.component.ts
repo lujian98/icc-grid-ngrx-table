@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subject, filter, takeUntil } from 'rxjs';
 import { isEqual } from '@icc/ui/core';
 import { IccFieldsComponent, IccFieldsetComponent, IccFieldsetConfig, IccFormField } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
+import { Subject, takeUntil } from 'rxjs';
 import { IccFormConfig } from '../models/form.model';
 
 @Component({
@@ -24,13 +24,14 @@ import { IccFormConfig } from '../models/form.model';
 export class IccFormViewComponent implements OnInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
+  form: FormGroup = new FormGroup({});
   private _formFields: IccFormField[] = [];
   private _values: any;
 
   @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: IccFormField[]) {
-    console.log(' 111 formFields=', val);
+    //console.log(' 111 formFields=', val);
     this._formFields = val;
     this.addFormControls(this.formFields);
 
@@ -64,22 +65,8 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return this._values;
   }
 
-  form: FormGroup = new FormGroup({});
-
-  constructor() {}
-
   ngOnInit(): void {
-    this.form.valueChanges
-      .pipe(
-        filter(() => this.form.dirty),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((values) => {
-        console.log('oooo value changed=', this.values);
-        console.log(' value changed=', values);
-        this.checkFormValueChanged(values);
-        //console.log(' is form dirty=', this.form.dirty);
-      });
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => this.checkFormValueChanged(values));
   }
 
   trackByIndex(index: number): number {
@@ -87,32 +74,20 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private checkFormValueChanged(values: any): void {
-    // const hasChange = this.hasChange(this.form.controls, this.form.getRawValue(), this.values);
-    const hasChange = !isEqual(values, this.values);
-    console.log(' xxxx hasChange=', hasChange);
-    if (!hasChange) {
+    if (isEqual(values, this.values)) {
       this.form.markAsPristine();
+    } else {
+      this.form.markAsDirty();
     }
-  }
-
-  private hasChange(items: Object, rawValues: any, values: any): boolean {
-    return Object.keys(items).some((key) => {
-      const rawValue = rawValues[key];
-      const value = values ? values[key] : null;
-      return typeof rawValue === 'object' && rawValue
-        ? this.hasChange(rawValue, rawValue, value)
-        : value !== undefined && rawValue !== value;
-    });
+    console.log('is form dirty = ', this.form.dirty);
   }
 
   resetForm(): void {
     this.form.patchValue({ ...this.values });
-    this.form.markAsPristine();
   }
 
   checkForm(): void {
     console.log(' form=', this.form);
-    const field = this.form.get('userName');
     console.log(' values =', this.form.value);
   }
 

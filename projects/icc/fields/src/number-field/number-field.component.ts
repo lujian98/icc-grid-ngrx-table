@@ -108,7 +108,6 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   get hasValue(): boolean {
-    // TODO zero
     return !!this.field.value || this.field.value === 0;
   }
 

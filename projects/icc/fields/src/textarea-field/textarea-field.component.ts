@@ -112,7 +112,6 @@ export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   onChange(): void {
-    console.log(' on change=', this.field.value);
     this.valueChange.emit(this.field.value);
   }
 

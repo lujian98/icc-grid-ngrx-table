@@ -115,8 +115,6 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   onChange(val: Date): void {
-    console.log(' on change=', this.field.value);
-    console.log(' on change val=', val);
     this.valueChange.emit(val);
   }
 

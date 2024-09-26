@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -13,10 +13,10 @@ import {
   Validator,
 } from '@angular/forms';
 import {
+  IccFieldWidthDirective,
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
@@ -54,9 +54,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     IccIconModule,
   ],
 })
-export class IccDisplayFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  //private changeDetectorRef = inject(ChangeDetectorRef);
-  //private destroy$ = new Subject<void>();
+export class IccDisplayFieldComponent implements ControlValueAccessor, Validator {
   private _fieldConfig!: IccDisplayFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
@@ -114,10 +112,5 @@ export class IccDisplayFieldComponent implements OnDestroy, ControlValueAccessor
   validate(control: AbstractControl): ValidationErrors | null {
     return null;
     //return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    //this.destroy$.next();
-    //this.destroy$.complete();
   }
 }

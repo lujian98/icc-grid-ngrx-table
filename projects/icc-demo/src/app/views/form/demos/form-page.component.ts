@@ -63,6 +63,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'number',
       fieldName: 'age',
       fieldLabel: 'Age',
+      clearValue: true,
     },
     {
       fieldType: 'text',
@@ -73,7 +74,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'textarea',
       fieldName: 'notes',
       fieldLabel: 'Notes',
-      clearValue: false,
+      clearValue: true,
     },
     {
       fieldType: 'display',
@@ -116,7 +117,7 @@ export class AppFromPageDemoComponent {
     state: STATES[32],
     display: 'display only',
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
-    enabled: false,
+    enabled: true,
     totalValue: 123892,
     userName2: 'user 77 A33',
     loginName2: 'test login A33',
