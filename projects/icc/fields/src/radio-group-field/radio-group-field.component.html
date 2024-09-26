@@ -5,16 +5,37 @@
     </icc-label>
 
     <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
-      <input type="radio" [value]="group.name" [formControlName]="fieldConfig.fieldName!" />
+      <app-radio [value]="group.name" [field]="field" [checked]="getChecked(group.name)">
+        {{ group.title }}
+      </app-radio>
     </ng-container>
   </icc-form-field>
 </ng-container>
 <!--
-    <input type="radio" value="value1" name="group2">
-    <input type="radio" value="value2" name="group2">
-    <input type="radio" value="value3" name="group2">
+    <input type="radio" [value]="group.name" [formControlName]="fieldConfig.fieldName!" />
+    {{ group.title }}
+      <icc-radio [value]="group.name" >
+      {{ group.title }}
+    </icc-radio>
 
 
+    <app-radio
+name="g2"
+id="rc4" label="Inputs2" value="Inputs2" [ctrl]="getRadioOptions2()" checked ></app-radio>
+<app-radio 
+name="g2"
+id="rc5" label="HTML2" value="HTML2" [ctrl]="getRadioOptions2()" ></app-radio>
+<app-radio
+name="g2"
+id="rc6" label="Code2" value="Code2" [ctrl]="getRadioOptions2()" ></app-radio>
+
+
+
+    <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
+      <input type="radio" [value]="group.name" [formControlName]="fieldConfig.fieldName!" />
+      {{ group.title }}
+    </ng-container>
+    
 
         <icc-radio-group
       [formControlName]="fieldConfig.fieldName!"

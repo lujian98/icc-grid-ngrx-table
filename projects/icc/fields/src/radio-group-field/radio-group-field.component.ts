@@ -33,7 +33,8 @@ import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultRadioGroupFieldConfig, IccRadioGroupFieldConfig } from './models/radio-group-field.model';
-import { IccRadioComponent, IccRadioGroupComponent } from '@icc/ui/radio';
+// import { IccRadioComponent, IccRadioGroupComponent } from '@icc/ui/radio';
+import { AppRadioComponent } from './radio.component';
 
 @Component({
   selector: 'icc-radio-group-field',
@@ -64,8 +65,9 @@ import { IccRadioComponent, IccRadioGroupComponent } from '@icc/ui/radio';
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
-    IccRadioComponent,
-    IccRadioGroupComponent,
+    //IccRadioComponent,
+    //IccRadioGroupComponent,
+    AppRadioComponent,
   ],
 })
 export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -106,8 +108,8 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
 
   @Output() valueChange = new EventEmitter<boolean>(true);
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get groups(): any[] {
@@ -115,6 +117,11 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
     return this.fieldConfig.groups;
   }
 
+  getChecked(name: string): boolean {
+    console.log(' name =', name);
+    console.log(' field =', this.field);
+    return name === this.field.value;
+  }
   onChange(): void {
     this.valueChange.emit(this.field.value);
   }
