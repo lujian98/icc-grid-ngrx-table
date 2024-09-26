@@ -21,7 +21,6 @@ export class IccFieldsetComponent {
   @Input()
   set fieldConfig(fieldConfig: Partial<IccFieldsetConfig>) {
     this._fieldConfig = { ...defaultFieldsetConfig, ...fieldConfig };
-    console.log(' fffff fieldConfig= ', this.fieldConfig);
   }
   get fieldConfig(): IccFieldsetConfig {
     return this._fieldConfig;
