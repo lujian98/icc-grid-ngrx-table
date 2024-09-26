@@ -33,7 +33,6 @@ import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultRadioGroupFieldConfig, IccRadioGroupFieldConfig } from './models/radio-group-field.model';
-// import { IccRadioComponent, IccRadioGroupComponent } from '@icc/ui/radio';
 import { IccRadioComponent } from '@icc/ui/radio';
 
 @Component({
@@ -65,8 +64,6 @@ import { IccRadioComponent } from '@icc/ui/radio';
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
-    //IccRadioComponent,
-    //IccRadioGroupComponent,
     IccRadioComponent,
   ],
 })
@@ -113,13 +110,11 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   get groups(): any[] {
-    console.log(' get groups =', this.fieldConfig.groups);
+    //console.log(' get groups =', this.fieldConfig.groups);
     return this.fieldConfig.groups;
   }
 
   getChecked(name: string): boolean {
-    console.log(' name =', name);
-    console.log(' field =', this.field);
     return name === this.field.value;
   }
   onChange(): void {
