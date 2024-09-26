@@ -28,6 +28,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'text',
       fieldName: 'loginName2',
       fieldLabel: 'Login Name2',
+      fieldWidth: 80,
     },
   ];
 

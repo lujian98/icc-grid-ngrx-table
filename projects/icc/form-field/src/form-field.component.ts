@@ -1,4 +1,6 @@
 import {
+  ChangeDetectorRef,
+  inject,
   ChangeDetectionStrategy,
   Component,
   HostBinding,
@@ -14,6 +16,7 @@ import { IccLabelDirective } from './directive/label.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
 import { IccFieldsetLabeLabelWidthDirective } from './directive/fieldset-label-width.directive';
+import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
@@ -37,6 +40,8 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  fieldWidth: string = '100%';
   focused = false;
   @HostBinding('class.icc-form-field')
   get field() {
@@ -68,6 +73,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     @Optional() private formLabelWidthDirective: IccFormLabelWidthDirective,
     @Optional() private fieldsetLabeLabelWidthDirective: IccFieldsetLabeLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
+    @Optional() private fieldWidthDirective: IccFieldWidthDirective,
   ) {}
 
   ngAfterViewInit(): void {
@@ -88,6 +94,11 @@ export class IccFormFieldComponent implements AfterViewInit {
         width = DEFAULT_FORM_FIELD_LABEL_WIDTH;
       }
       this.label.nativeElement.style.setProperty('flex', `0 0 ${width}`);
+    }
+
+    if (this.fieldWidthDirective && this.fieldWidthDirective.width) {
+      this.fieldWidth = this.fieldWidthDirective.width;
+      this.changeDetectorRef.detectChanges();
     }
   }
 }
