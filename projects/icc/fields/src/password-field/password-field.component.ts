@@ -28,6 +28,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -64,6 +65,7 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
   ],
 })

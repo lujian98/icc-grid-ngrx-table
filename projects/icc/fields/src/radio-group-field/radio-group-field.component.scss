@@ -1,6 +1,6 @@
 :host {
   width: 100%;
-  ::ng-deep .icc-form-field-wrapper {
-    padding-left: 10px;
+  icc-radio:first-of-type {
+    padding-left: 5px;
   }
 }

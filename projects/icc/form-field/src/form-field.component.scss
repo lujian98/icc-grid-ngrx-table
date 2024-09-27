@@ -1,9 +1,9 @@
 :host {
   .icc-form-field {
-    padding-left: 5px;
-    padding-right: 5px;
+    //padding-left: 5px;
+    // padding-right: 5px;
     //margin-bottom: 3px;
-    padding-bottom: 2px;
+    padding: 1px 0 1px 5px;
     position: relative;
 
     ::ng-deep input {
@@ -22,6 +22,7 @@
   }
 
   .icc-form-field-container {
+    padding-right: 5px;
     flex: 1 0 66%;
     flex-grow: 1;
     display: flex;
@@ -70,7 +71,8 @@
     color: #ff4f4f;
   }
 
-  .icc-form-field-hint {
+  .icc-form-field-hint,
+  .icc-form-field-error {
     display: flex;
     flex-direction: column;
     line-height: 1rem;
@@ -82,7 +84,7 @@
       }
 
       icc-hint {
-        width: 66%;
+        //width: 66%;
         padding: 3px;
       }
     }

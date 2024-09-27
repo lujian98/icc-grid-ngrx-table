@@ -20,6 +20,7 @@ import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
+import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 
 @Component({
@@ -37,6 +38,7 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
     IccSuffixDirective,
     IccFormLabelWidthDirective,
     IccFieldsetLabelWidthDirective,
+    IccFormFieldErrorsDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
