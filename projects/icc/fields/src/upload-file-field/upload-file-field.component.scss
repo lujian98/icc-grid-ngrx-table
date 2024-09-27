@@ -1,0 +1,15 @@
+:host {
+  width: 100%;
+
+  .upload-file-input {
+    line-height: 1.75rem;
+    width: 100%;
+    &::file-selector-button {
+      display: none;
+    }
+  }
+
+  icc-icon {
+    padding-right: 10px;
+  }
+}
