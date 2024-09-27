@@ -130,6 +130,11 @@ export class AppFromPageDemoComponent {
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
     },
+    {
+      fieldType: 'password',
+      fieldName: 'userPassword',
+      fieldLabel: 'Password',
+    },
   ];
 
   values = {
@@ -147,5 +152,6 @@ export class AppFromPageDemoComponent {
     loginName2: 'test login A33',
     group88: 'B',
     uploadfile: '',
+    userPassword: '',
   };
 }

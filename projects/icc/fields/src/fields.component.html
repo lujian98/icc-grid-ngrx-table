@@ -13,6 +13,9 @@
 <icc-hidden-field *ngIf="fieldConfig.fieldType === 'hidden'" [fieldConfig]="fieldConfig" [form]="form">
 </icc-hidden-field>
 
+<icc-password-field *ngIf="fieldConfig.fieldType === 'password'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-password-field>
+
 <icc-radio-group-field *ngIf="fieldConfig.fieldType === 'radiogroup'" [fieldConfig]="fieldConfig" [form]="form">
 </icc-radio-group-field>
 
