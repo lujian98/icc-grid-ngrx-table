@@ -1,3 +1,5 @@
+import { ValidatorFn } from '@angular/forms';
+
 export interface IccBaseField {
   fieldType: string;
   fieldName?: string;
@@ -7,4 +9,5 @@ export interface IccBaseField {
   labelWidth?: number | string;
   fieldWidth?: number | string;
   required?: boolean;
+  validators?: ValidatorFn | ValidatorFn[];
 }

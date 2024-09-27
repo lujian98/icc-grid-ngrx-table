@@ -20,6 +20,7 @@ export class AppFormComponent {
         { name: 'Simple Form', link: 'simple-form' },
         { name: 'Theme Form', link: 'theme-form' },
         { name: 'Form Page', link: 'form-page' },
+        { name: 'Password Page', link: 'password-page' },
       ],
     },
   ];

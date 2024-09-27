@@ -45,6 +45,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     if (this.formConfig.remoteFieldsConfig && !this.formConfig.remoteFormData) {
       this.form.patchValue({ ...this.values });
     }
+
+    if (this.formConfig.validators) {
+      this.form.addValidators(this.formConfig.validators);
+    }
   }
   get formFields(): any[] {
     return this._formFields;
@@ -63,6 +67,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   private setValidators(field: IccFormField): void {
     const formField = this.form.get(field.fieldName!)!;
+
+    if (field.validators) {
+      formField.addValidators(field.validators);
+    }
+
     if (field.required) {
       formField.addValidators(Validators.required);
     }

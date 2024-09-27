@@ -4,4 +4,5 @@ export interface IccFormFieldError {
   actualLength?: number;
   max?: number;
   min?: number;
+  message?: string;
 }

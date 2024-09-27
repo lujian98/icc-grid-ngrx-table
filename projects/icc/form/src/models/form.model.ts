@@ -1,3 +1,5 @@
+import { ValidatorFn } from '@angular/forms';
+
 export interface IccFormConfig {
   formId: string; // auto generated unique id
   urlKey: string; // Only for remote config
@@ -6,6 +8,7 @@ export interface IccFormConfig {
   remoteFormData: boolean;
   readonly: boolean;
   labelWidth?: number | string;
+  validators?: ValidatorFn | ValidatorFn[];
 }
 
 export interface FormState {
