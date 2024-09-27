@@ -30,28 +30,15 @@ import {
   IccSuffixDirective,
   IccErrorDirective,
 } from '@icc/ui/form-field';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
-import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
+//import { defaultFieldErrorFieldConfig, IccFieldErrorFieldConfig } from './models/field-errors.model';
 
 @Component({
-  selector: 'icc-text-field',
-  templateUrl: './text-field.component.html',
-  styleUrls: ['./text-field.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => IccTextFieldComponent),
-      multi: true,
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => IccTextFieldComponent),
-      multi: true,
-    },
-  ],
+  selector: 'icc-field-errors',
+  templateUrl: './field-errors.component.html',
+  styleUrls: ['./field-errors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -66,27 +53,26 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccInputDirective,
     IccIconModule,
     IccErrorDirective,
-    IccFieldsErrorsComponent,
   ],
 })
-export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+export class IccFieldsErrorsComponent implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccTextFieldConfig;
+  /*
+  private _fieldConfig!: IccFieldErrorFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
 
   @Input()
-  set fieldConfig(fieldConfig: Partial<IccTextFieldConfig>) {
-    this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
+  set fieldConfig(fieldConfig: Partial<IccFieldErrorFieldConfig>) {
+    this._fieldConfig = { ...defaultFieldErrorFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
   }
-  get fieldConfig(): IccTextFieldConfig {
+  get fieldConfig(): IccFieldErrorFieldConfig {
     return this._fieldConfig;
   }
 
-  private initForm(fieldConfig: IccTextFieldConfig): void {
-    //console.log(' fieldConfig=', fieldConfig);
+  private initForm(fieldConfig: IccFieldErrorFieldConfig): void {
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({
@@ -98,7 +84,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   @Input()
   set value(val: string) {
     this._value = val;
-    this.initForm({ ...defaultTextFieldConfig });
+    this.initForm({ ...defaultFieldErrorFieldConfig });
     this.field.setValue(val);
   }
 
@@ -106,14 +92,14 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
     return this._value;
   }
 
-  @Output() valueChange = new EventEmitter<string>(true);
+  @Output() valueChange = new EventEmitter<string>(false);
 
   get field(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    return !!this.field.value || this.field.value === 0;
   }
 
   onChange(): void {
@@ -147,9 +133,9 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   validate(control: AbstractControl): ValidationErrors | null {
     return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
-
+*/
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    //this.destroy$.next();
+    //this.destroy$.complete();
   }
 }
