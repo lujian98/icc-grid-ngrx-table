@@ -37,12 +37,16 @@ export class AppFromPageDemoComponent {
       fieldType: 'text',
       fieldName: 'userName',
       fieldLabel: 'User Name',
+      required: true,
+      minLength: 4,
+      maxLength: 20,
       clearValue: true,
     },
     {
       fieldType: 'text',
       fieldName: 'loginName',
       fieldLabel: 'Login Name',
+      required: true,
     },
     {
       fieldType: 'fieldset',
@@ -63,6 +67,9 @@ export class AppFromPageDemoComponent {
       fieldType: 'number',
       fieldName: 'age',
       fieldLabel: 'Age',
+      required: true,
+      minValue: 0,
+      maxValue: 100,
       clearValue: true,
     },
     {
@@ -74,6 +81,9 @@ export class AppFromPageDemoComponent {
       fieldType: 'textarea',
       fieldName: 'notes',
       fieldLabel: 'Notes',
+      required: true,
+      minLength: 4,
+      maxLength: 20,
       clearValue: true,
     },
     {
@@ -134,6 +144,9 @@ export class AppFromPageDemoComponent {
       fieldType: 'password',
       fieldName: 'userPassword',
       fieldLabel: 'Password',
+      required: true,
+      minLength: 4,
+      maxLength: 20,
     },
   ];
 

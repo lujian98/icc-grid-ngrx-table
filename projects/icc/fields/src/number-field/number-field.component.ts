@@ -29,6 +29,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -63,6 +64,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

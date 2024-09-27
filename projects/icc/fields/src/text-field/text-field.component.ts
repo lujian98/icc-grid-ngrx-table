@@ -28,7 +28,6 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccErrorDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -65,7 +64,6 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
-    IccErrorDirective,
     IccFieldsErrorsComponent,
   ],
 })
@@ -117,6 +115,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   onChange(): void {
+    this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }
 

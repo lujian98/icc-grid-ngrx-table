@@ -1,6 +1,26 @@
-<ng-container>
-  <icc-error>
+<ng-container *ngFor="let error of errors; trackBy: trackByIndex; let index = index">
+  <icc-error *ngIf="error.type === 'required'">
     <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
     {{ "FIELD_IS_REQUIRED" }}
+  </icc-error>
+
+  <icc-error *ngIf="error.type === 'minlength'">
+    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+    {{ "minlength" }}
+  </icc-error>
+
+  <icc-error *ngIf="error.type === 'maxlength'">
+    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+    {{ "maxlength" }}
+  </icc-error>
+
+  <icc-error *ngIf="error.type === 'min'">
+    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+    {{ "minvalue" }}
+  </icc-error>
+
+  <icc-error *ngIf="error.type === 'max'">
+    <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+    {{ "maxvalue" }}
   </icc-error>
 </ng-container>

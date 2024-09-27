@@ -1,8 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
-import { IccFieldsComponent, IccFieldsetComponent, IccFieldsetConfig, IccFormField } from '@icc/ui/fields';
+import {
+  IccFieldsComponent,
+  IccFieldsetComponent,
+  IccFieldsetConfig,
+  IccFormField,
+  IccTextFieldConfig,
+  IccNumberFieldConfig,
+} from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormConfig } from '../models/form.model';
@@ -49,8 +56,36 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         this.addFormControls((field as IccFieldsetConfig).formFields);
       } else if (!this.form.get(field.fieldName!)) {
         this.form.addControl(field.fieldName!, new FormControl<string>('', []));
+        this.setValidators(field);
       }
     });
+  }
+
+  private setValidators(field: IccFormField): void {
+    const formField = this.form.get(field.fieldName!)!;
+    if (field.required) {
+      formField.addValidators(Validators.required);
+    }
+
+    if (field.fieldType === 'text' || field.fieldType === 'textarea' || field.fieldType === 'password') {
+      const f = field as IccTextFieldConfig;
+      if (f.minLength || f.minLength === 0) {
+        formField.addValidators(Validators.minLength(f.minLength));
+      }
+      if (f.maxLength || f.maxLength === 0) {
+        formField.addValidators(Validators.maxLength(f.maxLength));
+      }
+    }
+
+    if (field.fieldType === 'number') {
+      const f = field as IccNumberFieldConfig;
+      if (f.minValue || f.minValue === 0) {
+        formField.addValidators(Validators.min(f.minValue));
+      }
+      if (f.maxValue || f.maxValue === 0) {
+        formField.addValidators(Validators.max(f.maxValue));
+      }
+    }
   }
 
   @Input()
@@ -93,6 +128,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     console.log(' form=', this.form);
     console.log(' values =', this.form.value);
     console.log('is form dirty = ', this.form.dirty);
+    console.log('is form invalid = ', this.form.invalid);
   }
 
   submit(): void {

@@ -29,6 +29,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -63,6 +64,7 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -112,6 +114,7 @@ export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   onChange(): void {
+    this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }
 

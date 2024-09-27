@@ -29,6 +29,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -63,6 +64,7 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -112,7 +114,8 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   onChange(): void {
-    this.valueChange.emit(this.field.value);
+    this.field.markAsTouched();
+    //this.valueChange.emit(this.field.value);
   }
 
   onBlur(): void {}
