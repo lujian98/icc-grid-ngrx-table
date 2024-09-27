@@ -13,5 +13,9 @@
     />
     <icc-icon class="folder-open" icon="folder-open" iccSuffix (click)="fileInput.click()"></icc-icon>
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+
+    <ng-container *ngIf="field?.errors">
+      <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
+    </ng-container>
   </icc-form-field>
 </ng-container>

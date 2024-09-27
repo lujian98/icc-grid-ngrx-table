@@ -30,6 +30,7 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from './models/checkbox-field.model';
@@ -65,6 +66,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccInputDirective,
     IccIconModule,
     IccCheckboxComponent,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

@@ -29,6 +29,7 @@ import {
   IccLabelWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccRadioComponent } from '@icc/ui/radio';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -65,6 +66,7 @@ import {
     IccLabelWidthDirective,
     IccFieldWidthDirective,
     IccRadioComponent,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

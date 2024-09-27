@@ -51,6 +51,10 @@
           </ng-container>
         </ng-template>
       </icc-autocomplete>
+
+      <ng-container *ngIf="field?.errors">
+        <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
+      </ng-container>
     </icc-form-field>
   </ng-container>
 </ng-container>

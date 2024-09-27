@@ -29,6 +29,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
@@ -66,6 +67,7 @@ import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
     IccIconModule,
     IccCalendarModule,
     IccLocaleDatePipe,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

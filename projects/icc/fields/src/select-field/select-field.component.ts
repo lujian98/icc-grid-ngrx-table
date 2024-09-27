@@ -41,6 +41,7 @@ import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
 } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccInputDirective } from '../input/input.directive';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
@@ -84,6 +85,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccIconModule,
     IccCheckboxComponent,
     IccFilterPipe,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
@@ -219,6 +221,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     }
     //console.log('bbbbbbbbbbbb val=', value)
     return value;
+  }
+
+  get field(): AbstractControl {
+    return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
   @Output() selectionChange = new EventEmitter<any[]>(true);

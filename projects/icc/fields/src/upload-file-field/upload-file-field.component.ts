@@ -30,6 +30,7 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { Subject, takeUntil } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models/upload-file-field.model';
@@ -63,6 +64,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFieldsErrorsComponent,
   ],
 })
 export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
