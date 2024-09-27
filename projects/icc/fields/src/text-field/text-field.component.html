@@ -11,6 +11,7 @@
       (click)="$event.stopPropagation()"
       (keyup)="onChange()"
       (blur)="onBlur()"
+      [required]="!!fieldConfig.required"
       placeholder="{{ fieldConfig.placeholder }}"
     />
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>

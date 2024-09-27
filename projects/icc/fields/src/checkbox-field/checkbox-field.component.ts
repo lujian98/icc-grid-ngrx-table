@@ -112,6 +112,7 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   onChange(): void {
+    console.log(' on change form=', this.form);
     this.valueChange.emit(this.field.value);
   }
 

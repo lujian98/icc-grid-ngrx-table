@@ -19,6 +19,7 @@
         (blur)="onBlur()"
         [iccAutocomplete]="autocomplete"
         [iccAutocompleteClose]="autocompleteClose"
+        [required]="!!fieldConfig.required"
         placeholder="{{ fieldConfig.placeholder }}"
       />
       <icc-icon

@@ -9,6 +9,7 @@
       type="file"
       class="upload-file-input"
       [formControlName]="fieldConfig.fieldName!"
+      [required]="!!fieldConfig.required"
       placeholder="{{ fieldConfig.placeholder }}"
     />
     <icc-icon class="folder-open" icon="folder-open" iccSuffix (click)="fileInput.click()"></icc-icon>

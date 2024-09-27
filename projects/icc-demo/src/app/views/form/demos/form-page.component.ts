@@ -95,6 +95,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'date',
       fieldName: 'createdate',
       fieldLabel: 'Create Date',
+      required: true,
     },
     {
       fieldType: 'hidden',
@@ -104,6 +105,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'checkbox',
       fieldName: 'enabled',
       fieldLabel: 'Enabled',
+      required: true,
     },
     {
       fieldType: 'select',
@@ -114,12 +116,14 @@ export class AppFromPageDemoComponent {
       fieldLabel: 'State',
       optionLabel: 'state',
       optionKey: 'abbr',
+      required: true,
       placeholder: 'Select One or More...',
     },
     {
       fieldType: 'radiogroup',
       fieldName: 'group88',
       fieldLabel: 'Radio Group',
+      required: true,
       groups: [
         {
           title: 'Group A',
@@ -139,6 +143,7 @@ export class AppFromPageDemoComponent {
       fieldType: 'uploadfile',
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
+      required: true,
     },
     {
       fieldType: 'password',

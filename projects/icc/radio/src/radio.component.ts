@@ -24,6 +24,7 @@ export class IccRadioComponent implements ControlValueAccessor {
   @Input() value!: string;
   @Input() checked!: boolean;
   @Input() name!: string;
+  @Input() required!: boolean;
   private _disabled = false;
 
   @Input()
