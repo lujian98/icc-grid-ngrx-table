@@ -11,6 +11,7 @@
       [formControlName]="fieldConfig.fieldName!"
       placeholder="{{ fieldConfig.placeholder }}"
     />
-    <icc-icon icon="folder-open" iccSuffix (click)="fileInput.click()"></icc-icon>
+    <icc-icon class="folder-open" icon="folder-open" iccSuffix (click)="fileInput.click()"></icc-icon>
+    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
   </icc-form-field>
 </ng-container>
