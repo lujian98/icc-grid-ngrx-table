@@ -54,7 +54,7 @@ export class AppPasswordPageDemoComponent {
       fieldName: 'enabled',
       fieldLabel: 'Enabled',
       required: true,
-      requiredFields: ['userName', 'loginName', 'password', 'email', 'age'],
+      requiredFields: ['userName', 'loginName', 'password', 'email', 'age', 'notes', 'createdate'],
     },
     {
       fieldType: 'text',
