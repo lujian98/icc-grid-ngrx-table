@@ -22,6 +22,7 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
+  Validators,
 } from '@angular/forms';
 import {
   IccAutocompleteComponent,
@@ -225,6 +226,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   get field(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
+  }
+
+  get isRequired(): boolean {
+    return this.field.hasValidator(Validators.required);
   }
 
   @Output() selectionChange = new EventEmitter<any[]>(true);

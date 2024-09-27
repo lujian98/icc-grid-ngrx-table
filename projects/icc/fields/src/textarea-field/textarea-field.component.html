@@ -9,7 +9,7 @@
       (click)="$event.stopPropagation()"
       (keyup)="onChange()"
       spellcheck="false"
-      [required]="!!fieldConfig.required"
+      [required]="isRequired"
       placeholder="{{ fieldConfig.placeholder }}"
     >
     </textarea>

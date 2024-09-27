@@ -21,6 +21,7 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
+  Validators,
 } from '@angular/forms';
 import {
   IccFormFieldComponent,
@@ -109,6 +110,10 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
 
   get field(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
+  }
+
+  get isRequired(): boolean {
+    return this.field.hasValidator(Validators.required);
   }
 
   get hasValue(): boolean {

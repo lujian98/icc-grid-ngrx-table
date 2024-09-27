@@ -10,7 +10,7 @@
       [calendarModal]="datepicker"
       [value]="field.value | localeDate"
       [placeholder]="fieldConfig.placeholder"
-      [required]="!!fieldConfig.required"
+      [required]="isRequired"
       readonly
     />
     <icc-calendar
