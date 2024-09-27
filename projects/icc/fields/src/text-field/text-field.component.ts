@@ -52,7 +52,7 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
       multi: true,
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,

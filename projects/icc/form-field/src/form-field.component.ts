@@ -63,6 +63,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   @ViewChild('label') label!: ElementRef;
 
   get _control() {
+    this.changeDetectorRef.markForCheck();
     return this._explicitFormFieldControl || this._controlDirective;
   }
   set _control(value) {

@@ -103,7 +103,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     if (this.form) {
       this.form.patchValue({ ...values });
     }
-    //this.changeDetectorRef.markForCheck();
   }
   get values(): any {
     return this._values;

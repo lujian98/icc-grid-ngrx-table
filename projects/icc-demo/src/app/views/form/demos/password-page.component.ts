@@ -43,4 +43,81 @@ export class AppPasswordPageDemoComponent {
     userPassword: '',
     userPasswordConfirmation: '',
   };
+
+  formConfig2 = {
+    labelWidth: 120,
+  };
+
+  formFields2: IccFormField[] = [
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      required: true,
+      requiredFields: ['userName', 'loginName', 'password', 'email', 'age'],
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName',
+      fieldLabel: 'Login Name',
+      //required: true,
+    },
+    {
+      fieldType: 'number',
+      fieldName: 'age',
+      fieldLabel: 'Age',
+      //required: true,
+      minValue: 0,
+      maxValue: 100,
+      clearValue: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      fieldLabel: 'User Password',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+    },
+    {
+      fieldType: 'textarea',
+      fieldName: 'notes',
+      fieldLabel: 'Notes',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'date',
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      //required: true,
+    },
+  ];
+
+  values2 = {
+    enabled: false,
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    password: '',
+    age: 18,
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    notes: 'This is a notes. ',
+  };
 }

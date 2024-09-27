@@ -21,6 +21,7 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
+  Validators,
 } from '@angular/forms';
 import {
   IccFormFieldComponent,
@@ -112,8 +113,23 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   onChange(): void {
-    console.log(' on change form=', this.form);
     this.valueChange.emit(this.field.value);
+    this.setRequiredFields(this.field.value);
+  }
+
+  private setRequiredFields(checked: boolean): void {
+    if (this.fieldConfig.requiredFields) {
+      this.fieldConfig.requiredFields.forEach((name) => {
+        const formField = this.form.get(name)!;
+        if (checked) {
+          formField.addValidators(Validators.required);
+          formField.updateValueAndValidity();
+        } else {
+          formField.setErrors(null);
+          formField.removeValidators(Validators.required);
+        }
+      });
+    }
   }
 
   registerOnChange(fn: any): void {
