@@ -111,7 +111,7 @@ export class AppPasswordPageDemoComponent {
   ];
 
   values2 = {
-    enabled: false,
+    enabled: true,
     userName: 'user 77 2222',
     loginName: 'test login88',
     email: 'test@email.com',

@@ -32,7 +32,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer, take } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from './models/checkbox-field.model';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
@@ -92,6 +92,9 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
       this.form = new FormGroup({
         [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
       });
+      timer(10)
+        .pipe(take(1))
+        .subscribe(() => this.setRequiredFields(this.field.value));
     }
   }
 
@@ -121,12 +124,14 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
     if (this.fieldConfig.requiredFields) {
       this.fieldConfig.requiredFields.forEach((name) => {
         const formField = this.form.get(name)!;
-        if (checked) {
-          formField.addValidators(Validators.required);
-          formField.updateValueAndValidity();
-        } else {
-          formField.setErrors(null);
-          formField.removeValidators(Validators.required);
+        if (formField) {
+          if (checked) {
+            formField.addValidators(Validators.required);
+            formField.updateValueAndValidity();
+          } else {
+            formField.setErrors(null);
+            formField.removeValidators(Validators.required);
+          }
         }
       });
     }
