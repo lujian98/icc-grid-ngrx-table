@@ -94,7 +94,7 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
       });
       timer(10)
         .pipe(take(1))
-        .subscribe(() => this.setRequiredFields(this.field.value));
+        .subscribe(() => this.setEnableFields());
     }
   }
 
@@ -117,7 +117,12 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
 
   onChange(): void {
     this.valueChange.emit(this.field.value);
+    this.setEnableFields();
+  }
+
+  private setEnableFields(): void {
     this.setRequiredFields(this.field.value);
+    this.setReadonlyFields(this.field.value);
   }
 
   private setRequiredFields(checked: boolean): void {
@@ -131,6 +136,22 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
           } else {
             formField.setErrors(null);
             formField.removeValidators(Validators.required);
+          }
+        }
+      });
+    }
+  }
+
+  private setReadonlyFields(checked: boolean): void {
+    if (this.fieldConfig.readonlyFields) {
+      this.fieldConfig.readonlyFields.forEach((name) => {
+        const formField = this.form.get(name)!;
+        if (formField) {
+          if (checked) {
+            formField.enable();
+          } else {
+            formField.setErrors(null);
+            formField.disable();
           }
         }
       });

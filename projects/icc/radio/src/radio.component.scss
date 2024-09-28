@@ -1,5 +1,6 @@
 :host {
-  margin-right: 1rem;
+  padding-right: 10px;
+  padding-left: 5px;
   label {
     display: inline-flex;
     flex-direction: column;
@@ -14,7 +15,7 @@
 }
 
 .icc-radio-label-content {
-  padding-left: 1.5rem;
+  padding-left: 20px;
 }
 
 .icc-radio-outer-circle,
