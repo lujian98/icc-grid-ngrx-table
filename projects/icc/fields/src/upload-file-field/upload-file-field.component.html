@@ -12,7 +12,13 @@
       [required]="isRequired"
       placeholder="{{ fieldConfig.placeholder }}"
     />
-    <icc-icon class="folder-open" icon="folder-open" iccSuffix (click)="fileInput.click()"></icc-icon>
+    <icc-icon
+      *ngIf="!field.disabled"
+      class="folder-open"
+      icon="folder-open"
+      iccSuffix
+      (click)="fileInput.click()"
+    ></icc-icon>
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
 
     <ng-container *ngIf="field?.errors">

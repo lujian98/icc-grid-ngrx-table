@@ -59,11 +59,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       if (field.fieldType === 'fieldset') {
         this.addFormControls((field as IccFieldsetConfig).formFields);
       } else if (!this.form.get(field.fieldName!)) {
-        this.form.addControl(field.fieldName!, new FormControl<string>('', []));
+        this.form.addControl(field.fieldName!, new FormControl<string>({ value: '', disabled: !!field.readonly }, []));
         this.setValidators(field);
       }
     });
-  }
+  } // FormControl({value: '', disabled: true})
 
   private setValidators(field: IccFormField): void {
     const formField = this.form.get(field.fieldName!)!;

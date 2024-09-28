@@ -242,7 +242,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   get hasValue(): boolean {
     const value = this.selectedField.value;
-    return value instanceof Array ? value.length > 0 : !!value;
+    return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
   }
 
   get filterValue(): string {

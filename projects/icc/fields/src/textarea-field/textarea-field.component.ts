@@ -115,7 +115,7 @@ export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    return (!!this.field.value || this.field.value === 0) && !this.field.disabled;
   }
 
   onChange(): void {

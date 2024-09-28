@@ -115,7 +115,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    return !!this.field.value && !this.field.disabled;
   }
 
   onChange(): void {

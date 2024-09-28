@@ -112,14 +112,15 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   get isRequired(): boolean {
-    return this.field.hasValidator(Validators.required);
+    return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    return (!!this.field.value || this.field.value === 0) && !this.field.disabled;
   }
 
   onChange(): void {
+    console.log(' this.field=', this.field);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }

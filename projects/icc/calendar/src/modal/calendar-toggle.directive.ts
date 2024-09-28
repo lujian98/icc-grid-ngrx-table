@@ -7,6 +7,7 @@ import { IccCalendarComponent } from '../calendar.component';
 })
 export class IccCalendarToggleDirective extends CdkOverlayOrigin implements AfterViewInit {
   @Input() calendarModal!: IccCalendarComponent;
+  @Input() disabled!: boolean;
 
   constructor(elemRef: ElementRef) {
     super(elemRef);
@@ -17,6 +18,8 @@ export class IccCalendarToggleDirective extends CdkOverlayOrigin implements Afte
   }
 
   @HostListener('click') toggleOverlay() {
-    this.calendarModal.toggleOverlay();
+    if (!this.disabled) {
+      this.calendarModal.toggleOverlay();
+    }
   }
 }

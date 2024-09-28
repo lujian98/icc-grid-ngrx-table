@@ -118,7 +118,7 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   get hasValue(): boolean {
-    return !!this.field.value;
+    return !!this.field.value && !this.field.disabled;
   }
 
   onChange(val: Date): void {

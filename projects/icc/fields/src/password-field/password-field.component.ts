@@ -113,11 +113,11 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   get isRequired(): boolean {
-    return this.field.hasValidator(Validators.required);
+    return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 
   get hasValue(): boolean {
-    return !!this.field.value || this.field.value === 0;
+    return (!!this.field.value || this.field.value === 0) && !this.field.disabled;
   }
 
   onChange(): void {
