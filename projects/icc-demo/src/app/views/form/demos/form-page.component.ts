@@ -121,7 +121,7 @@ export class AppFromPageDemoComponent {
     },
     {
       fieldType: 'radiogroup',
-      fieldName: 'group88',
+      fieldName: 'group1',
       fieldLabel: 'Radio Group',
       required: true,
       groups: [
@@ -168,7 +168,7 @@ export class AppFromPageDemoComponent {
     totalValue: 123892,
     userName2: 'user 77 A33',
     loginName2: 'test login A33',
-    group88: 'B',
+    group1: 'B',
     uploadfile: '',
     userPassword: '',
   };
@@ -305,7 +305,7 @@ export class AppFromPageDemoComponent {
     state: STATES[32],
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group88: 'B',
+    group88: 'A',
     uploadfile: '',
   };
 }

@@ -600,7 +600,7 @@ export class AppPasswordPageDemoComponent {
     display: 'display field',
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group86: 'B',
+    group86: 'A',
     uploadfile: '',
     checkboxtest: true,
   };

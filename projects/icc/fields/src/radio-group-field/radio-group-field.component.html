@@ -11,6 +11,7 @@
     <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
       <icc-radio
         [value]="group.name"
+        [name]="fieldConfig.fieldName!"
         [field]="field"
         [fieldName]="fieldConfig.fieldName!"
         [checked]="getChecked(group.name)"
