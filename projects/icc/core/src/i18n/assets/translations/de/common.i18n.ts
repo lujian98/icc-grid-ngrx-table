@@ -1,0 +1,58 @@
+export const COMMON = {
+  TITLE: {
+    APPLIANCE_ADMINISTRATION: 'Appliance-Verwaltung',
+    APPLICATION_ADMINISTRATION: 'Anwendungsverwaltung',
+    AUTHORIZATION_AND_AUTHENTICATION: 'Autorisierung und Authentifizierung',
+    INTEGRATIONS: 'Integrationen',
+    IP_BASED_ACCESS_CONTROL: 'IP-basierte Zugriffssteuerung',
+    SETTINGS: 'Einstellungen',
+    SNMP_SETTINGS: 'SNMP-Einstellungen',
+    USER_ACCOUNTS: 'Benutzerkonten',
+    USER_GROUPS: 'Benutzergruppen',
+    USER_ROLES: 'Benutzerrollen',
+  },
+  ACTION: {
+    BACK_TO_LIST: 'Zurück zur Liste',
+    CANCEL: 'Abbrechen',
+    DELETE: 'Löschen',
+    EDIT: 'Bearbeiten',
+    OK: 'OK',
+    REFRESH: 'Aktualisieren',
+    REMOVE: 'Entfernen',
+    SAVE: 'Speichern',
+    SEARCH: 'Suchen',
+    TEST: 'Test',
+    TODAY: 'Heute',
+    UPLOAD: 'Hochladen',
+  },
+  EDITOR: {
+    FIELD_IS_REQUIRED: 'Dieses Feld ist erforderlich',
+    MIN_LENGTH: 'Die minimale Länge für dieses Feld ist {{length}}',
+    MAX_LENGTH: 'Die maximale Länge für dieses Feld ist {{length}}',
+    MIN_VALUE: 'Der minimale Wert für dieses Feld ist {{value}}',
+    MAX_VALUE: 'Der maximale Wert für dieses Feld ist {{value}}',
+    NO_RESULT: 'Kein Ergebnis ...',
+  },
+  LABEL: {
+    OPTIONAL: 'Optional',
+    CHECK_ALL: 'Alle auswählen',
+    UNCHECK_ALL: 'Auswahl aufheben',
+  },
+  PASSWORD: {
+    CHANGE_PASSWORD: 'Passwort ändern',
+    CURRENT_PASSWORD: 'Aktuelles Passwort',
+    NEW_PASSWORD: 'Neues Passwort',
+    CONFIRM_NEW_PASSWORD: 'Neues Passwort bestätigen',
+    PASSWORD: 'Passwort',
+    PASSWORD_CONFIRMATION: 'Passwort-Bestätigung',
+    ERRORS: {
+      NOT_MATCH: 'Die Passwortbestätigung stimmt nicht mit dem Passwortfeld überein.',
+    },
+  },
+  UPLOAD: {
+    INVALID_EXTENSION: 'Dateierweiterung ist nicht gültig.',
+    EMPTY_FILE:
+      'Ausgewählte Datei ist leer oder die Dateigröße ist kleiner als die erforderliche Mindestdateigröße {{size}}.',
+    BIG_FILE: 'Ausgewählte Dateigröße ist größer als die zulässige Dateigröße {{size}}.',
+  },
+};

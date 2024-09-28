@@ -1,0 +1,58 @@
+export const COMMON = {
+  TITLE: {
+    APPLIANCE_ADMINISTRATION: 'Administration des appareils',
+    APPLICATION_ADMINISTRATION: 'Gestion des applications',
+    AUTHORIZATION_AND_AUTHENTICATION: 'Autorisation et Authentification',
+    INTEGRATIONS: 'Intégrations',
+    IP_BASED_ACCESS_CONTROL: 'Contrôle d’accès basé sur les adresses IP',
+    SETTINGS: 'Paramètres',
+    SNMP_SETTINGS: 'Paramètres SNMP',
+    USER_ACCOUNTS: 'Comptes utilisateur',
+    USER_GROUPS: "Groupes d'utilisateur",
+    USER_ROLES: 'Rôles d’utilisateur',
+  },
+  ACTION: {
+    BACK_TO_LIST: 'Retour à la liste',
+    CANCEL: 'Annuler',
+    DELETE: 'Supprimer',
+    EDIT: 'Modifier',
+    OK: 'OK',
+    REFRESH: 'Actualiser',
+    REMOVE: 'Retirer',
+    SAVE: 'Sauvegarder',
+    SEARCH: 'Rechercher',
+    TEST: 'Test',
+    TODAY: 'Aujourd’hui',
+    UPLOAD: 'Charger',
+  },
+  EDITOR: {
+    FIELD_IS_REQUIRED: 'Ce champ est obligatoire',
+    MIN_LENGTH: 'La longueur minimale de ce champ est de {{length}}',
+    MAX_LENGTH: 'La longueur maximale de ce champ est de {{length}}',
+    MIN_VALUE: 'La valeur minimale de ce champ est {{value}}',
+    MAX_VALUE: 'La valeur maximale de ce champ est {{value}}',
+    NO_RESULT: 'Aucun résultat...',
+  },
+  LABEL: {
+    OPTIONAL: 'Facultatif',
+    CHECK_ALL: 'Tout cocher',
+    UNCHECK_ALL: 'Tout décocher',
+  },
+  PASSWORD: {
+    CHANGE_PASSWORD: 'Modifier le mot de passe',
+    CURRENT_PASSWORD: 'Mot de passe actuel',
+    NEW_PASSWORD: 'Nouveau mot de passe',
+    CONFIRM_NEW_PASSWORD: 'Confirmer le nouveau mot de passe',
+    PASSWORD: 'Mot de passe',
+    PASSWORD_CONFIRMATION: 'Confirmation du mot de passe',
+    ERRORS: {
+      NOT_MATCH: 'Le mot de passe de confirmation ne correspond pas.',
+    },
+  },
+  UPLOAD: {
+    INVALID_EXTENSION: 'L’extension de fichier n’est pas valide.',
+    EMPTY_FILE:
+      'Le fichier sélectionné est vide ou sa taille est plus petite que la taille de fichier minimum requise {{size}}.',
+    BIG_FILE: 'La taille du fichier sélectionné est supérieure à la taille maximale requise {{size}}.',
+  },
+};

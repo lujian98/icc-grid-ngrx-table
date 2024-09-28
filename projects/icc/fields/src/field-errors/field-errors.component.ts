@@ -9,6 +9,7 @@ import {
   IccLabelWidthDirective,
   IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccInputDirective } from '../input/input.directive';
 import { IccFormFieldError } from './models/field-errors.model';
@@ -23,6 +24,7 @@ import { IccFormFieldError } from './models/field-errors.model';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

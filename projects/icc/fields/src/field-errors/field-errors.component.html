@@ -7,7 +7,7 @@
 
     <icc-error *ngSwitchCase="'required'">
       <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
-      {{ "FIELD_IS_REQUIRED" }}
+      {{ "COMMON.EDITOR.FIELD_IS_REQUIRED" | translate }}
     </icc-error>
 
     <icc-error *ngSwitchCase="'minlength'">

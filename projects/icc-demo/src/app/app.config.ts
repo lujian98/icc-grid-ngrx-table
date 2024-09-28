@@ -3,6 +3,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { IccDialogModule } from '@icc/ui/dialog';
 import { IccOverlayModule } from '@icc/ui/overlay';
+import { IccI18nModule } from '@icc/ui/core';
 import { IccThemeModule } from '@icc/ui/theme';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
@@ -32,9 +33,11 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 })),
     importProvidersFrom(TranslateModule.forRoot({ defaultLanguage: 'en-US', extend: true })),
     //importProvidersFrom(InMemoryWebApiModule.forRoot(InMemoryService, { delay: 1000 })),
+    importProvidersFrom(IccI18nModule.forRoot()),
     importProvidersFrom(IccThemeModule.forRoot({ name: 'light' })),
     importProvidersFrom(IccOverlayModule.forRoot()),
     importProvidersFrom(IccDialogModule.forRoot()),
     importProvidersFrom(IccUiModulesModule),
   ],
 };
+//     SunI18nModule.forRoot(),
