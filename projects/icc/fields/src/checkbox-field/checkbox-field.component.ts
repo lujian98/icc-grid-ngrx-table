@@ -9,6 +9,7 @@ import {
   Input,
   OnDestroy,
   Output,
+  OnInit,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -70,7 +71,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccFieldsErrorsComponent,
   ],
 })
-export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccCheckboxFieldConfig;
@@ -92,9 +93,16 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
       this.form = new FormGroup({
         [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
       });
+
       timer(10)
         .pipe(take(1))
         .subscribe(() => this.setEnableFields());
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.field) {
+      this.field.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setEnableFields());
     }
   }
 
