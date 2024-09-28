@@ -320,19 +320,6 @@ export class AppPasswordPageDemoComponent {
       fieldLabel: 'Enabled',
       hidden: true,
       required: true,
-      /*
-      requiredFields: [
-        'userName',
-        'loginName',
-        'password',
-        'email',
-        'age',
-        'state',
-        'notes',
-        'createdate',
-        'uploadfile',
-        'group88',
-      ],*/
     },
     {
       fieldType: 'text',
@@ -460,5 +447,161 @@ export class AppPasswordPageDemoComponent {
     notes: 'This is a notes. ',
     group88: 'B',
     uploadfile: '',
+  };
+
+  formFields6: IccFormField[] = [
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      required: true,
+      readonlyFields: [
+        'userName',
+        'loginName',
+        'password',
+        'email',
+        'age',
+        'state',
+        'display',
+        'notes',
+        'createdate',
+        'uploadfile',
+        'group88',
+        'checkboxtest',
+      ],
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
+      required: true,
+      readonlyHidden: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName',
+      fieldLabel: 'Login Name',
+      readonlyHidden: true,
+      required: true,
+    },
+    {
+      fieldType: 'number',
+      fieldName: 'age',
+      fieldLabel: 'Age',
+      readonlyHidden: true,
+      minValue: 0,
+      maxValue: 100,
+      clearValue: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      fieldLabel: 'User Password',
+      readonlyHidden: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    {
+      fieldType: 'checkbox',
+      fieldName: 'checkboxtest',
+      fieldLabel: 'Checkbox Test',
+      readonlyHidden: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+      readonlyHidden: true,
+    },
+    {
+      fieldType: 'select',
+      remoteOptions: true,
+      urlKey: 'usa',
+      fieldName: 'state',
+      multiSelection: false,
+      fieldLabel: 'State',
+      readonlyHidden: true,
+      optionLabel: 'state',
+      optionKey: 'abbr',
+      placeholder: 'Select One or More...',
+    },
+    {
+      fieldType: 'textarea',
+      fieldName: 'notes',
+      fieldLabel: 'Notes',
+      readonlyHidden: true,
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'date',
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      readonlyHidden: true,
+      //required: true,
+    },
+    {
+      fieldType: 'uploadfile',
+      fieldName: 'uploadfile',
+      fieldLabel: 'Upload File',
+      readonlyHidden: true,
+      //required: true,
+    },
+    {
+      fieldType: 'display',
+      fieldName: 'display',
+      fieldLabel: 'display',
+      readonlyHidden: true,
+    },
+    {
+      fieldType: 'radiogroup',
+      fieldName: 'group88',
+      fieldLabel: 'Radio Group',
+      readonlyHidden: true,
+      //required: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
+  ];
+
+  fieldSet6: IccFormField[] = [
+    {
+      fieldType: 'fieldset',
+      legend: 'Checkbox visile fields Demo',
+      formFields: this.formFields6,
+    },
+  ];
+
+  values6 = {
+    enabled: true,
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    password: '',
+    age: 18,
+    state: STATES[32],
+    display: 'display field',
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    notes: 'This is a notes. ',
+    group88: 'B',
+    uploadfile: '',
+    checkboxtest: true,
   };
 }

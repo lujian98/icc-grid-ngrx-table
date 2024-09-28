@@ -117,6 +117,10 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
     return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
   get hasValue(): boolean {
     return !!this.field.value && !this.field.disabled;
   }

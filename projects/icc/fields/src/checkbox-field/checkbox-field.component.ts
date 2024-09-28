@@ -115,6 +115,10 @@ export class IccCheckboxFieldComponent implements OnDestroy, ControlValueAccesso
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
   onChange(): void {
     this.valueChange.emit(this.field.value);
     this.setEnableFields();

@@ -232,6 +232,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
   @Output() selectionChange = new EventEmitter<any[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;

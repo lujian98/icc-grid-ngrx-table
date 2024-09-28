@@ -92,6 +92,10 @@ export class IccDisplayFieldComponent implements ControlValueAccessor, Validator
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
   registerOnChange(fn: any): void {
     //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }

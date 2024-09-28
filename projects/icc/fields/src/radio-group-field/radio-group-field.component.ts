@@ -111,6 +111,10 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
   get groups(): IccRadioGroup[] {
     return this.fieldConfig.groups;
   }

@@ -1,6 +1,6 @@
 <ng-container *ngIf="form" [formGroup]="form">
   <icc-form-field
-    [ngStyle]="{ display: fieldConfig.hidden ? 'none' : 'inherit' }"
+    [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
     [iccLabelWidth]="fieldConfig.labelWidth"
     [iccFieldWidth]="fieldConfig.fieldWidth"
   >
