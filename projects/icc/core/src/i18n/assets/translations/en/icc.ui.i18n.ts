@@ -1,4 +1,4 @@
-export const COMMON = {
+export const ICC = {
   TITLE: {
     APPLIANCE_ADMINISTRATION: 'Appliance Administration',
     APPLICATION_ADMINISTRATION: 'Application Administration',

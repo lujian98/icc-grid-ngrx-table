@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { commonCoreBaseTranslations } from './assets/translations/translations';
+import { iccUiTranslations } from './assets/translations/translations';
 
 @NgModule({
   imports: [TranslateModule],
@@ -16,9 +16,10 @@ export class IccI18nModule {
   }
 
   constructor() {
-    type LangKey = keyof typeof commonCoreBaseTranslations;
-    for (const key of Object.keys(commonCoreBaseTranslations)) {
-      this.translateService.setTranslation(key, commonCoreBaseTranslations[key as LangKey]);
+    console.log(' commonCoreBaseTranslations=', iccUiTranslations);
+    type LangKey = keyof typeof iccUiTranslations;
+    for (const key of Object.keys(iccUiTranslations)) {
+      this.translateService.setTranslation(key, iccUiTranslations[key as LangKey]);
     }
   }
 }

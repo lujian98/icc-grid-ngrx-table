@@ -1,4 +1,4 @@
-export const COMMON = {
+export const ICC = {
   TITLE: {
     APPLIANCE_ADMINISTRATION: '设备管理',
     APPLICATION_ADMINISTRATION: '应用管理',

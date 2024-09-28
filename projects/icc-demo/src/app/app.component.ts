@@ -41,16 +41,6 @@ export const languages: Language[] = [
     nativeName: '日本',
   },
   {
-    isocode: 'ru',
-    name: 'Russian',
-    nativeName: 'Pусский',
-  },
-  {
-    isocode: 'tr',
-    name: 'Turkish',
-    nativeName: 'Türkçe',
-  },
-  {
     isocode: 'zh-CN',
     name: 'Simplified Chinese',
     nativeName: '简体中文',

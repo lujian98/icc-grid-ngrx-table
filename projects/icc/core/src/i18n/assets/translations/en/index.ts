@@ -1,5 +1,5 @@
-import { COMMON } from './common.i18n';
+import { ICC } from './icc.ui.i18n';
 
 export const en = {
-  COMMON,
+  ICC,
 };
