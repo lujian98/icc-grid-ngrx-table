@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
   private translateService = inject(TranslateService);
   languages = languages;
-  currentLang = '';
+  currentLang = { ...languages[0] };
 
   title = 'icc-demo';
 
@@ -87,8 +87,7 @@ export class AppComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.currentLang = 'en-US';
-    this.localeInitializer(this.currentLang);
+    this.localeInitializer(this.currentLang.isocode);
   }
 
   toggleTheme(): void {
@@ -102,13 +101,11 @@ export class AppComponent implements OnInit {
     this.themeService.setBackgroundColor(value);
   }
 
-  setLang(selected: Language[]): void {
-    //console.log( ' hhhh lang=', selected)
-    const lang = selected[0].isocode;
-    if (this.currentLang !== lang) {
-      this.currentLang = lang;
-      this.localeInitializer(lang);
-      this.translateService.use(lang);
+  setLang(selected: Language): void {
+    if (this.currentLang.isocode !== selected.isocode) {
+      this.currentLang = selected;
+      this.localeInitializer(selected.isocode);
+      this.translateService.use(selected.isocode);
     }
   }
 
