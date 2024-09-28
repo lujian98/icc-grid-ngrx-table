@@ -5,10 +5,11 @@ export function confirmationValidator(controlName: string, matchingControlName: 
     const control = controls.get(controlName);
     const matchingControl = controls.get(matchingControlName);
     if (control?.value !== matchingControl?.value) {
-      matchingControl?.setErrors({ confirmedValidator: { message: 'PASSWORD_NOT_EQUAL' } });
+      matchingControl?.setErrors({ confirmationPassword: true });
       return { confirmedValidator: true };
+    } else {
+      matchingControl?.setErrors(null);
+      return null;
     }
-    matchingControl?.setErrors(null);
-    return null;
   };
 }
