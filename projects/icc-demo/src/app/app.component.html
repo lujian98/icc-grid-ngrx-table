@@ -19,8 +19,8 @@
     </div>
 
     <icc-select-field
-      [fieldConfig]="langSelection"
-      [value]="currentLang"
+      [fieldConfig]="langSelectionConfig"
+      [value]="selectedLang"
       [options]="languages"
       (selectionChange)="setLang($event)"
     ></icc-select-field>

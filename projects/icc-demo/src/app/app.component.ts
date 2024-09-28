@@ -1,17 +1,16 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { combineLatest, take } from 'rxjs';
-import { registerLocaleData } from '@angular/common';
+import { IccSelectFieldComponent } from '@icc/ui/fields';
 import {
   IccLayoutComponent,
   IccLayoutFooterComponent,
   IccLayoutHeaderComponent,
   IccLayoutMainComponent,
 } from '@icc/ui/layout';
-import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccThemeService } from '@icc/ui/theme';
+import { TranslateService } from '@ngx-translate/core';
+import { combineLatest, take } from 'rxjs';
 
 export interface Language {
   isocode: string;
@@ -67,8 +66,8 @@ export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
   private translateService = inject(TranslateService);
   languages = languages;
-  currentLang = { ...languages[0] };
-
+  currentLang = '';
+  selectedLang: Language | undefined;
   title = 'icc-demo';
 
   gridUrl = `grid`;
@@ -77,17 +76,17 @@ export class AppComponent implements OnInit {
   selectUrl = `select`;
   rangeValue = this.themeService.rangeMax;
 
-  langSelection = {
-    //fieldLabel: 'Language',
+  langSelectionConfig = {
     fieldName: 'language',
     optionLabel: 'name',
     optionKey: 'isocode',
     clearValue: false,
-    //placeholder: '',
   };
 
   ngOnInit(): void {
-    this.localeInitializer(this.currentLang.isocode);
+    this.currentLang = 'en-US';
+    this.selectedLang = languages.find((lang) => lang.isocode === this.currentLang);
+    this.localeInitializer(this.currentLang);
   }
 
   toggleTheme(): void {
@@ -102,8 +101,8 @@ export class AppComponent implements OnInit {
   }
 
   setLang(selected: Language): void {
-    if (this.currentLang.isocode !== selected.isocode) {
-      this.currentLang = selected;
+    if (this.currentLang !== selected.isocode) {
+      this.currentLang = selected.isocode;
       this.localeInitializer(selected.isocode);
       this.translateService.use(selected.isocode);
     }
