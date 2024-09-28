@@ -228,8 +228,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
-  get isRequired(): boolean {
-    return this.field.hasValidator(Validators.required);
+  get required(): boolean {
+    return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 
   @Output() selectionChange = new EventEmitter<any[]>(true);

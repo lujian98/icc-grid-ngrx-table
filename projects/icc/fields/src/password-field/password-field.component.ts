@@ -112,7 +112,7 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }
 
-  get isRequired(): boolean {
+  get required(): boolean {
     return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
 

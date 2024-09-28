@@ -12,7 +12,7 @@
       (keyup)="onChange()"
       (wheel)="onChange()"
       (blur)="onBlur()"
-      [required]="isRequired"
+      [required]="required"
       placeholder="{{ fieldConfig.placeholder }}"
     />
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
