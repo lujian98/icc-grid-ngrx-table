@@ -10,6 +10,7 @@ export interface IccBaseField {
   fieldWidth?: number | string;
   required?: boolean;
   readonly?: boolean;
+  hidden?: boolean;
   validators?: ValidatorFn | ValidatorFn[];
   requiredFields?: string[]; // for boolean or select condition true children is required.
   readonlyFields?: string[]; // for boolean or select condition true children is readonly (need use cases).

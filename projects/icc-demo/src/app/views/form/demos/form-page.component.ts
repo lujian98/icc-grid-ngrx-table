@@ -172,4 +172,140 @@ export class AppFromPageDemoComponent {
     uploadfile: '',
     userPassword: '',
   };
+
+  formConfig3 = {
+    labelWidth: 100,
+  };
+
+  formFields3: IccFormField[] = [
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      required: true,
+      requiredFields: [
+        'userName',
+        'loginName',
+        'password',
+        'email',
+        'age',
+        'state',
+        'notes',
+        'createdate',
+        'uploadfile',
+        'group88',
+      ],
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName',
+      fieldLabel: 'Login Name',
+      //required: true,
+    },
+    {
+      fieldType: 'number',
+      fieldName: 'age',
+      fieldLabel: 'Age',
+      //required: true,
+      minValue: 0,
+      maxValue: 100,
+      clearValue: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      fieldLabel: 'User Password',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+    },
+    {
+      fieldType: 'select',
+      remoteOptions: true,
+      urlKey: 'usa',
+      fieldName: 'state',
+      multiSelection: false,
+      fieldLabel: 'State',
+      optionLabel: 'state',
+      optionKey: 'abbr',
+      placeholder: 'Select One or More...',
+    },
+    {
+      fieldType: 'textarea',
+      fieldName: 'notes',
+      fieldLabel: 'Notes',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'date',
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      //required: true,
+    },
+    {
+      fieldType: 'uploadfile',
+      fieldName: 'uploadfile',
+      fieldLabel: 'Upload File',
+      //required: true,
+    },
+    {
+      fieldType: 'radiogroup',
+      fieldName: 'group88',
+      fieldLabel: 'Radio Group',
+      //required: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
+  ];
+
+  fieldSet3: IccFormField[] = [
+    {
+      fieldType: 'fieldset',
+      legend: 'Checkbox enable required Demo',
+      formFields: this.formFields3,
+    },
+  ];
+
+  values3 = {
+    enabled: true,
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    password: '',
+    age: 18,
+    state: STATES[32],
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    notes: 'This is a notes. ',
+    group88: 'B',
+    uploadfile: '',
+  };
 }

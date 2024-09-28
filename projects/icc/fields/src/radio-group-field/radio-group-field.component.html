@@ -1,5 +1,9 @@
 <ng-container *ngIf="form" [formGroup]="form">
-  <icc-form-field [iccLabelWidth]="fieldConfig.labelWidth" [iccFieldWidth]="fieldConfig.fieldWidth">
+  <icc-form-field
+    [ngStyle]="{ display: fieldConfig.hidden ? 'none' : 'inherit' }"
+    [iccLabelWidth]="fieldConfig.labelWidth"
+    [iccFieldWidth]="fieldConfig.fieldWidth"
+  >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel }}
     </icc-label>

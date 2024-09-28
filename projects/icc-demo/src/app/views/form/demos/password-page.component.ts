@@ -58,138 +58,6 @@ export class AppPasswordPageDemoComponent {
     labelWidth: 100,
   };
 
-  formFields2: IccFormField[] = [
-    {
-      fieldType: 'checkbox',
-      fieldName: 'enabled',
-      fieldLabel: 'Enabled',
-      required: true,
-      requiredFields: [
-        'userName',
-        'loginName',
-        'password',
-        'email',
-        'age',
-        'state',
-        'notes',
-        'createdate',
-        'uploadfile',
-        'group88',
-      ],
-    },
-    {
-      fieldType: 'text',
-      fieldName: 'userName',
-      fieldLabel: 'User Name',
-      //required: true,
-      minLength: 4,
-      maxLength: 20,
-      clearValue: true,
-    },
-    {
-      fieldType: 'text',
-      fieldName: 'loginName',
-      fieldLabel: 'Login Name',
-      //required: true,
-    },
-    {
-      fieldType: 'number',
-      fieldName: 'age',
-      fieldLabel: 'Age',
-      //required: true,
-      minValue: 0,
-      maxValue: 100,
-      clearValue: true,
-    },
-    {
-      fieldType: 'password',
-      fieldName: 'password',
-      fieldLabel: 'User Password',
-      //required: true,
-      minLength: 4,
-      maxLength: 20,
-    },
-    {
-      fieldType: 'text',
-      fieldName: 'email',
-      fieldLabel: 'Email Address',
-    },
-    {
-      fieldType: 'select',
-      remoteOptions: true,
-      urlKey: 'usa',
-      fieldName: 'state',
-      multiSelection: false,
-      fieldLabel: 'State',
-      optionLabel: 'state',
-      optionKey: 'abbr',
-      placeholder: 'Select One or More...',
-    },
-    {
-      fieldType: 'textarea',
-      fieldName: 'notes',
-      fieldLabel: 'Notes',
-      //required: true,
-      minLength: 4,
-      maxLength: 20,
-      clearValue: true,
-    },
-    {
-      fieldType: 'date',
-      fieldName: 'createdate',
-      fieldLabel: 'Create Date',
-      //required: true,
-    },
-    {
-      fieldType: 'uploadfile',
-      fieldName: 'uploadfile',
-      fieldLabel: 'Upload File',
-      //required: true,
-    },
-    {
-      fieldType: 'radiogroup',
-      fieldName: 'group88',
-      fieldLabel: 'Radio Group',
-      //required: true,
-      groups: [
-        {
-          title: 'Group A',
-          name: 'A',
-        },
-        {
-          title: 'Group B',
-          name: 'B',
-        },
-        {
-          title: 'Group C',
-          name: 'C',
-        },
-      ],
-    },
-  ];
-
-  fieldSet2: IccFormField[] = [
-    {
-      fieldType: 'fieldset',
-      legend: 'Checkbox enable required Demo',
-      formFields: this.formFields2,
-    },
-  ];
-
-  values2 = {
-    enabled: true,
-    userName: 'user 77 2222',
-    loginName: 'test login88',
-    email: 'test@email.com',
-    password: '',
-    age: 18,
-    state: STATES[32],
-    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
-    notes: 'This is a notes. ',
-    group88: 'B',
-    uploadfile: '',
-  };
-
   formFields3: IccFormField[] = [
     {
       fieldType: 'checkbox',
@@ -439,6 +307,155 @@ export class AppPasswordPageDemoComponent {
     password: '',
     age: 18,
     state: STATES[32],
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    notes: 'This is a notes. ',
+    group88: 'B',
+    uploadfile: '',
+  };
+
+  formFields5: IccFormField[] = [
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      hidden: true,
+      required: true,
+      /*
+      requiredFields: [
+        'userName',
+        'loginName',
+        'password',
+        'email',
+        'age',
+        'state',
+        'notes',
+        'createdate',
+        'uploadfile',
+        'group88',
+      ],*/
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
+      hidden: true,
+      required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName',
+      fieldLabel: 'Login Name',
+      hidden: true,
+      required: true,
+    },
+    {
+      fieldType: 'number',
+      fieldName: 'age',
+      fieldLabel: 'Age',
+      hidden: true,
+      minValue: 0,
+      maxValue: 100,
+      clearValue: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      fieldLabel: 'User Password',
+      hidden: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+      hidden: true,
+    },
+    {
+      fieldType: 'select',
+      hidden: true,
+      remoteOptions: true,
+      urlKey: 'usa',
+      fieldName: 'state',
+      multiSelection: false,
+      fieldLabel: 'State',
+      optionLabel: 'state',
+      optionKey: 'abbr',
+      placeholder: 'Select One or More...',
+    },
+    {
+      fieldType: 'textarea',
+      hidden: true,
+      fieldName: 'notes',
+      fieldLabel: 'Notes',
+      //required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'date',
+      hidden: true,
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      //required: true,
+    },
+    {
+      fieldType: 'uploadfile',
+      hidden: true,
+      fieldName: 'uploadfile',
+      fieldLabel: 'Upload File',
+      //required: true,
+    },
+    {
+      fieldType: 'display',
+      fieldName: 'display',
+      fieldLabel: 'display',
+      hidden: true,
+    },
+    {
+      fieldType: 'radiogroup',
+      hidden: true,
+      fieldName: 'group88',
+      fieldLabel: 'Radio Group',
+      //required: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
+  ];
+
+  fieldSet5: IccFormField[] = [
+    {
+      fieldType: 'fieldset',
+      legend: 'Checkbox hidden Demo',
+      formFields: this.formFields5,
+    },
+  ];
+
+  values5 = {
+    enabled: true,
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    password: '',
+    age: 18,
+    state: STATES[32],
+    display: 'display field',
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
     group88: 'B',
