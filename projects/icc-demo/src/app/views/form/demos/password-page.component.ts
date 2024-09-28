@@ -139,7 +139,7 @@ export class AppPasswordPageDemoComponent {
     },
     {
       fieldType: 'radiogroup',
-      fieldName: 'group88',
+      fieldName: 'group83',
       fieldLabel: 'Radio Group',
       readonly: true,
       groups: [
@@ -177,7 +177,7 @@ export class AppPasswordPageDemoComponent {
     state: STATES[32],
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group88: 'B',
+    group83: 'B',
     uploadfile: '',
   };
 
@@ -197,7 +197,7 @@ export class AppPasswordPageDemoComponent {
         'notes',
         'createdate',
         'uploadfile',
-        'group88',
+        'group82',
       ],
     },
     {
@@ -271,7 +271,7 @@ export class AppPasswordPageDemoComponent {
     },
     {
       fieldType: 'radiogroup',
-      fieldName: 'group88',
+      fieldName: 'group82',
       fieldLabel: 'Radio Group',
       //required: true,
       groups: [
@@ -309,7 +309,7 @@ export class AppPasswordPageDemoComponent {
     state: STATES[32],
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group88: 'B',
+    group82: 'B',
     uploadfile: '',
   };
 
@@ -406,7 +406,7 @@ export class AppPasswordPageDemoComponent {
     {
       fieldType: 'radiogroup',
       hidden: true,
-      fieldName: 'group88',
+      fieldName: 'group81',
       fieldLabel: 'Radio Group',
       //required: true,
       groups: [
@@ -445,7 +445,7 @@ export class AppPasswordPageDemoComponent {
     display: 'display field',
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group88: 'B',
+    group81: 'B',
     uploadfile: '',
   };
 
@@ -466,7 +466,7 @@ export class AppPasswordPageDemoComponent {
         'notes',
         'createdate',
         'uploadfile',
-        'group88',
+        'group86',
         'checkboxtest',
       ],
     },
@@ -560,7 +560,7 @@ export class AppPasswordPageDemoComponent {
     },
     {
       fieldType: 'radiogroup',
-      fieldName: 'group88',
+      fieldName: 'group86',
       fieldLabel: 'Radio Group',
       readonlyHidden: true,
       //required: true,
@@ -600,7 +600,7 @@ export class AppPasswordPageDemoComponent {
     display: 'display field',
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
-    group88: 'B',
+    group86: 'B',
     uploadfile: '',
     checkboxtest: true,
   };
