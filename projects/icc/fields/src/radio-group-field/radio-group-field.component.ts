@@ -112,9 +112,8 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   get hidden(): boolean {
-    console.log(' (this.field.disabled=', this.field.disabled);
-    console.log(' (this.fieldConfig.readonlyHidden=', this.fieldConfig.readonlyHidden);
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    // not able to hide for the radio group if field is dirty
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden && !this.field.dirty);
   }
 
   get groups(): IccRadioGroup[] {
