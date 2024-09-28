@@ -17,6 +17,13 @@
         (input)="onChange($event)"
       />
     </div>
+
+    <icc-select-field
+      [fieldConfig]="langSelection"
+      [value]="currentLang"
+      [options]="languages"
+      (selectionChange)="setLang($event)"
+    ></icc-select-field>
   </icc-layout-header>
 
   <icc-layout-main>
@@ -25,3 +32,11 @@
 
   <icc-layout-footer> Footer Bar </icc-layout-footer>
 </icc-layout>
+
+<!--
+      <sun-select (change)="setLang($event)" [selected]="currentLang">
+        <sun-option *ngFor="let lang of langs$ | async" [value]="lang.isocode">
+          {{ lang.nativeName }}
+        </sun-option>
+      </sun-select>
+      -->

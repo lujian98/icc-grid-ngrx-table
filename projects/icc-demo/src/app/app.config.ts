@@ -7,6 +7,7 @@ import { IccThemeModule } from '@icc/ui/theme';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientInMemoryWebApiModule, InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { routes } from './app.routes';
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(EffectsModule.forRoot()),
     importProvidersFrom(StoreDevtoolsModule.instrument({ maxAge: 25 })),
     importProvidersFrom(HttpClientInMemoryWebApiModule.forRoot(InMemoryService, { delay: 100 })),
+    importProvidersFrom(TranslateModule.forRoot({ defaultLanguage: 'en-US', extend: true })),
     //importProvidersFrom(InMemoryWebApiModule.forRoot(InMemoryService, { delay: 1000 })),
     importProvidersFrom(IccThemeModule.forRoot({ name: 'light' })),
     importProvidersFrom(IccOverlayModule.forRoot()),

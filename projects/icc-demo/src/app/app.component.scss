@@ -1,5 +1,8 @@
 :host {
   display: flex;
+  icc-select-field {
+    width: 150px;
+  }
   .theme {
     input {
       width: 250px;
