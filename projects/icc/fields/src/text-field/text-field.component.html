@@ -16,7 +16,7 @@
       (keyup)="onChange()"
       (blur)="onBlur()"
       [required]="required"
-      placeholder="{{ fieldConfig.placeholder }}"
+      placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
 

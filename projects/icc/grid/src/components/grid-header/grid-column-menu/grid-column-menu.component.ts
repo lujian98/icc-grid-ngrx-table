@@ -54,13 +54,13 @@ export class IccGridColumnMenuComponent {
     const menuItems = [
       {
         name: 'asc',
-        title: 'Sort ASC',
+        title: 'ICC.UI.GRID.SORT_ASCENDING',
         icon: 'arrow-up-short-wide',
         disabled: this.sortDisabled('asc'),
       },
       {
         name: 'desc',
-        title: 'Sort DESC',
+        title: 'ICC.UI.GRID.SORT_DESCENDING',
         icon: 'arrow-down-wide-short',
         disabled: this.sortDisabled('desc'),
       },

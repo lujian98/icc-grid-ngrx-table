@@ -10,5 +10,10 @@ export const ICC = {
         MAX_VALUE: '此字段的最大值为 {{value}}.',
       },
     },
+    GRID: {
+      FILTER: '过滤器 ...',
+      SORT_ASCENDING: '正序',
+      SORT_DESCENDING: '倒序',
+    },
   },
 };

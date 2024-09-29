@@ -10,5 +10,10 @@ export const ICC = {
         MAX_VALUE: 'The maximum value for this field is {{value}}.',
       },
     },
+    GRID: {
+      FILTER: 'Filter ...',
+      SORT_ASCENDING: 'Sort Ascending',
+      SORT_DESCENDING: 'Sort Descending',
+    },
   },
 };

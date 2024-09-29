@@ -23,6 +23,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   IccFormFieldComponent,
   IccLabelDirective,
@@ -52,12 +53,13 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
       multi: true,
     },
   ],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

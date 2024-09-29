@@ -18,7 +18,7 @@ export class IccTextFilterComponent extends IccFieldFilterComponent {
     this.fieldConfig = {
       fieldName: this.column.name,
       clearValue: true,
-      placeholder: 'Filter ...',
+      placeholder: `ICC.UI.GRID.FILTER`,
     };
   }
 
