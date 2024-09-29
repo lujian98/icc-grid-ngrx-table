@@ -7,3 +7,4 @@ export * from './src/config/icc-ui-modules-options.tokens';
 export * from './src/backend/services/backend.service';
 export * from './src/validators/confirmation.validator';
 export * from './src/i18n/i18n.module';
+export * from './src/i18n/i18n.service';

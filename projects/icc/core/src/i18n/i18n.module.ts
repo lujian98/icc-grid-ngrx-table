@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule, inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { iccUiTranslations } from './assets/translations/translations';
+import { IccI18nService } from './i18n.service';
 
 @NgModule({
   imports: [TranslateModule],
@@ -12,6 +13,7 @@ export class IccI18nModule {
   static forRoot(): ModuleWithProviders<IccI18nModule> {
     return {
       ngModule: IccI18nModule,
+      providers: [IccI18nService],
     };
   }
 
@@ -23,3 +25,15 @@ export class IccI18nModule {
     }
   }
 }
+
+/*
+    return {
+      ngModule: IccThemeModule,
+      providers: [
+        { provide: ICC_THEME_OPTIONS, useValue: iccThemeOptions || {} },
+        { provide: ICC_WINDOW, useFactory: iccWindowFactory },
+        { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
+        IccThemeService,
+      ],
+    };
+    */

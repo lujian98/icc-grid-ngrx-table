@@ -20,8 +20,8 @@
 
     <icc-select-field
       [fieldConfig]="langSelectionConfig"
-      [value]="selectedLang"
-      [options]="languages"
+      [value]="i18nService.currentLang"
+      [options]="i18nService.languages"
       (selectionChange)="setLang($event)"
     ></icc-select-field>
   </icc-layout-header>
