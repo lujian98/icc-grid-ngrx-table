@@ -50,6 +50,7 @@ export class IccLayoutFooterComponent {}
   imports: [
     CommonModule,
     IccLayoutHeaderComponent,
+    IccLayoutMainComponent,
     IccLayoutSidebarComponent,
     IccLayoutCenterComponent,
     IccLayoutFooterComponent,

@@ -11,6 +11,7 @@ import {
   IccNumberFieldConfig,
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
+import { IccPanelTopBarComponent } from '@icc/ui/panel';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
@@ -18,6 +19,7 @@ import { IccFormConfig } from '../models/form.model';
 @Component({
   selector: 'icc-form-view',
   templateUrl: './form-view.component.html',
+  styleUrls: ['./form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -27,6 +29,7 @@ import { IccFormConfig } from '../models/form.model';
     IccFieldsetComponent,
     IccFormLabelWidthDirective,
     IccFieldsComponent,
+    IccPanelTopBarComponent,
   ],
 })
 export class IccFormViewComponent implements OnInit, OnDestroy {

@@ -8,6 +8,7 @@ import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
 import { IccFormConfig } from './models/form.model';
 import { IccFormField } from '@icc/ui/fields';
+import { IccPanelComponent } from '@icc/ui/panel';
 
 @Component({
   selector: 'icc-form',
@@ -15,7 +16,7 @@ import { IccFormField } from '@icc/ui/fields';
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormStateModule, IccFormViewComponent],
+  imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccPanelComponent],
 })
 export class IccFormComponent {
   private formFacade = inject(IccFormFacade);
