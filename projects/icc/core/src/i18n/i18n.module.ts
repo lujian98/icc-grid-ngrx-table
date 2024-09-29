@@ -5,7 +5,6 @@ import { IccI18nService } from './i18n.service';
 
 @NgModule({
   imports: [TranslateModule],
-  exports: [TranslateModule],
 })
 export class IccI18nModule {
   private translateService = inject(TranslateService);
@@ -18,22 +17,9 @@ export class IccI18nModule {
   }
 
   constructor() {
-    console.log(' commonCoreBaseTranslations=', iccUiTranslations);
     type LangKey = keyof typeof iccUiTranslations;
     for (const key of Object.keys(iccUiTranslations)) {
       this.translateService.setTranslation(key, iccUiTranslations[key as LangKey]);
     }
   }
 }
-
-/*
-    return {
-      ngModule: IccThemeModule,
-      providers: [
-        { provide: ICC_THEME_OPTIONS, useValue: iccThemeOptions || {} },
-        { provide: ICC_WINDOW, useFactory: iccWindowFactory },
-        { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
-        IccThemeService,
-      ],
-    };
-    */

@@ -104,7 +104,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @Input() form!: FormGroup;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    console.log(' 0000000000000 fieldConfig =', fieldConfig);
+    //console.log(' 0000000000000 fieldConfig =', fieldConfig);
     if (fieldConfig.options) {
       this.options = [...fieldConfig.options];
       delete fieldConfig.options;
@@ -205,7 +205,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     if (typeof val === 'string') {
       value = [val];
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
-      console.log(' object val=', val);
+      //console.log(' object val=', val);
       return val;
     }
     const isStringsArray = value.every((item: any) => typeof item === 'string');

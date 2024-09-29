@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IccI18nService } from '@icc/ui/core';
+import { IccI18nService, IccLanguage } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 import {
   IccLayoutComponent,
@@ -10,12 +10,6 @@ import {
   IccLayoutMainComponent,
 } from '@icc/ui/layout';
 import { IccThemeService } from '@icc/ui/theme';
-
-export interface Language {
-  isocode: string;
-  name?: string;
-  nativeName?: string;
-}
 
 @Component({
   selector: 'app-root',
@@ -66,7 +60,7 @@ export class AppComponent implements OnInit {
     this.themeService.setBackgroundColor(value);
   }
 
-  setLang(selected: Language): void {
+  setLang(selected: IccLanguage): void {
     this.i18nService.setLang(selected);
   }
 }
