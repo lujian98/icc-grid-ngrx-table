@@ -16,6 +16,8 @@ export class AppGridHorizontalScrollComponent {
     urlKey: 'DCR',
     horizontalScroll: true,
     columnResize: true,
+    columnMenu: true,
+    columnSort: true,
     remoteGridData: true,
   };
 
