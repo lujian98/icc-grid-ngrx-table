@@ -6,7 +6,8 @@ export const defaultFormConfig: IccFormConfig = {
   remoteFormConfig: false,
   remoteFieldsConfig: false,
   remoteFormData: false,
-  readonly: false,
+  editable: true,
+  //readonly: false,
 };
 
 export const defaultFormState: IccFormState = {

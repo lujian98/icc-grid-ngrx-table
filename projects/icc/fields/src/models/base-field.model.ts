@@ -9,7 +9,8 @@ export interface IccBaseField {
   labelWidth?: number | string;
   fieldWidth?: number | string;
   required?: boolean;
-  readonly?: boolean;
+  readonly?: boolean; // formcontrl disabled inital setup only
+  editable?: boolean; // formcontrl disable by ngrx switch control FormConfig editable
   hidden?: boolean;
   validators?: ValidatorFn | ValidatorFn[];
   requiredFields?: string[]; // for boolean or select condition true children is required.

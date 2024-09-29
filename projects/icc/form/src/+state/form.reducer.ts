@@ -28,7 +28,7 @@ export const iccFormFeature = createFeature({
           ...state[key],
           formConfig: { ...state[key].formConfig, ...action.formConfig },
         };
-      }
+      } // TODO apply editable for FormFields
       //console.log('xxxxxxxxxxxxxx load remote formData = ', newState[key]);
       return { ...newState };
     }),
@@ -40,7 +40,7 @@ export const iccFormFeature = createFeature({
           ...state[key],
           formFields: [...action.formFields],
         };
-      }
+      } // TODO apply editable for FormFields
       //console.log(' FormFieldsConfig sucess=', newState);
       return { ...newState };
     }),
