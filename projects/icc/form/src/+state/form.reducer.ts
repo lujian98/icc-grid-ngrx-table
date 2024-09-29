@@ -2,8 +2,28 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import * as formActions from './form.actions';
 import { FormState } from '../models/form.model';
 import { defaultFormState } from '../models/default-form';
+import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
 export const initialState: FormState = {};
+
+export function setFormFieldsEditable(formFields: IccFormField[], editable: boolean): IccFormField[] {
+  return [
+    ...formFields.map((field) => {
+      if (field.fieldType === 'fieldset') {
+        const newfield = field as IccFieldsetConfig;
+        return {
+          ...field,
+          formFields: setFormFieldsEditable(newfield.formFields, editable),
+        };
+      } else {
+        return {
+          ...field,
+          editable,
+        };
+      }
+    }),
+  ];
+}
 
 export const iccFormFeature = createFeature({
   name: 'iccForm',
@@ -24,11 +44,15 @@ export const iccFormFeature = createFeature({
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
+        const formConfig = { ...state[key].formConfig, ...action.formConfig };
+        const editable = formConfig.editable;
+        const formFields = setFormFieldsEditable(state[key].formFields, editable);
         newState[key] = {
           ...state[key],
-          formConfig: { ...state[key].formConfig, ...action.formConfig },
+          formConfig,
+          formFields,
         };
-      } // TODO apply editable for FormFields
+      }
       //console.log('xxxxxxxxxxxxxx load remote formData = ', newState[key]);
       return { ...newState };
     }),
@@ -36,12 +60,14 @@ export const iccFormFeature = createFeature({
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
+        const editable = state[key].formConfig.editable;
+        const formFields = setFormFieldsEditable(action.formFields, editable);
         newState[key] = {
           ...state[key],
-          formFields: [...action.formFields],
+          formFields,
         };
       } // TODO apply editable for FormFields
-      //console.log(' FormFieldsConfig sucess=', newState);
+      console.log(' FormFieldsConfig sucess=', newState[key]);
       return { ...newState };
     }),
     on(formActions.getFormDataSuccess, (state, action) => {

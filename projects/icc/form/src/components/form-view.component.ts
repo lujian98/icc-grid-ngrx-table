@@ -12,6 +12,7 @@ import {
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { Subject, takeUntil } from 'rxjs';
+import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
 
 @Component({
@@ -30,6 +31,7 @@ import { IccFormConfig } from '../models/form.model';
 })
 export class IccFormViewComponent implements OnInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private formFacade = inject(IccFormFacade);
   private destroy$ = new Subject<void>();
   form: FormGroup = new FormGroup({});
   private _formFields: IccFormField[] = [];

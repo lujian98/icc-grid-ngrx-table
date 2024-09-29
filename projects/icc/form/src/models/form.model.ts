@@ -1,4 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
+import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
 export interface IccFormConfig {
   formId: string; // auto generated unique id
@@ -18,6 +19,6 @@ export interface FormState {
 
 export interface IccFormState<T extends object = object> {
   formConfig: IccFormConfig;
-  formFields: T[];
+  formFields: IccFormField[];
   formData: T | undefined;
 }
