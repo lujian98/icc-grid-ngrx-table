@@ -74,6 +74,6 @@ export class IccI18nService {
         console.log(' extraModule=', extraModule);
         registerLocaleData(baseModule.default, key, extraModule.default);
       });
-    console.log(' yyyyyy localeInitializer key=', key);
+    //console.log(' yyyyyy localeInitializer key=', key);
   }
 }
