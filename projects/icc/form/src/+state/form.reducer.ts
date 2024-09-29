@@ -70,6 +70,22 @@ export const iccFormFeature = createFeature({
       console.log(' FormFieldsConfig sucess=', newState[key]);
       return { ...newState };
     }),
+    on(formActions.setFormEditable, (state, action) => {
+      const key = action.formId;
+      const editable = action.editable;
+      const newState: FormState = { ...state };
+      if (state[key]) {
+        const formConfig = { ...state[key].formConfig, editable };
+        const formFields = setFormFieldsEditable(state[key].formFields, editable);
+        newState[key] = {
+          ...state[key],
+          formConfig,
+          formFields,
+        };
+      } // TODO apply editable for FormFields
+      console.log(' FormFieldsConfig sucess=', newState[key]);
+      return { ...newState };
+    }),
     on(formActions.getFormDataSuccess, (state, action) => {
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };

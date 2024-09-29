@@ -94,7 +94,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
         [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
       });
 
-      timer(10)
+      timer(20)
         .pipe(take(1))
         .subscribe(() => this.setEnableFields());
     }

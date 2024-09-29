@@ -30,6 +30,10 @@ export class IccFormFacade {
     this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
   }
 
+  setFormEditable(formId: string, editable: boolean): void {
+    this.store.dispatch(formActions.setFormEditable({ formId, editable }));
+  }
+
   clearformDataStore(formId: string): void {
     this.store.dispatch(formActions.clearFormDataStore({ formId }));
   }

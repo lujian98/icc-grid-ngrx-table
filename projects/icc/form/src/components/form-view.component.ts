@@ -129,6 +129,14 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     console.log('is form dirty = ', this.form.dirty);
   }
 
+  editForm(): void {
+    this.formFacade.setFormEditable(this.formConfig.formId, true);
+  }
+
+  viewForm(): void {
+    this.formFacade.setFormEditable(this.formConfig.formId, false);
+  }
+
   resetForm(): void {
     console.log('resetForm = ', this.values);
     this.form.patchValue({ ...this.values });

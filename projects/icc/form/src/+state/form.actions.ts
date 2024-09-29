@@ -31,5 +31,7 @@ export const getFormDataSuccess = createAction(
   props<{ formConfig: IccFormConfig; formData: any }>(),
 );
 
+export const setFormEditable = createAction('[Form] Set Form Editable', props<{ formId: string; editable: boolean }>());
+
 export const clearFormDataStore = createAction('[Form] Clear Form Panel Data Store', props<{ formId: string }>());
 export const removeFormDataStore = createAction('[Form] Remove Form Panel Data Store', props<{ formId: string }>());
