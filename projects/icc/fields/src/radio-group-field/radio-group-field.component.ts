@@ -31,7 +31,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccRadioComponent } from '@icc/ui/radio';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer, take } from 'rxjs';
 import {
   defaultRadioGroupFieldConfig,
   IccRadioGroup,
@@ -92,6 +92,13 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
         [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
       });
     }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
   }
 
   @Input()

@@ -32,7 +32,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer, take } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/textarea-field.model';
 
@@ -91,6 +91,13 @@ export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccesso
         [this.fieldConfig.fieldName!]: new FormControl<string>(''),
       });
     }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
   }
 
   @Input()

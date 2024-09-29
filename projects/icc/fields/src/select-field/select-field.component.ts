@@ -34,7 +34,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccFilterPipe, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, Subject, filter, map, takeUntil, timer, take } from 'rxjs';
 import {
   IccLabelDirective,
   IccSuffixDirective,
@@ -115,7 +115,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     } else {
       this._fieldConfig = config;
     }
-    //console.log( 'this.fieldConfig=', this.fieldConfig)
+    this.setFieldEditable();
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
@@ -136,6 +136,15 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
         return fieldConfig;
       }),
     );
+  }
+
+  private setFieldEditable(): void {
+    if (this.form) {
+      // filter not working and need check this form
+      timer(5)
+        .pipe(take(1))
+        .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
+    }
   }
 
   private initSelectField(): void {

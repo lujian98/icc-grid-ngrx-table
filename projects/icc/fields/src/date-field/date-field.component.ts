@@ -32,7 +32,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, timer, take } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
 import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
@@ -94,6 +94,13 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
         [this.fieldConfig.fieldName!]: new FormControl<Date | string>(''),
       });
     }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
   }
 
   @Input()

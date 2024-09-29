@@ -98,6 +98,13 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
         .pipe(take(1))
         .subscribe(() => this.setEnableFields());
     }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
   }
 
   ngOnInit(): void {
