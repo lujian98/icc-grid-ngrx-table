@@ -134,6 +134,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   editForm(): void {
     this.formFacade.setFormEditable(this.formConfig.formId, true);
+    this.checkFormValueChanged(this.form.getRawValue());
   }
 
   viewForm(): void {
@@ -142,7 +143,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   resetForm(): void {
     this.form.patchValue({ ...this.values });
-    this.checkFormValueChanged(this.form.getRawValue());
+    //this.checkFormValueChanged(this.form.getRawValue());
   }
 
   checkForm(): void {

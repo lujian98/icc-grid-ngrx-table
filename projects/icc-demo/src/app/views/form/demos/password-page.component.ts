@@ -147,7 +147,7 @@ export class AppPasswordPageDemoComponent {
       fieldType: 'radiogroup',
       fieldName: 'group83',
       fieldLabel: 'Radio Group',
-      readonly: true,
+      //readonly: true,
       groups: [
         {
           title: 'Group A',

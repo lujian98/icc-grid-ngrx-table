@@ -74,7 +74,10 @@ export class IccFormFieldComponent implements AfterViewInit {
 
   get formFieldIndicatorColor(): string {
     const control = this.fieldControlDirective?.fieldControl;
+    //console.log( ' control=', control)
     if (control && !control.disabled) {
+      //console.log( ' control=', control)
+      //console.log( ' disabled=', control.dirty)
       return control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
     } else {
       return '';
