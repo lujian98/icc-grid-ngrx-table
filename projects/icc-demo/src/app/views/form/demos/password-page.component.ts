@@ -17,6 +17,7 @@ import { State, STATES } from '../../../data/states';
 export class AppPasswordPageDemoComponent {
   formConfig = {
     labelWidth: 150,
+    autoFitHeight: false,
     validators: [confirmationValidator('userPassword', 'userPasswordConfirmation')],
   };
 
@@ -52,6 +53,11 @@ export class AppPasswordPageDemoComponent {
   values = {
     userPassword: '',
     userPasswordConfirmation: '',
+  };
+
+  formConfig1 = {
+    labelWidth: 100,
+    autoFitHeight: false,
   };
 
   formConfig2 = {

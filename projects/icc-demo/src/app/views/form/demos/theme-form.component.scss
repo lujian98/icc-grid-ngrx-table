@@ -2,6 +2,17 @@
   display: flex;
   flex-direction: column;
   div {
+    margin: 5px;
     width: 500px;
+    border: 1px solid green;
+  }
+
+  .grow-box {
+    height: -webkit-fill-available;
+    overflow-y: auto;
+  }
+
+  .grow-box-inner {
+    height: 900px;
   }
 }

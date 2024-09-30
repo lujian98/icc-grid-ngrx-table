@@ -2,6 +2,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: -webkit-fill-available;
-  //overflow-y: hidden;
+
+  &.auto-fit-height {
+    height: -webkit-fill-available;
+    overflow-y: auto;
+  }
 }

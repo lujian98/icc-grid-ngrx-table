@@ -11,6 +11,7 @@ export interface IccFormConfig {
   //readonly: boolean;
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];
+  autoFitHeight: boolean;
 }
 
 export interface FormState {

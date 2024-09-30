@@ -7,6 +7,10 @@
   padding: 0 5px;
   overflow-x: hidden;
 
+  .icc-panel-middle {
+    height: -webkit-fill-available;
+  }
+
   ::ng-deep {
     icc-panel-header {
       position: sticky;

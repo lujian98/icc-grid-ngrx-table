@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, HostBinding } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { Observable } from 'rxjs';
 import { IccFormStateModule } from './+state/form-state.module';
@@ -63,5 +63,10 @@ export class IccFormComponent {
   @Input()
   set values(val: any) {
     this.formFacade.setFormData(this.formConfig, val);
+  }
+
+  @HostBinding('class.auto-fit-height')
+  get autoFitHeight() {
+    return this.formConfig.autoFitHeight;
   }
 }
