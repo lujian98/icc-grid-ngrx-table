@@ -70,7 +70,7 @@ export class IccInputDirective extends IccFormFieldControlDirective<any> impleme
   }
   constructor(
     protected _elementRef: ElementRef<HTMLInputElement | HTMLTextAreaElement>,
-    //@Optional() @Self() public ngControl: NgControl,
+    @Optional() @Self() override ngControl: NgControl,
     @Optional() public _parentForm: NgForm,
     @Optional() public _parentFormGroup: FormGroupDirective,
   ) {

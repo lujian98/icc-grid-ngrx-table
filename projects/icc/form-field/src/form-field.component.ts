@@ -69,6 +69,19 @@ export class IccFormFieldComponent implements AfterViewInit {
   set _control(value) {
     this._explicitFormFieldControl = value;
   }
+
+  get formFieldIndicatorColor(): string {
+    console.log(' this._control =', this._control);
+    if (this._control && !this._control.disabled) {
+      if (this._control.ngControl?.dirty) {
+        return `icc-form-field-indicator-red`;
+      } else {
+        return `icc-form-field-indicator-green`;
+      }
+    }
+    return '';
+  }
+
   private _explicitFormFieldControl!: IccFormFieldControlDirective<any>;
 
   constructor(
