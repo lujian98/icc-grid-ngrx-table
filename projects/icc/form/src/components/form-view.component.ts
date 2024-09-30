@@ -7,8 +7,8 @@ import {
   IccFieldsetComponent,
   IccFieldsetConfig,
   IccFormField,
-  IccTextFieldConfig,
   IccNumberFieldConfig,
+  IccTextFieldConfig,
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccPanelTopBarComponent } from '@icc/ui/panel';
@@ -68,7 +68,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         this.setValidators(field);
       }
     });
-  } // FormControl({value: '', disabled: true})
+  }
 
   private setValidators(field: IccFormField): void {
     const formField = this.form.get(field.fieldName!)!;

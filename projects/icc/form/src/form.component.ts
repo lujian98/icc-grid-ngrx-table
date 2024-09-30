@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, HostBinding } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
+import { IccPanelComponent } from '@icc/ui/panel';
 import { Observable } from 'rxjs';
 import { IccFormStateModule } from './+state/form-state.module';
 import { IccFormFacade } from './+state/form.facade';
 import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
 import { IccFormConfig } from './models/form.model';
-import { IccFormField } from '@icc/ui/fields';
-import { IccPanelComponent } from '@icc/ui/panel';
 
 @Component({
   selector: 'icc-form',
