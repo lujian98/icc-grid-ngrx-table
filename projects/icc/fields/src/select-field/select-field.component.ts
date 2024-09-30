@@ -43,7 +43,7 @@ import {
   IccFormFieldComponent,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
-import { IccInputDirective } from '../input/input.directive';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';

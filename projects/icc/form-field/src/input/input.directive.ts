@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Optional, Self, DoCheck, Input, HostBinding, HostListener } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
-//import { IccFormFieldControlDirective } from '../../../form-field/src/form-field-control';
-import { IccFormFieldControlDirective } from '@icc/ui/form-field';
+import { IccFormFieldControlDirective } from '../form-field-control';
+//import { IccFormFieldControlDirective } from '@icc/ui/form-field';
 
 @Directive({
   selector: 'input[iccInput], textarea[iccInput]',

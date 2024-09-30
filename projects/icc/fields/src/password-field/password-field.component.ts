@@ -34,7 +34,7 @@ import {
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '../input/input.directive';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/password-field.model';
 
 @Component({

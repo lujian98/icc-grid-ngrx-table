@@ -13,7 +13,7 @@ import {
   Validator,
 } from '@angular/forms';
 import { IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccInputDirective } from '../input/input.directive';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-field.model';
 
 @Component({

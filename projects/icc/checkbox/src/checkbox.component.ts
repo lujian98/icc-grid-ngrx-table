@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { IccInputDirective } from '@icc/ui/fields';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { CommonModule } from '@angular/common';
 import { IccIconModule } from '@icc/ui/icon';
 

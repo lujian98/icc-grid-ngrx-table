@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@a
 import { BehaviorSubject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccInputDirective } from '@icc/ui/fields';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
 

@@ -11,7 +11,7 @@ import {
 } from '@icc/ui/form-field';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccInputDirective } from '../input/input.directive';
+//import { IccInputDirective } from '../input/input.directive';
 import { IccFormFieldError } from './models/field-errors.model';
 
 @Component({
@@ -30,7 +30,7 @@ import { IccFormFieldError } from './models/field-errors.model';
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,
-    IccInputDirective,
+    //IccInputDirective,
     IccIconModule,
     IccErrorDirective,
   ],

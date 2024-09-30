@@ -21,7 +21,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '../input/input.directive';
+import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
 @Component({
