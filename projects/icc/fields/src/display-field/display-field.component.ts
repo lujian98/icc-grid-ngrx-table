@@ -18,6 +18,7 @@ import {
   IccLabelDirective,
   IccLabelWidthDirective,
   IccSuffixDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil, timer, take } from 'rxjs';
@@ -53,6 +54,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFieldControlDirective,
   ],
 })
 export class IccDisplayFieldComponent implements ControlValueAccessor, Validator {
@@ -96,8 +98,8 @@ export class IccDisplayFieldComponent implements ControlValueAccessor, Validator
     return this._value;
   }
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get hidden(): boolean {

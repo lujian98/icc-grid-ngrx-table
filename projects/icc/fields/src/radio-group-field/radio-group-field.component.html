@@ -3,6 +3,7 @@
     [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
     [iccLabelWidth]="fieldConfig.labelWidth"
     [iccFieldWidth]="fieldConfig.fieldWidth"
+    [iccFieldControl]="field"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel }}

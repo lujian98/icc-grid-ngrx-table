@@ -29,6 +29,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -66,6 +67,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccInputDirective,
     IccIconModule,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -114,8 +116,8 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
 
   @Output() valueChange = new EventEmitter<number | null>(true);
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get required(): boolean {

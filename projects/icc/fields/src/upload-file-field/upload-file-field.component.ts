@@ -29,6 +29,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -66,6 +67,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     IccInputDirective,
     IccIconModule,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -113,8 +115,8 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
 
   @Output() valueChange = new EventEmitter<any>(false);
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get required(): boolean {

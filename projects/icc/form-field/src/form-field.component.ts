@@ -21,6 +21,7 @@ import { IccHintDirective } from './directive/hint.directive';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
 import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
+import { IccFieldControlDirective } from './directive/field-control.directive';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 
 @Component({
@@ -39,6 +40,7 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
     IccFormLabelWidthDirective,
     IccFieldsetLabelWidthDirective,
     IccFormFieldErrorsDirective,
+    IccFieldControlDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
@@ -71,15 +73,12 @@ export class IccFormFieldComponent implements AfterViewInit {
   }
 
   get formFieldIndicatorColor(): string {
-    console.log(' this._control =', this._control);
-    if (this._control && !this._control.disabled) {
-      if (this._control.ngControl?.dirty) {
-        return `icc-form-field-indicator-red`;
-      } else {
-        return `icc-form-field-indicator-green`;
-      }
+    const control = this.fieldControlDirective?.fieldControl;
+    if (control && !control.disabled) {
+      return control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
+    } else {
+      return '';
     }
-    return '';
   }
 
   private _explicitFormFieldControl!: IccFormFieldControlDirective<any>;
@@ -90,6 +89,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
     @Optional() private fieldWidthDirective: IccFieldWidthDirective,
+    @Optional() private fieldControlDirective: IccFieldControlDirective,
   ) {}
 
   ngAfterViewInit(): void {

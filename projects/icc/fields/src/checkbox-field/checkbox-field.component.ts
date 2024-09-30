@@ -30,6 +30,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -69,6 +70,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccIconModule,
     IccCheckboxComponent,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
@@ -126,8 +128,8 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
 
   @Output() valueChange = new EventEmitter<boolean>(true);
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get hidden(): boolean {

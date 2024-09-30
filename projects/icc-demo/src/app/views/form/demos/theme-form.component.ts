@@ -55,10 +55,24 @@ export class AppThemeFormDemoComponent {
 
   fieldSet: IccFormField[] = [
     {
-      fieldType: 'checkbox',
-      fieldName: 'enabled',
-      fieldLabel: 'Enabled',
+      fieldType: 'radiogroup',
+      fieldName: 'group1',
+      fieldLabel: 'Radio Group',
       required: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
     },
     /*
 

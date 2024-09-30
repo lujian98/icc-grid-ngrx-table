@@ -28,6 +28,7 @@ import {
   IccLabelDirective,
   IccLabelWidthDirective,
   IccSuffixDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccRadioComponent } from '@icc/ui/radio';
@@ -67,6 +68,7 @@ import {
     IccFieldWidthDirective,
     IccRadioComponent,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

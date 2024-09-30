@@ -30,6 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFormFieldErrorsDirective,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -68,6 +69,7 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     IccIconModule,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
@@ -115,8 +117,8 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
 
   @Output() valueChange = new EventEmitter<string>(false);
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get required(): boolean {

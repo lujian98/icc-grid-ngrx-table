@@ -41,6 +41,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccFormFieldComponent,
+  IccFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccInputDirective } from '@icc/ui/form-field';
@@ -87,6 +88,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccCheckboxComponent,
     IccFilterPipe,
     IccFieldsErrorsComponent,
+    IccFieldControlDirective,
   ],
 })
 export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
@@ -236,8 +238,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return value;
   }
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get required(): boolean {

@@ -70,8 +70,8 @@ export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor,
     return this._value;
   }
 
-  get field(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   registerOnChange(fn: any): void {
