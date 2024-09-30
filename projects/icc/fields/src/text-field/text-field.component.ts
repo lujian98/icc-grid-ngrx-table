@@ -103,8 +103,8 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
       .pipe(take(1))
       .subscribe(() => {
         this.fieldConfig.editable ? this.field.enable() : this.field.disable();
-        console.log(' this.field=', this.field);
-        this.changeDetectorRef.markForCheck();
+        //console.log(' this.field=', this.field);
+        //this.changeDetectorRef.markForCheck();
       });
   }
 

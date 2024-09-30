@@ -6,6 +6,7 @@ import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
 import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
+import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 import {
   IccNumberFieldComponent,
   defaultNumberFieldConfig,
@@ -48,59 +49,97 @@ import { State, STATES } from '../../../data/states';
   ],
 })
 export class AppThemeFormDemoComponent {
-  checked = true;
-
-  numberConfig = {
-    //...defaultNumberFieldConfig,
-    fieldLabel: 'Number Field',
+  formConfig = {
+    labelWidth: 100,
   };
-  numberValue = 50;
 
-  displayConfig = {
-    fieldLabel: 'Display Field',
-  };
-  diaplayValue = 'Test Display field';
+  fieldSet: IccFormField[] = [
+    {
+      fieldType: 'display',
+      fieldName: 'display',
+      fieldLabel: 'display',
+    },
+    /*
+    {
+      fieldType: 'date',
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      required: true,
+    },
+    {
+      fieldType: 'hidden',
+      fieldName: 'totalValue',
+    },
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      required: true,
+    },
+    {
+      fieldType: 'select',
+      remoteOptions: true,
+      urlKey: 'usa',
+      fieldName: 'state',
+      multiSelection: false,
+      fieldLabel: 'State',
+      optionLabel: 'state',
+      optionKey: 'abbr',
+      required: true,
+      placeholder: 'Select One or More...',
+    },
+    {
+      fieldType: 'radiogroup',
+      fieldName: 'group1',
+      fieldLabel: 'Radio Group',
+      required: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
+    {
+      fieldType: 'uploadfile',
+      fieldName: 'uploadfile',
+      fieldLabel: 'Upload File',
+      required: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'userPassword',
+      fieldLabel: 'Password',
+      required: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    */
+  ];
 
-  checkboxConfig = {
-    fieldLabel: 'Checkbox Field',
-  };
-  checkboxValue = true;
-
-  hiddenConfig = {
-    fieldName: 'hidden67',
-  };
-  hiddenValue = 'H773333';
-
-  datepickerControl = new FormControl();
-  showcaseForm = new FormGroup({});
-
-  dateConfig = {
-    fieldName: 'date77',
-    fieldLabel: 'Date Field',
-  };
-  dateValue = new Date();
-
-  textConfig = {
-    fieldLabel: 'Text Field',
-  };
-  textValue = 'text value 222';
-
-  textareaConfig = {
-    fieldLabel: 'Textarea Field',
-  };
-  textareaValue = 'This is textarea value 222';
-
-  states = STATES;
-  multiObjectStates = [STATES[32], STATES[36]];
-  multiSelectionRemote = {
-    fieldType: 'select',
-    remoteOptions: true,
-    urlKey: 'usa',
-    fieldName: 'state',
-    multiSelection: true,
-    fieldLabel: 'Multi Selection (Object)',
-    optionLabel: 'state',
-    optionKey: 'abbr',
-    placeholder: 'Select One or More...',
+  values = {
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    age: 18,
+    notes: 'This is a notes. ',
+    state: STATES[32],
+    display: 'display only',
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    enabled: true,
+    totalValue: 123892,
+    userName2: 'user 77 A33',
+    loginName2: 'test login A33',
+    group1: 'B',
+    uploadfile: '',
+    userPassword: '',
   };
 }

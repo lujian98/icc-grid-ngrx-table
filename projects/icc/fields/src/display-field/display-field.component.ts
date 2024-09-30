@@ -20,6 +20,7 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
+import { Subject, takeUntil, timer, take } from 'rxjs';
 import { IccInputDirective } from '../input/input.directive';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
@@ -75,6 +76,13 @@ export class IccDisplayFieldComponent implements ControlValueAccessor, Validator
         [this.fieldConfig.fieldName!]: new FormControl<string>(''),
       });
     }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => this.field.disable());
   }
 
   @Input()
