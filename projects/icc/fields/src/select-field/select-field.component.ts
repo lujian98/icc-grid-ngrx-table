@@ -308,7 +308,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   onChange(options: any): void {
-    // console.log( 'qqqqqqqqqqqqqqq options=', options)
+    //console.log( 'qqqqqqqqqqqqqqq options=', options)
     if (this.fieldConfig.multiSelection) {
       this.selectionChange.emit([options]);
     } else {

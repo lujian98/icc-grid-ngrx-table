@@ -27,6 +27,6 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
   onSelectionChange<T>(value: any): void {
     //console.log(' filtr select change options=', value);
     // TODO if mutiple select filter use this.filterChanged$.next(value);
-    this.applyFilter(value);
+    this.applyFilter([value]);
   }
 }

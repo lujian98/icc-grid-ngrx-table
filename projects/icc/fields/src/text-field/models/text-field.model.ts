@@ -10,4 +10,5 @@ export const defaultTextFieldConfig: IccTextFieldConfig = {
   fieldName: 'textfield',
   placeholder: '',
   clearValue: false,
+  editable: true,
 };

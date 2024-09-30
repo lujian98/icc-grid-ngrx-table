@@ -66,7 +66,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
 
   checkField(): void {}
 
-  applyFilter(filterValue: string): void {
+  applyFilter(filterValue: any): void {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 

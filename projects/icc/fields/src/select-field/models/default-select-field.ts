@@ -16,6 +16,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   optionKey: 'name',
   placeholder: '',
   clearValue: true,
+  editable: true,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {
