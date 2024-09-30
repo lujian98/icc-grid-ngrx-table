@@ -14,8 +14,8 @@
       iccCalendarToggle
       [calendarModal]="datepicker"
       [value]="field.value | localeDate"
+      [disabled]="field.disabled"
       [placeholder]="fieldConfig.placeholder"
-      [formControlName]="fieldConfig.fieldName!"
       [required]="required"
       readonly
     />
