@@ -96,9 +96,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
         [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
       });
 
-      timer(20)
-        .pipe(take(1))
-        .subscribe(() => this.setEnableFields());
+      this.setEnableFields();
     }
     this.setFieldEditable();
   }
@@ -106,7 +104,10 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
+      .subscribe(() => {
+        this.fieldConfig.editable ? this.field.enable() : this.field.disable();
+        this.setEnableFields();
+      });
   }
 
   ngOnInit(): void {
@@ -142,8 +143,12 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   private setEnableFields(): void {
-    this.setRequiredFields(this.field.value);
-    this.setReadonlyFields(this.field.value);
+    timer(20)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.setRequiredFields(this.field.value);
+        this.setReadonlyFields(this.field.value);
+      });
   }
 
   private setRequiredFields(checked: boolean): void {
