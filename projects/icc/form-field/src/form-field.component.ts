@@ -1,27 +1,28 @@
+import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectorRef,
-  inject,
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  HostBinding,
   ContentChild,
   ElementRef,
-  ViewChild,
-  AfterViewInit,
+  HostBinding,
+  inject,
   Optional,
+  ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IccFormFieldControlDirective } from './form-field-control';
-import { IccLabelDirective } from './directive/label.directive';
-import { IccLabelWidthDirective } from './directive/label-width.directive';
-import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
-import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
-import { IccFieldWidthDirective } from './directive/field-width.directive';
-import { IccHintDirective } from './directive/hint.directive';
+import { take, timer } from 'rxjs';
 import { IccErrorDirective } from './directive/error.directive';
-import { IccSuffixDirective } from './directive/suffix.directive';
-import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
 import { IccFieldControlDirective } from './directive/field-control.directive';
+import { IccFieldWidthDirective } from './directive/field-width.directive';
+import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
+import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
+import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
+import { IccHintDirective } from './directive/hint.directive';
+import { IccLabelWidthDirective } from './directive/label-width.directive';
+import { IccLabelDirective } from './directive/label.directive';
+import { IccSuffixDirective } from './directive/suffix.directive';
+import { IccFormFieldControlDirective } from './form-field-control';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 
 @Component({
@@ -46,6 +47,8 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   fieldWidth: string = '100%';
+  private _formFieldIndicator: string = '';
+
   focused = false;
   @HostBinding('class.icc-form-field')
   get field() {
@@ -65,6 +68,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   @ViewChild('label') label!: ElementRef;
 
   get _control() {
+    this.checkFormFieldIndicator();
     this.changeDetectorRef.markForCheck();
     return this._explicitFormFieldControl || this._controlDirective;
   }
@@ -72,16 +76,27 @@ export class IccFormFieldComponent implements AfterViewInit {
     this._explicitFormFieldControl = value;
   }
 
-  get formFieldIndicatorColor(): string {
-    const control = this.fieldControlDirective?.fieldControl;
-    //console.log( ' control=', control)
-    if (control && !control.disabled) {
-      //console.log( ' control=', control)
-      //console.log( ' disabled=', control.dirty)
-      return control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
-    } else {
-      return '';
-    }
+  private checkFormFieldIndicator(): void {
+    timer(50)
+      .pipe(take(1))
+      .subscribe(() => {
+        let colorClass = '';
+        const control = this.fieldControlDirective?.fieldControl;
+        if (control && !control.disabled) {
+          colorClass = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
+        }
+        if (colorClass !== this.formFieldIndicator) {
+          this.formFieldIndicator = colorClass;
+          this.changeDetectorRef.markForCheck();
+        }
+      });
+  }
+
+  set formFieldIndicator(val: string) {
+    this._formFieldIndicator = val;
+  }
+  get formFieldIndicator(): string {
+    return this._formFieldIndicator;
   }
 
   private _explicitFormFieldControl!: IccFormFieldControlDirective<any>;
