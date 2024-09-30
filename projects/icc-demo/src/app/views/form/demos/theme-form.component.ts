@@ -55,12 +55,11 @@ export class AppThemeFormDemoComponent {
 
   fieldSet: IccFormField[] = [
     {
-      fieldType: 'date',
-      fieldName: 'createdate',
-      fieldLabel: 'Create Date',
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
       required: true,
     },
-
     /*
 
 
