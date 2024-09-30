@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-
+import { IccInputDirective } from '@icc/ui/fields';
 import { CommonModule } from '@angular/common';
 import { IccIconModule } from '@icc/ui/icon';
 
@@ -29,7 +29,7 @@ export class GhostCheckboxDirective {
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
   standalone: true,
-  imports: [CommonModule, IccIconModule],
+  imports: [CommonModule, IccIconModule, IccInputDirective],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
