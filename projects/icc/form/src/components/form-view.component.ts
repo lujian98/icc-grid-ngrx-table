@@ -43,7 +43,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: IccFormField[]) {
-    //console.log(' 111 formFields=', val);
     this._formFields = val;
     this.addFormControls(this.formFields);
 
@@ -122,14 +121,15 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private checkFormValueChanged(values: any): void {
-    //console.log('is form dirty = ', values);
-    // console.log('is form dirty = ', this.values);
-    if (isEqual(values, this.values)) {
-      this.form.markAsPristine();
-    } else {
-      this.form.markAsDirty();
-    }
-    console.log('is form dirty = ', this.form.dirty);
+    isEqual(values, this.values) ? this.form.markAsPristine() : this.form.markAsDirty();
+    this.setFieldDirty(values, this.values);
+  }
+
+  private setFieldDirty(values: any, orgValues: any): void {
+    Object.keys(values).forEach((key) => {
+      const formField = this.form.get(key)!;
+      isEqual(values[key], orgValues[key]) ? formField.markAsPristine() : formField.markAsDirty();
+    });
   }
 
   editForm(): void {
@@ -141,8 +141,8 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   resetForm(): void {
-    console.log('resetForm = ', this.values);
     this.form.patchValue({ ...this.values });
+    this.checkFormValueChanged(this.form.getRawValue());
   }
 
   checkForm(): void {
