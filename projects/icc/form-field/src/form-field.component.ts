@@ -77,7 +77,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   }
 
   private checkFormFieldIndicator(): void {
-    timer(50)
+    timer(10)
       .pipe(take(1))
       .subscribe(() => {
         let colorClass = '';
