@@ -46,73 +46,66 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 })
 export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private _fieldIndicator: string = '';
+  public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
   fieldWidth: string = '100%';
-  private _formFieldIndicator: string = '';
 
-  focused = false;
-  @HostBinding('class.icc-form-field')
-  get field() {
-    return true;
-  }
-
-  @HostBinding('class.icc-form-field-invalid')
+  @HostBinding('class.icc-form-field-invalid') // TODO add a HostBinding class
   get invalid() {
+    //console.log( ' host binding invalid ')
+    //console.log(' 7777 fieldControl=', this._controlDirective)
+    this.checkFieldIndicator();
+    this.changeDetectorRef.markForCheck();
     if (this._control) {
       return this._control.errorState;
     }
     return false;
   }
 
-  @ContentChild(IccFormFieldControlDirective) _controlDirective!: IccFormFieldControlDirective<any>;
-  @ContentChild(IccLabelDirective) iccLabel!: IccLabelDirective;
-  @ViewChild('label') label!: ElementRef;
-
-  get _control() {
-    this.checkFormFieldIndicator();
-    this.changeDetectorRef.markForCheck();
-    console.log('00000 focused =', this._controlDirective?.focused);
-    return this._explicitFormFieldControl || this._controlDirective;
-  }
-  set _control(value) {
-    this._explicitFormFieldControl = value;
-  }
-
   onClick(event: MouseEvent): void {
-    console.log(' 3333 on click this._control=', this._control);
     this._control && this._control.onContainerClick(event);
   }
 
-  private checkFormFieldIndicator(): void {
+  get _control(): IccFormFieldControlDirective<any> {
+    return this._controlDirective;
+  }
+
+  get required(): boolean {
+    return this._control && this._control.required && !this._control.disabled;
+  }
+
+  get focused(): boolean {
+    return this._control && this._control.focused;
+  }
+
+  private checkFieldIndicator(): void {
     timer(10)
       .pipe(take(1))
       .subscribe(() => {
-        let colorClass = '';
+        let fieldIndicator = '';
         const control = this.fieldControlDirective?.fieldControl;
         if (control && !control.disabled) {
-          colorClass = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
+          fieldIndicator = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
         }
-        if (colorClass !== this.formFieldIndicator) {
-          this.formFieldIndicator = colorClass;
+        if (fieldIndicator !== this.fieldIndicator) {
+          this.fieldIndicator = fieldIndicator;
           this.changeDetectorRef.markForCheck();
         }
       });
   }
 
-  set formFieldIndicator(val: string) {
-    this._formFieldIndicator = val;
+  private set fieldIndicator(val: string) {
+    this._fieldIndicator = val;
   }
-  get formFieldIndicator(): string {
-    return this._formFieldIndicator;
+  get fieldIndicator(): string {
+    return this._fieldIndicator;
   }
 
-  get fieldFocused(): boolean {
-    console.log(' 77777777777ocused =', this._control?.focused);
-    return this._control && this._control.focused;
-  }
-  private _explicitFormFieldControl!: IccFormFieldControlDirective<any>;
+  @ContentChild(IccFormFieldControlDirective) private _controlDirective!: IccFormFieldControlDirective<any>;
+  @ContentChild(IccLabelDirective) private iccLabel!: IccLabelDirective;
+  @ViewChild('label') private label!: ElementRef;
 
   constructor(
-    public elementRef: ElementRef,
     @Optional() private formLabelWidthDirective: IccFormLabelWidthDirective,
     @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
