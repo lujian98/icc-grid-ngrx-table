@@ -1,17 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
-import {
-  IccErrorDirective,
-  IccFieldWidthDirective,
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
-  IccSuffixDirective,
-} from '@icc/ui/form-field';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ValidationErrors } from '@angular/forms';
+import { IccErrorDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-//import { IccInputDirective } from '../input/input.directive';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccFormFieldError } from './models/field-errors.model';
 
 @Component({
@@ -20,20 +12,7 @@ import { IccFormFieldError } from './models/field-errors.model';
   styleUrls: ['./field-errors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    TranslateModule,
-    IccFormFieldComponent,
-    IccSuffixDirective,
-    IccLabelDirective,
-    IccLabelWidthDirective,
-    IccFieldWidthDirective,
-    //IccInputDirective,
-    IccIconModule,
-    IccErrorDirective,
-  ],
+  imports: [CommonModule, TranslateModule, IccIconModule, IccErrorDirective],
 })
 export class IccFieldsErrorsComponent {
   private _errors!: IccFormFieldError[];

@@ -136,7 +136,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   onChange(): void {
-    console.log(' this.field=', this.field);
+    //console.log(' this.field=', this.field);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }
