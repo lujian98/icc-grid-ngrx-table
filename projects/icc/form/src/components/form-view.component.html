@@ -1,8 +1,8 @@
 <icc-panel-top-bar>
-  <button (click)="checkForm()">Check Form</button>
-  <button (click)="resetForm()">Reset Form</button>
-  <button (click)="editForm()">Edit Form</button>
-  <button (click)="viewForm()">View Form</button>
+  <button icc-button (click)="checkForm()">Check Form</button>
+  <button icc-button (click)="resetForm()">Reset Form</button>
+  <button icc-button (click)="editForm()">Edit Form</button>
+  <button icc-button (click)="viewForm()">View Form</button>
 </icc-panel-top-bar>
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">

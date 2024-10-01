@@ -1,11 +1,6 @@
 @mixin icc-panel-theme() {
-  /*
-  icc-panel-header,
-  icc-panel-main,
-  //icc-panel-sidebar,
-  //icc-panel-center,
-  icc-panel-footer {
-    background-color: var(--app-background-color);
-    color: icc-theme(app-text-basic-color);
-  }*/
+  icc-panel-top-bar,
+  icc-panel-bottom-bar {
+    background-color: icc-theme(icc-panel-top-bar-background-color);
+  }
 }
