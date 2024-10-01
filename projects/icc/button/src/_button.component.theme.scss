@@ -1,30 +1,13 @@
-@mixin sun-button-theme() {
-  /*
-  [sun-button] {
+@mixin icc-button-theme() {
+  [icc-button] {
     font-size: 0.6875rem;
     font-weight: 500;
     line-height: 28px;
 
     &.status-default {
-      background-color: sun-theme(button-default-color);
+      background-color: icc-theme(icc-button-default-color);
       &[disabled]:hover {
-        background-color: sun-theme(button-default-color);
-        border-color: transparent;
-      }
-    }
-
-    &.status-primary {
-      background-color: sun-theme(button-primary-color);
-      &[disabled]:hover {
-        background-color: sun-theme(button-primary-color);
-        border-color: transparent;
-      }
-    }
-
-    &.status-danger {
-      background-color: sun-theme(button-danger-color);
-      &[disabled]:hover {
-        background-color: sun-theme(button-danger-color);
+        background-color: icc-theme(icc-button-default-color);
         border-color: transparent;
       }
     }
@@ -41,10 +24,11 @@
       }
     }
 
-    &.icon-start sun-icon:first-of-type {
+    /*
+    &.icon-start icc-icon:first-of-type {
       margin-right: 0.375rem;
     }
-    &.icon-end sun-icon:last-of-type {
+    &.icon-end icc-icon:last-of-type {
       margin-left: 0.375rem;
     }
 
@@ -54,6 +38,6 @@
 
     &.size-standard {
       height: 1.875rem;
-    }
-  }*/
+    }*/
+  }
 }

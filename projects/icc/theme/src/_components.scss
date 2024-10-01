@@ -8,6 +8,7 @@
 @import "../../checkbox/src/checkbox.component.theme";
 @import "../../radio/src/radio.component.theme";
 @import "../../panel/src/panel.component.theme";
+@import "../../button/src/button.component.theme";
 
 @import "../../calendar/src/calendar.component.theme";
 @import "../../calendar/src/weekdays/weekdays.component.theme";
@@ -25,6 +26,7 @@
   @include icc-checkbox-theme();
   @include icc-radio-theme();
   @include icc-panel-theme();
+  @include icc-button-theme();
 
   @include icc-calendar-theme();
   @include icc-calendar-weekdays-theme();

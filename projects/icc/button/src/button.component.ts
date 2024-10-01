@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-//import { SunUtils } from '../utils/utils';
+//import { IccUtils } from '../utils/utils';
 
-//export type SunButtonSize = 'medium' | 'standard';
-//export type SunButtonStatus = 'default' | 'primary' | 'danger';
+//export type IccButtonSize = 'medium' | 'standard';
+export type IccButtonStatus = 'default' | 'primary' | 'danger';
 
 @Component({
   selector: 'button[icc-button], a[icc-button]',
@@ -16,10 +16,14 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   imports: [CommonModule],
 })
 export class IccButtonComponent {
-  //@Input() size: SunButtonSize = 'standard';
-  // @Input() status: SunButtonStatus = 'default';
+  //@Input() size: IccButtonSize = 'standard';
+  @Input() status: IccButtonStatus = 'default';
   @Input() appearance!: string;
 
+  @HostBinding('class.status-default')
+  get default() {
+    return this.status === 'default';
+  }
   /*
   @HostBinding('class.size-medium')
   get medium() {
@@ -31,10 +35,7 @@ export class IccButtonComponent {
     return this.size === 'standard';
   }
 
-  @HostBinding('class.status-default')
-  get default() {
-    return this.status === 'default';
-  }
+
 
   @HostBinding('class.status-primary')
   get primary() {
@@ -62,8 +63,8 @@ export class IccButtonComponent {
   get iconLeft(): boolean {
     const el = this.elementRef.nativeElement;
     const icon = this.firstIconElement;
-    const childrenCount = SunUtils.children(el).length;
-    return !!(icon && SunUtils.firstChild(el) === icon && childrenCount > 1);
+    const childrenCount = IccUtils.children(el).length;
+    return !!(icon && IccUtils.firstChild(el) === icon && childrenCount > 1);
   }
 
   @HostBinding('class.icon-end')
@@ -71,8 +72,8 @@ export class IccButtonComponent {
     const el = this.elementRef.nativeElement;
     const icon = this.lastIconElement;
     const iconCount = this.iconElements.length;
-    const childrenCount = SunUtils.children(el).length;
-    return !!(icon && SunUtils.lastChild(el) === icon && childrenCount > iconCount);
+    const childrenCount = IccUtils.children(el).length;
+    return !!(icon && IccUtils.lastChild(el) === icon && childrenCount > iconCount);
   }*/
 
   constructor(protected elementRef: ElementRef<HTMLElement>) {}
@@ -80,7 +81,7 @@ export class IccButtonComponent {
   /*
   protected get iconElements() {
     const el = this.elementRef.nativeElement;
-    return el.querySelectorAll('sun-icon');
+    return el.querySelectorAll('icc-icon');
   }
 
   protected get firstIconElement() {
