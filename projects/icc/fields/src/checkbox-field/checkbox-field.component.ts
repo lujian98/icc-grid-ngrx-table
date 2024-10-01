@@ -173,7 +173,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
       this.fieldConfig.readonlyFields.forEach((name) => {
         const formField = this.form.get(name)!;
         if (formField) {
-          if (checked) {
+          if (checked && this.fieldConfig.editable) {
             formField.enable();
           } else {
             formField.setErrors(null);
