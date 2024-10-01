@@ -30,6 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -66,6 +67,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],
@@ -132,6 +134,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   onChange(): void {
+    this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }
 

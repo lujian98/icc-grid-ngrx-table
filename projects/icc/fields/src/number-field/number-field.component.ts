@@ -30,6 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -66,6 +67,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],
@@ -133,6 +135,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   onChange(): void {
+    this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }
 

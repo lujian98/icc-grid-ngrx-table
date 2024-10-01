@@ -30,6 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -68,6 +69,7 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
     IccIconModule,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
+    IccFormFieldErrorsDirective,
   ],
 })
 export class IccTextareaFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

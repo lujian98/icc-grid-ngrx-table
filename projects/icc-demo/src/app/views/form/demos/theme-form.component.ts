@@ -55,24 +55,11 @@ export class AppThemeFormDemoComponent {
 
   fieldSet: IccFormField[] = [
     {
-      fieldType: 'radiogroup',
-      fieldName: 'group1',
-      fieldLabel: 'Radio Group',
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
       required: true,
-      groups: [
-        {
-          title: 'Group A',
-          name: 'A',
-        },
-        {
-          title: 'Group B',
-          name: 'B',
-        },
-        {
-          title: 'Group C',
-          name: 'C',
-        },
-      ],
+      clearValue: true,
     },
     /*
 

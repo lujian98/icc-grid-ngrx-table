@@ -31,6 +31,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -69,6 +70,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccInputDirective,
     IccIconModule,
     IccCheckboxComponent,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],
@@ -138,6 +140,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   onChange(): void {
+    this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     this.setEnableFields();
   }

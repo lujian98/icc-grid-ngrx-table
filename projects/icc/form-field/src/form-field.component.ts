@@ -70,10 +70,16 @@ export class IccFormFieldComponent implements AfterViewInit {
   get _control() {
     this.checkFormFieldIndicator();
     this.changeDetectorRef.markForCheck();
+    console.log('00000 focused =', this._controlDirective?.focused);
     return this._explicitFormFieldControl || this._controlDirective;
   }
   set _control(value) {
     this._explicitFormFieldControl = value;
+  }
+
+  onClick(event: MouseEvent): void {
+    console.log(' 3333 on click this._control=', this._control);
+    this._control && this._control.onContainerClick(event);
   }
 
   private checkFormFieldIndicator(): void {
@@ -99,6 +105,10 @@ export class IccFormFieldComponent implements AfterViewInit {
     return this._formFieldIndicator;
   }
 
+  get fieldFocused(): boolean {
+    console.log(' 77777777777ocused =', this._control?.focused);
+    return this._control && this._control.focused;
+  }
   private _explicitFormFieldControl!: IccFormFieldControlDirective<any>;
 
   constructor(

@@ -10,6 +10,12 @@
       background-color: icc-theme(icc-form-field-focus-background-color);
       border-color: icc-theme(icc-form-field-focus-border-color);
     }
+
+    .icc-form-field-suffix-focus {
+      outline: none;
+      background-color: icc-theme(icc-form-field-focus-background-color);
+      border-color: icc-theme(icc-form-field-focus-border-color);
+    }
   }
 
   .icc-form-field-container:has(textarea) {

@@ -29,6 +29,7 @@ import {
   IccLabelWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccRadioComponent } from '@icc/ui/radio';
@@ -67,6 +68,7 @@ import {
     IccLabelWidthDirective,
     IccFieldWidthDirective,
     IccRadioComponent,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],

@@ -30,6 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -69,6 +70,7 @@ import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
     IccIconModule,
     IccCalendarModule,
     IccLocaleDatePipe,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],
@@ -135,6 +137,7 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   onChange(val: Date): void {
+    this.field.markAsTouched();
     this.valueChange.emit(val);
   }
 

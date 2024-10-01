@@ -91,6 +91,14 @@ export class IccInputDirective extends IccFormFieldControlDirective<any> impleme
     this._elementRef.nativeElement.focus(options);
   }
 
+  @HostListener('mouseenter') onHover() {
+    this.focused = true;
+  }
+
+  @HostListener('mouseleave') onLeave() {
+    this.focused = false;
+  }
+
   @HostListener('blur') onBlur() {
     this.focused = false;
   }

@@ -10,8 +10,8 @@
     </icc-label>
     <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
 
-    <ng-container *ngIf="field?.errors">
+    <icc-form-field-errors *ngIf="field?.touched && field?.errors">
       <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
-    </ng-container>
+    </icc-form-field-errors>
   </icc-form-field>
 </ng-container>

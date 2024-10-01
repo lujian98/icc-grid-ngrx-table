@@ -42,6 +42,7 @@ import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
   IccFieldControlDirective,
+  IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccInputDirective } from '@icc/ui/form-field';
@@ -87,6 +88,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccIconModule,
     IccCheckboxComponent,
     IccFilterPipe,
+    IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFieldControlDirective,
   ],

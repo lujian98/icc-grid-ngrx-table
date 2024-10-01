@@ -13,7 +13,6 @@
       type="number"
       autocomplete="off"
       [formControlName]="fieldConfig.fieldName!"
-      (click)="$event.stopPropagation()"
       (keyup)="onChange()"
       (wheel)="onChange()"
       (blur)="onBlur()"
@@ -22,8 +21,11 @@
     />
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
 
-    <ng-container *ngIf="field?.errors">
+    <icc-form-field-errors *ngIf="field?.touched && field?.errors">
       <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
-    </ng-container>
+    </icc-form-field-errors>
   </icc-form-field>
 </ng-container>
+<!--
+      (click)="$event.stopPropagation()"
+      -->
