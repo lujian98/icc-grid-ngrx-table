@@ -11,6 +11,7 @@ import {
   Optional,
   ViewChild,
 } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { take, timer } from 'rxjs';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccFieldControlDirective } from './directive/field-control.directive';
@@ -71,7 +72,9 @@ export class IccFormFieldComponent implements AfterViewInit {
   }
 
   get required(): boolean {
-    return this._control && this._control.required && !this._control.disabled;
+    // return this._control && this._control.required && !this._control.disabled;
+    const control = this.fieldControlDirective?.fieldControl;
+    return control && control.hasValidator(Validators.required) && !control.disabled;
   }
 
   get focused(): boolean {
