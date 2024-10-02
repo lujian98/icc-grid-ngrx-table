@@ -70,7 +70,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   }
 
   get required(): boolean {
-    const control = this.fieldControlDirective?.fieldControl;
+    const control = this.formFieldControlDirective?.fieldControl;
     return control && control.hasValidator(Validators.required) && !control.disabled;
   }
 
@@ -86,7 +86,7 @@ export class IccFormFieldComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe(() => {
         let fieldIndicator = '';
-        const control = this.fieldControlDirective?.fieldControl;
+        const control = this.formFieldControlDirective?.fieldControl;
         if (control && !control.disabled) {
           fieldIndicator = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
         }
@@ -113,7 +113,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
     @Optional() private fieldWidthDirective: IccFieldWidthDirective,
-    @Optional() private fieldControlDirective: IccFormFieldControlDirective,
+    @Optional() private formFieldControlDirective: IccFormFieldControlDirective,
   ) {}
 
   ngAfterViewInit(): void {
