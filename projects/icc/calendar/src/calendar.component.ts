@@ -14,12 +14,13 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CustomControl } from './modal/custom-control';
 import { addMonths, isValidDate, startOfDay, startofMonth } from './date-utils/date.utils';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
-//import { IccTranslationService } from 'iccbird-seven-ui/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -43,6 +44,8 @@ export class IccCalendarComponent
   extends CustomControl<Date>
   implements AfterContentInit, ControlValueAccessor, OnChanges, OnInit
 {
+  private translateService = inject(TranslateService);
+
   @ViewChild('content') modalRef!: TemplateRef<any>;
   months!: readonly Date[];
   touched = false;
@@ -120,27 +123,23 @@ export class IccCalendarComponent
 
   @Output() valueChange = new EventEmitter<Date>();
 
-  constructor(
-    public changeDetectorRef: ChangeDetectorRef,
-    //private translationService: IccTranslationService
-  ) {
+  constructor(public changeDetectorRef: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit(): void {
     if (!this.locale) {
-      //this.locale = this.translationService.currentLang;
+      this.locale = this.translateService.currentLang;
     }
+    console.log(' 7777 this.locale =', this.locale);
   }
 
   ngAfterContentInit() {
     this.months = this.getMonths();
-    /*
-    this.langSub$ = this.translationService.onLangChange.subscribe((val) => {
+    this.langSub$ = this.translateService.onLangChange.subscribe((val) => {
       this.locale = val.lang;
       console.log('Locale:', this.locale, 'Service Locale', val.lang);
     });
-    */
   }
 
   ngOnChanges(changes: SimpleChanges) {

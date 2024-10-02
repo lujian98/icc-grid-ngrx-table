@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-//import { IccTranslationService } from 'iccbird-seven-ui/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 
 @Pipe({
@@ -7,15 +7,13 @@ import { DatePipe } from '@angular/common';
   standalone: true,
 })
 export class IccLocaleDatePipe implements PipeTransform {
-  constructor() //  private translationService: IccTranslationService
-  {}
+  private translateService = inject(TranslateService);
 
   transform(value: any, format?: string) {
     if (!value) {
       return '';
     }
-    // const locale = this.translationService.currentLang || 'en-US';
-    const locale = 'en-US';
+    const locale = this.translateService.currentLang || 'en-US';
     return new DatePipe(locale).transform(value, format);
   }
 }

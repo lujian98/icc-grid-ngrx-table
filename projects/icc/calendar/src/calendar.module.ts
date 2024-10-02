@@ -5,6 +5,7 @@ import { IccWeekdaysComponent } from './weekdays/weekdays.component';
 import { IccMonthHeaderComponent } from './month-header/month-header.component';
 import { IccMonthYearPipe } from './month-year-pipe/month-year.pipe';
 //import { IccButtonModule } from '@icc/ui/button';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMonthComponent } from './month/month.component';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -19,6 +20,7 @@ import { IccLocaleDatePipe } from './date-utils/locale-date.pipe';
     CommonModule,
     OverlayModule,
     A11yModule,
+    TranslateModule,
     //IccButtonModule,
     //IccI18nModule,
     IccIconModule,

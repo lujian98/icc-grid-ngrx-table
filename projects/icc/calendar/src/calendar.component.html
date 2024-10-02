@@ -11,6 +11,7 @@
   <div [cdkTrapFocus]="isOverlayOpen" [cdkTrapFocusAutoCapture]="isOverlayOpen">
     <div class="icc-calendar" [ngClass]="'icc-calendar--first-weekday-' + (firstDayOfWeek | lowercase)">
       <icc-weekdays [locale]="locale"></icc-weekdays>
+
       <ng-container *ngFor="let month of months">
         <icc-month-header
           [month]="month"

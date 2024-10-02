@@ -1,6 +1,6 @@
 import { FormStyle, getLocaleDayNames, TranslationWidth } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-//import { IccTranslationService } from 'iccbird-seven-ui/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'icc-weekdays',
@@ -9,6 +9,8 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccWeekdaysComponent implements OnInit {
+  private translateService = inject(TranslateService);
+
   weekdays!: readonly string[];
   weekdaysAbbr!: readonly string[];
 
@@ -25,13 +27,11 @@ export class IccWeekdaysComponent implements OnInit {
     this.weekdaysAbbr = this.getWeekdaysAbbr();
   }
 
-  constructor() //private translationService: IccTranslationService
-  {}
-
   ngOnInit(): void {
-    if (!this.locale) {
-      //this.locale = this.translationService.currentLang;
-    }
+    //if (!this.locale) {
+    this.locale = this.translateService.currentLang;
+    //}
+    //console.log( ' weekdata locale=', this.locale)
   }
 
   private getWeekdays() {
