@@ -1,8 +1,6 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'icc-radio',
@@ -33,7 +31,6 @@ export class IccRadioComponent implements ControlValueAccessor {
   }
   set disabled(disabled: boolean) {
     this._disabled = disabled;
-    // this.cd.markForCheck();
   }
 
   registerOnChange(fn: any): void {

@@ -1,19 +1,19 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { CommonModule } from '@angular/common';
 import {
-  Component,
-  forwardRef,
   ChangeDetectorRef,
+  Component,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
   Input,
   Output,
-  EventEmitter,
   ViewChild,
-  ElementRef,
-  Directive,
-  HostBinding,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IccInputDirective } from '@icc/ui/form-field';
-import { CommonModule } from '@angular/common';
 import { IccIconModule } from '@icc/ui/icon';
 
 @Directive({
