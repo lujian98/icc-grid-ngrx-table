@@ -1,6 +1,9 @@
 export const ICC = {
   UI: {
     FIELDS: {
+      DATE: {
+        PLACEHOLDER: '选择日期',
+      },
       ERRORS: {
         NOT_MATCH: '确认密码与密码字段不匹配.',
         FIELD_IS_REQUIRED: '此字段必填.',

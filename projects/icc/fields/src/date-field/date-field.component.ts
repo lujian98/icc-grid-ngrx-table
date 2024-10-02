@@ -23,6 +23,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   IccFormFieldComponent,
   IccLabelDirective,
@@ -61,6 +62,7 @@ import { IccCalendarModule, IccLocaleDatePipe } from '@icc/ui/calendar';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

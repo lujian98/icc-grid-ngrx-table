@@ -5,6 +5,6 @@ export interface IccDateFieldConfig extends IccBaseField {}
 export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldType: 'date',
   fieldName: 'datefield',
-  placeholder: 'Select Date',
+  placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
   clearValue: true,
 };
