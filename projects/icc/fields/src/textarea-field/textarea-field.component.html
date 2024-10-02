@@ -19,7 +19,7 @@
     </textarea>
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
 
-    <icc-form-field-errors *ngIf="field?.touched && field?.errors">
+    <icc-form-field-errors *ngIf="(field?.touched || field?.dirty) && field?.errors">
       <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
     </icc-form-field-errors>
   </icc-form-field>

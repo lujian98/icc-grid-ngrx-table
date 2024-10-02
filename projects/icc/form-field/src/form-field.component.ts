@@ -57,7 +57,8 @@ export class IccFormFieldComponent implements AfterViewInit {
   get invalid() {
     this.checkFieldIndicator();
     this.changeDetectorRef.markForCheck();
-    return this.formFieldControl?.touched && this.formFieldControl?.invalid;
+    const control = this.formFieldControl;
+    return (control?.touched || control?.dirty) && control?.invalid;
   }
 
   get formFieldControl(): FormControl {
