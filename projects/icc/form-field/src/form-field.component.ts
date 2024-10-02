@@ -24,7 +24,7 @@ import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccLabelDirective } from './directive/label.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
-import { IccInputDirective } from './input/input.directive';
+import { IccInputDirective } from './directive/input.directive';
 
 @Component({
   selector: 'icc-form-field',
