@@ -74,7 +74,7 @@ export class IccI18nService {
     combineLatest([base, extra])
       .pipe(take(1))
       .subscribe(([baseModule, extraModule]) => {
-        console.log(' baseModule=', baseModule);
+        //console.log(' baseModule=', baseModule);
         registerLocaleData(baseModule.default, key, extraModule.default);
       });
   }
