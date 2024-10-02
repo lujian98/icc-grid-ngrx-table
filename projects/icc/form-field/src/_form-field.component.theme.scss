@@ -33,6 +33,12 @@
     }
   }
 
+  .icc-form-field-invalid {
+    .icc-form-field-infix {
+      border: 1px solid orangered;
+    }
+  }
+
   [iccInput] {
     height: 1.75rem;
     border: none;

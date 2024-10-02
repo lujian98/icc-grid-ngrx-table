@@ -180,7 +180,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   private setTriggerValue(): void {
     const inputValue = this.autocomplete.toDisplay;
     if (this.formField && inputValue) {
-      this.formField.inputCoontrol.value = inputValue;
+      this.formField.inputDirective.value = inputValue;
     } else {
       this.host.nativeElement.value = inputValue;
     }

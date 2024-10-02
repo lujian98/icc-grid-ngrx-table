@@ -11,7 +11,7 @@ import {
   Optional,
   ViewChild,
 } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 import { take, timer } from 'rxjs';
 import { IccErrorDirective } from './directive/error.directive';
 import { IccFormFieldControlDirective } from './directive/form-field-control.directive';
@@ -53,20 +53,18 @@ export class IccFormFieldComponent implements AfterViewInit {
   public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
   fieldWidth: string = '100%';
 
-  @HostBinding('class.icc-form-field-invalid') // TODO add a HostBinding class
+  @HostBinding('class.icc-form-field-invalid')
   get invalid() {
-    //console.log( ' host binding invalid ')
     this.checkFieldIndicator();
     this.changeDetectorRef.markForCheck();
-    return false;
+    return this.formFieldControl?.touched && this.formFieldControl?.invalid;
   }
 
-  get inputCoontrol(): IccInputDirective {
-    return this.inputDirective;
+  get formFieldControl(): FormControl {
+    return this.formFieldControlDirective?.fieldControl;
   }
-
   get required(): boolean {
-    const control = this.formFieldControlDirective?.fieldControl;
+    const control = this.formFieldControl;
     return control && control.hasValidator(Validators.required) && !control.disabled;
   }
 
@@ -82,7 +80,7 @@ export class IccFormFieldComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe(() => {
         let fieldIndicator = '';
-        const control = this.formFieldControlDirective?.fieldControl;
+        const control = this.formFieldControl;
         if (control && !control.disabled) {
           fieldIndicator = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
         }
@@ -100,7 +98,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     return this._fieldIndicator;
   }
 
-  @ContentChild(IccInputDirective) private inputDirective!: IccInputDirective;
+  @ContentChild(IccInputDirective) public inputDirective!: IccInputDirective;
   @ContentChild(IccLabelDirective) private iccLabel!: IccLabelDirective;
   @ViewChild('label') private label!: ElementRef;
 
