@@ -138,8 +138,6 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
     this.valueChange.emit(this.field.value);
   }
 
-  onBlur(): void {}
-
   clearValue(): void {
     this.value = '';
     this.valueChange.emit('');

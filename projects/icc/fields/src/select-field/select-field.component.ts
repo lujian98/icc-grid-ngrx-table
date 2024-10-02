@@ -320,8 +320,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     }
   }
 
-  onBlur(): void {}
-
   closeOverlay(): void {
     this.autocompleteClose = true;
   }

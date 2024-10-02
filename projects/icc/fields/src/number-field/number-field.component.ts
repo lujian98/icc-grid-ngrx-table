@@ -139,8 +139,6 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     this.valueChange.emit(this.field.value);
   }
 
-  onBlur(): void {}
-
   clearValue(): void {
     this.value = null;
     this.valueChange.emit(null);

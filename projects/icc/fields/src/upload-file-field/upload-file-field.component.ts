@@ -138,8 +138,6 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     this.valueChange.emit(this.field.value);
   }
 
-  onBlur(): void {}
-
   clearValue(): void {
     this.value = null;
     this.valueChange.emit(null);

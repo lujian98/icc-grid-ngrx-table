@@ -143,8 +143,6 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
     this.valueChange.emit(this.field.value);
   }
 
-  onBlur(): void {}
-
   clearValue(): void {
     this.value = '';
     this.valueChange.emit('');

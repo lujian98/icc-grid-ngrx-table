@@ -18,7 +18,6 @@
         [formControlName]="fieldConfig.fieldName!"
         (isOverlayOpen)="overlayOpen($event)"
         (change)="onChange($event)"
-        (blur)="onBlur()"
         [iccAutocomplete]="autocomplete"
         [iccAutocompleteClose]="autocompleteClose"
         [required]="required"
@@ -66,7 +65,3 @@
     </icc-form-field>
   </ng-container>
 </ng-container>
-
-<!--
-
--->
