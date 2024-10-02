@@ -6,7 +6,7 @@
     [iccFormFieldControl]="field"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel }}
+      {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
     <textarea
       iccInput
@@ -14,7 +14,7 @@
       (keyup)="onChange()"
       spellcheck="false"
       [required]="required"
-      placeholder="{{ fieldConfig.placeholder }}"
+      placeholder="{{ fieldConfig.placeholder! | translate }}"
     >
     </textarea>
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>

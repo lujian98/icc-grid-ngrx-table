@@ -8,7 +8,7 @@
       [iccFormFieldControl]="field"
     >
       <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-        {{ fieldConfig.fieldLabel }}
+        {{ fieldConfig.fieldLabel | translate }}
       </icc-label>
       <input
         iccInput
@@ -21,7 +21,7 @@
         [iccAutocomplete]="autocomplete"
         [iccAutocompleteClose]="autocompleteClose"
         [required]="required"
-        placeholder="{{ fieldConfig.placeholder }}"
+        placeholder="{{ fieldConfig.placeholder! | translate }}"
       />
       <icc-icon
         *ngIf="fieldConfig.clearValue && hasValue"
@@ -54,7 +54,7 @@
                 </icc-filter-highlight>
               </ng-container>
             </icc-option>
-            <icc-option class="no-result" *ngIf="!result.length">No Result</icc-option>
+            <icc-option class="no-result" *ngIf="!result.length">{{ "ICC.UI.LIST.NO_RESULT" | translate }}</icc-option>
           </ng-container>
         </ng-template>
       </icc-autocomplete>

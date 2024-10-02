@@ -6,7 +6,7 @@
     [iccFormFieldControl]="field"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel }}
+      {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
 
     <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">

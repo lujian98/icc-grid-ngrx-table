@@ -18,5 +18,8 @@ export const ICC = {
       SORT_ASCENDING: '正序',
       SORT_DESCENDING: '倒序',
     },
+    LIST: {
+      NO_RESULT: '没有数据',
+    },
   },
 };

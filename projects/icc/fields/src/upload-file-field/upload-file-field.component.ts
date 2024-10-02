@@ -23,6 +23,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   IccFormFieldComponent,
   IccLabelDirective,
@@ -60,6 +61,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

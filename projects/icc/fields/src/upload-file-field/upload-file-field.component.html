@@ -6,7 +6,7 @@
     [iccFormFieldControl]="field"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel }}
+      {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
     <input
       #fileInput
@@ -15,7 +15,7 @@
       class="upload-file-input"
       [formControlName]="fieldConfig.fieldName!"
       [required]="required"
-      placeholder="{{ fieldConfig.placeholder }}"
+      placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
     <icc-icon
       *ngIf="!field.disabled"

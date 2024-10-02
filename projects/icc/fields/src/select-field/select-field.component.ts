@@ -24,6 +24,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
@@ -73,6 +74,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccSelectFieldStateModule,
     IccFormFieldComponent,
     IccSuffixDirective,

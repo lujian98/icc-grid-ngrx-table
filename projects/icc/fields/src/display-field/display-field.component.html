@@ -6,7 +6,7 @@
     [iccFormFieldControl]="field"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel }}
+      {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
     <input iccInput type="text" [formControlName]="fieldConfig.fieldName!" readonly />
   </icc-form-field>

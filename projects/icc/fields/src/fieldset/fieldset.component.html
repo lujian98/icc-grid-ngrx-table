@@ -3,7 +3,7 @@
   [iccFieldWidth]="fieldConfig.fieldWidth"
   [ngStyle]="{ 'flex-direction': fieldConfig.flexDirection }"
 >
-  <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend }}</legend>
+  <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend | translate }}</legend>
 
   <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
     <icc-fields *ngIf="config.fieldType !== 'fieldset'" [fieldConfig]="config" [form]="form"> </icc-fields>

@@ -12,6 +12,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -47,6 +48,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

@@ -18,5 +18,8 @@ export const ICC = {
       SORT_ASCENDING: 'Sort Ascending',
       SORT_DESCENDING: 'Sort Descending',
     },
+    LIST: {
+      NO_RESULT: 'No Result',
+    },
   },
 };

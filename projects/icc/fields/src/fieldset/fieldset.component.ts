@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccFieldsetLabelWidthDirective, IccFieldWidthDirective } from '@icc/ui/form-field';
 import { IccFieldsComponent } from '../fields.component';
 import { IccFormField } from '../models/fields.model';
@@ -16,6 +17,7 @@ import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.mode
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     IccFieldsComponent,
     IccFieldsetLabelWidthDirective,
     IccFieldWidthDirective,
