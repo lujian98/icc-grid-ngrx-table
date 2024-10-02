@@ -1,6 +1,13 @@
 import { ValidatorFn } from '@angular/forms';
 import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
+export interface IccFormButtonConfg {
+  name: string;
+  title?: string;
+  visible?: any;
+  disabled?: any;
+}
+
 export interface IccFormConfig {
   formId: string; // auto generated unique id
   urlKey: string; // Only for remote config
@@ -12,6 +19,7 @@ export interface IccFormConfig {
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];
   autoFitHeight: boolean;
+  buttons?: IccFormButtonConfg[];
 }
 
 export interface FormState {
