@@ -6,7 +6,7 @@
     </label>
     <div class="icc-form-field-wrapper" [ngStyle]="{ width: fieldWidth }">
       <div class="icc-form-field-container" [ngClass]="fieldIndicator">
-        <div class="icc-form-field-infix" #inputContainer (mouseenter)="onMouseenter()" (mouseleave)="onMouseleave()">
+        <div class="icc-form-field-infix" (mouseenter)="onMouseenter()" (mouseleave)="onMouseleave()">
           <ng-content></ng-content>
         </div>
         <div class="icc-form-field-suffix" [ngClass]="focused ? 'icc-form-field-suffix-focus' : ''">

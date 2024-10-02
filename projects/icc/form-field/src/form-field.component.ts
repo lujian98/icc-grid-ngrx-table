@@ -61,7 +61,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     return false;
   }
 
-  get _control(): IccInputDirective {
+  get inputCoontrol(): IccInputDirective {
     return this.inputDirective;
   }
 
