@@ -1,4 +1,4 @@
-import { FormatWidth, getLocaleDateFormat } from '../common';
+import { FormatWidth, getLocaleDateFormat } from '@angular/common';
 import { memoize } from './memoize';
 import { NumericWeekday } from './numeric-weekday';
 

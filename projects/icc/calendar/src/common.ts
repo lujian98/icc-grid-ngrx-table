@@ -113,3 +113,30 @@ export function getLocaleData(normalizedLocale: string): any {
   }
   return LOCALE_DATA[normalizedLocale];
 }
+
+export enum FormStyle {
+  Format,
+  Standalone,
+}
+
+export enum TranslationWidth {
+  /** 1 character for `en-US`. For example: 'S' */
+  Narrow,
+  /** 3 characters for `en-US`. For example: 'Sun' */
+  Abbreviated,
+  /** Full length for `en-US`. For example: "Sunday" */
+  Wide,
+  /** 2 characters for `en-US`, For example: "Su" */
+  Short,
+}
+
+export function getLocaleDayNames(
+  locale: string,
+  formStyle: FormStyle,
+  width: TranslationWidth,
+): ReadonlyArray<string> {
+  const data = findLocaleData(locale);
+  const daysData = <string[][][]>[data[LocaleDataIndex.DaysFormat], data[LocaleDataIndex.DaysStandalone]];
+  const days = getLastDefinedValue(daysData, formStyle);
+  return getLastDefinedValue(days, width);
+}

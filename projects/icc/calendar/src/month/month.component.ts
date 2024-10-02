@@ -1,4 +1,4 @@
-import { WeekDay } from '../common';
+import { WeekDay } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,

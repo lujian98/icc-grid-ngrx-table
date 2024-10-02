@@ -1,5 +1,5 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { getLocaleFirstDayOfWeek, WeekDay } from './common';
+import { getLocaleFirstDayOfWeek, WeekDay } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -75,7 +75,7 @@ export class IccCalendarComponent
   @Input() min?: Date | null;
   @Input() monthAndYearFormat?: string;
 
-  private _locale?: string = 'en-US';
+  private _locale?: string; // = 'en-US';
 
   @Input()
   get locale() {
