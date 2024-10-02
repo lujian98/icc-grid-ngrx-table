@@ -9,5 +9,5 @@ export * from './src/directive/label-width.directive';
 export * from './src/directive/field-width.directive';
 export * from './src/directive/suffix.directive';
 export * from './src/directive/form-field-errors.directive';
-export * from './src/directive/field-control.directive';
+export * from './src/directive/form-field-control.directive';
 export * from './src/input/input.directive';

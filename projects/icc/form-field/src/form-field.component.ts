@@ -14,7 +14,7 @@ import {
 import { Validators } from '@angular/forms';
 import { take, timer } from 'rxjs';
 import { IccErrorDirective } from './directive/error.directive';
-import { IccFormFieldControlDirective } from './directive/field-control.directive';
+import { IccFormFieldControlDirective } from './directive/form-field-control.directive';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
 import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
