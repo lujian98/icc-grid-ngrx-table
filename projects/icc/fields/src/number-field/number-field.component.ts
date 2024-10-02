@@ -29,7 +29,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -69,7 +69,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccIconModule,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

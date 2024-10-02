@@ -30,7 +30,7 @@ import {
   IccFieldWidthDirective,
   IccSuffixDirective,
   IccFormFieldErrorsDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
@@ -69,7 +69,7 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     IccIconModule,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

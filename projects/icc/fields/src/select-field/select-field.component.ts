@@ -41,7 +41,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccFormFieldComponent,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -90,7 +90,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFilterPipe,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {

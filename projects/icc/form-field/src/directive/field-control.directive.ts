@@ -5,6 +5,6 @@ import { FormControl } from '@angular/forms';
   selector: 'icc-form-field[iccFieldControl] ', // tslint:disable-line: directive-selector
   standalone: true,
 })
-export class IccFieldControlDirective {
+export class IccFormFieldControlDirective {
   @Input('iccFieldControl') fieldControl!: FormControl;
 }

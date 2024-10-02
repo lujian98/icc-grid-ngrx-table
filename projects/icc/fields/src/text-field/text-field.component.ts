@@ -30,7 +30,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -71,7 +71,7 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccIconModule,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

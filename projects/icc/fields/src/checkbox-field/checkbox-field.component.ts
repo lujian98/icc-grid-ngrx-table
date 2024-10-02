@@ -30,7 +30,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
@@ -72,7 +72,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccCheckboxComponent,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {

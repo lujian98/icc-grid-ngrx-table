@@ -18,7 +18,7 @@ import {
   IccLabelDirective,
   IccLabelWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil, timer, take } from 'rxjs';
@@ -54,7 +54,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccDisplayFieldComponent implements ControlValueAccessor, Validator {

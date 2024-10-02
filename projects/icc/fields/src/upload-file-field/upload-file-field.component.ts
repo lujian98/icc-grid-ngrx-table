@@ -29,7 +29,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
@@ -69,7 +69,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     IccIconModule,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
   ],
 })
 export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

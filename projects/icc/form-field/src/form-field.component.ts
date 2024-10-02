@@ -14,7 +14,7 @@ import {
 import { Validators } from '@angular/forms';
 import { take, timer } from 'rxjs';
 import { IccErrorDirective } from './directive/error.directive';
-import { IccFieldControlDirective } from './directive/field-control.directive';
+import { IccFormFieldControlDirective } from './directive/field-control.directive';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
 import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
@@ -42,7 +42,7 @@ import { IccInputDirective } from './input/input.directive';
     IccFormLabelWidthDirective,
     IccFieldsetLabelWidthDirective,
     IccFormFieldErrorsDirective,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
     IccInputDirective,
   ],
 })
@@ -113,7 +113,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
     @Optional() private fieldWidthDirective: IccFieldWidthDirective,
-    @Optional() private fieldControlDirective: IccFieldControlDirective,
+    @Optional() private fieldControlDirective: IccFormFieldControlDirective,
   ) {}
 
   ngAfterViewInit(): void {

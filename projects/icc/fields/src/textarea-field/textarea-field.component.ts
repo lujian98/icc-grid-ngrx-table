@@ -29,7 +29,7 @@ import {
   IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFieldControlDirective,
+  IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
@@ -68,7 +68,7 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
     IccInputDirective,
     IccIconModule,
     IccFieldsErrorsComponent,
-    IccFieldControlDirective,
+    IccFormFieldControlDirective,
     IccFormFieldErrorsDirective,
   ],
 })
