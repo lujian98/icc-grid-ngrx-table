@@ -23,8 +23,8 @@ import { IccHintDirective } from './directive/hint.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccLabelDirective } from './directive/label.directive';
 import { IccSuffixDirective } from './directive/suffix.directive';
-import { IccFormFieldControlDirective } from './form-field-control';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
+import { IccInputDirective } from './input/input.directive';
 
 @Component({
   selector: 'icc-form-field',
@@ -43,6 +43,7 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
     IccFieldsetLabelWidthDirective,
     IccFormFieldErrorsDirective,
     IccFieldControlDirective,
+    IccInputDirective,
   ],
 })
 export class IccFormFieldComponent implements AfterViewInit {
@@ -64,7 +65,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     //this._control && this._control.onContainerClick(event);
   }
 
-  get _control(): IccFormFieldControlDirective<any> {
+  get _control(): IccInputDirective {
     return this._controlDirective;
   }
 
@@ -103,7 +104,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     return this._fieldIndicator;
   }
 
-  @ContentChild(IccFormFieldControlDirective) private _controlDirective!: IccFormFieldControlDirective<any>;
+  @ContentChild(IccInputDirective) private _controlDirective!: IccInputDirective;
   @ContentChild(IccLabelDirective) private iccLabel!: IccLabelDirective;
   @ViewChild('label') private label!: ElementRef;
 
