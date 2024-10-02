@@ -181,6 +181,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     const inputValue = this.autocomplete.toDisplay;
     if (this.formField && inputValue) {
       this.formField._control.value = inputValue;
+      //this.formField._control.setValue(inputValue);
     } else {
       this.host.nativeElement.value = inputValue;
     }

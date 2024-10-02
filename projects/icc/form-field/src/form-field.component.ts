@@ -48,23 +48,20 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _fieldIndicator: string = '';
+  focused: boolean = false;
   public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
   fieldWidth: string = '100%';
 
   @HostBinding('class.icc-form-field-invalid') // TODO add a HostBinding class
   get invalid() {
     //console.log( ' host binding invalid ')
-    //console.log(' 7777 fieldControl=', this._controlDirective)
     this.checkFieldIndicator();
     this.changeDetectorRef.markForCheck();
-    if (this._control) {
-      return this._control.errorState;
-    }
     return false;
   }
 
   onClick(event: MouseEvent): void {
-    this._control && this._control.onContainerClick(event);
+    //this._control && this._control.onContainerClick(event);
   }
 
   get _control(): IccFormFieldControlDirective<any> {
@@ -72,13 +69,15 @@ export class IccFormFieldComponent implements AfterViewInit {
   }
 
   get required(): boolean {
-    // return this._control && this._control.required && !this._control.disabled;
     const control = this.fieldControlDirective?.fieldControl;
     return control && control.hasValidator(Validators.required) && !control.disabled;
   }
 
-  get focused(): boolean {
-    return this._control && this._control.focused;
+  onMouseenter(): void {
+    this.focused = true;
+  }
+  onMouseleave(): void {
+    this.focused = false;
   }
 
   private checkFieldIndicator(): void {

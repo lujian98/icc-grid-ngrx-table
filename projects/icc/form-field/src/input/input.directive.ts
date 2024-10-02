@@ -22,6 +22,7 @@ export class IccInputDirective extends IccFormFieldControlDirective<any> impleme
   }
   set value(value: string) {
     if (this.value !== value) {
+      console.log(' this._inputValueAccessor=', this._inputValueAccessor);
       this._inputValueAccessor.value = value;
     }
   }
