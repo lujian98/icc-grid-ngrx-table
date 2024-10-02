@@ -5,4 +5,4 @@ export * from './src/month/month.component';
 export * from './src/month-year-pipe/month-year.pipe';
 export * from './src/modal/calendar-toggle.directive';
 export * from './src/calendar.module';
-export * from './src/date-utils/locale-date.pipe';
+export * from '../core/src/pipes/locale-date.pipe';

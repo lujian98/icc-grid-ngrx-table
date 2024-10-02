@@ -1,5 +1,5 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { getLocaleFirstDayOfWeek, WeekDay } from '@angular/common';
+import { getLocaleFirstDayOfWeek, WeekDay } from './common/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -131,14 +131,13 @@ export class IccCalendarComponent
     if (!this.locale) {
       this.locale = this.translateService.currentLang;
     }
-    console.log(' 7777 this.locale =', this.locale);
   }
 
   ngAfterContentInit() {
     this.months = this.getMonths();
     this.langSub$ = this.translateService.onLangChange.subscribe((val) => {
       this.locale = val.lang;
-      console.log('Locale:', this.locale, 'Service Locale', val.lang);
+      //console.log('Locale:', this.locale, 'Service Locale', val.lang);
     });
   }
 

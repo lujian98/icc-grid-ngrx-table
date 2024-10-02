@@ -48,6 +48,8 @@ export class IccI18nService {
     switch (locale) {
       case 'zh':
         return import(`@angular/common/locales/zh`);
+      case 'ja':
+        return import(`@angular/common/locales/ja`);
       default:
         return import(`@angular/common/locales/en`);
     }
@@ -57,6 +59,8 @@ export class IccI18nService {
     switch (locale) {
       case 'zh':
         return import('@angular/common/locales/extra/zh');
+      case 'ja':
+        return import('@angular/common/locales/extra/ja');
       default:
         return import('@angular/common/locales/extra/en');
     }
@@ -70,6 +74,7 @@ export class IccI18nService {
     combineLatest([base, extra])
       .pipe(take(1))
       .subscribe(([baseModule, extraModule]) => {
+        console.log(' baseModule=', baseModule);
         registerLocaleData(baseModule.default, key, extraModule.default);
       });
   }

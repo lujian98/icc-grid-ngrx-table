@@ -1,5 +1,4 @@
-import { FormStyle, getLocaleDayNames, TranslationWidth } from '@angular/common';
-//import { FormStyle, getLocaleDayNames, TranslationWidth } from '../common';
+import { FormStyle, getLocaleDayNames, TranslationWidth } from '../common/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 

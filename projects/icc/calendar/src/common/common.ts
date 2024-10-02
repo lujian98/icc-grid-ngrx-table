@@ -1,5 +1,6 @@
+import { ɵfindLocaleData } from '@angular/core';
 import localeEn from './locale_en';
-import { global } from './global';
+
 //deprecated from angular common
 export enum WeekDay {
   Sunday = 0,
@@ -81,14 +82,14 @@ export function getLocaleFirstDayOfWeek(locale: string): WeekDay {
 export function findLocaleData(locale: string): any {
   const normalizedLocale = normalizeLocale(locale);
 
-  let match = getLocaleData(normalizedLocale);
+  let match = ɵfindLocaleData(normalizedLocale);
   if (match) {
     return match;
   }
 
   // let's try to find a parent locale
   const parentLocale = normalizedLocale.split('-')[0];
-  match = getLocaleData(parentLocale);
+  match = ɵfindLocaleData(parentLocale);
   if (match) {
     return match;
   }
@@ -102,16 +103,6 @@ export function findLocaleData(locale: string): any {
 
 function normalizeLocale(locale: string): string {
   return locale.toLowerCase().replace(/_/g, '-');
-}
-
-let LOCALE_DATA: { [localeId: string]: any } = {};
-
-export function getLocaleData(normalizedLocale: string): any {
-  if (!(normalizedLocale in LOCALE_DATA)) {
-    LOCALE_DATA[normalizedLocale] = console.log(' global=', global);
-    global.ng && global.ng.common && global.ng.common.locales && global.ng.common.locales[normalizedLocale];
-  }
-  return LOCALE_DATA[normalizedLocale];
 }
 
 export enum FormStyle {

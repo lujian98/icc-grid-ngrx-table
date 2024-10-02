@@ -1,5 +1,8 @@
 export const ICC = {
   UI: {
+    CALENDAR: {
+      TODAY: '今天',
+    },
     FIELDS: {
       DATE: {
         PLACEHOLDER: '选择日期',
