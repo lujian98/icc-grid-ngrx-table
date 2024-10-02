@@ -36,7 +36,7 @@ import {
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccLocaleDatePipe } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
+import { Subject, takeUntil, timer, take, delay } from 'rxjs';
 import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
 import { IccCalendarModule } from '@icc/ui/calendar';
@@ -147,18 +147,19 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
 
   private _inputDate!: string;
   set inputDate(val: Date) {
-    //this._inputDate = this.localeDatePipe.transform(val)!;
+    this._inputDate = this.localeDatePipe.transform(val)!;
   }
   get inputDate(): string {
     return this._inputDate;
   }
   constructor() {
-    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.translateService.onLangChange.pipe(delay(50), takeUntil(this.destroy$)).subscribe(() => {
       this.inputDate = this.field.value;
+      this.changeDetectorRef.markForCheck();
     });
   }
   onChange(val: Date): void {
-    this.inputDate = this.field.value;
+    this.inputDate = val;
     this.field.markAsTouched();
     this.valueChange.emit(val);
   }
