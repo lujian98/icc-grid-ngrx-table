@@ -61,12 +61,8 @@ export class IccFormFieldComponent implements AfterViewInit {
     return false;
   }
 
-  onClick(event: MouseEvent): void {
-    //this._control && this._control.onContainerClick(event);
-  }
-
   get _control(): IccInputDirective {
-    return this._controlDirective;
+    return this.inputDirective;
   }
 
   get required(): boolean {
@@ -104,7 +100,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     return this._fieldIndicator;
   }
 
-  @ContentChild(IccInputDirective) private _controlDirective!: IccInputDirective;
+  @ContentChild(IccInputDirective) private inputDirective!: IccInputDirective;
   @ContentChild(IccLabelDirective) private iccLabel!: IccLabelDirective;
   @ViewChild('label') private label!: ElementRef;
 
