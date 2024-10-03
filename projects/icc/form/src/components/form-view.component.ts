@@ -136,7 +136,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   buttonVisible(button: IccFormButtonConfg): boolean {
-    if (button.visible) {
+    if (button.visible !== undefined) {
       if (button.visible.editable) {
         return this.formConfig.editable;
       } else {
@@ -147,13 +147,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   buttonDisabled(button: IccFormButtonConfg): boolean {
-    //return true;
-    if (button.disabled) {
-      return true;
+    if (button.disabled !== undefined) {
       if (button.disabled.dirty) {
-        return !this.form.dirty;
-      } else {
         return this.form.dirty;
+      } else {
+        return !this.form.dirty;
       }
     }
     // disabled: { dirty: false },

@@ -21,7 +21,7 @@ export const buttons: IccFormButtonConfg[] = [
     name: 'Save',
     title: 'Save',
     visible: { editable: true },
-    disabled: { dirty: false },
+    disabled: { dirty: false, invalid: true },
   },
 ];
 
