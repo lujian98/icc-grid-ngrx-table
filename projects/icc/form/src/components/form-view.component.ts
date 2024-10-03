@@ -190,7 +190,8 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private refreshForm(): void {
-    //TODO refresh form data
+    // remote data or emit refresh
+    this.formFacade.getFormData(this.formConfig);
   }
 
   private viewForm(): void {
