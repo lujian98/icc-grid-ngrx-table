@@ -1,8 +1,10 @@
 <icc-panel-top-bar>
-  <button icc-button (click)="checkForm()">Check Form</button>
-  <button icc-button (click)="resetForm()">Reset Form</button>
-  <button icc-button (click)="editForm()">Edit Form</button>
-  <button icc-button (click)="viewForm()">View Form</button>
+  <ng-container *ngFor="let button of formConfig.buttons">
+    <button icc-button (click)="buttonClick(button)">{{ button.title }}</button>
+  </ng-container>
+  <!--
+  ngif button visile and disaled by dirty
+  -->
 </icc-panel-top-bar>
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">

@@ -19,7 +19,7 @@ export interface IccFormConfig {
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];
   autoFitHeight: boolean;
-  buttons?: IccFormButtonConfg[];
+  buttons: IccFormButtonConfg[];
 }
 
 export interface FormState {

@@ -15,7 +15,7 @@ import { IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccButtonComponent } from '@icc/ui/button';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig } from '../models/form.model';
+import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -55,6 +55,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     if (this.formConfig.validators) {
       this.form.addValidators(this.formConfig.validators);
     }
+    console.log(' formConfig=', this.formConfig);
   }
   get formFields(): any[] {
     return this._formFields;
@@ -134,6 +135,19 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  buttonClick(button: IccFormButtonConfg): void {
+    if (button.name === 'Edit') {
+      this.editForm();
+    } else if (button.name === 'View') {
+      this.viewForm();
+    } else if (button.name === 'Reset') {
+      this.resetForm();
+    } else if (button.name === 'Save') {
+      this.saveForm();
+    }
+    console.log(' button=', button);
+  }
+
   editForm(): void {
     this.formFacade.setFormEditable(this.formConfig.formId, true);
     this.checkFormValueChanged(this.form.getRawValue());
@@ -148,7 +162,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     //this.checkFormValueChanged(this.form.getRawValue());
   }
 
-  checkForm(): void {
+  saveForm(): void {
     console.log(' form=', this.form);
     console.log(' values =', this.form.value);
     console.log(' raw values =', this.form.getRawValue());
