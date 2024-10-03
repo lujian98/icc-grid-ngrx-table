@@ -1,11 +1,17 @@
 import { ValidatorFn } from '@angular/forms';
 import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
 
+export enum IccFormButtonType {
+  Edit = 'Edit',
+  Refresh = 'Refresh',
+  Reset = 'Reset',
+  View = 'View',
+  Save = 'Save',
+}
+
 export interface IccFormButtonConfg {
   name: string;
   title?: string;
-  visible?: any;
-  disabled?: any;
 }
 
 export interface IccFormConfig {

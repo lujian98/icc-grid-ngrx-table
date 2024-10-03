@@ -15,7 +15,7 @@ import { IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccButtonComponent } from '@icc/ui/button';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
+import { IccFormConfig, IccFormButtonConfg, IccFormButtonType } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -136,63 +136,75 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   buttonVisible(button: IccFormButtonConfg): boolean {
-    if (button.visible !== undefined) {
-      if (button.visible.editable) {
+    switch (button.name) {
+      case IccFormButtonType.View:
+      case IccFormButtonType.Reset:
+      case IccFormButtonType.Save:
         return this.formConfig.editable;
-      } else {
+      case IccFormButtonType.Edit:
+      default:
         return !this.formConfig.editable;
-      }
     }
-    return true;
   }
 
   buttonDisabled(button: IccFormButtonConfg): boolean {
-    if (button.disabled !== undefined) {
-      if (button.disabled.dirty) {
+    switch (button.name) {
+      case IccFormButtonType.View:
         return this.form.dirty;
-      } else {
+      case IccFormButtonType.Reset:
         return !this.form.dirty;
-      }
+      case IccFormButtonType.Save:
+        return !(this.form.dirty && this.form.valid);
+      case IccFormButtonType.Edit:
+      default:
+        return false;
     }
-    // disabled: { dirty: false },
-    return false;
   }
   buttonClick(button: IccFormButtonConfg): void {
-    if (button.name === 'Edit') {
-      this.editForm();
-    } else if (button.name === 'View') {
-      this.viewForm();
-    } else if (button.name === 'Reset') {
-      this.resetForm();
-    } else if (button.name === 'Save') {
-      this.saveForm();
+    switch (button.name) {
+      case IccFormButtonType.Edit:
+        this.editForm();
+        break;
+      case IccFormButtonType.Refresh:
+        this.refreshForm();
+        break;
+      case IccFormButtonType.View:
+        this.viewForm();
+        break;
+      case IccFormButtonType.Reset:
+        this.resetForm();
+        break;
+      case IccFormButtonType.Save:
+        this.saveForm();
+        break;
+      default:
+        break;
     }
-    console.log(' button=', button);
   }
 
-  editForm(): void {
+  private editForm(): void {
     this.formFacade.setFormEditable(this.formConfig.formId, true);
     this.checkFormValueChanged(this.form.getRawValue());
   }
 
-  viewForm(): void {
+  private refreshForm(): void {
+    //TODO refresh form data
+  }
+
+  private viewForm(): void {
     this.formFacade.setFormEditable(this.formConfig.formId, false);
   }
 
-  resetForm(): void {
+  private resetForm(): void {
     this.form.patchValue({ ...this.values });
-    //this.checkFormValueChanged(this.form.getRawValue());
   }
 
-  saveForm(): void {
+  private saveForm(): void {
     console.log(' form=', this.form);
     console.log(' values =', this.form.value);
     console.log(' raw values =', this.form.getRawValue());
     console.log('is form dirty = ', this.form.dirty);
     console.log('is form invalid = ', this.form.invalid);
-  }
-
-  submit(): void {
     if (this.form.valid) {
       /*
       this.isLoading = true;

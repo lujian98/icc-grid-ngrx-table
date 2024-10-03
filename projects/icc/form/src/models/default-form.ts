@@ -1,27 +1,25 @@
-import { IccFormConfig, IccFormState, IccFormButtonConfg } from './form.model';
+import { IccFormConfig, IccFormState, IccFormButtonConfg, IccFormButtonType } from './form.model';
 
 export const buttons: IccFormButtonConfg[] = [
   {
-    name: 'Edit',
+    name: IccFormButtonType.Edit,
     title: 'Edit',
-    visible: { editable: false },
   },
   {
-    name: 'Reset',
+    name: IccFormButtonType.Refresh,
+    title: 'Refresh',
+  },
+  {
+    name: IccFormButtonType.Reset,
     title: 'Reset',
-    visible: { editable: true },
-    disabled: { dirty: false },
   },
   {
-    name: 'View',
+    name: IccFormButtonType.View,
     title: 'View',
-    visible: { editable: true },
   },
   {
-    name: 'Save',
+    name: IccFormButtonType.Save,
     title: 'Save',
-    visible: { editable: true },
-    disabled: { dirty: false, invalid: true },
   },
 ];
 
