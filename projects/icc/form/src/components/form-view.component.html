@@ -1,4 +1,5 @@
 <icc-panel-top-bar>
+  <div class="icc-panel-top-bar-title" *ngIf="formConfig.title !== undefined">{{ formConfig.title }}</div>
   <ng-container *ngFor="let button of formConfig.buttons">
     <button icc-button *ngIf="buttonVisible(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
       <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>

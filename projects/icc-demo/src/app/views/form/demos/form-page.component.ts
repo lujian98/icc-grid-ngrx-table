@@ -15,6 +15,7 @@ import { State, STATES } from '../../../data/states';
 })
 export class AppFromPageDemoComponent {
   formConfig = {
+    title: 'Edit User',
     labelWidth: 100,
   };
 

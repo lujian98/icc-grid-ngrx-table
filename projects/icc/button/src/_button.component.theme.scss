@@ -3,6 +3,7 @@
     font-size: 0.6875rem;
     font-weight: 500;
     line-height: 28px;
+    color: icc-theme(app-text-basic-color);
 
     &.status-default {
       background-color: icc-theme(icc-button-default-color);

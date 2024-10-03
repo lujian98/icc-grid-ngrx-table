@@ -18,6 +18,7 @@ export interface IccFormButtonConfg {
 export interface IccFormConfig {
   formId: string; // auto generated unique id
   urlKey: string; // Only for remote config
+  title?: string;
   remoteFormConfig: boolean;
   remoteFieldsConfig: boolean;
   remoteFormData: boolean;
