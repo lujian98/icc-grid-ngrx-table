@@ -10,16 +10,16 @@ export const buttons: IccFormButtonConfg[] = [
     title: 'Refresh',
   },
   {
+    name: IccFormButtonType.Save,
+    title: 'Save',
+  },
+  {
     name: IccFormButtonType.Reset,
     title: 'Reset',
   },
   {
     name: IccFormButtonType.View,
     title: 'View',
-  },
-  {
-    name: IccFormButtonType.Save,
-    title: 'Save',
   },
 ];
 
