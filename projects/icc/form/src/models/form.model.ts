@@ -11,7 +11,8 @@ export enum IccFormButtonType {
 
 export interface IccFormButtonConfg {
   name: string;
-  title?: string;
+  title: string;
+  icon?: string;
 }
 
 export interface IccFormConfig {

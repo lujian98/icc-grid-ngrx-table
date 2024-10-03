@@ -13,6 +13,7 @@ import {
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig, IccFormButtonConfg, IccFormButtonType } from '../models/form.model';
@@ -32,6 +33,7 @@ import { IccFormConfig, IccFormButtonConfg, IccFormButtonType } from '../models/
     IccFieldsComponent,
     IccPanelTopBarComponent,
     IccButtonComponent,
+    IccIconModule,
   ],
 })
 export class IccFormViewComponent implements OnInit, OnDestroy {

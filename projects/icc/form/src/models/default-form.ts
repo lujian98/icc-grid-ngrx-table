@@ -4,22 +4,27 @@ export const buttons: IccFormButtonConfg[] = [
   {
     name: IccFormButtonType.Edit,
     title: 'Edit',
+    icon: 'pen-to-square',
   },
   {
     name: IccFormButtonType.Refresh,
     title: 'Refresh',
+    icon: 'refresh',
   },
   {
     name: IccFormButtonType.Save,
     title: 'Save',
+    icon: 'floppy-disk',
   },
   {
     name: IccFormButtonType.Reset,
     title: 'Reset',
+    icon: 'right-left',
   },
   {
     name: IccFormButtonType.View,
     title: 'View',
+    icon: 'glasses',
   },
 ];
 

@@ -1,13 +1,10 @@
 <icc-panel-top-bar>
   <ng-container *ngFor="let button of formConfig.buttons">
     <button icc-button *ngIf="buttonVisible(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
+      <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
       {{ button.title }}
     </button>
   </ng-container>
-  <!--
-  [disabled]="disabled"
-  ngif button visile and disaled by dirty
-  -->
 </icc-panel-top-bar>
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
