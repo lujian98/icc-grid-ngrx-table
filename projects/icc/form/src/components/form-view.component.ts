@@ -57,7 +57,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     if (this.formConfig.validators) {
       this.form.addValidators(this.formConfig.validators);
     }
-    console.log(' formConfig=', this.formConfig);
+    //console.log(' formConfig=', this.formConfig);
   }
   get formFields(): any[] {
     return this._formFields;
