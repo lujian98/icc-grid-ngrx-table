@@ -135,6 +135,30 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  buttonVisible(button: IccFormButtonConfg): boolean {
+    if (button.visible) {
+      if (button.visible.editable) {
+        return this.formConfig.editable;
+      } else {
+        return !this.formConfig.editable;
+      }
+    }
+    return true;
+  }
+
+  buttonDisabled(button: IccFormButtonConfg): boolean {
+    //return true;
+    if (button.disabled) {
+      return true;
+      if (button.disabled.dirty) {
+        return !this.form.dirty;
+      } else {
+        return this.form.dirty;
+      }
+    }
+    // disabled: { dirty: false },
+    return false;
+  }
   buttonClick(button: IccFormButtonConfg): void {
     if (button.name === 'Edit') {
       this.editForm();

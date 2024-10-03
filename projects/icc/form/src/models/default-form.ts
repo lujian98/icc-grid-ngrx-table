@@ -21,7 +21,7 @@ export const buttons: IccFormButtonConfg[] = [
     name: 'Save',
     title: 'Save',
     visible: { editable: true },
-    disabled: { dirty: true },
+    disabled: { dirty: false },
   },
 ];
 
@@ -31,7 +31,7 @@ export const defaultFormConfig: IccFormConfig = {
   remoteFormConfig: false,
   remoteFieldsConfig: false,
   remoteFormData: false,
-  editable: true,
+  editable: false,
   //readonly: false,
   autoFitHeight: true,
   buttons: buttons,
