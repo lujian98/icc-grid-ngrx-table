@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, Output, EventEmitter } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccPanelComponent } from '@icc/ui/panel';
@@ -63,6 +63,12 @@ export class IccFormComponent {
   @Input()
   set values(val: any) {
     this.formFacade.setFormData(this.formConfig, val);
+  }
+
+  @Output() iccFormButtonClick = new EventEmitter<any>(false);
+
+  formButtonClick(buttonClick: any): void {
+    this.iccFormButtonClick.emit(buttonClick);
   }
 
   @HostBinding('class.auto-fit-height')

@@ -1,7 +1,13 @@
 <icc-panel *ngIf="formConfig$ | async as formConfig">
   <ng-container *ngIf="formFieldsConfig$ | async as formFields">
     <ng-container *ngIf="formData$ | async as formData">
-      <icc-form-view [formConfig]="formConfig" [formFields]="formFields" [values]="formData"> </icc-form-view>
+      <icc-form-view
+        [formConfig]="formConfig"
+        [formFields]="formFields"
+        [values]="formData"
+        (formButtonClick)="formButtonClick($event)"
+      >
+      </icc-form-view>
     </ng-container>
   </ng-container>
 </icc-panel>

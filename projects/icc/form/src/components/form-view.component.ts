@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
 import {
@@ -117,6 +127,8 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return this._values;
   }
 
+  @Output() formButtonClick = new EventEmitter<any>(false);
+
   ngOnInit(): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => this.checkFormValueChanged(values));
   }
@@ -182,6 +194,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    this.formButtonClick.emit({
+      button: button,
+      formData: this.form.getRawValue(),
+    });
   }
 
   private editForm(): void {
@@ -203,17 +219,12 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private saveForm(): void {
-    console.log(' form=', this.form);
-    console.log(' values =', this.form.value);
-    console.log(' raw values =', this.form.getRawValue());
-    console.log('is form dirty = ', this.form.dirty);
-    console.log('is form invalid = ', this.form.invalid);
     if (this.form.valid) {
-      /*
-      this.isLoading = true;
-      this.submitEvent.emit({
-        ...this.form.value,
-      });*/
+      //console.log(' form=', this.form);
+      console.log(' values =', this.form.value);
+      console.log(' raw values =', this.form.getRawValue());
+      //console.log('is form dirty = ', this.form.dirty);
+      //console.log('is form invalid = ', this.form.invalid);
     }
   }
 
