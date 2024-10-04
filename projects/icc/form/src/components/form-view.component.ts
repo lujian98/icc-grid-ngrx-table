@@ -206,7 +206,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private refreshForm(): void {
-    // remote data or emit refresh
     this.formFacade.getFormData(this.formConfig);
   }
 
@@ -225,6 +224,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       console.log(' raw values =', this.form.getRawValue());
       //console.log('is form dirty = ', this.form.dirty);
       //console.log('is form invalid = ', this.form.invalid);
+      this.formFacade.saveFormData(this.formConfig, this.form.getRawValue());
     }
   }
 

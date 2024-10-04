@@ -35,7 +35,15 @@ export class IccFormFacade {
   }
 
   getFormData(formConfig: IccFormConfig): void {
-    this.store.dispatch(formActions.getFormData({ formConfig }));
+    if (formConfig.remoteFormData) {
+      this.store.dispatch(formActions.getFormData({ formConfig }));
+    }
+  }
+
+  saveFormData(formConfig: IccFormConfig, formData: any): void {
+    if (formConfig.remoteFormData) {
+      this.store.dispatch(formActions.saveFormData({ formConfig, formData }));
+    }
   }
 
   clearformDataStore(formId: string): void {

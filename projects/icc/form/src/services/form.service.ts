@@ -49,4 +49,18 @@ export class IccFormService {
       }),
     );
   }
+
+  saveFormData(formConfig: IccFormConfig, formData: any): Observable<{ formConfig: IccFormConfig; formData: any }> {
+    const params = this.backendService.getParams(formConfig.urlKey, 'saveFormData');
+    const url = this.backendService.apiUrl;
+    return this.http.put<{ formConfig: IccFormConfig; formData: any }>(url, { params }).pipe(
+      map((res) => {
+        //console.log(' formData res=', res);
+        return {
+          formConfig: { ...formConfig, ...res.formConfig },
+          formData: { ...res.formData },
+        };
+      }),
+    );
+  }
 }

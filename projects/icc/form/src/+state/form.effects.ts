@@ -63,6 +63,19 @@ export class IccFormEffects {
     ),
   );
 
+  saveFormData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(formActions.saveFormData),
+      concatMap(({ formConfig, formData }) => {
+        return this.formService.saveFormData(formConfig, formData).pipe(
+          map(({ formConfig, formData }) => {
+            return formActions.saveFormDataSuccess({ formConfig, formData });
+          }),
+        );
+      }),
+    ),
+  );
+
   clearFormDataStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.clearFormDataStore),
