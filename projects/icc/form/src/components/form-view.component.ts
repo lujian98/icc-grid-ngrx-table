@@ -59,7 +59,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     }
     //console.log(' formConfig=', this.formConfig);
   }
-  get formFields(): any[] {
+  get formFields(): IccFormField[] {
     return this._formFields;
   }
 
