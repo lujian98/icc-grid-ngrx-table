@@ -24,6 +24,19 @@ export function getFormEditable(button: IccFormButtonConfg): boolean {
   }
 }
 
+export function getFieldEditable(formField: IccFormField, button: IccFormButtonConfg): boolean {
+  switch (button.name) {
+    case IccFormButtonType.Refresh:
+    case IccFormButtonType.View:
+      return false;
+    case IccFormButtonType.Edit:
+    case IccFormButtonType.Reset:
+    case IccFormButtonType.Save:
+    default:
+      return true;
+  }
+}
+
 export function setFormFieldsEditable(formFields: IccFormField[], button: IccFormButtonConfg): IccFormField[] {
   return [
     ...formFields.map((field) => {
@@ -34,12 +47,13 @@ export function setFormFieldsEditable(formFields: IccFormField[], button: IccFor
           formFields: setFormFieldsEditable(newfield.formFields, button),
         };
       } else {
-        const editButtons = field.editButtons ? field.editButtons : defaultBaseField.editButtons;
-        const editable = editButtons?.find((item) => item === button.name);
-        return {
-          ...field,
-          editable,
-        };
+        if (button.name === IccFormButtonType.Reset || button.name === IccFormButtonType.Save) {
+          return { ...field };
+        } else {
+          const editButtons = field.editButtons ? field.editButtons : defaultBaseField.editButtons;
+          const editable = editButtons?.find((item) => item === button.name);
+          return { ...field, editable };
+        }
       }
     }),
   ] as IccFormField[];
@@ -65,7 +79,6 @@ export const iccFormFeature = createFeature({
       const newState: FormState = { ...state };
       if (state[key]) {
         const formConfig = { ...state[key].formConfig, ...action.formConfig };
-        //const editable = formConfig.editable;
         const formFields = setFormFieldsEditable(state[key].formFields, viewButton);
         newState[key] = {
           ...state[key],
@@ -85,7 +98,7 @@ export const iccFormFeature = createFeature({
           ...state[key],
           formFields,
         };
-      } // TODO apply editable for FormFields
+      }
       //console.log(' FormFieldsConfig sucess=', newState[key]);
       return { ...newState };
     }),
@@ -101,7 +114,7 @@ export const iccFormFeature = createFeature({
           formConfig,
           formFields,
         };
-      } // TODO apply editable for FormFields
+      }
       //console.log(' FormFieldsConfig sucess=', newState[key]);
       return { ...newState };
     }),
