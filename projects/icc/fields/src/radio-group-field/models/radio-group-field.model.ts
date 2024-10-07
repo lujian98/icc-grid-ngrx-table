@@ -1,4 +1,4 @@
-import { IccBaseField } from '../../models/base-field.model';
+import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
 
 export interface IccRadioGroup {
   name: string;
@@ -13,4 +13,5 @@ export const defaultRadioGroupFieldConfig: IccRadioGroupFieldConfig = {
   fieldType: 'radiogroup',
   fieldName: 'radiogroupfield',
   groups: [],
+  ...defaultBaseField,
 };

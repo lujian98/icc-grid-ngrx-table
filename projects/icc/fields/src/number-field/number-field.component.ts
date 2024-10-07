@@ -83,6 +83,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   set fieldConfig(fieldConfig: Partial<IccNumberFieldConfig>) {
     this._fieldConfig = { ...defaultNumberFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
+    //console.log(' this.fieldConfig=', this.fieldConfig)
   }
   get fieldConfig(): IccNumberFieldConfig {
     return this._fieldConfig;

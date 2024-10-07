@@ -20,6 +20,7 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       clearValue: true,
       urlKey: this.gridConfig.urlKey,
       remoteOptions: true,
+      editable: true,
       placeholder: 'Filter ...',
     };
   }

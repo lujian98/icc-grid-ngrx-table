@@ -19,6 +19,7 @@ export class IccTextFilterComponent extends IccFieldFilterComponent {
       fieldName: this.column.name,
       clearValue: true,
       placeholder: `ICC.UI.GRID.FILTER`,
+      editable: true,
     };
   }
 

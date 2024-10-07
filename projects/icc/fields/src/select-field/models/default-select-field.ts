@@ -1,4 +1,5 @@
 import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model';
+import { defaultBaseField } from '../../models/base-field.model';
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   fieldId: '191cf2bb6b5', // auto generated unique id
@@ -14,9 +15,10 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
-  placeholder: '',
-  clearValue: true,
-  editable: true,
+  ...defaultBaseField,
+  //placeholder: '',
+  //clearValue: true,
+  //editable: true,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {
