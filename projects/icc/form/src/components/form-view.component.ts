@@ -175,15 +175,14 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     }
   }
   buttonClick(button: IccFormButtonConfg): void {
+    this.formFacade.setFormEditable(this.formConfig.formId, button);
+
     switch (button.name) {
       case IccFormButtonType.Edit:
-        this.editForm();
+        this.editForm(button);
         break;
       case IccFormButtonType.Refresh:
         this.refreshForm();
-        break;
-      case IccFormButtonType.View:
-        this.viewForm();
         break;
       case IccFormButtonType.Reset:
         this.resetForm();
@@ -191,26 +190,23 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       case IccFormButtonType.Save:
         this.saveForm();
         break;
+      case IccFormButtonType.View:
       default:
         break;
     }
+
     this.formButtonClick.emit({
       button: button,
       formData: this.form.getRawValue(),
     });
   }
 
-  private editForm(): void {
-    this.formFacade.setFormEditable(this.formConfig.formId, true);
+  private editForm(button: IccFormButtonConfg): void {
     this.checkFormValueChanged(this.form.getRawValue());
   }
 
   private refreshForm(): void {
     this.formFacade.getFormData(this.formConfig);
-  }
-
-  private viewForm(): void {
-    this.formFacade.setFormEditable(this.formConfig.formId, false);
   }
 
   private resetForm(): void {

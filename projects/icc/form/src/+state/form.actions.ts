@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IccFormConfig } from '../models/form.model';
+import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
 
 export const initFormConfig = createAction('[Form] Init Form Panel Config', props<{ formConfig: IccFormConfig }>());
 
@@ -24,7 +24,10 @@ export const loadFormFieldsConfigSuccess = createAction(
   props<{ formConfig: IccFormConfig; formFields: any[] }>(),
 );
 
-export const setFormEditable = createAction('[Form] Set Form Editable', props<{ formId: string; editable: boolean }>());
+export const setFormEditable = createAction(
+  '[Form] Set Form Editable',
+  props<{ formId: string; button: IccFormButtonConfg }>(),
+);
 
 export const getFormData = createAction('[Form] Get Form Data', props<{ formConfig: IccFormConfig }>());
 

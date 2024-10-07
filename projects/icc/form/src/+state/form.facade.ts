@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccFormConfig } from '../models/form.model';
+import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
 import * as formActions from './form.actions';
 import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
 
@@ -30,8 +30,8 @@ export class IccFormFacade {
     this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
   }
 
-  setFormEditable(formId: string, editable: boolean): void {
-    this.store.dispatch(formActions.setFormEditable({ formId, editable }));
+  setFormEditable(formId: string, button: IccFormButtonConfg): void {
+    this.store.dispatch(formActions.setFormEditable({ formId, button }));
   }
 
   getFormData(formConfig: IccFormConfig): void {

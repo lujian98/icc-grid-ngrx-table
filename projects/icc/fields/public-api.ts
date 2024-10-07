@@ -1,5 +1,6 @@
 export * from './src/fields.component';
 export * from './src/models/fields.model';
+export * from './src/models/base-field.model';
 export * from './src/fieldset';
 export * from './src/checkbox-field';
 export * from './src/radio-group-field';

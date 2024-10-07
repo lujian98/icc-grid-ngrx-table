@@ -85,6 +85,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   set fieldConfig(fieldConfig: Partial<IccTextFieldConfig>) {
     this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
+    //console.log('this.fieldConfig=', this.fieldConfig);
   }
   get fieldConfig(): IccTextFieldConfig {
     return this._fieldConfig;
