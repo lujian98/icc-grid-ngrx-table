@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-
-import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
+import { IccFormConfig } from '../models/form.model';
+import { IccFormButtonConfg } from '@icc/ui/fields';
 
 export const initFormConfig = createAction('[Form] Init Form Panel Config', props<{ formConfig: IccFormConfig }>());
 

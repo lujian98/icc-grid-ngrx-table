@@ -19,6 +19,7 @@ import {
   IccFormField,
   IccNumberFieldConfig,
   IccTextFieldConfig,
+  IccFormButtonConfg,
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccPanelTopBarComponent } from '@icc/ui/panel';
@@ -26,7 +27,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig, IccFormButtonConfg, IccFormButtonType } from '../models/form.model';
+import { IccFormConfig, IccFormButtonType } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',

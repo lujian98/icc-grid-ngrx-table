@@ -1,4 +1,5 @@
-import { IccFormConfig, IccFormState, IccFormButtonConfg, IccFormButtonType } from './form.model';
+import { IccFormConfig, IccFormState, IccFormButtonType } from './form.model';
+import { IccFormButtonConfg } from '@icc/ui/fields';
 
 export const buttons: IccFormButtonConfg[] = [
   {

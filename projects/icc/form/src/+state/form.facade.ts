@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccFormConfig, IccFormButtonConfg } from '../models/form.model';
+import { IccFormConfig } from '../models/form.model';
+import { IccFormButtonConfg } from '@icc/ui/fields';
 import * as formActions from './form.actions';
 import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
 

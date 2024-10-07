@@ -1,12 +1,16 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as formActions from './form.actions';
-import { FormState, IccFormButtonConfg, IccFormButtonType } from '../models/form.model';
-import { defaultFormState, buttons } from '../models/default-form';
-import { IccFormField, IccFieldsetConfig, defaultBaseField } from '@icc/ui/fields';
+import { FormState, IccFormButtonType } from '../models/form.model';
+import { defaultFormState } from '../models/default-form';
+import { IccFormField, IccFieldsetConfig, defaultBaseField, IccFormButtonConfg } from '@icc/ui/fields';
 
 export const initialState: FormState = {};
 
-const viewButton = buttons[4]; // TODO view button
+const viewButton = {
+  name: IccFormButtonType.View,
+  title: 'View',
+};
+
 export function getFormEditable(button: IccFormButtonConfg): boolean {
   switch (button.name) {
     case IccFormButtonType.Refresh:
