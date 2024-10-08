@@ -15,6 +15,7 @@
       class="upload-file-input"
       [formControlName]="fieldConfig.fieldName!"
       [required]="required"
+      (change)="onChange($event)"
       placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
     <icc-icon
@@ -31,3 +32,7 @@
     </icc-form-field-errors>
   </icc-form-field>
 </ng-container>
+<!--
+      webkitdirectory
+      mozdirectory
+  -->

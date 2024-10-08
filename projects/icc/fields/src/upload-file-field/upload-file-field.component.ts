@@ -135,9 +135,24 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     return !!this.field.value && !this.field.disabled;
   }
 
-  onChange(): void {
+  onChange(event: any): void {
+    console.log(' event=', event);
+    var files = event.target.files;
+    console.log(' files=', files);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
+
+    /*
+        var files = e.target.files;
+    var output = [];
+ 
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      output.push(file.webkitRelativePath); // 使用webkitRelativePath来获取文件的相对路径
+    }
+ 
+    console.log(output);
+    */
   }
 
   clearValue(): void {
