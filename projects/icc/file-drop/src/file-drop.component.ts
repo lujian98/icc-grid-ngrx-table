@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ContentChild,
   ElementRef,
@@ -12,7 +14,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
-
 import { IccFileDropEntry } from './file-drop-entry';
 import { FileSystemDirectoryEntry, FileSystemEntry, FileSystemFileEntry } from './dom.types';
 import { IccFileDropContentTemplateDirective } from './templates.directive';
@@ -21,6 +22,9 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   selector: 'icc-file-drop',
   templateUrl: './file-drop.component.html',
   styleUrls: ['./file-drop.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccFileDropContentTemplateDirective],
 })
 export class IccFileDropComponent implements OnDestroy {
   @Input()

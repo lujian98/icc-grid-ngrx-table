@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccFileDropEntry, IccFileDropModule } from '@icc/ui/file-drop';
+import { IccFileDropEntry, IccFileDropComponent } from '@icc/ui/file-drop';
 
 @Component({
   selector: 'app-file-drop',
@@ -8,7 +8,7 @@ import { IccFileDropEntry, IccFileDropModule } from '@icc/ui/file-drop';
   styleUrls: ['./file-drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFileDropModule],
+  imports: [CommonModule, IccFileDropComponent],
 })
 export class AppFileDropDemoComponent {
   title = 'icc-file-drop-example';
