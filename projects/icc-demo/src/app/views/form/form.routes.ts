@@ -3,6 +3,7 @@ import { AppSimpleFromDemoComponent } from './demos/simple-form.component';
 import { AppThemeFormDemoComponent } from './demos/theme-form.component';
 import { AppFromPageDemoComponent } from './demos/form-page.component';
 import { AppPasswordPageDemoComponent } from './demos/password-page.component';
+import { AppFileDropDemoComponent } from './demos/file-drop.component';
 
 import { AppFormComponent } from './form.component';
 
@@ -16,6 +17,7 @@ export const AppFormRoutes: Routes = [
       { path: 'theme-form', component: AppThemeFormDemoComponent },
       { path: 'form-page', component: AppFromPageDemoComponent },
       { path: 'password-page', component: AppPasswordPageDemoComponent },
+      { path: 'file-drop', component: AppFileDropDemoComponent },
       {
         path: '**',
         redirectTo: 'simple-form',
