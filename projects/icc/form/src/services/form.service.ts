@@ -66,9 +66,7 @@ export class IccFormService {
 
   uploadFiles(formConfig: IccFormConfig, files: IccUploadFile[]): Observable<{ formConfig: IccFormConfig }> {
     const url = this.backendService.apiUrl;
-    const formData = new FormData();
-    formData.append('keyName', formConfig.urlKey);
-    formData.append('action', 'uploadFiles');
+    const formData = this.backendService.getFormData(formConfig.urlKey, 'uploadFiles');
     files.forEach((file) => {
       formData.append('filelist[]', file.fieldName);
       formData.append(file.fieldName, file.file);

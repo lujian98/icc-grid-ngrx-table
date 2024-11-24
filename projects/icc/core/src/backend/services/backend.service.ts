@@ -21,4 +21,14 @@ export class IccBackendService {
     }
     return params;
   }
+
+  getFormData(keyName: string, action: string, path?: string): FormData {
+    const formData = new FormData();
+    formData.append('keyName', keyName);
+    formData.append('action', action);
+    if (path) {
+      formData.append('path', path);
+    }
+    return formData;
+  }
 }
