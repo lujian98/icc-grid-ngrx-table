@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { isEqual, IccUploadFileService } from '@icc/ui/core';
 import { IccFormService } from '../services/form.service';
 import * as formActions from './form.actions';
 import { IccFormFacade } from './form.facade';
@@ -12,6 +13,7 @@ export class IccFormEffects {
   private store = inject(Store);
   private actions$ = inject(Actions);
   private formService = inject(IccFormService);
+  private uploadFileService = inject(IccUploadFileService);
 
   loadRemoteFormConfig$ = createEffect(() =>
     this.actions$.pipe(
@@ -70,6 +72,20 @@ export class IccFormEffects {
         return this.formService.saveFormData(formConfig, formData).pipe(
           map(({ formConfig, formData }) => {
             return formActions.saveFormDataSuccess({ formConfig, formData });
+          }),
+        );
+      }),
+    ),
+  );
+
+  uploadFiles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(formActions.uploadFiles),
+      concatMap(({ formConfig, files }) => {
+        return this.formService.uploadFiles(formConfig, files).pipe(
+          map(({ formConfig }) => {
+            this.uploadFileService.uploadFiles = [];
+            return formActions.uploadFilesSuccess({ formConfig });
           }),
         );
       }),

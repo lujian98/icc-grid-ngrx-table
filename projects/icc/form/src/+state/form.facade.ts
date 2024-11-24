@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { IccUploadFile } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
 import { IccFormButtonConfg } from '@icc/ui/fields';
 import * as formActions from './form.actions';
@@ -44,6 +45,12 @@ export class IccFormFacade {
   saveFormData(formConfig: IccFormConfig, formData: any): void {
     if (formConfig.remoteFormData) {
       this.store.dispatch(formActions.saveFormData({ formConfig, formData }));
+    }
+  }
+
+  uploadFiles(formConfig: IccFormConfig, files: IccUploadFile[]): void {
+    if (files.length > 0) {
+      this.store.dispatch(formActions.uploadFiles({ formConfig, files }));
     }
   }
 

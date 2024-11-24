@@ -11,7 +11,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { isEqual } from '@icc/ui/core';
+import { isEqual, IccUploadFileService } from '@icc/ui/core';
 import {
   IccFieldsComponent,
   IccFieldsetComponent,
@@ -49,6 +49,7 @@ import { IccFormConfig, IccFormButtonType } from '../models/form.model';
 })
 export class IccFormViewComponent implements OnInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private uploadFileService = inject(IccUploadFileService);
   private formFacade = inject(IccFormFacade);
   private destroy$ = new Subject<void>();
   form: FormGroup = new FormGroup({});
@@ -132,6 +133,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => this.checkFormValueChanged(values));
+    this.uploadFileService.uploadFiles = [];
   }
 
   trackByIndex(index: number): number {
@@ -155,6 +157,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       case IccFormButtonType.View:
       case IccFormButtonType.Reset:
       case IccFormButtonType.Save:
+      case IccFormButtonType.UploadFile:
         return this.formConfig.editable;
       case IccFormButtonType.Edit:
       default:
@@ -170,6 +173,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         return !this.form.dirty;
       case IccFormButtonType.Save:
         return !(this.form.dirty && this.form.valid);
+      case IccFormButtonType.UploadFile:
+        //console.log( ' this.form.value=', this.form.value)
+        //console.log( 'this.uploadFileService.uploadFiles=', this.uploadFileService.uploadFiles)
+        return !(this.form.dirty && this.form.valid && this.uploadFileService.uploadFiles.length > 0);
       case IccFormButtonType.Edit:
       default:
         return false;
@@ -190,6 +197,9 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         break;
       case IccFormButtonType.Save:
         this.saveForm();
+        break;
+      case IccFormButtonType.UploadFile:
+        this.uploadFile();
         break;
       case IccFormButtonType.View:
       default:
@@ -212,6 +222,9 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   private resetForm(): void {
     this.form.patchValue({ ...this.values });
+    this.uploadFileService.uploadFiles = [];
+    console.log('this.values=', this.values);
+    this.changeDetectorRef.markForCheck();
   }
 
   private saveForm(): void {
@@ -223,6 +236,12 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       //console.log('is form invalid = ', this.form.invalid);
       this.formFacade.saveFormData(this.formConfig, this.form.getRawValue());
     }
+  }
+
+  private uploadFile(): void {
+    //console.log(' uploadFile this.formConfig=', this.formConfig);
+    //console.log(' upload files=', this.uploadFileService.uploadFiles);
+    this.formFacade.uploadFiles(this.formConfig, this.uploadFileService.uploadFiles);
   }
 
   ngOnDestroy(): void {

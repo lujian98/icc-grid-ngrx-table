@@ -7,6 +7,7 @@ export enum IccFormButtonType {
   Reset = 'Reset',
   View = 'View',
   Save = 'Save',
+  UploadFile = 'UploadFile',
 }
 
 export interface IccFormConfig {

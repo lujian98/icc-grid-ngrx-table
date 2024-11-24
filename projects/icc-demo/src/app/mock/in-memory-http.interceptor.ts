@@ -10,7 +10,7 @@ export class InMemoryHttpInterceptor implements HttpInterceptor {
     const keyName = req.params.get('keyName');
     const action = req.params.get('action');
     const path = req.params.get('path');
-    //console.log(' req=', req); // gridConfig
+    console.log(' req=', req); // gridConfig
     //console.log(' req.params=', req.params);
     //console.log(' keyName=', req.params.get('keyName'));
     if (keyName && action === 'gridData') {

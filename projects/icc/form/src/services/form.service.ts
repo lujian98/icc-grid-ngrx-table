@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
-import { IccBackendService } from '@icc/ui/core';
+import { IccBackendService, IccUploadFile } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
 
 @Injectable({
@@ -59,6 +59,26 @@ export class IccFormService {
         return {
           formConfig: { ...formConfig, ...res.formConfig },
           formData: { ...res.formData },
+        };
+      }),
+    );
+  }
+
+  uploadFiles(formConfig: IccFormConfig, files: IccUploadFile[]): Observable<{ formConfig: IccFormConfig }> {
+    const url = this.backendService.apiUrl;
+    const formData = new FormData();
+    formData.append('keyName', formConfig.urlKey);
+    formData.append('action', 'uploadFiles');
+    files.forEach((file) => {
+      formData.append('filelist[]', file.fieldName);
+      formData.append(file.fieldName, file.file);
+    });
+    //console.log(' url =', url);
+    return this.http.post<{ formConfig: IccFormConfig }>(url, formData).pipe(
+      map((res) => {
+        //console.log(' formData res=', res);
+        return {
+          formConfig: { ...formConfig },
         };
       }),
     );

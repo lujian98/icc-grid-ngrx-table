@@ -9,6 +9,8 @@ import {
   Input,
   OnDestroy,
   Output,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,6 +26,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { IccUploadFileService } from '@icc/ui/core';
 import {
   IccFormFieldComponent,
   IccLabelDirective,
@@ -76,6 +79,7 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
 })
 export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private uploadFileService = inject(IccUploadFileService);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccUploadFileFieldConfig;
   private _value!: any;
@@ -135,13 +139,24 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     return !!this.field.value && !this.field.disabled;
   }
 
+  @ViewChild('fileInput') fileInput?: ElementRef;
+
+  get selectedFile(): any {
+    if (this.fileInput?.nativeElement.files.length > 0) {
+      return this.fileInput?.nativeElement.files[0];
+    } else {
+      return null;
+    }
+  }
+
   onChange(event: any): void {
-    console.log(' event=', event);
+    //console.log(' event=', event);
     var files = event.target.files;
-    console.log(' files=', files);
+    //console.log(' files=', files);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
-
+    //console.log(' selectedFile=', this.selectedFile);
+    this.uploadFileService.uploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
     /*
         var files = e.target.files;
     var output = [];
