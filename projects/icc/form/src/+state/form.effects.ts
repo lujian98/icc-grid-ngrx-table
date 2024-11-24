@@ -82,7 +82,7 @@ export class IccFormEffects {
     this.actions$.pipe(
       ofType(formActions.uploadFiles),
       concatMap(({ formConfig, files }) => {
-        return this.formService.uploadFiles(formConfig, files).pipe(
+        return this.uploadFileService.sendUploadFiles(formConfig.urlKey, files).pipe(
           map(({ formConfig }) => {
             this.uploadFileService.uploadFiles = [];
             return formActions.uploadFilesSuccess({ formConfig });

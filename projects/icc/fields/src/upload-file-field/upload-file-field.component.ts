@@ -156,7 +156,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     //console.log(' selectedFile=', this.selectedFile);
-    this.uploadFileService.uploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
+    this.uploadFileService.formUploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
     /*
         var files = e.target.files;
     var output = [];

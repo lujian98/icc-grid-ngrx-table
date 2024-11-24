@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { IccBackendService } from '../backend/services/backend.service';
 
 export interface IccUploadFile {
   fieldName: string;
@@ -11,6 +13,9 @@ export interface IccUploadFile {
   providedIn: 'root',
 })
 export class IccUploadFileService {
+  private http = inject(HttpClient);
+  private backendService = inject(IccBackendService);
+
   private _uploadFiles: IccUploadFile[] = [];
   // private uploadFiles = new BehaviorSubject<IccUploadFile[] | null>(null);
   // uploadFiles$ = this.uploadFiles.asObservable();
@@ -22,7 +27,7 @@ export class IccUploadFileService {
     return this._uploadFiles;
   }
 
-  uploadFileChanged(fieldName: string, file: File | null): void {
+  formUploadFileChanged(fieldName: string, file: File | null): void {
     console.log('ssss files =', file);
     this.uploadFiles = this.uploadFiles.filter((file) => file.fieldName !== fieldName);
     if (file) {
@@ -30,10 +35,27 @@ export class IccUploadFileService {
         ...this.uploadFiles,
         {
           fieldName: fieldName,
-          //relativePath: file.webkitRelativePath,
           file: file,
         },
       ];
     }
+  }
+
+  sendUploadFiles(urlKey: string, files: IccUploadFile[]): Observable<any> {
+    const url = this.backendService.apiUrl;
+    const formData = this.backendService.getFormData(urlKey, 'uploadFiles');
+    files.forEach((file) => {
+      formData.append('filelist[]', file.fieldName);
+      formData.append(file.fieldName, file.file, file.relativePath);
+    });
+
+    //TODO response ???
+    return this.http.post(url, formData).pipe(
+      map((res) => {
+        return {
+          res,
+        };
+      }),
+    );
   }
 }

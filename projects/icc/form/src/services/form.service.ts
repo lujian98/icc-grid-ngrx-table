@@ -64,6 +64,7 @@ export class IccFormService {
     );
   }
 
+  /*
   uploadFiles(formConfig: IccFormConfig, files: IccUploadFile[]): Observable<{ formConfig: IccFormConfig }> {
     const url = this.backendService.apiUrl;
     const formData = this.backendService.getFormData(formConfig.urlKey, 'uploadFiles');
@@ -80,5 +81,5 @@ export class IccFormService {
         };
       }),
     );
-  }
+  }*/
 }
