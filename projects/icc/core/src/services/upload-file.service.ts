@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface IccUploadFile {
   fieldName: string;
+  relativePath?: string;
   file: File;
 }
 
@@ -22,12 +23,14 @@ export class IccUploadFileService {
   }
 
   uploadFileChanged(fieldName: string, file: File | null): void {
+    console.log('ssss files =', file);
     this.uploadFiles = this.uploadFiles.filter((file) => file.fieldName !== fieldName);
     if (file) {
       this.uploadFiles = [
         ...this.uploadFiles,
         {
           fieldName: fieldName,
+          //relativePath: file.webkitRelativePath,
           file: file,
         },
       ];
