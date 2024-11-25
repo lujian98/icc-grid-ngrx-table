@@ -197,6 +197,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   ngOnDestroy(): void {
+    this.uploadFileService.uploadFiles = [];
     this.destroy$.next();
     this.destroy$.complete();
   }
