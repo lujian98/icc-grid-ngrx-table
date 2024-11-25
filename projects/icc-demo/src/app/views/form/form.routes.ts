@@ -5,6 +5,7 @@ import { AppFromPageDemoComponent } from './demos/form-page.component';
 import { AppPasswordPageDemoComponent } from './demos/password-page.component';
 import { AppFileDropDemoComponent } from './demos/file-drop.component';
 import { AppFileUploadDemoComponent } from './demos/file-upload.component';
+import { AppFileDropUploadComponent } from './demos/file-drop-upload.component';
 
 import { AppFormComponent } from './form.component';
 
@@ -19,6 +20,7 @@ export const AppFormRoutes: Routes = [
       { path: 'form-page', component: AppFromPageDemoComponent },
       { path: 'password-page', component: AppPasswordPageDemoComponent },
       { path: 'file-drop', component: AppFileDropDemoComponent },
+      { path: 'file-drop-upload', component: AppFileDropUploadComponent },
       { path: 'file-upload', component: AppFileUploadDemoComponent },
       {
         path: '**',

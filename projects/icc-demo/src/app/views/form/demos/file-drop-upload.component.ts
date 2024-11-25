@@ -1,0 +1,13 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IccFileDropUploadComponent } from '@icc/ui/file-drop';
+
+@Component({
+  selector: 'app-file-drop-upload',
+  template: `<icc-file-drop-upload></icc-file-drop-upload>`,
+  styles: [':host { width: 100%; }'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccFileDropUploadComponent],
+})
+export class AppFileDropUploadComponent {}

@@ -22,6 +22,7 @@ export class AppFormComponent {
         { name: 'Form Page', link: 'form-page' },
         { name: 'Password Page', link: 'password-page' },
         { name: 'File Drop', link: 'file-drop' },
+        { name: 'File Drop Upload', link: 'file-drop-upload' },
         { name: 'File Upload', link: 'file-upload' },
       ],
     },

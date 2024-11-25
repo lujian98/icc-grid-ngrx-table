@@ -1,0 +1,14 @@
+<icc-panel>
+  <input type="checkbox" [checked]="checked" (change)="onChange($event)" /> Enabled
+
+  <icc-file-drop
+    [accept]="'*'"
+    [dropZoneClassName]="className"
+    [disabled]="!checked"
+    [multiple]="true"
+    (onFileDrop)="dropped($event)"
+  >
+  </icc-file-drop>
+
+  {{ entries | json }}
+</icc-panel>
