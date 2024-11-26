@@ -1,3 +1,7 @@
+:host {
+  padding-bottom: 10px;
+}
+
 .icc-file-drop__drop-zone {
   height: 100px;
   margin: auto;
@@ -23,9 +27,4 @@
 
 .icc-file-drop__file-input {
   display: none;
-}
-
-.file-drop-grid {
-  display: flex;
-  height: 300px;
 }

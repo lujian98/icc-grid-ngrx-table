@@ -17,7 +17,6 @@ import { Subscription, timer } from 'rxjs';
 import { IccFileDropEntry } from './file-drop-entry';
 import { FileSystemDirectoryEntry, FileSystemEntry, FileSystemFileEntry } from './dom.types';
 import { IccFileDropContentTemplateDirective } from './templates.directive';
-import { IccFileDropGridComponent } from '../file-drop-grid/file-drop-grid.component';
 
 @Component({
   selector: 'icc-file-drop',
@@ -25,7 +24,7 @@ import { IccFileDropGridComponent } from '../file-drop-grid/file-drop-grid.compo
   styleUrls: ['./file-drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFileDropContentTemplateDirective, IccFileDropGridComponent],
+  imports: [CommonModule, IccFileDropContentTemplateDirective],
 })
 export class IccFileDropComponent implements OnDestroy {
   @Input()
