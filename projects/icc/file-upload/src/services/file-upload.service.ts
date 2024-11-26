@@ -16,7 +16,11 @@ export class IccFileUploadService {
     const formData = this.backendService.getFormData(fileUploadConfig.urlKey, 'uploadFiles');
     files.forEach((file) => {
       formData.append('filelist[]', file.fieldName);
-      formData.append(file.fieldName, file.file, file.relativePath);
+      if (file.relativePath) {
+        formData.append(file.fieldName, file.file, file.relativePath);
+      } else {
+        formData.append(file.fieldName, file.file);
+      }
     });
     console.log(' send upload file=', fileUploadConfig.urlKey, ' file=', files);
     //TODO response ???
