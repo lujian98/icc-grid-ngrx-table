@@ -1,17 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
+import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
-import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
-import { IccFileDropGridComponent } from './components/file-drop-grid/file-drop-grid.component';
-import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
-import { IccFileUpload } from './models/file-upload.model';
+import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
 
 @Component({
   selector: 'icc-file-select-upload',
@@ -27,7 +25,7 @@ import { IccFileUpload } from './models/file-upload.model';
     IccPanelTopBarComponent,
     IccButtonComponent,
     IccFileDropComponent,
-    IccFileDropGridComponent,
+    IccFileUploadGridComponent,
     IccCheckboxComponent,
     IccUploadFileFieldComponent,
   ],
@@ -78,6 +76,12 @@ export class IccFileSelectUploadComponent implements OnDestroy {
   onChange(checked: boolean): void {
     if (typeof checked === 'boolean') {
       this.checked = checked;
+      this.fieldConfigs = [...this.fieldConfigs].map((config) => {
+        return {
+          ...config,
+          editable: this.checked,
+        };
+      });
     }
   }
 

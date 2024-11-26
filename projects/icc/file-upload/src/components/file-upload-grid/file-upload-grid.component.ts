@@ -4,14 +4,14 @@ import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig } f
 import { IccFileUploadFacade } from '../../+state/file-upload.facade';
 
 @Component({
-  selector: 'icc-file-drop-grid',
-  templateUrl: './file-drop-grid.component.html',
+  selector: 'icc-file-upload-grid',
+  templateUrl: './file-upload-grid.component.html',
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
-export class IccFileDropGridComponent {
+export class IccFileUploadGridComponent {
   private fileUploadFacade = inject(IccFileUploadFacade);
   gridData$ = this.fileUploadFacade.selectUploadFilesGridData$;
 
