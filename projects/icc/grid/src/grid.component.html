@@ -1,11 +1,11 @@
 <ng-container *ngIf="gridConfig$ | async as gridConfig">
   <ng-container *ngIf="columnsConfig$ | async as columns">
-    <div class="icc-grid-toolbar">
+    <div class="icc-grid-toolbar" *ngIf="!gridConfig.hideTopbar">
       <button (click)="refresh()">Refresh</button>
       <button (click)="clearFilters()">Clear All Filters</button>
     </div>
     <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
 
-    <icc-grid-footer [gridConfig]="gridConfig"> </icc-grid-footer>
+    <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
   </ng-container>
 </ng-container>

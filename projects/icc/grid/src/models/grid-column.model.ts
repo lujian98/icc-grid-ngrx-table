@@ -26,6 +26,8 @@ export interface IccGridConfig {
   pageSize: number;
   totalCounts: number;
   remoteGridData: boolean;
+  hideTopbar: boolean;
+  hideGridFooter: boolean;
 }
 
 export interface GridState {

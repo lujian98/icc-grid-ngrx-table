@@ -19,6 +19,10 @@ export class IccFileDropGridComponent {
 
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
+    verticalScroll: true,
+    pageSize: 1000,
+    hideTopbar: true,
+    hideGridFooter: true,
     remoteColumnsConfig: false,
     remoteGridData: false,
   };

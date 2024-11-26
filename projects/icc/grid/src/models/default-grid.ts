@@ -23,6 +23,8 @@ export const defaultGridConfig: IccGridConfig = {
   pageSize: 10,
   totalCounts: 0,
   remoteGridData: false,
+  hideTopbar: false,
+  hideGridFooter: false,
 };
 
 export const defaultState: IccGridState = {
