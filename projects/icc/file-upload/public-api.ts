@@ -5,3 +5,4 @@ export { FileSystemEntry, FileSystemDirectoryEntry, FileSystemFileEntry } from '
 export { IccFileDropContentTemplateDirective } from './src/components/file-drop/templates.directive';
 
 export { IccFileDropUploadComponent } from './src/file-drop-upload.component';
+export { IccFileSelectUploadComponent } from './src/file-select-upload.component';

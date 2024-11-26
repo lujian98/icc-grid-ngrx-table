@@ -1,0 +1,21 @@
+<icc-panel>
+  <icc-panel-top-bar *ngIf="uploadFiles$ | async as uploadFiles">
+    <div class="icc-panel-top-bar-title">{{ "File Select Upload" }}</div>
+    <icc-checkbox [checked]="checked" (change)="onChange($event)">Enabled</icc-checkbox>
+    <ng-container *ngFor="let button of buttons">
+      <button icc-button [disabled]="uploadFiles.length === 0" (click)="buttonClick(button)">
+        <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
+        {{ button.title }}
+      </button>
+    </ng-container>
+  </icc-panel-top-bar>
+
+  <div class="icc-file-select-files">
+    <ng-container *ngFor="let fieldConfig of fieldConfigs">
+      <icc-upload-file-field [fieldConfig]="fieldConfig" (selectUploadFile)="selectUploadFile(fieldConfig, $event)">
+      </icc-upload-file-field>
+    </ng-container>
+  </div>
+
+  <icc-file-drop-grid> </icc-file-drop-grid>
+</icc-panel>

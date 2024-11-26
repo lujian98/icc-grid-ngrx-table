@@ -6,3 +6,5 @@ export interface IccFileUpload extends IccUploadFile {
   size: number;
   lastModified: number;
 }
+
+// TODO api config key and other

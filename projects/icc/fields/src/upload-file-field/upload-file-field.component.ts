@@ -122,6 +122,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   @Output() valueChange = new EventEmitter<any>(false);
+  @Output() selectUploadFile = new EventEmitter<File>(false);
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
@@ -157,6 +158,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     this.valueChange.emit(this.field.value);
     //console.log(' selectedFile=', this.selectedFile);
     this.uploadFileService.formUploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
+    this.selectUploadFile.emit(this.selectedFile);
     /*
         var files = e.target.files;
     var output = [];
@@ -172,7 +174,9 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
 
   clearValue(): void {
     this.value = null;
+    this.field.markAsPristine();
     this.valueChange.emit(null);
+    this.selectUploadFile.emit(this.selectedFile);
   }
 
   registerOnChange(fn: any): void {

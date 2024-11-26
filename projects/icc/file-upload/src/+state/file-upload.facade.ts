@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { IccFileUpload } from '../models/file-upload.model';
 import { Store } from '@ngrx/store';
 import * as fileUploadActions from './file-upload.actions';
 import { selectUploadFiles, selectUploadFilesGridData } from './file-upload.selectors';
@@ -10,8 +9,16 @@ export class IccFileUploadFacade {
   selectUploadFiles$ = this.store.select(selectUploadFiles);
   selectUploadFilesGridData$ = this.store.select(selectUploadFilesGridData);
 
-  dropUploadFile(file: IccFileUpload): void {
-    this.store.dispatch(fileUploadActions.dropUploadFile({ file }));
+  dropUploadFile(relativePath: string, file: File): void {
+    this.store.dispatch(fileUploadActions.dropUploadFile({ relativePath, file }));
+  }
+
+  selectUploadFile(fieldName: string, file: File | null): void {
+    if (file) {
+      this.store.dispatch(fileUploadActions.selectUploadFile({ fieldName, file }));
+    } else {
+      this.store.dispatch(fileUploadActions.clearSelectUploadFile({ fieldName }));
+    }
   }
 
   uploadFiles(urlKey: string): void {

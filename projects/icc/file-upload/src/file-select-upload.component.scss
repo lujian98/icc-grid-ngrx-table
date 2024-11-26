@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  height: -webkit-fill-available;
+
+  .icc-file-select-files {
+    padding: 10px 0px;
+  }
+
+  icc-file-drop-grid {
+    display: flex;
+    flex: 1;
+  }
+}
