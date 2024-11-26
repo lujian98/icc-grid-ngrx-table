@@ -151,25 +151,12 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   onChange(event: any): void {
-    //console.log(' event=', event);
     var files = event.target.files;
-    //console.log(' files=', files);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
-    //console.log(' selectedFile=', this.selectedFile);
+    // TODO still need use uploadFileService.formUploadFileChanged ?? for from field save with upload file???
     this.uploadFileService.formUploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
     this.selectUploadFile.emit(this.selectedFile);
-    /*
-        var files = e.target.files;
-    var output = [];
- 
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      output.push(file.webkitRelativePath); // 使用webkitRelativePath来获取文件的相对路径
-    }
- 
-    console.log(output);
-    */
   }
 
   clearValue(): void {

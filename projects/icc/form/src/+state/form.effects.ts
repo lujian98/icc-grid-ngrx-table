@@ -78,6 +78,7 @@ export class IccFormEffects {
     ),
   );
 
+  /*
   uploadFiles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.uploadFiles),
@@ -90,7 +91,7 @@ export class IccFormEffects {
         );
       }),
     ),
-  );
+  );*/
 
   clearFormDataStore$ = createEffect(() =>
     this.actions$.pipe(

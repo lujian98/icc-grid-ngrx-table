@@ -3,7 +3,7 @@
     <div class="icc-panel-top-bar-title">{{ "File Select Upload" }}</div>
     <icc-checkbox [checked]="checked" (change)="onChange($event)">Enabled</icc-checkbox>
     <ng-container *ngFor="let button of buttons">
-      <button icc-button [disabled]="uploadFiles.length === 0" (click)="buttonClick(button)">
+      <button icc-button [disabled]="buttonVisible(uploadFiles)" (click)="buttonClick(button)">
         <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
         {{ button.title }}
       </button>

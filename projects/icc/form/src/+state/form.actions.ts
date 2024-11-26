@@ -47,12 +47,14 @@ export const saveFormDataSuccess = createAction(
   props<{ formConfig: IccFormConfig; formData: any }>(),
 );
 
+/*
 export const uploadFiles = createAction(
   '[Form] Upload Files',
   props<{ formConfig: IccFormConfig; files: IccUploadFile[] }>(),
 );
 
 export const uploadFilesSuccess = createAction('[Form] Upload Files Success', props<{ formConfig: IccFormConfig }>());
+*/
 
 export const clearFormDataStore = createAction('[Form] Clear Form Panel Data Store', props<{ formId: string }>());
 export const removeFormDataStore = createAction('[Form] Remove Form Panel Data Store', props<{ formId: string }>());

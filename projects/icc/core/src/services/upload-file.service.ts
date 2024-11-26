@@ -28,7 +28,6 @@ export class IccUploadFileService {
   }
 
   formUploadFileChanged(fieldName: string, file: File | null): void {
-    console.log('ssss files =', file);
     this.uploadFiles = this.uploadFiles.filter((file) => file.fieldName !== fieldName);
     if (file) {
       this.uploadFiles = [
@@ -41,6 +40,7 @@ export class IccUploadFileService {
     }
   }
 
+  /*
   sendFormUploadFiles(urlKey: string, files: IccUploadFile[]): Observable<any> {
     const url = this.backendService.apiUrl;
     const formData = this.backendService.getFormData(urlKey, 'uploadFiles');
@@ -57,5 +57,5 @@ export class IccUploadFileService {
         };
       }),
     );
-  }
+  }*/
 }

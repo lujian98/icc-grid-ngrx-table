@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fileUploadActions from './file-upload.actions';
 import { selectUploadFiles, selectUploadFilesGridData } from './file-upload.selectors';
+import { IccFileUploadConfig } from '../models/file-upload.model';
 
 @Injectable()
 export class IccFileUploadFacade {
@@ -21,8 +22,8 @@ export class IccFileUploadFacade {
     }
   }
 
-  uploadFiles(urlKey: string): void {
-    this.store.dispatch(fileUploadActions.uploadFiles({ urlKey }));
+  uploadFiles(fileUploadConfig: IccFileUploadConfig): void {
+    this.store.dispatch(fileUploadActions.uploadFiles({ fileUploadConfig }));
   }
 
   clearUploadFiles(): void {

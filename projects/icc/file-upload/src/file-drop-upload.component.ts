@@ -85,7 +85,7 @@ export class IccFileDropUploadComponent implements OnDestroy {
         this.fileUploadFacade.clearUploadFiles();
         break;
       case IccButtonType.UploadFile:
-        this.fileUploadFacade.uploadFiles('DCR');
+        this.fileUploadFacade.uploadFiles(this.fileUploadConfig);
         break;
       default:
         break;

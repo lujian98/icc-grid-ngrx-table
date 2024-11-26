@@ -10,7 +10,7 @@ import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
-import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-upload.model';
+import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-select-upload',
@@ -73,24 +73,6 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     return this._fileUploadConfig;
   }
 
-  /*
-  @Input()
-  set uploadNumber(val: number) {
-    if (val) {
-      this.fieldConfigs = [];
-      for (let i = 0; i < val; i++) {
-        this.fieldConfigs.push({
-          fieldType: 'uploadfile',
-          labelWidth: 60,
-          fieldName: `file_select_upload_${i + 1}`,
-          fieldLabel: `File ${i + 1}`,
-          editable: this.checked,
-          clearValue: true,
-        });
-      }
-    }
-  }*/
-
   @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 
   selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File): void {
@@ -109,14 +91,21 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     }
   }
 
+  buttonVisible(uploadFiles: IccFileUpload[]): boolean {
+    if (uploadFiles.length === 0) {
+      this.uploadFileFields?.toArray().forEach((field) => field.clearValue());
+    }
+    return uploadFiles.length === 0;
+  }
+
   buttonClick(button: IccButtonConfg): void {
     switch (button.name) {
       case IccButtonType.Reset:
         this.fileUploadFacade.clearUploadFiles();
-        this.uploadFileFields.toArray().forEach((field) => field.clearValue());
+        //this.uploadFileFields.toArray().forEach((field) => field.clearValue());
         break;
       case IccButtonType.UploadFile:
-        this.fileUploadFacade.uploadFiles('DCR');
+        this.fileUploadFacade.uploadFiles(this.fileUploadConfig);
         break;
       default:
         break;

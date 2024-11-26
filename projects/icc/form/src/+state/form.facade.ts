@@ -48,11 +48,12 @@ export class IccFormFacade {
     }
   }
 
+  /*
   uploadFiles(formConfig: IccFormConfig, files: IccUploadFile[]): void {
     if (files.length > 0) {
       this.store.dispatch(formActions.uploadFiles({ formConfig, files }));
     }
-  }
+  }*/
 
   clearformDataStore(formId: string): void {
     this.store.dispatch(formActions.clearFormDataStore({ formId }));

@@ -4,7 +4,6 @@ import { AppThemeFormDemoComponent } from './demos/theme-form.component';
 import { AppFromPageDemoComponent } from './demos/form-page.component';
 import { AppPasswordPageDemoComponent } from './demos/password-page.component';
 import { AppFileDropDemoComponent } from './demos/file-drop.component';
-import { AppFileUploadDemoComponent } from './demos/file-upload.component';
 import { AppFileDropUploadComponent } from './demos/file-drop-upload.component';
 import { AppFileSelectUploadComponent } from './demos/file-select-upload.component';
 
@@ -23,7 +22,6 @@ export const AppFormRoutes: Routes = [
       { path: 'file-drop', component: AppFileDropDemoComponent },
       { path: 'file-drop-upload', component: AppFileDropUploadComponent },
       { path: 'file-select-upload', component: AppFileSelectUploadComponent },
-      { path: 'file-upload', component: AppFileUploadDemoComponent },
       {
         path: '**',
         redirectTo: 'simple-form',
