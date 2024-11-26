@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { IccUploadFile } from '@icc/ui/core';
+import { IccFileDropUpload } from '../models/file-drop-upload.model';
 import { Store } from '@ngrx/store';
 import * as fileDropActions from './file-drop.actions';
 import { selectUploadFiles } from './file-drop.selectors';
@@ -9,7 +9,7 @@ export class IccFileDropFacade {
   private store = inject(Store);
   selectUploadFiles$ = this.store.select(selectUploadFiles);
 
-  dropUploadFile(file: IccUploadFile): void {
+  dropUploadFile(file: IccFileDropUpload): void {
     this.store.dispatch(fileDropActions.dropUploadFile({ file }));
   }
 

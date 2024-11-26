@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccButtonConfg, IccButtonType, IccUploadFile } from '@icc/ui/core';
+import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
+import { IccFileDropUpload } from './models/file-drop-upload.model';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccFileDropStateModule } from './+state/file-drop-state.module';
@@ -49,39 +50,23 @@ export class IccFileDropUploadComponent {
   }
 
   dropped(files: IccFileDropEntry[]): void {
-    //console.log(' this.files=', files);
-    const uploadFiles: IccUploadFile[] = [];
-    let i = 0;
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
-        //console.log(' droppedFile=', droppedFile);
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          i++;
-          // console.log(' file=', file);
-          const newFile: IccUploadFile = {
-            fieldName: `filedrop_${i}`,
+          const newFile: IccFileDropUpload = {
+            fieldName: `filedrop`,
             relativePath: droppedFile.relativePath,
             file: file,
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            lastModified: file.lastModified,
           };
           this.fileDropFacade.dropUploadFile(newFile);
         });
       }
     }
-
-    /*
-    timer(100)
-      .pipe(take(1))
-      .subscribe(() => {
-        //console.log( ' uploadFiles=', uploadFiles)
-        this.uploadFileService
-          .sendUploadFiles('DCR', uploadFiles)
-          .pipe(take(1))
-          .subscribe((res) => {
-            //console.log(' res=', res)
-          });
-      });
-      */
   }
 
   onChange(event: any): void {
