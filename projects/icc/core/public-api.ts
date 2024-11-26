@@ -11,3 +11,4 @@ export * from './src/i18n/i18n.module';
 export * from './src/i18n/i18n.service';
 export * from './src/i18n/i18n.model';
 export * from './src/services/upload-file.service';
+export * from './src/models/buttons.model';

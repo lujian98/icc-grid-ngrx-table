@@ -1,4 +1,14 @@
 <icc-panel>
+  <icc-panel-top-bar *ngIf="uploadFiles$ | async as uploadFiles">
+    <div class="icc-panel-top-bar-title">{{ "File Drop Upload" }}</div>
+    <ng-container *ngFor="let button of buttons">
+      <button icc-button [disabled]="uploadFiles.length === 0" (click)="buttonClick(button)">
+        <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
+        {{ button.title }}
+      </button>
+    </ng-container>
+  </icc-panel-top-bar>
+
   <input type="checkbox" [checked]="checked" (change)="onChange($event)" /> Enabled
 
   <icc-file-drop
@@ -9,6 +19,4 @@
     (onFileDrop)="dropped($event)"
   >
   </icc-file-drop>
-
-  {{ entries | json }}
 </icc-panel>

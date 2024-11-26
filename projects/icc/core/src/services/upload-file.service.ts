@@ -48,7 +48,7 @@ export class IccUploadFileService {
       formData.append('filelist[]', file.fieldName);
       formData.append(file.fieldName, file.file, file.relativePath);
     });
-
+    console.log(' send upload file=', urlKey, ' file=', files);
     //TODO response ???
     return this.http.post(url, formData).pipe(
       map((res) => {
