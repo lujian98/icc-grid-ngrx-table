@@ -4,10 +4,14 @@ import { IccFileDropUploadComponent } from '@icc/ui/file-upload';
 
 @Component({
   selector: 'app-file-drop-upload',
-  template: `<icc-file-drop-upload></icc-file-drop-upload>`,
+  template: `<icc-file-drop-upload [fileUploadConfig]="fileUploadConfig"></icc-file-drop-upload>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccFileDropUploadComponent],
 })
-export class AppFileDropUploadComponent {}
+export class AppFileDropUploadComponent {
+  fileUploadConfig = {
+    urlKey: 'DCR',
+  };
+}

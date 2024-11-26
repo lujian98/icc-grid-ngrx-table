@@ -10,6 +10,7 @@ import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
+import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-select-upload',
@@ -33,6 +34,7 @@ import { IccFileUploadGridComponent } from './components/file-upload-grid/file-u
 export class IccFileSelectUploadComponent implements OnDestroy {
   private fileUploadFacade = inject(IccFileUploadFacade);
   uploadFiles$ = this.fileUploadFacade.selectUploadFiles$;
+  private _fileUploadConfig!: IccFileUploadConfig;
   fieldConfigs: IccUploadFileFieldConfig[] = [];
 
   buttons: IccButtonConfg[] = [
@@ -51,6 +53,28 @@ export class IccFileSelectUploadComponent implements OnDestroy {
   checked = true;
 
   @Input()
+  set fileUploadConfig(val: Partial<IccFileUploadConfig>) {
+    this._fileUploadConfig = { ...defaultFileUploadConfig, ...val };
+    if (this._fileUploadConfig.maxSelectUploads) {
+      this.fieldConfigs = [];
+      for (let i = 0; i < this._fileUploadConfig.maxSelectUploads; i++) {
+        this.fieldConfigs.push({
+          fieldType: 'uploadfile',
+          labelWidth: 60,
+          fieldName: `file_select_upload_${i + 1}`,
+          fieldLabel: `File ${i + 1}`,
+          editable: this.checked,
+          clearValue: true,
+        });
+      }
+    }
+  }
+  get fileUploadConfig(): IccFileUploadConfig {
+    return this._fileUploadConfig;
+  }
+
+  /*
+  @Input()
   set uploadNumber(val: number) {
     if (val) {
       this.fieldConfigs = [];
@@ -65,7 +89,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
         });
       }
     }
-  }
+  }*/
 
   @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 

@@ -7,4 +7,14 @@ export interface IccFileUpload extends IccUploadFile {
   lastModified: number;
 }
 
-// TODO api config key and other
+export interface IccFileUploadConfig {
+  urlKey: string;
+  fileDir: string; // default to urlKey if not defined
+  maxSelectUploads: number; // for file select upload only
+}
+
+export const defaultFileUploadConfig: IccFileUploadConfig = {
+  urlKey: 'upload',
+  fileDir: 'upload',
+  maxSelectUploads: 5,
+};

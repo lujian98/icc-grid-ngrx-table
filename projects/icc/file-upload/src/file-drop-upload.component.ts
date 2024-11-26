@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
@@ -10,6 +10,7 @@ import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
+import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-drop-upload',
@@ -32,6 +33,15 @@ import { IccFileUploadGridComponent } from './components/file-upload-grid/file-u
 export class IccFileDropUploadComponent implements OnDestroy {
   private fileUploadFacade = inject(IccFileUploadFacade);
   uploadFiles$ = this.fileUploadFacade.selectUploadFiles$;
+  private _fileUploadConfig!: IccFileUploadConfig;
+
+  @Input()
+  set fileUploadConfig(val: Partial<IccFileUploadConfig>) {
+    this._fileUploadConfig = { ...defaultFileUploadConfig, ...val };
+  }
+  get fileUploadConfig(): IccFileUploadConfig {
+    return this._fileUploadConfig;
+  }
 
   buttons: IccButtonConfg[] = [
     {

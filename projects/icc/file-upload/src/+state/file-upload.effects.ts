@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { IccUploadFileService } from '@icc/ui/core';
+import { IccFileUploadService } from '../services/file-upload.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { concatMap, map } from 'rxjs';
@@ -9,7 +9,7 @@ import { IccFileUploadFacade } from './file-upload.facade';
 @Injectable()
 export class IccFileUploadEffects {
   private actions$ = inject(Actions);
-  private uploadFileService = inject(IccUploadFileService);
+  private fileUploadService = inject(IccFileUploadService);
   private fileUploadFacade = inject(IccFileUploadFacade);
 
   uploadFiles$ = createEffect(() =>
@@ -19,7 +19,7 @@ export class IccFileUploadEffects {
         return [this.fileUploadFacade.selectUploadFiles$];
       }),
       concatMap(([action, uploadFiles]) => {
-        return this.uploadFileService.sendUploadFiles(action.urlKey, uploadFiles).pipe(
+        return this.fileUploadService.sendUploadFiles(action.urlKey, uploadFiles).pipe(
           map(() => {
             return fileUploadActions.uploadFilesSuccess();
           }),
