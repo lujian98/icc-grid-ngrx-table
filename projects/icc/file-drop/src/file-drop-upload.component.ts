@@ -10,6 +10,7 @@ import { IccFileDropFacade } from './+state/file-drop.facade';
 import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileDropGridComponent } from './components/file-drop-grid/file-drop-grid.component';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
 
 @Component({
   selector: 'icc-file-drop-upload',
@@ -26,6 +27,7 @@ import { IccFileDropGridComponent } from './components/file-drop-grid/file-drop-
     IccButtonComponent,
     IccFileDropComponent,
     IccFileDropGridComponent,
+    IccCheckboxComponent,
   ],
 })
 export class IccFileDropUploadComponent {

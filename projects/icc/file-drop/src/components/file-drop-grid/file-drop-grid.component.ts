@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
+import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig } from '@icc/ui/grid';
 import { IccFileDropFacade } from '../../+state/file-drop.facade';
-
-//import { CARSDATA3 } from '../../../data/cars-large';
 
 @Component({
   selector: 'icc-file-drop-grid',
@@ -20,6 +18,13 @@ export class IccFileDropGridComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     verticalScroll: true,
+    columnSort: true,
+    sortFields: [
+      {
+        field: 'fieldName',
+        dir: 'asc',
+      },
+    ],
     pageSize: 1000,
     hideTopbar: true,
     hideGridFooter: true,
@@ -42,5 +47,4 @@ export class IccFileDropGridComponent {
       name: 'size',
     },
   ];
-  //gridData: IccGridData<any> =  CARSDATA3; //  [gridData]="gridData"
 }
