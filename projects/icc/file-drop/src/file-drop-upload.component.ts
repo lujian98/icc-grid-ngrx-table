@@ -58,7 +58,7 @@ export class IccFileDropUploadComponent {
             fieldName: `filedrop`,
             relativePath: droppedFile.relativePath,
             file: file,
-            name: file.name,
+            filename: file.name,
             type: file.type,
             size: file.size,
             lastModified: file.lastModified,

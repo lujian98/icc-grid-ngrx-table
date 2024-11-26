@@ -179,10 +179,11 @@ export const iccGridFeature = createFeature({
             totalCounts: action.gridData.totalCounts,
           },
           totalCounts: action.gridData.totalCounts,
+          data: action.gridData.data,
           inMemoryData: action.gridData.data,
         };
       }
-      //console.log(' new load data setup grid data = ', newState)
+      console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
     on(gridActions.removeGridDataStore, (state, action) => {

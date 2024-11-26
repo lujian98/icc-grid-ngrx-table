@@ -1,7 +1,7 @@
 import { IccUploadFile } from '@icc/ui/core';
 
 export interface IccFileDropUpload extends IccUploadFile {
-  name: string;
+  filename: string;
   type: string;
   size: number;
   lastModified: number;

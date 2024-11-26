@@ -63,6 +63,7 @@ export class IccGridFacade {
   }
 
   setGridInMemoryData(gridId: string, gridData: IccGridData<any>): void {
+    console.log(' setGridInMemoryData=', gridData);
     this.store.dispatch(gridActions.setGridInMemoryData({ gridId, gridData }));
   }
 
