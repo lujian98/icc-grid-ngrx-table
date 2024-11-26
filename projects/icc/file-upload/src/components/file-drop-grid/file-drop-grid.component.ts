@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig } from '@icc/ui/grid';
-import { IccFileDropFacade } from '../../+state/file-drop.facade';
+import { IccFileUploadFacade } from '../../+state/file-upload.facade';
 
 @Component({
   selector: 'icc-file-drop-grid',
@@ -12,8 +12,8 @@ import { IccFileDropFacade } from '../../+state/file-drop.facade';
   imports: [CommonModule, IccGridComponent],
 })
 export class IccFileDropGridComponent {
-  private fileDropFacade = inject(IccFileDropFacade);
-  gridData$ = this.fileDropFacade.selectUploadFilesGridData$;
+  private fileUploadFacade = inject(IccFileUploadFacade);
+  gridData$ = this.fileUploadFacade.selectUploadFilesGridData$;
 
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,

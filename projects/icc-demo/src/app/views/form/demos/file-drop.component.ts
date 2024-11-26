@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccFileDropEntry, IccFileDropComponent } from '@icc/ui/file-drop';
+import { IccFileDropEntry, IccFileDropComponent } from '@icc/ui/file-upload';
 
 @Component({
   selector: 'app-file-drop',

@@ -19,7 +19,7 @@ export class IccGridinMemoryService {
     columns: IccColumnConfig[],
     inMemoryData: any[],
   ): Observable<IccGridData<T>> {
-    console.log('inMemoryData=', inMemoryData);
+    //console.log('inMemoryData=', inMemoryData);
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);

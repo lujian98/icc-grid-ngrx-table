@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
-import { IccFileDropUpload } from './models/file-drop-upload.model';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
-import { IccFileDropStateModule } from './+state/file-drop-state.module';
-import { IccFileDropFacade } from './+state/file-drop.facade';
+import { IccFileUploadStateModule } from './+state/file-upload-state.module';
+import { IccFileUploadFacade } from './+state/file-upload.facade';
+import { IccFileDropGridComponent } from './components/file-drop-grid/file-drop-grid.component';
 import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
-import { IccFileDropGridComponent } from './components/file-drop-grid/file-drop-grid.component';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccFileUpload } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-drop-upload',
@@ -20,7 +20,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   standalone: true,
   imports: [
     CommonModule,
-    IccFileDropStateModule,
+    IccFileUploadStateModule,
     IccIconModule,
     IccPanelComponent,
     IccPanelTopBarComponent,
@@ -31,8 +31,8 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   ],
 })
 export class IccFileDropUploadComponent {
-  private fileDropFacade = inject(IccFileDropFacade);
-  uploadFiles$ = this.fileDropFacade.selectUploadFiles$;
+  private fileUploadFacade = inject(IccFileUploadFacade);
+  uploadFiles$ = this.fileUploadFacade.selectUploadFiles$;
 
   buttons: IccButtonConfg[] = [
     {
@@ -58,7 +58,7 @@ export class IccFileDropUploadComponent {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          const newFile: IccFileDropUpload = {
+          const newFile: IccFileUpload = {
             fieldName: `filedrop`,
             relativePath: droppedFile.relativePath,
             file: file,
@@ -67,23 +67,25 @@ export class IccFileDropUploadComponent {
             size: file.size,
             lastModified: file.lastModified,
           };
-          this.fileDropFacade.dropUploadFile(newFile);
+          this.fileUploadFacade.dropUploadFile(newFile);
         });
       }
     }
   }
 
-  onChange(event: any): void {
-    this.checked = event.target.checked;
+  onChange(checked: boolean): void {
+    if (typeof checked === 'boolean') {
+      this.checked = checked;
+    }
   }
 
   buttonClick(button: IccButtonConfg): void {
     switch (button.name) {
       case IccButtonType.Reset:
-        this.fileDropFacade.clearUploadFiles();
+        this.fileUploadFacade.clearUploadFiles();
         break;
       case IccButtonType.UploadFile:
-        this.fileDropFacade.uploadFiles('DCR');
+        this.fileUploadFacade.uploadFiles('DCR');
         break;
       default:
         break;

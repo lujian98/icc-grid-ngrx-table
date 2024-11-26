@@ -3,25 +3,25 @@ import { IccUploadFileService } from '@icc/ui/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { concatMap, map } from 'rxjs';
-import * as fileDropActions from './file-drop.actions';
-import { IccFileDropFacade } from './file-drop.facade';
+import * as fileUploadActions from './file-upload.actions';
+import { IccFileUploadFacade } from './file-upload.facade';
 
 @Injectable()
-export class IccFileDropEffects {
+export class IccFileUploadEffects {
   private actions$ = inject(Actions);
   private uploadFileService = inject(IccUploadFileService);
-  private fileDropFacade = inject(IccFileDropFacade);
+  private fileUploadFacade = inject(IccFileUploadFacade);
 
   uploadFiles$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fileDropActions.uploadFiles),
+      ofType(fileUploadActions.uploadFiles),
       concatLatestFrom(() => {
-        return [this.fileDropFacade.selectUploadFiles$];
+        return [this.fileUploadFacade.selectUploadFiles$];
       }),
       concatMap(([action, uploadFiles]) => {
         return this.uploadFileService.sendUploadFiles(action.urlKey, uploadFiles).pipe(
           map(() => {
-            return fileDropActions.uploadFilesSuccess();
+            return fileUploadActions.uploadFilesSuccess();
           }),
         );
       }),
