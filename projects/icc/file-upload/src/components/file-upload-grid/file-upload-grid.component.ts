@@ -19,6 +19,7 @@ export class IccFileUploadGridComponent {
     ...defaultGridConfig,
     verticalScroll: true,
     columnSort: true,
+    columnResize: true,
     sortFields: [
       {
         field: 'fieldName',
@@ -45,10 +46,14 @@ export class IccFileUploadGridComponent {
     {
       name: 'type',
       title: 'ICC.UI.FILE.TYPE',
+      width: 50,
+      align: 'center',
     },
     {
       name: 'size',
       title: 'ICC.UI.FILE.SIZE',
+      width: 50,
+      align: 'center',
     },
   ];
 }
