@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
+import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
@@ -20,6 +21,7 @@ import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-uplo
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     IccFileUploadStateModule,
     IccIconModule,
     IccPanelComponent,
@@ -43,18 +45,7 @@ export class IccFileDropUploadComponent implements OnDestroy {
     return this._fileUploadConfig;
   }
 
-  buttons: IccButtonConfg[] = [
-    {
-      name: IccButtonType.UploadFile,
-      title: 'UploadFile',
-      icon: 'pen-to-square',
-    },
-    {
-      name: IccButtonType.Reset,
-      title: 'Reset',
-      icon: 'right-left',
-    },
-  ];
+  buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
 
   checked = true;
 

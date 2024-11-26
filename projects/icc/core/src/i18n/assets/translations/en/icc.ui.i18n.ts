@@ -1,5 +1,11 @@
 export const ICC = {
   UI: {
+    ACTIONS: {
+      EDIT: 'Edit',
+      ENABLED: 'Enabled',
+      RESET: 'Reset',
+      UPLOAD_FILE: 'Upload File',
+    },
     CALENDAR: {
       TODAY: 'Today',
     },
@@ -15,6 +21,18 @@ export const ICC = {
         MIN_VALUE: 'The minimum value for this field is {{value}}.',
         MAX_VALUE: 'The maximum value for this field is {{value}}.',
       },
+      FIELD_NAME: 'Field Name',
+    },
+    FILE: {
+      FILE: 'File',
+      NAME: 'File Name',
+      TYPE: 'Type',
+      SIZE: 'Size',
+    },
+    FILE_UPLOAD: {
+      DRAG_DROP_FILE: 'Drag & Drop File Fold or Files Here',
+      FILE_DROP_UPLOAD: 'File Drop Upload',
+      FILE_SELECT_UPLOAD: 'File Select Upload',
     },
     GRID: {
       FILTER: 'Filter ...',

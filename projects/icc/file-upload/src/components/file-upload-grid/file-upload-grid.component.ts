@@ -34,17 +34,21 @@ export class IccFileUploadGridComponent {
   columnsConfig: IccColumnConfig[] = [
     {
       name: 'fieldName',
+      title: 'ICC.UI.FIELDS.FIELD_NAME',
       width: 50,
       align: 'center',
     },
     {
       name: 'filename',
+      title: 'ICC.UI.FILE.NAME',
     },
     {
       name: 'type',
+      title: 'ICC.UI.FILE.TYPE',
     },
     {
       name: 'size',
+      title: 'ICC.UI.FILE.SIZE',
     },
   ];
 }

@@ -15,6 +15,18 @@ export const ICC = {
         MIN_VALUE: '此字段的最小值为 {{value}}.',
         MAX_VALUE: '此字段的最大值为 {{value}}.',
       },
+      FIELD_NAME: 'Field Name',
+    },
+    FILE: {
+      FILE: '文件',
+      NAME: 'File Name',
+      TYPE: 'Type',
+      SIZE: 'Size',
+    },
+    FILE_UPLOAD: {
+      DRAG_DROP_FILE: 'Drag & Drop File Fold or Files Here',
+      FILE_DROP_UPLOAD: 'File Drop Upload',
+      FILE_SELECT_UPLOAD: 'File Select Upload',
     },
     GRID: {
       FILTER: '过滤器 ...',

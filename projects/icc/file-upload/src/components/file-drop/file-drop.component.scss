@@ -6,7 +6,7 @@
   div.icc-file-drop__drop-zone--disabled {
     height: 60px;
     border-radius: 30px;
-    color: #001428; // $colors-text-primary;
+    //color: #001428; // $colors-text-primary;
     font-size: 18px;
     font-weight: 400;
     font-family: "Inter", sans-serif; //$font-family-standard;
@@ -23,8 +23,12 @@
     border: 3px dashed #dfe2e5; // $colors-border
   }
 
+  div.icc-file-drop__drop-zone--enabled {
+    border-color: blue; //$colors-text-primary;
+  }
+
   div.icc-file-drop__drop-zone--enabled:hover {
-    border-color: #001428; //$colors-text-primary;
+    border-color: orange; //$colors-text-primary;
   }
 
   div.icc-file-drop__drop-zone--disabled:hover {
@@ -48,7 +52,7 @@
   align-items: center;
   justify-content: center;
   height: 100px;
-  color: #0782d0;
+  //color: #0782d0;
 }
 
 .icc-file-drop__drop-zone-label {

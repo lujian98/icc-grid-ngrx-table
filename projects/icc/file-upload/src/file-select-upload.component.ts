@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccButtonConfg, IccButtonType } from '@icc/ui/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
@@ -20,6 +21,7 @@ import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './m
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     IccFileUploadStateModule,
     IccIconModule,
     IccPanelComponent,
@@ -33,22 +35,12 @@ import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './m
 })
 export class IccFileSelectUploadComponent implements OnDestroy {
   private fileUploadFacade = inject(IccFileUploadFacade);
+  private translateService = inject(TranslateService);
   uploadFiles$ = this.fileUploadFacade.selectUploadFiles$;
   private _fileUploadConfig!: IccFileUploadConfig;
   fieldConfigs: IccUploadFileFieldConfig[] = [];
 
-  buttons: IccButtonConfg[] = [
-    {
-      name: IccButtonType.UploadFile,
-      title: 'UploadFile',
-      icon: 'pen-to-square',
-    },
-    {
-      name: IccButtonType.Reset,
-      title: 'Reset',
-      icon: 'right-left',
-    },
-  ];
+  buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
 
   checked = true;
 
@@ -56,13 +48,14 @@ export class IccFileSelectUploadComponent implements OnDestroy {
   set fileUploadConfig(val: Partial<IccFileUploadConfig>) {
     this._fileUploadConfig = { ...defaultFileUploadConfig, ...val };
     if (this._fileUploadConfig.maxSelectUploads) {
+      const fileI18n = this.translateService.instant('ICC.UI.FILE.FILE');
       this.fieldConfigs = [];
       for (let i = 0; i < this._fileUploadConfig.maxSelectUploads; i++) {
         this.fieldConfigs.push({
           fieldType: 'uploadfile',
           labelWidth: 60,
           fieldName: `file_select_upload_${i + 1}`,
-          fieldLabel: `File ${i + 1}`,
+          fieldLabel: `${fileI18n} ${i + 1}`,
           editable: this.checked,
           clearValue: true,
         });
@@ -102,7 +95,6 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     switch (button.name) {
       case IccButtonType.Reset:
         this.fileUploadFacade.clearUploadFiles();
-        //this.uploadFileFields.toArray().forEach((field) => field.clearValue());
         break;
       case IccButtonType.UploadFile:
         this.fileUploadFacade.uploadFiles(this.fileUploadConfig);

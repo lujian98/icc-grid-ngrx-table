@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { IccIconModule } from '@icc/ui/icon';
@@ -13,7 +14,7 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
+  imports: [CommonModule, TranslateModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
   providers: [IccDynamicOverlayService, IccGridFacade],
 })
 export class IccGridHeaderCellComponent {

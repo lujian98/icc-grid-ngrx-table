@@ -13,6 +13,24 @@ export interface IccButtonConfg {
   icon?: string;
 }
 
+export const IccBUTTONS = {
+  Edit: {
+    name: IccButtonType.Edit,
+    title: 'ICC.UI.ACTIONS.EDIT',
+    icon: 'pen-to-square',
+  },
+  UploadFile: {
+    name: IccButtonType.UploadFile,
+    title: 'ICC.UI.ACTIONS.UPLOAD_FILE',
+    icon: 'pen-to-square',
+  },
+  Reset: {
+    name: IccButtonType.Reset,
+    title: 'ICC.UI.ACTIONS.RESET',
+    icon: 'right-left',
+  },
+};
+
 export const buttons: IccButtonConfg[] = [
   {
     name: IccButtonType.Edit,

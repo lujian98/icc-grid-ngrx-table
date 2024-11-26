@@ -14,6 +14,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccFileDropEntry } from './file-drop-entry';
 import { FileSystemDirectoryEntry, FileSystemEntry, FileSystemFileEntry } from './dom.types';
 import { IccFileDropContentTemplateDirective } from './templates.directive';
@@ -24,7 +25,7 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   styleUrls: ['./file-drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFileDropContentTemplateDirective],
+  imports: [CommonModule, TranslateModule, IccFileDropContentTemplateDirective],
 })
 export class IccFileDropComponent implements OnDestroy {
   @Input()
