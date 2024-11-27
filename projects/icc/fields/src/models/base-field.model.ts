@@ -25,9 +25,3 @@ export const defaultBaseField: Partial<IccBaseField> = {
   clearValue: false,
   editButtons: ['Add', 'Edit'],
 };
-
-export interface IccFormButtonConfg {
-  name: string;
-  title: string;
-  icon?: string;
-}

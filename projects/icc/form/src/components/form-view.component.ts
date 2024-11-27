@@ -11,7 +11,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { isEqual, IccUploadFileService } from '@icc/ui/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { isEqual, IccUploadFileService, IccButtonConfg, IccButtonType } from '@icc/ui/core';
 import {
   IccFieldsComponent,
   IccFieldsetComponent,
@@ -19,7 +20,6 @@ import {
   IccFormField,
   IccNumberFieldConfig,
   IccTextFieldConfig,
-  IccFormButtonConfg,
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccPanelTopBarComponent } from '@icc/ui/panel';
@@ -27,7 +27,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig, IccFormButtonType } from '../models/form.model';
+import { IccFormConfig } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -38,6 +38,7 @@ import { IccFormConfig, IccFormButtonType } from '../models/form.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    TranslateModule,
     FormsModule,
     IccFieldsetComponent,
     IccFormLabelWidthDirective,
@@ -152,54 +153,54 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  buttonVisible(button: IccFormButtonConfg): boolean {
+  buttonVisible(button: IccButtonConfg): boolean {
     switch (button.name) {
-      case IccFormButtonType.View:
-      case IccFormButtonType.Reset:
-      case IccFormButtonType.Save:
-        //case IccFormButtonType.UploadFile:
+      case IccButtonType.View:
+      case IccButtonType.Reset:
+      case IccButtonType.Save:
+        //case IccButtonType.UploadFile:
         return this.formConfig.editable;
-      case IccFormButtonType.Edit:
+      case IccButtonType.Edit:
       default:
         return !this.formConfig.editable;
     }
   }
 
-  buttonDisabled(button: IccFormButtonConfg): boolean {
+  buttonDisabled(button: IccButtonConfg): boolean {
     switch (button.name) {
-      case IccFormButtonType.View:
+      case IccButtonType.View:
         return this.form.dirty;
-      case IccFormButtonType.Reset:
+      case IccButtonType.Reset:
         return !this.form.dirty;
-      case IccFormButtonType.Save:
+      case IccButtonType.Save:
         return !(this.form.dirty && this.form.valid);
-      //case IccFormButtonType.UploadFile:
+      //case IccButtonType.UploadFile:
       //  return !(this.form.dirty && this.form.valid && this.uploadFileService.uploadFiles.length > 0);
-      case IccFormButtonType.Edit:
+      case IccButtonType.Edit:
       default:
         return false;
     }
   }
-  buttonClick(button: IccFormButtonConfg): void {
+  buttonClick(button: IccButtonConfg): void {
     this.formFacade.setFormEditable(this.formConfig.formId, button);
 
     switch (button.name) {
-      case IccFormButtonType.Edit:
+      case IccButtonType.Edit:
         this.editForm(button);
         break;
-      case IccFormButtonType.Refresh:
+      case IccButtonType.Refresh:
         this.refreshForm();
         break;
-      case IccFormButtonType.Reset:
+      case IccButtonType.Reset:
         this.resetForm();
         break;
-      case IccFormButtonType.Save:
+      case IccButtonType.Save:
         this.saveForm();
         break;
-      //case IccFormButtonType.UploadFile:
+      //case IccButtonType.UploadFile:
       //this.uploadFile();
       //  break;
-      case IccFormButtonType.View:
+      case IccButtonType.View:
       default:
         break;
     }
@@ -210,7 +211,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  private editForm(button: IccFormButtonConfg): void {
+  private editForm(button: IccButtonConfg): void {
     this.checkFormValueChanged(this.form.getRawValue());
   }
 

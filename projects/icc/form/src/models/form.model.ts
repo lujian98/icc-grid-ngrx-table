@@ -1,14 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
-import { IccFormField, IccFormButtonConfg } from '@icc/ui/fields';
-
-export enum IccFormButtonType {
-  Edit = 'Edit',
-  Refresh = 'Refresh',
-  Reset = 'Reset',
-  View = 'View',
-  Save = 'Save',
-  UploadFile = 'UploadFile',
-}
+import { IccButtonConfg } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
 
 export interface IccFormConfig {
   formId: string; // auto generated unique id
@@ -22,7 +14,7 @@ export interface IccFormConfig {
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];
   autoFitHeight: boolean;
-  buttons: IccFormButtonConfg[];
+  buttons: IccButtonConfg[];
 }
 
 export interface FormState {

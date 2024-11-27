@@ -3,8 +3,11 @@ export const ICC = {
     ACTIONS: {
       EDIT: 'Edit',
       ENABLED: 'Enabled',
+      REFRESH: 'Refresh',
       RESET: 'Reset',
+      SAVE: 'Save',
       UPLOAD_FILE: 'Upload File',
+      VIEW: 'View',
     },
     CALENDAR: {
       TODAY: 'Today',

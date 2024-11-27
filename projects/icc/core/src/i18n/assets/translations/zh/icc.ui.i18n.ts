@@ -3,6 +3,15 @@ export const ICC = {
     CALENDAR: {
       TODAY: '今天',
     },
+    ACTIONS: {
+      EDIT: 'Edit',
+      ENABLED: 'Enabled',
+      Refresh: 'Refresh',
+      RESET: 'Reset',
+      SAVE: 'Save',
+      UPLOAD_FILE: 'Upload File',
+      View: 'View',
+    },
     FIELDS: {
       DATE: {
         PLACEHOLDER: '选择日期',

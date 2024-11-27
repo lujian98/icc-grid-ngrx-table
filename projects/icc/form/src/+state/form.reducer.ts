@@ -1,43 +1,39 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { IccBUTTONS, IccButtonConfg, IccButtonType } from '@icc/ui/core';
 import * as formActions from './form.actions';
-import { FormState, IccFormButtonType } from '../models/form.model';
+import { FormState } from '../models/form.model';
 import { defaultFormState } from '../models/default-form';
-import { IccFormField, IccFieldsetConfig, defaultBaseField, IccFormButtonConfg } from '@icc/ui/fields';
+import { IccFormField, IccFieldsetConfig, defaultBaseField } from '@icc/ui/fields';
 
 export const initialState: FormState = {};
 
-const viewButton = {
-  name: IccFormButtonType.View,
-  title: 'View',
-};
-
-export function getFormEditable(button: IccFormButtonConfg): boolean {
+export function getFormEditable(button: IccButtonConfg): boolean {
   switch (button.name) {
-    case IccFormButtonType.Refresh:
-    case IccFormButtonType.View:
+    case IccButtonType.Refresh:
+    case IccButtonType.View:
       return false;
-    case IccFormButtonType.Edit:
-    case IccFormButtonType.Reset:
-    case IccFormButtonType.Save:
+    case IccButtonType.Edit:
+    case IccButtonType.Reset:
+    case IccButtonType.Save:
     default:
       return true;
   }
 }
 
-export function getFieldEditable(formField: IccFormField, button: IccFormButtonConfg): boolean {
+export function getFieldEditable(formField: IccFormField, button: IccButtonConfg): boolean {
   switch (button.name) {
-    case IccFormButtonType.Refresh:
-    case IccFormButtonType.View:
+    case IccButtonType.Refresh:
+    case IccButtonType.View:
       return false;
-    case IccFormButtonType.Edit:
-    case IccFormButtonType.Reset:
-    case IccFormButtonType.Save:
+    case IccButtonType.Edit:
+    case IccButtonType.Reset:
+    case IccButtonType.Save:
     default:
       return true;
   }
 }
 
-export function setFormFieldsEditable(formFields: IccFormField[], button: IccFormButtonConfg): IccFormField[] {
+export function setFormFieldsEditable(formFields: IccFormField[], button: IccButtonConfg): IccFormField[] {
   return [
     ...formFields.map((field) => {
       if (field.fieldType === 'fieldset') {
@@ -47,7 +43,7 @@ export function setFormFieldsEditable(formFields: IccFormField[], button: IccFor
           formFields: setFormFieldsEditable(newfield.formFields, button),
         };
       } else {
-        if (button.name === IccFormButtonType.Reset || button.name === IccFormButtonType.Save) {
+        if (button.name === IccButtonType.Reset || button.name === IccButtonType.Save) {
           return { ...field };
         } else {
           const editButtons = field.editButtons ? field.editButtons : defaultBaseField.editButtons;
@@ -79,7 +75,7 @@ export const iccFormFeature = createFeature({
       const newState: FormState = { ...state };
       if (state[key]) {
         const formConfig = { ...state[key].formConfig, ...action.formConfig };
-        const formFields = setFormFieldsEditable(state[key].formFields, viewButton);
+        const formFields = setFormFieldsEditable(state[key].formFields, IccBUTTONS.View);
         newState[key] = {
           ...state[key],
           formConfig,
@@ -93,7 +89,7 @@ export const iccFormFeature = createFeature({
       const key = action.formConfig.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
-        const formFields = setFormFieldsEditable(action.formFields, viewButton);
+        const formFields = setFormFieldsEditable(action.formFields, IccBUTTONS.View);
         newState[key] = {
           ...state[key],
           formFields,

@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccUploadFile } from '@icc/ui/core';
+import { IccButtonConfg } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
-import { IccFormButtonConfg } from '@icc/ui/fields';
 import * as formActions from './form.actions';
 import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
 
@@ -32,7 +31,7 @@ export class IccFormFacade {
     this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
   }
 
-  setFormEditable(formId: string, button: IccFormButtonConfg): void {
+  setFormEditable(formId: string, button: IccButtonConfg): void {
     this.store.dispatch(formActions.setFormEditable({ formId, button }));
   }
 

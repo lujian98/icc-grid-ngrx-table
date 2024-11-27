@@ -1,32 +1,12 @@
-import { IccFormConfig, IccFormState, IccFormButtonType } from './form.model';
-import { IccFormButtonConfg } from '@icc/ui/fields';
+import { IccFormConfig, IccFormState } from './form.model';
+import { IccBUTTONS, IccButtonConfg } from '@icc/ui/core';
 
-export const buttons: IccFormButtonConfg[] = [
-  {
-    name: IccFormButtonType.Edit,
-    title: 'Edit',
-    icon: 'pen-to-square',
-  },
-  {
-    name: IccFormButtonType.Refresh,
-    title: 'Refresh',
-    icon: 'refresh',
-  },
-  {
-    name: IccFormButtonType.Save,
-    title: 'Save',
-    icon: 'floppy-disk',
-  },
-  {
-    name: IccFormButtonType.Reset,
-    title: 'Reset',
-    icon: 'right-left',
-  },
-  {
-    name: IccFormButtonType.View,
-    title: 'View',
-    icon: 'glasses',
-  },
+export const buttons: IccButtonConfg[] = [
+  IccBUTTONS.Edit,
+  IccBUTTONS.Refresh,
+  IccBUTTONS.Save,
+  IccBUTTONS.Reset,
+  IccBUTTONS.View,
 ];
 
 export const defaultFormConfig: IccFormConfig = {

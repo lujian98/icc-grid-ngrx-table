@@ -19,42 +19,29 @@ export const IccBUTTONS = {
     title: 'ICC.UI.ACTIONS.EDIT',
     icon: 'pen-to-square',
   },
-  UploadFile: {
-    name: IccButtonType.UploadFile,
-    title: 'ICC.UI.ACTIONS.UPLOAD_FILE',
-    icon: 'pen-to-square',
+  Refresh: {
+    name: IccButtonType.Refresh,
+    title: 'ICC.UI.ACTIONS.REFRESH',
+    icon: 'refresh',
   },
   Reset: {
     name: IccButtonType.Reset,
     title: 'ICC.UI.ACTIONS.RESET',
     icon: 'right-left',
   },
-};
-
-export const buttons: IccButtonConfg[] = [
-  {
-    name: IccButtonType.Edit,
-    title: 'Edit',
-    icon: 'pen-to-square',
-  },
-  {
-    name: IccButtonType.Refresh,
-    title: 'Refresh',
-    icon: 'refresh',
-  },
-  {
+  Save: {
     name: IccButtonType.Save,
-    title: 'Save',
+    title: 'ICC.UI.ACTIONS.SAVE',
     icon: 'floppy-disk',
   },
-  {
-    name: IccButtonType.Reset,
-    title: 'Reset',
-    icon: 'right-left',
+  UploadFile: {
+    name: IccButtonType.UploadFile,
+    title: 'ICC.UI.ACTIONS.UPLOAD_FILE',
+    icon: 'pen-to-square',
   },
-  {
+  View: {
     name: IccButtonType.View,
-    title: 'View',
+    title: 'ICC.UI.ACTIONS.VIEW',
     icon: 'glasses',
   },
-];
+};
