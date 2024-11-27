@@ -6,7 +6,7 @@
   <i class="fa-solid fa-caret-left"></i>
 </button>
 <span>
-  Page:
+  {{ "ICC.UI.GRID.PAGE" | translate }}:
   <input
     iccInput
     type="number"
@@ -18,7 +18,7 @@
     (input)="valueChanged($event)"
   />
 </span>
-<span> of {{ lastPage }} </span>
+<span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
 <button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
   <i class="fa-solid fa-caret-right"></i>
 </button>
@@ -31,9 +31,14 @@
   <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 
-<span
-  >Page Size:
+<span>
+  {{ "ICC.UI.GRID.PAGE_SIZE" | translate }}:
   <input iccInput type="number" min="1" max="10" [value]="gridConfig.pageSize" autocomplete="off" readonly />
 </span>
 
-<span class="grid-footer-displaying">{{ displaying }}</span>
+<span class="grid-footer-displaying">
+  {{ "ICC.UI.GRID.DISPLAYING" | translate }}
+  {{ displaying }}
+  {{ "ICC.UI.GRID.OF" | translate }}
+  {{ gridConfig.totalCounts }}
+</span>

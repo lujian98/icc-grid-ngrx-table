@@ -34,12 +34,16 @@ export const ICC = {
       SIZE: 'Size',
     },
     FILE_UPLOAD: {
-      DRAG_DROP_FILE: 'Drag & Drop File Fold or Files Here',
+      DRAG_DROP_FILE: 'Drag & Drop File Folder or Files Here',
       FILE_DROP_UPLOAD: 'File Drop Upload',
       FILE_SELECT_UPLOAD: 'File Select Upload',
     },
     GRID: {
+      DISPLAYING: 'Displaying',
       FILTER: 'Filter ...',
+      OF: 'of',
+      PAGE: 'Page',
+      PAGE_SIZE: 'Page Size',
       SORT_ASCENDING: 'Sort Ascending',
       SORT_DESCENDING: 'Sort Descending',
     },

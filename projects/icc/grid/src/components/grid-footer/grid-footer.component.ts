@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
-import { IccLabelDirective, IccSuffixDirective, IccFormFieldComponent } from '@icc/ui/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccInputDirective } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
@@ -13,7 +13,7 @@ import { IccGridConfig } from '../../models/grid-column.model';
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccInputDirective],
+  imports: [CommonModule, TranslateModule, IccInputDirective],
 })
 export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
@@ -48,7 +48,7 @@ export class IccGridFooterComponent implements OnDestroy {
     if (end > this.gridConfig.totalCounts) {
       end = this.gridConfig.totalCounts;
     }
-    return `Displaying ${start} - ${end} of ${this.gridConfig.totalCounts}`;
+    return `${start} - ${end}`;
   }
 
   constructor() {
