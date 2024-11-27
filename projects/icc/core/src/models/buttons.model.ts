@@ -1,4 +1,5 @@
 export enum IccButtonType {
+  ClearAllFilters = 'ClearAllFilters',
   Edit = 'Edit',
   Refresh = 'Refresh',
   Reset = 'Reset',
@@ -14,6 +15,11 @@ export interface IccButtonConfg {
 }
 
 export const IccBUTTONS = {
+  ClearAllFilters: {
+    name: IccButtonType.ClearAllFilters,
+    title: 'ICC.UI.ACTIONS.CLEAR_ALL_FILTERS',
+    icon: 'pen-to-square', // TODO icon
+  },
   Edit: {
     name: IccButtonType.Edit,
     title: 'ICC.UI.ACTIONS.EDIT',
@@ -37,7 +43,7 @@ export const IccBUTTONS = {
   UploadFile: {
     name: IccButtonType.UploadFile,
     title: 'ICC.UI.ACTIONS.UPLOAD_FILE',
-    icon: 'pen-to-square',
+    icon: 'pen-to-square', // TODO icon
   },
   View: {
     name: IccButtonType.View,

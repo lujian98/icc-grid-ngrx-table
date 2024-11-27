@@ -4,6 +4,7 @@ export const ICC = {
       TODAY: '今天',
     },
     ACTIONS: {
+      CLEAR_ALL_FILTERS: 'Clear All Filters',
       EDIT: 'Edit',
       ENABLED: 'Enabled',
       Refresh: 'Refresh',

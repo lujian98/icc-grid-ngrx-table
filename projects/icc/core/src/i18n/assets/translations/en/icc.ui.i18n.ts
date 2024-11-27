@@ -1,6 +1,7 @@
 export const ICC = {
   UI: {
     ACTIONS: {
+      CLEAR_ALL_FILTERS: 'Clear All Filters',
       EDIT: 'Edit',
       ENABLED: 'Enabled',
       REFRESH: 'Refresh',
