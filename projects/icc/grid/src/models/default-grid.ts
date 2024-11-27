@@ -25,6 +25,7 @@ export const defaultGridConfig: IccGridConfig = {
   remoteGridData: false,
   hideTopbar: false,
   hideGridFooter: false,
+  rowHeight: 24, //px
 };
 
 export const defaultState: IccGridState = {

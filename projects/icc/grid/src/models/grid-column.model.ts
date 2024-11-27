@@ -28,6 +28,7 @@ export interface IccGridConfig {
   remoteGridData: boolean;
   hideTopbar: boolean;
   hideGridFooter: boolean;
+  rowHeight: number;
 }
 
 export interface GridState {

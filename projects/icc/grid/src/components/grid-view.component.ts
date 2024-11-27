@@ -164,7 +164,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / 24);
+    const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);

@@ -1,9 +1,13 @@
-<icc-grid-cell *ngIf="gridConfig.rowSelection" class="icc-grid-cell-row-select">
+<icc-grid-cell
+  *ngIf="gridConfig.rowSelection"
+  class="icc-grid-cell-row-select"
+  [ngStyle]="{ height: gridConfig.rowHeight + 'px' }"
+>
   <icc-row-select [isSelected]="selected" (selected)="toggleRowSelection()"> </icc-row-select>
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
-  <icc-grid-cell *ngIf="!column.hidden">
+  <icc-grid-cell *ngIf="!column.hidden" [ngStyle]="{ height: gridConfig.rowHeight + 'px' }">
     <icc-dynamic-grid-cell [record]="record" [column]="column"> </icc-dynamic-grid-cell>
   </icc-grid-cell>
 </ng-container>
