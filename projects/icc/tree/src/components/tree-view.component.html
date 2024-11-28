@@ -1,11 +1,11 @@
-<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
+<div class="grid-header-container" [ngStyle]="{ width: treeConfig.viewportWidth + 'px' }">
   <icc-grid-header
     [ngStyle]="{
       width: tableWidth + 'px',
       'grid-template-columns': gridTemplateColumns,
       left: columnHeaderPosition + 'px',
     }"
-    [gridConfig]="gridConfig"
+    [gridConfig]="treeConfig"
     [columns]="columns"
     (cdkDropListDropped)="onColumnDragDrop($event)"
     (columnResizing)="onColumnResizing($event)"
@@ -17,19 +17,19 @@
 </div>
 
 <cdk-virtual-scroll-viewport
-  [itemSize]="gridConfig.rowHeight"
+  [itemSize]="treeConfig.rowHeight"
   [ngStyle]="{
-    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'hidden',
-    'overflow-y': gridConfig.virtualScroll || gridConfig.verticalScroll ? 'auto' : 'hidden',
+    'overflow-x': treeConfig.horizontalScroll ? 'auto' : 'hidden',
+    'overflow-y': treeConfig.virtualScroll || treeConfig.verticalScroll ? 'auto' : 'hidden',
   }"
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
 >
-  <ng-container *ngIf="gridData$ | async as gridData">
+  <ng-container *ngIf="treeData$ | async as treeData">
     <icc-grid-row
       [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
-      *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index"
-      [gridConfig]="gridConfig"
+      *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
+      [gridConfig]="treeConfig"
       [columns]="columns"
       [record]="record"
     >

@@ -5,15 +5,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { uniqueId, IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  IccGridData,
-  defaultGridConfig,
-  IccGridStateModule,
-  IccGridFacade,
-} from '@icc/ui/grid';
+import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
 import { IccTreeViewComponent } from './components/tree-view.component';
+import { IccTreeConfig, defaultTreeConfig, IccTreeData } from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -25,41 +19,41 @@ import { IccTreeViewComponent } from './components/tree-view.component';
 })
 export class IccTreeComponent<T> implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
-  private _gridConfig!: IccGridConfig;
+  private _treeConfig!: IccTreeConfig;
   private _columnsConfig: IccColumnConfig[] = [];
-  private _gridData!: IccGridData<T>;
-  private gridId = uniqueId(16);
-  gridConfig$!: Observable<IccGridConfig>;
+  private _treeData!: IccTreeData<T>;
+  private treeId = uniqueId(16);
+  treeConfig$!: Observable<IccTreeConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
 
   @Input()
-  set gridConfig(value: Partial<IccGridConfig>) {
-    this.initGridConfig({ ...defaultGridConfig, ...value });
+  set treeConfig(value: Partial<IccTreeConfig>) {
+    this.initGridConfig({ ...defaultTreeConfig, ...value });
   }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
+  get treeConfig(): IccTreeConfig {
+    return this._treeConfig;
   }
 
-  private initGridConfig(value: IccGridConfig): void {
-    this._gridConfig = {
+  private initGridConfig(value: IccTreeConfig): void {
+    this._treeConfig = {
       ...value,
-      gridId: this.gridId,
+      gridId: this.treeId,
     };
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
-    this.gridFacade.initGridConfig(this.gridConfig);
+    this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
+    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
+    this.gridFacade.initGridConfig(this.treeConfig);
   }
 
   @Input()
   set columnsConfig(val: IccColumnConfig[]) {
     this._columnsConfig = val;
-    if (!this.gridConfig) {
-      this.initGridConfig({ ...defaultGridConfig });
+    if (!this.treeConfig) {
+      this.initGridConfig({ ...defaultTreeConfig });
     }
-    if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
+    if (!this.treeConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
+      this.gridFacade.setGridColumnsConfig(this.treeConfig, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {
@@ -67,29 +61,29 @@ export class IccTreeComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set gridData(val: IccGridData<T>) {
-    this._gridData = { ...val };
-    if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridId, this.gridData);
+  set treeData(val: IccTreeData<T>) {
+    this._treeData = { ...val };
+    if (!this.treeConfig.remoteGridData && this.treeData) {
+      this.gridFacade.setGridInMemoryData(this.treeId, this.treeData);
     }
   }
-  get gridData(): IccGridData<T> {
-    return this._gridData;
+  get treeData(): IccTreeData<T> {
+    return this._treeData;
   }
 
   refresh(): void {
-    if (this.gridConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(this.gridId, 1);
+    if (this.treeConfig.virtualScroll) {
+      this.gridFacade.getGridPageData(this.treeId, 1);
     } else {
-      this.gridFacade.getGridData(this.gridId);
+      this.gridFacade.getGridData(this.treeId);
     }
   }
 
   clearFilters(): void {
-    this.gridFacade.setGridColumnFilters(this.gridId, []);
+    this.gridFacade.setGridColumnFilters(this.treeId, []);
   }
 
   ngOnDestroy(): void {
-    this.gridFacade.clearGridDataStore(this.gridId);
+    this.gridFacade.clearGridDataStore(this.treeId);
   }
 }

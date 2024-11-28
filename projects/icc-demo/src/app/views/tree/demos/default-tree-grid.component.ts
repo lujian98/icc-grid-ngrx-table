@@ -1,20 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccColumnConfig, IccGridComponent, IccGridData, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
-import { IccTreeComponent } from '@icc/ui/tree';
+import { IccColumnConfig } from '@icc/ui/grid';
+import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeData } from '@icc/ui/tree';
 import { CARSDATA3 } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-default-tree-grid',
-  template: `<icc-tree [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-tree>`,
+  template: `<icc-tree [treeConfig]="treeConfig" [columnsConfig]="columnsConfig" [treeData]="treeData"></icc-tree>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccTreeComponent],
 })
 export class AppDefaultTreeGridComponent {
-  gridConfig: IccGridConfig = {
-    ...defaultGridConfig,
+  treeConfig: IccTreeConfig = {
+    ...defaultTreeConfig,
     columnSort: true,
     columnFilter: true,
     columnResize: true,
@@ -45,5 +45,5 @@ export class AppDefaultTreeGridComponent {
       align: 'center',
     },
   ];
-  gridData: IccGridData<any> = CARSDATA3;
+  treeData: IccTreeData<any> = CARSDATA3;
 }

@@ -15,7 +15,6 @@ import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import {
   IccColumnConfig,
-  IccGridConfig,
   IccColumnWidth,
   getTableWidth,
   viewportWidthRatio,
@@ -23,11 +22,10 @@ import {
   ROW_SELECTION_CELL_WIDTH,
   DragDropEvent,
   IccGridRowComponent,
-  IccGridData,
-  defaultGridConfig,
-  IccGridStateModule,
   IccGridFacade,
 } from '@icc/ui/grid';
+
+import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree-view',
@@ -39,19 +37,19 @@ import {
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
-  private _gridConfig!: IccGridConfig;
+  private _treeConfig!: IccTreeConfig;
   private _columns: IccColumnConfig[] = [];
   private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
-  gridData$!: Observable<T[]>;
+  treeData$!: Observable<T[]>;
   columnHeaderPosition = 0;
   tableWidth: number = 2000;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
     this._columns = [...val];
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
   get columns(): IccColumnConfig[] {
@@ -59,14 +57,14 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set gridConfig(val: IccGridConfig) {
-    this._gridConfig = { ...val };
-    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+  set treeConfig(val: IccTreeConfig) {
+    this._treeConfig = { ...val };
+    this.treeData$ = this.gridFacade.selectGridData(this.treeConfig.gridId);
+    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
+  get treeConfig(): IccTreeConfig {
+    return this._treeConfig;
   }
 
   set columnWidths(values: IccColumnWidth[]) {
@@ -109,19 +107,19 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     this.setColumWidths(columnWidths, 1);
-    if (this.gridConfig.horizontalScroll) {
+    if (this.treeConfig.horizontalScroll) {
       this.tableWidth = getTableWidth(columnWidths);
     }
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     const columns: IccColumnConfig[] = [...this.columns].map((column, index) => ({
       ...column,
       width: columnWidths[index].width / widthRatio,
     }));
     this.setColumWidths(columnWidths, widthRatio);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+    this.gridFacade.setGridColumnsConfig(this.treeConfig, columns);
   }
 
   onColumnDragDrop(events: DragDropEvent): void {
@@ -129,16 +127,16 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     const currentIndex = this.indexCorrection(events.currentIndex);
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+    this.gridFacade.setGridColumnsConfig(this.treeConfig, columns);
   }
 
   onScrolledIndexChange(index: number): void {
-    if (this.gridConfig.virtualScroll) {
-      const nextPage = this.gridConfig.page + 1;
-      const pageSize = this.gridConfig.pageSize;
+    if (this.treeConfig.virtualScroll) {
+      const nextPage = this.treeConfig.page + 1;
+      const pageSize = this.treeConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
-      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
-        this.gridFacade.getGridPageData(this.gridConfig.gridId, nextPage);
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.treeConfig.totalCounts) {
+        this.gridFacade.getGridPageData(this.treeConfig.gridId, nextPage);
       }
     }
   }
@@ -148,16 +146,16 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private setColumWidths(columns: any[], widthRatio: number): void {
-    if (this.gridConfig.horizontalScroll) {
+    if (this.treeConfig.horizontalScroll) {
       this.tableWidth = getTableWidth(this.columns);
     } else {
-      this.tableWidth = this.gridConfig.viewportWidth;
+      this.tableWidth = this.treeConfig.viewportWidth;
     }
     const colWidths = [...columns]
       .filter((column) => column.hidden !== true)
       .map((column) => widthRatio * column.width! + 'px')
       .join(' ');
-    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
+    this.gridTemplateColumns = this.treeConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
   }
 
   private indexCorrection(idx: number): number {
@@ -172,10 +170,10 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
+    const fitPageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
     const pageSize =
-      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);
+      !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
+    this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
   }
 
   @HostListener('window:resize', ['$event'])
