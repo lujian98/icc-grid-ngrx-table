@@ -16,7 +16,10 @@ export class AppTreeComponent {
   items: IccAccordion[] = [
     {
       name: 'Tree Grid Demo',
-      items: [{ name: '0: Default Tree Grid', link: 'app-default-tree' }],
+      items: [
+        { name: '0: Default Tree Grid', link: 'app-default-tree' },
+        { name: '1: CDK Tree Grid', link: 'app-cdk-tree-grid' },
+      ],
     },
   ];
 }
