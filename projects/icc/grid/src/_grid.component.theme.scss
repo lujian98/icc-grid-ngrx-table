@@ -1,5 +1,6 @@
 @mixin icc-grid-theme() {
-  icc-grid {
+  icc-grid,
+  icc-tree {
     .icc-grid-toolbar,
     icc-grid-footer {
       background-color: icc-theme(icc-grid-toolbar-background-color);

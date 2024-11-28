@@ -1,0 +1,189 @@
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import { BehaviorSubject, Observable, interval, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccColumnWidth,
+  getTableWidth,
+  viewportWidthRatio,
+  IccGridHeaderComponent,
+  ROW_SELECTION_CELL_WIDTH,
+  DragDropEvent,
+  IccGridRowComponent,
+  IccGridData,
+  defaultGridConfig,
+  IccGridStateModule,
+  IccGridFacade,
+} from '@icc/ui/grid';
+
+@Component({
+  selector: 'icc-tree-view',
+  templateUrl: './tree-view.component.html',
+  styleUrls: ['./tree-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
+})
+export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
+  private gridFacade = inject(IccGridFacade);
+  private _gridConfig!: IccGridConfig;
+  private _columns: IccColumnConfig[] = [];
+  private _gridTemplateColumns: string = '';
+  private _columnWidths: IccColumnWidth[] = [];
+  sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+  gridData$!: Observable<T[]>;
+  columnHeaderPosition = 0;
+  tableWidth: number = 2000;
+
+  @Input()
+  set columns(val: IccColumnConfig[]) {
+    this._columns = [...val];
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    this.setColumWidths(this.columns, widthRatio);
+  }
+  get columns(): IccColumnConfig[] {
+    return this._columns;
+  }
+
+  @Input()
+  set gridConfig(val: IccGridConfig) {
+    this._gridConfig = { ...val };
+    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    this.setColumWidths(this.columns, widthRatio);
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
+
+  set columnWidths(values: IccColumnWidth[]) {
+    this._columnWidths = values;
+  }
+
+  get columnWidths(): IccColumnWidth[] {
+    return this._columnWidths;
+  }
+
+  set gridTemplateColumns(value: string) {
+    this._gridTemplateColumns = value;
+  }
+
+  get gridTemplateColumns(): string {
+    return this._gridTemplateColumns;
+  }
+
+  @ViewChild(CdkVirtualScrollViewport, { static: true })
+  private viewport!: CdkVirtualScrollViewport;
+
+  ngAfterViewInit(): void {
+    interval(10)
+      .pipe(take(1))
+      .subscribe(() => this.setViewportPageSize());
+
+    this.sizeChanged$
+      .pipe(
+        skip(1),
+        debounceTime(250),
+        distinctUntilChanged(),
+        switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
+      )
+      .subscribe(() => this.setViewportPageSize());
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  onColumnResizing(columnWidths: IccColumnWidth[]): void {
+    this.setColumWidths(columnWidths, 1);
+    if (this.gridConfig.horizontalScroll) {
+      this.tableWidth = getTableWidth(columnWidths);
+    }
+  }
+
+  onColumnResized(columnWidths: IccColumnWidth[]): void {
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => ({
+      ...column,
+      width: columnWidths[index].width / widthRatio,
+    }));
+    this.setColumWidths(columnWidths, widthRatio);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+  }
+
+  onColumnDragDrop(events: DragDropEvent): void {
+    const previousIndex = this.indexCorrection(events.previousIndex);
+    const currentIndex = this.indexCorrection(events.currentIndex);
+    const columns = [...this.columns];
+    moveItemInArray(columns, previousIndex, currentIndex);
+    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+  }
+
+  onScrolledIndexChange(index: number): void {
+    if (this.gridConfig.virtualScroll) {
+      const nextPage = this.gridConfig.page + 1;
+      const pageSize = this.gridConfig.pageSize;
+      const displayTotal = (nextPage - 1) * pageSize;
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
+        this.gridFacade.getGridPageData(this.gridConfig.gridId, nextPage);
+      }
+    }
+  }
+
+  onViewportScroll(event: any): void {
+    this.columnHeaderPosition = -event.target.scrollLeft;
+  }
+
+  private setColumWidths(columns: any[], widthRatio: number): void {
+    if (this.gridConfig.horizontalScroll) {
+      this.tableWidth = getTableWidth(this.columns);
+    } else {
+      this.tableWidth = this.gridConfig.viewportWidth;
+    }
+    const colWidths = [...columns]
+      .filter((column) => column.hidden !== true)
+      .map((column) => widthRatio * column.width! + 'px')
+      .join(' ');
+    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
+  }
+
+  private indexCorrection(idx: number): number {
+    this.columns.forEach((column, index) => {
+      if (column.hidden && idx >= index) {
+        idx++;
+      }
+    });
+    return idx;
+  }
+
+  private setViewportPageSize(): void {
+    const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
+    const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
+    const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
+    const pageSize =
+      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
+    this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: MouseEvent) {
+    this.sizeChanged$.next(event);
+  }
+
+  ngOnDestroy(): void {
+    this.sizeChanged$.complete();
+  }
+}

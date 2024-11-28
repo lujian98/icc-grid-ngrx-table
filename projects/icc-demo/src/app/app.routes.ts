@@ -9,6 +9,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/grid/grid.routes').then((m) => m.AppGridRoutes),
       },
       {
+        path: 'tree',
+        loadChildren: () => import('./views/tree/tree.routes').then((m) => m.AppTreeGridRoutes),
+      },
+      {
         path: 'select',
         loadChildren: () => import('./views/select/select.routes').then((m) => m.AppSelectRoutes),
       },

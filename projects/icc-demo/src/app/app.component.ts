@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   title = 'icc-demo';
 
   gridUrl = `grid`;
+  treeUrl = `tree`;
   d3Url = `d3`;
   formUrl = `form`;
   selectUrl = `select`;

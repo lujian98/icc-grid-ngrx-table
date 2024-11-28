@@ -1,0 +1,38 @@
+<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
+  <icc-grid-header
+    [ngStyle]="{
+      width: tableWidth + 'px',
+      'grid-template-columns': gridTemplateColumns,
+      left: columnHeaderPosition + 'px',
+    }"
+    [gridConfig]="gridConfig"
+    [columns]="columns"
+    (cdkDropListDropped)="onColumnDragDrop($event)"
+    (columnResizing)="onColumnResizing($event)"
+    (columnResized)="onColumnResized($event)"
+    cdkDropListOrientation="horizontal"
+    cdkDropList
+  >
+  </icc-grid-header>
+</div>
+
+<cdk-virtual-scroll-viewport
+  [itemSize]="gridConfig.rowHeight"
+  [ngStyle]="{
+    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'hidden',
+    'overflow-y': gridConfig.virtualScroll || gridConfig.verticalScroll ? 'auto' : 'hidden',
+  }"
+  (scrolledIndexChange)="onScrolledIndexChange($event)"
+  (scroll)="onViewportScroll($event)"
+>
+  <ng-container *ngIf="gridData$ | async as gridData">
+    <icc-grid-row
+      [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
+      *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index"
+      [gridConfig]="gridConfig"
+      [columns]="columns"
+      [record]="record"
+    >
+    </icc-grid-row>
+  </ng-container>
+</cdk-virtual-scroll-viewport>

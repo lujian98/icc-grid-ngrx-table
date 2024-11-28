@@ -17,7 +17,7 @@ export class AppGridComponent {
     {
       name: 'Grid Demo',
       items: [
-        { name: 'Default Grid', link: 'app-default-grid' },
+        { name: '0: Default Grid', link: 'app-default-grid' },
         { name: '1: Simple Grid', link: 'remote-simple-grid' },
         { name: '2: Grid Sort', link: 'remote-grid-sort' },
         { name: '3: Grid Filter', link: 'remote-grid-filter' },
