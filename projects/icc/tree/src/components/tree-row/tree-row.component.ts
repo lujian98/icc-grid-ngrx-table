@@ -8,6 +8,7 @@ import {
   IccRowSelectComponent,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
+import { IccTreeNodeComponent } from './tree-node/tree-node.component';
 
 @Component({
   selector: 'icc-tree-row',
@@ -18,6 +19,7 @@ import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
   imports: [
     CommonModule,
     IccGridCellViewComponent,
+    IccTreeNodeComponent,
     IccGridCellComponent,
     IccDynamicGridCellComponent,
     IccRowSelectComponent,

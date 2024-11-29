@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  width: 100%;
+
+  .tree-node {
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+}

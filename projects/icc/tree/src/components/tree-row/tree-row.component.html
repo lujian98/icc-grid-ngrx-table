@@ -10,7 +10,7 @@
   *ngIf="treeColumn"
   [ngStyle]="{ height: treeConfig.rowHeight + 'px', 'padding-left': nodePadding + 'px' }"
 >
-  <icc-dynamic-grid-cell [record]="record" [column]="treeColumn"> </icc-dynamic-grid-cell>
+  <icc-tree-node [record]="record" [column]="treeColumn"> </icc-tree-node>
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
