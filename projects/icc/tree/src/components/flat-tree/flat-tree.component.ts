@@ -3,6 +3,17 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTree, CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+import {
+  IccColumnConfig,
+  IccColumnWidth,
+  getTableWidth,
+  viewportWidthRatio,
+  IccGridHeaderComponent,
+  ROW_SELECTION_CELL_WIDTH,
+  DragDropEvent,
+  IccGridRowComponent,
+  IccGridFacade,
+} from '@icc/ui/grid';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccTreeDataSource } from '../../models/tree-datasource';
@@ -28,8 +39,19 @@ function flattenNodes<T>(nodes: IccTreeNode<T>[]): IccTreeNode<T>[] {
   imports: [CommonModule, CdkTreeModule, ScrollingModule, IccButtonComponent, IccIconModule],
 })
 export class IccFlatTreeComponent<T> {
+  private _columns: IccColumnConfig[] = [];
   private _treeData!: IccTreeNode<T>[];
   dataSource = new IccTreeDataSource<IccTreeNode<T>>([]);
+
+  @Input()
+  set columns(val: IccColumnConfig[]) {
+    this._columns = [...val];
+    //const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
+    //this.setColumWidths(this.columns, widthRatio);
+  }
+  get columns(): IccColumnConfig[] {
+    return this._columns;
+  }
 
   @Input()
   set treeData(val: IccTreeNode<T>[]) {
@@ -67,3 +89,25 @@ export class IccFlatTreeComponent<T> {
     return true;
   }
 }
+
+/*
+  flatTreeData: TreeNode[] = [];
+
+  constructor() {
+    const treeData: TreeNode[] = [
+      // Your tree data
+    ];
+    this.flatTreeData = this.flattenTree(treeData, 0);
+  }
+
+  flattenTree(nodes: TreeNode[], level: number): TreeNode[] {
+    const result: TreeNode[] = [];
+    for (const node of nodes) {
+      result.push({ ...node, level });
+      if (node.children) {
+        result.push(...this.flattenTree(node.children, level + 1));
+      }
+    }
+    return result;
+  }
+    */

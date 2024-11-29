@@ -30,7 +30,7 @@ export class IccGridFacade {
 
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
-    if (gridConfig.viewportReady) {
+    if (gridConfig.viewportReady && !gridConfig.isTreeGrid) {
       this.getGridData(gridConfig.gridId);
     }
   }
@@ -84,6 +84,7 @@ export class IccGridFacade {
   }
 
   selectGridInMemoryData(gridId: string): Observable<any[]> {
+    console.log('wwwwwwww selectGridInMemoryData ');
     return this.store.select(selectGridInMemoryData(gridId));
   }
 }

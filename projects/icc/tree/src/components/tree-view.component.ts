@@ -26,6 +26,7 @@ import {
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
+import { IccTreeFacade } from '../+state/tree.facade';
 
 @Component({
   selector: 'icc-tree-view',
@@ -43,6 +44,7 @@ import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
   ],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
+  private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
   private _columns: IccColumnConfig[] = [];
@@ -66,7 +68,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
-    this.treeData$ = this.gridFacade.selectGridData(this.treeConfig.gridId);
+    this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig.gridId);
     const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }

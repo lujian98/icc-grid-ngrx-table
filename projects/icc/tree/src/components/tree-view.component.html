@@ -26,7 +26,7 @@
   (scroll)="onViewportScroll($event)"
 >
   <ng-container *ngIf="treeData$ | async as treeData">
-    <icc-flat-tree [treeData]="treeData"></icc-flat-tree>
+    <icc-flat-tree [columns]="columns" [treeData]="treeData"></icc-flat-tree>
     <!--
 
     <icc-grid-row

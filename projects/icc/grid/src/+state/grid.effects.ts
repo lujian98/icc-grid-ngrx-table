@@ -48,6 +48,7 @@ export class IccGridEffects {
               window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
             } else {
+              console.log(' wwwwwwwwwwwwwwwwwwww loadGridColumnsConfig loaded ');
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
               return gridActions.getGridData({ gridId: gridConfig.gridId });
             }

@@ -2,6 +2,7 @@ import { IccGridConfig, IccGridState } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
+  isTreeGrid: false,
   urlKey: 'grid', // Only for remote grid config and data
   viewportReady: false, // internal use
   columnSort: false,

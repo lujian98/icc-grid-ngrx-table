@@ -8,6 +8,8 @@ import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
 import { IccTreeViewComponent } from './components/tree-view.component';
 import { IccTreeConfig, defaultTreeConfig, IccTreeData, IccTreeNode } from './models/tree-grid.model';
+import { IccTreeStateModule } from './+state/tree-state.module';
+import { IccTreeFacade } from './+state/tree.facade';
 
 @Component({
   selector: 'icc-tree',
@@ -15,9 +17,18 @@ import { IccTreeConfig, defaultTreeConfig, IccTreeData, IccTreeNode } from './mo
   styleUrls: ['./tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, IccIconModule, IccGridStateModule, IccTreeViewComponent, IccButtonComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    IccIconModule,
+    IccTreeStateModule,
+    IccGridStateModule,
+    IccTreeViewComponent,
+    IccButtonComponent,
+  ],
 })
 export class IccTreeComponent<T> implements OnDestroy {
+  private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
   private _columnsConfig: IccColumnConfig[] = [];
@@ -44,6 +55,7 @@ export class IccTreeComponent<T> implements OnDestroy {
     this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
     this.gridFacade.initGridConfig(this.treeConfig);
+    this.treeFacade.initTreeConfig(this.treeConfig);
   }
 
   @Input()
@@ -62,10 +74,10 @@ export class IccTreeComponent<T> implements OnDestroy {
 
   @Input()
   set treeData(val: IccTreeNode<T>[]) {
-    console.log(' 111 tree data=', val);
+    //console.log(' 111 tree data=', val);
     this._treeData = [...val];
     if (!this.treeConfig.remoteGridData && this.treeData) {
-      this.gridFacade.setGridInMemoryData(this.treeId, {
+      this.treeFacade.setTreeInMemoryData(this.treeId, {
         data: this._treeData,
         totalCounts: this._treeData.length,
       });

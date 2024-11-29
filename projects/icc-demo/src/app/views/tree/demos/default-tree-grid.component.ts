@@ -54,7 +54,7 @@ export class AppDefaultTreeGridComponent {
       width: 50,
       align: 'center',
     },
-    /*
+
     {
       name: 'vin',
     },
@@ -65,12 +65,12 @@ export class AppDefaultTreeGridComponent {
       name: 'year',
       width: 50,
       align: 'right',
-    },
+    } /*
     {
       name: 'color',
       width: 80,
       align: 'center',
-    },*/
+    },*/,
   ];
   treeData: IccTreeNode<NestedFoodNode>[] = NESTED_DATA;
 }

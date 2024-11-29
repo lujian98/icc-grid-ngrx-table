@@ -4,6 +4,7 @@ export interface IccTreeConfig extends IccGridConfig {}
 
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
+  isTreeGrid: true,
 };
 
 //export interface IccTreeData<T> extends IccGridData<T> {}
@@ -19,3 +20,19 @@ export interface IccTreeData {
 }
 
 export interface IccTreeNode<T> extends IccTreeData {}
+
+export interface TreeState {
+  [key: string]: IccTreeState;
+}
+
+export interface IccTreeState<T extends object = object> {
+  treeId: string;
+  data: T[];
+  inMemoryData: T[];
+}
+
+export const defaultTreeState: IccTreeState = {
+  treeId: '',
+  data: [],
+  inMemoryData: [],
+};
