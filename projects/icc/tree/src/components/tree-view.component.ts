@@ -145,7 +145,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
       const pageSize = this.treeConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.treeConfig.totalCounts) {
-        this.gridFacade.getGridPageData(this.treeConfig.gridId, nextPage);
+        this.gridFacade.getGridPageData(this.treeConfig, nextPage);
       }
     }
   }

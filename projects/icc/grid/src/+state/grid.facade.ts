@@ -31,40 +31,40 @@ export class IccGridFacade {
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
     if (gridConfig.viewportReady && !gridConfig.isTreeGrid) {
-      this.getGridData(gridConfig.gridId);
+      this.getGridData(gridConfig);
     }
   }
 
-  setGridSortFields(gridId: string, sortFields: IccSortField[]): void {
-    this.store.dispatch(gridActions.setGridSortFields({ gridId, sortFields }));
-    this.getGridData(gridId);
+  setGridSortFields(gridConfig: IccGridConfig, sortFields: IccSortField[]): void {
+    this.store.dispatch(gridActions.setGridSortFields({ gridConfig, sortFields }));
+    this.getGridData(gridConfig);
   }
 
-  setGridColumnFilters(gridId: string, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, columnFilters }));
-    this.getGridData(gridId);
+  setGridColumnFilters(gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridConfig, columnFilters }));
+    this.getGridData(gridConfig);
   }
 
-  setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
-    this.store.dispatch(gridActions.setGridColumnsConfig({ gridId, columnsConfig }));
+  setGridColumnConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnsConfig({ gridConfig, columnsConfig }));
   }
 
-  getGridPageData(gridId: string, page: number): void {
-    this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
-    this.getGridData(gridId);
+  getGridPageData(gridConfig: IccGridConfig, page: number): void {
+    this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
+    this.getGridData(gridConfig);
   }
 
-  getGridData(gridId: string): void {
-    this.store.dispatch(gridActions.getGridData({ gridId }));
+  getGridData(gridConfig: IccGridConfig): void {
+    this.store.dispatch(gridActions.getGridData({ gridConfig }));
   }
 
-  setGridData(gridId: string, gridData: IccGridData<any>): void {
-    this.store.dispatch(gridActions.getGridDataSuccess({ gridId, gridData }));
+  setGridData(gridConfig: IccGridConfig, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.getGridDataSuccess({ gridConfig, gridData }));
   }
 
-  setGridInMemoryData(gridId: string, gridData: IccGridData<any>): void {
-    this.store.dispatch(gridActions.setGridInMemoryData({ gridId, gridData }));
-    this.getGridData(gridId);
+  setGridInMemoryData(gridConfig: IccGridConfig, gridData: IccGridData<any>): void {
+    this.store.dispatch(gridActions.setGridInMemoryData({ gridConfig, gridData }));
+    this.getGridData(gridConfig);
   }
 
   clearGridDataStore(gridId: string): void {
@@ -79,12 +79,12 @@ export class IccGridFacade {
     return this.store.select(selectColumnsConfig(gridId));
   }
 
-  selectGridData(gridId: string): Observable<any[]> {
-    return this.store.select(selectGridData(gridId));
+  selectGridData(gridConfig: IccGridConfig): Observable<any[]> {
+    return this.store.select(selectGridData(gridConfig));
   }
 
-  selectGridInMemoryData(gridId: string): Observable<any[]> {
+  selectGridInMemoryData(gridConfig: IccGridConfig): Observable<any[]> {
     console.log('wwwwwwww selectGridInMemoryData ');
-    return this.store.select(selectGridInMemoryData(gridId));
+    return this.store.select(selectGridInMemoryData(gridConfig));
   }
 }

@@ -82,7 +82,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridSortFields, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -98,7 +98,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridColumnFilters, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -114,7 +114,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setViewportPage, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -128,7 +128,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridColumnsConfig, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -145,7 +145,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.getGridDataSuccess, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -168,7 +168,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {
-      const key = action.gridId;
+      const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       //console.log(' old state=', state)
       if (state[key]) {

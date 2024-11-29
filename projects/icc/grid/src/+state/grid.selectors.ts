@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { GridState } from '../models/grid-column.model';
+import { GridState, IccGridConfig } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 
 const featureSelector = createFeatureSelector('iccGrid');
@@ -22,20 +22,22 @@ export const selectColumnsConfig = (gridId: string) =>
     },
   );
 
-export const selectGridData = (gridId: string) =>
+export const selectGridData = (gridConfig: IccGridConfig) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: GridState) => {
+      const gridId = gridConfig.gridId;
       return state[gridId] ? state[gridId].data : [];
     },
   );
 
-export const selectGridInMemoryData = (gridId: string) =>
+export const selectGridInMemoryData = (gridConfig: IccGridConfig) =>
   createSelector(
     // @ts-ignore
     featureSelector,
     (state: GridState) => {
+      const gridId = gridConfig.gridId;
       return state[gridId] ? state[gridId].inMemoryData : [];
     },
   );

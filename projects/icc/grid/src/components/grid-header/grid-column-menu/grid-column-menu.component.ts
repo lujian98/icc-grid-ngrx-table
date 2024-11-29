@@ -95,7 +95,7 @@ export class IccGridColumnMenuComponent {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortFields(this.gridId, [sort]);
+    this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
   }
 
   private columnHideShow(item: IccMenuItem, columns: IccColumnConfig[]): void {
@@ -104,6 +104,6 @@ export class IccGridColumnMenuComponent {
       ...column,
       hidden: !item.checked,
     };
-    this.gridFacade.setGridColumnConfig(this.gridId, col);
+    this.gridFacade.setGridColumnConfig(this.gridConfig, col);
   }
 }

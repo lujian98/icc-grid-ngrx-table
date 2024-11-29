@@ -80,7 +80,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
         value: this.value,
       });
     }
-    this.gridFacade.setGridColumnFilters(this.gridConfig.gridId, columnFilters);
+    this.gridFacade.setGridColumnFilters(this.gridConfig, columnFilters);
   }
 
   ngOnDestroy(): void {

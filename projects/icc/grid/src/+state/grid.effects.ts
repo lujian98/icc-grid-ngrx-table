@@ -50,7 +50,7 @@ export class IccGridEffects {
             } else {
               console.log(' wwwwwwwwwwwwwwwwwwww loadGridColumnsConfig loaded ');
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
-              return gridActions.getGridData({ gridId: gridConfig.gridId });
+              return gridActions.getGridData({ gridConfig });
             }
           }),
         );
@@ -65,24 +65,23 @@ export class IccGridEffects {
       //delay(10),
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.gridId),
-          this.gridFacade.selectColumnsConfig(action.gridId),
-          this.gridFacade.selectGridInMemoryData(action.gridId),
+          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
+          this.gridFacade.selectColumnsConfig(action.gridConfig.gridId),
+          this.gridFacade.selectGridInMemoryData(action.gridConfig),
         ];
       }),
       switchMap(([action, gridConfig, columns, inMemoryData]) => {
-        const gridId = action.gridId;
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
             map((gridData) => {
               //console.log( ' remoteGridData loaded ')
-              return gridActions.getGridDataSuccess({ gridId, gridData });
+              return gridActions.getGridDataSuccess({ gridConfig, gridData });
             }),
           );
         } else {
           return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
             map((gridData) => {
-              return gridActions.getGridDataSuccess({ gridId, gridData });
+              return gridActions.getGridDataSuccess({ gridConfig, gridData });
             }),
           );
         }

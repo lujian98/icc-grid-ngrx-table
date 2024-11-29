@@ -52,7 +52,7 @@ export class IccGridHeaderCellComponent {
           dir: 'asc',
         };
       }
-      this.gridFacade.setGridSortFields(this.gridConfig.gridId, [sort]);
+      this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
     }
   }
 

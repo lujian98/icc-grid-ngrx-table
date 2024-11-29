@@ -75,7 +75,7 @@ export class IccGridComponent<T> implements OnDestroy {
   set gridData(val: IccGridData<T>) {
     this._gridData = { ...val };
     if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridId, this.gridData);
+      this.gridFacade.setGridInMemoryData(this.gridConfig, this.gridData);
     }
   }
   get gridData(): IccGridData<T> {
@@ -84,14 +84,14 @@ export class IccGridComponent<T> implements OnDestroy {
 
   refresh(): void {
     if (this.gridConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(this.gridId, 1);
+      this.gridFacade.getGridPageData(this.gridConfig, 1);
     } else {
-      this.gridFacade.getGridData(this.gridId);
+      this.gridFacade.getGridData(this.gridConfig);
     }
   }
 
   clearFilters(): void {
-    this.gridFacade.setGridColumnFilters(this.gridId, []);
+    this.gridFacade.setGridColumnFilters(this.gridConfig, []);
   }
 
   ngOnDestroy(): void {

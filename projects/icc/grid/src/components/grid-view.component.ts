@@ -53,7 +53,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig.gridId);
+    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -130,7 +130,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
-        this.gridFacade.getGridPageData(this.gridConfig.gridId, nextPage);
+        this.gridFacade.getGridPageData(this.gridConfig, nextPage);
       }
     }
   }
