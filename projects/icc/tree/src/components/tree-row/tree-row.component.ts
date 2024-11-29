@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   IccColumnConfig,
-  IccGridCellViewComponent,
   IccGridCellComponent,
   IccDynamicGridCellComponent,
   IccRowSelectComponent,
@@ -18,7 +17,6 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
   standalone: true,
   imports: [
     CommonModule,
-    IccGridCellViewComponent,
     IccTreeNodeComponent,
     IccGridCellComponent,
     IccDynamicGridCellComponent,

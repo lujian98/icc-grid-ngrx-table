@@ -9,11 +9,13 @@ export const defaultTreeConfig: IccTreeConfig = {
 
 export interface IccTreeData {
   //id?: string;
-  level?: number;
   name: string;
+  level?: number;
+  leaf?: boolean;
+  expanded?: boolean;
   //icon?: string | SunIconConfig;
   //readonly?: boolean;
-  //leaf?: boolean;
+  //
   children?: IccTreeData[];
   //contextMenu?: SunMenuItem[];
 }

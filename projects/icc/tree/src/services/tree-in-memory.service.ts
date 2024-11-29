@@ -7,7 +7,8 @@ import { IccTreeConfig, IccTreeData, IccTreeNode } from '../models/tree-grid.mod
 function flattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTreeNode<T>[] {
   const result: IccTreeNode<T>[] = [];
   for (const node of nodes) {
-    result.push({ ...node, level });
+    const leaf = node.children ? false : true;
+    result.push({ ...node, level, leaf });
     if (node.children) {
       result.push(...flattenTree(node.children, level + 1));
     }
