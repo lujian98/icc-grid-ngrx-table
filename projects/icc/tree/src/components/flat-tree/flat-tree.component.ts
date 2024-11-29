@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy, Component, ViewChild, Input } from '@angular/c
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../../models/tree-grid.model';
+import { IccTreeDataSource } from '../../models/tree-datasource';
 
 function flattenNodes(nodes: NestedFoodNode[]): NestedFoodNode[] {
   const flattenedNodes = [];

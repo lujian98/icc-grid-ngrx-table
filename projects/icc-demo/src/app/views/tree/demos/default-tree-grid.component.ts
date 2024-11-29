@@ -1,12 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig } from '@icc/ui/grid';
-import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeData } from '@icc/ui/tree';
+import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeNode } from '@icc/ui/tree';
 import { CARSDATA3 } from '../../../data/cars-large';
 
-const NESTED_DATA = [
+interface NestedFoodNode {
+  name: string;
+  test?: string;
+  children?: NestedFoodNode[];
+}
+
+const NESTED_DATA: NestedFoodNode[] = [
   {
     name: 'Fruit',
+    test: 'aaa',
     children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
   },
   {
@@ -23,11 +30,6 @@ const NESTED_DATA = [
     ],
   },
 ];
-
-const TREE_DATA = {
-  data: NESTED_DATA,
-  totalCounts: NESTED_DATA.length,
-};
 
 @Component({
   selector: 'app-default-tree-grid',
@@ -71,5 +73,5 @@ export class AppDefaultTreeGridComponent {
       align: 'center',
     },*/
   ];
-  treeData: IccTreeData<any> = TREE_DATA;
+  treeData: IccTreeNode<NestedFoodNode>[] = NESTED_DATA;
 }

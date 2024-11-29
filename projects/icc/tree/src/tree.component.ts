@@ -7,7 +7,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
 import { IccTreeViewComponent } from './components/tree-view.component';
-import { IccTreeConfig, defaultTreeConfig, IccTreeData } from './models/tree-grid.model';
+import { IccTreeConfig, defaultTreeConfig, IccTreeData, IccTreeNode } from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -21,7 +21,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
   private _columnsConfig: IccColumnConfig[] = [];
-  private _treeData!: IccTreeData<T>;
+  private _treeData!: IccTreeNode<T>[];
   private treeId = uniqueId(16);
   treeConfig$!: Observable<IccTreeConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
@@ -61,14 +61,17 @@ export class IccTreeComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set treeData(val: any) {
+  set treeData(val: IccTreeNode<T>[]) {
     console.log(' 111 tree data=', val);
-    this._treeData = { ...val };
+    this._treeData = [...val];
     if (!this.treeConfig.remoteGridData && this.treeData) {
-      this.gridFacade.setGridInMemoryData(this.treeId, this.treeData);
+      this.gridFacade.setGridInMemoryData(this.treeId, {
+        data: this._treeData,
+        totalCounts: this._treeData.length,
+      });
     }
   }
-  get treeData(): any {
+  get treeData(): IccTreeNode<T>[] {
     return this._treeData;
   }
 
