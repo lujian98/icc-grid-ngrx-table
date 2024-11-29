@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig } from '@icc/ui/grid';
 import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeNode } from '@icc/ui/tree';
-import { CARSDATA3 } from '../../../data/cars-large';
 
 interface NestedFoodNode {
   name: string;

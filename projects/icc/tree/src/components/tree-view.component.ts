@@ -24,7 +24,7 @@ import {
   IccGridRowComponent,
   IccGridFacade,
 } from '@icc/ui/grid';
-import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../models/tree-grid.model';
+import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
 
 @Component({
@@ -49,7 +49,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
-  treeData$!: Observable<T[]>;
+  treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
   tableWidth: number = 2000;
 

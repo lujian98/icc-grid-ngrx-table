@@ -1,15 +1,14 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ArrayDataSource } from '@angular/cdk/collections';
-import { CdkTree, CdkTreeModule } from '@angular/cdk/tree';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkTree, CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewChild, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../../models/tree-grid.model';
 import { IccTreeDataSource } from '../../models/tree-datasource';
+import { IccTreeNode } from '../../models/tree-grid.model';
 
-function flattenNodes(nodes: NestedFoodNode[]): NestedFoodNode[] {
+function flattenNodes<T>(nodes: IccTreeNode<T>[]): IccTreeNode<T>[] {
   const flattenedNodes = [];
   for (const node of nodes) {
     flattenedNodes.push(node);
@@ -20,33 +19,6 @@ function flattenNodes(nodes: NestedFoodNode[]): NestedFoodNode[] {
   return flattenedNodes;
 }
 
-interface NestedFoodNode {
-  name: string;
-  children?: NestedFoodNode[];
-}
-
-/*
-const NESTED_DATA: NestedFoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts' }],
-      },
-      {
-        name: 'Orange',
-        children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
-      },
-    ],
-  },
-];
-*/
-
 @Component({
   selector: 'icc-flat-tree',
   templateUrl: './flat-tree.component.html',
@@ -56,37 +28,35 @@ const NESTED_DATA: NestedFoodNode[] = [
   imports: [CommonModule, CdkTreeModule, ScrollingModule, IccButtonComponent, IccIconModule],
 })
 export class IccFlatTreeComponent<T> {
-  private _treeData!: NestedFoodNode[];
-  dataSource!: ArrayDataSource<NestedFoodNode>; // = new ArrayDataSource(NESTED_DATA);
+  private _treeData!: IccTreeNode<T>[];
+  dataSource = new IccTreeDataSource<IccTreeNode<T>>([]);
+
   @Input()
-  set treeData(val: any) {
-    console.log(' flat tree data=', val);
+  set treeData(val: IccTreeNode<T>[]) {
+    //console.log(' flat tree data=', val);
     this._treeData = val;
-    // TODO custom data source
-    this.dataSource = new ArrayDataSource(this._treeData);
+    this.dataSource.data = this._treeData;
   }
-  get treeData(): any {
+  get treeData(): IccTreeNode<T>[] {
     return this._treeData;
   }
 
-  @ViewChild(CdkTree) tree!: CdkTree<NestedFoodNode>;
+  @ViewChild(CdkTree) tree!: CdkTree<IccTreeNode<T>>;
 
-  childrenAccessor = (dataNode: NestedFoodNode) => dataNode.children ?? [];
-  //dataSource = new ArrayDataSource(NESTED_DATA);
+  childrenAccessor = (dataNode: IccTreeNode<T>) => dataNode.children ?? [];
 
-  hasChild = (_: number, node: NestedFoodNode) => !!node.children?.length;
+  hasChild = (_: number, node: IccTreeNode<T>) => !!node.children?.length;
 
-  getParentNode(node: NestedFoodNode) {
+  private getParentNode(node: IccTreeNode<T>): IccTreeNode<T> | null {
     for (const parent of flattenNodes(this.treeData)) {
       if (parent.children?.includes(node)) {
         return parent;
       }
     }
-
     return null;
   }
 
-  shouldRender(node: NestedFoodNode) {
+  shouldRender(node: IccTreeNode<T>): boolean {
     let parent = this.getParentNode(node);
     while (parent) {
       if (!this.tree.isExpanded(parent)) {

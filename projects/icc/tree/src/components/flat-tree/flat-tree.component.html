@@ -1,4 +1,4 @@
-<cdk-tree *ngIf="dataSource" #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+<cdk-tree *ngIf="dataSource.data.length > 0" #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
   <!-- This is the tree node template for leaf nodes -->
   <cdk-tree-node
     *cdkTreeNodeDef="let node"
