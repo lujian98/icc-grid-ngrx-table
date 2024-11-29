@@ -5,14 +5,15 @@ import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeNode } from 
 
 interface NestedFoodNode {
   name: string;
-  test?: string;
+  vin?: string;
+  year?: string;
   children?: NestedFoodNode[];
 }
 
 const NESTED_DATA: NestedFoodNode[] = [
   {
     name: 'Fruit',
-    test: 'aaa',
+    vin: 'aaa',
     children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
   },
   {
@@ -24,6 +25,7 @@ const NESTED_DATA: NestedFoodNode[] = [
       },
       {
         name: 'Orange',
+        year: '1990',
         children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
       },
     ],
@@ -52,7 +54,7 @@ export class AppDefaultTreeGridComponent {
     {
       name: 'name',
       width: 50,
-      align: 'center',
+      align: 'left',
     },
 
     {

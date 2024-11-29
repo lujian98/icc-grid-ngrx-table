@@ -21,12 +21,13 @@ import {
   IccGridHeaderComponent,
   ROW_SELECTION_CELL_WIDTH,
   DragDropEvent,
-  IccGridRowComponent,
+  //IccGridRowComponent,
   IccGridFacade,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
 import { IccTreeFacade } from '../+state/tree.facade';
+import { IccTreeRowComponent } from './tree-row/tree-row.component';
 
 @Component({
   selector: 'icc-tree-view',
@@ -39,7 +40,7 @@ import { IccTreeFacade } from '../+state/tree.facade';
     DragDropModule,
     ScrollingModule,
     IccGridHeaderComponent,
-    IccGridRowComponent,
+    IccTreeRowComponent,
     IccFlatTreeComponent,
   ],
 })
@@ -58,6 +59,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set columns(val: IccColumnConfig[]) {
     this._columns = [...val];
+    console.log(' column=', this.columns);
     const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }

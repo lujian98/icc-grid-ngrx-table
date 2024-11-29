@@ -1,0 +1,54 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  IccColumnConfig,
+  IccGridCellViewComponent,
+  IccGridCellComponent,
+  IccDynamicGridCellComponent,
+  IccRowSelectComponent,
+} from '@icc/ui/grid';
+import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
+
+@Component({
+  selector: 'icc-tree-row',
+  templateUrl: './tree-row.component.html',
+  styleUrls: ['./tree-row.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    IccGridCellViewComponent,
+    IccGridCellComponent,
+    IccDynamicGridCellComponent,
+    IccRowSelectComponent,
+  ],
+})
+export class IccTreeRowComponent<T> {
+  @Input() columns: IccColumnConfig[] = [];
+  @Input() treeConfig!: IccTreeConfig;
+  @Input() record!: IccTreeNode<T>;
+  @Input() selected = false;
+
+  @Output() toggleRow = new EventEmitter<any>();
+
+  get treeColumn(): IccColumnConfig | undefined {
+    return this.columns.find((col) => col.name === 'name');
+  }
+
+  get nodePadding(): number {
+    return (this.record.level! + 1) * 10;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  toggleRowSelection() {
+    //console.log( ' row columns=', this.columns)
+    //console.log( ' row record=', this.record)
+    this.toggleRow.emit({
+      dataItem: this.record,
+      //selectionType: this.selectionType
+    });
+  }
+}
