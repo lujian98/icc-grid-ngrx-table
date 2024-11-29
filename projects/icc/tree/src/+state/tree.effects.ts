@@ -24,13 +24,13 @@ export class IccTreeEffects {
       debounceTime(10), // debounce with switchMap may lose data if two or more tree pull, but will cancel previous call
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.treeId),
-          this.gridFacade.selectColumnsConfig(action.treeId),
-          this.treeFacade.selectTreeInMemoryData(action.treeId),
+          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
+          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
+          this.treeFacade.selectTreeInMemoryData(action.treeConfig),
         ];
       }),
       switchMap(([action, treeConfig, columns, inMemoryData]) => {
-        const treeId = action.treeId;
+        const treeId = action.treeConfig.gridId;
         /*
         if (treeConfig.remoteTreeData) {
           return this.treeService.getTreeData(treeConfig, columns).pipe(
@@ -43,7 +43,7 @@ export class IccTreeEffects {
          */
         return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
           map((treeData) => {
-            return treeActions.getTreeDataSuccess({ treeId, treeData });
+            return treeActions.getTreeDataSuccess({ treeConfig, treeData });
           }),
         );
         //}

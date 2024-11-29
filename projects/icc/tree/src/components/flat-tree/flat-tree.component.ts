@@ -30,6 +30,17 @@ function flattenNodes<T>(nodes: IccTreeNode<T>[]): IccTreeNode<T>[] {
   return flattenedNodes;
 }
 
+function flattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTreeNode<T>[] {
+  const result: IccTreeNode<T>[] = [];
+  for (const node of nodes) {
+    result.push({ ...node, level });
+    if (node.children) {
+      result.push(...flattenTree(node.children, level + 1));
+    }
+  }
+  return result;
+}
+
 @Component({
   selector: 'icc-flat-tree',
   templateUrl: './flat-tree.component.html',
@@ -55,9 +66,11 @@ export class IccFlatTreeComponent<T> {
 
   @Input()
   set treeData(val: IccTreeNode<T>[]) {
-    //console.log(' flat tree data=', val);
+    console.log(' flat tree data=', val);
     this._treeData = val;
     this.dataSource.data = this._treeData;
+    const flatTree = flattenTree(this._treeData, 0);
+    console.log(' flat flatTree=', flatTree);
   }
   get treeData(): IccTreeNode<T>[] {
     return this._treeData;

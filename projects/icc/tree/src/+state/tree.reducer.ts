@@ -4,6 +4,11 @@ import { IccTreeConfig, TreeState, defaultTreeState } from '../models/tree-grid.
 
 export const initialState: TreeState = {};
 
+/*
+      const gridConfig = { ...action.gridConfig };
+      const key = gridConfig.gridId;
+      const newState: GridState = { ...state };
+      */
 export const iccTreeFeature = createFeature({
   name: 'iccTree',
   reducer: createReducer(
@@ -14,32 +19,32 @@ export const iccTreeFeature = createFeature({
       const newState: TreeState = { ...state };
       newState[key] = {
         ...defaultTreeState,
-        treeId: key,
+        treeConfig,
       };
       return { ...newState };
     }),
     on(treeActions.getTreeDataSuccess, (state, action) => {
-      const key = action.treeId;
+      const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
 
         newState[key] = {
           ...oldState,
-          data: [...action.treeData.data],
+          data: [...action.treeData],
         };
       }
       console.log(' new load data setup tree data = ', newState);
       return { ...newState };
     }),
     on(treeActions.setTreeInMemoryData, (state, action) => {
-      const key = action.treeId;
+      const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
       //console.log(' old state=', state)
       if (state[key]) {
         newState[key] = {
           ...state[key],
-          inMemoryData: action.treeData.data,
+          inMemoryData: [...action.treeData],
         };
       }
       console.log(' new load data setTreeInMemoryData tree data = ', newState);

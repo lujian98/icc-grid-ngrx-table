@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as treeActions from './tree.actions';
 import { selectTreeData, selectTreeInMemoryData } from './tree.selectors';
-import { IccTreeConfig } from '../models/tree-grid.model';
+import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 
 @Injectable()
 export class IccTreeFacade {
@@ -38,28 +38,28 @@ export class IccTreeFacade {
 
   */
 
-  getTreeData(treeId: string): void {
-    this.store.dispatch(treeActions.getTreeData({ treeId }));
+  getTreeData(treeConfig: IccTreeConfig): void {
+    this.store.dispatch(treeActions.getTreeData({ treeConfig }));
   }
 
-  setTreeData(treeId: string, treeData: any): void {
-    this.store.dispatch(treeActions.getTreeDataSuccess({ treeId, treeData }));
+  setTreeData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
+    this.store.dispatch(treeActions.getTreeDataSuccess({ treeConfig, treeData }));
   }
 
-  setTreeInMemoryData(treeId: string, treeData: any): void {
-    this.store.dispatch(treeActions.setTreeInMemoryData({ treeId, treeData }));
-    this.getTreeData(treeId);
+  setTreeInMemoryData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
+    this.store.dispatch(treeActions.setTreeInMemoryData({ treeConfig, treeData }));
+    this.getTreeData(treeConfig);
   }
 
   clearTreeDataStore(treeId: string): void {
     this.store.dispatch(treeActions.clearTreeDataStore({ treeId }));
   }
 
-  selectTreeData(treeId: string): Observable<any[]> {
-    return this.store.select(selectTreeData(treeId));
+  selectTreeData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
+    return this.store.select(selectTreeData(treeConfig));
   }
 
-  selectTreeInMemoryData(treeId: string): Observable<any[]> {
-    return this.store.select(selectTreeInMemoryData(treeId));
+  selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
+    return this.store.select(selectTreeInMemoryData(treeConfig));
   }
 }

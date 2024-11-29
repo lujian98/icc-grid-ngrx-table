@@ -1,4 +1,4 @@
-import { IccGridConfig, IccGridData, defaultGridConfig } from '@icc/ui/grid';
+import { IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
 export interface IccTreeConfig extends IccGridConfig {}
 
@@ -7,10 +7,9 @@ export const defaultTreeConfig: IccTreeConfig = {
   isTreeGrid: true,
 };
 
-//export interface IccTreeData<T> extends IccGridData<T> {}
-
 export interface IccTreeData {
   //id?: string;
+  level?: number;
   name: string;
   //icon?: string | SunIconConfig;
   //readonly?: boolean;
@@ -26,13 +25,15 @@ export interface TreeState {
 }
 
 export interface IccTreeState<T extends object = object> {
-  treeId: string;
-  data: T[];
-  inMemoryData: T[];
+  //treeId: string;
+  treeConfig: IccTreeConfig;
+  data: IccTreeNode<T>[];
+  inMemoryData: IccTreeNode<T>[];
 }
 
 export const defaultTreeState: IccTreeState = {
-  treeId: '',
+  //treeId: '',
+  treeConfig: defaultTreeConfig,
   data: [],
   inMemoryData: [],
 };

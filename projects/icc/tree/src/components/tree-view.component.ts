@@ -68,7 +68,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
-    this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig.gridId);
+    this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig);
     const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
