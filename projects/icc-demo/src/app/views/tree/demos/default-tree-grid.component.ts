@@ -4,6 +4,31 @@ import { IccColumnConfig } from '@icc/ui/grid';
 import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeData } from '@icc/ui/tree';
 import { CARSDATA3 } from '../../../data/cars-large';
 
+const NESTED_DATA = [
+  {
+    name: 'Fruit',
+    children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
+  },
+  {
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts' }],
+      },
+      {
+        name: 'Orange',
+        children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
+      },
+    ],
+  },
+];
+
+const TREE_DATA = {
+  data: NESTED_DATA,
+  totalCounts: NESTED_DATA.length,
+};
+
 @Component({
   selector: 'app-default-tree-grid',
   template: `<icc-tree [treeConfig]="treeConfig" [columnsConfig]="columnsConfig" [treeData]="treeData"></icc-tree>`,
@@ -24,10 +49,11 @@ export class AppDefaultTreeGridComponent {
 
   columnsConfig: IccColumnConfig[] = [
     {
-      name: 'ID',
+      name: 'name',
       width: 50,
       align: 'center',
     },
+    /*
     {
       name: 'vin',
     },
@@ -43,7 +69,7 @@ export class AppDefaultTreeGridComponent {
       name: 'color',
       width: 80,
       align: 'center',
-    },
+    },*/
   ];
-  treeData: IccTreeData<any> = CARSDATA3;
+  treeData: IccTreeData<any> = TREE_DATA;
 }

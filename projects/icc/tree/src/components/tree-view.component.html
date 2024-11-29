@@ -26,6 +26,9 @@
   (scroll)="onViewportScroll($event)"
 >
   <ng-container *ngIf="treeData$ | async as treeData">
+    <icc-flat-tree [treeData]="treeData"></icc-flat-tree>
+    <!--
+
     <icc-grid-row
       [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
       *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
@@ -34,5 +37,6 @@
       [record]="record"
     >
     </icc-grid-row>
+        -->
   </ng-container>
 </cdk-virtual-scroll-viewport>

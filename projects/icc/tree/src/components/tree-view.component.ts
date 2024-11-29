@@ -24,8 +24,8 @@ import {
   IccGridRowComponent,
   IccGridFacade,
 } from '@icc/ui/grid';
-
 import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../models/tree-grid.model';
+import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
 
 @Component({
   selector: 'icc-tree-view',
@@ -33,7 +33,14 @@ import { IccTreeConfig, defaultTreeConfig, IccTreeData } from '../models/tree-gr
   styleUrls: ['./tree-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    ScrollingModule,
+    IccGridHeaderComponent,
+    IccGridRowComponent,
+    IccFlatTreeComponent,
+  ],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);

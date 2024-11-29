@@ -61,13 +61,14 @@ export class IccTreeComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set treeData(val: IccTreeData<T>) {
+  set treeData(val: any) {
+    console.log(' 111 tree data=', val);
     this._treeData = { ...val };
     if (!this.treeConfig.remoteGridData && this.treeData) {
       this.gridFacade.setGridInMemoryData(this.treeId, this.treeData);
     }
   }
-  get treeData(): IccTreeData<T> {
+  get treeData(): any {
     return this._treeData;
   }
 
