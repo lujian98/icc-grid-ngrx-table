@@ -42,15 +42,16 @@ export class IccGridEffects {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
-            //console.log( ' loadGridColumnsConfig loaded ')
             if (gridConfig.remoteGridConfig) {
               // remote config will need trigger window resize to load data
               window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
-            } else {
-              console.log(' wwwwwwwwwwwwwwwwwwww loadGridColumnsConfig loaded ');
+            } else if (!gridConfig.isTreeGrid) {
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
               return gridActions.getGridData({ gridConfig });
+            } else {
+              // TODO tree need load local data?
+              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
             }
           }),
         );

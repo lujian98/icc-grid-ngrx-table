@@ -1,14 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
-import { IccTreeConfig, TreeState, defaultTreeState } from '../models/tree-grid.model';
+import { TreeState, defaultTreeState } from '../models/tree-grid.model';
 
 export const initialState: TreeState = {};
 
-/*
-      const gridConfig = { ...action.gridConfig };
-      const key = gridConfig.gridId;
-      const newState: GridState = { ...state };
-      */
 export const iccTreeFeature = createFeature({
   name: 'iccTree',
   reducer: createReducer(

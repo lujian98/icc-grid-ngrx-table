@@ -30,7 +30,7 @@ export class IccGridFacade {
 
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
-    if (gridConfig.viewportReady && !gridConfig.isTreeGrid) {
+    if (gridConfig.viewportReady) {
       this.getGridData(gridConfig);
     }
   }
@@ -55,7 +55,9 @@ export class IccGridFacade {
   }
 
   getGridData(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.getGridData({ gridConfig }));
+    if (!gridConfig.isTreeGrid) {
+      this.store.dispatch(gridActions.getGridData({ gridConfig }));
+    }
   }
 
   setGridData(gridConfig: IccGridConfig, gridData: IccGridData<any>): void {

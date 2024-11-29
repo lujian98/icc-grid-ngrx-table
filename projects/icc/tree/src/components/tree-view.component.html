@@ -29,6 +29,14 @@
     <icc-flat-tree [columns]="columns" [treeData]="treeData"></icc-flat-tree>
     <!--
 
+    <cdk-virtual-scroll-viewport itemSize="50">
+      <ng-container *cdkVirtualFor="let node of flatTreeData">
+        <div [style.padding-left]="node.level * 20 + 'px'">
+          {{ node.name }} 
+        </div>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+
     <icc-grid-row
       [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
       *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
