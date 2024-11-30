@@ -1,4 +1,4 @@
-import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -11,21 +11,12 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
+import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent } from '@icc/ui/grid';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
-import {
-  IccColumnConfig,
-  IccColumnWidth,
-  getTableWidth,
-  viewportWidthRatio,
-  IccGridHeaderComponent,
-  ROW_SELECTION_CELL_WIDTH,
-  DragDropEvent,
-  IccGridFacade,
-} from '@icc/ui/grid';
+import { IccTreeFacade } from '../+state/tree.facade';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
-import { IccTreeFacade } from '../+state/tree.facade';
 import { IccTreeRowComponent } from './tree-row/tree-row.component';
 
 @Component({
@@ -38,7 +29,7 @@ import { IccTreeRowComponent } from './tree-row/tree-row.component';
     CommonModule,
     DragDropModule,
     ScrollingModule,
-    IccGridHeaderComponent,
+    IccGridHeaderViewComponent,
     IccTreeRowComponent,
     IccFlatTreeComponent,
   ],
@@ -47,50 +38,24 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
-  private _columns: IccColumnConfig[] = [];
-  private _gridTemplateColumns: string = '';
-  private _columnWidths: IccColumnWidth[] = [];
+  gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
-  tableWidth: number = 2000;
 
-  @Input()
-  set columns(val: IccColumnConfig[]) {
-    this._columns = [...val];
-    console.log(' column=', this.columns);
-    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
-    this.setColumWidths(this.columns, widthRatio);
-  }
-  get columns(): IccColumnConfig[] {
-    return this._columns;
-  }
+  @Input() columns: IccColumnConfig[] = [];
 
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
     this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig);
-    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
-    this.setColumWidths(this.columns, widthRatio);
   }
   get treeConfig(): IccTreeConfig {
     return this._treeConfig;
   }
 
-  set columnWidths(values: IccColumnWidth[]) {
-    this._columnWidths = values;
-  }
-
-  get columnWidths(): IccColumnWidth[] {
-    return this._columnWidths;
-  }
-
-  set gridTemplateColumns(value: string) {
-    this._gridTemplateColumns = value;
-  }
-
-  get gridTemplateColumns(): string {
-    return this._gridTemplateColumns;
+  gridTemplateColumnsEvent(event: string): void {
+    this.gridTemplateColumns = event;
   }
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
@@ -115,67 +80,12 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     return index;
   }
 
-  onColumnResizing(columnWidths: IccColumnWidth[]): void {
-    this.setColumWidths(columnWidths, 1);
-    if (this.treeConfig.horizontalScroll) {
-      this.tableWidth = getTableWidth(columnWidths);
-    }
-  }
-
-  onColumnResized(columnWidths: IccColumnWidth[]): void {
-    const widthRatio = viewportWidthRatio(this.treeConfig, this.columns);
-    const columns: IccColumnConfig[] = [...this.columns].map((column, index) => ({
-      ...column,
-      width: columnWidths[index].width / widthRatio,
-    }));
-    this.setColumWidths(columnWidths, widthRatio);
-    this.gridFacade.setGridColumnsConfig(this.treeConfig, columns);
-  }
-
-  onColumnDragDrop(events: DragDropEvent): void {
-    const previousIndex = this.indexCorrection(events.previousIndex);
-    const currentIndex = this.indexCorrection(events.currentIndex);
-    const columns = [...this.columns];
-    moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnsConfig(this.treeConfig, columns);
-  }
-
   onScrolledIndexChange(index: number): void {
     //console.log( ' index =', index)
-    if (this.treeConfig.virtualScroll) {
-      const nextPage = this.treeConfig.page + 1;
-      const pageSize = this.treeConfig.pageSize;
-      const displayTotal = (nextPage - 1) * pageSize;
-      if (displayTotal - index < pageSize - 10 && displayTotal < this.treeConfig.totalCounts) {
-        //this.gridFacade.getGridPageData(this.treeConfig, nextPage);
-      }
-    }
   }
 
   onViewportScroll(event: any): void {
     this.columnHeaderPosition = -event.target.scrollLeft;
-  }
-
-  private setColumWidths(columns: any[], widthRatio: number): void {
-    if (this.treeConfig.horizontalScroll) {
-      this.tableWidth = getTableWidth(this.columns);
-    } else {
-      this.tableWidth = this.treeConfig.viewportWidth;
-    }
-    const colWidths = [...columns]
-      .filter((column) => column.hidden !== true)
-      .map((column) => widthRatio * column.width! + 'px')
-      .join(' ');
-    this.gridTemplateColumns = this.treeConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
-  }
-
-  private indexCorrection(idx: number): number {
-    this.columns.forEach((column, index) => {
-      if (column.hidden && idx >= index) {
-        idx++;
-      }
-    });
-    return idx;
   }
 
   private setViewportPageSize(): void {

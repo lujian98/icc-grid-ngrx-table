@@ -17,7 +17,7 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
   standalone: true,
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
 })
-export class IccGridHeaderViewComponent<T> {
+export class IccGridHeaderViewComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
