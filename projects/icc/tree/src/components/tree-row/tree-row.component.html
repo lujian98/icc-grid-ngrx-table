@@ -7,7 +7,7 @@
 </icc-grid-cell>
 
 <icc-grid-cell
-  *ngIf="treeColumn"
+  *ngIf="treeColumn && !treeColumn.hidden"
   [ngStyle]="{ height: treeConfig.rowHeight + 'px', 'padding-left': nodePadding + 'px' }"
 >
   <icc-tree-node [treeConfig]="treeConfig" [node]="record" [column]="treeColumn"> </icc-tree-node>
