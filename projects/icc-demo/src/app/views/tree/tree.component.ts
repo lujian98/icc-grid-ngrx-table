@@ -19,6 +19,8 @@ export class AppTreeComponent {
       items: [
         { name: '1: Default Tree Grid', link: 'app-default-tree' },
         { name: '2: Tree Remote Data', link: 'app-tree-remote-data' },
+        { name: '2: Tree Remote Column & Data', link: 'app-tree-remote-conlumn-data' },
+
         { name: '11: CDK Tree Grid', link: 'app-cdk-tree-grid' },
       ],
     },

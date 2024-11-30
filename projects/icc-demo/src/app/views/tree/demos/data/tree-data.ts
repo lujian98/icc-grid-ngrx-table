@@ -1,4 +1,5 @@
 import { IccTreeNode } from '@icc/ui/tree';
+import { IccColumnConfig } from '@icc/ui/grid';
 
 export interface NestedFoodNode extends IccTreeNode<NestedFoodNode> {
   name: string;
@@ -30,5 +31,29 @@ export const TREE_NESTED_DATA: NestedFoodNode[] = [
         children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
       },
     ],
+  },
+];
+
+export const ECRColumnConfig: IccColumnConfig[] = [
+  {
+    name: 'name',
+    width: 50,
+    align: 'left',
+  },
+  {
+    name: 'vin',
+  },
+  {
+    name: 'brand',
+  },
+  {
+    name: 'year',
+    width: 50,
+    align: 'right',
+  },
+  {
+    name: 'color',
+    width: 80,
+    align: 'center',
   },
 ];

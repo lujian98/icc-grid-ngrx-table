@@ -42,7 +42,7 @@ export class IccGridEffects {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
-            if (gridConfig.remoteGridConfig) {
+            if (gridConfig.remoteGridConfig || gridConfig.isTreeGrid) {
               // remote config will need trigger window resize to load data
               window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
