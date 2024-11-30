@@ -44,14 +44,6 @@ export const ECRTreeGridConfig: Partial<IccTreeConfig> = {
   columnReorder: true,
   columnMenu: true,
   columnHidden: true,
-
-  sortFields: [
-    {
-      field: 'ID',
-      dir: 'asc',
-    },
-  ],
-  columnFilters: [{ name: 'vin', value: '9' }],
 };
 
 export const ECRColumnConfig: IccColumnConfig[] = [
@@ -88,14 +80,6 @@ export const NPRTreeGridConfig: Partial<IccTreeConfig> = {
   columnReorder: true,
   columnMenu: true,
   columnHidden: true,
-
-  sortFields: [
-    {
-      field: 'ID',
-      dir: 'asc',
-    },
-  ],
-  columnFilters: [{ name: 'vin', value: '9' }],
 };
 
 export const METTreeGridConfig: Partial<IccTreeConfig> = {

@@ -72,9 +72,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     return index;
   }
 
-  onScrolledIndexChange(index: number): void {
-    //console.log( ' index =', index)
-  }
+  onScrolledIndexChange(index: number): void {}
 
   onViewportScroll(event: any): void {
     this.columnHeaderPosition = -event.target.scrollLeft;
@@ -89,27 +87,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
     this.treeFacade.viewportReadyLoadData(this.treeConfig);
   }
-
-  /*
-  private getParentNode(node: IccTreeNode<T>): IccTreeNode<T> | null {
-    for (const parent of flattenNodes(this.treeData)) {
-      if (parent.children?.includes(node)) {
-        return parent;
-      }
-    }
-    return null;
-  }
-
-  shouldRender(node: IccTreeNode<T>): boolean {
-    let parent = this.getParentNode(node);
-    while (parent) {
-      if (!this.tree.isExpanded(parent)) {
-        return false;
-      }
-      parent = this.getParentNode(parent);
-    }
-    return true;
-  }*/
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

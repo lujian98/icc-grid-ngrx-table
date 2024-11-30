@@ -21,19 +21,8 @@ export class IccTreeFacade {
 
   /*
 
-
   setGridSortFields(gridId: string, sortFields: IccSortField[]): void {
     this.store.dispatch(gridActions.setGridSortFields({ gridId, sortFields }));
-    this.getGridData(gridId);
-  }
-
-  setGridColumnFilters(gridId: string, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, columnFilters }));
-    this.getGridData(gridId);
-  }
-    
-  getGridPageData(gridId: string, page: number): void {
-    this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
     this.getGridData(gridId);
   }
 

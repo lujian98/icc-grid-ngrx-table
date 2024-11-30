@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IccColumnConfig } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridinMemoryService } from '@icc/ui/grid';
 import { Observable, of } from 'rxjs';
 import { IccTreeConfig, IccTreeData, iccFlattenTree } from '../models/tree-grid.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class IccTreeinMemoryService {
+export class IccTreeinMemoryService extends IccGridinMemoryService {
   getTreeData<T>(
     treeConfig: IccTreeConfig,
     columns: IccColumnConfig[],
@@ -16,6 +16,9 @@ export class IccTreeinMemoryService {
     const flatTree = iccFlattenTree([...inMemoryData], 0);
     // TODO filter ......
 
-    return of([...flatTree]);
+    const filterParams = this.getFilterParams(treeConfig.columnFilters, columns);
+    const filteredData = this.getFilteredData([...flatTree], filterParams);
+
+    return of([...filteredData]);
   }
 }

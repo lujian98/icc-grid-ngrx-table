@@ -6,7 +6,9 @@ import { debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
 import { IccTreeinMemoryService } from '../services/tree-in-memory.service';
 import { IccTreeRemoteService } from '../services/tree-remote.service';
 import * as treeActions from './tree.actions';
+import { IccTreeConfig } from '../models/tree-grid.model';
 import { IccTreeFacade } from './tree.facade';
+import { setGridColumnFilters, setGridSortFields } from '@icc/ui/grid';
 
 @Injectable()
 export class IccTreeEffects {
@@ -55,6 +57,23 @@ export class IccTreeEffects {
           }),
         );
       }),
+    ),
+  );
+
+  setGridColumnFilters$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setGridColumnFilters), // gridActions
+      switchMap(({ gridConfig }) =>
+        of(gridConfig).pipe(
+          map((treeConfig: IccTreeConfig) => {
+            if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
+              return treeActions.getTreeRemoteData({ treeConfig });
+            } else {
+              return treeActions.getTreeInMemoryData({ treeConfig });
+            }
+          }),
+        ),
+      ),
     ),
   );
 

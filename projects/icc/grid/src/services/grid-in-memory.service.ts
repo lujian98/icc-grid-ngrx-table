@@ -33,7 +33,7 @@ export class IccGridinMemoryService {
     });
   }
 
-  private getFilteredData(data: any[], filterParams: any[]) {
+  protected getFilteredData(data: any[], filterParams: any[]) {
     [...filterParams].forEach((params) => {
       const key = params.key;
       if (key.indexOf('_') > 1) {
@@ -157,7 +157,7 @@ export class IccGridinMemoryService {
     return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
-  private getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
+  protected getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
     const params: any[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
