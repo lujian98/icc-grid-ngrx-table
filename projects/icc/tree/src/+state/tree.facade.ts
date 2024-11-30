@@ -66,4 +66,9 @@ export class IccTreeFacade {
   selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
     return this.store.select(selectTreeInMemoryData(treeConfig));
   }
+
+  nodeToggle<T>(treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
+    console.log(' ttttt treeConfig = ', treeConfig);
+    console.log(' ttttt node = ', node);
+  }
 }

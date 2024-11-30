@@ -1,8 +1,17 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  HostListener,
+  Input,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccColumnConfig } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccTreeNode } from '../../../models/tree-grid.model';
+import { IccTreeNode, IccTreeConfig } from '../../../models/tree-grid.model';
+import { IccTreeFacade } from '../../../+state/tree.facade';
 
 @Component({
   selector: 'icc-tree-node',
@@ -13,8 +22,11 @@ import { IccTreeNode } from '../../../models/tree-grid.model';
   imports: [CommonModule, IccIconModule],
 })
 export class IccTreeNodeComponent<T> {
+  private treeFacade = inject(IccTreeFacade);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _node!: IccTreeNode<T>;
+
+  @Input() treeConfig!: IccTreeConfig;
   @Input() column!: IccColumnConfig;
 
   @Input()
@@ -31,4 +43,12 @@ export class IccTreeNodeComponent<T> {
     // console.log(' get record =', this.column.name)
     return (this.node as any)[this.column.name];
   }
+
+  @HostListener('click') nodeToggle() {
+    if (!this.node.leaf) {
+      this.treeFacade.nodeToggle(this.treeConfig, this.node);
+    }
+  }
 }
+
+// chevron-down' : 'chevron-right

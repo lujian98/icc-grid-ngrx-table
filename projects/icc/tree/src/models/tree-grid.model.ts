@@ -1,12 +1,15 @@
 import { IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
-export interface IccTreeConfig extends IccGridConfig {}
+export interface IccTreeConfig extends IccGridConfig {
+  id?: string;
+}
 
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
   isTreeGrid: true,
   virtualScroll: true,
   pageSize: 10000,
+  id: 'name',
 };
 
 export interface IccTreeData {
