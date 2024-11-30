@@ -13,6 +13,7 @@ export const selectTreeData = (treeConfig: IccTreeConfig) =>
     },
   );
 
+/*
 export const selectTreeRemoteData = (treeConfig: IccTreeConfig) =>
   createSelector(
     // @ts-ignore
@@ -21,7 +22,7 @@ export const selectTreeRemoteData = (treeConfig: IccTreeConfig) =>
       const treeId = treeConfig.gridId;
       return state[treeId] ? state[treeId].remoteData : [];
     },
-  );
+  );*/
 
 export const selectTreeInMemoryData = (treeConfig: IccTreeConfig) =>
   createSelector(

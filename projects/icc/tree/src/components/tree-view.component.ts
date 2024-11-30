@@ -87,6 +87,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     const pageSize =
       !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
+    this.treeFacade.viewportReadyLoadData(this.treeConfig);
   }
 
   /*

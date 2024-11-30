@@ -2,8 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IccBackendService } from '@icc/ui/core';
 import { IccColumnConfig } from '@icc/ui/grid';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { IccTreeConfig, IccTreeData } from '../models/tree-grid.model';
 
 @Injectable({
@@ -27,7 +26,7 @@ export class IccTreeRemoteService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccTreeData[]>(url, { params }).pipe(
       map((res) => {
-        console.log('1444444 res=', res);
+        //console.log('tree 7777777 res=', res);
         return res;
       }),
       catchError((error) =>

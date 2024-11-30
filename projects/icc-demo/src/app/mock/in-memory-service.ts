@@ -2,6 +2,7 @@ import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS 
 import { Observable } from 'rxjs';
 import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
 import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig, DCRGridConfig } from '../data/cars-large';
+import { TREE_NESTED_DATA, NestedFoodNode } from '../views/tree/demos/data/tree-data';
 import { State, STATES } from '../data/states';
 import {
   SingleSelectConfig,
@@ -42,6 +43,7 @@ export class InMemoryService extends InMemoryDbService {
     DCR_color: any[];
     DCR_columnConfig: IccColumnConfig[];
     DCR_gridConfig: Partial<IccGridConfig>;
+    ECR_tree: NestedFoodNode[];
     usa_state: State[];
     usa_statelist: string[];
     usa_SingleRemote: State[];
@@ -90,6 +92,7 @@ export class InMemoryService extends InMemoryDbService {
       DCR_color: DCRColors,
       DCR_columnConfig: DCRColumnConfig,
       DCR_gridConfig: DCRGridConfig,
+      ECR_tree: TREE_NESTED_DATA,
       usa_state: STATES,
       usa_statelist: STATES.map((state) => state.state),
       usa_SingleRemote: STATES,
@@ -181,13 +184,29 @@ export class InMemoryService extends InMemoryDbService {
 
   get(reqInfo: RequestInfo) {
     //console.log( ' reqInfo=', reqInfo)
+    const action = reqInfo.query.get('action');
     if (reqInfo.id) {
       return this.getDataDetail(reqInfo);
+    } else if (action?.[0] === 'treeData') {
+      //console.log( ' action=', action)
+      return this.getTreeData(reqInfo);
     } else if (reqInfo.query.size > 0) {
       return this.getQueryData(reqInfo);
     } else {
       return undefined; // let the default GET handle all others
     }
+  }
+
+  private getTreeData(reqInfo: RequestInfo) {
+    return reqInfo.utils.createResponse$(() => {
+      const collection = reqInfo.collection.slice();
+      const body = [...collection];
+      const options: ResponseOptions = {
+        body: body,
+        status: STATUS.OK,
+      };
+      return this.finishOptions(options, reqInfo);
+    });
   }
 
   private getQueryData(reqInfo: RequestInfo) {
