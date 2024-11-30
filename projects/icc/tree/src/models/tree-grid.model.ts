@@ -8,10 +8,13 @@ export interface IccTreeConfig extends IccGridConfig {
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
   isTreeGrid: true,
+  //remoteGridConfig: false,
+  //remoteColumnsConfig: false,
+  //remoteGridData: false,
   virtualScroll: true,
   pageSize: 10000,
-  id: 'name',
-  remoteLoadAll: true,
+  id: 'name', // TODO not used
+  remoteLoadAll: false,
 };
 
 export interface IccTreeData {
