@@ -1,4 +1,5 @@
 <div class="tree-node">
-  <icc-icon *ngIf="!node.leaf" config="caret-right"></icc-icon>
+  <icc-icon *ngIf="!node.leaf && node.expanded" config="caret-down"></icc-icon>
+  <icc-icon *ngIf="!node.leaf && !node.expanded" config="caret-right"></icc-icon>
   {{ data }}
 </div>

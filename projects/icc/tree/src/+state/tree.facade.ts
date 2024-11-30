@@ -68,7 +68,9 @@ export class IccTreeFacade {
   }
 
   nodeToggle<T>(treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
-    console.log(' ttttt treeConfig = ', treeConfig);
-    console.log(' ttttt node = ', node);
+    //only for in memory data
+    // TODO remove data need call a service to add/remove child
+    this.store.dispatch(treeActions.nodeToggle({ treeConfig, node }));
+    this.getTreeData(treeConfig);
   }
 }

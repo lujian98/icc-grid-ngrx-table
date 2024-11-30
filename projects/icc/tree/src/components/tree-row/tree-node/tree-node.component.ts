@@ -32,7 +32,7 @@ export class IccTreeNodeComponent<T> {
   @Input()
   set node(data: IccTreeNode<T>) {
     this._node = { ...data };
-    console.log(' node =', this.node);
+    //console.log(' node =', this.node);
     this.changeDetectorRef.markForCheck();
   }
   get node(): IccTreeNode<T> {
@@ -40,7 +40,6 @@ export class IccTreeNodeComponent<T> {
   }
 
   get data(): T {
-    // console.log(' get record =', this.column.name)
     return (this.node as any)[this.column.name];
   }
 
@@ -50,5 +49,3 @@ export class IccTreeNodeComponent<T> {
     }
   }
 }
-
-// chevron-down' : 'chevron-right

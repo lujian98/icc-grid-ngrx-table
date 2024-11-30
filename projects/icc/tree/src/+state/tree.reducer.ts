@@ -1,6 +1,16 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
-import { TreeState, defaultTreeState, iccFlattenTree } from '../models/tree-grid.model';
+import { TreeState, defaultTreeState, iccFlattenTree, IccTreeNode } from '../models/tree-grid.model';
+
+export function iccNodeToggle<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
+  return [...nodes].map((node) => {
+    return {
+      ...node,
+      expanded: node.name === n.name ? !node.expanded : node.expanded,
+      children: node.children ? iccNodeToggle(node.children, n) : undefined,
+    };
+  });
+}
 
 export const initialState: TreeState = {};
 
@@ -18,6 +28,7 @@ export const iccTreeFeature = createFeature({
       };
       return { ...newState };
     }),
+
     on(treeActions.getTreeDataSuccess, (state, action) => {
       const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
@@ -48,6 +59,19 @@ export const iccTreeFeature = createFeature({
         };
       }
       console.log(' ssssssssssss new load data setTreeInMemoryData tree data = ', newState);
+      return { ...newState };
+    }),
+
+    on(treeActions.nodeToggle, (state, action) => {
+      const key = action.treeConfig.gridId;
+      const newState: TreeState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        newState[key] = {
+          ...oldState,
+          inMemoryData: iccNodeToggle(oldState.inMemoryData, action.node),
+        };
+      }
       return { ...newState };
     }),
 
