@@ -50,7 +50,7 @@ export function iccFlattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTr
   for (const node of nodes) {
     const leaf = node.children ? false : true;
     flattenedNodes.push({ ...node, level, leaf });
-    if (node.children) {
+    if (node.children && node.expanded) {
       flattenedNodes.push(...iccFlattenTree(node.children, level + 1));
     }
   }
