@@ -1,4 +1,4 @@
-import { IccTreeNode } from '@icc/ui/tree';
+import { IccTreeNode, IccTreeConfig } from '@icc/ui/tree';
 import { IccColumnConfig } from '@icc/ui/grid';
 
 export interface NestedFoodNode extends IccTreeNode<NestedFoodNode> {
@@ -34,6 +34,26 @@ export const TREE_NESTED_DATA: NestedFoodNode[] = [
   },
 ];
 
+export const ECRTreeGridConfig: Partial<IccTreeConfig> = {
+  remoteGridData: true,
+  remoteColumnsConfig: true,
+  remoteLoadAll: true,
+  columnSort: true,
+  columnFilter: true,
+  columnResize: true,
+  columnReorder: true,
+  columnMenu: true,
+  columnHidden: true,
+
+  sortFields: [
+    {
+      field: 'ID',
+      dir: 'asc',
+    },
+  ],
+  columnFilters: [{ name: 'vin', value: '9' }],
+};
+
 export const ECRColumnConfig: IccColumnConfig[] = [
   {
     name: 'name',
@@ -57,3 +77,33 @@ export const ECRColumnConfig: IccColumnConfig[] = [
     align: 'center',
   },
 ];
+
+export const NPRTreeGridConfig: Partial<IccTreeConfig> = {
+  remoteGridData: true,
+  //remoteColumnsConfig: true,
+  remoteLoadAll: true,
+  columnSort: true,
+  columnFilter: true,
+  columnResize: true,
+  columnReorder: true,
+  columnMenu: true,
+  columnHidden: true,
+
+  sortFields: [
+    {
+      field: 'ID',
+      dir: 'asc',
+    },
+  ],
+  columnFilters: [{ name: 'vin', value: '9' }],
+};
+
+export const METTreeGridConfig: Partial<IccTreeConfig> = {
+  remoteGridData: false,
+  remoteColumnsConfig: true,
+};
+
+export const RNDTreeGridConfig: Partial<IccTreeConfig> = {
+  remoteGridData: false,
+  remoteColumnsConfig: false,
+};

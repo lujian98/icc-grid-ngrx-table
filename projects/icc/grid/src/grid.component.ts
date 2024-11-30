@@ -82,11 +82,11 @@ export class IccGridComponent<T> implements OnDestroy {
     return this._gridData;
   }
 
-  refresh(): void {
-    if (this.gridConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(this.gridConfig, 1);
+  refresh(gridConfig: IccGridConfig): void {
+    if (gridConfig.virtualScroll) {
+      this.gridFacade.getGridPageData(gridConfig, 1);
     } else {
-      this.gridFacade.getGridData(this.gridConfig);
+      this.gridFacade.getGridData(gridConfig);
     }
   }
 

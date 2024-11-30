@@ -27,6 +27,9 @@ export class IccGridEffects {
               //console.log( ' gridConfig loaded ')
               return gridActions.loadGridColumnsConfig({ gridConfig });
             } else {
+              if (gridConfig.remoteGridData) {
+                window.dispatchEvent(new Event('resize'));
+              }
               return gridActions.loadGridConfigSuccess({ gridConfig });
             }
           }),

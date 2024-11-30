@@ -1,7 +1,7 @@
 <ng-container *ngIf="treeConfig$ | async as treeConfig">
   <ng-container *ngIf="columnsConfig$ | async as columns">
     <div class="icc-grid-toolbar" *ngIf="!treeConfig.hideTopbar">
-      <button icc-button (click)="refresh()">
+      <button icc-button (click)="refresh(treeConfig)">
         <icc-icon [icon]="buttons[0].icon!"></icc-icon>
         {{ buttons[0].title | translate }}
       </button>

@@ -84,8 +84,8 @@ export class IccTreeComponent<T> implements OnDestroy {
     return this._treeData;
   }
 
-  refresh(): void {
-    this.treeFacade.getTreeData(this.treeConfig);
+  refresh(treeConfig: IccTreeConfig): void {
+    this.treeFacade.getTreeData(treeConfig);
   }
 
   clearFilters(): void {

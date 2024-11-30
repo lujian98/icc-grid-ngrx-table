@@ -2,7 +2,16 @@ import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS 
 import { Observable } from 'rxjs';
 import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
 import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig, DCRGridConfig } from '../data/cars-large';
-import { TREE_NESTED_DATA, NestedFoodNode, ECRColumnConfig } from '../views/tree/demos/data/tree-data';
+import { IccTreeNode, IccTreeConfig } from '@icc/ui/tree';
+import {
+  TREE_NESTED_DATA,
+  NestedFoodNode,
+  ECRColumnConfig,
+  ECRTreeGridConfig,
+  NPRTreeGridConfig,
+  METTreeGridConfig,
+  RNDTreeGridConfig,
+} from '../views/tree/demos/data/tree-data';
 import { State, STATES } from '../data/states';
 import {
   SingleSelectConfig,
@@ -45,6 +54,14 @@ export class InMemoryService extends InMemoryDbService {
     DCR_gridConfig: Partial<IccGridConfig>;
     ECR_tree: NestedFoodNode[];
     ECR_columnConfig: IccColumnConfig[];
+    ECR_gridConfig: Partial<IccTreeConfig>;
+    NPR_gridConfig: Partial<IccTreeConfig>;
+    NPR_tree: NestedFoodNode[];
+    MET_gridConfig: Partial<IccTreeConfig>;
+    MET_columnConfig: IccColumnConfig[];
+    RND_gridConfig: Partial<IccTreeConfig>;
+    TST_columnConfig: IccColumnConfig[];
+
     usa_state: State[];
     usa_statelist: string[];
     usa_SingleRemote: State[];
@@ -95,6 +112,13 @@ export class InMemoryService extends InMemoryDbService {
       DCR_gridConfig: DCRGridConfig,
       ECR_tree: TREE_NESTED_DATA,
       ECR_columnConfig: ECRColumnConfig,
+      ECR_gridConfig: ECRTreeGridConfig,
+      NPR_gridConfig: NPRTreeGridConfig,
+      NPR_tree: TREE_NESTED_DATA,
+      MET_gridConfig: METTreeGridConfig,
+      MET_columnConfig: ECRColumnConfig,
+      RND_gridConfig: RNDTreeGridConfig,
+      TST_columnConfig: ECRColumnConfig,
 
       usa_state: STATES,
       usa_statelist: STATES.map((state) => state.state),
