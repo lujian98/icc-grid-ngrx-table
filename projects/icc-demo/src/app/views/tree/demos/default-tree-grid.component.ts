@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig } from '@icc/ui/grid';
-import { IccTreeComponent, defaultTreeConfig, IccTreeConfig, IccTreeNode } from '@icc/ui/tree';
+import { IccTreeComponent, IccTreeNode } from '@icc/ui/tree';
 
 interface NestedFoodNode extends IccTreeNode<NestedFoodNode> {
   name: string;
@@ -37,20 +37,13 @@ const NESTED_DATA: NestedFoodNode[] = [
 
 @Component({
   selector: 'app-default-tree-grid',
-  template: `<icc-tree [treeConfig]="treeConfig" [columnsConfig]="columnsConfig" [treeData]="treeData"></icc-tree>`,
+  template: `<icc-tree [columnsConfig]="columnsConfig" [treeData]="treeData"></icc-tree>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccTreeComponent],
 })
 export class AppDefaultTreeGridComponent {
-  treeConfig: IccTreeConfig = {
-    ...defaultTreeConfig,
-    columnSort: true,
-    columnFilter: true,
-    columnResize: true,
-  };
-
   columnsConfig: IccColumnConfig[] = [
     {
       name: 'name',
