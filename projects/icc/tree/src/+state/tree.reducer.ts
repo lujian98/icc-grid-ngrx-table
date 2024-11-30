@@ -41,7 +41,7 @@ export const iccTreeFeature = createFeature({
           inMemoryData: [...action.treeData],
         };
       }
-      console.log(' get gggggg new load data setup tree data = ', newState);
+      console.log('get new load remote data= ', newState);
       return { ...newState };
     }),
 
@@ -55,7 +55,7 @@ export const iccTreeFeature = createFeature({
           inMemoryData: [...action.treeData],
         };
       }
-      console.log(' set setTreeInMemoryData tree data = ', newState);
+      console.log(' set InMemoryData tree data = ', newState);
       return { ...newState };
     }),
 
@@ -69,7 +69,7 @@ export const iccTreeFeature = createFeature({
           treeData: [...action.treeData],
         };
       }
-      console.log(' get setTreeInMemoryData = ', newState);
+      console.log(' get InMemoryData = ', newState);
       return { ...newState };
     }),
 

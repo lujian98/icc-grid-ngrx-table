@@ -85,11 +85,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   }
 
   refresh(): void {
-    if (this.treeConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(this.treeConfig, 1);
-    } else {
-      this.gridFacade.getGridData(this.treeConfig);
-    }
+    this.treeFacade.getTreeData(this.treeConfig);
   }
 
   clearFilters(): void {
@@ -98,5 +94,6 @@ export class IccTreeComponent<T> implements OnDestroy {
 
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.treeId);
+    this.treeFacade.clearTreeDataStore(this.treeId);
   }
 }
