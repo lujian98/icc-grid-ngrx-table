@@ -1,0 +1,17 @@
+<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
+  <icc-grid-header
+    [ngStyle]="{
+      width: tableWidth + 'px',
+      'grid-template-columns': gridTemplateColumns,
+      left: columnHeaderPosition + 'px',
+    }"
+    [gridConfig]="gridConfig"
+    [columns]="columns"
+    (cdkDropListDropped)="onColumnDragDrop($event)"
+    (columnResizing)="onColumnResizing($event)"
+    (columnResized)="onColumnResized($event)"
+    cdkDropListOrientation="horizontal"
+    cdkDropList
+  >
+  </icc-grid-header>
+</div>

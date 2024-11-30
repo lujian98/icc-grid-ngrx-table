@@ -1,20 +1,10 @@
-<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
-  <icc-grid-header
-    [ngStyle]="{
-      width: tableWidth + 'px',
-      'grid-template-columns': gridTemplateColumns,
-      left: columnHeaderPosition + 'px',
-    }"
-    [gridConfig]="gridConfig"
-    [columns]="columns"
-    (cdkDropListDropped)="onColumnDragDrop($event)"
-    (columnResizing)="onColumnResizing($event)"
-    (columnResized)="onColumnResized($event)"
-    cdkDropListOrientation="horizontal"
-    cdkDropList
-  >
-  </icc-grid-header>
-</div>
+<icc-grid-header-view
+  [gridConfig]="gridConfig"
+  [columns]="columns"
+  [columnHeaderPosition]="columnHeaderPosition"
+  (gridTemplateColumnsEvent)="gridTemplateColumnsEvent($event)"
+>
+</icc-grid-header-view>
 
 <cdk-virtual-scroll-viewport
   [itemSize]="gridConfig.rowHeight"
