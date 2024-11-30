@@ -2,12 +2,12 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
 import { TreeState, defaultTreeState, iccFlattenTree, IccTreeNode } from '../models/tree-grid.model';
 
-export function iccNodeToggle<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
+export function iccNodeToggleInMemoryData<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
   return [...nodes].map((node) => {
     return {
       ...node,
       expanded: node.name === n.name ? !node.expanded : node.expanded,
-      children: node.children ? iccNodeToggle(node.children, n) : undefined,
+      children: node.children ? iccNodeToggleInMemoryData(node.children, n) : undefined,
     };
   });
 }
@@ -33,6 +33,7 @@ export const iccTreeFeature = createFeature({
       const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
       if (state[key]) {
+        // TODO load all once
         const oldState = state[key];
         const treeData = action.treeConfig.remoteGridData
           ? iccFlattenTree([...action.treeData], 0)
@@ -58,18 +59,32 @@ export const iccTreeFeature = createFeature({
           inMemoryData: [...action.treeData],
         };
       }
-      console.log(' ssssssssssss new load data setTreeInMemoryData tree data = ', newState);
+      console.log(' set setTreeInMemoryData tree data = ', newState);
       return { ...newState };
     }),
 
-    on(treeActions.nodeToggle, (state, action) => {
+    on(treeActions.getInMemoryTreeDataSuccess, (state, action) => {
+      const key = action.treeConfig.gridId;
+      const newState: TreeState = { ...state }; // treeData is faltten and filter
+      if (state[key]) {
+        const oldState = state[key];
+        newState[key] = {
+          ...oldState,
+          treeData: [...action.treeData],
+        };
+      }
+      console.log(' get setTreeInMemoryData = ', newState);
+      return { ...newState };
+    }),
+
+    on(treeActions.nodeToggleInMemoryData, (state, action) => {
       const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
         newState[key] = {
           ...oldState,
-          inMemoryData: iccNodeToggle(oldState.inMemoryData, action.node),
+          inMemoryData: iccNodeToggleInMemoryData(oldState.inMemoryData, action.node),
         };
       }
       return { ...newState };

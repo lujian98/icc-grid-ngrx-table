@@ -15,7 +15,20 @@ export const setTreeInMemoryData = createAction(
   props<{ treeConfig: IccTreeConfig; treeData: IccTreeData[] }>(),
 );
 
-export const nodeToggle = createAction('[Tree] Node Toggle', props<{ treeConfig: IccTreeConfig; node: IccTreeData }>());
+export const getTreeInMemoryData = createAction(
+  '[Tree] Get Tree InMemoryData Data',
+  props<{ treeConfig: IccTreeConfig }>(),
+);
+
+export const getInMemoryTreeDataSuccess = createAction(
+  '[Tree] Get Tree InMemory Data Success',
+  props<{ treeConfig: IccTreeConfig; treeData: IccTreeData[] }>(),
+);
+
+export const nodeToggleInMemoryData = createAction(
+  '[Tree] Node Toggle InMemoryData',
+  props<{ treeConfig: IccTreeConfig; node: IccTreeData }>(),
+);
 
 export const clearTreeDataStore = createAction('[Tree] Clear Tree Data Store', props<{ treeId: string }>());
 export const removeTreeDataStore = createAction('[Tree] Remove Tree Data Store', props<{ treeId: string }>());

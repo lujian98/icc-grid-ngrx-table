@@ -39,7 +39,20 @@ export class IccTreeFacade {
   */
 
   getTreeData(treeConfig: IccTreeConfig): void {
-    this.store.dispatch(treeActions.getTreeData({ treeConfig }));
+    if (treeConfig.remoteGridData) {
+      this.store.dispatch(treeActions.getTreeData({ treeConfig }));
+    } else {
+      this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+    }
+  }
+
+  nodeToggle<T>(treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
+    if (treeConfig.remoteGridData) {
+      // TODO remove data need call a service to add/remove child
+    } else {
+      this.store.dispatch(treeActions.nodeToggleInMemoryData({ treeConfig, node }));
+      this.getTreeData(treeConfig);
+    }
   }
 
   setTreeData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
@@ -65,12 +78,5 @@ export class IccTreeFacade {
 
   selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
     return this.store.select(selectTreeInMemoryData(treeConfig));
-  }
-
-  nodeToggle<T>(treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
-    //only for in memory data
-    // TODO remove data need call a service to add/remove child
-    this.store.dispatch(treeActions.nodeToggle({ treeConfig, node }));
-    this.getTreeData(treeConfig);
   }
 }

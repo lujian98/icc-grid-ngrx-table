@@ -39,7 +39,7 @@ export class IccTreeEffects {
               return treeActions.getTreeDataSuccess({ treeId, treeData });
             }),
           );
-        } else {
+        } else { // remoteLoadAll not refresh and in memory data
          */
         return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
           map((treeData) => {
@@ -47,6 +47,28 @@ export class IccTreeEffects {
           }),
         );
         //}
+      }),
+    ),
+  );
+
+  // for remoteLoadAll not refresh and in memory data
+  getTreeInMemoryData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(treeActions.getTreeInMemoryData),
+      debounceTime(10), // debounce with switchMap may lose data if two or more tree pull, but will cancel previous call
+      concatLatestFrom((action) => {
+        return [
+          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
+          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
+          this.treeFacade.selectTreeInMemoryData(action.treeConfig),
+        ];
+      }),
+      switchMap(([action, treeConfig, columns, inMemoryData]) => {
+        return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
+          map((treeData) => {
+            return treeActions.getInMemoryTreeDataSuccess({ treeConfig, treeData });
+          }),
+        );
       }),
     ),
   );

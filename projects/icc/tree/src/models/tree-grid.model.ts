@@ -2,6 +2,7 @@ import { IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
 export interface IccTreeConfig extends IccGridConfig {
   id?: string;
+  remoteLoadAll?: boolean;
 }
 
 export const defaultTreeConfig: IccTreeConfig = {
@@ -10,6 +11,7 @@ export const defaultTreeConfig: IccTreeConfig = {
   virtualScroll: true,
   pageSize: 10000,
   id: 'name',
+  remoteLoadAll: true,
 };
 
 export interface IccTreeData {
