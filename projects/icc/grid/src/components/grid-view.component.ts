@@ -1,4 +1,3 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -16,7 +15,6 @@ import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } 
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
-import { IccGridHeaderComponent } from './grid-header/grid-header.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 
 @Component({
@@ -25,14 +23,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    DragDropModule,
-    ScrollingModule,
-    IccGridHeaderComponent,
-    IccGridRowComponent,
-    IccGridHeaderViewComponent,
-  ],
+  imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);

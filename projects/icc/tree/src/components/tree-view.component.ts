@@ -16,7 +16,6 @@ import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
-import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
 import { IccTreeRowComponent } from './tree-row/tree-row.component';
 
 @Component({
@@ -25,14 +24,7 @@ import { IccTreeRowComponent } from './tree-row/tree-row.component';
   styleUrls: ['./tree-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    DragDropModule,
-    ScrollingModule,
-    IccGridHeaderViewComponent,
-    IccTreeRowComponent,
-    IccFlatTreeComponent,
-  ],
+  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
