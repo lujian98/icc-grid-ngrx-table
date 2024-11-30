@@ -39,14 +39,14 @@ export interface TreeState {
 export interface IccTreeState<T extends object = object> {
   treeConfig: IccTreeConfig;
   treeData: IccTreeNode<T>[];
-  remoteData: IccTreeNode<T>[];
+  //remoteData: IccTreeNode<T>[];
   inMemoryData: IccTreeNode<T>[];
 }
 
 export const defaultTreeState: IccTreeState = {
   treeConfig: defaultTreeConfig,
   treeData: [],
-  remoteData: [],
+  //remoteData: [],
   inMemoryData: [],
 };
 

@@ -37,7 +37,7 @@ export const iccTreeFeature = createFeature({
         newState[key] = {
           ...oldState,
           treeData: iccFlattenTree([...action.treeData], 0),
-          remoteData: [...action.treeData],
+          //remoteData: [...action.treeData],
           inMemoryData: [...action.treeData],
         };
       }
