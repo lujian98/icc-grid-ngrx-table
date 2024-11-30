@@ -5,6 +5,8 @@ export interface IccTreeConfig extends IccGridConfig {}
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
   isTreeGrid: true,
+  virtualScroll: true,
+  pageSize: 10000,
 };
 
 export interface IccTreeData {
@@ -27,15 +29,27 @@ export interface TreeState {
 }
 
 export interface IccTreeState<T extends object = object> {
-  //treeId: string;
   treeConfig: IccTreeConfig;
-  data: IccTreeNode<T>[];
+  treeData: IccTreeNode<T>[];
+  remoteData: IccTreeNode<T>[];
   inMemoryData: IccTreeNode<T>[];
 }
 
 export const defaultTreeState: IccTreeState = {
-  //treeId: '',
   treeConfig: defaultTreeConfig,
-  data: [],
+  treeData: [],
+  remoteData: [],
   inMemoryData: [],
 };
+
+export function iccFlattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTreeNode<T>[] {
+  const flattenedNodes: IccTreeNode<T>[] = [];
+  for (const node of nodes) {
+    const leaf = node.children ? false : true;
+    flattenedNodes.push({ ...node, level, leaf });
+    if (node.children) {
+      flattenedNodes.push(...iccFlattenTree(node.children, level + 1));
+    }
+  }
+  return flattenedNodes;
+}

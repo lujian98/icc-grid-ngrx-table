@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as treeActions from './tree.actions';
-import { selectTreeData, selectTreeInMemoryData } from './tree.selectors';
+import { selectTreeData, selectTreeRemoteData, selectTreeInMemoryData } from './tree.selectors';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 
 @Injectable()
@@ -57,6 +57,10 @@ export class IccTreeFacade {
 
   selectTreeData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
     return this.store.select(selectTreeData(treeConfig));
+  }
+
+  selectTreeRemoteData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
+    return this.store.select(selectTreeRemoteData(treeConfig));
   }
 
   selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {

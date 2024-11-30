@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
-import { TreeState, defaultTreeState } from '../models/tree-grid.model';
+import { TreeState, defaultTreeState, iccFlattenTree } from '../models/tree-grid.model';
 
 export const initialState: TreeState = {};
 
@@ -23,15 +23,20 @@ export const iccTreeFeature = createFeature({
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-
+        const treeData = action.treeConfig.remoteGridData
+          ? iccFlattenTree([...action.treeData], 0)
+          : [...action.treeData];
+        const remoteData = action.treeConfig.remoteGridData ? [...action.treeData] : [];
         newState[key] = {
           ...oldState,
-          data: [...action.treeData],
+          treeData,
+          remoteData,
         };
       }
-      console.log(' new load data setup tree data = ', newState);
+      console.log(' get gggggg new load data setup tree data = ', newState);
       return { ...newState };
     }),
+
     on(treeActions.setTreeInMemoryData, (state, action) => {
       const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
@@ -42,9 +47,10 @@ export const iccTreeFeature = createFeature({
           inMemoryData: [...action.treeData],
         };
       }
-      console.log(' new load data setTreeInMemoryData tree data = ', newState);
+      console.log(' ssssssssssss new load data setTreeInMemoryData tree data = ', newState);
       return { ...newState };
     }),
+
     on(treeActions.removeTreeDataStore, (state, action) => {
       const key = action.treeId;
       const newState: TreeState = { ...state };

@@ -21,7 +21,6 @@ import {
   IccGridHeaderComponent,
   ROW_SELECTION_CELL_WIDTH,
   DragDropEvent,
-  //IccGridRowComponent,
   IccGridFacade,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
@@ -142,12 +141,13 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onScrolledIndexChange(index: number): void {
+    //console.log( ' index =', index)
     if (this.treeConfig.virtualScroll) {
       const nextPage = this.treeConfig.page + 1;
       const pageSize = this.treeConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.treeConfig.totalCounts) {
-        this.gridFacade.getGridPageData(this.treeConfig, nextPage);
+        //this.gridFacade.getGridPageData(this.treeConfig, nextPage);
       }
     }
   }

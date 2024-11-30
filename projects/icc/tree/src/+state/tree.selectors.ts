@@ -9,7 +9,17 @@ export const selectTreeData = (treeConfig: IccTreeConfig) =>
     featureSelector,
     (state: TreeState) => {
       const treeId = treeConfig.gridId;
-      return state[treeId] ? state[treeId].data : [];
+      return state[treeId] ? state[treeId].treeData : [];
+    },
+  );
+
+export const selectTreeRemoteData = (treeConfig: IccTreeConfig) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: TreeState) => {
+      const treeId = treeConfig.gridId;
+      return state[treeId] ? state[treeId].remoteData : [];
     },
   );
 
