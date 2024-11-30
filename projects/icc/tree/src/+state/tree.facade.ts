@@ -40,7 +40,7 @@ export class IccTreeFacade {
 
   getTreeData(treeConfig: IccTreeConfig): void {
     if (treeConfig.remoteGridData) {
-      this.store.dispatch(treeActions.getTreeData({ treeConfig }));
+      this.store.dispatch(treeActions.getTreeRemoteData({ treeConfig }));
     } else {
       this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
     }
@@ -55,9 +55,10 @@ export class IccTreeFacade {
     }
   }
 
+  /*
   setTreeData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
-    this.store.dispatch(treeActions.getTreeDataSuccess({ treeConfig, treeData }));
-  }
+    this.store.dispatch(treeActions.getTreeRemoteDataSuccess({ treeConfig, treeData }));
+  }*/
 
   setTreeInMemoryData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
     this.store.dispatch(treeActions.setTreeInMemoryData({ treeConfig, treeData }));
@@ -72,9 +73,11 @@ export class IccTreeFacade {
     return this.store.select(selectTreeData(treeConfig));
   }
 
+  /*
   selectTreeRemoteData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
     return this.store.select(selectTreeRemoteData(treeConfig));
   }
+  */
 
   selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
     return this.store.select(selectTreeInMemoryData(treeConfig));

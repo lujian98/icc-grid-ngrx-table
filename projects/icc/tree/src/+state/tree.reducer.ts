@@ -29,20 +29,16 @@ export const iccTreeFeature = createFeature({
       return { ...newState };
     }),
 
-    on(treeActions.getTreeDataSuccess, (state, action) => {
+    on(treeActions.getTreeRemoteDataSuccess, (state, action) => {
       const key = action.treeConfig.gridId;
       const newState: TreeState = { ...state };
       if (state[key]) {
-        // TODO load all once
         const oldState = state[key];
-        const treeData = action.treeConfig.remoteGridData
-          ? iccFlattenTree([...action.treeData], 0)
-          : [...action.treeData];
-        const remoteData = action.treeConfig.remoteGridData ? [...action.treeData] : [];
         newState[key] = {
           ...oldState,
-          treeData,
-          remoteData,
+          treeData: iccFlattenTree([...action.treeData], 0),
+          remoteData: [...action.treeData],
+          inMemoryData: [...action.treeData],
         };
       }
       console.log(' get gggggg new load data setup tree data = ', newState);
