@@ -23,6 +23,8 @@ export class IccGridinMemoryService {
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);
+    //console.log('grid sortedData=', sortedData);
+    this.getTreeNodes(sortedData);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
     //console.log( 'offset, limit=', offset, limit)
@@ -32,7 +34,32 @@ export class IccGridinMemoryService {
       totalCounts: filteredData.length,
     });
   }
+  private getTreeNodes(records: any[]) {
+    let nodesData: any[] = [];
+    let maker = '';
+    records.forEach((item) => {
+      if (maker !== item.brand) {
+        maker = item.brand;
+        const children = records
+          .filter((r) => r.brand === maker)
+          .map((record) => {
+            return {
+              name: record.color,
+              brand: maker,
+              color: record.color,
+              vin: record.vin,
+              year: record.year,
+            };
+          });
+        nodesData.push({
+          name: maker,
+          children: children,
+        });
+      }
+    });
 
+    console.log('nodes=', nodesData);
+  }
   protected getFilteredData(data: any[], filterParams: any[]) {
     [...filterParams].forEach((params) => {
       const key = params.key;

@@ -90,4 +90,10 @@ export const METTreeGridConfig: Partial<IccTreeConfig> = {
 export const RNDTreeGridConfig: Partial<IccTreeConfig> = {
   remoteGridData: false,
   remoteColumnsConfig: false,
+  columnSort: true,
+  columnFilter: true,
+  columnResize: true,
+  columnReorder: true,
+  columnMenu: true,
+  columnHidden: true,
 };

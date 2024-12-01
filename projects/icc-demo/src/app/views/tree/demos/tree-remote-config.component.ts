@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig } from '@icc/ui/grid';
 import { IccTreeComponent, IccTreeNode, defaultTreeConfig, IccTreeConfig } from '@icc/ui/tree';
+import { CAR_TREE_DATA } from './data/tree-large-data';
 
 interface NestedFoodNode extends IccTreeNode<NestedFoodNode> {
   name: string;
@@ -75,5 +76,5 @@ export class AppTreeRemoteConfigComponent {
     },
   ];
 
-  treeData: IccTreeNode<NestedFoodNode>[] = NESTED_DATA;
+  treeData = CAR_TREE_DATA;
 }
