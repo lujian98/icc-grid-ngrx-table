@@ -31,3 +31,29 @@ export function iccExpandAllNodesInMemoryData<T>(nodes: IccTreeNode<T>[], expand
     };
   });
 }
+
+export function iccSetNestNodeId<T>(nodes: IccTreeNode<T>[]): IccTreeNode<T>[] {
+  return [...nodes].map((node) => {
+    return {
+      ...node,
+      id: node.id ? node.id : node.name,
+      children: node.children ? iccSetNestNodeId(node.children) : undefined,
+    };
+  });
+}
+
+export function iccFindNodeId<T>(id: string, nodes: IccTreeNode<T>[]): IccTreeNode<T> | null {
+  let find: IccTreeNode<T> | null = null;
+  [...nodes].forEach((node) => {
+    if (node.id === id) {
+      find = node;
+    } else if (node.children && !find) {
+      find = iccFindNodeId(id, node.children);
+    }
+  });
+  return find;
+}
+
+export function iccGetNodeParent<T>(n: IccTreeNode<T>, nodes: IccTreeNode<T>[]): IccTreeNode<T> | undefined {
+  return [...nodes].find((node) => node.children?.find((cn: IccTreeNode<T>) => cn.id === n.id));
+}

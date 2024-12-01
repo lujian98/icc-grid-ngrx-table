@@ -1,4 +1,5 @@
-import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropModule, CdkDragDrop, CdkDragMove } from '@angular/cdk/drag-drop';
+import { DOCUMENT } from '@angular/common';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -15,8 +16,9 @@ import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent } from '@icc
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
-import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
+import { IccTreeConfig, IccTreeNode, IccTreeDropInfo } from '../models/tree-grid.model';
 import { IccTreeRowComponent } from './tree-row/tree-row.component';
+import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
 
 @Component({
   selector: 'icc-tree-view',
@@ -27,6 +29,7 @@ import { IccTreeRowComponent } from './tree-row/tree-row.component';
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
+  private document = inject(DOCUMENT);
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
@@ -34,6 +37,8 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
+  private dragNode: IccTreeNode<T> | null = null;
+  private dropInfo: IccTreeDropInfo<T> | null = null;
 
   @Input() columns: IccColumnConfig[] = [];
 
@@ -88,15 +93,123 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.treeFacade.viewportReadyLoadData(this.treeConfig);
   }
 
-  dragDisabled = true;
-
-  dragStart(node: T): void {
-    //this.dragNode = node;
+  dragStart(node: IccTreeNode<T>): void {
+    //console.log(' drag start=', node)
+    this.dragNode = node;
   }
 
-  dragMoved(event: any): void {}
+  dragMoved(event: CdkDragMove, nodes: IccTreeNode<T>[]): void {
+    //console.log('drag moved=', event);
+    //console.log('nodes=', nodes);
+    this.dropInfo = null;
+    const e = this.document.elementFromPoint(event.pointerPosition.x, event.pointerPosition.y);
+    if (!e) {
+      this.clearDragInfo();
+      return;
+    }
+    const container = e.classList.contains('icc-tree-row') ? e : e.closest('.icc-tree-node');
+    if (!container) {
+      this.clearDragInfo();
+      return;
+    }
+    const targetId = container.getAttribute('tree-node-id')!;
+    const target = iccFindNodeId(targetId, nodes)!;
+    //console.log( ' targetNode=', target)
+    if (this.isNodeDroppable(target, nodes)) {
+      this.dropInfo = {
+        target: target,
+      };
+      const targetRect = container.getBoundingClientRect();
+      const oneThird = targetRect.height / 3;
+      if (event.pointerPosition.y - targetRect.top < oneThird && this.isDroppablePosition(target, 'before', nodes)) {
+        this.dropInfo.position = 'before';
+      } else if (
+        event.pointerPosition.y - targetRect.top > 2 * oneThird &&
+        this.isDroppablePosition(target, 'after', nodes)
+      ) {
+        this.dropInfo.position = 'after';
+      } else {
+        const dragParent = iccGetNodeParent(this.dragNode!, nodes);
+        if (target.id !== dragParent?.id) {
+          this.dropInfo.position = 'inside';
+        }
+      }
+      //console.log(  ' this.dropInfo=', this.dropInfo)
+      if (this.dropInfo.position) {
+        this.showDragInfo();
+      } else {
+        this.clearDragInfo();
+        this.dropInfo = null;
+      }
+    }
+  }
 
-  drop(event: CdkDragDrop<string[]>): void {}
+  drop(event: CdkDragDrop<string[]>): void {
+    console.log(' this.dropInfo=', this.dropInfo);
+    this.clearDragInfo(true);
+  }
+
+  private isDroppablePosition(target: IccTreeNode<T>, position: string, nodes: IccTreeNode<T>[]): boolean {
+    let targetIndex = nodes.indexOf(target);
+    const dragIndex = nodes.indexOf(this.dragNode!);
+    /*
+    //const dragNodes = this.getTreeNodes(this.dragNode, nodes);
+    const diff = (dragIndex > targetIndex) ? 0 : dragNodes.length;
+    targetIndex -= diff;
+    if (position === 'after') {
+      const adIndex = this.getAdujstIndex(targetNode, nodes);
+      targetIndex += adIndex + 1;
+    }*/
+    return dragIndex !== targetIndex;
+  }
+
+  /*
+  private getTreeNodes(nodes: ItemNode[], nodeId: string): ItemNode[] {
+    const node = this.nodeLookup[nodeId];
+    const parentId = this.getParentNodeId(node, nodes, 'main');
+    return parentId !== 'main' ? this.nodeLookup[parentId].children : nodes;
+  }*/
+
+  private isNodeDroppable(target: IccTreeNode<T>, nodes: IccTreeNode<T>[]): boolean {
+    let droppable = true;
+    if (target.id === this.dragNode?.id) {
+      droppable = false;
+    } else {
+      // TODO other case not droppable
+      /*
+      const subTreeNodes = this.getTreeNodes(this.dragNode, this.data);
+      if (subTreeNodes.length > 1) {
+        const find = subTreeNodes.filter(node => node.nodeId === targetId);
+        if (find.length > 0) {
+          droppable = false;
+        }
+      }*/
+    }
+    return droppable;
+  }
+
+  private showDragInfo(): void {
+    this.clearDragInfo();
+    if (this.dropInfo?.target.id) {
+      this.document.getElementById(this.dropInfo.target.id)?.classList.add('icc-tree-drop-' + this.dropInfo.position);
+    }
+  }
+
+  private clearDragInfo(dropped: boolean = false): void {
+    if (dropped) {
+      this.dropInfo = null;
+      this.dragNode = null;
+    }
+    this.document
+      .querySelectorAll('.icc-tree-drop-before')
+      .forEach((element) => element.classList.remove('icc-tree-drop-before'));
+    this.document
+      .querySelectorAll('.icc-tree-drop-after')
+      .forEach((element) => element.classList.remove('icc-tree-drop-after'));
+    this.document
+      .querySelectorAll('.icc-tree-drop-inside')
+      .forEach((element) => element.classList.remove('icc-tree-drop-inside'));
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

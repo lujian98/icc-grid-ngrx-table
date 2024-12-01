@@ -23,15 +23,18 @@
       (cdkDropListDropped)="drop($event)"
     >
       <icc-tree-row
+        class="icc-tree-node"
         [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
         [treeConfig]="treeConfig"
         [columns]="columns"
         [record]="record"
-        [cdkDragDisabled]="dragDisabled"
         cdkDrag
+        [cdkDragDisabled]="treeConfig.dragDisabled"
         (cdkDragStarted)="dragStart(record)"
-        (cdkDragMoved)="dragMoved($event)"
+        (cdkDragMoved)="dragMoved($event, treeData)"
         [cdkDragData]="record"
+        [attr.tree-node-id]="record.id"
+        [attr.id]="record.id"
       >
       </icc-tree-row>
     </div>

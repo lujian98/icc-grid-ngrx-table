@@ -1,8 +1,9 @@
 import { IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 
 export interface IccTreeConfig extends IccGridConfig {
-  id?: string;
+  //id?: string;
   remoteLoadAll?: boolean;
+  dragDisabled?: boolean;
 }
 
 export const defaultTreeConfig: IccTreeConfig = {
@@ -13,12 +14,13 @@ export const defaultTreeConfig: IccTreeConfig = {
   //remoteGridData: false,
   virtualScroll: true,
   pageSize: 10000,
-  id: 'name', // TODO not used
+  //id: 'name', // TODO not used
   remoteLoadAll: false,
+  dragDisabled: false,
 };
 
 export interface IccTreeData {
-  //id?: string;
+  id?: string; // if node set will use name unique tree node id
   name: string;
   level?: number;
   leaf?: boolean;
@@ -49,3 +51,9 @@ export const defaultTreeState: IccTreeState = {
   //remoteData: [],
   inMemoryData: [],
 };
+
+export interface IccTreeDropInfo<T> {
+  target: IccTreeNode<T>;
+  //targetId: string;
+  position?: string;
+}

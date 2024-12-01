@@ -1,7 +1,12 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
 import { TreeState, defaultTreeState } from '../models/tree-grid.model';
-import { iccFlattenTree, iccNodeToggleInMemoryData, iccExpandAllNodesInMemoryData } from '../utils/nested-tree';
+import {
+  iccFlattenTree,
+  iccSetNestNodeId,
+  iccNodeToggleInMemoryData,
+  iccExpandAllNodesInMemoryData,
+} from '../utils/nested-tree';
 
 export const initialState: TreeState = {};
 
@@ -25,11 +30,11 @@ export const iccTreeFeature = createFeature({
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
+        const inMemoryData = iccSetNestNodeId([...action.treeData]);
         newState[key] = {
           ...oldState,
-          treeData: iccFlattenTree([...action.treeData], 0),
-          //remoteData: [...action.treeData],
-          inMemoryData: [...action.treeData],
+          inMemoryData,
+          treeData: iccFlattenTree([...inMemoryData], 0),
         };
       }
       console.log('get new load remote data= ', newState);
@@ -43,7 +48,7 @@ export const iccTreeFeature = createFeature({
       if (state[key]) {
         newState[key] = {
           ...state[key],
-          inMemoryData: [...action.treeData],
+          inMemoryData: iccSetNestNodeId([...action.treeData]),
         };
       }
       console.log(' set InMemoryData tree data = ', newState);
