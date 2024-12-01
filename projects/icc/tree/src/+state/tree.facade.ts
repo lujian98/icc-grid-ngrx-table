@@ -54,6 +54,18 @@ export class IccTreeFacade {
     }
   }
 
+  dropNode<T>(
+    treeConfig: IccTreeConfig,
+    node: IccTreeNode<T>,
+    targetParent: IccTreeNode<T>,
+    targetIndex: number,
+  ): void {
+    console.log(' this.dragNode=', node);
+    this.store.dispatch(treeActions.dropNode({ treeConfig, node, targetParent, targetIndex }));
+    this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+    //TODO remote update node
+  }
+
   setTreeInMemoryData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
     this.store.dispatch(treeActions.setTreeInMemoryData({ treeConfig, treeData }));
   }

@@ -3,7 +3,7 @@ import { IccTreeNode } from '../models/tree-grid.model';
 export function iccFlattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTreeNode<T>[] {
   const flattenedNodes: IccTreeNode<T>[] = [];
   for (const node of nodes) {
-    const leaf = node.children ? false : true;
+    const leaf = node.children ? false : true; // TODO remote node leaf???
     flattenedNodes.push({ ...node, level, leaf });
     if (node.children && node.expanded) {
       flattenedNodes.push(...iccFlattenTree(node.children, level + 1));

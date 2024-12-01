@@ -126,7 +126,12 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
       } else {
         const dragParent = iccGetNodeParent(this.dragNode!, nodes);
         if (target.id !== dragParent?.id) {
-          this.dropInfo.position = 'inside';
+          this.dropInfo = {
+            ...this.dropInfo!,
+            targetParent: target,
+            targetIndex: 0,
+            position: 'inside',
+          };
         }
       }
       if (this.dropInfo.position) {
@@ -143,19 +148,25 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     let dragIndex = nodes.indexOf(this.dragNode!);
     const targetParent = iccGetNodeParent(target, nodes);
     const dragParent = iccGetNodeParent(this.dragNode!, nodes);
+    let parentNodes = targetParent?.children;
+    if (targetParent == undefined) {
+      parentNodes = nodes.filter((node) => node.level === 0);
+    }
+    targetIndex = parentNodes?.findIndex((node) => node.id === target.id)!;
+    if (position === 'before') {
+      targetIndex--;
+    } else if (position === 'after') {
+      targetIndex++;
+    }
+
+    this.dropInfo = {
+      ...this.dropInfo!,
+      targetParent,
+      targetIndex,
+    };
 
     if ((targetParent == undefined && dragParent === undefined) || targetParent?.id === dragParent?.id) {
-      let parentNodes = targetParent?.children;
-      if (targetParent == undefined) {
-        parentNodes = nodes.filter((node) => node.level === 0);
-      }
-      targetIndex = parentNodes?.findIndex((node) => node.id === target.id)!;
       dragIndex = parentNodes?.findIndex((node) => node.id === this.dragNode!.id)!;
-      if (position === 'before') {
-        targetIndex--;
-      } else if (position === 'after') {
-        targetIndex++;
-      }
       return dragIndex !== targetIndex;
     }
     return true;
@@ -197,10 +208,11 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    if (this.dropInfo) {
-      console.log(' this.dropInfo=', this.dropInfo);
-      console.log(' this.dragNode=', this.dragNode);
-      console.log(' this.event=', event);
+    if (this.dropInfo && this.dragNode) {
+      //console.log(' this.dropInfo=', this.dropInfo);
+      //console.log(' this.dragNode=', this.dragNode);
+      //console.log(' this.event=', event);
+      this.treeFacade.dropNode(this.treeConfig, this.dragNode, this.dropInfo.targetParent!, this.dropInfo.targetIndex!);
     }
     this.clearDragInfo(true);
   }

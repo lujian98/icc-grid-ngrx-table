@@ -54,6 +54,7 @@ export const defaultTreeState: IccTreeState = {
 
 export interface IccTreeDropInfo<T> {
   target: IccTreeNode<T>;
-  //targetId: string;
+  targetParent?: IccTreeNode<T>;
+  targetIndex?: number;
   position?: string;
 }

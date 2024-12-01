@@ -35,5 +35,10 @@ export const expandAllNodesInMemoryData = createAction(
   props<{ treeConfig: IccTreeConfig; expanded: boolean }>(),
 );
 
+export const dropNode = createAction(
+  '[Tree] Node Toggle dropNode',
+  props<{ treeConfig: IccTreeConfig; node: IccTreeData; targetParent: IccTreeData; targetIndex: number }>(),
+);
+
 export const clearTreeDataStore = createAction('[Tree] Clear Tree Data Store', props<{ treeId: string }>());
 export const removeTreeDataStore = createAction('[Tree] Remove Tree Data Store', props<{ treeId: string }>());

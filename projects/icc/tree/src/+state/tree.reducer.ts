@@ -1,12 +1,24 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
-import { TreeState, defaultTreeState } from '../models/tree-grid.model';
+import { TreeState, defaultTreeState, IccTreeNode } from '../models/tree-grid.model';
 import {
   iccFlattenTree,
   iccSetNestNodeId,
   iccNodeToggleInMemoryData,
   iccExpandAllNodesInMemoryData,
 } from '../utils/nested-tree';
+
+export function iccRemoveNode<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
+  return [...nodes]
+    .filter((node) => node.id !== n.id)
+    .map((node) => {
+      const children = node.children?.length ? iccRemoveNode(node.children, n) : undefined;
+      return {
+        ...node,
+        children: children && children.length > 0 ? children : undefined,
+      };
+    });
+}
 
 export const initialState: TreeState = {};
 
@@ -77,6 +89,21 @@ export const iccTreeFeature = createFeature({
         newState[key] = {
           ...oldState,
           inMemoryData: iccNodeToggleInMemoryData(oldState.inMemoryData, action.node),
+        };
+      }
+      return { ...newState };
+    }),
+
+    on(treeActions.dropNode, (state, action) => {
+      const key = action.treeConfig.gridId;
+      const newState: TreeState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const nodes = iccRemoveNode([...oldState.inMemoryData], action.node);
+        console.log(' get iccRemoveNode = ', nodes);
+        newState[key] = {
+          ...oldState,
+          inMemoryData: [...nodes],
         };
       }
       return { ...newState };
