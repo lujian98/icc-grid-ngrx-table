@@ -9,6 +9,16 @@
         <icc-icon [icon]="buttons[1].icon!"></icc-icon>
         {{ buttons[1].title | translate }}
       </button>
+
+      <button icc-button (click)="expandAll(treeConfig, true)">
+        <icc-icon [icon]="buttons[1].icon!"></icc-icon>
+        {{ "Expand All" | translate }}
+      </button>
+
+      <button icc-button (click)="expandAll(treeConfig, false)">
+        <icc-icon [icon]="buttons[1].icon!"></icc-icon>
+        {{ "Collapse All" | translate }}
+      </button>
     </div>
 
     <icc-tree-view [treeConfig]="treeConfig" [columns]="columns"> </icc-tree-view>

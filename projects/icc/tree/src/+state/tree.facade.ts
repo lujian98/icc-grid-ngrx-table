@@ -45,6 +45,15 @@ export class IccTreeFacade {
     }
   }
 
+  expandAllNodes<T>(treeConfig: IccTreeConfig, expanded: boolean): void {
+    if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
+      // TODO remove data need call a service to add/remove child
+    } else {
+      this.store.dispatch(treeActions.expandAllNodesInMemoryData({ treeConfig, expanded }));
+      this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+    }
+  }
+
   setTreeInMemoryData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
     this.store.dispatch(treeActions.setTreeInMemoryData({ treeConfig, treeData }));
   }

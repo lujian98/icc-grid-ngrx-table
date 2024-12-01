@@ -92,6 +92,10 @@ export class IccTreeComponent<T> implements OnDestroy {
     this.gridFacade.setGridColumnFilters(this.treeConfig, []);
   }
 
+  expandAll(treeConfig: IccTreeConfig, expanded: boolean): void {
+    this.treeFacade.expandAllNodes(treeConfig, expanded);
+  }
+
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.treeId);
     this.treeFacade.clearTreeDataStore(this.treeId);

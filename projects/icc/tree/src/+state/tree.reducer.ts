@@ -12,6 +12,16 @@ export function iccNodeToggleInMemoryData<T>(nodes: IccTreeNode<T>[], n: IccTree
   });
 }
 
+export function iccExpandAllNodesInMemoryData<T>(nodes: IccTreeNode<T>[], expanded: boolean): IccTreeNode<T>[] {
+  return [...nodes].map((node) => {
+    return {
+      ...node,
+      expanded: node.children ? expanded : undefined,
+      children: node.children ? iccExpandAllNodesInMemoryData(node.children, expanded) : undefined,
+    };
+  });
+}
+
 export const initialState: TreeState = {};
 
 export const iccTreeFeature = createFeature({
@@ -81,6 +91,19 @@ export const iccTreeFeature = createFeature({
         newState[key] = {
           ...oldState,
           inMemoryData: iccNodeToggleInMemoryData(oldState.inMemoryData, action.node),
+        };
+      }
+      return { ...newState };
+    }),
+
+    on(treeActions.expandAllNodesInMemoryData, (state, action) => {
+      const key = action.treeConfig.gridId;
+      const newState: TreeState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        newState[key] = {
+          ...oldState,
+          inMemoryData: iccExpandAllNodesInMemoryData(oldState.inMemoryData, action.expanded),
         };
       }
       return { ...newState };

@@ -30,5 +30,10 @@ export const nodeToggleInMemoryData = createAction(
   props<{ treeConfig: IccTreeConfig; node: IccTreeData }>(),
 );
 
+export const expandAllNodesInMemoryData = createAction(
+  '[Tree] Expand All Nodes InMemoryData',
+  props<{ treeConfig: IccTreeConfig; expanded: boolean }>(),
+);
+
 export const clearTreeDataStore = createAction('[Tree] Clear Tree Data Store', props<{ treeId: string }>());
 export const removeTreeDataStore = createAction('[Tree] Remove Tree Data Store', props<{ treeId: string }>());
