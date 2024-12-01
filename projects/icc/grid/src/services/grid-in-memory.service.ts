@@ -19,12 +19,12 @@ export class IccGridinMemoryService {
     columns: IccColumnConfig[],
     inMemoryData: any[],
   ): Observable<IccGridData<T>> {
-    console.log('grid service inMemoryData=', inMemoryData);
+    //console.log('grid service inMemoryData=', inMemoryData);
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);
     //console.log('grid sortedData=', sortedData);
-    this.getTreeNodes(sortedData);
+    //this.getTreeNodes(sortedData);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
     //console.log( 'offset, limit=', offset, limit)
