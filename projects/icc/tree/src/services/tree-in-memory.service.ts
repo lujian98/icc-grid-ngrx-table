@@ -14,7 +14,6 @@ export class IccTreeinMemoryService extends IccGridinMemoryService {
   ): Observable<IccTreeData[]> {
     console.log('tree service inMemoryData=', inMemoryData);
     const flatTree = iccFlattenTree([...inMemoryData], 0);
-    // TODO filter ......
 
     const filterParams = this.getFilterParams(treeConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...flatTree], filterParams);
