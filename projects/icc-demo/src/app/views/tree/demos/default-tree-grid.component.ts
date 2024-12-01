@@ -13,20 +13,24 @@ interface NestedFoodNode extends IccTreeNode<NestedFoodNode> {
 const NESTED_DATA: NestedFoodNode[] = [
   {
     name: 'Fruit',
+    icon: 'bell',
     vin: 'aaa',
-    children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
+    children: [{ name: 'Apple', icon: 'bell' }, { name: 'Banana' }, { name: 'Fruit loops' }],
   },
   {
     name: 'Vegetables',
+    icon: 'bell',
     expanded: true,
     children: [
       {
         name: 'Green',
         expanded: true,
-        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts' }],
+        icon: 'bell',
+        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts', icon: 'bell' }],
       },
       {
         name: 'Orange',
+        icon: 'bell',
         year: '1990',
         expanded: false,
         children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],

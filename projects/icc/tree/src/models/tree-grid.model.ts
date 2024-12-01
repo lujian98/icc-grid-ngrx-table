@@ -23,7 +23,7 @@ export interface IccTreeData {
   level?: number;
   leaf?: boolean;
   expanded?: boolean;
-  //icon?: string | SunIconConfig;
+  icon?: string;
   //readonly?: boolean;
   //
   children?: IccTreeData[];
