@@ -1,26 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import * as treeActions from './tree.actions';
-import { TreeState, defaultTreeState, iccFlattenTree, IccTreeNode } from '../models/tree-grid.model';
-
-export function iccNodeToggleInMemoryData<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
-  return [...nodes].map((node) => {
-    return {
-      ...node,
-      expanded: node.name === n.name ? !node.expanded : node.expanded,
-      children: node.children ? iccNodeToggleInMemoryData(node.children, n) : undefined,
-    };
-  });
-}
-
-export function iccExpandAllNodesInMemoryData<T>(nodes: IccTreeNode<T>[], expanded: boolean): IccTreeNode<T>[] {
-  return [...nodes].map((node) => {
-    return {
-      ...node,
-      expanded: node.children ? expanded : undefined,
-      children: node.children ? iccExpandAllNodesInMemoryData(node.children, expanded) : undefined,
-    };
-  });
-}
+import { TreeState, defaultTreeState } from '../models/tree-grid.model';
+import { iccFlattenTree, iccNodeToggleInMemoryData, iccExpandAllNodesInMemoryData } from '../utils/nested-tree';
 
 export const initialState: TreeState = {};
 

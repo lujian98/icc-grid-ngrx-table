@@ -77,6 +77,23 @@ export class IccTreeEffects {
     ),
   );
 
+  setGridSortFields$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setGridSortFields), // gridActions
+      switchMap(({ gridConfig }) =>
+        of(gridConfig).pipe(
+          map((treeConfig: IccTreeConfig) => {
+            if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
+              return treeActions.getTreeRemoteData({ treeConfig });
+            } else {
+              return treeActions.getTreeInMemoryData({ treeConfig });
+            }
+          }),
+        ),
+      ),
+    ),
+  );
+
   clearTreeDataStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(treeActions.clearTreeDataStore),

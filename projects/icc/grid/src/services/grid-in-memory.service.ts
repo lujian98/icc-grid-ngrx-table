@@ -138,7 +138,7 @@ export class IccGridinMemoryService {
     return data;
   }
 
-  private dataSortByField(data: any[], field: string, direction: string) {
+  protected dataSortByField(data: any[], field: string, direction: string) {
     const order = direction === 'asc' ? 1 : -1;
     //console.log( ' data=', data)
     data.sort((d1: any, d2: any) => {

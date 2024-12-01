@@ -49,15 +49,3 @@ export const defaultTreeState: IccTreeState = {
   //remoteData: [],
   inMemoryData: [],
 };
-
-export function iccFlattenTree<T>(nodes: IccTreeNode<T>[], level: number): IccTreeNode<T>[] {
-  const flattenedNodes: IccTreeNode<T>[] = [];
-  for (const node of nodes) {
-    const leaf = node.children ? false : true;
-    flattenedNodes.push({ ...node, level, leaf });
-    if (node.children && node.expanded) {
-      flattenedNodes.push(...iccFlattenTree(node.children, level + 1));
-    }
-  }
-  return flattenedNodes;
-}

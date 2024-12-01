@@ -7,7 +7,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
 import { IccTreeViewComponent } from './components/tree-view.component';
-import { IccTreeConfig, defaultTreeConfig, IccTreeData, IccTreeNode } from './models/tree-grid.model';
+import { IccTreeConfig, defaultTreeConfig, IccTreeNode } from './models/tree-grid.model';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
 
