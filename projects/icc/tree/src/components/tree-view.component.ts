@@ -94,13 +94,10 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   dragStart(node: IccTreeNode<T>): void {
-    //console.log(' drag start=', node)
     this.dragNode = node;
   }
 
   dragMoved(event: CdkDragMove, nodes: IccTreeNode<T>[]): void {
-    //console.log('drag moved=', event);
-    //console.log('nodes=', nodes);
     this.dropInfo = null;
     const e = this.document.elementFromPoint(event.pointerPosition.x, event.pointerPosition.y);
     if (!e) {
@@ -112,9 +109,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
       this.clearDragInfo();
       return;
     }
-    const targetId = container.getAttribute('tree-node-id')!;
-    const target = iccFindNodeId(targetId, nodes)!;
-    //console.log( ' targetNode=', target)
+    const target = iccFindNodeId(container.getAttribute('tree-node-id')!, nodes)!;
     if (this.isNodeDroppable(target, nodes)) {
       this.dropInfo = {
         target: target,
@@ -134,7 +129,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
           this.dropInfo.position = 'inside';
         }
       }
-      //console.log(  ' this.dropInfo=', this.dropInfo)
       if (this.dropInfo.position) {
         this.showDragInfo();
       } else {
@@ -144,48 +138,39 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  drop(event: CdkDragDrop<string[]>): void {
-    console.log(' this.dropInfo=', this.dropInfo);
-    this.clearDragInfo(true);
-  }
-
   private isDroppablePosition(target: IccTreeNode<T>, position: string, nodes: IccTreeNode<T>[]): boolean {
     let targetIndex = nodes.indexOf(target);
-    const dragIndex = nodes.indexOf(this.dragNode!);
-    /*
-    //const dragNodes = this.getTreeNodes(this.dragNode, nodes);
-    const diff = (dragIndex > targetIndex) ? 0 : dragNodes.length;
-    targetIndex -= diff;
-    if (position === 'after') {
-      const adIndex = this.getAdujstIndex(targetNode, nodes);
-      targetIndex += adIndex + 1;
-    }*/
-    return dragIndex !== targetIndex;
+    let dragIndex = nodes.indexOf(this.dragNode!);
+    const targetParent = iccGetNodeParent(target, nodes);
+    const dragParent = iccGetNodeParent(this.dragNode!, nodes);
+
+    if ((targetParent == undefined && dragParent === undefined) || targetParent?.id === dragParent?.id) {
+      let parentNodes = targetParent?.children;
+      if (targetParent == undefined) {
+        parentNodes = nodes.filter((node) => node.level === 0);
+      }
+      targetIndex = parentNodes?.findIndex((node) => node.id === target.id)!;
+      dragIndex = parentNodes?.findIndex((node) => node.id === this.dragNode!.id)!;
+      if (position === 'before') {
+        targetIndex--;
+      } else if (position === 'after') {
+        targetIndex++;
+      }
+      return dragIndex !== targetIndex;
+    }
+    return true;
   }
 
-  /*
-  private getTreeNodes(nodes: ItemNode[], nodeId: string): ItemNode[] {
-    const node = this.nodeLookup[nodeId];
-    const parentId = this.getParentNodeId(node, nodes, 'main');
-    return parentId !== 'main' ? this.nodeLookup[parentId].children : nodes;
-  }*/
-
   private isNodeDroppable(target: IccTreeNode<T>, nodes: IccTreeNode<T>[]): boolean {
-    let droppable = true;
-    if (target.id === this.dragNode?.id) {
-      droppable = false;
-    } else {
-      // TODO other case not droppable
-      /*
-      const subTreeNodes = this.getTreeNodes(this.dragNode, this.data);
-      if (subTreeNodes.length > 1) {
-        const find = subTreeNodes.filter(node => node.nodeId === targetId);
-        if (find.length > 0) {
-          droppable = false;
-        }
-      }*/
+    return target.id !== this.dragNode?.id && !this.dragNodeHasSameParent(target, this.dragNode!, nodes);
+  }
+
+  private dragNodeHasSameParent<T>(target: IccTreeNode<T>, dragNode: IccTreeNode<T>, nodes: IccTreeNode<T>[]): boolean {
+    const targetParent = iccGetNodeParent(target, nodes);
+    if (targetParent?.id === this.dragNode?.id) {
+      return true;
     }
-    return droppable;
+    return targetParent ? this.dragNodeHasSameParent(targetParent, dragNode, nodes) : false;
   }
 
   private showDragInfo(): void {
@@ -209,6 +194,13 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.document
       .querySelectorAll('.icc-tree-drop-inside')
       .forEach((element) => element.classList.remove('icc-tree-drop-inside'));
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    console.log(' this.dropInfo=', this.dropInfo);
+    console.log(' this.dragNode=', this.dragNode);
+    console.log(' this.event=', event);
+    this.clearDragInfo(true);
   }
 
   @HostListener('window:resize', ['$event'])
