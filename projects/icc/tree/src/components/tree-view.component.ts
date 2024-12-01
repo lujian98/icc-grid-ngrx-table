@@ -88,6 +88,8 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.treeFacade.viewportReadyLoadData(this.treeConfig);
   }
 
+  dragDisabled = true;
+
   dragStart(node: T): void {
     //this.dragNode = node;
   }

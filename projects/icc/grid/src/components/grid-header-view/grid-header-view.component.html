@@ -7,11 +7,11 @@
     }"
     [gridConfig]="gridConfig"
     [columns]="columns"
-    (cdkDropListDropped)="onColumnDragDrop($event)"
     (columnResizing)="onColumnResizing($event)"
     (columnResized)="onColumnResized($event)"
-    cdkDropListOrientation="horizontal"
     cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="onColumnDragDrop($event)"
   >
   </icc-grid-header>
 </div>

@@ -27,6 +27,7 @@
         [treeConfig]="treeConfig"
         [columns]="columns"
         [record]="record"
+        [cdkDragDisabled]="dragDisabled"
         cdkDrag
         (cdkDragStarted)="dragStart(record)"
         (cdkDragMoved)="dragMoved($event)"

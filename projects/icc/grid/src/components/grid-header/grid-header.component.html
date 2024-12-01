@@ -11,13 +11,13 @@
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"
-    [cdkDragDisabled]="dragDisabled"
     [column]="column"
     [columns]="columns"
     [gridConfig]="gridConfig"
     (columnResizing)="columnResizing.emit($event)"
     (columnResized)="columnResized.emit($event)"
     cdkDrag
+    [cdkDragDisabled]="dragDisabled"
     iccColumnResize
   >
     <icc-grid-header-cell [column]="column" [gridConfig]="gridConfig"> </icc-grid-header-cell>
