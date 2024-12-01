@@ -154,7 +154,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     }
     targetIndex = parentNodes?.findIndex((node) => node.id === target.id)!;
     if (position === 'before') {
-      targetIndex--;
+      //targetIndex--;
     } else if (position === 'after') {
       targetIndex++;
     }

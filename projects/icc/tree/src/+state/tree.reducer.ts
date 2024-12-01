@@ -20,6 +20,30 @@ export function iccRemoveNode<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): Ic
     });
 }
 
+export function iccAddNestedTreeNode<T>(
+  nodes: IccTreeNode<T>[],
+  n: IccTreeNode<T>,
+  targetParent: IccTreeNode<T>,
+  targetIndex: number,
+): IccTreeNode<T>[] {
+  if (!targetParent) {
+    nodes.splice(targetIndex, 0, n);
+    return [...nodes];
+  } else {
+    return [...nodes].map((node) => {
+      let children = node.children;
+      if (node.id === targetParent.id) {
+        children = node.children ? node.children : [];
+        children.splice(targetIndex, 0, n);
+      }
+      return {
+        ...node,
+        children: children ? iccAddNestedTreeNode(children, n, targetParent, targetIndex) : undefined,
+      };
+    });
+  }
+}
+
 export const initialState: TreeState = {};
 
 export const iccTreeFeature = createFeature({
@@ -100,10 +124,12 @@ export const iccTreeFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const nodes = iccRemoveNode([...oldState.inMemoryData], action.node);
-        console.log(' get iccRemoveNode = ', nodes);
+        const inMemoryData = iccAddNestedTreeNode([...nodes], action.node, action.targetParent, action.targetIndex);
+        //console.log(' get iccRemoveNode = ', inMemoryData);
         newState[key] = {
           ...oldState,
-          inMemoryData: [...nodes],
+          inMemoryData,
+          //inMemoryData: [...nodes],
         };
       }
       return { ...newState };
