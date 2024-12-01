@@ -1,4 +1,4 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -87,6 +87,14 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
     this.treeFacade.viewportReadyLoadData(this.treeConfig);
   }
+
+  dragStart(node: T): void {
+    //this.dragNode = node;
+  }
+
+  dragMoved(event: any): void {}
+
+  drop(event: CdkDragDrop<string[]>): void {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

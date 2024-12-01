@@ -16,13 +16,23 @@
   (scroll)="onViewportScroll($event)"
 >
   <ng-container *ngIf="treeData$ | async as treeData">
-    <icc-tree-row
-      [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
+    <div
       *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
-      [treeConfig]="treeConfig"
-      [columns]="columns"
-      [record]="record"
+      cdkDropList
+      [cdkDropListSortingDisabled]="true"
+      (cdkDropListDropped)="drop($event)"
     >
-    </icc-tree-row>
+      <icc-tree-row
+        [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
+        [treeConfig]="treeConfig"
+        [columns]="columns"
+        [record]="record"
+        cdkDrag
+        (cdkDragStarted)="dragStart(record)"
+        (cdkDragMoved)="dragMoved($event)"
+        [cdkDragData]="record"
+      >
+      </icc-tree-row>
+    </div>
   </ng-container>
 </cdk-virtual-scroll-viewport>
