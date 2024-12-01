@@ -197,9 +197,11 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    console.log(' this.dropInfo=', this.dropInfo);
-    console.log(' this.dragNode=', this.dragNode);
-    console.log(' this.event=', event);
+    if (this.dropInfo) {
+      console.log(' this.dropInfo=', this.dropInfo);
+      console.log(' this.dragNode=', this.dragNode);
+      console.log(' this.event=', event);
+    }
     this.clearDragInfo(true);
   }
 
