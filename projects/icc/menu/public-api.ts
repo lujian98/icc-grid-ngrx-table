@@ -1,4 +1,4 @@
 export * from './src/models/menu-item.model';
 export * from './src/components/menu-item/menu-item.component';
 export * from './src/menu.component';
-export * from './src/components/popover-menu/popover-menu.component';
+export * from './src/popover-menu.component';

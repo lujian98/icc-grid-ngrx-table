@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { IccMenuComponent } from '../../menu.component';
-import { IccMenuItem } from '../../models/menu-item.model';
+import { IccMenuComponent } from './menu.component';
+import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
   selector: 'icc-popover-menu',
