@@ -11,8 +11,7 @@
     >
       <i *ngIf="item.icon" [class]="item.icon"></i>
       <span class="icc-menu-item-title"> {{ item.title }}</span>
-      <span class="icc-flex"></span>
-      <i class="fas fa-caret-right"></i>
+      <i *ngIf="level > 0" class="fas fa-caret-right"></i>
     </button>
 
     <ng-template #menu>
