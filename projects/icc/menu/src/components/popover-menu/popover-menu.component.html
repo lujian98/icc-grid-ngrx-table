@@ -1,9 +1,8 @@
-<div [iccPopover]="menu" [iccPopoverTrigger]="popoverTrigger">
-  <span *ngIf="menuItemConfig.title">{{ menuItemConfig.title }}</span>
-  <i *ngIf="menuItemConfig.icon" [class]="menuItemConfig.icon" style="color: green"></i>
+<div [iccPopover]="menu" [iccPopoverTrigger]="menuTrigger">
+  <span *ngIf="menuItem.title">{{ menuItem.title }}</span>
+  <i *ngIf="menuItem.icon" [class]="menuItem.icon" style="color: green"></i>
 </div>
 
 <ng-template #menu>
-  <icc-popover-menu-item [menuItemConfigs]="menuItemConfig.children!" (iccItemChangedEvent)="onMenuItemChanged($event)">
-  </icc-popover-menu-item>
+  <icc-menu [items]="menuItem.children!" [level]="level + 1" (click)="onMenuItemChanged($event)"> </icc-menu>
 </ng-template>

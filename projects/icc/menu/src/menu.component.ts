@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccMenuItem } from './models/menu-item.model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
+import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
   selector: 'icc-menu',
@@ -9,11 +11,10 @@ import { IccMenuItemComponent } from './components/menu-item/menu-item.component
   styleUrls: ['./menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccMenuItemComponent],
+  imports: [CommonModule, IccMenuItemComponent, IccPopoverDirective],
 })
 export class IccMenuComponent {
   private _items: IccMenuItem[] = [];
-  // @Input() menuType!: string;
   private selected: IccMenuItem | undefined;
 
   @Input()
@@ -27,7 +28,23 @@ export class IccMenuComponent {
     return this._items;
   }
 
+  @Input() level = 0;
+
+  @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
+
+  get popoverTrigger(): IccTrigger {
+    return this.level === 0 ? this.menuTrigger : IccTrigger.HOVER;
+  }
+
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
+
+  isLeafMenu(item: IccMenuItem): boolean {
+    return !item.hidden && (!item.children || item.children.length === 0);
+  }
+
+  hasChildItem(item: IccMenuItem): boolean {
+    return !item.hidden && !!item.children && item.children.length > 0;
+  }
 
   itemClicked(event: MouseEvent, selectedItem: IccMenuItem): void {
     if (selectedItem.disabled) {

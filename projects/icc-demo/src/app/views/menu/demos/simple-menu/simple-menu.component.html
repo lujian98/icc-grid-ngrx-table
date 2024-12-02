@@ -3,7 +3,7 @@
 
   <div>
     No fieldConfig - use default field config with Local field config and local object options
-    <icc-popover-menu [menuItemConfig]="testMenuItems"> </icc-popover-menu>
+    <icc-popover-menu [menuItem]="testMenuItems"> </icc-popover-menu>
   </div>
 
   <div><br /></div>
@@ -11,12 +11,18 @@
   <div><br /></div>
   <div><br /></div>
 
-  <div
-    [iccPopover]="menuItemComponent"
-    [iccPopoverTrigger]="contextmenu"
-    [iccPopoverContext]="cMenuItems"
-    (iccItemChangedEvent)="onMenuItemChanged($event)"
-  >
+  <div><br /></div>
+  <div><br /></div>
+  <div><br /></div>
+  <div>
+    Click Menu
+    <icc-menu [items]="menuItems"> </icc-menu>
+  </div>
+  <div><br /></div>
+  <div><br /></div>
+
+  <div>
     Context Menu
+    <icc-menu [items]="menuItems" [menuTrigger]="contextmenu"> </icc-menu>
   </div>
 </div>

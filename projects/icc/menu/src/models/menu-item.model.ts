@@ -14,4 +14,6 @@ export interface IccMenuItem {
   checkbox?: boolean;
   checked?: boolean;
   separator?: boolean;
+
+  children?: IccMenuItem[];
 }

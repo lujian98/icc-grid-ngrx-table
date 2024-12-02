@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccPopoverMenuComponent, IccPopoverMenuItemComponent } from '@icc/ui/menu';
+import { IccPopoverMenuComponent, IccMenuComponent, IccMenuItem } from '@icc/ui/menu';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
+import { IccTrigger } from '@icc/ui/overlay';
 
 @Component({
   selector: 'app-simple-menu',
@@ -10,22 +10,15 @@ import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overl
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccPopoverMenuComponent,
-    IccPopoverMenuItemComponent,
-    IccPopoverComponent,
-    IccPopoverDirective,
-  ],
+  imports: [CommonModule, IccMenuComponent, IccPopoverMenuComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppSimpleMenuComponent implements OnInit {
-  menuItemComponent = IccPopoverMenuItemComponent;
-
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
 
-  cMenuItems: any;
-  testMenuItems = {
+  menuItems: any;
+  testMenuItems: IccMenuItem = {
     icon: 'fas fa-ellipsis-v',
+    name: 'group0',
     title: 'Group',
     children: [
       {
@@ -39,7 +32,7 @@ export class AppSimpleMenuComponent implements OnInit {
               {
                 title: 'Delight your Organization',
                 name: 'star_rate',
-                type: 'checkbox',
+                //type: 'checkbox',
               },
             ],
           },
@@ -99,12 +92,6 @@ export class AppSimpleMenuComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.cMenuItems = {
-      menuItemConfigs: this.testMenuItems.children,
-    };
-  }
-
-  onMenuItemChanged(event: any) {
-    console.log(' ppppppppppppp menu clicked=', event);
+    this.menuItems = [this.testMenuItems];
   }
 }
