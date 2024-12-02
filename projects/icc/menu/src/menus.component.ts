@@ -6,14 +6,14 @@ import { IccMenuItemComponent } from './components/menu-item/menu-item.component
 import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
-  selector: 'icc-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: 'icc-menus',
+  templateUrl: './menus.component.html',
+  styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccMenuItemComponent, IccPopoverDirective],
 })
-export class IccMenuComponent {
+export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
 

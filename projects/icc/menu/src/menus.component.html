@@ -16,7 +16,7 @@
     </button>
 
     <ng-template #menu>
-      <icc-menu [items]="item.children!" [level]="level + 1" (click)="itemClicked($event, item)"> </icc-menu>
+      <icc-menus [items]="item.children!" [level]="level + 1" (click)="itemClicked($event, item)"> </icc-menus>
     </ng-template>
   </span>
 </ng-container>

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { IccMenuComponent } from './menu.component';
+import { IccMenusComponent } from './menus.component';
 import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
@@ -11,7 +11,7 @@ import { IccMenuItem } from './models/menu-item.model';
   styleUrls: ['./popover-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccMenuComponent, IccPopoverComponent, IccPopoverDirective],
+  imports: [CommonModule, IccMenusComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class IccPopoverMenuComponent {
   @Input() menuItem!: IccMenuItem;
