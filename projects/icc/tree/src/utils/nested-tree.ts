@@ -57,3 +57,39 @@ export function iccFindNodeId<T>(id: string, nodes: IccTreeNode<T>[]): IccTreeNo
 export function iccGetNodeParent<T>(n: IccTreeNode<T>, nodes: IccTreeNode<T>[]): IccTreeNode<T> | undefined {
   return [...nodes].find((node) => node.children?.find((cn: IccTreeNode<T>) => cn.id === n.id));
 }
+
+export function iccRemoveNestedNode<T>(nodes: IccTreeNode<T>[], n: IccTreeNode<T>): IccTreeNode<T>[] {
+  return [...nodes]
+    .filter((node) => node.id !== n.id)
+    .map((node) => {
+      const children = node.children?.length ? iccRemoveNestedNode(node.children, n) : undefined;
+      return {
+        ...node,
+        children: children && children.length > 0 ? children : undefined,
+      };
+    });
+}
+
+export function iccAddNestedTreeNode<T>(
+  nodes: IccTreeNode<T>[],
+  n: IccTreeNode<T>,
+  targetParent: IccTreeNode<T>,
+  targetIndex: number,
+): IccTreeNode<T>[] {
+  if (!targetParent) {
+    nodes.splice(targetIndex, 0, n);
+    return [...nodes];
+  } else {
+    return [...nodes].map((node) => {
+      let children = node.children;
+      if (node.id === targetParent.id) {
+        children = node.children ? node.children : [];
+        children.splice(targetIndex, 0, n);
+      }
+      return {
+        ...node,
+        children: children ? iccAddNestedTreeNode(children, n, targetParent, targetIndex) : undefined,
+      };
+    });
+  }
+}

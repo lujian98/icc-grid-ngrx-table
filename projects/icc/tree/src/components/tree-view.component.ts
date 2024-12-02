@@ -154,7 +154,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     }
     targetIndex = parentNodes?.findIndex((node) => node.id === target.id)!;
     if (position === 'before') {
-      //targetIndex--;
+      targetIndex--;
     } else if (position === 'after') {
       targetIndex++;
     }
@@ -162,7 +162,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.dropInfo = {
       ...this.dropInfo!,
       targetParent,
-      targetIndex,
+      targetIndex: targetIndex < 0 ? 0 : targetIndex,
     };
 
     if ((targetParent == undefined && dragParent === undefined) || targetParent?.id === dragParent?.id) {
@@ -209,9 +209,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
 
   drop(event: CdkDragDrop<string[]>): void {
     if (this.dropInfo && this.dragNode) {
-      //console.log(' this.dropInfo=', this.dropInfo);
-      //console.log(' this.dragNode=', this.dragNode);
-      //console.log(' this.event=', event);
       this.treeFacade.dropNode(this.treeConfig, this.dragNode, this.dropInfo.targetParent!, this.dropInfo.targetIndex!);
     }
     this.clearDragInfo(true);
