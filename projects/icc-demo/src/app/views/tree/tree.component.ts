@@ -25,8 +25,6 @@ export class AppTreeComponent {
         { name: '6: Tree Remote Config & Column', link: 'app-tree-remote-config-column' },
         { name: '7: Tree Remote Config (only)', link: 'app-tree-remote-config' },
         { name: '8: Tree Remote Column (only)', link: 'app-tree-remote-column' },
-
-        { name: '11: CDK Tree Grid', link: 'app-cdk-tree-grid' },
       ],
     },
   ];

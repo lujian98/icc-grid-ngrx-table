@@ -9,8 +9,6 @@ import { AppTreeRemoteConfigColumnComponent } from './demos/tree-remote-config-c
 import { AppTreeRemoteConfigComponent } from './demos/tree-remote-config.component';
 import { AppTreeRemoteColumnComponent } from './demos/tree-remote-column.component';
 
-import { AppCdkTreeGridComponent } from './demos/cdk-tree-grid.component';
-
 import { AppTreeComponent } from './tree.component';
 
 export const AppTreeGridRoutes: Routes = [
@@ -28,7 +26,6 @@ export const AppTreeGridRoutes: Routes = [
       { path: 'app-tree-remote-config', component: AppTreeRemoteConfigComponent },
       { path: 'app-tree-remote-column', component: AppTreeRemoteColumnComponent },
 
-      { path: 'app-cdk-tree-grid', component: AppCdkTreeGridComponent },
       {
         path: '**',
         redirectTo: 'app-default-tree-grid',
