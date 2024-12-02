@@ -35,6 +35,8 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   @Input('iccPopoverStyle')
   style: string | undefined;
 
+  @Input() popoverLevel = 0;
+
   constructor(
     protected elementRef: ElementRef,
     protected dyanmicOverlayService: IccDynamicOverlayService,

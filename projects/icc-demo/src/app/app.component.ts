@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   d3Url = `d3`;
   formUrl = `form`;
   selectUrl = `select`;
+  menuUrl = 'menu';
   rangeValue = this.themeService.rangeMax;
 
   i18nService = inject(IccI18nService);
