@@ -19,15 +19,6 @@ export class IccTreeFacade {
     }
   }
 
-  /*
-
-  setGridSortFields(gridId: string, sortFields: IccSortField[]): void {
-    this.store.dispatch(gridActions.setGridSortFields({ gridId, sortFields }));
-    this.getGridData(gridId);
-  }
-
-  */
-
   getTreeData(treeConfig: IccTreeConfig): void {
     if (treeConfig.remoteGridData) {
       this.store.dispatch(treeActions.getTreeRemoteData({ treeConfig }));
@@ -60,7 +51,6 @@ export class IccTreeFacade {
     targetParent: IccTreeNode<T>,
     targetIndex: number,
   ): void {
-    console.log(' this.dragNode=', node);
     this.store.dispatch(treeActions.dropNode({ treeConfig, node, targetParent, targetIndex }));
     this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
     //TODO remote update node

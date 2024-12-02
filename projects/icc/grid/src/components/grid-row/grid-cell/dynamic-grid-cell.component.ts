@@ -32,7 +32,6 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   @Input()
   set record(data: T) {
     this._record = { ...data };
-    //console.log( ' data=', data)
     if (this._componentRef) {
       this._componentRef.instance.record = this.record;
     }

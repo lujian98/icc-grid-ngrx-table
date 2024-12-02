@@ -65,7 +65,7 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridData<T>>(url, { params }).pipe(
       map((res) => {
-        console.log('1444444 res=', res);
+        //console.log('1444444 res=', res);
         return res;
       }),
       catchError((error) =>
