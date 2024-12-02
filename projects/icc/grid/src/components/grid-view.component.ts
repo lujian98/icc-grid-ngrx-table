@@ -30,7 +30,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private _gridConfig!: IccGridConfig;
   gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
-  gridData$!: Observable<T[]>;
+  gridData$!: Observable<T[]> | undefined;
   columnHeaderPosition = 0;
 
   @Input() columns: IccColumnConfig[] = [];
@@ -38,10 +38,16 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-    this.gridData$ = this.gridFacade.selectGridData(this.gridConfig);
+    if (!this.gridData$) {
+      this.gridData$ = this.gridFacade.selectGridData(this.gridConfig);
+    }
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
+  }
+
+  getRecord(record: T): T {
+    return { ...record };
   }
 
   gridTemplateColumnsEvent(event: string): void {

@@ -164,7 +164,7 @@ export const iccGridFeature = createFeature({
           data: data,
         };
       }
-      //console.log(' new load data setup grid data = ', newState);
+      console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {

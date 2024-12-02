@@ -26,6 +26,7 @@ export class IccGridFacade {
 
   setGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+    this.getGridData(gridConfig);
   }
 
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number): void {
@@ -86,7 +87,7 @@ export class IccGridFacade {
   }
 
   selectGridInMemoryData(gridConfig: IccGridConfig): Observable<any[]> {
-    console.log('wwwwwwww selectGridInMemoryData ');
+    //console.log('wwwwwwww selectGridInMemoryData ');
     return this.store.select(selectGridInMemoryData(gridConfig));
   }
 }

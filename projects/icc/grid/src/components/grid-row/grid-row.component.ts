@@ -23,8 +23,16 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
 export class IccGridRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
-  @Input() record!: T;
+  private _record!: T;
   @Input() selected = false;
+
+  @Input()
+  set record(data: T) {
+    this._record = data;
+  }
+  get record(): T {
+    return this._record;
+  }
 
   @Output() toggleRow = new EventEmitter<any>();
 

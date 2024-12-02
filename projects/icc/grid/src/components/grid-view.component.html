@@ -16,13 +16,14 @@
   (scroll)="onViewportScroll($event)"
 >
   <ng-container *ngIf="gridData$ | async as gridData">
-    <icc-grid-row
-      [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
-      *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index"
-      [gridConfig]="gridConfig"
-      [columns]="columns"
-      [record]="record"
-    >
-    </icc-grid-row>
+    <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
+      <icc-grid-row
+        [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
+        [gridConfig]="gridConfig"
+        [columns]="columns"
+        [record]="getRecord(record)"
+      >
+      </icc-grid-row>
+    </div>
   </ng-container>
 </cdk-virtual-scroll-viewport>

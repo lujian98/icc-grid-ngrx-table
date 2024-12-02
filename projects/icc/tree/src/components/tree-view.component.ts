@@ -45,10 +45,16 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
-    this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig);
+    if (!this.treeData$) {
+      this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig);
+    }
   }
   get treeConfig(): IccTreeConfig {
     return this._treeConfig;
+  }
+
+  getRecord(record: IccTreeNode<T>): IccTreeNode<T> {
+    return { ...record };
   }
 
   gridTemplateColumnsEvent(event: string): void {

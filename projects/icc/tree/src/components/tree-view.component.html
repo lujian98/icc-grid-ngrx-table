@@ -27,7 +27,7 @@
         [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
         [treeConfig]="treeConfig"
         [columns]="columns"
-        [record]="record"
+        [record]="getRecord(record)"
         cdkDrag
         [cdkDragDisabled]="treeConfig.dragDisabled"
         (cdkDragStarted)="dragStart(record)"
