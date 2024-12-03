@@ -1,0 +1,29 @@
+<ng-content select="icc-layout-panel-header"></ng-content>
+<ng-content></ng-content>
+<ng-content select="icc-layout-panel-content"></ng-content>
+<ng-content select="icc-layout-panel-footer"></ng-content>
+
+<div
+  *ngIf="resizeable"
+  IccResizeRight
+  iccResize
+  direction="right"
+  elementKey="right"
+  (iccResizeEvent)="onResizePanel($event)"
+></div>
+<div
+  *ngIf="resizeable"
+  IccResizeBottom
+  iccResize
+  direction="bottom"
+  elementKey="bottom"
+  (iccResizeEvent)="onResizePanel($event)"
+></div>
+<div
+  *ngIf="resizeable"
+  IccResizeBottomRight
+  iccResize
+  direction="bottomRight"
+  elementKey="bottomRight"
+  (iccResizeEvent)="onResizePanel($event)"
+></div>

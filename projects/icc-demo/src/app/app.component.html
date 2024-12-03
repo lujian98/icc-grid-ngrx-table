@@ -1,3 +1,43 @@
+<icc-layout-panel layout="viewport">
+  <icc-layout-panel-header>
+    <button [routerLink]="['dashboard']">Dashboard</button>
+    <button [routerLink]="['grid']">Grid</button>
+    <button [routerLink]="['tree']">Tree</button>
+    <button [routerLink]="['form']">Form</button>
+    <button [routerLink]="['select']">Select</button>
+    <button [routerLink]="['menu']">Menu</button>
+    <button [routerLink]="['d3']">D3</button>
+
+    <button (click)="toggleTheme()">Toggle Theme</button>
+
+    <div class="theme">
+      <input
+        type="range"
+        [value]="rangeValue"
+        min="0"
+        [max]="themeService.rangeMax"
+        step="1"
+        (input)="onChange($event)"
+      />
+    </div>
+
+    <icc-select-field
+      [fieldConfig]="langSelectionConfig"
+      [value]="i18nService.currentLang"
+      [options]="i18nService.languages"
+      (selectionChange)="setLang($event)"
+    ></icc-select-field>
+  </icc-layout-panel-header>
+
+  <icc-layout-panel-content>
+    <router-outlet></router-outlet>
+  </icc-layout-panel-content>
+
+  <icc-layout-panel-footer> Footer </icc-layout-panel-footer>
+</icc-layout-panel>
+
+<!--
+
 <icc-layout>
   <icc-layout-header>
     <button [routerLink]="['dashboard']">Dashboard</button>
@@ -35,3 +75,4 @@
 
   <icc-layout-footer> Footer Bar </icc-layout-footer>
 </icc-layout>
+-->

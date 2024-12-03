@@ -9,6 +9,14 @@ import {
   IccLayoutHeaderComponent,
   IccLayoutMainComponent,
 } from '@icc/ui/layout';
+
+import {
+  IccLayoutPanelComponent,
+  IccLayoutPanelContentComponent,
+  IccLayoutPanelHeaderComponent,
+  IccLayoutPanelFooterComponent,
+} from '@icc/ui/layout-panel';
+
 import { IccThemeService } from '@icc/ui/theme';
 
 @Component({
@@ -25,6 +33,11 @@ import { IccThemeService } from '@icc/ui/theme';
     IccLayoutHeaderComponent,
     IccLayoutFooterComponent,
     IccSelectFieldComponent,
+
+    IccLayoutPanelComponent,
+    IccLayoutPanelContentComponent,
+    IccLayoutPanelHeaderComponent,
+    IccLayoutPanelFooterComponent,
   ],
 })
 export class AppComponent implements OnInit {

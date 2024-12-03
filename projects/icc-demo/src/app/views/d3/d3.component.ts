@@ -4,13 +4,27 @@ import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
 
+import {
+  IccLayoutPanelComponent,
+  IccLayoutPanelContentComponent,
+  IccLayoutPanelHeaderComponent,
+  IccLayoutPanelFooterComponent,
+} from '@icc/ui/layout-panel';
+
 @Component({
   selector: 'app-d3',
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    IccLayoutCenterComponent,
+    IccLayoutSidebarComponent,
+    IccAccordionComponent,
+    IccLayoutPanelContentComponent,
+  ],
 })
 export class AppD3Component {
   expendIndex = 0;
