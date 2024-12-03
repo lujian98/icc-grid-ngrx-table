@@ -5,6 +5,10 @@ export const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'dashboard',
+        loadChildren: () => import('./views/dashboard/dashboard.routes').then((m) => m.AppDashboardRoutes),
+      },
+      {
         path: 'grid',
         loadChildren: () => import('./views/grid/grid.routes').then((m) => m.AppGridRoutes),
       },

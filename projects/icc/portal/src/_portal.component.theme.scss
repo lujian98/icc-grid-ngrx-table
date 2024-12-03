@@ -1,0 +1,7 @@
+@mixin icc-portal-component-theme() {
+  //TODO
+  .icc-portal-text {
+    background-color: icc-theme(icc-portal-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}
