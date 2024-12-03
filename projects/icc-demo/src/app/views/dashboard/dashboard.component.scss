@@ -1,7 +1,4 @@
 :host {
   display: flex;
-
-  ::ng-deep icc-dashboard {
-    height: 600px;
-  }
+  flex: 1;
 }

@@ -2,15 +2,26 @@
   display: flex;
   position: relative; // for resize handle position
   flex-direction: column;
+
   ::ng-deep {
     icc-layout-panel-header {
-      flex: 0 1 auto;
+      display: flex;
+      flex-direction: row;
+      height: 50px;
+      min-height: 50px;
+      justify-content: center;
+      align-items: center;
     }
+
     icc-layout-panel-footer {
       display: flex;
-      flex: 0 1 auto;
+      z-index: 2;
+      height: 30px;
+      min-height: 30px;
+      justify-content: center;
       align-items: center;
       flex-flow: row wrap;
+      //border: 1px solid blue;
     }
   }
 }
