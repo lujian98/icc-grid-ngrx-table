@@ -31,13 +31,6 @@ export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
   title = 'icc-demo';
 
-  dashboardUrl = 'dashboard';
-  gridUrl = `grid`;
-  treeUrl = `tree`;
-  d3Url = `d3`;
-  formUrl = `form`;
-  selectUrl = `select`;
-  menuUrl = 'menu';
   rangeValue = this.themeService.rangeMax;
 
   i18nService = inject(IccI18nService);
