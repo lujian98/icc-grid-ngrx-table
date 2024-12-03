@@ -1,4 +1,14 @@
-import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  inject,
+} from '@angular/core';
 import { IccResizeInfo } from './model';
 
 @Directive({
@@ -7,6 +17,9 @@ import { IccResizeInfo } from './model';
   standalone: true,
 })
 export class IccResizeDirective implements OnInit, OnDestroy {
+  private renderer = inject(Renderer2);
+  private elementRef = inject(ElementRef);
+
   @Input() direction!: string;
   @Input() elementKey!: string;
 
@@ -18,11 +31,6 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   private resizeInfo!: IccResizeInfo;
 
   @Output() iccResizeEvent: EventEmitter<IccResizeInfo> = new EventEmitter<IccResizeInfo>();
-
-  constructor(
-    private renderer: Renderer2,
-    private elementRef: ElementRef,
-  ) {}
 
   ngOnInit(): void {
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
@@ -38,7 +46,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     });
   }
 
-  private setElementResize(e: MouseEvent) {
+  private setElementResize(e: MouseEvent): void {
     let el = this.elementRef.nativeElement.parentNode;
     if (this.direction === 'leftRight' || this.direction === 'topBottom') {
       el = this.elementRef.nativeElement.previousElementSibling;
@@ -106,7 +114,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     });
   }
 
-  private elementTransform() {
+  private elementTransform(): void {
     this.resizeInfo.origin = null;
     switch (this.direction) {
       case 'top':
@@ -144,7 +152,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.resizableMousedown();
   }
 }

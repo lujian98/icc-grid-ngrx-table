@@ -1,40 +1,21 @@
-import {
-  CdkDrag,
-  CdkDropList,
-  CdkDragEnter,
-  CdkDragMove,
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Input,
-  OnChanges,
-  OnDestroy,
   OnInit,
-  Output,
-  SimpleChanges,
+  inject,
 } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { DxyPosition, Tile, TileInfo, ResizeMap } from './model';
-
-import { IccPortalComponent } from '@icc/ui/portal';
-
-//import { IccMenuModule } from '../components/menu/menu.module';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
 import { IccPanelComponent } from '@icc/ui/panel';
-
-//import { IccFieldConfig } from '../models/item-config';
+import { IccPortalComponent } from '@icc/ui/portal';
+import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 
 @Component({
   selector: 'icc-dashboard',
@@ -42,77 +23,71 @@ import { IccPanelComponent } from '@icc/ui/panel';
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DragDropModule, IccPortalComponent, IccPanelComponent, IccResizeDirective],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    IccPortalComponent,
+    IccPanelComponent,
+    IccResizeDirective,
+    IccPopoverMenuComponent,
+    IccMenusComponent,
+  ],
 })
-export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private elementRef = inject(ElementRef);
   @Input() tiles: Tile<T>[] = [];
   @Input() gridGap = 2;
   @Input() gridWidth = 100;
   @Input() gridHeight = 100;
   @Input() cols = 10;
   @Input() rows = 6;
-  //menuItems: IccFieldConfig;
+  private gridMap: number[][] = [];
+  menuItems!: IccMenuItem;
 
   gridTemplateColumns!: string;
   gridTemplateRows!: string;
-
-  private gridMap: number[][] = [];
-
-  // @Input() maxRows = 2;
-  // responsiveColumns: number;
-
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    private breakpointObserver: BreakpointObserver,
-    private elementRef: ElementRef,
-    private cd: ChangeDetectorRef,
-  ) {}
 
   ngOnInit(): void {
     this.setGridTemplate();
     this.setTileLayouts();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setSideMenu();
     this.setupGrid();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    //if (changes.tiles) { }
-  }
-
-  setSideMenu() {
+  setSideMenu(): void {
     const sideMenu = [];
-    sideMenu.push({ title: 'Refresh', name: 'Refresh', icon: 'fas fa-sync-alt' });
-    /*
+    sideMenu.push({ title: 'Refresh', name: 'Refresh', icon: 'refresh' });
     this.menuItems = {
-      type: 'menu',
+      name: 'dashboard',
+      title: 'dashboard',
       icon: 'fas fa-ellipsis-v',
-      children: sideMenu
+      children: sideMenu,
     };
-    */
   }
 
-  private setupGrid() {
+  private setupGrid(): void {
     // TODO should this be this.elementRef.nativeElement.parentNode or this.elementRef.nativeElement???
-    console.log(' this =', this);
+    //console.log(' this =', this);
     const size = this.getDashboardSize()!;
-    console.log(' 3333333333 size =', size);
+    //console.log(' 3333333333 size =', size);
     this.gridWidth = (size.width - this.cols * this.gridGap - 4) / this.cols;
     this.gridHeight = (size.height - this.cols * this.gridGap - 4) / this.rows;
     this.setGridTemplate();
-    this.cd.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   private getDashboardSize() {
     // TODO return correct size
     const el = this.elementRef.nativeElement;
     let node = null;
-    console.log(' this.elementRef=', this.elementRef);
-    console.log(' el.clientWidth=', el.clientWidth);
-    console.log(' el.firstChild.clientWidth=', el.firstChild.clientWidth);
-    console.log(' el.parentNode.parentNode.clientWidth=', el.parentNode.parentNode.clientWidth);
+    //console.log(' this.elementRef=', this.elementRef);
+    //console.log(' el.clientWidth=', el.clientWidth);
+    //console.log(' el.firstChild.clientWidth=', el.firstChild.clientWidth);
+    //console.log(' el.parentNode.parentNode.clientWidth=', el.parentNode.parentNode.clientWidth);
 
     /*
     if (el.clientWidth) {
@@ -129,16 +104,15 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
         height: node.clientHeight,
       };
     }
-
     return null;
   }
 
-  private setGridTemplate() {
+  private setGridTemplate(): void {
     this.gridTemplateColumns = `repeat(${this.cols}, ${this.gridWidth}px)`;
     this.gridTemplateRows = `repeat(${this.rows}, ${this.gridHeight}px)`;
   }
 
-  private setTileLayouts() {
+  private setTileLayouts(): void {
     for (let i = 0; i < this.rows; i++) {
       this.gridMap[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -177,12 +151,12 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
         tile.content = tile.title || tile.name;
       }
     });
-    console.log(' this.tiles =', this.tiles);
-    console.log(' this.gridMap =', this.gridMap);
+    //console.log(' this.tiles =', this.tiles);
+    //console.log(' this.gridMap =', this.gridMap);
   }
 
-  onResizeTile(resizeInfo: IccResizeInfo, tile: Tile<T>) {
-    console.log(' resizeInfo=', resizeInfo);
+  onResizeTile(resizeInfo: IccResizeInfo, tile: Tile<T>): void {
+    //console.log(' resizeInfo=', resizeInfo);
     if (resizeInfo.isResized) {
       // const element = resizeInfo.element;
       // element.style.transform = '';
@@ -214,7 +188,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     let dxy: DxyPosition;
     let dx = Math.round(resizeInfo.dx / this.gridWidth);
     let dy = Math.round(resizeInfo.dy / this.gridHeight);
-    console.log(' dx =', dx, ' resizeInfo =', resizeInfo, ' this.gridWidth=', this.gridWidth);
+    //console.log(' dx =', dx, ' resizeInfo =', resizeInfo, ' this.gridWidth=', this.gridWidth);
 
     switch (resizeInfo.direction) {
       case 'top':
@@ -401,7 +375,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     return false;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>) {
+  onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>): void {
     const draggedTile = this.tiles[e.item.data];
     const dx = Math.round(e.distance.x / this.gridWidth);
     const dy = Math.round(e.distance.y / this.gridHeight);
@@ -452,8 +426,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     }
     return false;
   }
-
-  ngOnDestroy() {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

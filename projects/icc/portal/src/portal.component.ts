@@ -28,11 +28,9 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() context!: {};
   @Input() withBackground!: boolean;
   portalType!: string;
-  overlayComponentRef!: IccOverlayComponentRef<T>; // WARNING need this to bind TemplateRef close
+  private overlayComponentRef!: IccOverlayComponentRef<T>; // WARNING need this to bind TemplateRef close
 
   @ViewChild(CdkPortalOutlet) portalOutlet!: CdkPortalOutlet;
-
-  constructor() {}
 
   ngOnInit(): void {
     if (this.content instanceof Type) {
