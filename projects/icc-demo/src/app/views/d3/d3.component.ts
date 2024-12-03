@@ -2,14 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
-
-import {
-  IccLayoutPanelComponent,
-  IccLayoutPanelContentComponent,
-  IccLayoutPanelHeaderComponent,
-  IccLayoutPanelFooterComponent,
-} from '@icc/ui/layout-panel';
+import { IccLayoutPanelContentComponent } from '@icc/ui/layout-panel';
 
 @Component({
   selector: 'app-d3',
@@ -17,14 +10,7 @@ import {
   styleUrls: ['./d3.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    RouterModule,
-    IccLayoutCenterComponent,
-    IccLayoutSidebarComponent,
-    IccAccordionComponent,
-    IccLayoutPanelContentComponent,
-  ],
+  imports: [CommonModule, RouterModule, IccAccordionComponent, IccLayoutPanelContentComponent],
 })
 export class AppD3Component {
   expendIndex = 0;

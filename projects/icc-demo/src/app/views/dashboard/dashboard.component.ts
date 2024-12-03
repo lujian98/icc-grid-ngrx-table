@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
+import { IccLayoutPanelContentComponent } from '@icc/ui/layout-panel';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,14 @@ import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/lay
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    IccLayoutPanelContentComponent,
+    IccLayoutCenterComponent,
+    IccLayoutSidebarComponent,
+    IccAccordionComponent,
+  ],
 })
 export class AppDashboardComponent {
   items: IccAccordion[] = [

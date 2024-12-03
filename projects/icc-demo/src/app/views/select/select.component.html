@@ -1,7 +1,10 @@
-<icc-layout-sidebar>
-  <icc-accordion [items]="items"></icc-accordion>
-</icc-layout-sidebar>
+<icc-layout-panel-content class="app-content-container" [resizeable]="true">
+  <div start class="app-content-start">
+    <icc-accordion [items]="items"></icc-accordion>
+  </div>
 
-<icc-layout-center>
-  <router-outlet></router-outlet>
-</icc-layout-center>
+  <div middle class="app-content-middle">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="app-content-end" end>Left Container</div>
+</icc-layout-panel-content>

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/layout';
+import { IccLayoutPanelContentComponent } from '@icc/ui/layout-panel';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +10,7 @@ import { IccLayoutCenterComponent, IccLayoutSidebarComponent } from '@icc/ui/lay
   styleUrls: ['./menu.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterModule, IccLayoutCenterComponent, IccLayoutSidebarComponent, IccAccordionComponent],
+  imports: [CommonModule, RouterModule, IccLayoutPanelContentComponent, IccAccordionComponent],
 })
 export class AppMenuComponent {
   items: IccAccordion[] = [
