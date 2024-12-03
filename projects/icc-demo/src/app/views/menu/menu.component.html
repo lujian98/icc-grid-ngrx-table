@@ -1,12 +1,12 @@
-<icc-layout-panel-content class="app-content-container" [resizeable]="true">
-  <div start class="app-content-start">
+<icc-layout-panel-content [resizeable]="true">
+  <div start>
     <icc-accordion [items]="items"></icc-accordion>
   </div>
 
-  <div middle class="app-content-middle">
+  <div middle>
     <router-outlet></router-outlet>
   </div>
-  <div class="app-content-end" end>Left Container</div>
+  <div end>Left Container</div>
 </icc-layout-panel-content>
 
 <!--

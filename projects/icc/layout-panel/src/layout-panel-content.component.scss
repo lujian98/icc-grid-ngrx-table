@@ -4,6 +4,26 @@
   flex-direction: column;
   overflow: auto;
 
+  ::ng-deep icc-layout-panel-content {
+    flex-direction: row;
+    overflow: hidden;
+
+    div[start] {
+      min-width: 150px;
+      width: 250px;
+      border: 1px solid red;
+    }
+
+    div[middle] {
+      flex: 1 1 auto;
+      border: 1px solid orange;
+    }
+
+    div[end] {
+      flex: 0 0 200px;
+    }
+  }
+
   .icc-content-resize-left,
   .icc-content-resize-right {
     // cursor: col-resize;
