@@ -33,7 +33,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
-  //gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
@@ -61,11 +60,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }
-
-  /*
-  gridTemplateColumnsEvent(event: string): void {
-    this.gridTemplateColumns = event;
-  }*/
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   private viewport!: CdkVirtualScrollViewport;

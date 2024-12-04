@@ -6,6 +6,7 @@ import {
   IccDynamicGridCellComponent,
   IccRowSelectComponent,
   IccColumnWidth,
+  ROW_SELECTION_CELL_WIDTH,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
 import { IccTreeNodeComponent } from './tree-node/tree-node.component';
@@ -43,9 +44,11 @@ export class IccTreeRowComponent<T> {
 
   getColumnWidth(column: IccColumnConfig): string {
     const width = this.columnWidths.find((col) => col.name === column.name)?.width;
-    //console.log(' this.columnWidths =', this.columnWidths)
-    //console.log(' width =', width)
     return width ? `${width}px` : '';
+  }
+
+  get selectColumnWidth(): string {
+    return `${ROW_SELECTION_CELL_WIDTH}px`;
   }
 
   trackByIndex(index: number): number {

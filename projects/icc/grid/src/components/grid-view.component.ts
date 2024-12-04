@@ -28,7 +28,6 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-  //gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
   columnHeaderPosition = 0;
@@ -54,11 +53,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }
-
-  /*
-  gridTemplateColumnsEvent(event: string): void {
-    this.gridTemplateColumns = event;
-  }*/
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   private viewport!: CdkVirtualScrollViewport;
@@ -100,7 +94,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    console.log(' clientWidth=', clientWidth);
     const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;

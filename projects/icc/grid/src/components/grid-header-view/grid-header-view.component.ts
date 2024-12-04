@@ -3,7 +3,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { DragDropEvent } from '../../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { getTableWidth, viewportWidthRatio } from '../../utils/viewport-width-ratio';
@@ -21,7 +20,6 @@ export class IccGridHeaderViewComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _columns: IccColumnConfig[] = [];
-  //private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
   tableWidth: number = 1000;
 
@@ -55,18 +53,7 @@ export class IccGridHeaderViewComponent {
   get columnWidths(): IccColumnWidth[] {
     return this._columnWidths;
   }
-  /*
-  set gridTemplateColumns(value: string) {
-    this._gridTemplateColumns = value;
-    this.gridTemplateColumnsEvent.emit(value);
-  }
 
-  get gridTemplateColumns(): string {
-    return this._gridTemplateColumns;
-  }
-
-  @Output() gridTemplateColumnsEvent = new EventEmitter<string>();
-  */
   @Output() gridColumnWidthsEvent = new EventEmitter<IccColumnWidth[]>();
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
@@ -109,15 +96,6 @@ export class IccGridHeaderViewComponent {
           width: widthRatio * column.width!,
         };
       });
-
-    /*
-    const colWidths = [...columns]
-      .filter((column) => column.hidden !== true)
-      .map((column) => widthRatio * column.width! + 'px')
-      .join(' ');
-    this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
-    //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns)
-    */
   }
 
   private indexCorrection(idx: number): number {

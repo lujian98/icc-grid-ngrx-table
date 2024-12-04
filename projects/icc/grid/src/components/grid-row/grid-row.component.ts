@@ -5,6 +5,7 @@ import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
 import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
+import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 
 @Component({
   selector: 'icc-grid-row',
@@ -40,9 +41,11 @@ export class IccGridRowComponent<T> {
 
   getColumnWidth(column: IccColumnConfig): string {
     const width = this.columnWidths.find((col) => col.name === column.name)?.width;
-    //console.log(' this.columnWidths =', this.columnWidths)
-    //console.log(' width =', width)
     return width ? `${width}px` : '';
+  }
+
+  get selectColumnWidth(): string {
+    return `${ROW_SELECTION_CELL_WIDTH}px`;
   }
 
   trackByIndex(index: number): number {
