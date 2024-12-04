@@ -36,7 +36,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 2,
         colWidth: 6,
-        color: '#e8eaed',
+        //color: '#e8eaed',
         //color: getColor(),
         content: AppStockChartComponent,
         context: this.portalData,
