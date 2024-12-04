@@ -1,34 +1,28 @@
 :host {
-  flex: 1 1 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex: 1 1 auto;
   overflow: auto;
   border: 1px solid magenta;
 
-  ::ng-deep icc-layout-content {
-    flex-direction: row;
-    overflow: hidden;
+  ::ng-deep div[start] {
+    min-width: 150px;
+    width: 250px;
+    border: 1px solid red;
+  }
+
+  ::ng-deep div[middle] {
+    display: flex;
     flex: 1 1 auto;
+    border: 1px solid orange;
+    //height: -webkit-fill-available;;
+  }
 
-    div[start] {
-      min-width: 150px;
-      width: 250px;
-      border: 1px solid red;
-    }
-
-    div[middle] {
-      display: flex;
-      flex: 1 1 auto;
-      border: 1px solid orange;
-      //height: -webkit-fill-available;;
-    }
-
-    div[end] {
-      //flex: 0 0 200px;
-      width: 250px;
-      min-width: 150px;
-      border: 1px solid blue;
-    }
+  ::ng-deep div[end] {
+    //flex: 0 0 200px;
+    width: 250px;
+    min-width: 150px;
+    border: 1px solid blue;
   }
 
   .icc-content-resize-left,
