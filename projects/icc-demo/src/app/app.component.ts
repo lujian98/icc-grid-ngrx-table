@@ -5,10 +5,10 @@ import { IccI18nService, IccLanguage } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 
 import {
-  IccLayoutPanelComponent,
-  IccLayoutPanelContentComponent,
-  IccLayoutPanelHeaderComponent,
-  IccLayoutPanelFooterComponent,
+  IccLayoutComponent,
+  IccLayoutContentComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutFooterComponent,
 } from '@icc/ui/layout';
 
 import { IccThemeService } from '@icc/ui/theme';
@@ -23,10 +23,10 @@ import { IccThemeService } from '@icc/ui/theme';
     CommonModule,
     RouterModule,
     IccSelectFieldComponent,
-    IccLayoutPanelComponent,
-    IccLayoutPanelContentComponent,
-    IccLayoutPanelHeaderComponent,
-    IccLayoutPanelFooterComponent,
+    IccLayoutComponent,
+    IccLayoutContentComponent,
+    IccLayoutHeaderComponent,
+    IccLayoutFooterComponent,
   ],
 })
 export class AppComponent implements OnInit {

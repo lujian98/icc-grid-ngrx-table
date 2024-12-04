@@ -17,39 +17,39 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccResizeInfo, IccResizeDirective } from '@icc/ui/resize';
-import { IccLayoutPanelContentComponent } from './layout-panel-content.component';
+import { IccLayoutContentComponent } from './layout-content.component';
 
 @Component({
-  selector: 'icc-layout-panel-header',
+  selector: 'icc-layout-header',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class IccLayoutPanelHeaderComponent {}
+export class IccLayoutHeaderComponent {}
 
 @Component({
-  selector: 'icc-layout-panel-footer',
+  selector: 'icc-layout-footer',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class IccLayoutPanelFooterComponent {}
+export class IccLayoutFooterComponent {}
 
 @Component({
-  selector: 'icc-layout-panel',
-  templateUrl: './layout-panel.component.html',
-  styleUrls: ['./layout-panel.component.scss'],
+  selector: 'icc-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,
-    IccLayoutPanelHeaderComponent,
-    IccLayoutPanelContentComponent,
-    IccLayoutPanelFooterComponent,
+    IccLayoutHeaderComponent,
+    IccLayoutContentComponent,
+    IccLayoutFooterComponent,
     IccResizeDirective,
   ],
 })
-export class IccLayoutPanelComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
+export class IccLayoutComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
   @Input() height!: string;
   @Input() width!: string;
   @Input() resizeable!: boolean;

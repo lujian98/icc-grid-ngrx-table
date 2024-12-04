@@ -24,14 +24,14 @@ export interface IccSize {
 }
 
 @Component({
-  selector: 'icc-layout-panel-content',
-  templateUrl: './layout-panel-content.component.html',
-  styleUrls: ['./layout-panel-content.component.scss'],
+  selector: 'icc-layout-content',
+  templateUrl: './layout-content.component.html',
+  styleUrls: ['./layout-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccResizeDirective],
 })
-export class IccLayoutPanelContentComponent implements AfterViewInit, AfterContentInit, OnDestroy {
+export class IccLayoutContentComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input() resizeable!: boolean;
   @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight!: TemplateRef<any>;
   @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft!: TemplateRef<any>;
