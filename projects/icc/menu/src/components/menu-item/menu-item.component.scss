@@ -17,7 +17,8 @@
     width: 100%;
   }
 
-  .icc-menu-title {
+  .icc-menu-title,
+  a {
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
