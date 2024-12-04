@@ -38,6 +38,7 @@ export class IccGridHeaderViewComponent {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
+    console.log(' viewportWidth=', this.gridConfig.viewportWidth);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -87,6 +88,9 @@ export class IccGridHeaderViewComponent {
     } else {
       this.tableWidth = this.gridConfig.viewportWidth;
     }
+
+    console.log(' this.tableWidth=', this.tableWidth);
+    console.log(' widthRatio=', widthRatio);
 
     this.columnWidths = [...columns]
       .filter((column) => column.hidden !== true)
