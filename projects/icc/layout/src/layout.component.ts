@@ -1,22 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-  ContentChildren,
-  ViewChildren,
-  QueryList,
-  ViewContainerRef,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccResizeInfo, IccResizeDirective } from '@icc/ui/resize';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core';
+import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
 import { IccLayoutContentComponent } from './layout-content.component';
 
 @Component({
@@ -49,34 +33,18 @@ export class IccLayoutFooterComponent {}
     IccResizeDirective,
   ],
 })
-export class IccLayoutComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
+export class IccLayoutComponent implements OnInit {
+  private elementRef = inject(ElementRef);
   @Input() height!: string;
   @Input() width!: string;
   @Input() resizeable!: boolean;
   @Input() layout = 'fit'; // fit | viewport
 
-  constructor(
-    private elementRef: ElementRef,
-    private viewContainerRef: ViewContainerRef,
-  ) {}
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.initPanelSize();
   }
 
-  ngAfterContentInit() {
-    // console.log(' 111111 viewChildren=', this.viewChildren);
-    // console.log(' 222222 contentChildren=', this.contentChildren);
-  }
-
-  ngAfterViewInit() {
-    // console.log(' 3333333 viewChildren=', this.viewChildren);
-    // console.log(' 4444444444 contentChildren=', this.contentChildren);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {}
-
-  private initPanelSize() {
+  private initPanelSize(): void {
     if (this.layout === 'viewport' || this.layout === 'fit') {
       this.setFitLayout();
     }
@@ -88,7 +56,7 @@ export class IccLayoutComponent implements AfterViewInit, AfterContentInit, OnIn
     }
   }
 
-  private setFitLayout() {
+  private setFitLayout(): void {
     // TODO fit width if width is set
     const size = this.getParentSize();
     if (size) {
@@ -99,12 +67,12 @@ export class IccLayoutComponent implements AfterViewInit, AfterContentInit, OnIn
     }
   }
 
-  private setHeight(height: string) {
+  private setHeight(height: string): void {
     const el = this.elementRef.nativeElement;
     el.style.height = height;
   }
 
-  private setWidth(width: string) {
+  private setWidth(width: string): void {
     const el = this.elementRef.nativeElement;
     el.style.width = width;
     el.parentNode.style.width = width;
@@ -130,7 +98,7 @@ export class IccLayoutComponent implements AfterViewInit, AfterContentInit, OnIn
     return size;
   }
 
-  onResizePanel(resizeInfo: IccResizeInfo) {
+  onResizePanel(resizeInfo: IccResizeInfo): void {
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
       const width = resizeInfo.width * resizeInfo.scaleX;

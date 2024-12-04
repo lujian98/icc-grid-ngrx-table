@@ -1,22 +1,21 @@
+import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   AfterViewInit,
-  AfterContentInit,
+  ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  OnDestroy,
-  Input,
-  QueryList,
   ContentChildren,
+  ElementRef,
+  Input,
+  OnDestroy,
+  QueryList,
   TemplateRef,
   ViewChild,
-  ViewChildren,
   ViewContainerRef,
+  inject,
 } from '@angular/core';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeWhile } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
-import { IccResizeInfo, IccResizeDirective } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { Observable, Subject, take, timer } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 export interface IccSize {
   height: number;
@@ -31,7 +30,9 @@ export interface IccSize {
   standalone: true,
   imports: [CommonModule, IccResizeDirective],
 })
-export class IccLayoutContentComponent implements AfterViewInit, AfterContentInit, OnDestroy {
+export class IccLayoutContentComponent implements AfterViewInit, OnDestroy {
+  private elementRef = inject(ElementRef);
+
   @Input() resizeable!: boolean;
   @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight!: TemplateRef<any>;
   @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft!: TemplateRef<any>;
@@ -39,34 +40,23 @@ export class IccLayoutContentComponent implements AfterViewInit, AfterContentIni
   @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop!: TemplateRef<any>;
   @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight!: ViewContainerRef;
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft!: ViewContainerRef;
-
   @ContentChildren('divContainer', { read: ViewContainerRef }) divContainer!: QueryList<ViewContainerRef>;
 
-  private alive = true;
+  private destroy$ = new Subject<boolean>();
 
-  constructor(private elementRef: ElementRef) {}
-
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.resizeable) {
       this.setupPanelSizeObserver();
       this.checkResizeCondition();
     }
   }
 
-  ngAfterContentInit() {
-    // console.log( ' 5555555555 this.divContainer=', this.divContainer)
-  }
-
-  private setupPanelSizeObserver() {
+  private setupPanelSizeObserver(): void {
     new Observable<IccSize>((observer) => {
       const config = { attributes: true, childList: true, subtree: true };
       new MutationObserver(() => observer.next(this.getPanelSize())).observe(this.elementRef.nativeElement, config);
     })
-      .pipe(
-        debounceTime(50),
-        distinctUntilChanged(),
-        takeWhile(() => this.alive),
-      )
+      .pipe(debounceTime(50), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((size) => this.initPanelSize());
   }
 
@@ -77,12 +67,11 @@ export class IccLayoutContentComponent implements AfterViewInit, AfterContentIni
     };
   }
 
-  private initPanelSize() {
+  private initPanelSize(): void {
     this.checkPanelHeight();
-    //window.dispatchEvent(new Event('resize')); // TODO this could casue grid menu without parent
   }
 
-  private checkResizeCondition() {
+  private checkResizeCondition(): void {
     // TODO createEmbeddedView will disable the html input???
     // console.log(' 111111111111 this.divContainer=', this.divContainer, ' this.elementRef=', this.elementRef);
     const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
@@ -117,19 +106,24 @@ export class IccLayoutContentComponent implements AfterViewInit, AfterContentIni
     }
   }
 
-  onResizePanel(resizeInfo: IccResizeInfo) {
+  onResizePanel(resizeInfo: IccResizeInfo): void {
     if (resizeInfo.isResized) {
       this.checkPanelHeight();
+      //resize grid need get viewport size
+      timer(500)
+        .pipe(take(1))
+        .subscribe(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
     }
   }
 
-  private checkPanelHeight() {
+  private checkPanelHeight(): void {
     const natEl = this.elementRef.nativeElement;
     const style = window.getComputedStyle(natEl);
     if (style.flexDirection === 'column' && natEl.scrollHeight !== natEl.clientHeight) {
       const dh = natEl.scrollHeight - natEl.clientHeight;
       const elements: HTMLDivElement[] = Array.from(natEl.children);
-      // console.log(' mmmmmm dh =', dh, ' scrollHeight= ', natEl.scrollHeight, ' clientHeight=', natEl.clientHeight);
       const els = elements.filter((element: HTMLDivElement) => element.getAttribute('middle') !== null);
       if (els.length === 1) {
         const height = els[0].clientHeight - dh;
@@ -138,7 +132,8 @@ export class IccLayoutContentComponent implements AfterViewInit, AfterContentIni
     }
   }
 
-  ngOnDestroy() {
-    this.alive = false;
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
