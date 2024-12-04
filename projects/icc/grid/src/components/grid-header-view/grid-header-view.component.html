@@ -1,14 +1,16 @@
-<icc-grid-header
-  [ngStyle]="{
-    left: columnHeaderPosition + 'px',
-  }"
-  [gridConfig]="gridConfig"
-  [columns]="columns"
-  [columnWidths]="columnWidths"
-  (columnResizing)="onColumnResizing($event)"
-  (columnResized)="onColumnResized($event)"
-  cdkDropList
-  cdkDropListOrientation="horizontal"
-  (cdkDropListDropped)="onColumnDragDrop($event)"
->
-</icc-grid-header>
+<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
+  <icc-grid-header
+    [ngStyle]="{
+      left: columnHeaderPosition + 'px',
+    }"
+    [gridConfig]="gridConfig"
+    [columns]="columns"
+    [columnWidths]="columnWidths"
+    (columnResizing)="onColumnResizing($event)"
+    (columnResized)="onColumnResized($event)"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="onColumnDragDrop($event)"
+  >
+  </icc-grid-header>
+</div>
