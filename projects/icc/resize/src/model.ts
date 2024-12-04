@@ -12,3 +12,8 @@ export interface IccResizeInfo {
   signX: number;
   signY: number;
 }
+
+export interface IccSize {
+  height: number;
+  width: number;
+}

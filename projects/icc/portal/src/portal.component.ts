@@ -1,9 +1,8 @@
-import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
+import { CdkPortalOutlet, ComponentPortal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
-import { PortalModule } from '@angular/cdk/portal';
 import {
-  ChangeDetectionStrategy,
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnDestroy,
@@ -13,7 +12,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { IccPortalContent } from './model';
-import { IccOverlayComponentRef } from './overlay-component-ref';
 
 @Component({
   selector: 'icc-portal',
@@ -28,7 +26,6 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() context!: {};
   @Input() withBackground!: boolean;
   portalType!: string;
-  private overlayComponentRef!: IccOverlayComponentRef<T>; // WARNING need this to bind TemplateRef close
 
   @ViewChild(CdkPortalOutlet) portalOutlet!: CdkPortalOutlet;
 
@@ -50,21 +47,13 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     if (this.content instanceof Type) {
       const portal = new ComponentPortal(this.content);
       const componentRef = this.portalOutlet.attachComponentPortal(portal);
-      console.log(' componentRef=', componentRef);
+      console.log('componentRef=', componentRef);
       if (this.context) {
         Object.assign(componentRef.instance!, this.context);
         componentRef.changeDetectorRef.markForCheck();
         componentRef.changeDetectorRef.detectChanges();
       }
-      //this.overlayComponentRef.componentRef = componentRef.instance;
-      //this.overlayComponentRef.isComponentAttached$.next(true);
     } else if (this.content instanceof TemplateRef) {
-      if (this.overlayComponentRef) {
-        this.context = {
-          // Using { $implicit: this.context } will not work bind close
-          close: this.overlayComponentRef.close.bind(this.overlayComponentRef),
-        };
-      }
       // @ts-ignore
       const portal = new TemplatePortal(this.content, null, this.context);
       const templateRef = this.portalOutlet.attachTemplatePortal(portal);

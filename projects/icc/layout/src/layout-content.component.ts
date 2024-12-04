@@ -13,14 +13,9 @@ import {
   ViewContainerRef,
   inject,
 } from '@angular/core';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccSize } from '@icc/ui/resize';
 import { Observable, Subject, take, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-
-export interface IccSize {
-  height: number;
-  width: number;
-}
 
 @Component({
   selector: 'icc-layout-content',
