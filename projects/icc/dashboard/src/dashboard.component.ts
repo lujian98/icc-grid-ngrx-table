@@ -153,6 +153,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     });
     //console.log(' this.tiles =', this.tiles);
     //console.log(' this.gridMap =', this.gridMap);
+    window.dispatchEvent(new Event('resize'));
   }
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: Tile<T>): void {
