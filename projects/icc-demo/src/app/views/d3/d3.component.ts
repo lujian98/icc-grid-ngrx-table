@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import { IccLayoutPanelContentComponent } from '@icc/ui/layout-panel';
+import { IccLayoutPanelContentComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'app-d3',

@@ -3,19 +3,13 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RouterModule } from '@angular/router';
 import { IccI18nService, IccLanguage } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
-import {
-  IccLayoutComponent,
-  IccLayoutFooterComponent,
-  IccLayoutHeaderComponent,
-  IccLayoutMainComponent,
-} from '@icc/ui/layout';
 
 import {
   IccLayoutPanelComponent,
   IccLayoutPanelContentComponent,
   IccLayoutPanelHeaderComponent,
   IccLayoutPanelFooterComponent,
-} from '@icc/ui/layout-panel';
+} from '@icc/ui/layout';
 
 import { IccThemeService } from '@icc/ui/theme';
 
@@ -28,12 +22,7 @@ import { IccThemeService } from '@icc/ui/theme';
   imports: [
     CommonModule,
     RouterModule,
-    IccLayoutComponent,
-    IccLayoutMainComponent,
-    IccLayoutHeaderComponent,
-    IccLayoutFooterComponent,
     IccSelectFieldComponent,
-
     IccLayoutPanelComponent,
     IccLayoutPanelContentComponent,
     IccLayoutPanelHeaderComponent,
