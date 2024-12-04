@@ -17,7 +17,7 @@ export const defaultGridConfig: IccGridConfig = {
   horizontalScroll: false,
   verticalScroll: false,
   virtualScroll: false,
-  viewportWidth: 2000, // internal use
+  viewportWidth: 1000, // internal use
   sortFields: [],
   columnFilters: [],
   page: 1,

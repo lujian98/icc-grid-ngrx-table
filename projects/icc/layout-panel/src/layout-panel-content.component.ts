@@ -79,7 +79,7 @@ export class IccLayoutPanelContentComponent implements AfterViewInit, AfterConte
 
   private initPanelSize() {
     this.checkPanelHeight();
-    // window.dispatchEvent(new Event('resize')); // TODO this could casue grid menu without parent
+    //window.dispatchEvent(new Event('resize')); // TODO this could casue grid menu without parent
   }
 
   private checkResizeCondition() {

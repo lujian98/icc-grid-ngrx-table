@@ -1,9 +1,4 @@
 :host {
   display: flex;
   flex: 1;
-
-  ::ng-deep icc-grid {
-    //height: 600px;
-    width: 1000px;
-  }
 }

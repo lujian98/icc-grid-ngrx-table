@@ -23,7 +23,7 @@ export class IccGridHeaderViewComponent {
   private _columns: IccColumnConfig[] = [];
   private _gridTemplateColumns: string = '';
   private _columnWidths: IccColumnWidth[] = [];
-  tableWidth: number = 2000;
+  tableWidth: number = 1000;
 
   @Input() columnHeaderPosition: number = 0;
 
