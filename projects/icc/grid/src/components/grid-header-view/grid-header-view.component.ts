@@ -12,6 +12,7 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
 @Component({
   selector: 'icc-grid-header-view',
   templateUrl: './grid-header-view.component.html',
+  styleUrls: ['./grid-header-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
@@ -38,7 +39,6 @@ export class IccGridHeaderViewComponent {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-    console.log(' viewportWidth=', this.gridConfig.viewportWidth);
     const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
@@ -83,15 +83,7 @@ export class IccGridHeaderViewComponent {
   }
 
   private setColumWidths(columns: any[], widthRatio: number): void {
-    if (this.gridConfig.horizontalScroll) {
-      this.tableWidth = getTableWidth(this.columns);
-    } else {
-      this.tableWidth = this.gridConfig.viewportWidth;
-    }
-
-    console.log(' this.tableWidth=', this.tableWidth);
-    console.log(' widthRatio=', widthRatio);
-
+    this.tableWidth = this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
     this.columnWidths = [...columns]
       .filter((column) => column.hidden !== true)
       .map((column) => {
