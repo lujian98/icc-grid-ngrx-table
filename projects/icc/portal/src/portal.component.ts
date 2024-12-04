@@ -24,7 +24,6 @@ import { IccPortalContent } from './model';
 export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() content!: IccPortalContent<T>;
   @Input() context!: {};
-  @Input() withBackground!: boolean;
   portalType!: string;
 
   @ViewChild(CdkPortalOutlet) portalOutlet!: CdkPortalOutlet;

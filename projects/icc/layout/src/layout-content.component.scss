@@ -3,7 +3,6 @@
   flex-direction: row;
   flex: 1 1 auto;
   overflow-x: hidden;
-  border: 1px solid magenta;
 
   ::ng-deep div[start] {
     position: relative;
@@ -32,6 +31,10 @@
     // cursor: col-resize;
     height: 100%;
     // border-left: 1px solid darkgreen; // no need border
+  }
+
+  .icc-content-resize-left {
+    padding-right: 5px;
   }
 
   .icc-content-resize-right {
