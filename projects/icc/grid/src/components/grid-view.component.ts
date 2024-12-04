@@ -21,14 +21,14 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-  gridTemplateColumns: string = '';
+  //gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
   columnHeaderPosition = 0;
@@ -55,9 +55,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnWidths = values;
   }
 
+  /*
   gridTemplateColumnsEvent(event: string): void {
     this.gridTemplateColumns = event;
-  }
+  }*/
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   private viewport!: CdkVirtualScrollViewport;

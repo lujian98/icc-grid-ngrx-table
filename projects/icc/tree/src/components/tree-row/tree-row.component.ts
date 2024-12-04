@@ -5,6 +5,7 @@ import {
   IccGridCellComponent,
   IccDynamicGridCellComponent,
   IccRowSelectComponent,
+  IccColumnWidth,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
 import { IccTreeNodeComponent } from './tree-node/tree-node.component';
@@ -28,6 +29,7 @@ export class IccTreeRowComponent<T> {
   @Input() treeConfig!: IccTreeConfig;
   @Input() record!: IccTreeNode<T>;
   @Input() selected = false;
+  @Input() columnWidths: IccColumnWidth[] = [];
 
   @Output() toggleRow = new EventEmitter<any>();
 
@@ -37,6 +39,13 @@ export class IccTreeRowComponent<T> {
 
   get nodePadding(): number {
     return (this.record.level! + 1) * 10;
+  }
+
+  getColumnWidth(column: IccColumnConfig): string {
+    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+    //console.log(' this.columnWidths =', this.columnWidths)
+    //console.log(' width =', width)
+    return width ? `${width}px` : '';
   }
 
   trackByIndex(index: number): number {

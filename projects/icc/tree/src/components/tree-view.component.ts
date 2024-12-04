@@ -12,7 +12,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent, IccColumnWidth } from '@icc/ui/grid';
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
@@ -33,10 +33,11 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
-  gridTemplateColumns: string = '';
+  //gridTemplateColumns: string = '';
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
+  columnWidths: IccColumnWidth[] = [];
   private dragNode: IccTreeNode<T> | null = null;
   private dropInfo: IccTreeDropInfo<T> | null = null;
 
@@ -57,9 +58,14 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     return { ...record };
   }
 
+  gridColumnWidthsEvent(values: IccColumnWidth[]): void {
+    this.columnWidths = values;
+  }
+
+  /*
   gridTemplateColumnsEvent(event: string): void {
     this.gridTemplateColumns = event;
-  }
+  }*/
 
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   private viewport!: CdkVirtualScrollViewport;

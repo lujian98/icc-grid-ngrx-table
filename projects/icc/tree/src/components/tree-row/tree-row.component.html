@@ -8,13 +8,25 @@
 
 <icc-grid-cell
   *ngIf="treeColumn && !treeColumn.hidden"
-  [ngStyle]="{ height: treeConfig.rowHeight + 'px', 'padding-left': nodePadding + 'px' }"
+  [ngStyle]="{
+    height: treeConfig.rowHeight + 'px',
+    'padding-left': nodePadding + 'px',
+    flex: '0 0 ' + getColumnWidth(treeColumn),
+    'max-width': getColumnWidth(treeColumn),
+  }"
 >
   <icc-tree-node [treeConfig]="treeConfig" [node]="record" [column]="treeColumn"> </icc-tree-node>
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
-  <icc-grid-cell *ngIf="!column.hidden && column.name !== 'name'" [ngStyle]="{ height: treeConfig.rowHeight + 'px' }">
+  <icc-grid-cell
+    *ngIf="!column.hidden && column.name !== 'name'"
+    [ngStyle]="{
+      height: treeConfig.rowHeight + 'px',
+      flex: '0 0 ' + getColumnWidth(column),
+      'max-width': getColumnWidth(column),
+    }"
+  >
     <icc-dynamic-grid-cell [record]="record" [column]="column"> </icc-dynamic-grid-cell>
   </icc-grid-cell>
 </ng-container>

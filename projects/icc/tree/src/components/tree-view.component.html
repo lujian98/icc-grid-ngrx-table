@@ -2,7 +2,7 @@
   [gridConfig]="treeConfig"
   [columns]="columns"
   [columnHeaderPosition]="columnHeaderPosition"
-  (gridTemplateColumnsEvent)="gridTemplateColumnsEvent($event)"
+  (gridColumnWidthsEvent)="gridColumnWidthsEvent($event)"
 >
 </icc-grid-header-view>
 
@@ -24,9 +24,9 @@
     >
       <icc-tree-row
         class="icc-tree-node"
-        [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
         [treeConfig]="treeConfig"
         [columns]="columns"
+        [columnWidths]="columnWidths"
         [record]="getRecord(record)"
         cdkDrag
         [cdkDragDisabled]="treeConfig.dragDisabled"
