@@ -48,7 +48,9 @@ export class IccGridHeaderViewComponent {
   }
 
   set columnWidths(values: IccColumnWidth[]) {
+    //console.log( ' eeeeeeeeeeeeee columnWidths=', this.columnWidths)
     this._columnWidths = values;
+    this.gridColumnWidthsEvent.emit(values);
   }
 
   get columnWidths(): IccColumnWidth[] {
@@ -65,6 +67,7 @@ export class IccGridHeaderViewComponent {
   }
 
   @Output() gridTemplateColumnsEvent = new EventEmitter<string>();
+  @Output() gridColumnWidthsEvent = new EventEmitter<IccColumnWidth[]>();
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     this.setColumWidths(columnWidths, 1);
@@ -97,11 +100,22 @@ export class IccGridHeaderViewComponent {
     } else {
       this.tableWidth = this.gridConfig.viewportWidth;
     }
+
+    this.columnWidths = [...columns]
+      .filter((column) => column.hidden !== true)
+      .map((column) => {
+        return {
+          name: column.name,
+          width: widthRatio * column.width!,
+        };
+      });
+
     const colWidths = [...columns]
       .filter((column) => column.hidden !== true)
       .map((column) => widthRatio * column.width! + 'px')
       .join(' ');
     this.gridTemplateColumns = this.gridConfig.rowSelection ? `${ROW_SELECTION_CELL_WIDTH}px ${colWidths}` : colWidths;
+    //console.log(' this.gridTemplateColumns=', this.gridTemplateColumns)
   }
 
   private indexCorrection(idx: number): number {

@@ -7,10 +7,16 @@
   </icc-row-select>
   <div class="icc-header-no-filter-border" *ngIf="gridConfig.columnFilter"></div>
 </icc-grid-header-item>
+<!--
+    [ngStyle]="{ width: getColumnWidth(column) }"
 
+          [ngStyle]="{'flex':'0 0 '+column.width+'px', 'width': column.width+'px',
+        'left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+-->
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     *ngIf="!column.hidden"
+    [ngStyle]="{ flex: '0 0 ' + getColumnWidth(column) }"
     [column]="column"
     [columns]="columns"
     [gridConfig]="gridConfig"

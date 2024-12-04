@@ -13,7 +13,7 @@ import {
 import { BehaviorSubject, Observable, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../models/grid-column.model';
 import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 
@@ -21,7 +21,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridHeaderViewComponent],
 })
@@ -32,6 +32,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
   columnHeaderPosition = 0;
+  columnWidths: IccColumnWidth[] = [];
 
   @Input() columns: IccColumnConfig[] = [];
 
@@ -48,6 +49,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   getRecord(record: T): T {
     return { ...record };
+  }
+
+  gridColumnWidthsEvent(values: IccColumnWidth[]): void {
+    this.columnWidths = values;
   }
 
   gridTemplateColumnsEvent(event: string): void {
@@ -94,6 +99,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
+    console.log(' clientWidth=', clientWidth);
     const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;

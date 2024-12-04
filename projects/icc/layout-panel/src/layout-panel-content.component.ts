@@ -84,7 +84,7 @@ export class IccLayoutPanelContentComponent implements AfterViewInit, AfterConte
 
   private checkResizeCondition() {
     // TODO createEmbeddedView will disable the html input???
-    console.log(' 111111111111 this.divContainer=', this.divContainer, ' this.elementRef=', this.elementRef);
+    // console.log(' 111111111111 this.divContainer=', this.divContainer, ' this.elementRef=', this.elementRef);
     const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
     let start: any = null;
     let middle: any = null;

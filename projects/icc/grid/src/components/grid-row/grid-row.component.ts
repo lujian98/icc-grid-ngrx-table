@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
 import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
@@ -26,6 +26,8 @@ export class IccGridRowComponent<T> {
   private _record!: T;
   @Input() selected = false;
 
+  @Input() columnWidths: IccColumnWidth[] = [];
+
   @Input()
   set record(data: T) {
     this._record = data;
@@ -35,6 +37,13 @@ export class IccGridRowComponent<T> {
   }
 
   @Output() toggleRow = new EventEmitter<any>();
+
+  getColumnWidth(column: IccColumnConfig): string {
+    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+    //console.log(' this.columnWidths =', this.columnWidths)
+    //console.log(' width =', width)
+    return width ? `${width}px` : '';
+  }
 
   trackByIndex(index: number): number {
     return index;

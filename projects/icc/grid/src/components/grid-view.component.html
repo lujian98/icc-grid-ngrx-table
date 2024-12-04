@@ -2,6 +2,7 @@
   [gridConfig]="gridConfig"
   [columns]="columns"
   [columnHeaderPosition]="columnHeaderPosition"
+  (gridColumnWidthsEvent)="gridColumnWidthsEvent($event)"
   (gridTemplateColumnsEvent)="gridTemplateColumnsEvent($event)"
 >
 </icc-grid-header-view>
@@ -18,12 +19,15 @@
   <ng-container *ngIf="gridData$ | async as gridData">
     <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
       <icc-grid-row
-        [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
         [gridConfig]="gridConfig"
         [columns]="columns"
+        [columnWidths]="columnWidths"
         [record]="getRecord(record)"
       >
       </icc-grid-row>
     </div>
   </ng-container>
 </cdk-virtual-scroll-viewport>
+<!--
+        [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }"
+-->

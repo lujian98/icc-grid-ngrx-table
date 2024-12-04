@@ -32,11 +32,18 @@ export class IccGridHeaderComponent {
   @Input() gridConfig!: IccGridConfig;
 
   @Input() allSelected = false;
+  @Input() columnWidths: IccColumnWidth[] = [];
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
 
   rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
+
+  getColumnWidth(column: IccColumnConfig): string {
+    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+    //console.log( ' 444444 idth=', width)
+    return width ? `${width}px` : '';
+  }
 
   trackByIndex(index: number): number {
     return index;

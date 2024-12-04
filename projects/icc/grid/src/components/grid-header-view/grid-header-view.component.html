@@ -1,17 +1,25 @@
-<div class="grid-header-container" [ngStyle]="{ width: gridConfig.viewportWidth + 'px' }">
-  <icc-grid-header
-    [ngStyle]="{
-      width: tableWidth + 'px',
+<icc-grid-header
+  [ngStyle]="{
+    left: columnHeaderPosition + 'px',
+  }"
+  [gridConfig]="gridConfig"
+  [columns]="columns"
+  [columnWidths]="columnWidths"
+  (columnResizing)="onColumnResizing($event)"
+  (columnResized)="onColumnResized($event)"
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="onColumnDragDrop($event)"
+>
+</icc-grid-header>
+
+<!--
+
+<div class="grid-header-container" >
+
+  </div>
+
       'grid-template-columns': gridTemplateColumns,
-      left: columnHeaderPosition + 'px',
-    }"
-    [gridConfig]="gridConfig"
-    [columns]="columns"
-    (columnResizing)="onColumnResizing($event)"
-    (columnResized)="onColumnResized($event)"
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="onColumnDragDrop($event)"
-  >
-  </icc-grid-header>
-</div>
+      width: tableWidth + 'px',
+[ngStyle]="{ width: gridConfig.viewportWidth + 'px' }"
+-->
