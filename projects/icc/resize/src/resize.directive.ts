@@ -34,8 +34,6 @@ export class IccResizeDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
-      // event.preventDefault(); // WARNING DONOT do global event.preventDefault and event.stopPropagation
-      // event.stopPropagation();
       const el = document.elementFromPoint(event.x, event.y)!;
       const direction = el.getAttribute('direction');
       const elementKey = el.getAttribute('ng-reflect-element-key');
@@ -96,13 +94,10 @@ export class IccResizeDirective implements OnInit, OnDestroy {
           const height = this.resizeInfo.height * this.resizeInfo.scaleY;
           const dh = document.body.scrollHeight - document.body.clientHeight;
           el.style.flex = `0 0 ${height - dh}px`;
-        } else if (this.direction === 'leftRight' || this.direction === 'rightLeft') {
-          // TODO dw not working?
-          const dw = document.body.scrollWidth - document.body.clientWidth;
+        } else if (this.direction === 'leftRight') {
+          const parent = this.elementRef.nativeElement.parentElement;
+          const dw = parent.scrollWidth - parent.clientWidth;
           const width = this.resizeInfo.width * this.resizeInfo.scaleX;
-          console.log(' width=', width);
-          console.log(' dww=', dw);
-          console.log(' el.style.flex=', el.style.flex);
           el.style.flex = `0 0 ${width - dw}px`;
         }
         el.style['transform-origin'] = '';
@@ -117,7 +112,6 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         ) {
           window.dispatchEvent(new Event('resize'));
         }
-        //this.resizeInfo = null;
       }
       this.isResizing = false;
       event.preventDefault();
