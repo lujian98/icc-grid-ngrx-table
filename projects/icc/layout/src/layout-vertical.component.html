@@ -1,0 +1,28 @@
+<ng-content select="icc-layout-top"></ng-content>
+<ng-content></ng-content>
+<ng-container #contentResizeTopBottom *ngIf="resizeable"></ng-container>
+<ng-content select="icc-layout-middle"></ng-content>
+<ng-container #contentResizeBottomTop *ngIf="resizeable"></ng-container>
+<ng-content select="icc-layout-bottom"></ng-content>
+
+<ng-template #tplResizeTopBottom>
+  <div
+    class="icc-content-resize-top"
+    IccResizeTopBottom
+    iccResize
+    direction="topBottom"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+</ng-template>
+
+<ng-template #tplResizeBottomTop>
+  <div
+    class="icc-content-resize-bottom"
+    IccResizeBottomTop
+    iccResize
+    direction="bottomTop"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+</ng-template>

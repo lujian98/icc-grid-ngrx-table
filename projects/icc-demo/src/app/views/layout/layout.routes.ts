@@ -5,6 +5,8 @@ import { AppHorizontalCenterRightComponent } from './demos/horizontal-center-rig
 import { AppHorizontalLeftRightComponent } from './demos/horizontal-left-right.component';
 import { AppLayoutHorizontalAllComponent } from './demos/layout-horizontal-all.component';
 
+import { AppLayoutVerticalComponent } from './demos/layout-vertical.component';
+
 import { AppLayoutComponent } from './layout.component';
 
 export const AppLayoutRoutes: Routes = [
@@ -18,6 +20,8 @@ export const AppLayoutRoutes: Routes = [
       { path: 'horizontal-center-right', component: AppHorizontalCenterRightComponent },
       { path: 'horizontal-left-right', component: AppHorizontalLeftRightComponent },
       { path: 'layout-horizontal-all', component: AppLayoutHorizontalAllComponent },
+
+      { path: 'layout-vertical', component: AppLayoutVerticalComponent },
       {
         path: '**',
         redirectTo: 'horizontal-layout',

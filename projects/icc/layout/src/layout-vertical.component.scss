@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+
+  ::ng-deep {
+    icc-layout-top {
+      position: relative;
+      z-index: 1;
+      min-height: 50px;
+      height: 150px;
+      border: 1px solid red;
+    }
+
+    icc-layout-middle {
+      display: flex;
+      flex: 1 1 auto;
+      border: 1px solid orange;
+      min-height: 50px;
+    }
+
+    icc-layout-bottom {
+      position: relative;
+      z-index: 1;
+      min-height: 50px;
+      height: 150px;
+      border: 1px solid blue;
+    }
+  }
+
+  .icc-content-resize-top,
+  .icc-content-resize-bottom {
+    // cursor: row-resize;
+    width: 100%;
+    border-top: 1px solid darkgreen; // no need border
+  }
+
+  .icc-content-resize-bottom {
+    //padding-top: 5px;
+  }
+}

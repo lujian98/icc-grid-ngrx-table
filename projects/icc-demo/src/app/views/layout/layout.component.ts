@@ -35,6 +35,8 @@ export class AppLayoutComponent {
         { name: 'Horizontal Layout (Center, Right)', link: 'horizontal-center-right' },
         { name: 'Horizontal Layout (Left, Right)', link: 'horizontal-left-right' },
         { name: 'Horizontal Layout (header and footer)', link: 'layout-horizontal-all' },
+
+        { name: 'Vertical Layout (Top, Middle, Bottom)', link: 'layout-vertical' },
       ],
     },
   ];
