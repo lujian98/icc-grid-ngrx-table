@@ -3,10 +3,8 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ContentChildren,
   ElementRef,
   Input,
-  QueryList,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -60,7 +58,6 @@ export class IccLayoutHorizontalComponent implements AfterViewInit {
   @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft!: TemplateRef<any>;
   @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight!: ViewContainerRef;
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft!: ViewContainerRef;
-  @ContentChildren('divContainer', { read: ViewContainerRef }) divContainer!: QueryList<ViewContainerRef>;
 
   ngAfterViewInit(): void {
     if (this.resizeable) {
@@ -70,21 +67,9 @@ export class IccLayoutHorizontalComponent implements AfterViewInit {
 
   private checkResizeCondition(): void {
     const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
-    let left = false;
-    let center = false;
-    let right = false;
-    elements.forEach((el: HTMLDivElement) => {
-      if (!left && el.localName === 'icc-layout-left') {
-        left = true;
-      }
-      if (!center && el.localName === 'icc-layout-center') {
-        center = true;
-      }
-      if (!right && el.localName === 'icc-layout-right') {
-        right = true;
-      }
-    });
-    //const style = window.getComputedStyle(this.elementRef.nativeElement);
+    const left = elements.find((el) => el.localName === 'icc-layout-left');
+    const center = elements.find((el) => el.localName === 'icc-layout-center');
+    const right = elements.find((el) => el.localName === 'icc-layout-right');
     if (left && (center || right)) {
       this.contentResizeLeftRight.createEmbeddedView(this.tplResizeLeftRight);
     }
