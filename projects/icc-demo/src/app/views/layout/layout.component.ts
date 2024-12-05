@@ -28,7 +28,7 @@ import {
 export class AppLayoutComponent {
   items: IccAccordion[] = [
     {
-      name: 'Layout Demo', // layout-horizontal-all
+      name: 'Layout Demo',
       items: [
         { name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' },
         { name: 'Horizontal Layout (Left, Center)', link: 'horizontal-left-center' },
@@ -37,6 +37,12 @@ export class AppLayoutComponent {
         { name: 'Horizontal Layout (header and footer)', link: 'layout-horizontal-all' },
 
         { name: 'Vertical Layout (Top, Middle, Bottom)', link: 'layout-vertical' },
+        { name: 'Vertical Layout (Top, Middle)', link: 'vertical-top-middle' },
+        { name: 'Vertical Layout (Middle, Bottom)', link: 'vertical-middle-bottom' },
+        { name: 'Vertical Layout (Top, Bottom)', link: 'vertical-top-bottom' },
+        { name: 'Vertical Layout (header and footer)', link: 'layout-vertical-all' },
+
+        { name: 'Horizontal & Vertical Layout (mixed)', link: 'layout-horizontal-vertical' },
       ],
     },
   ];

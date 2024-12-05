@@ -6,7 +6,12 @@ import { AppHorizontalLeftRightComponent } from './demos/horizontal-left-right.c
 import { AppLayoutHorizontalAllComponent } from './demos/layout-horizontal-all.component';
 
 import { AppLayoutVerticalComponent } from './demos/layout-vertical.component';
+import { AppVerticalTopMiddleComponent } from './demos/vertical-top-middle.component';
+import { AppVerticalMiddleBottomComponent } from './demos/vertical-middle-bottom.component';
+import { AppVerticalTopBottomComponent } from './demos/vertical-top-bottom.component';
+import { AppLayoutVerticalAllComponent } from './demos/layout-vertical-all.component';
 
+import { AppLayoutHorizontalVerticalComponent } from './demos/layout-horizontal-vertical.component';
 import { AppLayoutComponent } from './layout.component';
 
 export const AppLayoutRoutes: Routes = [
@@ -22,6 +27,12 @@ export const AppLayoutRoutes: Routes = [
       { path: 'layout-horizontal-all', component: AppLayoutHorizontalAllComponent },
 
       { path: 'layout-vertical', component: AppLayoutVerticalComponent },
+      { path: 'vertical-top-middle', component: AppVerticalTopMiddleComponent },
+      { path: 'vertical-middle-bottom', component: AppVerticalMiddleBottomComponent },
+      { path: 'vertical-top-bottom', component: AppVerticalTopBottomComponent },
+      { path: 'layout-vertical-all', component: AppLayoutVerticalAllComponent },
+
+      { path: 'layout-horizontal-vertical', component: AppLayoutHorizontalVerticalComponent },
       {
         path: '**',
         redirectTo: 'horizontal-layout',
