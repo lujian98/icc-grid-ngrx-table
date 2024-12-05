@@ -29,7 +29,7 @@ export class AppLayoutComponent {
   items: IccAccordion[] = [
     {
       name: 'Layout Demo',
-      items: [{ name: 'Horizontal Layout', link: 'horizontal-layout' }],
+      items: [{ name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' }],
     },
   ];
 }

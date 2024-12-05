@@ -11,7 +11,7 @@
     IccResizeLeftRight
     iccResize
     direction="leftRight"
-    elementKey="leftRight"
+    [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
 </ng-template>
@@ -22,7 +22,7 @@
     IccResizeRightLeft
     iccResize
     direction="rightLeft"
-    elementKey="rightLeft"
+    [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
 </ng-template>

@@ -11,17 +11,11 @@ import {
   selector: 'app-layout-horizontal',
   template: `
     <icc-layout-horizontal [resizeable]="true">
-      <icc-layout-left>
-        <div>Left</div>
-      </icc-layout-left>
+      <icc-layout-left> </icc-layout-left>
 
-      <icc-layout-center>
-        <div>Center</div>
-      </icc-layout-center>
+      <icc-layout-center> Horizontal Layout With Left and Right panels </icc-layout-center>
 
-      <icc-layout-right>
-        <div>Right Container</div>
-      </icc-layout-right>
+      <icc-layout-right> </icc-layout-right>
     </icc-layout-horizontal>
   `,
   styles: [':host { display: flex; width: 100%; }'],
