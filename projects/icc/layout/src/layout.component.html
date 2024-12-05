@@ -7,7 +7,7 @@
   IccResizeRight
   iccResize
   direction="right"
-  elementKey="right"
+  [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>
 <div
@@ -15,7 +15,7 @@
   IccResizeBottom
   iccResize
   direction="bottom"
-  elementKey="bottom"
+  [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>
 <div
@@ -23,6 +23,6 @@
   IccResizeBottomRight
   iccResize
   direction="bottomRight"
-  elementKey="bottomRight"
+  [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>
