@@ -28,8 +28,14 @@ import {
 export class AppLayoutComponent {
   items: IccAccordion[] = [
     {
-      name: 'Layout Demo',
-      items: [{ name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' }],
+      name: 'Layout Demo', // layout-horizontal-all
+      items: [
+        { name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' },
+        { name: 'Horizontal Layout (Left, Center)', link: 'horizontal-left-center' },
+        { name: 'Horizontal Layout (Center, Right)', link: 'horizontal-center-right' },
+        { name: 'Horizontal Layout (Left, Right)', link: 'horizontal-left-right' },
+        { name: 'Horizontal Layout (header and footer)', link: 'layout-horizontal-all' },
+      ],
     },
   ];
 }

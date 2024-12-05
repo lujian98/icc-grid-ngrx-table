@@ -2,6 +2,7 @@
   display: flex;
   position: relative; // for resize handle position
   flex-direction: column;
+  width: 100%;
 
   ::ng-deep {
     icc-layout-header {
