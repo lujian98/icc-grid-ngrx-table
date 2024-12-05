@@ -28,35 +28,21 @@ export class IccLayoutFooterComponent {}
 })
 export class IccLayoutComponent implements OnInit {
   private elementRef = inject(ElementRef);
-  @Input() height!: string;
+  @Input() height!: string; // TODO set input width and height
   @Input() width!: string;
   @Input() resizeable!: boolean;
   @Input() layout = 'fit'; // fit | viewport
 
   ngOnInit(): void {
-    this.initPanelSize();
+    this.setVieportSize();
   }
 
-  private initPanelSize(): void {
-    if (this.layout === 'viewport' || this.layout === 'fit') {
-      this.setFitLayout();
-    }
-    if (this.height) {
-      this.setHeight(this.height);
-    }
-    if (this.width) {
-      this.setWidth(this.width);
-    }
-  }
-
-  private setFitLayout(): void {
-    // TODO fit width if width is set
-    const size = this.getParentSize();
-    if (size) {
-      this.setHeight(`${size.height}px`);
-      if (this.layout === 'viewport') {
-        this.setWidth(`${size.width}px`);
-      }
+  private setVieportSize(): void {
+    if (this.layout === 'viewport') {
+      const width = window.innerWidth || document.body.clientWidth;
+      const height = window.innerHeight || document.body.clientHeight;
+      this.setHeight(`${height}px`);
+      this.setWidth(`${width}px`);
     }
   }
 
@@ -71,26 +57,6 @@ export class IccLayoutComponent implements OnInit {
     el.parentNode.style.width = width;
   }
 
-  private getParentSize() {
-    let size = null;
-    if (this.layout === 'viewport') {
-      size = {
-        width: window.innerWidth || document.body.clientWidth,
-        height: window.innerHeight || document.body.clientHeight,
-      };
-    } else {
-      const el = this.elementRef.nativeElement;
-      let ownerCt = el.parentNode.parentNode;
-      if (!ownerCt || ownerCt.clientHeight <= 0) {
-        ownerCt = ownerCt.parentNode;
-      }
-      if (ownerCt) {
-        size = { width: ownerCt.clientWidth, height: ownerCt.clientHeight };
-      }
-    }
-    return size;
-  }
-
   onResizePanel(resizeInfo: IccResizeInfo): void {
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
@@ -102,8 +68,6 @@ export class IccLayoutComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
-    if (this.layout === 'fit' || this.layout === 'viewport') {
-      this.setFitLayout();
-    }
+    this.setVieportSize();
   }
 }
