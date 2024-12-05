@@ -92,6 +92,19 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     });
     this.resizableMouseup = this.renderer.listen(document, 'mouseup', (event: MouseEvent) => {
       if (this.isResizing && this.resizeInfo.origin) {
+        if (this.direction === 'topBottom' || this.direction === 'bottomTop') {
+          const height = this.resizeInfo.height * this.resizeInfo.scaleY;
+          const dh = document.body.scrollHeight - document.body.clientHeight;
+          el.style.flex = `0 0 ${height - dh}px`;
+        } else if (this.direction === 'leftRight' || this.direction === 'rightLeft') {
+          // TODO dw not working?
+          const dw = document.body.scrollWidth - document.body.clientWidth;
+          const width = this.resizeInfo.width * this.resizeInfo.scaleX;
+          console.log(' width=', width);
+          console.log(' dww=', dw);
+          console.log(' el.style.flex=', el.style.flex);
+          el.style.flex = `0 0 ${width - dw}px`;
+        }
         el.style['transform-origin'] = '';
         el.style.transform = '';
         this.resizeInfo.isResized = true;
