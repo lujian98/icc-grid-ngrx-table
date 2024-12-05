@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import {
-  IccLayoutContentComponent,
   IccLayoutRightComponent,
   IccLayoutHorizontalComponent,
   IccLayoutLeftComponent,
@@ -19,7 +18,6 @@ import {
   imports: [
     CommonModule,
     RouterModule,
-    IccLayoutContentComponent,
     IccLayoutHorizontalComponent,
     IccLayoutLeftComponent,
     IccLayoutCenterComponent,

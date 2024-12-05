@@ -1,11 +1,11 @@
-<icc-layout-content [resizeable]="true">
-  <div start>
+<icc-layout-horizontal [resizeable]="true">
+  <icc-layout-left>
     <icc-accordion [items]="items"></icc-accordion>
-  </div>
+  </icc-layout-left>
 
-  <div middle>
+  <icc-layout-center>
     <router-outlet></router-outlet>
-  </div>
+  </icc-layout-center>
 
-  <div end>Left Container</div>
-</icc-layout-content>
+  <icc-layout-right><div>Right Container</div></icc-layout-right>
+</icc-layout-horizontal>

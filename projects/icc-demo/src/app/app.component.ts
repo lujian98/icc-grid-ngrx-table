@@ -4,12 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IccI18nService, IccLanguage } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 
-import {
-  IccLayoutComponent,
-  IccLayoutContentComponent,
-  IccLayoutHeaderComponent,
-  IccLayoutFooterComponent,
-} from '@icc/ui/layout';
+import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 
 import { IccThemeService } from '@icc/ui/theme';
 
@@ -24,7 +19,6 @@ import { IccThemeService } from '@icc/ui/theme';
     RouterModule,
     IccSelectFieldComponent,
     IccLayoutComponent,
-    IccLayoutContentComponent,
     IccLayoutHeaderComponent,
     IccLayoutFooterComponent,
   ],
