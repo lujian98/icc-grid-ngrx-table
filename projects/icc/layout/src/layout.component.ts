@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core';
 import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
-import { IccLayoutContentComponent } from './layout-content.component';
 
 @Component({
   selector: 'icc-layout-header',
@@ -25,13 +24,7 @@ export class IccLayoutFooterComponent {}
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccLayoutHeaderComponent,
-    IccLayoutContentComponent,
-    IccLayoutFooterComponent,
-    IccResizeDirective,
-  ],
+  imports: [CommonModule, IccLayoutHeaderComponent, IccLayoutFooterComponent, IccResizeDirective],
 })
 export class IccLayoutComponent implements OnInit {
   private elementRef = inject(ElementRef);
