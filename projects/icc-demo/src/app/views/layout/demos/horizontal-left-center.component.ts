@@ -15,7 +15,7 @@ import {
       <icc-layout-center> Horizontal Layout With Left</icc-layout-center>
     </icc-layout-horizontal>
   `,
-  styles: [':host { display: flex; width: 100%; }'],
+  styles: [':host { display: flex; width: 100%; flex-direction: column;}'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [

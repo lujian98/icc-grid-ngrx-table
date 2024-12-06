@@ -15,7 +15,7 @@ import {
       <icc-layout-right> </icc-layout-right>
     </icc-layout-horizontal>
   `,
-  styles: [':host { display: flex; width: 100%; }'],
+  styles: [':host { display: flex; width: 100%; flex-direction: column; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
