@@ -8,8 +8,6 @@
     icc-layout-header {
       display: flex;
       flex-direction: row;
-      height: 50px;
-      min-height: 50px;
       justify-content: center;
       align-items: center;
     }
@@ -17,8 +15,6 @@
     icc-layout-footer {
       display: flex;
       z-index: 2;
-      height: 30px;
-      min-height: 30px;
       justify-content: center;
       align-items: center;
       flex-flow: row wrap;

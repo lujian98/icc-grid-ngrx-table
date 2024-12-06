@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  inject,
+  HostBinding,
+} from '@angular/core';
 import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
 import { uniqueId } from '@icc/ui/core';
 
@@ -27,24 +36,27 @@ export class IccLayoutFooterComponent {}
   standalone: true,
   imports: [CommonModule, IccLayoutHeaderComponent, IccLayoutFooterComponent, IccResizeDirective],
 })
-export class IccLayoutComponent implements OnInit {
+export class IccLayoutComponent {
   private elementRef = inject(ElementRef);
   elementKey = uniqueId(16);
-
-  @Input() height!: string; // TODO set input width and height
-  @Input() width!: string;
   @Input() resizeable!: boolean;
+  @Input() layout: string | undefined; // viewport
 
-  @Input() layout = 'fit'; // fit | viewport
-
-  ngOnInit(): void {
-    this.setVieportSize();
+  @HostBinding('class.icc-main-viewport-layout')
+  get viewportLayout(): boolean {
+    return this.layout === 'viewport';
   }
 
-  private setVieportSize(): void {
-    if (this.layout === 'viewport') {
-      const width = window.innerWidth || document.body.clientWidth;
-      const height = window.innerHeight || document.body.clientHeight;
+  @HostBinding('class.icc-normal-layout')
+  get normalLayout(): boolean {
+    return this.layout !== 'viewport';
+  }
+
+  //Not sure it is used
+  onResizePanel(resizeInfo: IccResizeInfo): void {
+    if (resizeInfo.isResized) {
+      const height = resizeInfo.height * resizeInfo.scaleY;
+      const width = resizeInfo.width * resizeInfo.scaleX;
       this.setHeight(`${height}px`);
       this.setWidth(`${width}px`);
     }
@@ -59,20 +71,5 @@ export class IccLayoutComponent implements OnInit {
     const el = this.elementRef.nativeElement;
     el.style.width = width;
     el.parentNode.style.width = width;
-  }
-
-  //Not sure it is used
-  onResizePanel(resizeInfo: IccResizeInfo): void {
-    if (resizeInfo.isResized) {
-      const height = resizeInfo.height * resizeInfo.scaleY;
-      const width = resizeInfo.width * resizeInfo.scaleX;
-      this.setHeight(`${height}px`);
-      this.setWidth(`${width}px`);
-    }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
-    this.setVieportSize();
   }
 }

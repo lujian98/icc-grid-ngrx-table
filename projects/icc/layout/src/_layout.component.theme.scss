@@ -1,4 +1,28 @@
 @mixin icc-layout-theme() {
+  .icc-main-viewport-layout {
+    icc-layout-header {
+      height: 50px;
+    }
+    icc-layout-horizontal {
+      height: calc(100vh - 80px);
+    }
+    icc-layout-footer {
+      height: 30px;
+    }
+  }
+
+  .icc-normal-layout {
+    icc-layout-header {
+      height: unset;
+    }
+    icc-layout-horizontal {
+      height: unset;
+    }
+    icc-layout-footer {
+      height: unset;
+    }
+  }
+
   icc-layout,
   icc-layout-header,
   icc-layout-footer,
