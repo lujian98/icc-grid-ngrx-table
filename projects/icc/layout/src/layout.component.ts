@@ -1,16 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnInit,
-  inject,
-  HostBinding,
-} from '@angular/core';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, inject } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
+import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
 
 @Component({
   selector: 'icc-layout-header',
@@ -38,9 +29,34 @@ export class IccLayoutFooterComponent {}
 })
 export class IccLayoutComponent {
   private elementRef = inject(ElementRef);
+  private _width: string = '';
+  private _height: string = '';
+
   elementKey = uniqueId(16);
   @Input() resizeable!: boolean;
-  @Input() layout: string | undefined; // viewport
+  @Input() layout: string = ''; // viewport
+
+  @Input()
+  set height(val: string) {
+    this._height = val;
+    if (val) {
+      this.setHeight(val);
+    }
+  }
+  get height(): string {
+    return this._height;
+  }
+
+  @Input()
+  set width(val: string) {
+    this._width = val;
+    if (val) {
+      this.setWidth(val);
+    }
+  }
+  get width(): string {
+    return this._width;
+  }
 
   @HostBinding('class.icc-main-viewport-layout')
   get viewportLayout(): boolean {
@@ -52,9 +68,7 @@ export class IccLayoutComponent {
     return this.layout !== 'viewport';
   }
 
-  //Not sure it is used
   onResizePanel(resizeInfo: IccResizeInfo): void {
-    //console.log( ' resize =', resizeInfo)
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
       const width = resizeInfo.width * resizeInfo.scaleX;
@@ -65,12 +79,16 @@ export class IccLayoutComponent {
 
   private setHeight(height: string): void {
     const el = this.elementRef.nativeElement;
-    el.style.height = height;
+    if (el) {
+      el.style.height = height;
+    }
   }
 
   private setWidth(width: string): void {
     const el = this.elementRef.nativeElement;
-    el.style.width = width;
-    el.parentNode.style.width = width;
+    if (el) {
+      el.style.width = width;
+      //el.parentNode.style.width = width;
+    }
   }
 }
