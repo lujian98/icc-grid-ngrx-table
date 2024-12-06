@@ -13,7 +13,7 @@ import {
 @Component({
   selector: 'app-layout-vertical-all',
   template: `
-    <icc-layout layout="fit">
+    <icc-layout>
       <icc-layout-header>Header</icc-layout-header>
 
       <icc-layout-vertical [resizeable]="true">

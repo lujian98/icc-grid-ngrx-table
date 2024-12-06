@@ -54,6 +54,7 @@ export class IccLayoutComponent {
 
   //Not sure it is used
   onResizePanel(resizeInfo: IccResizeInfo): void {
+    //console.log( ' resize =', resizeInfo)
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
       const width = resizeInfo.width * resizeInfo.scaleX;

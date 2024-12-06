@@ -92,7 +92,8 @@ export class IccResizeDirective implements OnInit, OnDestroy {
       if (this.isResizing && this.resizeInfo.origin) {
         if (this.direction === 'topBottom' || this.direction === 'bottomTop') {
           const height = this.resizeInfo.height * this.resizeInfo.scaleY;
-          const dh = document.body.scrollHeight - document.body.clientHeight;
+          const parent = this.elementRef.nativeElement.parentElement;
+          const dh = parent.scrollHeight - parent.clientHeight;
           el.style.flex = `0 0 ${height - dh}px`;
         } else if (this.direction === 'leftRight') {
           const parent = this.elementRef.nativeElement.parentElement;

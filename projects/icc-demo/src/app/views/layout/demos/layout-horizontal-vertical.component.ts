@@ -17,13 +17,13 @@ import {
 @Component({
   selector: 'app-layout-horizontal-vertical',
   template: `
-    <icc-layout layout="fit">
+    <icc-layout>
       <icc-layout-header>Header</icc-layout-header>
       <icc-layout-horizontal [resizeable]="true">
         <icc-layout-left> </icc-layout-left>
 
         <icc-layout-center>
-          <icc-layout layout="fit">
+          <icc-layout>
             <icc-layout-header>Header</icc-layout-header>
 
             <icc-layout-vertical [resizeable]="true">
