@@ -1,18 +1,37 @@
 :host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  cdk-accordion {
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fill-available;
+
+    cdk-accordion-item {
+      display: flex;
+      //flex: 1;
+      flex-direction: column;
+      height: -webkit-fill-available;
+      position: relative;
+      z-index: 1;
+
+      .icc-accordion-item-header {
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        padding: 8px 10px;
+      }
+
+      /*
+      ::ng-deep icc-menu-item {
+        padding: 4px 0;
+      }*/
+    }
+  }
+
   &:hover {
     cursor: pointer;
-  }
-
-  .icc-accordion-item-header {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding: 8px 10px;
-  }
-
-  .cdk-accordion-item {
-    position: relative;
-    z-index: 1;
   }
 
   .cdk-accordion-item + .cdk-accordion-item {
