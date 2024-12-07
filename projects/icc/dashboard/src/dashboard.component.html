@@ -32,56 +32,56 @@
       <div
         IccResizeTop
         iccResize
-        direction="top"
+        [direction]="resizeType.TOP"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeRight
         iccResize
-        direction="right"
+        [direction]="resizeType.RIGHT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeBottom
         iccResize
-        direction="bottom"
+        [direction]="resizeType.BOTTOM"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeLeft
         iccResize
-        direction="left"
+        [direction]="resizeType.LEFT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeTopLeft
         iccResize
-        direction="topLeft"
+        [direction]="resizeType.TOP_LEFT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeTopRight
         iccResize
-        direction="topRight"
+        [direction]="resizeType.TOP_RIGHT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeBottomRight
         iccResize
-        direction="bottomRight"
+        [direction]="resizeType.BOTTOM_RIGHT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>
       <div
         IccResizeBottomLeft
         iccResize
-        direction="bottomLeft"
+        [direction]="resizeType.BOTTOM_LEFT"
         [elementKey]="'tile' + i"
         (iccResizeEvent)="onResizeTile($event, tile)"
       ></div>

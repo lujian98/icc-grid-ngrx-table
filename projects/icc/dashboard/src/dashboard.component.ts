@@ -14,7 +14,7 @@ import {
 import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
 import { IccPanelComponent } from '@icc/ui/panel';
 import { IccPortalComponent } from '@icc/ui/portal';
-import { IccResizeDirective, IccResizeInfo, IccSize } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccSize, IccResizeType } from '@icc/ui/resize';
 import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 
 @Component({
@@ -36,6 +36,7 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
+  resizeType = IccResizeType;
   @Input() tiles: Tile<T>[] = [];
   @Input() gridGap = 2;
   @Input() gridWidth = 100;

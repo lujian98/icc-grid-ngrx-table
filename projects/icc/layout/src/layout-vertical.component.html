@@ -10,7 +10,7 @@
     class="icc-content-resize-top"
     IccResizeTopBottom
     iccResize
-    direction="topBottom"
+    [direction]="resizeType.TOP_BOTTOM"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
@@ -21,7 +21,7 @@
     class="icc-content-resize-bottom"
     IccResizeBottomTop
     iccResize
-    direction="bottomTop"
+    [direction]="resizeType.BOTTOM_TOP"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>

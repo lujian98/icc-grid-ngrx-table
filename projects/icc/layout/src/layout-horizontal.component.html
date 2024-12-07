@@ -10,7 +10,7 @@
     class="icc-content-resize-left"
     IccResizeLeftRight
     iccResize
-    direction="leftRight"
+    [direction]="resizeType.LEFT_RIGHT"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
@@ -21,7 +21,7 @@
     class="icc-content-resize-right"
     IccResizeRightLeft
     iccResize
-    direction="rightLeft"
+    [direction]="resizeType.RIGHT_LEFT"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>

@@ -11,7 +11,7 @@ import {
   inject,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { take, timer } from 'rxjs';
 
 @Component({
@@ -55,6 +55,7 @@ export class IccLayoutBottomComponent {}
 export class IccLayoutVerticalComponent implements AfterViewInit {
   private elementRef = inject(ElementRef);
   elementKey = uniqueId(16);
+  resizeType = IccResizeType;
   @Input() resizeable!: boolean;
 
   @ViewChild('tplResizeTopBottom', { static: true }) tplResizeTopBottom!: TemplateRef<any>;

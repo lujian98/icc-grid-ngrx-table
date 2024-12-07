@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, inject } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
 @Component({
   selector: 'icc-layout-header',
@@ -31,7 +31,7 @@ export class IccLayoutComponent {
   private elementRef = inject(ElementRef);
   private _width: string = '';
   private _height: string = '';
-
+  resizeType = IccResizeType;
   elementKey = uniqueId(16);
   @Input() resizeable!: boolean;
   @Input() layout: string = ''; // viewport

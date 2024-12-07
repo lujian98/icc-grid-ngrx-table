@@ -6,7 +6,7 @@
   *ngIf="resizeable"
   IccResizeRight
   iccResize
-  direction="right"
+  [direction]="resizeType.RIGHT"
   [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>
@@ -14,7 +14,7 @@
   *ngIf="resizeable"
   IccResizeBottom
   iccResize
-  direction="bottom"
+  [direction]="resizeType.BOTTOM"
   [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>
@@ -22,7 +22,7 @@
   *ngIf="resizeable"
   IccResizeBottomRight
   iccResize
-  direction="bottomRight"
+  [direction]="resizeType.BOTTOM_RIGHT"
   [elementKey]="elementKey"
   (iccResizeEvent)="onResizePanel($event)"
 ></div>

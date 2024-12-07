@@ -17,3 +17,18 @@ export interface IccSize {
   height: number;
   width: number;
 }
+
+export enum IccResizeType {
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+  TOP_LEFT = 'topLeft',
+  TOP_RIGHT = 'topRight',
+  BOTTOM_RIGHT = 'bottomRight',
+  BOTTOM_LEFT = 'bottomLeft',
+  TOP_BOTTOM = 'topBottom',
+  BOTTOM_TOP = 'bottomTop',
+  LEFT_RIGHT = 'leftRight',
+  RIGHT_LEFT = 'rightLeft',
+}
