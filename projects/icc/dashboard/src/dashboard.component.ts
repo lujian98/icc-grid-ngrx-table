@@ -14,7 +14,7 @@ import {
 import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
 import { IccPanelComponent } from '@icc/ui/panel';
 import { IccPortalComponent } from '@icc/ui/portal';
-import { IccResizeDirective, IccResizeInfo } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccSize } from '@icc/ui/resize';
 import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 
 @Component({
@@ -71,33 +71,17 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   private setupGrid(): void {
     // TODO should this be this.elementRef.nativeElement.parentNode or this.elementRef.nativeElement???
-    //console.log(' this =', this);
     const size = this.getDashboardSize()!;
-    //console.log(' 3333333333 size =', size);
     this.gridWidth = (size.width - this.cols * this.gridGap - 4) / this.cols;
     this.gridHeight = (size.height - this.cols * this.gridGap - 4) / this.rows;
     this.setGridTemplate();
     this.changeDetectorRef.detectChanges();
   }
 
-  private getDashboardSize() {
+  private getDashboardSize(): IccSize | null {
     // TODO return correct size
     const el = this.elementRef.nativeElement;
-    let node = null;
-    //console.log(' this.elementRef=', this.elementRef);
-    //console.log(' el.clientWidth=', el.clientWidth);
-    //console.log(' el.firstChild.clientWidth=', el.firstChild.clientWidth);
-    //console.log(' el.parentNode.parentNode.clientWidth=', el.parentNode.parentNode.clientWidth);
-
-    /*
-    if (el.clientWidth) {
-      node = el;
-    } else if (el.parentNode.clientWidth) {
-      node = el.parentNode;
-    } else if (el.parentNode.parentNode.clientWidth) {
-      node = el.parentNode.parentNode;
-    } */
-    node = el.firstChild;
+    const node = el.firstChild;
     if (node) {
       return {
         width: node.clientWidth,
@@ -151,31 +135,15 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         tile.content = tile.title || tile.name;
       }
     });
-    //console.log(' this.tiles =', this.tiles);
-    //console.log(' this.gridMap =', this.gridMap);
     window.dispatchEvent(new Event('resize'));
   }
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: Tile<T>): void {
-    //console.log(' resizeInfo=', resizeInfo);
     if (resizeInfo.isResized) {
-      // const element = resizeInfo.element;
-      // element.style.transform = '';
-      // element.style['transform-origin'] = '';
       const tileInfo = this.getResizeTileInfo(resizeInfo, tile);
       Object.assign(tile, tileInfo);
       this.setTileLayouts();
     }
-    /*
-    if (!resizeInfo.isResized) {
-      element.style['transform-origin'] = resizeInfo.origin;
-      element.style.transform = `scale(${resizeInfo.scaleX}, ${resizeInfo.scaleY})`;
-    } else {
-      element.style.transform = '';
-      const tileInfo = this.getResizeTileInfo(resizeInfo, tile);
-      Object.assign(tile, tileInfo);
-      this.setTileLayouts();
-    } */
   }
 
   private getResizeTileInfo(resizeInfo: IccResizeInfo, tile: Tile<T>): TileInfo {
@@ -189,7 +157,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     let dxy: DxyPosition;
     let dx = Math.round(resizeInfo.dx / this.gridWidth);
     let dy = Math.round(resizeInfo.dy / this.gridHeight);
-    //console.log(' dx =', dx, ' resizeInfo =', resizeInfo, ' this.gridWidth=', this.gridWidth);
 
     switch (resizeInfo.direction) {
       case 'top':
