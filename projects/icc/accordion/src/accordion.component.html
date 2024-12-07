@@ -9,6 +9,7 @@
       [attr.id]="'accordion-header-' + index"
       [attr.aria-expanded]="accordionItem.expanded"
       [attr.aria-controls]="'accordion-body-' + index"
+      [ngStyle]="{ 'overflow-y': isExpaneded(index) ? 'auto' : 'hidden' }"
     >
       <div
         class="icc-accordion-item-header"
