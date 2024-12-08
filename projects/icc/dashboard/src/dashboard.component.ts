@@ -14,12 +14,7 @@ import {
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import {
-  IccLayoutCenterComponent,
-  IccLayoutComponent,
-  IccLayoutHeaderComponent,
-  IccLayoutHorizontalComponent,
-} from '@icc/ui/layout';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
 import { TranslateModule } from '@ngx-translate/core';
@@ -40,8 +35,6 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
     IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
-    IccLayoutCenterComponent,
-    IccLayoutHorizontalComponent,
     IccResizeDirective,
   ],
 })
