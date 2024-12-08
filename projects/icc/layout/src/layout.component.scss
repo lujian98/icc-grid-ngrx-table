@@ -3,6 +3,7 @@
   position: relative; // for resize handle position
   flex-direction: column;
   width: 100%;
+  height: -webkit-fill-available;
 
   ::ng-deep {
     icc-layout-header {

@@ -10,6 +10,7 @@ import { IccTreeViewComponent } from './components/tree-view.component';
 import { IccTreeConfig, defaultTreeConfig, IccTreeNode } from './models/tree-grid.model';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-tree',
@@ -25,6 +26,8 @@ import { IccTreeFacade } from './+state/tree.facade';
     IccGridStateModule,
     IccTreeViewComponent,
     IccButtonComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
   ],
 })
 export class IccTreeComponent<T> implements OnDestroy {
