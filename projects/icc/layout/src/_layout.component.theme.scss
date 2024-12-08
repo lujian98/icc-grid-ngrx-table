@@ -26,11 +26,27 @@
   icc-layout,
   icc-layout-header,
   icc-layout-footer,
-  icc-layout-horizontal,
-  icc-layout-left,
-  icc-layout-center,
-  icc-layout-right {
+  icc-layout-horizontal {
     background-color: var(--app-background-color);
     color: icc-theme(app-text-basic-color);
+  }
+
+  .icc-layout-resize-right,
+  .icc-horizontal-resize-left,
+  .icc-horizontal-resize-right {
+    &:focus,
+    &:hover {
+      border-right: 2px solid red;
+      color: red;
+    }
+  }
+  .icc-layout-resize-bottom,
+  .icc-vertical-resize-top,
+  .icc-vertical-resize-bottom {
+    &:focus,
+    &:hover {
+      border-bottom: 2px solid red;
+      color: red;
+    }
   }
 }

@@ -12,13 +12,11 @@
       z-index: 1;
       min-height: 50px;
       height: 150px;
-      border: 1px solid red;
     }
 
     icc-layout-middle {
       display: flex;
       flex: 1 1 auto;
-      border: 1px solid orange;
       min-height: 50px;
     }
 
@@ -27,18 +25,11 @@
       z-index: 1;
       min-height: 50px;
       height: 150px;
-      border: 1px solid blue;
     }
   }
 
-  .icc-content-resize-top,
-  .icc-content-resize-bottom {
-    // cursor: row-resize;
+  .icc-vertical-resize-top,
+  .icc-vertical-resize-bottom {
     width: 100%;
-    border-top: 1px solid darkgreen; // no need border
-  }
-
-  .icc-content-resize-bottom {
-    //padding-top: 5px;
   }
 }
