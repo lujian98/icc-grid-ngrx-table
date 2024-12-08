@@ -22,6 +22,7 @@
         <div
           class="icc-drag-tile"
           [style.backgroundColor]="tile.color"
+          (mousedown)="onMousedown($event, tile)"
           cdkDrag
           [cdkDragDisabled]="isDragDisabled(tile)"
           [cdkDragData]="i"

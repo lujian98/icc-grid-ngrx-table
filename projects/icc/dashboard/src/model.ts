@@ -14,6 +14,8 @@ export interface Tile<T> {
   gridRow?: string;
   content?: IccPortalContent<T>;
   context?: {};
+  dragDisabled?: boolean;
+  dblClickDrag?: boolean;
 }
 
 export interface TileInfo {

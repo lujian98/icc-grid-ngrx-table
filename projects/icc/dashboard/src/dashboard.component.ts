@@ -1,5 +1,6 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -34,9 +35,11 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
+  private document = inject(DOCUMENT);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   resizeType = IccResizeType;
+  dragDisabled: boolean = false;
   @Input() tiles: Tile<T>[] = [];
   @Input() gridGap = 2;
   @Input() gridWidth = 100;
@@ -106,6 +109,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     }
     this.tiles.forEach((tile, index) => {
       tile.index = index;
+      tile.dragDisabled = tile.dblClickDrag ? true : tile.dragDisabled;
       if (tile.colWidth! <= 0) {
         tile.colWidth = 1;
       }
@@ -339,12 +343,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     return ret;
   }
 
-  isDragDisabled(tile: Tile<T>): boolean {
-    // TODO not used yet
-    return false;
-  }
-
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>): void {
+    console.log(' tile=', tile);
     const draggedTile = this.tiles[e.item.data];
     const dx = Math.round(e.distance.x / this.gridWidth);
     const dy = Math.round(e.distance.y / this.gridHeight);
@@ -370,6 +370,25 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
       }
     }
     this.setTileLayouts();
+    tile.dragDisabled = tile.dblClickDrag ? true : tile.dragDisabled;
+  }
+
+  onMousedown(event: MouseEvent, tile: Tile<T>): void {
+    tile.dragDisabled = tile.dblClickDrag ? this.targetHasD3Brush(event.target) : tile.dragDisabled;
+  }
+
+  // D3 zoom brush not able to fire mouseup event, use dblClickDrag:true and dropped dragDisabled: true
+  private targetHasD3Brush(el: any): boolean {
+    if (el.classList.contains('brush')) {
+      return true;
+    } else if (el.parentElement) {
+      return this.targetHasD3Brush(el.parentElement);
+    }
+    return false;
+  }
+
+  isDragDisabled(tile: Tile<T>): boolean {
+    return !!tile.dragDisabled;
   }
 
   private isDroppable(x: number, y: number, tile: Tile<T>, index: number): boolean {

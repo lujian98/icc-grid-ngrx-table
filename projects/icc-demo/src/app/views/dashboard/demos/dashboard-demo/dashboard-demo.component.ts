@@ -40,6 +40,7 @@ export class AppDashboardDemoComponent {
         //color: getColor(),
         content: AppStockChartComponent,
         context: this.portalData,
+        dblClickDrag: true,
       },
       {
         name: 'Card 2',
