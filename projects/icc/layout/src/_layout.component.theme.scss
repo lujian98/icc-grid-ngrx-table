@@ -13,7 +13,7 @@
 
   .icc-normal-layout {
     icc-layout-header {
-      height: unset;
+      height: 30px;
     }
     icc-layout-horizontal {
       height: unset;
@@ -27,7 +27,7 @@
   icc-layout-header,
   icc-layout-footer,
   icc-layout-horizontal {
-    background-color: var(--app-background-color);
+    background-color: var(--app-background-color); // TODO header different color???
     color: icc-theme(app-text-basic-color);
   }
 

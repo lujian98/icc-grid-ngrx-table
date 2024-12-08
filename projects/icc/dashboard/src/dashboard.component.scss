@@ -4,15 +4,10 @@
   height: 100%;
   padding: 0 5px;
 
-  icc-layout-header {
-    height: 30px;
-    padding: 0 5px;
-
-    .icc-layout-top-bar-title {
-      display: flex;
-      margin-right: auto;
-      align-items: center;
-    }
+  .icc-layout-top-bar-title {
+    display: flex;
+    margin-right: auto;
+    align-items: center;
   }
 
   .icc-tile-list {
