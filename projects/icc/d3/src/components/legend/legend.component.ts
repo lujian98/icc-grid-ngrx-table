@@ -179,6 +179,7 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
   }
 
   itemClick(event: any, d: any): void {
+    console.log(' disabled click 8888888');
     d.disabled = !d.disabled;
     this.dispatch.call('legendClick', this, d);
   }

@@ -52,8 +52,12 @@ export class AppStockHistoryDemoComponent<T> implements OnInit {
     setInterval(() => {
       const vdata = ndata[k];
       if (vdata && k <= 100) {
-        vdata.values = vdata.values.filter((v: any, i: any) => i < 12);
-        this.data = [vdata];
+        const newData = {
+          ...vdata,
+          values: vdata.values.filter((v: any, i: any) => i < 12),
+        };
+        //vdata.values = vdata.values.filter((v: any, i: any) => i < 12);
+        this.data = [newData];
         this.cd.detectChanges();
         k++;
       }
