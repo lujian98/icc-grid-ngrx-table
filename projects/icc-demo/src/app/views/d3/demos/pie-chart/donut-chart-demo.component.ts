@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { IccD3ChartConfig, IccD3Component } from '@icc/ui/d3';
 import * as d3Format from 'd3-format';
 
 @Component({
@@ -81,11 +81,6 @@ export class AppDonutChartDemoComponent implements OnInit {
   data2!: any[];
 
   ngOnInit(): void {
-    this.data2 = [
-      {
-        key: 'Pie Chart',
-        values: this.data,
-      },
-    ];
+    this.data2 = [...this.data];
   }
 }

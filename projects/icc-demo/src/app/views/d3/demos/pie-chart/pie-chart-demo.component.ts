@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
+import { IccD3ChartConfig, IccD3Component } from '@icc/ui/d3';
 
 @Component({
   selector: 'app-pie-chart-demo',
@@ -11,7 +11,7 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
       <icc-d3 [chartConfigs]="chartConfigs2" [data]="data2"></icc-d3>
     </div>
   `,
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccD3Component],
 })
@@ -87,21 +87,10 @@ export class AppPieChartDemoComponent implements OnInit {
   constructor(protected cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.data = [
-      {
-        key: 'Pie Chart',
-        values: [...this.data0],
-        //values: IccUtils.clone(this.data0),
-      },
-    ];
-    this.data2 = [
-      {
-        key: 'Pie Chart',
-        values: [...this.data0],
-        //values: IccUtils.clone(this.data0),
-      },
-    ];
+    this.data = [...this.data0];
+    this.data2 = [...this.data0];
 
+    /*
     const ndata = [...this.data0];
     setInterval(() => {
       const adata = [...ndata].map((d: any) => {
@@ -110,20 +99,12 @@ export class AppPieChartDemoComponent implements OnInit {
         return t;
       });
       this.data = [
-        {
-          key: 'Pie Chart',
-          values: [...adata],
-          //values: IccUtils.clone(ndata),
-        },
+        ...adata
       ];
       this.data2 = [
-        {
-          key: 'Pie Chart',
-          values: [...adata],
-          //values: IccUtils.clone(ndata),
-        },
+        ...adata
       ];
-      // this.cd.detectChanges();
     }, 3000);
+    */
   }
 }
