@@ -4,6 +4,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
+import { map } from 'rxjs';
 import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
@@ -36,7 +37,13 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 export class IccFileSelectUploadComponent implements OnDestroy {
   private fileUploadFacade = inject(IccFileUploadFacade);
   private translateService = inject(TranslateService);
-  uploadFiles$ = this.fileUploadFacade.selectUploadFiles$;
+  uploadFiles$ = this.fileUploadFacade.selectUploadFiles$.pipe(
+    map((uploadFiles) => {
+      console.log(' uploadFiles=', uploadFiles);
+      this.setButtonDisabled(uploadFiles.length === 0);
+      return uploadFiles;
+    }),
+  );
   private _fileUploadConfig!: IccFileUploadConfig;
   fieldConfigs: IccUploadFileFieldConfig[] = [];
 
@@ -66,7 +73,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     return this._fileUploadConfig;
   }
 
-  @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
+  //@ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 
   selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File): void {
     this.fileUploadFacade.selectUploadFile(fieldConfig.fieldName!, file);
@@ -75,6 +82,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
   onChange(checked: boolean): void {
     if (typeof checked === 'boolean') {
       this.checked = checked;
+      this.setButtonDisabled(!this.checked);
       this.fieldConfigs = [...this.fieldConfigs].map((config) => {
         return {
           ...config,
@@ -84,11 +92,13 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     }
   }
 
-  buttonVisible(uploadFiles: IccFileUpload[]): boolean {
-    if (uploadFiles.length === 0) {
-      this.uploadFileFields?.toArray().forEach((field) => field.clearValue());
-    }
-    return uploadFiles.length === 0;
+  private setButtonDisabled(disabled: boolean): void {
+    this.buttons = [...this.buttons].map((button) => {
+      return {
+        ...button,
+        disabled: disabled,
+      };
+    });
   }
 
   buttonClick(button: IccButtonConfg): void {

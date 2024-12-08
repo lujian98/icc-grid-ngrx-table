@@ -14,6 +14,7 @@ export interface IccButtonConfg {
   name: string;
   title: string;
   icon?: string;
+  disabled?: boolean;
 }
 
 export const IccBUTTONS = {
