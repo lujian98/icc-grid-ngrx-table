@@ -1,8 +1,8 @@
-<button (click)="getGridPageData(1)" [disabled]="page === 1">
+<button icc-button (click)="getGridPageData(1)" [disabled]="page === 1">
   <i class="fa-solid fa-backward-step"></i>
 </button>
 
-<button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
+<button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
   <i class="fa-solid fa-caret-left"></i>
 </button>
 <span>
@@ -19,15 +19,15 @@
   />
 </span>
 <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
-<button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
+<button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
   <i class="fa-solid fa-caret-right"></i>
 </button>
 
-<button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
+<button icc-button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
   <i class="fa-solid fa-forward-step"></i>
 </button>
 
-<button (click)="refreshData(page)">
+<button icc-button (click)="refreshData(page)">
   <i class="fa-solid fa-arrows-rotate"></i>
 </button>
 

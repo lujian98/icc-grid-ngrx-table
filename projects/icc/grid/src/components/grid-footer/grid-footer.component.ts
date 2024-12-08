@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IccInputDirective } from '@icc/ui/form-field';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
+import { IccButtonComponent } from '@icc/ui/button';
 
 @Component({
   selector: 'icc-grid-footer',
@@ -13,7 +14,7 @@ import { IccGridConfig } from '../../models/grid-column.model';
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, IccInputDirective],
+  imports: [CommonModule, TranslateModule, IccInputDirective, IccButtonComponent],
 })
 export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
