@@ -35,7 +35,7 @@ export class AppDashboardDemoComponent {
         rowStart: 4,
         rowHeight: 3,
         colStart: 2,
-        colWidth: 6,
+        colWidth: 8,
         //color: '#e8eaed',
         //color: getColor(),
         content: AppStockChartComponent,
