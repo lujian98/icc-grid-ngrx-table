@@ -34,6 +34,7 @@
   .icc-layout-resize-right,
   .icc-horizontal-resize-left,
   .icc-horizontal-resize-right {
+    min-width: 2px;
     &:focus,
     &:hover {
       border-right: 2px solid red;
@@ -43,6 +44,7 @@
   .icc-layout-resize-bottom,
   .icc-vertical-resize-top,
   .icc-vertical-resize-bottom {
+    min-height: 2px;
     &:focus,
     &:hover {
       border-bottom: 2px solid red;
