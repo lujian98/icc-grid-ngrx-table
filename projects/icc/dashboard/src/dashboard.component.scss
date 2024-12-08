@@ -4,6 +4,10 @@
   height: 100%;
   padding: 0 5px;
 
+  icc-layout {
+    display: block;
+  }
+
   .icc-layout-top-bar-title {
     display: flex;
     margin-right: auto;

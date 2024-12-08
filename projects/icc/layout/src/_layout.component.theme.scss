@@ -2,9 +2,10 @@
   .icc-main-viewport-layout {
     icc-layout-header {
       height: 36px;
+      margin-bottom: 2px;
     }
     icc-layout-horizontal {
-      height: calc(100vh - 60px);
+      height: calc(100vh - 62px);
     }
     icc-layout-footer {
       height: 24px;
@@ -14,6 +15,7 @@
   .icc-normal-layout {
     icc-layout-header {
       height: 30px;
+      margin-bottom: 2px;
     }
     icc-layout-horizontal {
       height: unset;
