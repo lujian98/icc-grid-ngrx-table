@@ -9,7 +9,7 @@
       display: flex;
       position: relative;
       z-index: 1;
-      min-width: 100px;
+      //min-width: 100px;
       width: 250px;
       height: -webkit-fill-available;
     }
@@ -25,7 +25,7 @@
       position: relative;
       z-index: 1;
       width: 250px;
-      min-width: 100px;
+      //min-width: 100px;
       height: -webkit-fill-available;
     }
   }
@@ -33,13 +33,5 @@
   .icc-horizontal-resize-left,
   .icc-horizontal-resize-right {
     height: 100%;
-  }
-
-  .icc-horizontal-resize-left {
-    padding-right: 5px;
-  }
-
-  .icc-horizontal-resize-right {
-    padding-left: 5px;
   }
 }

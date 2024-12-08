@@ -41,7 +41,7 @@ import {
       <icc-layout-footer> Footer </icc-layout-footer>
     </icc-layout>
   `,
-  styles: [':host { display: flex; width: 100%; }'],
+  styles: [':host { display: flex; width: 100%;  }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [

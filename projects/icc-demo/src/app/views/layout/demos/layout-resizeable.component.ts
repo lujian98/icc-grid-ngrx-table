@@ -27,7 +27,7 @@ import {
       <icc-layout-footer> Footer </icc-layout-footer>
     </icc-layout>
   `,
-  styles: [':host { display: flex; width: 100%; padding: 5px; }'],
+  styles: [':host { display: flex; width: 100%; padding: 5px; icc-layout-footer { border: 1px solid green } }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
