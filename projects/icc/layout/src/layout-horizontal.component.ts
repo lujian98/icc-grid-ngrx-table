@@ -86,6 +86,7 @@ export class IccLayoutHorizontalComponent implements AfterViewInit {
       const style = window.getComputedStyle(el);
       const display = style.display === 'flex' ? 'none' : 'flex';
       el.style.setProperty('display', display);
+      window.dispatchEvent(new Event('resize'));
     }
   }
 
