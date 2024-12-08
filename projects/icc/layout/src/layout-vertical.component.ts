@@ -70,16 +70,29 @@ export class IccLayoutVerticalComponent implements AfterViewInit {
   }
 
   private checkResizeCondition(): void {
-    const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
-    const top = elements.find((el) => el.localName === 'icc-layout-top');
-    const middle = elements.find((el) => el.localName === 'icc-layout-middle');
-    const bottom = elements.find((el) => el.localName === 'icc-layout-bottom');
+    const top = this.getPanelEl('top');
+    const middle = this.getPanelEl('middle');
+    const bottom = this.getPanelEl('bottom');
     if (top && (middle || bottom)) {
       this.contentResizeTopBottom.createEmbeddedView(this.tplResizeTopBottom);
     }
     if (bottom && middle) {
       this.contentResizeBottomTop.createEmbeddedView(this.tplResizeBottomTop);
     }
+  }
+
+  togglePanel(panel: string): void {
+    const el = this.getPanelEl(panel);
+    if (el) {
+      const style = window.getComputedStyle(el);
+      const display = style.display === 'flex' ? 'none' : 'flex';
+      el.style.setProperty('display', display);
+    }
+  }
+
+  private getPanelEl(panel: string): HTMLDivElement | undefined {
+    const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
+    return elements.find((el) => el.localName === `icc-layout-${panel}`);
   }
 
   onResizePanel(resizeInfo: IccResizeInfo): void {

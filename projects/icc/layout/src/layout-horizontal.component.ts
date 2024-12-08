@@ -69,16 +69,29 @@ export class IccLayoutHorizontalComponent implements AfterViewInit {
   }
 
   private checkResizeCondition(): void {
-    const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
-    const left = elements.find((el) => el.localName === 'icc-layout-left');
-    const center = elements.find((el) => el.localName === 'icc-layout-center');
-    const right = elements.find((el) => el.localName === 'icc-layout-right');
+    const left = this.getPanelEl('left');
+    const center = this.getPanelEl('center');
+    const right = this.getPanelEl('right');
     if (left && (center || right)) {
       this.contentResizeLeftRight.createEmbeddedView(this.tplResizeLeftRight);
     }
     if (right && center) {
       this.contentResizeRightLeft.createEmbeddedView(this.tplResizeRightLeft);
     }
+  }
+
+  togglePanel(panel: string): void {
+    const el = this.getPanelEl(panel);
+    if (el) {
+      const style = window.getComputedStyle(el);
+      const display = style.display === 'flex' ? 'none' : 'flex';
+      el.style.setProperty('display', display);
+    }
+  }
+
+  private getPanelEl(panel: string): HTMLDivElement | undefined {
+    const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
+    return elements.find((el) => el.localName === `icc-layout-${panel}`);
   }
 
   onResizePanel(resizeInfo: IccResizeInfo): void {

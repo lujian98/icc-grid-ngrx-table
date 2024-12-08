@@ -13,6 +13,7 @@
     [direction]="resizeType.TOP_BOTTOM"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
+    (dblclick)="togglePanel('top')"
   ></div>
 </ng-template>
 
@@ -24,5 +25,6 @@
     [direction]="resizeType.BOTTOM_TOP"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
+    (dblclick)="togglePanel('bottom')"
   ></div>
 </ng-template>

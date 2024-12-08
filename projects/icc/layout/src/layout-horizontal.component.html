@@ -13,6 +13,7 @@
     [direction]="resizeType.LEFT_RIGHT"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
+    (dblclick)="togglePanel('left')"
   ></div>
 </ng-template>
 
@@ -24,5 +25,6 @@
     [direction]="resizeType.RIGHT_LEFT"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
+    (dblclick)="togglePanel('right')"
   ></div>
 </ng-template>
