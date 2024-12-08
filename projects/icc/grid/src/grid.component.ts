@@ -11,6 +11,7 @@ import { defaultGridConfig } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
 import { IccGridStateModule } from './+state/grid-state.module';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-grid',
@@ -26,6 +27,8 @@ import { IccGridStateModule } from './+state/grid-state.module';
     IccGridViewComponent,
     IccGridFooterComponent,
     IccButtonComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
   ],
 })
 export class IccGridComponent<T> implements OnDestroy {

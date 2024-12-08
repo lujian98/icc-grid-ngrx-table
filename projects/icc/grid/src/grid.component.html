@@ -1,6 +1,6 @@
-<ng-container *ngIf="gridConfig$ | async as gridConfig">
+<icc-layout *ngIf="gridConfig$ | async as gridConfig">
   <ng-container *ngIf="columnsConfig$ | async as columns">
-    <div class="icc-grid-toolbar" *ngIf="!gridConfig.hideTopbar">
+    <icc-layout-header *ngIf="!gridConfig.hideTopbar">
       <button icc-button (click)="refresh(gridConfig)">
         <icc-icon [icon]="buttons[0].icon!"></icc-icon>
         {{ buttons[0].title | translate }}
@@ -9,9 +9,10 @@
         <icc-icon [icon]="buttons[1].icon!"></icc-icon>
         {{ buttons[1].title | translate }}
       </button>
-    </div>
+    </icc-layout-header>
+
     <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
 
     <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
   </ng-container>
-</ng-container>
+</icc-layout>
