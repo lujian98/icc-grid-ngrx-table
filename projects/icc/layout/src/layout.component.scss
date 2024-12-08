@@ -21,4 +21,12 @@
       flex-flow: row wrap;
     }
   }
+
+  [IccResizeRight] {
+    top: 0px;
+  }
+
+  [IccResizeBottom] {
+    left: 0px;
+  }
 }
