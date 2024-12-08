@@ -11,7 +11,7 @@ export function iccWindowFactory() {
   imports: [CommonModule],
 })
 export class IccThemeModule {
-  static forRoot(iccThemeOptions: IccThemeOptions = { name: 'light' }): ModuleWithProviders<IccThemeModule> {
+  static forRoot(iccThemeOptions: IccThemeOptions = { name: 'dark' }): ModuleWithProviders<IccThemeModule> {
     return {
       ngModule: IccThemeModule,
       providers: [
