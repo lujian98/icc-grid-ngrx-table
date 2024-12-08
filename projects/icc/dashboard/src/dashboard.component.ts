@@ -344,7 +344,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>): void {
-    console.log(' tile=', tile);
     const draggedTile = this.tiles[e.item.data];
     const dx = Math.round(e.distance.x / this.gridWidth);
     const dy = Math.round(e.distance.y / this.gridHeight);
@@ -373,7 +372,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     tile.dragDisabled = tile.dblClickDrag ? true : tile.dragDisabled;
   }
 
-  onMousedown(event: MouseEvent, tile: Tile<T>): void {
+  onDblClick(event: MouseEvent, tile: Tile<T>): void {
     tile.dragDisabled = tile.dblClickDrag ? this.targetHasD3Brush(event.target) : tile.dragDisabled;
   }
 
