@@ -10,20 +10,20 @@
     icc-layout-top {
       position: relative;
       z-index: 1;
-      min-height: 20px;
+      min-height: 2px;
       height: 150px;
     }
 
     icc-layout-middle {
       display: flex;
       flex: 1 1 auto;
-      min-height: 20px;
+      min-height: 2px;
     }
 
     icc-layout-bottom {
       position: relative;
       z-index: 1;
-      min-height: 20px;
+      min-height: 2px;
       height: 150px;
     }
   }
