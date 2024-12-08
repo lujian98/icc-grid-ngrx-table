@@ -2,14 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, inject } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
-
-@Component({
-  selector: 'icc-layout-header',
-  template: `<ng-content></ng-content>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-})
-export class IccLayoutHeaderComponent {}
+import { IccLayoutHeaderComponent } from './layout-header.component';
 
 @Component({
   selector: 'icc-layout-footer',
