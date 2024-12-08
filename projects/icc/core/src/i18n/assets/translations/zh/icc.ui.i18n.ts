@@ -4,9 +4,11 @@ export const ICC = {
       TODAY: '今天',
     },
     ACTIONS: {
+      ADD: 'Add',
       CLEAR_ALL_FILTERS: '清除所有过滤器',
       EDIT: '编辑',
       ENABLED: '启用',
+      REMOVE: 'Remove',
       REFRESH: '刷新',
       RESET: '重置',
       SAVE: '保存',
@@ -49,6 +51,9 @@ export const ICC = {
     },
     LIST: {
       NO_RESULT: '没有数据',
+    },
+    TITLE: {
+      DASHBOARD: 'Dashboard',
     },
   },
 };

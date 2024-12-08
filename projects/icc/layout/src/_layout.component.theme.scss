@@ -1,10 +1,10 @@
 @mixin icc-layout-theme() {
   .icc-main-viewport-layout {
     icc-layout-header {
-      height: 34px;
+      height: 36px;
     }
     icc-layout-horizontal {
-      height: calc(100vh - 58px);
+      height: calc(100vh - 60px);
     }
     icc-layout-footer {
       height: 24px;

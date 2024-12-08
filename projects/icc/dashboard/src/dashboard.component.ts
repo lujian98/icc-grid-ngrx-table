@@ -7,14 +7,22 @@ import {
   Component,
   ElementRef,
   HostListener,
+  inject,
   Input,
   OnInit,
-  inject,
 } from '@angular/core';
-import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
-import { IccPanelComponent } from '@icc/ui/panel';
+import { IccButtonComponent } from '@icc/ui/button';
+import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
+import { IccIconModule } from '@icc/ui/icon';
+import {
+  IccLayoutCenterComponent,
+  IccLayoutComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutHorizontalComponent,
+} from '@icc/ui/layout';
 import { IccPortalComponent } from '@icc/ui/portal';
-import { IccResizeDirective, IccResizeInfo, IccSize, IccResizeType } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
+import { TranslateModule } from '@ngx-translate/core';
 import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 
 @Component({
@@ -27,15 +35,21 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
     CommonModule,
     DragDropModule,
     IccPortalComponent,
-    IccPanelComponent,
+    TranslateModule,
+    IccIconModule,
+    IccButtonComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
+    IccLayoutCenterComponent,
+    IccLayoutHorizontalComponent,
     IccResizeDirective,
-    IccPopoverMenuComponent,
-    IccMenusComponent,
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
+  buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
+
   resizeType = IccResizeType;
   dragDisabled: boolean = false;
   @Input() tiles: Tile<T>[] = [];
@@ -45,7 +59,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   @Input() cols = 10;
   @Input() rows = 6;
   private gridMap: number[][] = [];
-  menuItems!: IccMenuItem;
 
   gridTemplateColumns!: string;
   gridTemplateRows!: string;
@@ -56,19 +69,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.setSideMenu();
     this.setupGrid();
-  }
-
-  setSideMenu(): void {
-    const sideMenu = [];
-    sideMenu.push({ title: 'Refresh', name: 'Refresh', icon: 'refresh' });
-    this.menuItems = {
-      name: 'dashboard',
-      //title: 'dashboard',
-      icon: 'fas fa-ellipsis-v',
-      children: sideMenu,
-    };
   }
 
   private setupGrid(): void {
@@ -85,9 +86,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const el = this.elementRef.nativeElement;
     const node = el.firstChild;
     if (node) {
+      const width = node.clientWidth - 10; // - padding left/right
+      const height = node.clientHeight - 30; // - top bar height
       return {
-        width: node.clientWidth,
-        height: node.clientHeight,
+        width: width,
+        height: height,
       };
     }
     return null;

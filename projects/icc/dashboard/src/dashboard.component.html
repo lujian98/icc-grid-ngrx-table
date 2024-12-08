@@ -1,95 +1,104 @@
-<icc-panel class="icc-dashboard">
-  <div
-    class="icc-tile-list"
-    cdkDropListGroup
-    [ngStyle]="{
-      'grid-gap': gridGap + 'px',
-      'grid-template-columns': gridTemplateColumns,
-      'grid-template-rows': gridTemplateRows,
-    }"
-  >
-    <div
-      class="icc-tile-item"
-      *ngFor="let tile of tiles; let i = index"
-      [ngStyle]="{ 'grid-column': tile.gridColumn, 'grid-row': tile.gridRow }"
-    >
-      <cdk-drop-list
-        class="icc-drag-tile"
-        [cdkDropListData]="i"
-        cdkDragHandle
-        (cdkDropListDropped)="onDropListDropped($event, tile)"
+<icc-layout>
+  <icc-layout-header>
+    <div class="icc-layout-top-bar-title">{{ "ICC.UI.TITLE.DASHBOARD" | translate }}</div>
+    <ng-container *ngFor="let button of buttons">
+      <button icc-button>
+        <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
+        {{ button.title | translate }}
+      </button>
+    </ng-container>
+  </icc-layout-header>
+  <icc-layout-horizontal>
+    <icc-layout-center>
+      <div
+        class="icc-tile-list"
+        cdkDropListGroup
+        [ngStyle]="{
+          'grid-gap': gridGap + 'px',
+          'grid-template-columns': gridTemplateColumns,
+          'grid-template-rows': gridTemplateRows,
+        }"
       >
         <div
-          class="icc-drag-tile"
-          [style.backgroundColor]="tile.color"
-          (dblclick)="onDblClick($event, tile)"
-          cdkDrag
-          [cdkDragDisabled]="isDragDisabled(tile)"
-          [cdkDragData]="i"
+          class="icc-tile-item"
+          *ngFor="let tile of tiles; let i = index"
+          [ngStyle]="{ 'grid-column': tile.gridColumn, 'grid-row': tile.gridRow }"
         >
-          <icc-portal [content]="tile.content!" [context]="tile.context!"></icc-portal>
+          <cdk-drop-list
+            class="icc-drag-tile"
+            [cdkDropListData]="i"
+            cdkDragHandle
+            (cdkDropListDropped)="onDropListDropped($event, tile)"
+          >
+            <div
+              class="icc-drag-tile"
+              [style.backgroundColor]="tile.color"
+              (dblclick)="onDblClick($event, tile)"
+              cdkDrag
+              [cdkDragDisabled]="isDragDisabled(tile)"
+              [cdkDragData]="i"
+            >
+              <icc-portal [content]="tile.content!" [context]="tile.context!"></icc-portal>
+            </div>
+          </cdk-drop-list>
+          <div
+            IccResizeTop
+            iccResize
+            [direction]="resizeType.TOP"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeRight
+            iccResize
+            [direction]="resizeType.RIGHT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeBottom
+            iccResize
+            [direction]="resizeType.BOTTOM"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeLeft
+            iccResize
+            [direction]="resizeType.LEFT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeTopLeft
+            iccResize
+            [direction]="resizeType.TOP_LEFT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeTopRight
+            iccResize
+            [direction]="resizeType.TOP_RIGHT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeBottomRight
+            iccResize
+            [direction]="resizeType.BOTTOM_RIGHT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
+          <div
+            IccResizeBottomLeft
+            iccResize
+            [direction]="resizeType.BOTTOM_LEFT"
+            [elementKey]="'tile' + i"
+            (iccResizeEvent)="onResizeTile($event, tile)"
+          ></div>
         </div>
-      </cdk-drop-list>
-      <div
-        IccResizeTop
-        iccResize
-        [direction]="resizeType.TOP"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeRight
-        iccResize
-        [direction]="resizeType.RIGHT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeBottom
-        iccResize
-        [direction]="resizeType.BOTTOM"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeLeft
-        iccResize
-        [direction]="resizeType.LEFT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeTopLeft
-        iccResize
-        [direction]="resizeType.TOP_LEFT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeTopRight
-        iccResize
-        [direction]="resizeType.TOP_RIGHT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeBottomRight
-        iccResize
-        [direction]="resizeType.BOTTOM_RIGHT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-      <div
-        IccResizeBottomLeft
-        iccResize
-        [direction]="resizeType.BOTTOM_LEFT"
-        [elementKey]="'tile' + i"
-        (iccResizeEvent)="onResizeTile($event, tile)"
-      ></div>
-    </div>
-  </div>
-
-  <div class="icc-dashbard-menu">
-    <icc-popover-menu *ngIf="menuItems" [menuItem]="menuItems"> </icc-popover-menu>
-  </div>
-</icc-panel>
+      </div>
+    </icc-layout-center>
+  </icc-layout-horizontal>
+</icc-layout>

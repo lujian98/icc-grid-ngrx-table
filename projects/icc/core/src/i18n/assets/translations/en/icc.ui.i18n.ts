@@ -1,9 +1,11 @@
 export const ICC = {
   UI: {
     ACTIONS: {
+      ADD: 'Add',
       CLEAR_ALL_FILTERS: 'Clear All Filters',
       EDIT: 'Edit',
       ENABLED: 'Enabled',
+      REMOVE: 'Remove',
       REFRESH: 'Refresh',
       RESET: 'Reset',
       SAVE: 'Save',
@@ -49,6 +51,9 @@ export const ICC = {
     },
     LIST: {
       NO_RESULT: 'No Result',
+    },
+    TITLE: {
+      DASHBOARD: 'Dashboard',
     },
   },
 };

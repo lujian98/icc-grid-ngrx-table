@@ -1,19 +1,24 @@
 :host {
+  display: flex;
   width: 100%;
-  //padding-right: 10px;
+  height: 100%;
+  padding: 0 5px;
 
-  .icc-dashboard {
-    position: relative; // for menu right position
-  }
+  icc-layout-header {
+    height: 30px;
+    padding: 0 5px;
 
-  .icc-dashbard-menu {
-    position: absolute;
-    right: 5px;
+    .icc-layout-top-bar-title {
+      display: flex;
+      margin-right: auto;
+      align-items: center;
+    }
   }
 
   .icc-tile-list {
     display: grid;
     position: absolute;
+    //padding: 10px;
   }
 
   .icc-tile-item {

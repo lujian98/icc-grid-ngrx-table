@@ -1,7 +1,9 @@
 export enum IccButtonType {
+  Add = 'Add',
   ClearAllFilters = 'ClearAllFilters',
   Edit = 'Edit',
   Refresh = 'Refresh',
+  Remove = 'Remove',
   Reset = 'Reset',
   View = 'View',
   Save = 'Save',
@@ -15,6 +17,11 @@ export interface IccButtonConfg {
 }
 
 export const IccBUTTONS = {
+  Add: {
+    name: IccButtonType.Add,
+    title: 'ICC.UI.ACTIONS.ADD',
+    icon: 'plus',
+  },
   ClearAllFilters: {
     name: IccButtonType.ClearAllFilters,
     title: 'ICC.UI.ACTIONS.CLEAR_ALL_FILTERS',
@@ -24,6 +31,11 @@ export const IccBUTTONS = {
     name: IccButtonType.Edit,
     title: 'ICC.UI.ACTIONS.EDIT',
     icon: 'pen-to-square',
+  },
+  Remove: {
+    name: IccButtonType.Remove,
+    title: 'ICC.UI.ACTIONS.REMOVE',
+    icon: 'trash',
   },
   Refresh: {
     name: IccButtonType.Refresh,
