@@ -3,16 +3,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   inject,
   Input,
   OnDestroy,
   OnInit,
   Output,
-  EventEmitter,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { isEqual, IccUploadFileService, IccButtonConfg, IccButtonType } from '@icc/ui/core';
+import { IccButtonComponent } from '@icc/ui/button';
+import { IccButtonConfg, IccButtonType, IccUploadFileService, isEqual } from '@icc/ui/core';
 import {
   IccFieldsComponent,
   IccFieldsetComponent,
@@ -22,9 +22,9 @@ import {
   IccTextFieldConfig,
 } from '@icc/ui/fields';
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
-import { IccPanelTopBarComponent } from '@icc/ui/panel';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
@@ -43,7 +43,7 @@ import { IccFormConfig } from '../models/form.model';
     IccFieldsetComponent,
     IccFormLabelWidthDirective,
     IccFieldsComponent,
-    IccPanelTopBarComponent,
+    IccLayoutHeaderComponent,
     IccButtonComponent,
     IccIconModule,
   ],

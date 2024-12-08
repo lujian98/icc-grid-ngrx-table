@@ -1,12 +1,12 @@
-<icc-panel-top-bar>
-  <div class="icc-panel-top-bar-title" *ngIf="formConfig.title !== undefined">{{ formConfig.title }}</div>
+<icc-layout-header>
+  <div class="icc-layout-top-bar-title" *ngIf="formConfig.title !== undefined">{{ formConfig.title }}</div>
   <ng-container *ngFor="let button of formConfig.buttons">
     <button icc-button *ngIf="buttonVisible(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
       <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
       {{ button.title | translate }}
     </button>
   </ng-container>
-</icc-panel-top-bar>
+</icc-layout-header>
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
   <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, inject, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Input, Output } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
-import { IccPanelComponent } from '@icc/ui/panel';
+import { IccLayoutComponent } from '@icc/ui/layout';
 import { Observable } from 'rxjs';
 import { IccFormStateModule } from './+state/form-state.module';
 import { IccFormFacade } from './+state/form.facade';
@@ -16,7 +16,7 @@ import { IccFormConfig } from './models/form.model';
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccPanelComponent],
+  imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
 })
 export class IccFormComponent {
   private formFacade = inject(IccFormFacade);
