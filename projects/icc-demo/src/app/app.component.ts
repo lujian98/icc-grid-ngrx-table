@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RouterModule } from '@angular/router';
 import { IccI18nService, IccLanguage } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
+import { IccButtonComponent } from '@icc/ui/button';
 
 import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 
@@ -21,6 +22,7 @@ import { IccThemeService } from '@icc/ui/theme';
     IccLayoutComponent,
     IccLayoutHeaderComponent,
     IccLayoutFooterComponent,
+    IccButtonComponent,
   ],
 })
 export class AppComponent implements OnInit {
