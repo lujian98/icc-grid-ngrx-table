@@ -6,12 +6,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
 import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './models/file-upload.model';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-file-select-upload',
@@ -24,8 +24,8 @@ import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './m
     TranslateModule,
     IccFileUploadStateModule,
     IccIconModule,
-    IccPanelComponent,
-    IccPanelTopBarComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
     IccButtonComponent,
     IccFileDropComponent,
     IccFileUploadGridComponent,

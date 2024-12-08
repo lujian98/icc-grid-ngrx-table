@@ -33,6 +33,12 @@
     color: icc-theme(app-text-basic-color);
   }
 
+  .icc-layout-top-bar-title {
+    display: flex;
+    margin-right: auto;
+    align-items: center;
+  }
+
   .icc-layout-resize-right,
   .icc-horizontal-resize-left,
   .icc-horizontal-resize-right {

@@ -5,13 +5,13 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPanelComponent, IccPanelTopBarComponent } from '@icc/ui/panel';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
 import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-upload.model';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-file-drop-upload',
@@ -24,8 +24,8 @@ import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-uplo
     TranslateModule,
     IccFileUploadStateModule,
     IccIconModule,
-    IccPanelComponent,
-    IccPanelTopBarComponent,
+    IccLayoutComponent,
+    IccLayoutHeaderComponent,
     IccButtonComponent,
     IccFileDropComponent,
     IccFileUploadGridComponent,
