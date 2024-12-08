@@ -37,10 +37,12 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 export class IccFileSelectUploadComponent implements OnDestroy {
   private fileUploadFacade = inject(IccFileUploadFacade);
   private translateService = inject(TranslateService);
+  private uploadFiles: IccFileUpload[] = [];
+
   uploadFiles$ = this.fileUploadFacade.selectUploadFiles$.pipe(
     map((uploadFiles) => {
-      console.log(' uploadFiles=', uploadFiles);
-      this.setButtonDisabled(uploadFiles.length === 0);
+      this.uploadFiles = uploadFiles;
+      this.setButtonDisabled();
       return uploadFiles;
     }),
   );
@@ -73,7 +75,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     return this._fileUploadConfig;
   }
 
-  //@ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
+  @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 
   selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File): void {
     this.fileUploadFacade.selectUploadFile(fieldConfig.fieldName!, file);
@@ -92,7 +94,12 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     }
   }
 
-  private setButtonDisabled(disabled: boolean): void {
+  private clearUploadFileFields(): void {
+    this.uploadFileFields?.toArray().forEach((field) => field.clearValue());
+  }
+
+  private setButtonDisabled(disabled: boolean = false): void {
+    disabled = this.uploadFiles.length === 0 ? true : disabled;
     this.buttons = [...this.buttons].map((button) => {
       return {
         ...button,
@@ -105,6 +112,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     switch (button.name) {
       case IccButtonType.Reset:
         this.fileUploadFacade.clearUploadFiles();
+        this.clearUploadFileFields();
         break;
       case IccButtonType.UploadFile:
         this.fileUploadFacade.uploadFiles(this.fileUploadConfig);
