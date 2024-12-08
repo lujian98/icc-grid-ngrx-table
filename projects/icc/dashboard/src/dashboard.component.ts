@@ -1,6 +1,5 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -35,7 +34,6 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
-  private document = inject(DOCUMENT);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   resizeType = IccResizeType;
@@ -164,7 +162,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     let dy = Math.round(resizeInfo.dy / this.gridHeight);
 
     switch (resizeInfo.direction) {
-      case 'top':
+      case IccResizeType.TOP:
         if (-dy >= tile.rowStart!) {
           dy = -tile.rowStart! + 1;
         } else if (dy >= tile.rowHeight!) {
@@ -182,7 +180,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         tileInfo.rowHeight += dxy.dy;
         tileInfo.rowStart -= dxy.dy;
         break;
-      case 'topRight':
+      case IccResizeType.TOP_RIGHT:
         if (-dy >= tile.rowStart!) {
           dy = -tile.rowStart! + 1;
         } else if (dy >= tile.rowHeight!) {
@@ -201,8 +199,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         tileInfo.rowStart -= dxy.dy;
         tileInfo.colWidth += dxy.dx;
         break;
-      case 'right':
-      case 'bottomRight':
+      case IccResizeType.RIGHT:
+      case IccResizeType.BOTTOM_RIGHT:
         resizeMap = {
           startRow: tile.rowStart! - 1,
           endRow: dy > 0 ? this.rows : tile.rowStart! - 1 + tile.rowHeight!,
@@ -215,7 +213,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         tileInfo.colWidth += dxy.dx;
         tileInfo.rowHeight += dxy.dy;
         break;
-      case 'bottom':
+      case IccResizeType.BOTTOM:
         resizeMap = {
           startRow: tile.rowStart! - 1 + tile.rowHeight!,
           endRow: this.rows,
@@ -227,7 +225,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         dxy = this.getDxy(0, dy, tile, resizeMap);
         tileInfo.rowHeight += dxy.dy;
         break;
-      case 'bottomLeft':
+      case IccResizeType.BOTTOM_LEFT:
         if (-dx >= tile.colStart!) {
           dx = -tile.colStart! + 1;
         }
@@ -246,7 +244,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
           tileInfo.colStart -= dxy.dx;
         }
         break;
-      case 'topLeft':
+      case IccResizeType.TOP_LEFT:
         if (-dx >= tile.colStart!) {
           dx = -tile.colStart! + 1;
         }
@@ -269,7 +267,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
           tileInfo.rowStart -= dxy.dy;
         }
         break;
-      case 'left':
+      case IccResizeType.LEFT:
         if (-dx >= tile.colStart!) {
           dx = -tile.colStart! + 1;
         } else if (dx >= tile.colWidth!) {
