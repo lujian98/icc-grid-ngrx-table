@@ -65,7 +65,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     sideMenu.push({ title: 'Refresh', name: 'Refresh', icon: 'refresh' });
     this.menuItems = {
       name: 'dashboard',
-      title: 'dashboard',
+      //title: 'dashboard',
       icon: 'fas fa-ellipsis-v',
       children: sideMenu,
     };

@@ -10,6 +10,7 @@
 @import "../../button/src/button.component.theme";
 
 @import "../../resize/src/resize.directive.theme";
+@import "../../dashboard/src/dashboard.component.theme";
 
 @import "../../calendar/src/calendar.component.theme";
 @import "../../calendar/src/weekdays/weekdays.component.theme";
@@ -28,6 +29,7 @@
   @include icc-panel-theme();
   @include icc-button-theme();
   @include icc-resize-directive-theme();
+  @include icc-dashboard-theme();
 
   @include icc-calendar-theme();
   @include icc-calendar-weekdays-theme();
