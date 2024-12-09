@@ -17,6 +17,8 @@
 
       .icc-accordion-item-header {
         display: flex;
+        top: 0;
+        position: sticky;
         align-content: center;
         justify-content: space-between;
         padding: 4px 10px;
