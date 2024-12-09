@@ -1,6 +1,10 @@
 @for (item of items; track item; let index = $index) {
   <icc-layout [ngStyle]="{ flex: getHeaderStyle(item) }">
-    <icc-layout-header [title]="getTitle(item)" (click)="toggle(item, !!item.expanded)">
+    <icc-layout-header
+      [ngClass]="item.expanded ? 'icc-accordion-item-expanded' : ''"
+      [title]="getTitle(item)"
+      (click)="toggle(item, !!item.expanded)"
+    >
       <i *ngIf="item.expanded" class="fa-solid fa-chevron-up"></i>
       <i *ngIf="!item.expanded" class="fa-solid fa-chevron-down"></i>
     </icc-layout-header>
