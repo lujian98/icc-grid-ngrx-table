@@ -1,30 +1,15 @@
 <icc-layout *ngIf="treeConfig$ | async as treeConfig">
   <ng-container *ngIf="columnsConfig$ | async as columns">
-    <icc-layout-header *ngIf="!treeConfig.hideTopbar">
-      <button icc-button (click)="refresh(treeConfig)">
-        <icc-icon [icon]="buttons[0].icon!"></icc-icon>
-        {{ buttons[0].title | translate }}
-      </button>
-      <button icc-button (click)="clearFilters()">
-        <icc-icon [icon]="buttons[1].icon!"></icc-icon>
-        {{ buttons[1].title | translate }}
-      </button>
-
-      <button icc-button (click)="expandAll(treeConfig, true)">
-        <icc-icon [icon]="buttons[1].icon!"></icc-icon>
-        {{ "Expand All" | translate }}
-      </button>
-
-      <button icc-button (click)="expandAll(treeConfig, false)">
-        <icc-icon [icon]="buttons[1].icon!"></icc-icon>
-        {{ "Collapse All" | translate }}
-      </button>
+    <icc-layout-header
+      *ngIf="!treeConfig.hideTopbar"
+      [buttons]="buttons"
+      (iccButtonClick)="buttonClick($event, treeConfig)"
+    >
     </icc-layout-header>
 
     <icc-tree-view [treeConfig]="treeConfig" [columns]="columns"> </icc-tree-view>
-
     <!--
-    <icc-grid-footer [treeConfig]="treeConfig" *ngIf="!treeConfig.hideGridFooter"> </icc-grid-footer>
-        -->
+      <icc-grid-footer [treeConfig]="treeConfig" *ngIf="!treeConfig.hideGridFooter"> </icc-grid-footer>
+    -->
   </ng-container>
 </icc-layout>

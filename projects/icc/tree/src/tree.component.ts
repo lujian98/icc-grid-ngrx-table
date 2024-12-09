@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@a
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { uniqueId, IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
+import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
@@ -40,7 +40,12 @@ export class IccTreeComponent<T> implements OnDestroy {
   treeConfig$!: Observable<IccTreeConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
-  buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
+  buttons: IccButtonConfg[] = [
+    IccBUTTONS.Refresh,
+    IccBUTTONS.ClearAllFilters,
+    IccBUTTONS.ExpandAll,
+    IccBUTTONS.CollapseAll,
+  ];
 
   @Input()
   set treeConfig(value: Partial<IccTreeConfig>) {
@@ -86,16 +91,24 @@ export class IccTreeComponent<T> implements OnDestroy {
     return this._treeData;
   }
 
-  refresh(treeConfig: IccTreeConfig): void {
-    this.treeFacade.getTreeData(treeConfig);
-  }
+  buttonClick(button: IccButtonConfg, treeConfig: IccTreeConfig): void {
+    switch (button.name) {
+      case IccButtonType.Refresh:
+        this.treeFacade.getTreeData(treeConfig);
+        break;
+      case IccButtonType.ClearAllFilters:
+        this.gridFacade.setGridColumnFilters(this.treeConfig, []);
+        break;
 
-  clearFilters(): void {
-    this.gridFacade.setGridColumnFilters(this.treeConfig, []);
-  }
-
-  expandAll(treeConfig: IccTreeConfig, expanded: boolean): void {
-    this.treeFacade.expandAllNodes(treeConfig, expanded);
+      case IccButtonType.ExpandAll:
+        this.treeFacade.expandAllNodes(treeConfig, true);
+        break;
+      case IccButtonType.CollapseAll:
+        this.treeFacade.expandAllNodes(treeConfig, false);
+        break;
+      default:
+        break;
+    }
   }
 
   ngOnDestroy(): void {

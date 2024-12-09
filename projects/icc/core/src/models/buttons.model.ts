@@ -1,7 +1,9 @@
 export enum IccButtonType {
   Add = 'Add',
   ClearAllFilters = 'ClearAllFilters',
+  CollapseAll = 'CollapseAll',
   Edit = 'Edit',
+  ExpandAll = 'ExpandAll',
   Refresh = 'Refresh',
   Remove = 'Remove',
   Reset = 'Reset',
@@ -15,6 +17,7 @@ export interface IccButtonConfg {
   title: string;
   icon?: string;
   disabled?: boolean;
+  hidden?: boolean;
 }
 
 export const IccBUTTONS = {
@@ -28,10 +31,20 @@ export const IccBUTTONS = {
     title: 'ICC.UI.ACTIONS.CLEAR_ALL_FILTERS',
     icon: 'pen-to-square', // TODO icon
   },
+  CollapseAll: {
+    name: IccButtonType.CollapseAll,
+    title: 'Collapse All',
+    icon: 'plus',
+  },
   Edit: {
     name: IccButtonType.Edit,
     title: 'ICC.UI.ACTIONS.EDIT',
     icon: 'pen-to-square',
+  },
+  ExpandAll: {
+    name: IccButtonType.ExpandAll,
+    title: 'Expand All',
+    icon: 'plus',
   },
   Remove: {
     name: IccButtonType.Remove,

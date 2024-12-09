@@ -103,19 +103,6 @@ export class IccGridComponent<T> implements OnDestroy {
     }
   }
 
-  /*
-  refresh(gridConfig: IccGridConfig): void {
-    if (gridConfig.virtualScroll) {
-      this.gridFacade.getGridPageData(gridConfig, 1);
-    } else {
-      this.gridFacade.getGridData(gridConfig);
-    }
-  }
-
-  clearFilters(): void {
-    this.gridFacade.setGridColumnFilters(this.gridConfig, []);
-  }*/
-
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.gridId);
   }
