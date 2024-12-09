@@ -13,6 +13,9 @@ import { AppLayoutVerticalAllComponent } from './demos/layout-vertical-all.compo
 import { AppLayoutHorizontalVerticalComponent } from './demos/layout-horizontal-vertical.component';
 
 import { AppLayoutResizeableComponent } from './demos/layout-resizeable.component';
+
+import { AppAccordionLayoutComponent } from './demos/accordion-layout.component';
+
 import { AppLayoutComponent } from './layout.component';
 
 export const AppLayoutRoutes: Routes = [
@@ -36,6 +39,7 @@ export const AppLayoutRoutes: Routes = [
       { path: 'layout-horizontal-vertical', component: AppLayoutHorizontalVerticalComponent },
 
       { path: 'layout-resizeable', component: AppLayoutResizeableComponent },
+      { path: 'accordion-layout', component: AppAccordionLayoutComponent },
 
       {
         path: '**',

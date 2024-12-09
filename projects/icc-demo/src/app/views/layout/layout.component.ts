@@ -28,7 +28,8 @@ import {
 export class AppLayoutComponent {
   items: IccAccordion[] = [
     {
-      name: 'Layout Demo', // layout-resizeable
+      name: 'Layout Demo', // accordion-layout
+      expanded: true,
       items: [
         { name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' },
         { name: 'Horizontal Layout (Left, Center)', link: 'horizontal-left-center' },
@@ -45,6 +46,7 @@ export class AppLayoutComponent {
         { name: 'Horizontal & Vertical Layout (mixed)', link: 'layout-horizontal-vertical' },
 
         { name: 'Main Layout resizeable', link: 'layout-resizeable' },
+        { name: 'Accordion Layout', link: 'accordion-layout' },
       ],
     },
   ];

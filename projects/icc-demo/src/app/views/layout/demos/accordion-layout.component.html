@@ -1,0 +1,19 @@
+@for (item of items; track item; let index = $index) {
+  <icc-layout [ngStyle]="{ flex: getLayoutFlex(item) }">
+    <icc-layout-header>{{ item.title }}</icc-layout-header>
+
+    <icc-layout-horizontal *ngIf="item?.expanded">
+      @for (item of items; track item; let index = $index) {
+        <div>{{ item.content }}</div>
+      }
+    </icc-layout-horizontal>
+  </icc-layout>
+}
+
+<!--
+
+    /* flex: 0 0 100px; */
+
+
+*ngIf="getExpanded(item)" 
+-->

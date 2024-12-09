@@ -4,4 +4,5 @@ export interface IccAccordion {
   name: string;
   title?: string;
   items: IccMenuItem[];
+  expanded?: boolean;
 }

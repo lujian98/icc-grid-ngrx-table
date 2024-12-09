@@ -30,6 +30,7 @@ export class AppD3Component {
   items: IccAccordion[] = [
     {
       name: 'D3 Demo',
+      //expanded: true,
       items: [
         { name: 'Line Chart', link: 'line-chart' },
         { name: 'Line Chart Remote', link: 'line-chart-remote' },
@@ -55,6 +56,7 @@ export class AppD3Component {
     },
     {
       name: 'D3 Demos2',
+      //expanded: true,
       items: [
         { name: 'Pie Chart', link: 'pie-chart-demo' },
         { name: 'Donut Chart', link: 'donut-chart-demo' },

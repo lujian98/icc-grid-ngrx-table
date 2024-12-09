@@ -20,7 +20,6 @@ export class IccLayoutHeaderComponent {
   @Output() iccButtonClick = new EventEmitter<IccButtonConfg>(false);
 
   buttonClick(button: IccButtonConfg): void {
-    console.log(' 0000000 button clieck =', button);
     this.iccButtonClick.emit(button);
   }
 }
