@@ -27,8 +27,8 @@ import {
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-
   private _items: IccAccordion[] = [];
+
   @Input()
   set items(val: IccAccordion[]) {
     this._items = val;
@@ -46,31 +46,25 @@ export class IccAccordionComponent {
 
   toggle(item: IccAccordion, currentExpanded: boolean): void {
     this.items = [...this.items].map((data) => {
-      let expanded = false;
-      if (data.name === item.name) {
-        expanded = !currentExpanded;
-      }
       return {
         ...data,
-        expanded,
+        expanded: data.name === item.name ? !currentExpanded : false,
       };
     });
     timer(20)
       .pipe(take(1))
-      .subscribe(() => {
-        this.setupView();
-      });
+      .subscribe(() => this.setupLayout());
   }
 
   getTitle(item: IccAccordion): string {
     return item.title === undefined ? item.name : item.title;
   }
 
-  getLayoutFlex(item: IccAccordion): string {
+  getHeaderStyle(item: IccAccordion): string {
     return item?.expanded ? '1 1 auto' : `0 0 ${ICC_LAYOUT_HEADER_HEIGHT}px`;
   }
 
-  private setupView(): void {
+  private setupLayout(): void {
     const clientHeight = this.elementRef.nativeElement.clientHeight;
     const children: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
     const expanded = children.find((el) => el.children.length === 2);
@@ -87,6 +81,6 @@ export class IccAccordionComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
-    this.setupView();
+    this.setupLayout();
   }
 }
