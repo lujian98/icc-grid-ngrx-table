@@ -22,13 +22,25 @@ export class IccColumnFilterComponent implements OnInit {
   private _componentRef: any;
   private _gridConfig!: IccGridConfig;
 
-  @Input() column!: IccColumnConfig;
+  private _column!: IccColumnConfig;
+
+  @Input()
+  set column(val: IccColumnConfig) {
+    this._column = { ...val };
+    if (this._componentRef) {
+      this._componentRef = undefined;
+      this.viewContainerRef.clear();
+      this.loadComponent();
+    }
+  }
+  get column(): IccColumnConfig {
+    return this._column;
+  }
 
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     if (this._componentRef) {
-      //console.log( ' reset gridconfig=',  this.gridConfig)
       this._componentRef.instance.gridConfig = this.gridConfig;
     }
   }
@@ -42,7 +54,6 @@ export class IccColumnFilterComponent implements OnInit {
   }
 
   private loadComponent(): void {
-    //console.log(' this.column=', this.column);
     const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
     // TODO if pass this.column.component  to dynamic components
     const cellComponent = this.componentMapper[filterType]; //IccTextFilterComponent;
