@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from './+state/grid.facade';
-import { uniqueId, IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
+import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
@@ -11,7 +11,7 @@ import { defaultGridConfig } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
 import { IccGridStateModule } from './+state/grid-state.module';
-import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-grid',
@@ -29,6 +29,7 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
     IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
+    IccLayoutFooterComponent,
   ],
 })
 export class IccGridComponent<T> implements OnDestroy {
@@ -85,6 +86,24 @@ export class IccGridComponent<T> implements OnDestroy {
     return this._gridData;
   }
 
+  buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
+    switch (button.name) {
+      case IccButtonType.Refresh:
+        if (gridConfig.virtualScroll) {
+          this.gridFacade.getGridPageData(gridConfig, 1);
+        } else {
+          this.gridFacade.getGridData(gridConfig);
+        }
+        break;
+      case IccButtonType.ClearAllFilters:
+        this.gridFacade.setGridColumnFilters(this.gridConfig, []);
+        break;
+      default:
+        break;
+    }
+  }
+
+  /*
   refresh(gridConfig: IccGridConfig): void {
     if (gridConfig.virtualScroll) {
       this.gridFacade.getGridPageData(gridConfig, 1);
@@ -95,7 +114,7 @@ export class IccGridComponent<T> implements OnDestroy {
 
   clearFilters(): void {
     this.gridFacade.setGridColumnFilters(this.gridConfig, []);
-  }
+  }*/
 
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.gridId);

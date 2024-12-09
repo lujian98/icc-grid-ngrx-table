@@ -1,12 +1,5 @@
 <icc-layout>
-  <icc-layout-header>
-    <div class="icc-layout-top-bar-title">{{ "ICC.UI.TITLE.DASHBOARD" | translate }}</div>
-    <ng-container *ngFor="let button of buttons">
-      <button icc-button>
-        <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
-        {{ button.title | translate }}
-      </button>
-    </ng-container>
+  <icc-layout-header title="ICC.UI.TITLE.DASHBOARD" [buttons]="buttons" (iccButtonClick)="buttonClick($event)">
   </icc-layout-header>
 
   <div

@@ -1,20 +1,4 @@
 <icc-layout *ngIf="uploadFiles$ | async as uploadFiles">
-  <!--
-
-  <icc-layout-header *ngIf="uploadFiles$ | async as uploadFiles">
-    <div class="icc-layout-top-bar-title">{{ "ICC.UI.FILE_UPLOAD.FILE_DROP_UPLOAD" | translate }}</div>
-    <icc-checkbox [checked]="checked" (change)="onChange($event)">{{
-      "ICC.UI.ACTIONS.ENABLED" | translate
-    }}</icc-checkbox>
-    <ng-container *ngFor="let button of buttons">
-      <button icc-button [disabled]="uploadFiles.length === 0" (click)="buttonClick(button)">
-        <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
-        {{ button.title | translate }}
-      </button>
-    </ng-container>
-  </icc-layout-header>
-    -->
-
   <icc-layout-header
     title="ICC.UI.FILE_UPLOAD.FILE_DROP_UPLOAD"
     [buttons]="buttons"

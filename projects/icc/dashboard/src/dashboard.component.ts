@@ -65,6 +65,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.setupGrid();
   }
 
+  buttonClick(button: IccButtonConfg): void {
+    console.log(' button click=', button);
+  }
+
   private setupGrid(): void {
     // TODO should this be this.elementRef.nativeElement.parentNode or this.elementRef.nativeElement???
     const size = this.getDashboardSize()!;

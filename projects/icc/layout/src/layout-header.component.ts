@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
+import { IccButtonConfg } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'icc-layout-header',
@@ -21,7 +20,6 @@ export class IccLayoutHeaderComponent {
   @Output() iccButtonClick = new EventEmitter<IccButtonConfg>(false);
 
   buttonClick(button: IccButtonConfg): void {
-    console.log(' button=', button);
     this.iccButtonClick.emit(button);
   }
 }
