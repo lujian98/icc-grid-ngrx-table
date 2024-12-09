@@ -1,7 +1,8 @@
 <icc-layout-header [title]="formConfig.title">
   <!--
-  [buttons]="getButtons(formConfig.buttons)"
+  [buttons]="buttons"
   (iccButtonClick)="buttonClick($event)"
+  >
 -->
 
   <ng-container *ngFor="let button of formConfig.buttons">

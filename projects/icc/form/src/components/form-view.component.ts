@@ -130,6 +130,16 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return this._values;
   }
 
+  get buttons(): IccButtonConfg[] {
+    return [...this.formConfig.buttons].map((button) => {
+      return {
+        ...button,
+        hidden: this.buttonHidden(button),
+        disabled: this.buttonDisabled(button),
+      };
+    });
+  }
+
   @Output() formButtonClick = new EventEmitter<any>(false);
 
   ngOnInit(): void {
@@ -151,16 +161,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     Object.keys(values).forEach((key) => {
       const formField = this.form.get(key)!;
       isEqual(values[key], orgValues[key]) ? formField.markAsPristine() : formField.markAsDirty();
-    });
-  }
-
-  getButtons(buttons: IccButtonConfg[]): IccButtonConfg[] {
-    return [...buttons].map((button) => {
-      return {
-        ...button,
-        hidden: this.buttonHidden(button),
-        disabled: this.buttonDisabled(button),
-      };
     });
   }
 
@@ -249,11 +249,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       this.formFacade.saveFormData(this.formConfig, this.form.getRawValue());
     }
   }
-
-  /*
-  private uploadFile(): void {
-    this.formFacade.uploadFiles(this.formConfig, this.uploadFileService.uploadFiles);
-  }*/
 
   ngOnDestroy(): void {
     this.destroy$.next();
