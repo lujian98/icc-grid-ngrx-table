@@ -1,7 +1,11 @@
-<icc-layout-header>
-  <div class="icc-layout-top-bar-title" *ngIf="formConfig.title !== undefined">{{ formConfig.title }}</div>
+<icc-layout-header [title]="formConfig.title">
+  <!--
+  [buttons]="getButtons(formConfig.buttons)"
+  (iccButtonClick)="buttonClick($event)"
+-->
+
   <ng-container *ngFor="let button of formConfig.buttons">
-    <button icc-button *ngIf="buttonVisible(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
+    <button icc-button *ngIf="!buttonHidden(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
       <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
       {{ button.title | translate }}
     </button>

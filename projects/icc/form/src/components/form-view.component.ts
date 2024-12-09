@@ -144,6 +144,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   private checkFormValueChanged(values: any): void {
     isEqual(values, this.values) ? this.form.markAsPristine() : this.form.markAsDirty();
     this.setFieldDirty(values, this.values);
+    this.changeDetectorRef.markForCheck();
   }
 
   private setFieldDirty(values: any, orgValues: any): void {
@@ -153,16 +154,26 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  buttonVisible(button: IccButtonConfg): boolean {
+  getButtons(buttons: IccButtonConfg[]): IccButtonConfg[] {
+    return [...buttons].map((button) => {
+      return {
+        ...button,
+        hidden: this.buttonHidden(button),
+        disabled: this.buttonDisabled(button),
+      };
+    });
+  }
+
+  buttonHidden(button: IccButtonConfg): boolean {
     switch (button.name) {
       case IccButtonType.View:
       case IccButtonType.Reset:
       case IccButtonType.Save:
         //case IccButtonType.UploadFile:
-        return this.formConfig.editable;
+        return !this.formConfig.editable;
       case IccButtonType.Edit:
       default:
-        return !this.formConfig.editable;
+        return this.formConfig.editable;
     }
   }
 
@@ -181,9 +192,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         return false;
     }
   }
+
   buttonClick(button: IccButtonConfg): void {
     this.formFacade.setFormEditable(this.formConfig.formId, button);
-
+    //console.log( ' 222222resset kkkkkkkkkkkkkk')
     switch (button.name) {
       case IccButtonType.Edit:
         this.editForm(button);
@@ -192,6 +204,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         this.refreshForm();
         break;
       case IccButtonType.Reset:
+        // console.log( ' resset kkkkkkkkkkkkkk')
         this.resetForm();
         break;
       case IccButtonType.Save:

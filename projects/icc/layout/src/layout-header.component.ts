@@ -14,12 +14,13 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule],
 })
 export class IccLayoutHeaderComponent {
-  @Input() title: string = '';
+  @Input() title: string | undefined;
   @Input() buttons: IccButtonConfg[] = [];
 
   @Output() iccButtonClick = new EventEmitter<IccButtonConfg>(false);
 
   buttonClick(button: IccButtonConfg): void {
+    //console.log(' 0000000 button clieck =', button)
     this.iccButtonClick.emit(button);
   }
 }

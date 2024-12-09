@@ -1,9 +1,9 @@
-<div *ngIf="title" class="icc-layout-top-bar-title">{{ title | translate }}</div>
+<div *ngIf="title !== undefined" class="icc-layout-top-bar-title">{{ title | translate }}</div>
 
 <ng-content></ng-content>
 
 <ng-container *ngFor="let button of buttons">
-  <button icc-button [disabled]="button.disabled" (click)="buttonClick(button)">
+  <button icc-button *ngIf="!button.hidden" [disabled]="button.disabled" (click)="buttonClick(button)">
     <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
     {{ button.title | translate }}
   </button>
