@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { IccMenusComponent } from '@icc/ui/menu';
-import { take, timer } from 'rxjs';
-import { IccAccordion } from './models/accordion.model';
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Input } from '@angular/core';
 import {
+  ICC_LAYOUT_HEADER_HEIGHT,
   IccLayoutComponent,
   IccLayoutHeaderComponent,
   IccLayoutHorizontalComponent,
-  ICC_LAYOUT_HEADER_HEIGHT,
 } from '@icc/ui/layout';
+import { IccMenusComponent } from '@icc/ui/menu';
+import { take, timer } from 'rxjs';
+import { IccAccordion } from './models/accordion.model';
 
 @Component({
   selector: 'icc-accordion',
