@@ -9,6 +9,8 @@
 
     <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
 
-    <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
+    <icc-layout-footer>
+      <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
+    </icc-layout-footer>
   </ng-container>
 </icc-layout>
