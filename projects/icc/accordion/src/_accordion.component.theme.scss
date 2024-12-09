@@ -1,7 +1,7 @@
 @mixin icc-accordion-theme() {
   icc-accordion {
     icc-layout-header {
-      border-bottom: 1px solid blueviolet;
+      border-bottom: 1px solid icc-theme(app-border-basic-color);
       &:focus,
       &:hover {
         background-color: icc-theme(icc-accordion-item-hover-background-color);
@@ -9,8 +9,8 @@
     }
 
     .icc-accordion-item-expanded {
-      background-color: icc-theme(icc-accordion-item-expanded-background-color);
       font-weight: bold;
+      border-bottom: unset;
     }
   }
 }
