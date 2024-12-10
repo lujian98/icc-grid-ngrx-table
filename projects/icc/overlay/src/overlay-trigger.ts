@@ -47,7 +47,7 @@ export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
 // ONLY USED
 export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   show$ = EMPTY;
-  private firstTime: boolean = true;
+  private firstTime: boolean = false; // seems not needed
   protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.container(), event] as [boolean, Event]),
     share(),
