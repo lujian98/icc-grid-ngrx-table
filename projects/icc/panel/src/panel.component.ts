@@ -25,6 +25,7 @@ export class IccPanelTopBarComponent {}
 })
 export class IccPanelBottomBarComponent {}
 
+// TODO remove this since it is not used
 @Component({
   selector: 'icc-panel',
   templateUrl: './panel.component.html',
@@ -33,4 +34,4 @@ export class IccPanelBottomBarComponent {}
   standalone: true,
   imports: [CommonModule, IccPanelHeaderComponent, IccPanelTopBarComponent, IccPanelBottomBarComponent],
 })
-export class IccPanelComponent {}
+export class IccPanelComponentNotUsed {}

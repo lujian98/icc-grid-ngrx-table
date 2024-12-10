@@ -9,6 +9,9 @@
     }
     icc-layout-footer {
       height: 24px;
+      border-color: icc-theme(app-border-basic-color);
+      border-bottom-width: 1px;
+      border-style: solid;
     }
   }
 
@@ -23,18 +26,23 @@
     }
     icc-layout-footer {
       height: unset;
+      border-bottom-width: 0;
     }
   }
 
   icc-layout,
-  icc-layout-header,
-  icc-layout-footer,
   icc-layout-horizontal {
-    background-color: var(--app-background-color); // TODO header different color???
+    background-color: var(--app-background-color);
     color: icc-theme(app-text-basic-color);
   }
 
-  .icc-layout-top-bar-title {
+  icc-layout-header,
+  icc-layout-footer {
+    background-color: icc-theme(icc-header-background-color);
+    color: icc-theme(app-text-basic-color);
+  }
+
+  .icc-layout-header-title {
     display: flex;
     margin-right: auto;
     align-items: center;
@@ -48,9 +56,9 @@
     &:focus,
     &:hover {
       border-right: 2px solid red;
-      color: red;
     }
   }
+
   .icc-layout-resize-bottom,
   .icc-vertical-resize-top,
   .icc-vertical-resize-bottom {
@@ -59,7 +67,6 @@
     &:focus,
     &:hover {
       border-bottom: 2px solid red;
-      color: red;
     }
   }
 }

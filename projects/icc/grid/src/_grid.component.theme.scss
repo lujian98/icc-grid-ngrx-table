@@ -1,14 +1,14 @@
 @mixin icc-grid-theme() {
   icc-grid,
   icc-tree {
-    .icc-grid-toolbar,
-    icc-grid-footer {
-      background-color: icc-theme(icc-grid-toolbar-background-color);
-    }
-
     icc-grid-header,
     icc-grid-header-view {
       background-color: icc-theme(icc-grid-header-background-color);
+    }
+
+    icc-grid-footer {
+      background-color: icc-theme(icc-grid-toolbar-background-color);
+      border-bottom: 1px solid icc-theme(app-border-basic-color);
     }
 
     icc-grid-row:nth-child(odd) {
