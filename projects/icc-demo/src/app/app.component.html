@@ -1,14 +1,5 @@
 <icc-layout layout="viewport">
-  <icc-layout-header [title]="title">
-    <button icc-button [routerLink]="['dashboard']">Dashboard</button>
-    <button icc-button [routerLink]="['grid']">Grid</button>
-    <button icc-button [routerLink]="['tree']">Tree</button>
-    <button icc-button [routerLink]="['form']">Form</button>
-    <button icc-button [routerLink]="['select']">Select</button>
-    <button icc-button [routerLink]="['menu']">Menu</button>
-    <button icc-button [routerLink]="['d3']">D3</button>
-    <button icc-button [routerLink]="['layout']">Layout</button>
-
+  <icc-layout-header [title]="title" [buttons]="buttons">
     <button icc-button (click)="toggleTheme()">Toggle Theme</button>
     <div class="theme">
       <input

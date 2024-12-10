@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IccI18nService, IccLanguage } from '@icc/ui/core';
+import { IccI18nService, IccLanguage, IccButtonConfg } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 import { IccButtonComponent } from '@icc/ui/button';
 
@@ -28,6 +28,49 @@ import { IccThemeService } from '@icc/ui/theme';
 export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
   title = 'ICC Demo';
+
+  buttons: IccButtonConfg[] = [
+    {
+      name: 'Dashboard',
+      title: 'Dashboard',
+      link: 'dashboard',
+    },
+    {
+      name: 'Grid',
+      title: 'Grid',
+      link: 'grid',
+    },
+    {
+      name: 'Tree',
+      title: 'Tree',
+      link: 'tree',
+    },
+    {
+      name: 'Form',
+      title: 'Form',
+      link: 'form',
+    },
+    {
+      name: 'Select',
+      title: 'Select',
+      link: 'select',
+    },
+    {
+      name: 'Menu',
+      title: 'Menu',
+      link: 'menu',
+    },
+    {
+      name: 'D3',
+      title: 'D3',
+      link: 'd3',
+    },
+    {
+      name: 'Layout',
+      title: 'Layout',
+      link: 'layout',
+    },
+  ];
 
   rangeValue = this.themeService.rangeMax;
 
