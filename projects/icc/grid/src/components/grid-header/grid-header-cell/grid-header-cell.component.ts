@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
-import { IccPopoverComponent } from '@icc/ui/popover';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccDynamicOverlayService } from '@icc/ui/overlay';
+import { IccPopoverComponent } from '@icc/ui/popover';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
+import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 @Component({
@@ -19,7 +19,6 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
 
@@ -38,6 +37,8 @@ export class IccGridHeaderCellComponent {
   get sortDir(): string {
     return this.findSortField!.dir;
   }
+
+  @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
 
   headCellClick(event: MouseEvent): void {
     if (this.gridConfig.columnSort && this.column.sortField !== false) {
@@ -58,15 +59,10 @@ export class IccGridHeaderCellComponent {
 
   onClickColumnMenu(event: MouseEvent): void {
     event.stopPropagation();
-    const fakeElement = this.getFakeElement(event);
-    const popoverContext = {
-      gridId: this.gridConfig.gridId,
-      column: this.column,
-    };
-    this.buildPopover(fakeElement, popoverContext);
-    this.show();
+    this.columnMenuClick.emit({ column: this.column, event: event });
   }
 
+  /*
   private getFakeElement(event: MouseEvent): ElementRef {
     return new ElementRef({
       getBoundingClientRect: () => ({
@@ -100,4 +96,5 @@ export class IccGridHeaderCellComponent {
       this.dynamicOverlayService,
     );
   }
+    */
 }

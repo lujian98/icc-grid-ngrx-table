@@ -21,7 +21,8 @@
     [cdkDragDisabled]="dragDisabled"
     iccColumnResize
   >
-    <icc-grid-header-cell [column]="column" [gridConfig]="gridConfig"> </icc-grid-header-cell>
+    <icc-grid-header-cell [column]="column" [gridConfig]="gridConfig" (columnMenuClick)="onColumnMenuClick($event)">
+    </icc-grid-header-cell>
 
     <icc-column-filter
       *ngIf="gridConfig.columnFilter && column.filterField !== false"

@@ -141,3 +141,8 @@ export interface IccColumnConfig {
   copyToClipboard?: boolean;
   */
 }
+
+export interface ColumnMenuClick {
+  column: IccColumnConfig;
+  event: MouseEvent;
+}
