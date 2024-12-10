@@ -31,7 +31,9 @@
   }
 
   icc-layout,
-  icc-layout-horizontal {
+  icc-layout-horizontal,
+  icc-layout-left,
+  icc-layout-right {
     background-color: var(--app-background-color);
     color: icc-theme(app-text-basic-color);
   }
