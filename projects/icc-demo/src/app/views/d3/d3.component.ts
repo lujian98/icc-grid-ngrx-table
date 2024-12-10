@@ -8,6 +8,7 @@ import {
   IccLayoutLeftComponent,
   IccLayoutCenterComponent,
 } from '@icc/ui/layout';
+import { IccMenuItem } from '@icc/ui/menu';
 
 @Component({
   selector: 'app-d3',
@@ -69,4 +70,8 @@ export class AppD3Component {
       ],
     },
   ];
+
+  menuItemClick(item: IccMenuItem): void {
+    console.log(' d3 menu item clicked=', item);
+  }
 }

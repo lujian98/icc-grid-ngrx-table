@@ -10,7 +10,7 @@
     </icc-layout-header>
 
     <icc-layout-horizontal *ngIf="item?.expanded">
-      <icc-menus [items]="item.items"></icc-menus>
+      <icc-menus [items]="item.items" (iccMenuItemChange)="menuItemChange($event)"></icc-menus>
     </icc-layout-horizontal>
   </icc-layout>
 }

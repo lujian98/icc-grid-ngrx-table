@@ -1,6 +1,6 @@
 <icc-layout-horizontal [resizeable]="true">
   <icc-layout-left>
-    <icc-accordion [items]="items"></icc-accordion>
+    <icc-accordion [items]="items" (iccMenuItemClick)="menuItemClick($event)"></icc-accordion>
   </icc-layout-left>
 
   <icc-layout-center>

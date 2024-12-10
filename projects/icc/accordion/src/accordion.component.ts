@@ -1,12 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   ICC_LAYOUT_HEADER_HEIGHT,
   IccLayoutComponent,
   IccLayoutHeaderComponent,
   IccLayoutHorizontalComponent,
 } from '@icc/ui/layout';
-import { IccMenusComponent } from '@icc/ui/menu';
+import { IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
 import { take, timer } from 'rxjs';
 import { IccAccordion } from './models/accordion.model';
 
@@ -42,6 +51,12 @@ export class IccAccordionComponent {
   }
   get items(): IccAccordion[] {
     return this._items;
+  }
+
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+
+  menuItemChange(item: IccMenuItem): void {
+    this.iccMenuItemClick.emit(item);
   }
 
   toggle(item: IccAccordion, currentExpanded: boolean): void {
