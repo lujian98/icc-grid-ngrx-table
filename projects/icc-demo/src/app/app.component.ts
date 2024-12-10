@@ -30,46 +30,14 @@ export class AppComponent implements OnInit {
   title = 'ICC Demo';
 
   buttons: IccButtonConfg[] = [
-    {
-      name: 'Dashboard',
-      title: 'Dashboard',
-      link: 'dashboard',
-    },
-    {
-      name: 'Grid',
-      title: 'Grid',
-      link: 'grid',
-    },
-    {
-      name: 'Tree',
-      title: 'Tree',
-      link: 'tree',
-    },
-    {
-      name: 'Form',
-      title: 'Form',
-      link: 'form',
-    },
-    {
-      name: 'Select',
-      title: 'Select',
-      link: 'select',
-    },
-    {
-      name: 'Menu',
-      title: 'Menu',
-      link: 'menu',
-    },
-    {
-      name: 'D3',
-      title: 'D3',
-      link: 'd3',
-    },
-    {
-      name: 'Layout',
-      title: 'Layout',
-      link: 'layout',
-    },
+    { name: 'Dashboard', link: 'dashboard' },
+    { name: 'Grid', link: 'grid' },
+    { name: 'Tree', link: 'tree' },
+    { name: 'Form', link: 'form' },
+    { name: 'Select', link: 'select' },
+    { name: 'Menu', link: 'menu' },
+    { name: 'D3', link: 'd3' },
+    { name: 'Layout', link: 'layout' },
   ];
 
   rangeValue = this.themeService.rangeMax;

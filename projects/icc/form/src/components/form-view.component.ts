@@ -140,6 +140,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  getButtonTitle(item: IccButtonConfg): string {
+    return item.title === undefined ? item.name : item.title;
+  }
+
   @Output() formButtonClick = new EventEmitter<any>(false);
 
   ngOnInit(): void {

@@ -14,7 +14,7 @@ export enum IccButtonType {
 
 export interface IccButtonConfg {
   name: string;
-  title: string;
+  title?: string;
   icon?: string;
   disabled?: boolean;
   hidden?: boolean;
