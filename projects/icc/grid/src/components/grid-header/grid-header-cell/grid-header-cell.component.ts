@@ -57,6 +57,7 @@ export class IccGridHeaderCellComponent {
   }
 
   onClickColumnMenu(event: MouseEvent): void {
+    event.stopPropagation();
     const fakeElement = this.getFakeElement(event);
     const popoverContext = {
       gridId: this.gridConfig.gridId,
@@ -68,8 +69,7 @@ export class IccGridHeaderCellComponent {
 
   private getFakeElement(event: MouseEvent): ElementRef {
     return new ElementRef({
-      // @ts-ignore
-      getBoundingClientRect: (): ClientRect => ({
+      getBoundingClientRect: () => ({
         bottom: event.clientY,
         height: 0,
         left: event.clientX,
