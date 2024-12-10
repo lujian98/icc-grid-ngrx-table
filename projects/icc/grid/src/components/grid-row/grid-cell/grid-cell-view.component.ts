@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CdkTableModule } from '@angular/cdk/table';
 import { IccColumnConfig } from '../../../models/grid-column.model';
 
 @Component({
@@ -9,7 +8,7 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   styleUrls: ['./grid-cell-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, CdkTableModule],
+  imports: [CommonModule],
 })
 export class IccGridCellViewComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
