@@ -83,7 +83,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const el = this.elementRef.nativeElement;
     const node = el.firstChild;
     if (node) {
-      const width = node.clientWidth - 10; // - padding left/right
+      const width = node.clientWidth - 0; // - padding left/right
       const height = node.clientHeight - 30; // - top bar height
       return {
         width: width,
