@@ -18,6 +18,7 @@ export class AppGridVerticalScrollComponent {
     pageSize: 50,
     columnMenu: true,
     columnSort: true,
+    columnFilter: true,
     columnHidden: true,
     remoteGridData: true,
   };

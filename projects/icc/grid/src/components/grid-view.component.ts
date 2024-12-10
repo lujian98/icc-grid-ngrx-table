@@ -4,16 +4,18 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
   Input,
   OnDestroy,
   ViewChild,
   inject,
 } from '@angular/core';
-import { BehaviorSubject, Observable, interval, of } from 'rxjs';
+import { uniqueId } from '@icc/ui/core';
+import { BehaviorSubject, Observable, interval, map, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 
@@ -26,6 +28,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
+  private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -39,7 +42,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
     if (!this.gridData$) {
-      this.gridData$ = this.gridFacade.selectGridData(this.gridConfig);
+      this.gridData$ = this.gridFacade.selectGridData(this.gridConfig).pipe(
+        map((data) => {
+          this.checkViewport(data);
+          return data;
+        }),
+      );
     }
   }
   get gridConfig(): IccGridConfig {
@@ -95,10 +103,25 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
-    //console.log(' clientWidth=', clientWidth);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);
+  }
+
+  private checkViewport(data: T[]): void {
+    if (this.gridConfig.virtualScroll || this.gridConfig.verticalScroll) {
+      // make sure column width with vertical scroll are correct
+      const el = this.viewport.elementRef.nativeElement;
+      const clientHeight = el.clientHeight;
+      const clientWidth = el.clientWidth;
+      const widowWidth = this.elementRef.nativeElement.clientWidth;
+      const pageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
+      if (data.length > pageSize && clientWidth === widowWidth) {
+        this.sizeChanged$.next(uniqueId(16));
+      } else if (data.length <= pageSize && clientWidth < widowWidth) {
+        this.sizeChanged$.next(uniqueId(16));
+      }
+    }
   }
 
   @HostListener('window:resize', ['$event'])

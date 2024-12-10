@@ -6,14 +6,16 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
   Input,
   OnDestroy,
   ViewChild,
   inject,
 } from '@angular/core';
+import { uniqueId } from '@icc/ui/core';
 import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent, IccColumnWidth } from '@icc/ui/grid';
-import { BehaviorSubject, Observable, interval, of } from 'rxjs';
+import { BehaviorSubject, Observable, interval, of, map } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
 import { IccTreeConfig, IccTreeNode, IccTreeDropInfo } from '../models/tree-grid.model';
@@ -29,6 +31,7 @@ import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
+  private elementRef = inject(ElementRef);
   private document = inject(DOCUMENT);
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
@@ -46,7 +49,12 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
     if (!this.treeData$) {
-      this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig);
+      this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig).pipe(
+        map((data) => {
+          this.checkViewport(data);
+          return data;
+        }),
+      );
     }
   }
   get treeConfig(): IccTreeConfig {
@@ -97,6 +105,22 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
       !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
     this.treeFacade.viewportReadyLoadData(this.treeConfig);
+  }
+
+  private checkViewport(data: any[]): void {
+    if (this.treeConfig.virtualScroll || this.treeConfig.verticalScroll) {
+      // make sure column width with vertical scroll are correct
+      const el = this.viewport.elementRef.nativeElement;
+      const clientHeight = el.clientHeight;
+      const clientWidth = el.clientWidth;
+      const widowWidth = this.elementRef.nativeElement.clientWidth;
+      const pageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
+      if (data.length > pageSize && clientWidth === widowWidth) {
+        this.sizeChanged$.next(uniqueId(16));
+      } else if (data.length <= pageSize && clientWidth < widowWidth) {
+        this.sizeChanged$.next(uniqueId(16));
+      }
+    }
   }
 
   dragStart(node: IccTreeNode<T>): void {
