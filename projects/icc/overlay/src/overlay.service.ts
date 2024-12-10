@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
-
 import { IccOverlay, IccOverlayConfig, IccOverlayRef } from './mapping';
 
 @Injectable()
 export class IccOverlayService {
-  constructor(protected overlay: IccOverlay) {}
+  private overlay = inject(IccOverlay);
 
   get scrollStrategies(): ScrollStrategyOptions {
     return this.overlay.scrollStrategies;
