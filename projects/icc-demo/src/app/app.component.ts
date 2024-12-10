@@ -27,7 +27,7 @@ import { IccThemeService } from '@icc/ui/theme';
 })
 export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
-  title = 'icc-demo';
+  title = 'ICC Demo';
 
   rangeValue = this.themeService.rangeMax;
 
