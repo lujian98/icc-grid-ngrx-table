@@ -43,9 +43,13 @@ export class IccAccordionComponent {
     this._items = val;
     if (this.isFirstTime) {
       this.isFirstTime = false;
-      const expanded = this.items.filter((item) => item.expanded);
-      if (expanded.length !== 1 && this.items.length > 0) {
-        this.toggle(this.items[0], false);
+      if (this.items.length > 0) {
+        const expanded = this.items.filter((item) => item.expanded);
+        if (expanded.length !== 1) {
+          this.toggle(this.items[0], false);
+        } else {
+          this.toggle(expanded[0], false);
+        }
       }
     }
   }

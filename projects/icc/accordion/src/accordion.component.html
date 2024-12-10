@@ -9,7 +9,7 @@
       <i *ngIf="!item.expanded" class="fa-solid fa-chevron-down"></i>
     </icc-layout-header>
 
-    <icc-layout-horizontal *ngIf="item?.expanded">
+    <icc-layout-horizontal *ngIf="item?.expanded && item.items">
       <icc-menus [items]="item.items" (iccMenuItemChange)="menuItemChange($event)"></icc-menus>
     </icc-layout-horizontal>
   </icc-layout>
