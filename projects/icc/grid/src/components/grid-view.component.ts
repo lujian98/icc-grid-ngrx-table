@@ -77,7 +77,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
       )
-      .subscribe(() => this.setViewportPageSize());
+      .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true));
   }
 
   trackByIndex(index: number): number {
@@ -99,13 +99,13 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnHeaderPosition = -event.target.scrollLeft;
   }
 
-  private setViewportPageSize(): void {
+  private setViewportPageSize(loadData: boolean = true): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth);
+    this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, loadData);
   }
 
   private checkViewport(data: T[]): void {

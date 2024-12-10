@@ -84,7 +84,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
       )
-      .subscribe(() => this.setViewportPageSize());
+      .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true));
   }
 
   trackByIndex(index: number): number {
@@ -97,14 +97,16 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnHeaderPosition = -event.target.scrollLeft;
   }
 
-  private setViewportPageSize(): void {
+  private setViewportPageSize(loadData: boolean = true): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
     const pageSize =
       !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth);
-    this.treeFacade.viewportReadyLoadData(this.treeConfig);
+    this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth, loadData);
+    if (loadData) {
+      this.treeFacade.viewportReadyLoadData(this.treeConfig);
+    }
   }
 
   private checkViewport(data: any[]): void {
