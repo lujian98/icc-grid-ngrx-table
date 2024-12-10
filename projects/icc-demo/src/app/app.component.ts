@@ -5,7 +5,12 @@ import { IccI18nService, IccLanguage, IccButtonConfg } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 import { IccButtonComponent } from '@icc/ui/button';
 
-import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
+import {
+  IccLayoutComponent,
+  IccLayoutHeaderComponent,
+  IccLayoutHeaderEndComponent,
+  IccLayoutFooterComponent,
+} from '@icc/ui/layout';
 
 import { IccThemeService } from '@icc/ui/theme';
 
@@ -21,6 +26,7 @@ import { IccThemeService } from '@icc/ui/theme';
     IccSelectFieldComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
+    IccLayoutHeaderEndComponent,
     IccLayoutFooterComponent,
     IccButtonComponent,
   ],

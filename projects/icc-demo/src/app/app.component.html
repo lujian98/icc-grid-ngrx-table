@@ -1,23 +1,25 @@
 <icc-layout layout="viewport">
   <icc-layout-header [title]="title" [buttons]="buttons">
-    <button icc-button (click)="toggleTheme()">Toggle Theme</button>
-    <div class="theme">
-      <input
-        type="range"
-        [value]="rangeValue"
-        min="0"
-        [max]="themeService.rangeMax"
-        step="1"
-        (input)="onChange($event)"
-      />
-    </div>
+    <icc-layout-header-end>
+      <button icc-button (click)="toggleTheme()">Toggle Theme</button>
+      <div class="theme">
+        <input
+          type="range"
+          [value]="rangeValue"
+          min="0"
+          [max]="themeService.rangeMax"
+          step="1"
+          (input)="onChange($event)"
+        />
+      </div>
 
-    <icc-select-field
-      [fieldConfig]="langSelectionConfig"
-      [value]="i18nService.currentLang"
-      [options]="i18nService.languages"
-      (selectionChange)="setLang($event)"
-    ></icc-select-field>
+      <icc-select-field
+        [fieldConfig]="langSelectionConfig"
+        [value]="i18nService.currentLang"
+        [options]="i18nService.languages"
+        (selectionChange)="setLang($event)"
+      ></icc-select-field>
+    </icc-layout-header-end>
   </icc-layout-header>
 
   <router-outlet></router-outlet>

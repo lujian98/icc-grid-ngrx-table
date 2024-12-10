@@ -7,12 +7,20 @@ import { IccIconModule } from '@icc/ui/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+  selector: 'icc-layout-header-end',
+  template: `<ng-content></ng-content>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+})
+export class IccLayoutHeaderEndComponent {}
+
+@Component({
   selector: 'icc-layout-header',
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule],
+  imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule, IccLayoutHeaderEndComponent],
 })
 export class IccLayoutHeaderComponent {
   private router = inject(Router);
