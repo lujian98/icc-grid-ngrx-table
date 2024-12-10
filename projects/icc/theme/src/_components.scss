@@ -6,7 +6,6 @@
 @import "../../form-field/src/form-field.component.theme";
 @import "../../checkbox/src/checkbox.component.theme";
 @import "../../radio/src/radio.component.theme";
-@import "../../panel/src/panel.component.theme";
 @import "../../button/src/button.component.theme";
 
 @import "../../resize/src/resize.directive.theme";
@@ -26,7 +25,6 @@
   @include icc-form-field-theme();
   @include icc-checkbox-theme();
   @include icc-radio-theme();
-  @include icc-panel-theme();
   @include icc-button-theme();
   @include icc-resize-directive-theme();
   @include icc-dashboard-theme();
