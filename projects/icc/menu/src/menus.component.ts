@@ -36,7 +36,8 @@ export class IccMenusComponent {
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   get popoverTrigger(): IccTrigger {
-    return this.level === 0 ? this.menuTrigger : IccTrigger.HOVER;
+    return IccTrigger.HOVER;
+    //return this.level === 0 ? this.menuTrigger : IccTrigger.HOVER;
   }
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
