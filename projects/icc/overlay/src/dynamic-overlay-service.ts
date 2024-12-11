@@ -1,49 +1,40 @@
-import { Injectable, ComponentRef, ElementRef, Type, TemplateRef } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
-
-import { IccOverlayRef } from './mapping';
-import { IccTriggerStrategy, IccTrigger, IccTriggerStrategyBuilderService } from './overlay-trigger';
+import { ComponentRef, ElementRef, Injectable, TemplateRef, Type, inject } from '@angular/core';
+import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
 import { IccRenderableContainer } from './overlay-container.component';
-import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
 import { IccPosition } from './overlay-position';
+import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
+import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay-trigger';
 import { IccOverlayService } from './overlay.service';
 
 @Injectable()
 export class IccDynamicOverlayService {
-  protected componentType!: Type<IccRenderableContainer>;
-  protected context: Object = {};
-  protected content!: Type<any> | TemplateRef<any> | string;
-  protected hostElement!: ElementRef;
-  protected position: IccPosition = IccPosition.BOTTOM;
-  protected trigger: IccTrigger = IccTrigger.HOVER;
-  protected customStyle: string | undefined;
+  private overlayPositionBuilder = inject(IccPositionBuilderService);
+  private overlayService = inject(IccOverlayService);
+  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
 
-  protected overlayRef!: IccOverlayRef | null;
-  protected containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
-  protected triggerStrategy!: IccTriggerStrategy;
+  private componentType!: Type<IccRenderableContainer>;
+  private hostElement!: ElementRef;
+  private overlayServiceConfig!: IccOverlayServiceConfig;
+  private context: Object = {};
+  private content!: Type<any> | TemplateRef<any> | string;
 
-  constructor(
-    private overlayPositionBuilder: IccPositionBuilderService,
-    private overlayService: IccOverlayService,
-    private triggerStrategyBuilder: IccTriggerStrategyBuilderService,
-  ) {}
+  private overlayRef!: IccOverlayRef | null;
+  private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  private triggerStrategy!: IccTriggerStrategy;
 
   build(
     componentType: Type<IccRenderableContainer>,
     hostElement: ElementRef,
-    position: IccPosition,
-    trigger: IccTrigger,
+    overlayServiceConfig: IccOverlayServiceConfig,
     content: Type<any> | TemplateRef<any> | string,
     context: {},
-    customStyle?: string,
-  ) {
+  ): void {
     this.componentType = componentType;
     this.hostElement = hostElement;
-    this.position = position;
-    this.trigger = trigger;
+    this.overlayServiceConfig = overlayServiceConfig;
     this.content = content;
     this.context = context;
-    this.customStyle = customStyle;
 
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
@@ -53,14 +44,14 @@ export class IccDynamicOverlayService {
       this.hostElement.nativeElement,
       // @ts-ignore
       () => this.container(),
-      this.trigger,
+      this.overlayServiceConfig.trigger,
     );
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
     this.triggerStrategy.hide$.subscribe(() => this.hide());
   }
 
-  rebuild(context: {}, content: Type<any> | TemplateRef<any> | string) {
+  rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
     this.context = context;
     this.content = content;
     if (this.containerRef) {
@@ -68,7 +59,7 @@ export class IccDynamicOverlayService {
     }
   }
 
-  destroy() {
+  destroy(): void {
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
@@ -77,7 +68,7 @@ export class IccDynamicOverlayService {
     }
   }
 
-  createOverlay(event: MouseEvent | null = null) {
+  createOverlay(event: MouseEvent | null = null): void {
     const positionStrategy = this.createPositionStrategy(event);
     this.overlayRef = this.overlayService.create({
       scrollStrategy: this.overlayService.scrollStrategies.close(),
@@ -89,14 +80,14 @@ export class IccDynamicOverlayService {
 
   createPositionStrategy(event: MouseEvent | null = null) {
     let origin: ElementRef | Point = this.hostElement;
-    if (this.trigger === IccTrigger.CONTEXTMENU && event) {
+    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
       origin = {
         x: event.clientX,
         y: event.clientY,
       };
-      this.position = IccPosition.BOTTOMRIGHT;
+      this.overlayServiceConfig.position = IccPosition.BOTTOMRIGHT;
     }
-    return this.overlayPositionBuilder.flexibleConnectedTo(origin, this.position);
+    return this.overlayPositionBuilder.flexibleConnectedTo(origin, this.overlayServiceConfig.position);
   }
 
   // @ts-ignore
@@ -104,8 +95,8 @@ export class IccDynamicOverlayService {
     return this.containerRef;
   }
 
-  show(event: MouseEvent | null = null) {
-    if (this.trigger === IccTrigger.CONTEXTMENU && event) {
+  show(event: MouseEvent | null = null): void {
+    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
       this.hide();
       this.overlayRef = null;
     }
@@ -121,19 +112,19 @@ export class IccDynamicOverlayService {
     this.updateContext();
   }
 
-  hide() {
+  hide(): void {
     this.overlayRef?.detach();
     this.containerRef = null;
     this.overlayRef = null;
   }
 
-  private updateContext() {
+  private updateContext(): void {
     // @ts-ignore
     Object.assign(this.containerRef?.instance, {
       content: this.content,
       context: this.context,
       dynamicOverlayService: this,
-      customStyle: this.customStyle,
+      customStyle: this.overlayServiceConfig.customStyle,
     });
     this.containerRef?.instance.renderContent();
     this.containerRef?.changeDetectorRef.detectChanges();

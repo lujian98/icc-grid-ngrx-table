@@ -12,7 +12,13 @@ import {
 } from '@angular/core';
 
 import { IccPopoverComponent } from './popover.component';
-import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
+import {
+  IccPosition,
+  IccTrigger,
+  IccDynamicOverlayService,
+  IccOverlayServiceConfig,
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
+} from '@icc/ui/overlay';
 
 @Directive({
   selector: '[iccPopover]',
@@ -42,14 +48,19 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   @Input() popoverLevel = 0;
 
   ngAfterViewInit() {
+    const overlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: this.trigger,
+      position: this.position,
+      popoverLevel: this.popoverLevel,
+      customStyle: this.style,
+    };
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,
-      this.position,
-      this.trigger,
+      overlayServiceConfig,
       this.content,
       this.context,
-      this.style,
     );
   }
 
@@ -80,14 +91,19 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   private rebuildPopover(mouseEvent: MouseEvent): void {
     this.dynamicOverlayService.destroy();
     const fakeElement = this.getFakeElement(mouseEvent);
+    const overlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: this.trigger,
+      position: this.position,
+      popoverLevel: this.popoverLevel,
+      customStyle: this.style,
+    };
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       fakeElement,
-      this.position,
-      this.trigger,
+      overlayServiceConfig,
       this.content,
       this.context,
-      this.style,
     );
   }
 

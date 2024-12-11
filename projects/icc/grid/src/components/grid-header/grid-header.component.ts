@@ -1,7 +1,13 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
-import { IccDynamicOverlayService, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import {
+  IccDynamicOverlayService,
+  IccPosition,
+  IccTrigger,
+  IccOverlayServiceConfig,
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
+} from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
@@ -98,11 +104,15 @@ export class IccGridHeaderComponent {
   }
 
   private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
+    const overlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: IccTrigger.POINT,
+      position: IccPosition.BOTTOM_END,
+    };
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       elementRef,
-      IccPosition.BOTTOM_END,
-      IccTrigger.POINT,
+      overlayServiceConfig,
       IccGridColumnMenuComponent,
       popoverContext,
     );
