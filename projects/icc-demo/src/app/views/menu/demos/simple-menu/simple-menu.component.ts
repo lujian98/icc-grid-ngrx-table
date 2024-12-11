@@ -60,6 +60,10 @@ export class AppSimpleMenuComponent implements OnInit {
               },
             ],
           },
+          {
+            title: 'James Brocchi',
+            name: 'person',
+          },
         ],
       },
       {
