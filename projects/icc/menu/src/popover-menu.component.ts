@@ -4,6 +4,7 @@ import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
 import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
 import { IccMenusComponent } from './menus.component';
 import { IccMenuItem } from './models/menu-item.model';
+import { IccIconModule } from '@icc/ui/icon';
 
 @Component({
   selector: 'icc-popover-menu',
@@ -11,7 +12,7 @@ import { IccMenuItem } from './models/menu-item.model';
   styleUrls: ['./popover-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccMenusComponent, IccPopoverComponent, IccPopoverDirective],
+  imports: [CommonModule, IccIconModule, IccMenusComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class IccPopoverMenuComponent {
   @Input() menuItem!: IccMenuItem;

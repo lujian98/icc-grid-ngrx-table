@@ -17,7 +17,7 @@ export class AppSimpleMenuComponent implements OnInit {
 
   menuItems: any;
   testMenuItems: IccMenuItem = {
-    icon: 'fas fa-ellipsis-v',
+    icon: 'ellipsis-v',
     name: 'group0',
     //title: 'Group',
     children: [

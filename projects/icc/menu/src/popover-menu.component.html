@@ -1,6 +1,6 @@
 <div [iccPopover]="menu" [iccPopoverTrigger]="menuTrigger" [iccPopoverPosition]="position">
   <span *ngIf="menuItem.title">{{ menuItem.title }}</span>
-  <i *ngIf="menuItem.icon" [class]="menuItem.icon" style="color: green"></i>
+  <icc-icon *ngIf="menuItem.icon" [config]="menuItem.icon"></icc-icon>
 </div>
 
 <ng-template #menu>

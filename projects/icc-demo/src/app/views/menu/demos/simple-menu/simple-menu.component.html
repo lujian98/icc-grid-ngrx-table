@@ -1,28 +1,26 @@
 <div>
   <div><br /></div>
 
-  <div>Click Popover Menu</div>
-  <div [ngStyle]="{ width: '20px' }">
-    <icc-popover-menu [menuItem]="testMenuItems"> </icc-popover-menu>
+  <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row' }">
+    Click Popover Menu
+    <div [ngStyle]="{ 'padding-left': '5px', width: '10px' }">
+      <icc-popover-menu [menuItem]="testMenuItems"> </icc-popover-menu>
+    </div>
   </div>
 
   <div><br /></div>
 
   <div><br /></div>
   <div><br /></div>
-
-  <div><br /></div>
-  <div><br /></div>
-  <div><br /></div>
-  <div>
-    Click Menu
+  <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
+    <div>Click Menu</div>
     <icc-menus [items]="menuItems"> </icc-menus>
   </div>
   <div><br /></div>
   <div><br /></div>
 
-  <div>
-    Context Menu
+  <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
+    <div>Context Menu</div>
     <icc-menus [items]="menuItems" [menuTrigger]="contextmenu"> </icc-menus>
   </div>
 </div>

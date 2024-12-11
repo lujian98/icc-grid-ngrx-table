@@ -5,6 +5,7 @@ import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './models/menu-item.model';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccIconModule } from '@icc/ui/icon';
 
 @Component({
   selector: 'icc-menus',
@@ -12,7 +13,7 @@ import { IccButtonComponent } from '@icc/ui/button';
   styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccMenuItemComponent, IccPopoverDirective, IccButtonComponent],
+  imports: [CommonModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective, IccButtonComponent],
 })
 export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
