@@ -1,5 +1,11 @@
 <ng-container *ngFor="let item of items">
-  <icc-menu-item *ngIf="isLeafMenu(item)" [menuItem]="item" (click)="itemClicked($event, item)"> </icc-menu-item>
+  <icc-menu-item
+    *ngIf="isLeafMenu(item)"
+    [menuItem]="item"
+    (click)="itemClicked($event, item)"
+    (iccMenuItemClick)="menuItemClick($event)"
+  >
+  </icc-menu-item>
 
   <span
     *ngIf="hasChildItem(item) && level === 0"
@@ -19,6 +25,7 @@
     [iccPopoverTrigger]="popoverTrigger"
     [popoverLevel]="level + 1"
     [iccPopoverPosition]="rightBottom"
+    (iccMenuItemClick)="menuItemClick($event)"
   >
   </icc-menu-item>
 
@@ -27,7 +34,7 @@
       class="icc-menus-sub-level"
       [items]="item.children!"
       [level]="level + 1"
-      (click)="itemClicked($event, item)"
+      (iccMenuItemClick)="menuItemClick($event)"
     >
     </icc-menus>
   </ng-template>

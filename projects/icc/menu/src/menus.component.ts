@@ -41,6 +41,12 @@ export class IccMenusComponent {
   }
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+
+  menuItemClick(item: IccMenuItem): void {
+    //console.log( ' 1111 iccMenuItemClick=', item)
+    this.iccMenuItemClick.emit(item);
+  }
 
   isLeafMenu(item: IccMenuItem): boolean {
     return !item.hidden && (!item.children || item.children.length === 0);

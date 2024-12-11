@@ -1,9 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccIconModule } from '@icc/ui/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { IccMenuItem } from '../../models/menu-item.model';
 
 @Component({
@@ -38,7 +46,13 @@ export class IccMenuItemComponent {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
 
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+
   hasChildItem(item: IccMenuItem): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
+  }
+
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    this.iccMenuItemClick.emit(this.menuItem);
   }
 }

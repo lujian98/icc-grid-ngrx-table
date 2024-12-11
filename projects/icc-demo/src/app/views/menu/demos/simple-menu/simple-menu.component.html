@@ -14,7 +14,7 @@
   <div><br /></div>
   <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
     <div>Click Menu</div>
-    <icc-menus [items]="menuItems"> </icc-menus>
+    <icc-menus [items]="menuItems" (iccMenuItemClick)="menuItemClick($event)"> </icc-menus>
   </div>
   <div><br /></div>
   <div><br /></div>

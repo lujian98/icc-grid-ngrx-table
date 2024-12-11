@@ -94,4 +94,8 @@ export class AppSimpleMenuComponent implements OnInit {
   ngOnInit() {
     this.menuItems = [this.testMenuItems];
   }
+
+  menuItemClick(item: IccMenuItem): void {
+    console.log(' 999999 end  iccMenuItemClick=', item);
+  }
 }
