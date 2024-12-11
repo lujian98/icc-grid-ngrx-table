@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
+import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
 import { IccMenusComponent } from './menus.component';
 import { IccMenuItem } from './models/menu-item.model';
 
@@ -16,6 +16,8 @@ import { IccMenuItem } from './models/menu-item.model';
 export class IccPopoverMenuComponent {
   @Input() menuItem!: IccMenuItem;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
+
+  @Input() position: IccPosition = IccPosition.BOTTOMRIGHT;
 
   level = 0;
 
