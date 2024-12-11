@@ -9,6 +9,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { IccIconModule } from '@icc/ui/icon';
 import {
   ICC_LAYOUT_HEADER_HEIGHT,
   IccLayoutComponent,
@@ -27,6 +28,7 @@ import { IccAccordion } from './models/accordion.model';
   standalone: true,
   imports: [
     CommonModule,
+    IccIconModule,
     IccMenusComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
