@@ -16,7 +16,6 @@ export class IccDynamicOverlayService {
   protected hostElement!: ElementRef;
   protected position: IccPosition = IccPosition.BOTTOM;
   protected trigger: IccTrigger = IccTrigger.HOVER;
-  protected dynamicOverlayService!: IccDynamicOverlayService;
   protected customStyle: string | undefined;
 
   protected overlayRef!: IccOverlayRef | null;
@@ -36,7 +35,6 @@ export class IccDynamicOverlayService {
     trigger: IccTrigger,
     content: Type<any> | TemplateRef<any> | string,
     context: {},
-    dynamicOverlayService: IccDynamicOverlayService,
     customStyle?: string,
   ) {
     this.componentType = componentType;
@@ -45,7 +43,6 @@ export class IccDynamicOverlayService {
     this.trigger = trigger;
     this.content = content;
     this.context = context;
-    this.dynamicOverlayService = dynamicOverlayService;
     this.customStyle = customStyle;
 
     if (this.triggerStrategy) {
@@ -135,7 +132,7 @@ export class IccDynamicOverlayService {
     Object.assign(this.containerRef?.instance, {
       content: this.content,
       context: this.context,
-      dynamicOverlayService: this.dynamicOverlayService,
+      dynamicOverlayService: this,
       customStyle: this.customStyle,
     });
     this.containerRef?.instance.renderContent();

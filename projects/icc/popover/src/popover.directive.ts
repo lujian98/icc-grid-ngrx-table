@@ -8,6 +8,7 @@ import {
   AfterViewInit,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 
 import { IccPopoverComponent } from './popover.component';
@@ -20,6 +21,9 @@ import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overl
   providers: [IccDynamicOverlayService],
 })
 export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
+  private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private elementRef = inject(ElementRef);
+
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 
@@ -37,20 +41,14 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
 
   @Input() popoverLevel = 0;
 
-  constructor(
-    protected elementRef: ElementRef,
-    protected dyanmicOverlayService: IccDynamicOverlayService,
-  ) {}
-
   ngAfterViewInit() {
-    this.dyanmicOverlayService.build(
+    this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,
       this.position,
       this.trigger,
       this.content,
       this.context,
-      this.dyanmicOverlayService,
       this.style,
     );
   }
@@ -71,40 +69,39 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   ngOnChanges(changes: SimpleChanges) {
     // @ts-ignore
     if (changes.context) {
-      this.dyanmicOverlayService.rebuild(this.context, this.content);
+      this.dynamicOverlayService.rebuild(this.context, this.content);
     }
   }
 
   ngOnDestroy() {
-    this.dyanmicOverlayService.destroy();
+    this.dynamicOverlayService.destroy();
   }
 
   private rebuildPopover(mouseEvent: MouseEvent): void {
-    this.dyanmicOverlayService.destroy();
+    this.dynamicOverlayService.destroy();
     const fakeElement = this.getFakeElement(mouseEvent);
-    this.dyanmicOverlayService.build(
+    this.dynamicOverlayService.build(
       IccPopoverComponent,
       fakeElement,
       this.position,
       this.trigger,
       this.content,
       this.context,
-      this.dyanmicOverlayService,
       this.style,
     );
   }
 
   openPopover(mouseEvent: MouseEvent): void {
     this.rebuildPopover(mouseEvent);
-    this.dyanmicOverlayService.show();
+    this.dynamicOverlayService.show();
   }
 
   show() {
-    this.dyanmicOverlayService.rebuild(this.context, this.content);
-    this.dyanmicOverlayService.show();
+    this.dynamicOverlayService.rebuild(this.context, this.content);
+    this.dynamicOverlayService.show();
   }
 
   hide() {
-    this.dyanmicOverlayService.hide();
+    this.dynamicOverlayService.hide();
   }
 }

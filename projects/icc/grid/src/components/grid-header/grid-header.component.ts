@@ -105,7 +105,6 @@ export class IccGridHeaderComponent {
       IccTrigger.POINT,
       IccGridColumnMenuComponent,
       popoverContext,
-      this.dynamicOverlayService,
     );
   }
 }

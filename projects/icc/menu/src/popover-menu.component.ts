@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { IccPosition, IccTrigger, IccDynamicOverlayService } from '@icc/ui/overlay';
+import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccMenusComponent } from './menus.component';
 import { IccMenuItem } from './models/menu-item.model';
 import { IccIconModule } from '@icc/ui/icon';

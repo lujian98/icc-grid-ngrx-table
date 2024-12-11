@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccDynamicOverlayService } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -15,7 +14,7 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, TranslateModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
-  providers: [IccDynamicOverlayService, IccGridFacade],
+  providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
@@ -61,40 +60,4 @@ export class IccGridHeaderCellComponent {
     event.stopPropagation();
     this.columnMenuClick.emit({ column: this.column, event: event });
   }
-
-  /*
-  private getFakeElement(event: MouseEvent): ElementRef {
-    return new ElementRef({
-      getBoundingClientRect: () => ({
-        bottom: event.clientY,
-        height: 0,
-        left: event.clientX,
-        right: event.clientX,
-        top: event.clientY,
-        width: 0,
-      }),
-    });
-  }
-
-  private show(): void {
-    this.hide();
-    this.dynamicOverlayService.show();
-  }
-
-  private hide() {
-    this.dynamicOverlayService.hide();
-  }
-
-  private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      elementRef,
-      IccPosition.BOTTOM_END,
-      IccTrigger.POINT,
-      IccGridColumnMenuComponent,
-      popoverContext,
-      this.dynamicOverlayService,
-    );
-  }
-    */
 }
