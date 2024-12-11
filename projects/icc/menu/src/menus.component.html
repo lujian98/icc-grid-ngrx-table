@@ -6,7 +6,7 @@
     [iccPopover]="menu"
     [iccPopoverTrigger]="popoverTrigger"
     [popoverLevel]="level + 1"
-    popoverPosition="bottomRight"
+    [iccPopoverPosition]="bottom"
   >
     <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
     <span class="icc-menu-item-title"> {{ item.title }}</span>
@@ -18,7 +18,7 @@
     [iccPopover]="menu"
     [iccPopoverTrigger]="popoverTrigger"
     [popoverLevel]="level + 1"
-    popoverPosition="Right"
+    [iccPopoverPosition]="rightBottom"
   >
   </icc-menu-item>
 

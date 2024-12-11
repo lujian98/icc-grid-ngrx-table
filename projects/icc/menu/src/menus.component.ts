@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IccTrigger } from '@icc/ui/overlay';
+import { IccTrigger, IccPosition } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './models/menu-item.model';
@@ -18,7 +18,8 @@ import { IccIconModule } from '@icc/ui/icon';
 export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
-
+  bottom = IccPosition.BOTTOM;
+  rightBottom = IccPosition.RIGHTBOTTOM;
   @Input()
   set items(val: IccMenuItem[]) {
     this._items = val;
