@@ -37,4 +37,8 @@ export class IccMenuItemComponent {
   get title(): string {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
+
+  hasChildItem(item: IccMenuItem): boolean {
+    return !item.hidden && !!item.children && item.children.length > 0;
+  }
 }
