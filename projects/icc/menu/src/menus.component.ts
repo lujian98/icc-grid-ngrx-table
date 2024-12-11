@@ -44,7 +44,7 @@ export class IccMenusComponent {
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
 
   menuItemClick(item: IccMenuItem): void {
-    //console.log( ' 1111 iccMenuItemClick=', item)
+    console.log(' 1111 iccMenuItemClick=', item);
     this.iccMenuItemClick.emit(item);
   }
 
