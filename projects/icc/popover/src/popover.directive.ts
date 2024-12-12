@@ -16,17 +16,11 @@ import {
   IccPosition,
   IccTrigger,
   IccDynamicOverlayService,
-  IccOverlayServiceConfig,
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccOverlayRef,
+  IccTriggerStrategy,
+  IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
-
-import {
-  IccBasePopoverStrategy,
-  IccPopoverClickStrategy,
-  IccPopoverHoverStrategy,
-  IccPopoverContextmenuStrategy,
-} from './popover.strategy';
 
 @Directive({
   selector: '[iccPopover]',
@@ -38,7 +32,9 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
 
-  private popoverStrategy!: IccBasePopoverStrategy;
+  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
+  private triggerStrategy!: IccTriggerStrategy;
+
   private overlayRef: IccOverlayRef | null = null;
   private isOpened = false;
 
@@ -60,48 +56,44 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   @Input() popoverLevel = 0;
 
   ngAfterViewInit() {
-    this.popoverStrategy = new IccPopoverClickStrategy(document, this.elementRef.nativeElement);
+    if (this.triggerStrategy) {
+      this.triggerStrategy.destroy();
+    }
 
-    this.popoverStrategy.show$.subscribe((event: any) => this.openPopover2(event));
-    this.popoverStrategy.hide$.subscribe(() => this.closePopover());
+    this.triggerStrategy = this.triggerStrategyBuilder.build(
+      this.elementRef.nativeElement,
+      // @ts-ignore
+      () => this.container(),
+      this.trigger,
+    );
+    // @ts-ignore
+    this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.openPopover2(event));
+    this.triggerStrategy.hide$.subscribe(() => this.hide());
+  }
+
+  container() {
+    return this.dynamicOverlayService.containerRef;
   }
 
   openPopover2(event: MouseEvent) {
-    if (!this.isOpened) {
-      this.isOpened = true;
-      const overlayServiceConfig = {
-        ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-        trigger: this.trigger,
-        position: this.position,
-        popoverLevel: this.popoverLevel,
-        customStyle: this.style,
-      };
-      this.overlayRef = this.dynamicOverlayService.build(
-        IccPopoverComponent,
-        this.elementRef,
-        overlayServiceConfig,
-        this.content,
-        this.context,
-        event,
-      );
-      this.popoverStrategy.isOpened = this.isOpened;
-      this.popoverStrategy.overlayRef = this.overlayRef!;
-      this.popoverStrategy.containerRef = this.dynamicOverlayService.containerRef!;
-
-      /*
-      this.overlayService.overlayComponentRef.afterClosed$
-        .pipe(takeWhile(() => this.isOpened))
-        .subscribe(() => {
-          this.closePopover();
-        });
-
-      this.overlayService.overlayComponentRef.isComponentAttached$
-        .pipe(takeWhile(() => this.isOpened))
-        .subscribe(() => {
-          this.setPortalComponentEvent();
-        });
-        */
-    }
+    //if (!this.isOpened) {
+    this.isOpened = true;
+    const overlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: this.trigger,
+      position: this.position,
+      popoverLevel: this.popoverLevel,
+      customStyle: this.style,
+    };
+    this.overlayRef = this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      this.elementRef,
+      overlayServiceConfig,
+      this.content,
+      this.context,
+      event,
+    );
+    //}
   }
 
   closePopover() {
@@ -109,10 +101,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     // TODO check overlay closeable
     //if (this.overlayService.isOverlayClosed(this.overlayRef, this.popoverType, this.popoverLevel)) {
     this.isOpened = false;
-    this.popoverStrategy.isOpened = this.isOpened;
-    //this.popoverStrategy.overlayRef = null;
-    //this.popoverStrategy.containerRef = null;
-    //}
 
     this.dynamicOverlayService.hide();
   }
