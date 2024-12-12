@@ -7,6 +7,7 @@ import {
   IccTrigger,
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
+  IccOverlayService,
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from './popover.component';
 
@@ -17,6 +18,7 @@ import { IccPopoverComponent } from './popover.component';
   providers: [IccDynamicOverlayService],
 })
 export class IccPopoverDirective implements AfterViewInit, OnDestroy {
+  private overlayService = inject(IccOverlayService);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
 
@@ -25,6 +27,7 @@ export class IccPopoverDirective implements AfterViewInit, OnDestroy {
 
   private overlayRef: IccOverlayRef | null = null;
   private isOpened = false;
+  private overlays: IccOverlayRef[] = [];
 
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
@@ -64,18 +67,21 @@ export class IccPopoverDirective implements AfterViewInit, OnDestroy {
 
   show(event: MouseEvent): void {
     this.isOpened = true;
+    console.log(' level =', this.popoverLevel);
     this.buildOverlay(this.elementRef);
+    //console.log( ' 22222this.overlays=', this.overlays)
   }
 
   hide(): void {
-    this.isOpened = false;
-    this.dynamicOverlayService.hide();
+    if (this.overlayService.isOverlayClosed(this.overlayRef!, this.trigger, this.popoverLevel)) {
+      this.isOpened = false;
+      this.dynamicOverlayService.hide();
+    }
   }
 
   private buildOverlay(elementRef: ElementRef): void {
     const overlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: this.trigger,
       position: this.position,
       popoverLevel: this.popoverLevel,
       customStyle: this.style,
@@ -87,6 +93,7 @@ export class IccPopoverDirective implements AfterViewInit, OnDestroy {
       this.content,
       this.context,
     );
+    //this.overlays.push(this.overlayRef!);
   }
 
   // for D3 point tooltip with fakeElement

@@ -15,7 +15,6 @@ export class IccDynamicOverlayService {
   private context: Object = {};
   private content!: Type<any> | TemplateRef<any> | string;
 
-  private overlays: IccOverlayRef[] = [];
   private overlayRef!: IccOverlayRef | null;
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
 
@@ -26,17 +25,17 @@ export class IccDynamicOverlayService {
     content: Type<any> | TemplateRef<any> | string,
     context: {},
   ) {
+    this.overlayServiceConfig = overlayServiceConfig;
+    if (this.overlayServiceConfig.popoverLevel! === 0) {
+      this.overlayService.closeAllOverlays(); // TODO delete all condition
+    }
     this.componentType = componentType;
     this.hostElement = hostElement;
-    this.overlayServiceConfig = overlayServiceConfig;
     this.content = content;
     this.context = context;
 
-    if (this.overlayServiceConfig.popoverLevel === 0) {
-      this.closeAllOverlays();
-    }
-
     this.show();
+    console.log(' popoverLevel=', this.overlayServiceConfig.popoverLevel);
     return this.overlayRef;
   }
 
@@ -56,7 +55,7 @@ export class IccDynamicOverlayService {
       //hasBackdrop: true,
       //backdropClass: '',
     });
-    this.overlays.push(this.overlayRef);
+    this.overlayService.add(this.overlayRef, this.overlayServiceConfig.popoverLevel!);
   }
 
   private createPositionStrategy() {
@@ -70,10 +69,12 @@ export class IccDynamicOverlayService {
   }
 
   hide(): void {
-    //console.log(' 2222222222222222 hide');
-    this.overlayRef?.detach();
+    if (this.overlayRef) {
+      this.overlayService.destroyOverlay(this.overlayRef);
+    }
     this.containerRef = null;
     this.overlayRef = null;
+    //console.log(' 2222222222222222 hide= ', this.overlayService.overlays);
   }
 
   private updateContext(): void {
@@ -88,40 +89,9 @@ export class IccDynamicOverlayService {
     this.containerRef?.changeDetectorRef.detectChanges();
   }
 
-  public closeAllOverlays(): void {
-    if (this.overlays && this.overlays.length > 0) {
-      this.overlays.forEach((overlay, index) => {
-        this.destroyOverlay(overlay, false);
-      });
-    }
-    this.overlays = [];
-  }
-
-  public isOverlayClosed(overlayRef: IccOverlayRef, popoverType: string, popoverLevel: number): boolean {
-    const index = this.overlays.indexOf(overlayRef);
-    // if (popoverType !== 'hover' || (popoverType === 'hover' && index === this.overlays.length - 1)) {
-    if (index === this.overlays.length - 1) {
-      this.destroyOverlay(overlayRef);
-      return true;
-    }
-    return false;
-  }
-
-  destroyOverlay(overlayRef: IccOverlayRef, removeIndex = true) {
-    if (overlayRef) {
-      if (removeIndex) {
-        const index = this.overlays.indexOf(overlayRef);
-        this.overlays.splice(index, 1);
-      }
-      overlayRef.detach();
-      overlayRef.dispose();
-    }
-  }
-
   destroy(): void {
     if (this.overlayRef) {
-      this.destroyOverlay(this.overlayRef);
-      //this.overlayRef.dispose();
+      this.overlayService.destroyOverlay(this.overlayRef);
     }
   }
 }
