@@ -2,11 +2,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
+  IccOverlayServiceConfig,
   IccPosition,
   IccTrigger,
-  IccOverlayServiceConfig,
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
@@ -77,7 +77,6 @@ export class IccGridHeaderComponent {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
     };
-    // TODO hide
     this.buildPopover(fakeElement, popoverContext);
   }
 
@@ -94,8 +93,18 @@ export class IccGridHeaderComponent {
     });
   }
 
+  private show(): void {
+    this.hide();
+    this.dynamicOverlayService.show();
+  }
+
+  private hide() {
+    this.dynamicOverlayService.hide();
+  }
+
+  //build column menu use POINT not depened on the grid column so it will not close the menu panel
   private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
-    const overlayServiceConfig = {
+    const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
       trigger: IccTrigger.POINT,
       position: IccPosition.BOTTOM_END,
@@ -107,5 +116,6 @@ export class IccGridHeaderComponent {
       IccGridColumnMenuComponent,
       popoverContext,
     );
+    this.show();
   }
 }

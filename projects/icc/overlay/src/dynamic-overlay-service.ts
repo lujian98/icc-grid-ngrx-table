@@ -1,6 +1,7 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, Injectable, TemplateRef, Type, inject } from '@angular/core';
 import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
+import { IccTriggerStrategy, IccTrigger, IccTriggerStrategyBuilderService } from './overlay-trigger';
 import { IccRenderableContainer } from './overlay-container.component';
 import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
 import { IccOverlayService } from './overlay.service';
@@ -9,6 +10,8 @@ import { IccOverlayService } from './overlay.service';
 export class IccDynamicOverlayService {
   private overlayPositionBuilder = inject(IccPositionBuilderService);
   private overlayService = inject(IccOverlayService);
+  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
+
   private componentType!: Type<IccRenderableContainer>;
   private hostElement!: ElementRef;
   private overlayServiceConfig!: IccOverlayServiceConfig;
@@ -17,6 +20,8 @@ export class IccDynamicOverlayService {
 
   private overlayRef!: IccOverlayRef | null;
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+
+  protected triggerStrategy!: IccTriggerStrategy;
 
   build(
     componentType: Type<IccRenderableContainer>,
@@ -34,12 +39,32 @@ export class IccDynamicOverlayService {
     this.content = content;
     this.context = context;
 
-    this.show();
-    console.log(' popoverLevel=', this.overlayServiceConfig.popoverLevel);
+    if (this.overlayServiceConfig.trigger === IccTrigger.POINT) {
+      this.setTriggerStrategy();
+    } else {
+      this.show();
+    }
     return this.overlayRef;
   }
 
-  private show(): void {
+  private setTriggerStrategy(): void {
+    // only POINT trigger for now
+    if (this.triggerStrategy) {
+      this.triggerStrategy.destroy();
+    }
+
+    this.triggerStrategy = this.triggerStrategyBuilder.build(
+      this.hostElement.nativeElement,
+      // @ts-ignore
+      () => this.container(),
+      this.overlayServiceConfig.trigger,
+    );
+    // @ts-ignore
+    this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
+    this.triggerStrategy.hide$.subscribe(() => this.hide());
+  }
+
+  show(): void {
     if (!this.overlayRef) {
       this.createOverlay();
     }
@@ -74,7 +99,6 @@ export class IccDynamicOverlayService {
     }
     this.containerRef = null;
     this.overlayRef = null;
-    //console.log(' 2222222222222222 hide= ', this.overlayService.overlays);
   }
 
   private updateContext(): void {
