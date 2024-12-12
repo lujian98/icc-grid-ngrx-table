@@ -1,17 +1,15 @@
 import {
+  AfterViewInit,
   Directive,
-  Input,
   ElementRef,
+  Input,
+  OnChanges,
   OnDestroy,
+  SimpleChanges,
   TemplateRef,
   Type,
-  AfterViewInit,
-  OnChanges,
-  SimpleChanges,
   inject,
 } from '@angular/core';
-import { IccPopoverComponent } from './popover.component';
-
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
@@ -19,6 +17,7 @@ import {
   IccPosition,
   IccTrigger,
 } from '@icc/ui/overlay';
+import { IccPopoverComponent } from './popover.component';
 
 @Directive({
   selector: '[iccPopover]',
@@ -53,7 +52,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       trigger: this.trigger,
       position: this.position,
     };
-
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,
@@ -63,19 +61,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     );
   }
 
-  private getFakeElement(event: MouseEvent): ElementRef {
-    return new ElementRef({
-      getBoundingClientRect: () => ({
-        bottom: event.clientY,
-        height: 0,
-        left: event.clientX,
-        right: event.clientX,
-        top: event.clientY,
-        width: 0,
-      }),
-    });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     // @ts-ignore
     if (changes.context) {
@@ -83,40 +68,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     }
   }
 
-  private rebuildPopover(mouseEvent: MouseEvent): void {
-    this.dynamicOverlayService.destroy();
-    const fakeElement = this.getFakeElement(mouseEvent);
-
-    const overlayServiceConfig: IccOverlayServiceConfig = {
-      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: this.trigger,
-      position: this.position,
-    };
-
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      fakeElement,
-      overlayServiceConfig,
-      this.content,
-      this.context,
-    );
-  }
-
-  openPopover(mouseEvent: MouseEvent): void {
-    this.rebuildPopover(mouseEvent);
-    this.dynamicOverlayService.show();
-  }
-
-  show(): void {
-    this.dynamicOverlayService.rebuild(this.context, this.content);
-    this.dynamicOverlayService.show();
-  }
-
-  hide(): void {
-    this.dynamicOverlayService.hide();
-  }
-
   ngOnDestroy(): void {
-    this.dynamicOverlayService.destroy();
+    //this.dynamicOverlayService.destroy();
   }
 }

@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ViewChild,
   ElementRef,
   HostBinding,
   HostListener,
@@ -12,6 +11,7 @@ import {
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { isDataSource } from '@angular/cdk/collections';
 import { Observable, of, Subscription, Subject } from 'rxjs';
@@ -39,8 +39,14 @@ import {
 
 import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverDirective } from '@icc/ui/popover';
-import { IccTrigger, IccPosition } from '@icc/ui/overlay';
+import { IccPopoverDirective, IccPopoverComponent } from '@icc/ui/popover';
+import {
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
+  IccDynamicOverlayService,
+  IccOverlayServiceConfig,
+  IccPosition,
+  IccTrigger,
+} from '@icc/ui/overlay';
 import { IccD3Config } from '../models/d3.model';
 
 @Component({
@@ -50,10 +56,11 @@ import { IccD3Config } from '../models/d3.model';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccPopoverDirective, IccD3PopoverComponent2, IccD3LegendComponent],
-  providers: [IccDrawServie],
+  imports: [CommonModule, IccPopoverDirective, IccPopoverComponent, IccD3PopoverComponent2, IccD3LegendComponent],
+  providers: [IccDrawServie, IccDynamicOverlayService],
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  private dynamicOverlayService = inject(IccDynamicOverlayService);
   private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private _data!: any[];
@@ -89,9 +96,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   private options!: IccD3Options; // get form d3Config
   @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[]; // TODO remove not used
 
-  trigger = IccTrigger.NOOP;
-  positopn = IccPosition.BOTTOMRIGHT;
-
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
   scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
@@ -104,8 +108,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   private alive = true;
   private isViewReady = false;
   isWindowReszie$: Subject<{}> = new Subject();
-  @ViewChild(IccPopoverDirective) popover!: IccPopoverDirective;
-  d3Popover = IccD3PopoverComponent2;
 
   @HostBinding('style.flex-direction') get flexDirection(): any {
     if (this.legend) {
@@ -295,7 +297,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     this.interactive = new IccInteractiveDraw(this.view, this.scale, this);
     this.interactive.drawPanel.select('.drawArea').on('mouseout', (e, d) => {
       // console.log(' mouseout=', e)
-      this.popover.hide();
+      this.hidePopover();
     });
   }
 
@@ -351,15 +353,41 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     this.dispatch.on('legendMouseover', (d: any) => this.legendMouseover(d, true));
     this.dispatch.on('legendMouseout', (d: any) => this.legendMouseover(d, false));
     this.dispatch.on('drawMouseover', (p: any) => {
-      this.popover.hide();
+      this.hidePopover();
       if (p.data && p.data.series.length > 0) {
-        this.popover.context = { data: p.data };
-        this.popover.openPopover(p.event);
+        const popoverContext = { data: p.data };
+        this.buildPopover(popoverContext, p.event);
       }
     });
     this.dispatch.on('drawMouseout', (p: any) => {
-      this.popover.hide(); // NOT WORKING
+      this.hidePopover(); // NOT WORKING
     });
+  }
+
+  private buildPopover(popoverContext: Object, event: MouseEvent): void {
+    const overlayServiceConfig: IccOverlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: IccTrigger.POINT,
+      position: IccPosition.BOTTOMRIGHT,
+      event,
+    };
+    this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      this.elementRef,
+      overlayServiceConfig,
+      IccD3PopoverComponent2,
+      popoverContext,
+    );
+    this.showPopover();
+  }
+
+  private showPopover(): void {
+    this.hidePopover();
+    this.dynamicOverlayService.show();
+  }
+
+  private hidePopover() {
+    this.dynamicOverlayService.hide();
   }
 
   legendMouseover(data: T[], mouseover: boolean): void {

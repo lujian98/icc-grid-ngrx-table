@@ -1,15 +1,14 @@
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ComponentRef, ElementRef, Injectable, TemplateRef, Type, inject } from '@angular/core';
-import { IccOverlayRef } from './mapping';
-import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay-trigger';
-import { IccOverlayServiceConfig } from './mapping';
+import { ComponentRef, ElementRef, inject, Injectable, OnDestroy, TemplateRef, Type } from '@angular/core';
+import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
 import { IccRenderableContainer } from './overlay-container.component';
 import { IccPosition } from './overlay-position';
 import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
+import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay-trigger';
 import { IccOverlayService } from './overlay.service';
 
 @Injectable()
-export class IccDynamicOverlayService {
+export class IccDynamicOverlayService implements OnDestroy {
   private overlayPositionBuilder = inject(IccPositionBuilderService);
   private overlayService = inject(IccOverlayService);
   private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
@@ -30,9 +29,9 @@ export class IccDynamicOverlayService {
     content: Type<any> | TemplateRef<any> | string,
     context: {},
   ): void {
+    this.componentType = componentType;
     this.overlayServiceConfig = overlayServiceConfig;
 
-    this.componentType = componentType;
     this.hostElement =
       overlayServiceConfig?.event && overlayServiceConfig.trigger === IccTrigger.POINT
         ? this.getFakeElement(overlayServiceConfig?.event)
@@ -100,7 +99,7 @@ export class IccDynamicOverlayService {
   }
 
   // @ts-ignore
-  private container() {
+  private container(): ComponentRef<IccRenderableContainer> | null | undefined {
     return this.containerRef;
   }
 
@@ -138,7 +137,7 @@ export class IccDynamicOverlayService {
     this.containerRef?.changeDetectorRef.detectChanges();
   }
 
-  destroy(): void {
+  ngOnDestroy(): void {
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
