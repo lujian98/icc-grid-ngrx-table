@@ -77,8 +77,8 @@ export class IccGridHeaderComponent {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
     };
-    this.buildPopover(fakeElement, popoverContext);
-    this.show();
+    //this.buildPopover(fakeElement, popoverContext);
+    //this.show();
   }
 
   private getFakeElement(event: MouseEvent): ElementRef {
@@ -100,7 +100,7 @@ export class IccGridHeaderComponent {
   }
 
   private hide() {
-    this.dynamicOverlayService.hide();
+    //this.dynamicOverlayService.hide();
   }
 
   private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
@@ -109,12 +109,13 @@ export class IccGridHeaderComponent {
       trigger: IccTrigger.POINT,
       position: IccPosition.BOTTOM_END,
     };
+    /*
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       elementRef,
       overlayServiceConfig,
       IccGridColumnMenuComponent,
       popoverContext,
-    );
+    );*/
   }
 }

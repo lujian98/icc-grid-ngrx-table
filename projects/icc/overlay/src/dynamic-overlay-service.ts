@@ -21,7 +21,8 @@ export class IccDynamicOverlayService {
 
   private overlays: IccOverlayRef[] = [];
   private overlayRef!: IccOverlayRef | null;
-  private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  //public containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  public containerRef!: ComponentRef<any> | undefined;
   private triggerStrategy!: IccTriggerStrategy;
 
   build(
@@ -30,7 +31,8 @@ export class IccDynamicOverlayService {
     overlayServiceConfig: IccOverlayServiceConfig,
     content: Type<any> | TemplateRef<any> | string,
     context: {},
-  ): void {
+    event: MouseEvent,
+  ) {
     this.componentType = componentType;
     this.hostElement = hostElement;
     this.overlayServiceConfig = overlayServiceConfig;
@@ -41,6 +43,7 @@ export class IccDynamicOverlayService {
       this.closeAllOverlays();
     }
 
+    /*
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
@@ -54,6 +57,27 @@ export class IccDynamicOverlayService {
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
     this.triggerStrategy.hide$.subscribe(() => this.hide());
+    */
+    this.show(event);
+
+    return this.overlayRef;
+  }
+
+  show(event: MouseEvent | null = null): void {
+    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
+      this.hide();
+      this.overlayRef = null;
+    }
+
+    if (this.containerRef) {
+      return;
+    }
+
+    if (!this.overlayRef) {
+      this.createOverlay(event);
+    }
+    this.containerRef = this.overlayRef?.attach(new ComponentPortal(this.componentType, null, null));
+    this.updateContext();
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
@@ -92,26 +116,9 @@ export class IccDynamicOverlayService {
     return this.containerRef;
   }
 
-  show(event: MouseEvent | null = null): void {
-    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
-      this.hide();
-      this.overlayRef = null;
-    }
-
-    if (this.containerRef) {
-      return;
-    }
-
-    if (!this.overlayRef) {
-      this.createOverlay(event);
-    }
-    this.containerRef = this.overlayRef?.attach(new ComponentPortal(this.componentType, null, null));
-    this.updateContext();
-  }
-
   hide(): void {
     this.overlayRef?.detach();
-    this.containerRef = null;
+    //this.containerRef = null;
     this.overlayRef = null;
   }
 
