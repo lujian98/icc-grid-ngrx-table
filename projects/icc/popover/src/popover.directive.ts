@@ -8,8 +8,8 @@ import {
   AfterViewInit,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
-
 import { IccPopoverComponent } from './popover.component';
 
 import {
@@ -27,6 +27,9 @@ import {
   providers: [IccDynamicOverlayService],
 })
 export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
+  private elementRef = inject(ElementRef);
+  private dynamicOverlayService = inject(IccDynamicOverlayService);
+
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 
@@ -43,11 +46,6 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   style: string | undefined;
 
   @Input() popoverLevel = 0;
-
-  constructor(
-    protected elementRef: ElementRef,
-    protected dynamicOverlayService: IccDynamicOverlayService,
-  ) {}
 
   ngAfterViewInit(): void {
     const overlayServiceConfig: IccOverlayServiceConfig = {

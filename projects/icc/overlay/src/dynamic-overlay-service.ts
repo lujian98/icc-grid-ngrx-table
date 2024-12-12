@@ -1,34 +1,27 @@
-import { Injectable, ComponentRef, ElementRef, Type, TemplateRef } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
-
+import { ComponentRef, ElementRef, Injectable, TemplateRef, Type, inject } from '@angular/core';
 import { IccOverlayRef } from './mapping';
-import { IccTriggerStrategy, IccTrigger, IccTriggerStrategyBuilderService } from './overlay-trigger';
-
-import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig } from './mapping';
-
+import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay-trigger';
+import { IccOverlayServiceConfig } from './mapping';
 import { IccRenderableContainer } from './overlay-container.component';
-import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
 import { IccPosition } from './overlay-position';
+import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
 import { IccOverlayService } from './overlay.service';
 
 @Injectable()
 export class IccDynamicOverlayService {
+  private overlayPositionBuilder = inject(IccPositionBuilderService);
+  private overlayService = inject(IccOverlayService);
+  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
+
   private componentType!: Type<IccRenderableContainer>;
   private context: Object = {};
   private content!: Type<any> | TemplateRef<any> | string;
   private hostElement!: ElementRef;
-
   private overlayRef!: IccOverlayRef | null;
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
   private triggerStrategy!: IccTriggerStrategy;
-
   private overlayServiceConfig!: IccOverlayServiceConfig;
-
-  constructor(
-    private overlayPositionBuilder: IccPositionBuilderService,
-    private overlayService: IccOverlayService,
-    private triggerStrategyBuilder: IccTriggerStrategyBuilderService,
-  ) {}
 
   build(
     componentType: Type<IccRenderableContainer>,
