@@ -115,6 +115,7 @@ export class IccDynamicOverlayService {
   }
 
   hide(): void {
+    console.log(' 2222222222222222 hide');
     this.overlayRef?.detach();
     this.containerRef = null;
     this.overlayRef = null;
