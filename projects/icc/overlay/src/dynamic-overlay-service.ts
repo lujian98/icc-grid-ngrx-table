@@ -21,7 +21,7 @@ export class IccDynamicOverlayService {
 
   private overlays: IccOverlayRef[] = [];
   private overlayRef!: IccOverlayRef | null;
-  private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  public containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
   private triggerStrategy!: IccTriggerStrategy;
 
   build(
@@ -30,7 +30,8 @@ export class IccDynamicOverlayService {
     overlayServiceConfig: IccOverlayServiceConfig,
     content: Type<any> | TemplateRef<any> | string,
     context: {},
-  ): void {
+    event?: MouseEvent,
+  ) {
     this.componentType = componentType;
     this.hostElement = hostElement;
     this.overlayServiceConfig = overlayServiceConfig;
@@ -41,6 +42,7 @@ export class IccDynamicOverlayService {
       this.closeAllOverlays();
     }
 
+    /*
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
@@ -54,6 +56,9 @@ export class IccDynamicOverlayService {
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
     this.triggerStrategy.hide$.subscribe(() => this.hide());
+    */
+    this.show();
+    return this.overlayRef;
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
