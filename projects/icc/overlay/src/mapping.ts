@@ -24,3 +24,8 @@ export const DEFAULT_OVERLAY_SERVICE_CONFIG: IccOverlayServiceConfig = {
   trigger: IccTrigger.CLICK,
   //shouldCloseOnBackdropClick: true,
 };
+
+export interface IccOverlayItem {
+  level: number;
+  overlayRef: IccOverlayRef;
+}

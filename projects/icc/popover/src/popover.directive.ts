@@ -51,6 +51,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
       trigger: this.trigger,
       position: this.position,
+      popoverLevel: this.popoverLevel,
     };
     this.dynamicOverlayService.build(
       IccPopoverComponent,
