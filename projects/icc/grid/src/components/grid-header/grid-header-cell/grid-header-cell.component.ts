@@ -6,6 +6,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
+import {
+  IccDynamicOverlayService,
+  IccPosition,
+  IccTrigger,
+  IccOverlayServiceConfig,
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
+} from '@icc/ui/overlay';
+import { IccPopoverDirective } from '@icc/ui/popover';
 
 @Component({
   selector: 'icc-grid-header-cell',
@@ -13,7 +21,14 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    IccPopoverComponent,
+    IccPopoverDirective,
+    IccIconModule,
+    IccGridColumnMenuComponent,
+  ],
   providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {
@@ -21,6 +36,13 @@ export class IccGridHeaderCellComponent {
   @Input() column!: IccColumnConfig;
   @Input() gridConfig!: IccGridConfig;
 
+  gridColumnMenuComponent = IccGridColumnMenuComponent;
+  trigger: IccTrigger = IccTrigger.CLICK;
+  position: IccPosition = IccPosition.BOTTOM_END;
+  /*
+  trigger: IccTrigger.POINT,
+  position: IccPosition.BOTTOM_END,
+  */
   get title(): string {
     return this.column.title === undefined ? this.column.name : this.column.title;
   }

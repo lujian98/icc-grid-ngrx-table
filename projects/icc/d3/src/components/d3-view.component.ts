@@ -354,7 +354,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       this.popover.hide();
       if (p.data && p.data.series.length > 0) {
         this.popover.context = { data: p.data };
-        this.popover.openPopover(p.event);
+        this.popover.openPopover2(p.event);
       }
     });
     this.dispatch.on('drawMouseout', (p: any) => {

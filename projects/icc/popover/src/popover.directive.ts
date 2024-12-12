@@ -208,10 +208,9 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     this.dynamicOverlayService.destroy();
   }
 
-  /*
-  private rebuildPopover(mouseEvent: MouseEvent): void {
+  private rebuildPopover(event: MouseEvent): void {
     this.dynamicOverlayService.destroy();
-    const fakeElement = this.getFakeElement(mouseEvent);
+    const fakeElement = this.getFakeElement(event);
     const overlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
       trigger: this.trigger,
@@ -219,6 +218,24 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       popoverLevel: this.popoverLevel,
       customStyle: this.style,
     };
+
+    this.overlayRef = this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      this.elementRef,
+      overlayServiceConfig,
+      this.content,
+      this.context,
+      event,
+
+      /*
+      origin,
+      IccPortalComponent,
+      overlayConfig,
+      this.content,
+      this.context
+      */
+    );
+    /*
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       fakeElement,
@@ -226,11 +243,12 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       this.content,
       this.context,
     );
-  }*/
+    */
+  }
 
   openPopover2(mouseEvent: MouseEvent): void {
-    //this.rebuildPopover(mouseEvent);
-    this.dynamicOverlayService.show();
+    this.rebuildPopover(mouseEvent);
+    //this.dynamicOverlayService.show();
   }
 
   show() {

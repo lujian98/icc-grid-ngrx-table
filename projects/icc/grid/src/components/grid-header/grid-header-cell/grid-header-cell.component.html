@@ -11,8 +11,21 @@
   </ng-container>
 
   <ng-container *ngIf="gridConfig.columnMenu">
-    <div class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
+    <div
+      class="grid-header-cell-menu"
+      [iccPopover]="gridColumnMenuComponent"
+      [iccPopoverTrigger]="trigger"
+      [iccPopoverPosition]="position"
+    >
       <icc-icon config="ellipsis-v"></icc-icon>
     </div>
   </ng-container>
 </div>
+
+<!--
+      (click)="onClickColumnMenu($event)"
+    [iccPopover]="menu"
+    [iccPopoverTrigger]="menuTrigger"
+    [popoverLevel]="level + 1"
+    [iccPopoverPosition]="bottom"
+-->
