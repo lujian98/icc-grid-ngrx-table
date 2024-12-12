@@ -31,8 +31,13 @@ export class IccDynamicOverlayService {
     context: {},
   ): void {
     this.overlayServiceConfig = overlayServiceConfig;
+
     this.componentType = componentType;
-    this.hostElement = hostElement;
+    this.hostElement =
+      overlayServiceConfig?.event && overlayServiceConfig.trigger === IccTrigger.POINT
+        ? this.getFakeElement(overlayServiceConfig?.event)
+        : hostElement;
+
     this.content = content;
     this.context = context;
 
@@ -66,6 +71,19 @@ export class IccDynamicOverlayService {
       positionStrategy,
       //hasBackdrop: true,
       //backdropClass: '',
+    });
+  }
+
+  private getFakeElement(event: MouseEvent): ElementRef {
+    return new ElementRef({
+      getBoundingClientRect: () => ({
+        bottom: event.clientY,
+        height: 0,
+        left: event.clientX,
+        right: event.clientX,
+        top: event.clientY,
+        width: 0,
+      }),
     });
   }
 

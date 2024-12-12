@@ -15,6 +15,7 @@ export interface IccOverlayServiceConfig {
   trigger: IccTrigger;
   //shouldCloseOnBackdropClick?: boolean;
   customStyle?: string | undefined;
+  event?: MouseEvent;
 }
 
 export const DEFAULT_OVERLAY_SERVICE_CONFIG: IccOverlayServiceConfig = {

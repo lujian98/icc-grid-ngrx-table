@@ -41,6 +41,7 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
 })
 export class IccGridHeaderComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private elementRef = inject(ElementRef);
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
 
@@ -72,25 +73,29 @@ export class IccGridHeaderComponent {
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
-    const fakeElement = this.getFakeElement(menuClick.event);
     const popoverContext = {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
     };
-    this.buildPopover(fakeElement, popoverContext);
+    this.buildPopover(popoverContext, menuClick.event);
   }
 
-  private getFakeElement(event: MouseEvent): ElementRef {
-    return new ElementRef({
-      getBoundingClientRect: () => ({
-        bottom: event.clientY,
-        height: 0,
-        left: event.clientX,
-        right: event.clientX,
-        top: event.clientY,
-        width: 0,
-      }),
-    });
+  //build column menu use POINT not depened on the grid column so it will not close the menu panel
+  private buildPopover(popoverContext: Object, event: MouseEvent): void {
+    const overlayServiceConfig: IccOverlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: IccTrigger.POINT,
+      position: IccPosition.BOTTOM_END,
+      event,
+    };
+    this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      this.elementRef,
+      overlayServiceConfig,
+      IccGridColumnMenuComponent,
+      popoverContext,
+    );
+    this.show();
   }
 
   private show(): void {
@@ -100,22 +105,5 @@ export class IccGridHeaderComponent {
 
   private hide() {
     this.dynamicOverlayService.hide();
-  }
-
-  //build column menu use POINT not depened on the grid column so it will not close the menu panel
-  private buildPopover(elementRef: ElementRef, popoverContext: Object): void {
-    const overlayServiceConfig: IccOverlayServiceConfig = {
-      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: IccTrigger.POINT,
-      position: IccPosition.BOTTOM_END,
-    };
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      elementRef,
-      overlayServiceConfig,
-      IccGridColumnMenuComponent,
-      popoverContext,
-    );
-    this.show();
   }
 }
