@@ -1,15 +1,24 @@
-import { AfterViewInit, Directive, ElementRef, inject, Input, OnDestroy, TemplateRef, Type } from '@angular/core';
+import {
+  Directive,
+  Input,
+  ElementRef,
+  OnDestroy,
+  TemplateRef,
+  Type,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+
+import { IccPopoverComponent } from './popover.component';
+
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
-  IccOverlayRef,
+  IccOverlayServiceConfig,
   IccPosition,
   IccTrigger,
-  IccTriggerStrategy,
-  IccTriggerStrategyBuilderService,
-  IccOverlayService,
 } from '@icc/ui/overlay';
-import { IccPopoverComponent } from './popover.component';
 
 @Directive({
   selector: '[iccPopover]',
@@ -17,18 +26,7 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnDestroy {
-  private overlayService = inject(IccOverlayService);
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
-  private elementRef = inject(ElementRef);
-
-  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
-  private triggerStrategy!: IccTriggerStrategy;
-
-  private overlayRef: IccOverlayRef | null = null;
-  private isOpened = false;
-  private overlays: IccOverlayRef[] = [];
-
+export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 
@@ -46,61 +44,25 @@ export class IccPopoverDirective implements AfterViewInit, OnDestroy {
 
   @Input() popoverLevel = 0;
 
+  constructor(
+    protected elementRef: ElementRef,
+    protected dynamicOverlayService: IccDynamicOverlayService,
+  ) {}
+
   ngAfterViewInit(): void {
-    if (this.triggerStrategy) {
-      this.triggerStrategy.destroy();
-    }
-    this.triggerStrategy = this.triggerStrategyBuilder.build(
-      this.elementRef.nativeElement,
-      // @ts-ignore
-      () => this.container(),
-      this.trigger,
-    );
-    // @ts-ignore
-    this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
-    this.triggerStrategy.hide$.subscribe(() => this.hide());
-  }
-
-  private container() {
-    return this.dynamicOverlayService.container();
-  }
-
-  show(event: MouseEvent): void {
-    this.isOpened = true;
-    console.log(' level =', this.popoverLevel);
-    this.buildOverlay(this.elementRef);
-    //console.log( ' 22222this.overlays=', this.overlays)
-  }
-
-  hide(): void {
-    if (this.overlayService.isOverlayClosed(this.overlayRef!, this.trigger, this.popoverLevel)) {
-      this.isOpened = false;
-      this.dynamicOverlayService.hide();
-    }
-  }
-
-  private buildOverlay(elementRef: ElementRef): void {
-    const overlayServiceConfig = {
+    const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: this.trigger,
       position: this.position,
-      popoverLevel: this.popoverLevel,
-      customStyle: this.style,
     };
-    this.overlayRef = this.dynamicOverlayService.build(
+
+    this.dynamicOverlayService.build(
       IccPopoverComponent,
-      elementRef,
+      this.elementRef,
       overlayServiceConfig,
       this.content,
       this.context,
     );
-    //this.overlays.push(this.overlayRef!);
-  }
-
-  // for D3 point tooltip with fakeElement
-  openPopover(event: MouseEvent): void {
-    this.dynamicOverlayService.destroy();
-    const fakeElement = this.getFakeElement(event);
-    this.buildOverlay(fakeElement);
   }
 
   private getFakeElement(event: MouseEvent): ElementRef {
@@ -116,10 +78,47 @@ export class IccPopoverDirective implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.triggerStrategy) {
-      this.triggerStrategy.destroy();
+  ngOnChanges(changes: SimpleChanges): void {
+    // @ts-ignore
+    if (changes.context) {
+      this.dynamicOverlayService.rebuild(this.context, this.content);
     }
+  }
+
+  private rebuildPopover(mouseEvent: MouseEvent): void {
+    this.dynamicOverlayService.destroy();
+    const fakeElement = this.getFakeElement(mouseEvent);
+
+    const overlayServiceConfig: IccOverlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: this.trigger,
+      position: this.position,
+    };
+
+    this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      fakeElement,
+      overlayServiceConfig,
+      this.content,
+      this.context,
+    );
+  }
+
+  openPopover(mouseEvent: MouseEvent): void {
+    this.rebuildPopover(mouseEvent);
+    this.dynamicOverlayService.show();
+  }
+
+  show(): void {
+    this.dynamicOverlayService.rebuild(this.context, this.content);
+    this.dynamicOverlayService.show();
+  }
+
+  hide(): void {
+    this.dynamicOverlayService.hide();
+  }
+
+  ngOnDestroy(): void {
     this.dynamicOverlayService.destroy();
   }
 }
