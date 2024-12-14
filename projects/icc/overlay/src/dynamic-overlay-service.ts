@@ -61,6 +61,7 @@ export class IccDynamicOverlayService implements OnDestroy {
       // and still have level > above is still show
       if (event.type === 'click' && this.overlayServiceConfig.trigger === IccTrigger.CLICK) {
         //console.log( ' overlayService=', this.overlayService.overlays)
+        this.hide();
       } else {
         this.hide();
         // console.log( ' event.type-=', event.type)

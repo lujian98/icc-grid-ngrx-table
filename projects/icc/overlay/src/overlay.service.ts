@@ -31,8 +31,8 @@ export class IccOverlayService {
       }
     });
     */
-    this.overlays = level <= 1 ? [overlay] : [...this.overlays, overlay];
-    console.log(' eeee this.overlays=', this.overlays);
+    this.overlays = level < 1 ? [overlay] : [...this.overlays, overlay];
+    console.log(' eeeeeeeee this.overlays=', this.overlays);
   }
 
   /*
