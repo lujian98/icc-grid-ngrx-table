@@ -44,6 +44,8 @@ export class IccDynamicOverlayService implements OnDestroy {
       this.triggerStrategy.destroy();
     }
 
+    console.log(' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel);
+    console.log(' 6666this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger);
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
       // @ts-ignore
@@ -52,7 +54,18 @@ export class IccDynamicOverlayService implements OnDestroy {
     );
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
-    this.triggerStrategy.hide$.subscribe(() => this.hide());
+    this.triggerStrategy.hide$.subscribe((event) => {
+      // TODO avoid hover menu item click to close overlay if
+      //console.log( ' 66666666 this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger)
+      //console.log( ' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel)
+      // and still have level > above is still show
+      if (event.type === 'click' && this.overlayServiceConfig.trigger === IccTrigger.CLICK) {
+        //console.log( ' overlayService=', this.overlayService.overlays)
+      } else {
+        this.hide();
+        // console.log( ' event.type-=', event.type)
+      }
+    });
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {

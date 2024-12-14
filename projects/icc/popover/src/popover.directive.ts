@@ -53,6 +53,8 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       position: this.position,
       popoverLevel: this.popoverLevel,
     };
+    console.log(' level =', this.popoverLevel);
+    console.log(' this.trigger =', this.trigger);
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,

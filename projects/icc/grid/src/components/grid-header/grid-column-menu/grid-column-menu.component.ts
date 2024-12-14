@@ -21,6 +21,7 @@ export class IccGridColumnMenuComponent {
   private gridConfig!: IccGridConfig;
   private columns!: IccColumnConfig[];
   private _menuItems: IccMenuItem[] = [];
+  level = 0;
 
   @Input()
   set gridId(val: string) {
@@ -63,6 +64,16 @@ export class IccGridColumnMenuComponent {
         title: 'ICC.UI.GRID.SORT_DESCENDING',
         icon: 'arrow-down-wide-short',
         disabled: this.sortDisabled('desc'),
+      },
+      {
+        name: 'columns',
+        title: 'columns',
+        children: [
+          {
+            name: 'test',
+            title: 'test',
+          },
+        ],
       },
     ];
     const columnItems = [...this.columns].map((column) => {

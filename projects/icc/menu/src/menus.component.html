@@ -11,7 +11,7 @@
     *ngIf="hasChildItem(item) && level === 0"
     [iccPopover]="menu"
     [iccPopoverTrigger]="menuTrigger"
-    [popoverLevel]="level + 1"
+    [popoverLevel]="level"
     [iccPopoverPosition]="bottom"
   >
     <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
@@ -23,7 +23,7 @@
     [menuItem]="item"
     [iccPopover]="menu"
     [iccPopoverTrigger]="popoverTrigger"
-    [popoverLevel]="level + 1"
+    [popoverLevel]="level"
     [iccPopoverPosition]="rightBottom"
     (iccMenuItemClick)="menuItemClick($event)"
   >
