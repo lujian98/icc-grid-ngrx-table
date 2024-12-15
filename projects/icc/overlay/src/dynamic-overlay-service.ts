@@ -55,16 +55,19 @@ export class IccDynamicOverlayService implements OnDestroy {
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
     this.triggerStrategy.hide$.subscribe((event) => {
-      // TODO avoid hover menu item click to close overlay if
-      //console.log( ' 66666666 this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger)
-      //console.log( ' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel)
-      // and still have level > above is still show
-      if (event.type === 'click' && this.overlayServiceConfig.trigger === IccTrigger.CLICK) {
-        //console.log( ' overlayService=', this.overlayService.overlays)
-        this.hide();
+      console.log('event.type=', event.type);
+      if (event.type === 'click' || event.type === 'hover') {
+        if (
+          this.overlayService.isOverlayColasable(
+            this.overlayRef!,
+            this.overlayServiceConfig.trigger,
+            this.overlayServiceConfig.popoverLevel!,
+          )
+        ) {
+          this.hide();
+        }
       } else {
         this.hide();
-        // console.log( ' event.type-=', event.type)
       }
     });
   }

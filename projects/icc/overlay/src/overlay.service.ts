@@ -32,8 +32,12 @@ export class IccOverlayService {
   remove(overlayRef: IccOverlayRef | null): void {
     if (overlayRef) {
       this.overlays = this.overlays.filter((item) => item.overlayRef !== overlayRef);
-      console.log(' trrrrrrrrrrrrrrrrrrrrr this.overlays=', this.overlays);
     }
+  }
+
+  public isOverlayColasable(overlayRef: IccOverlayRef, trigger: IccTrigger, popoverLevel: number): boolean {
+    const find = this.overlays.filter((item) => item.level > popoverLevel).length;
+    return find === 0 ? true : false;
   }
 
   /*
