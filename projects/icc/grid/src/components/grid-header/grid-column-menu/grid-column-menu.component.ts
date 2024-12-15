@@ -96,7 +96,7 @@ export class IccGridColumnMenuComponent {
   onMenuItemClick(item: IccMenuItem): void {
     console.log(' itemitemyyyy xxx =', item);
     if (item.checkbox) {
-      //this.columnHideShow(item, this.columns);
+      this.columnHideShow(item, this.columns);
     }
   }
 
@@ -119,6 +119,7 @@ export class IccGridColumnMenuComponent {
       ...column,
       hidden: !item.checked,
     };
+    console.log('cccc col=', col);
     this.gridFacade.setGridColumnConfig(this.gridConfig, col);
   }
 }
