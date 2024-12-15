@@ -110,8 +110,8 @@ export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
         debounceTime(100),
         takeWhile(() => !!this.container()),
         filter((event) => {
-          console.log(' hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-          return false;
+          //console.log(' hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+          //return false;
           return (
             !this.host.contains(event.target as Node) && !this.container().location.nativeElement.contains(event.target)
           );

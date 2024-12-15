@@ -37,6 +37,7 @@ export class IccOverlayService {
 
   isOverlayColasable(popoverLevel: number): boolean {
     const find = this.overlays.filter((item) => item.level > popoverLevel).length;
+    console.log(' find closedable ', find === 0 ? true : false);
     return find === 0 ? true : false;
   }
 }
