@@ -81,11 +81,11 @@ export class IccGridColumnMenuComponent {
       },
     ];
 
-    this.menuItems = [...menuItems, ...columnItems];
+    this.menuItems = [...menuItems, ...columnItems]; // , ...columnItems
   }
 
   onMenuItemChange(item: IccMenuItem): void {
-    console.log(' itemxxx =', item);
+    console.log(' 666666666666 itemxxx =', item);
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.checkbox) {

@@ -99,11 +99,11 @@ export class IccGridHeaderComponent {
   }
 
   private showMenu(): void {
-    this.hideMenu();
+    // this.hideMenu();
     this.dynamicOverlayService.show();
   }
 
   private hideMenu() {
-    this.dynamicOverlayService.hide();
+    // this.dynamicOverlayService.hide();
   }
 }

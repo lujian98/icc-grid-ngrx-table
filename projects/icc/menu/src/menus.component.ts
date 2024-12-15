@@ -67,6 +67,14 @@ export class IccMenusComponent {
     }
   }
 
+  onMenuItemChange(item: IccMenuItem): void {
+    if (item.name) {
+      console.log('11111 item changed=', item);
+      this.setSelected(item);
+      this.iccMenuItemChange.emit(item);
+    }
+  }
+
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
     this.selected = selectedItem;

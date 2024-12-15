@@ -47,12 +47,23 @@ export class IccMenuItemComponent {
   }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+  @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(false);
 
   hasChildItem(item: IccMenuItem): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
+  /*
+  onMenuItemChange(item: IccMenuItem): void {
+    if(item.name) {
+      console.log( '33333333333 item changed=', item)
+      this.iccMenuItemChange.emit(item);
+    }
+  }*/
+
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    console.log(' 22222 =', this.menuItem);
     this.iccMenuItemClick.emit(this.menuItem);
+    //this.iccMenuItemChange.emit(this.menuItem);
   }
 }

@@ -35,6 +35,7 @@
       [items]="item.children!"
       [level]="level + 1"
       (iccMenuItemClick)="menuItemClick($event)"
+      (iccMenuItemChange)="onMenuItemChange($event)"
     >
     </icc-menus>
   </ng-template>
