@@ -24,15 +24,16 @@ export class IccOverlayService {
     return this._overlays;
   }
   add(overlayRef: IccOverlayRef, level: number): void {
+    this.overlays = [...this.overlays].filter((item) => item.level < level);
     const overlay = { level, overlayRef };
-    /*
-    this.overlays.forEach((item, index) => {
-      if (index + 1 >= level) {
-      }
-    });
-    */
     this.overlays = level < 1 ? [overlay] : [...this.overlays, overlay];
-    console.log(' eeeeeeeee this.overlays=', this.overlays);
+  }
+
+  remove(overlayRef: IccOverlayRef | null): void {
+    if (overlayRef) {
+      this.overlays = this.overlays.filter((item) => item.overlayRef !== overlayRef);
+      console.log(' trrrrrrrrrrrrrrrrrrrrr this.overlays=', this.overlays);
+    }
   }
 
   /*

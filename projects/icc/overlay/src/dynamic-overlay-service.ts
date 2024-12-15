@@ -44,8 +44,8 @@ export class IccDynamicOverlayService implements OnDestroy {
       this.triggerStrategy.destroy();
     }
 
-    console.log(' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel);
-    console.log(' 6666this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger);
+    //console.log(' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel);
+    //console.log(' 6666this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger);
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
       // @ts-ignore
@@ -136,6 +136,8 @@ export class IccDynamicOverlayService implements OnDestroy {
   }
 
   hide(): void {
+    this.overlayService.remove(this.overlayRef);
+    //console.log( 'remove=', this.overlayRef)
     this.overlayRef?.detach();
     this.containerRef = null;
     this.overlayRef = null;
