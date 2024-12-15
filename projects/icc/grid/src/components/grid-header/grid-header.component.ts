@@ -77,6 +77,7 @@ export class IccGridHeaderComponent {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
     };
+    console.log(' new nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
     this.buildPopover(popoverContext, menuClick.event);
   }
 
@@ -95,7 +96,7 @@ export class IccGridHeaderComponent {
       IccGridColumnMenuComponent,
       popoverContext,
     );
-    console.log('kkkkkkkkkkkkkkkkkkkkkkkkkk rebuildpopover');
+    //console.log('kkkkkkkkkkkkkkkkkkkkkkkkkk rebuildpopover');
     this.showMenu();
   }
 
