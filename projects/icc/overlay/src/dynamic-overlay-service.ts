@@ -55,10 +55,10 @@ export class IccDynamicOverlayService implements OnDestroy {
     this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
       if (event.type === 'click' || event.type === 'mousemove') {
         if (this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!)) {
-          this.hide();
+          //this.hide();
         }
       } else {
-        this.hide();
+        //this.hide();
       }
     });
   }

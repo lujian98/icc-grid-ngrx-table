@@ -7,7 +7,6 @@
     [disabled]="disabled"
     [indeterminate]="indeterminate"
     (change)="updateValueAndIndeterminate($event)"
-    (click)="$event.stopPropagation()"
   />
   <span class="icc-checkbox-container">
     <icc-icon *ngIf="indeterminate" icon="minus"></icc-icon>
@@ -17,3 +16,5 @@
     <ng-content></ng-content>
   </span>
 </label>
+<!--
+    (click)="$event.stopPropagation()" -->

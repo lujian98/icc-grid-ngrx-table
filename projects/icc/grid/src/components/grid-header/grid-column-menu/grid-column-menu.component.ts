@@ -85,7 +85,7 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemChange(item: IccMenuItem): void {
-    console.log(' 666666666666 itemxxx =', item);
+    //console.log(' 666666666666 itemxxx =', item);
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.checkbox) {
@@ -94,9 +94,9 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemClick(item: IccMenuItem): void {
-    console.log(' itemitemyyyy xxx =', item);
+    //console.log(' itemitemyyyy xxx =', item);
     if (item.checkbox) {
-      this.columnHideShow(item, this.columns);
+      //this.columnHideShow(item, this.columns);
     }
   }
 
@@ -119,7 +119,7 @@ export class IccGridColumnMenuComponent {
       ...column,
       hidden: !item.checked,
     };
-    console.log('cccc col=', col);
+    //console.log('cccc col=', col);
     this.gridFacade.setGridColumnConfig(this.gridConfig, col);
   }
 }

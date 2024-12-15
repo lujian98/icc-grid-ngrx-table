@@ -109,11 +109,13 @@ export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
       fromEvent<Event>(this.document, 'mousemove').pipe(
         debounceTime(100),
         takeWhile(() => !!this.container()),
-        filter(
-          (event) =>
-            !this.host.contains(event.target as Node) &&
-            !this.container().location.nativeElement.contains(event.target),
-        ),
+        filter((event) => {
+          console.log(' hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+          return false;
+          return (
+            !this.host.contains(event.target as Node) && !this.container().location.nativeElement.contains(event.target)
+          );
+        }),
       ),
     ),
     takeWhile(() => this.alive),

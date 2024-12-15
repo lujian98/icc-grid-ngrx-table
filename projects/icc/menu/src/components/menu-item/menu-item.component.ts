@@ -62,7 +62,7 @@ export class IccMenuItemComponent {
   }*/
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    console.log(' 22222 =', this.menuItem);
+    // console.log(' 22222 =', this.menuItem);
     this.iccMenuItemClick.emit(this.menuItem);
     //this.iccMenuItemChange.emit(this.menuItem);
   }
