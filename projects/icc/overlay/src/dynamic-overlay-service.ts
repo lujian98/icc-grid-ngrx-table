@@ -21,7 +21,7 @@ export class IccDynamicOverlayService implements OnDestroy {
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
   private triggerStrategy!: IccTriggerStrategy;
   private overlayServiceConfig!: IccOverlayServiceConfig;
-
+  private isFirsTtime = true;
   build(
     componentType: Type<IccRenderableContainer>,
     hostElement: ElementRef,
@@ -43,6 +43,7 @@ export class IccDynamicOverlayService implements OnDestroy {
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
+    console.log(' ttttttttttt6666666666666 this.overlayServiceConfig.trigger=', this.overlayServiceConfig.trigger);
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
       // @ts-ignore
@@ -50,7 +51,9 @@ export class IccDynamicOverlayService implements OnDestroy {
       this.overlayServiceConfig.trigger,
     );
     // @ts-ignore
-    this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
+    this.triggerStrategy.show$.subscribe((event: MouseEvent) => {
+      this.show(event);
+    });
     // @ts-ignore
     this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
       if (event.type === 'click' || event.type === 'mousemove') {
@@ -60,8 +63,13 @@ export class IccDynamicOverlayService implements OnDestroy {
         }
       } else {
         this.hide();
+        // console.log(' 444444444444 overlays ', this.overlayService.overlays);
       }
     });
+    if (this.overlayServiceConfig.trigger === IccTrigger.HOVERCLICK && this.isFirsTtime) {
+      this.isFirsTtime = false;
+      // this.show();
+    }
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
@@ -98,7 +106,7 @@ export class IccDynamicOverlayService implements OnDestroy {
 
   private createPositionStrategy(event: MouseEvent | null = null) {
     let origin: ElementRef | Point = this.hostElement;
-    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
+    if (this.overlayServiceConfig?.trigger === IccTrigger.CONTEXTMENU && event) {
       origin = {
         x: event.clientX,
         y: event.clientY,
@@ -114,7 +122,7 @@ export class IccDynamicOverlayService implements OnDestroy {
   }
 
   show(event: MouseEvent | null = null): void {
-    if (this.overlayServiceConfig.trigger === IccTrigger.CONTEXTMENU && event) {
+    if (this.overlayServiceConfig?.trigger === IccTrigger.CONTEXTMENU && event) {
       this.hide();
       this.overlayRef = null;
     }

@@ -5,6 +5,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   SimpleChanges,
   TemplateRef,
   Type,
@@ -25,7 +26,7 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
+export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   private elementRef = inject(ElementRef);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
 
@@ -46,15 +47,18 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
 
   @Input() popoverLevel = 0;
 
-  ngAfterViewInit(): void {
+  private isFirstTime = true;
+
+  ngOnInit(): void {
+    console.log(' bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb =');
     const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
       trigger: this.trigger,
       position: this.position,
       popoverLevel: this.popoverLevel,
     };
-    //console.log(' level =', this.popoverLevel);
-    //console.log(' this.trigger =', this.trigger);
+    console.log(' level =', this.popoverLevel);
+    console.log('ffffffffffffffff  this.trigger =', this.trigger);
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,
@@ -62,13 +66,23 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       this.content,
       this.context,
     );
+
+    console.log(' hhhhhhhhuuuuuuuu isFirstTime  =', this.isFirstTime);
+    if (this.trigger === IccTrigger.HOVERCLICK && !this.isFirstTime) {
+      // this.dynamicOverlayService.show(overlayServiceConfig.event);
+      this.dynamicOverlayService.show(overlayServiceConfig.event);
+    }
+    this.isFirstTime = false;
   }
+  ngAfterViewInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(' hhhhhhhhhhhhhhhhh =', changes);
     // @ts-ignore
     if (changes.context) {
       this.dynamicOverlayService.rebuild(this.context, this.content);
     }
+    //this.dynamicOverlayService.show();
   }
 
   ngOnDestroy(): void {

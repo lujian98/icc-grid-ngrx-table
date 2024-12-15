@@ -95,11 +95,12 @@ export class IccGridHeaderComponent {
       IccGridColumnMenuComponent,
       popoverContext,
     );
+    console.log('kkkkkkkkkkkkkkkkkkkkkkkkkk rebuildpopover');
     this.showMenu();
   }
 
   private showMenu(): void {
-    this.hideMenu();
+    //this.hideMenu();
     this.dynamicOverlayService.show();
   }
 

@@ -20,7 +20,7 @@ export class IccMenusComponent {
   private selected: IccMenuItem | undefined;
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
-  hoverTrigger = IccTrigger.HOVER;
+  hoverTrigger = IccTrigger.HOVERCLICK; //HOVER;
 
   @Input()
   set items(val: IccMenuItem[]) {
@@ -28,6 +28,7 @@ export class IccMenusComponent {
     if (this.selected) {
       this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
     }
+    console.log(' menchanged mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
   }
   get items(): IccMenuItem[] {
     return this._items;

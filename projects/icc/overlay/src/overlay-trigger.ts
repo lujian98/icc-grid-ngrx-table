@@ -9,6 +9,7 @@ export enum IccTrigger {
   NOOP = 'noop',
   POINT = 'point',
   HOVER = 'hover',
+  HOVERCLICK = 'hoverclick',
   CONTEXTMENU = 'contextmenu',
   TOOLTIP = 'tooltip',
   FOCUS = 'focus',
@@ -95,6 +96,48 @@ export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
+export class IccHoverClickTriggerStrategy extends IccTriggerStrategyBase {
+  private click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => [!this.container() && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    share(),
+    //takeWhile(() => this.alive),
+  );
+
+  private merged$ = merge(
+    fromEvent<Event>(this.host, 'mouseenter'),
+    this.click$.pipe(
+      filter(([shouldShow]) => shouldShow),
+      map(([, event]) => {
+        event.preventDefault();
+        return event;
+      }),
+    ),
+  );
+
+  show$ = this.merged$.pipe(
+    filter(() => !this.container()),
+    delay(100),
+    takeUntil(fromEvent<Event>(this.host, 'mouseleave')),
+    repeat(),
+    takeWhile(() => this.alive),
+  );
+
+  hide$ = fromEvent<Event>(this.host, 'mouseleave').pipe(
+    switchMap(() =>
+      fromEvent<Event>(this.document, 'mousemove').pipe(
+        debounceTime(100),
+        takeWhile(() => !!this.container()),
+        filter((event) => {
+          return (
+            !this.host.contains(event.target as Node) && !this.container().location.nativeElement.contains(event.target)
+          );
+        }),
+      ),
+    ),
+    takeWhile(() => this.alive),
+  );
+}
+
 export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
   show$ = fromEvent<Event>(this.host, 'mouseenter').pipe(
     filter(() => !this.container()),
@@ -110,8 +153,6 @@ export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
         debounceTime(100),
         takeWhile(() => !!this.container()),
         filter((event) => {
-          //console.log(' hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-          //return false;
           return (
             !this.host.contains(event.target as Node) && !this.container().location.nativeElement.contains(event.target)
           );
@@ -200,6 +241,8 @@ export class IccTriggerStrategyBuilderService {
         return new IccPointTriggerStrategy(this.document, host, container);
       case IccTrigger.HOVER:
         return new IccHoverTriggerStrategy(this.document, host, container, formField);
+      case IccTrigger.HOVERCLICK:
+        return new IccHoverClickTriggerStrategy(this.document, host, container);
       case IccTrigger.CONTEXTMENU:
         return new IccContextmenuTriggerStrategy(this.document, host, container);
       case IccTrigger.TOOLTIP:
