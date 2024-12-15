@@ -1,6 +1,6 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, OnDestroy, TemplateRef, Type } from '@angular/core';
-import { IccOverlayRef, IccOverlayServiceConfig, IccOverlayItem } from './mapping';
+import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
 import { IccRenderableContainer } from './overlay-container.component';
 import { IccPosition } from './overlay-position';
 import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
@@ -43,9 +43,6 @@ export class IccDynamicOverlayService implements OnDestroy {
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
-
-    //console.log(' 66666666 this.overlayServiceConfig.popoverLevel-=', this.overlayServiceConfig.popoverLevel);
-    //console.log(' 6666this.overlayServiceConfig.trigger-=', this.overlayServiceConfig.trigger);
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
       // @ts-ignore
@@ -54,16 +51,10 @@ export class IccDynamicOverlayService implements OnDestroy {
     );
     // @ts-ignore
     this.triggerStrategy.show$.subscribe((event: MouseEvent) => this.show(event));
-    this.triggerStrategy.hide$.subscribe((event) => {
-      console.log('event.type=', event.type);
-      if (event.type === 'click' || event.type === 'hover') {
-        if (
-          this.overlayService.isOverlayColasable(
-            this.overlayRef!,
-            this.overlayServiceConfig.trigger,
-            this.overlayServiceConfig.popoverLevel!,
-          )
-        ) {
+    // @ts-ignore
+    this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
+      if (event.type === 'click' || event.type === 'mousemove') {
+        if (this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!)) {
           this.hide();
         }
       } else {

@@ -37,14 +37,13 @@ export class IccMenusComponent {
 
   get popoverTrigger(): IccTrigger {
     return IccTrigger.HOVER;
-    //return this.level === 0 ? this.menuTrigger : IccTrigger.HOVER;
   }
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
 
   menuItemClick(item: IccMenuItem): void {
-    console.log(' 1111 iccMenuItemClick=', item);
+    //console.log(' 1111 iccMenuItemClick=', item);
     this.iccMenuItemClick.emit(item);
   }
 
