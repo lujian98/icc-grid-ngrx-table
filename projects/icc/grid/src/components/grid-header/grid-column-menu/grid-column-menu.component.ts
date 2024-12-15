@@ -94,8 +94,9 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemClick(item: IccMenuItem): void {
+    console.log(' itemitemyyyy xxx =', item);
     if (item.checkbox) {
-      this.columnHideShow(item, this.columns);
+      //this.columnHideShow(item, this.columns);
     }
   }
 
