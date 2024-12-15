@@ -17,7 +17,6 @@ import { IccIconModule } from '@icc/ui/icon';
 export class IccPopoverMenuComponent {
   @Input() menuItem!: IccMenuItem;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
-
   @Input() position: IccPosition = IccPosition.BOTTOMRIGHT;
 
   level = 0;

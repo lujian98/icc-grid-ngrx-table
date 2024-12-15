@@ -20,6 +20,8 @@ export class IccMenusComponent {
   private selected: IccMenuItem | undefined;
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
+  hoverTrigger = IccTrigger.HOVER;
+
   @Input()
   set items(val: IccMenuItem[]) {
     this._items = val;
@@ -32,12 +34,7 @@ export class IccMenusComponent {
   }
 
   @Input() level = 0;
-
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
-
-  get popoverTrigger(): IccTrigger {
-    return IccTrigger.HOVER;
-  }
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);

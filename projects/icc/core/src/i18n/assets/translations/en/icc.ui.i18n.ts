@@ -41,6 +41,7 @@ export const ICC = {
       FILE_SELECT_UPLOAD: 'File Select Upload',
     },
     GRID: {
+      COLUMNS: 'Columns',
       DISPLAYING: 'Displaying',
       FILTER: 'Filter ...',
       OF: 'of',
