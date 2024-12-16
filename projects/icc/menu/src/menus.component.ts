@@ -83,8 +83,10 @@ export class IccMenusComponent {
 
   menuItemClick(item: IccMenuItem): void {
     if (!item.checkbox) {
+      console.log(' item click=', item);
       this.iccMenuItemClick.emit(item);
     }
+    this.setSelected(item);
   }
 
   isLeafMenu(item: IccMenuItem): boolean {
@@ -95,19 +97,15 @@ export class IccMenusComponent {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
+  /*
   itemClicked(event: MouseEvent, selectedItem: IccMenuItem): void {
     if (selectedItem.disabled) {
       event.stopPropagation();
     } else {
-      if (selectedItem.checkbox) {
-        selectedItem = {
-          ...selectedItem,
-          checked: !selectedItem.checked,
-        };
-      }
       this.setSelected(selectedItem);
+      this.iccMenuItemClick.emit(selectedItem);
     }
-  }
+  }*/
 
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));

@@ -85,6 +85,9 @@ export class IccMenuItemComponent {
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    if (this.menuItem.disabled) {
+      event.stopPropagation();
+    }
     if (!this.menuItem.checkbox) {
       this.iccMenuItemClick.emit(this.menuItem);
     }

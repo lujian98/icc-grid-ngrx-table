@@ -1,12 +1,6 @@
 <form *ngIf="form" [formGroup]="form">
   <ng-container *ngFor="let item of items">
-    <icc-menu-item
-      *ngIf="isLeafMenu(item)"
-      [form]="form"
-      [menuItem]="item"
-      (click)="itemClicked($event, item)"
-      (iccMenuItemClick)="menuItemClick($event)"
-    >
+    <icc-menu-item *ngIf="isLeafMenu(item)" [form]="form" [menuItem]="item" (iccMenuItemClick)="menuItemClick($event)">
     </icc-menu-item>
 
     <span
