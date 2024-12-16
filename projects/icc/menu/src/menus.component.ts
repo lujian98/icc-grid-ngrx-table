@@ -43,13 +43,14 @@ export class IccMenusComponent {
 
     if (!this.form) {
       this.form = new FormGroup({});
-      this.items.forEach((item) => {
-        // TODO disabled ??
-        if (item.checkbox) {
-          this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
-        }
-      });
     }
+    this.items.forEach((item) => {
+      // TODO disabled ??
+      const field = this.form!.get(item.name);
+      if (item.checkbox && !field) {
+        this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
+      }
+    });
   }
   get items(): IccMenuItem[] {
     return this._items;
@@ -71,6 +72,7 @@ export class IccMenusComponent {
 
   @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+  @Output() iccMenuFormChanges = new EventEmitter<any>(false);
 
   menuItemClick(item: IccMenuItem): void {
     //console.log(' 1111 iccMenuItemClick=', item);
@@ -97,6 +99,8 @@ export class IccMenusComponent {
       }
       this.setSelected(selectedItem);
       this.iccMenuItemChange.emit(selectedItem);
+      const values = this.form?.value;
+      console.log(' changes ffffffffffffff values=', values);
     }
   }
 

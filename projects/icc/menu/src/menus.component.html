@@ -2,8 +2,8 @@
   <ng-container *ngFor="let item of items">
     <icc-menu-item
       *ngIf="isLeafMenu(item)"
-      [menuItem]="item"
       [form]="form"
+      [menuItem]="item"
       (click)="itemClicked($event, item)"
       (iccMenuItemClick)="menuItemClick($event)"
     >
@@ -22,8 +22,8 @@
 
     <icc-menu-item
       *ngIf="hasChildItem(item) && level > 0"
-      [menuItem]="item"
       [form]="form"
+      [menuItem]="item"
       [iccPopover]="menu"
       [iccPopoverTrigger]="hoverTrigger"
       [popoverLevel]="level"
@@ -37,6 +37,7 @@
         [form]="form"
         class="icc-menus-sub-level"
         [items]="item.children!"
+        [values]="values"
         [level]="level + 1"
         (iccMenuItemClick)="menuItemClick($event)"
         (iccMenuItemChange)="onMenuItemChange($event)"
