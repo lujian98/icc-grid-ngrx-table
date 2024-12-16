@@ -76,7 +76,7 @@ const POSITIONS = {
       originY: 'bottom',
       overlayX: 'start',
       overlayY: 'top',
-      offsetX: offset,
+      offsetX: offset - 10,
       offsetY: -3 * offset,
     };
   },
