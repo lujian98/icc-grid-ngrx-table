@@ -26,7 +26,7 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
   private elementRef = inject(ElementRef);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
 
@@ -47,26 +47,13 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy,
 
   @Input() popoverLevel = 0;
 
-  private isFirstTime = true;
-
-  ngOnInit(): void {
-    //console.log(' hhhhhhhhuuuuuuuu isFirstTime  =', this.isFirstTime);
-    //if (this.trigger === IccTrigger.HOVERCLICK && !this.isFirstTime) {
-    // this.dynamicOverlayService.show(overlayServiceConfig.event);
-    // this.dynamicOverlayService.show(overlayServiceConfig.event);
-    //}
-    //this.isFirstTime = false;
-  }
   ngAfterViewInit(): void {
-    console.log(' bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb =');
     const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
       trigger: this.trigger,
       position: this.position,
       popoverLevel: this.popoverLevel,
     };
-    //console.log(' level =', this.popoverLevel);
-    //console.log('ffffffffffffffff  this.trigger =', this.trigger);
     this.dynamicOverlayService.build(
       IccPopoverComponent,
       this.elementRef,
@@ -77,12 +64,10 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy,
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //console.log(' hhhhhhhhhhhhhhhhh =', changes);
     // @ts-ignore
     if (changes.context) {
       this.dynamicOverlayService.rebuild(this.context, this.content);
     }
-    //this.dynamicOverlayService.show();
   }
 
   ngOnDestroy(): void {

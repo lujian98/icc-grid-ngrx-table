@@ -1,7 +1,6 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, OnDestroy, TemplateRef, Type } from '@angular/core';
 import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
-import { take, timer } from 'rxjs';
 import { IccRenderableContainer } from './overlay-container.component';
 import { IccPosition } from './overlay-position';
 import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
@@ -22,7 +21,7 @@ export class IccDynamicOverlayService implements OnDestroy {
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
   private triggerStrategy!: IccTriggerStrategy;
   private overlayServiceConfig!: IccOverlayServiceConfig;
-  private isFirsTtime = true;
+
   build(
     componentType: Type<IccRenderableContainer>,
     hostElement: ElementRef,
@@ -44,7 +43,6 @@ export class IccDynamicOverlayService implements OnDestroy {
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
     }
-    // console.log(' ttttttttttt6666666666666 this.overlayServiceConfig.trigger=', this.overlayServiceConfig.trigger);
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
       // @ts-ignore
@@ -58,35 +56,13 @@ export class IccDynamicOverlayService implements OnDestroy {
     // @ts-ignore
     this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
       if (event.type === 'click' || event.type === 'mousemove') {
-        // console.log(' 222222 overlays ', this.overlayService.overlays);
         if (this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!)) {
           this.hide();
-        } else {
-          /*
-          console.log(' 333333333333 overlayServiceConfig.popoverLevel ', this.overlayServiceConfig.popoverLevel);
-          console.log(' 333333333333 overlays ', this.overlayService.overlays);
-          if(this.overlayServiceConfig.popoverLevel === 0 && this.overlayService.overlays.length > 1) {
-
-
-            timer(600)
-            .pipe(take(1))
-            .subscribe(() => {
-              console.log(' 555555555555555555555555 show overlays ', this.overlayService.overlays);
-              this.show();
-            });
-
-          }*/
         }
       } else {
         this.hide();
-        // console.log(' 444444444444 overlays ', this.overlayService.overlays);
       }
     });
-    /*
-    if (this.overlayServiceConfig.trigger === IccTrigger.HOVERCLICK && this.isFirsTtime) {
-      this.isFirsTtime = false;
-      // this.show();
-    }*/
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
@@ -157,7 +133,6 @@ export class IccDynamicOverlayService implements OnDestroy {
 
   hide(): void {
     this.overlayService.remove(this.overlayRef);
-    //console.log( 'remove=', this.overlayRef)
     this.overlayRef?.detach();
     this.containerRef = null;
     this.overlayRef = null;
