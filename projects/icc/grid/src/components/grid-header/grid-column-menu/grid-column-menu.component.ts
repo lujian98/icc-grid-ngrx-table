@@ -33,7 +33,9 @@ export class IccGridColumnMenuComponent {
       map(([gridConfig, columns]) => {
         this.gridConfig = gridConfig;
         this.columns = columns;
-        this.setMenuItems();
+        if (this.menuItems.length === 0) {
+          this.setMenuItems();
+        }
         return [gridConfig, columns];
       }),
     );
@@ -85,7 +87,7 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemChange(item: IccMenuItem): void {
-    //console.log(' 666666666666 itemxxx =', item);
+    console.log(' 666666666666 itemxxx =', item);
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.checkbox) {
