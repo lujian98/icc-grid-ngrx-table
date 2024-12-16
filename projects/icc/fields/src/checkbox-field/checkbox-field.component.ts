@@ -91,15 +91,12 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   set fieldConfig(fieldConfig: Partial<IccCheckboxFieldConfig>) {
     this._fieldConfig = { ...defaultCheckboxFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
-    //console.log(' this._fieldConfig=', this._fieldConfig);
   }
   get fieldConfig(): IccCheckboxFieldConfig {
     return this._fieldConfig;
   }
 
   private initForm(fieldConfig: IccCheckboxFieldConfig): void {
-    //console.log( 'this.form=', this.form)
-    //console.log( 'bbbbbbbbbbbbbb this.field=', this.field)
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({
@@ -149,7 +146,6 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
 
   onChange(): void {
     this.field.markAsTouched();
-    console.log(' ddddddddddd this.field.value=', this.field.value);
     this.valueChange.emit(this.field.value);
     this.setEnableFields();
   }

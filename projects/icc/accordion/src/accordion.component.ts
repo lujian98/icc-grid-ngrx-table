@@ -61,7 +61,7 @@ export class IccAccordionComponent {
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
 
-  menuItemChange(item: IccMenuItem): void {
+  onMenuItemClick(item: IccMenuItem): void {
     this.iccMenuItemClick.emit(item);
   }
 

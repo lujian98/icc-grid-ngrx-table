@@ -97,12 +97,13 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemChange(item: IccMenuItem): void {
-    //console.log(' 666666666666 itemxxx =', item);
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
-    } else if (item.checkbox) {
-      // this.columnHideShow(item, this.columns);
     }
+  }
+
+  onMenuFormChanges(values: any): void {
+    this.columnHideShow(values, this.columns);
   }
 
   onMenuItemClick(item: IccMenuItem): void {
@@ -125,13 +126,18 @@ export class IccGridColumnMenuComponent {
     this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
   }
 
-  private columnHideShow(item: IccMenuItem, columns: IccColumnConfig[]): void {
-    const column = this.columns.find((col) => col.name === item.name)!;
-    const col: IccColumnConfig = {
-      ...column,
-      hidden: !item.checked,
-    };
-    //console.log('cccc col=', col);
-    this.gridFacade.setGridColumnConfig(this.gridConfig, col);
+  private columnHideShow(values: any, columns: IccColumnConfig[]): void {
+    const column = columns.find((col) => {
+      const checked = values[col.name];
+      const colChecked = !col.hidden;
+      return checked !== undefined && checked !== colChecked;
+    })!;
+    if (column) {
+      const col: IccColumnConfig = {
+        ...column,
+        hidden: !values[column.name],
+      };
+      this.gridFacade.setGridColumnConfig(this.gridConfig, col);
+    }
   }
 }

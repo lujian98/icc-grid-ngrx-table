@@ -8,22 +8,14 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
+import { IccSuffixDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccMenuItem } from '../../models/menu-item.model';
-import { IccCheckboxFieldComponent, defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from '@icc/ui/fields';
-import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
-  IccFieldWidthDirective,
-  IccSuffixDirective,
-  IccFormFieldControlDirective,
-  IccFormFieldErrorsDirective,
-} from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-menu-item',
@@ -87,7 +79,7 @@ export class IccMenuItemComponent {
   }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
-  @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(false);
+  //@Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(false);
 
   hasChildItem(item: IccMenuItem): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;

@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IccTrigger, IccPosition } from '@icc/ui/overlay';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IccPopoverDirective } from '@icc/ui/popover';
-import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
-import { IccMenuItem } from './models/menu-item.model';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverDirective } from '@icc/ui/popover';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
+import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
   selector: 'icc-menus',
@@ -27,6 +29,7 @@ import { IccIconModule } from '@icc/ui/icon';
 export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
+  private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVERCLICK; //HOVER;
@@ -43,6 +46,11 @@ export class IccMenusComponent {
 
     if (!this.form) {
       this.form = new FormGroup({});
+      this.form.valueChanges
+        .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
+        .subscribe((val) => {
+          this.iccMenuFormChanges.emit(this.form?.value);
+        });
     }
     this.items.forEach((item) => {
       // TODO disabled ??
@@ -70,12 +78,11 @@ export class IccMenusComponent {
   @Input() level = 0;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
-  @Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
+  //@Output() iccMenuItemChange = new EventEmitter<IccMenuItem>(true);
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
   @Output() iccMenuFormChanges = new EventEmitter<any>(false);
 
   menuItemClick(item: IccMenuItem): void {
-    //console.log(' 1111 iccMenuItemClick=', item);
     this.iccMenuItemClick.emit(item);
   }
 
@@ -98,19 +105,17 @@ export class IccMenusComponent {
         };
       }
       this.setSelected(selectedItem);
-      this.iccMenuItemChange.emit(selectedItem);
-      const values = this.form?.value;
-      console.log(' changes ffffffffffffff values=', values);
     }
   }
 
+  /*
   onMenuItemChange(item: IccMenuItem): void {
     if (item.name) {
       // console.log('11111 item changed=', item);
       this.setSelected(item);
-      this.iccMenuItemChange.emit(item);
+      //this.iccMenuItemChange.emit(item);
     }
-  }
+  }*/
 
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
