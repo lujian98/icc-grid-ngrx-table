@@ -8,11 +8,22 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccMenuItem } from '../../models/menu-item.model';
+import { IccCheckboxFieldComponent, defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from '@icc/ui/fields';
+import {
+  IccFormFieldComponent,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccFieldWidthDirective,
+  IccSuffixDirective,
+  IccFormFieldControlDirective,
+  IccFormFieldErrorsDirective,
+} from '@icc/ui/form-field';
 
 @Component({
   selector: 'icc-menu-item',
@@ -20,11 +31,40 @@ import { IccMenuItem } from '../../models/menu-item.model';
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, IccIconModule, IccCheckboxComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IccCheckboxFieldComponent,
+    IccSuffixDirective,
+    TranslateModule,
+    IccIconModule,
+    IccCheckboxComponent,
+  ],
 })
 export class IccMenuItemComponent {
-  @Input() menuItem!: IccMenuItem;
+  private _menuItem!: IccMenuItem;
   @Input() menuType!: string;
+  @Input() form!: FormGroup;
+
+  fieldConfig: IccCheckboxFieldConfig = {
+    ...defaultCheckboxFieldConfig,
+  };
+
+  @Input()
+  set menuItem(val: IccMenuItem) {
+    this._menuItem = val;
+    this.fieldConfig = {
+      ...defaultCheckboxFieldConfig,
+      fieldName: this.menuItem.name,
+      fieldLabel: this.menuItem.title || this.menuItem.name,
+      editable: true,
+    };
+  }
+  get menuItem(): IccMenuItem {
+    return this._menuItem;
+  }
 
   @HostBinding('class.menu-item-separator')
   get separator() {

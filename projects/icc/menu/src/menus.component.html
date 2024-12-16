@@ -1,42 +1,47 @@
-<ng-container *ngFor="let item of items">
-  <icc-menu-item
-    *ngIf="isLeafMenu(item)"
-    [menuItem]="item"
-    (click)="itemClicked($event, item)"
-    (iccMenuItemClick)="menuItemClick($event)"
-  >
-  </icc-menu-item>
-
-  <span
-    *ngIf="hasChildItem(item) && level === 0"
-    [iccPopover]="menu"
-    [iccPopoverTrigger]="menuTrigger"
-    [popoverLevel]="level"
-    [iccPopoverPosition]="bottom"
-  >
-    <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
-    <span class="icc-menu-item-title"> {{ item.title }}</span>
-  </span>
-
-  <icc-menu-item
-    *ngIf="hasChildItem(item) && level > 0"
-    [menuItem]="item"
-    [iccPopover]="menu"
-    [iccPopoverTrigger]="hoverTrigger"
-    [popoverLevel]="level"
-    [iccPopoverPosition]="rightBottom"
-    (iccMenuItemClick)="menuItemClick($event)"
-  >
-  </icc-menu-item>
-
-  <ng-template #menu>
-    <icc-menus
-      class="icc-menus-sub-level"
-      [items]="item.children!"
-      [level]="level + 1"
+<form *ngIf="form" [formGroup]="form">
+  <ng-container *ngFor="let item of items">
+    <icc-menu-item
+      *ngIf="isLeafMenu(item)"
+      [menuItem]="item"
+      [form]="form"
+      (click)="itemClicked($event, item)"
       (iccMenuItemClick)="menuItemClick($event)"
-      (iccMenuItemChange)="onMenuItemChange($event)"
     >
-    </icc-menus>
-  </ng-template>
-</ng-container>
+    </icc-menu-item>
+
+    <span
+      *ngIf="hasChildItem(item) && level === 0"
+      [iccPopover]="menu"
+      [iccPopoverTrigger]="menuTrigger"
+      [popoverLevel]="level"
+      [iccPopoverPosition]="bottom"
+    >
+      <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
+      <span class="icc-menu-item-title"> {{ item.title }}</span>
+    </span>
+
+    <icc-menu-item
+      *ngIf="hasChildItem(item) && level > 0"
+      [menuItem]="item"
+      [form]="form"
+      [iccPopover]="menu"
+      [iccPopoverTrigger]="hoverTrigger"
+      [popoverLevel]="level"
+      [iccPopoverPosition]="rightBottom"
+      (iccMenuItemClick)="menuItemClick($event)"
+    >
+    </icc-menu-item>
+
+    <ng-template #menu>
+      <icc-menus
+        [form]="form"
+        class="icc-menus-sub-level"
+        [items]="item.children!"
+        [level]="level + 1"
+        (iccMenuItemClick)="menuItemClick($event)"
+        (iccMenuItemChange)="onMenuItemChange($event)"
+      >
+      </icc-menus>
+    </ng-template>
+  </ng-container>
+</form>

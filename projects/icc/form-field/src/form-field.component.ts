@@ -10,6 +10,7 @@ import {
   inject,
   Optional,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { take, timer } from 'rxjs';
@@ -49,6 +50,9 @@ import { IccInputDirective } from './directive/input.directive';
 export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _fieldIndicator: string = '';
+
+  @Input() showFieldFieldIndicator: boolean = true;
+
   focused: boolean = false;
   public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
   fieldWidth: string = '100%';
@@ -96,7 +100,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     this._fieldIndicator = val;
   }
   get fieldIndicator(): string {
-    return this._fieldIndicator;
+    return this.showFieldFieldIndicator ? this._fieldIndicator : '';
   }
 
   @ContentChild(IccInputDirective) public inputDirective!: IccInputDirective;

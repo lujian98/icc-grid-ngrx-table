@@ -4,11 +4,19 @@
     [iccLabelWidth]="fieldConfig.labelWidth"
     [iccFieldWidth]="fieldConfig.fieldWidth"
     [iccFormFieldControl]="field"
+    [showFieldFieldIndicator]="showFieldFieldIndicator"
   >
+    <!--
+      TODO checkbox label after checkbox
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
+      -->
     <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
+
+    <div iccSuffix>
+      {{ fieldConfig.fieldLabel }}
+    </div>
 
     <icc-form-field-errors *ngIf="(field?.touched || field?.dirty) && field?.errors">
       <icc-field-errors [errors]="field!.errors!"></icc-field-errors>

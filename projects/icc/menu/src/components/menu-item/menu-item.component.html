@@ -10,6 +10,16 @@
   <span class="icc-menu-title"> {{ title | translate }} </span>
 </a>
 
+<icc-checkbox-field
+  *ngIf="menuItem.checkbox"
+  [fieldConfig]="fieldConfig"
+  [form]="form"
+  [showFieldFieldIndicator]="false"
+>
+</icc-checkbox-field>
+
+<!--
+[showFieldFieldIndicator]=
 <icc-checkbox
   *ngIf="menuItem.checkbox"
   class="icc-menu-item"
@@ -19,9 +29,14 @@
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title | translate }} </span>
 </icc-checkbox>
+-->
 
 <div *ngIf="!menuItem.link && !menuItem.checkbox" class="icc-menu-item">
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title | translate }} </span>
   <icc-icon class="icc-menu-icon-has-children" *ngIf="hasChildItem(menuItem)" config="caret-right"></icc-icon>
 </div>
+<!--
+<icc-checkbox-field *ngIf="fieldConfig.fieldType === 'checkbox'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-checkbox-field>
+-->

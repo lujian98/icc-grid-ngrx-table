@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccTrigger, IccPosition } from '@icc/ui/overlay';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './models/menu-item.model';
@@ -13,14 +14,25 @@ import { IccIconModule } from '@icc/ui/icon';
   styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective, IccButtonComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccIconModule,
+    IccMenuItemComponent,
+    IccPopoverDirective,
+    IccButtonComponent,
+  ],
 })
 export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
+  //form: FormGroup = new FormGroup({});
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVERCLICK; //HOVER;
+
+  @Input() form: FormGroup | undefined;
 
   @Input()
   set items(val: IccMenuItem[]) {
@@ -28,12 +40,36 @@ export class IccMenusComponent {
     if (this.selected) {
       this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
     }
-    console.log(' menchanged mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
+
+    if (!this.form) {
+      this.form = new FormGroup({});
+      this.items.forEach((item) => {
+        // TODO disabled ??
+        if (item.checkbox) {
+          this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
+        }
+      });
+    }
   }
   get items(): IccMenuItem[] {
     return this._items;
   }
 
+  /*
+
+  this.form.addControl(field.fieldName!, new FormControl<string>({ value: '', disabled: !!field.readonly }, []));
+
+    private addFormControls(formFields: IccFormField[]): void {
+    formFields.forEach((field) => {
+      if (field.fieldType === 'fieldset') {
+        this.addFormControls((field as IccFieldsetConfig).formFields);
+      } else if (!this.form.get(field.fieldName!)) {
+        this.form.addControl(field.fieldName!, new FormControl<string>({ value: '', disabled: !!field.readonly }, []));
+        this.setValidators(field);
+      }
+    });
+  }
+    */
   @Input() level = 0;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
