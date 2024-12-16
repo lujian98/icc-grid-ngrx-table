@@ -62,6 +62,10 @@
   ::ng-deep .icc-form-field {
     padding: 0px !important;
   }
+
+  ::ng-deep .icc-form-field-suffix {
+    width: 100%;
+  }
 }
 
 :-webkit-any-link {

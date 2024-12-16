@@ -135,6 +135,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   @Output() valueChange = new EventEmitter<boolean>(true);
+  //@Output() checkboxClick = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
@@ -148,6 +149,14 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     this.setEnableFields();
+  }
+
+  iccSuffixClick(event: MouseEvent): void {
+    event.stopPropagation();
+    const val = this.field.value; // ? true : false;
+    console.log(' iccSuffixClick field =========== val=', val);
+    this.field.patchValue(!val);
+    this.changeDetectorRef.markForCheck();
   }
 
   private setEnableFields(): void {

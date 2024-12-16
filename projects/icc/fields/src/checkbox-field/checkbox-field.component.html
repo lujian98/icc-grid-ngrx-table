@@ -14,7 +14,7 @@
       -->
     <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
 
-    <div iccSuffix>
+    <div class="icc-suffix-content" iccSuffix (click)="iccSuffixClick($event)">
       {{ fieldConfig.fieldLabel }}
     </div>
 
