@@ -55,14 +55,17 @@ export class IccDynamicOverlayService implements OnDestroy {
     });
     // @ts-ignore
     this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
-      if (event.type === 'click' || event.type === 'mousemove') {
-        if (this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!)) {
-          this.hide();
-        }
-      } else {
+      if (this.canOverlayClose(event)) {
         this.hide();
       }
     });
+  }
+
+  private canOverlayClose(event: MouseEvent): boolean {
+    if (event.type === 'click' || event.type === 'mousemove') {
+      return this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!) ? true : false;
+    }
+    return true;
   }
 
   rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
