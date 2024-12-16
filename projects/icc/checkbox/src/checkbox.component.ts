@@ -100,6 +100,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
   }
 
   updateValueAndIndeterminate(event: Event): void {
+    event.stopPropagation();
     const input = event.target as HTMLInputElement;
     this.checked = input.checked;
     this.change.emit(this.checked);

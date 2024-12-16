@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  inject,
+} from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
@@ -27,6 +35,7 @@ import { IccMenuItem } from './models/menu-item.model';
   ],
 })
 export class IccMenusComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
   private destroy$ = new Subject<void>();
@@ -83,6 +92,16 @@ export class IccMenusComponent {
   @Output() iccMenuFormChanges = new EventEmitter<any>(false);
 
   menuItemClick(item: IccMenuItem): void {
+    if (item.checkbox) {
+      const field = this.form?.get(item.name);
+      console.log(' field ===========', field);
+      const val = field?.value ? true : false;
+      console.log(' field =========== val=', val);
+      field?.patchValue(!field?.value);
+      this.changeDetectorRef.markForCheck();
+    } else {
+      //this.iccMenuItemClick.emit(item);
+    }
     this.iccMenuItemClick.emit(item);
   }
 
