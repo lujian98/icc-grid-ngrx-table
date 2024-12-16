@@ -74,6 +74,11 @@ export class IccGridHeaderComponent {
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
     let values: any = {};
+    const disabled = [...this.columns].map((column) => {
+      return {
+        [column.name]: !this.gridConfig.columnHidden, // || this.column.sortField === false,
+      };
+    });
     [...this.columns].forEach((column) => {
       values[column.name] = !column.hidden;
     });
@@ -81,6 +86,7 @@ export class IccGridHeaderComponent {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
       values: values,
+      disabled: disabled,
     };
     this.buildPopover(popoverContext, menuClick.event);
   }

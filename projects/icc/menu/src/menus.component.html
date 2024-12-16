@@ -1,6 +1,12 @@
 <form *ngIf="form" [formGroup]="form">
   <ng-container *ngFor="let item of items">
-    <icc-menu-item *ngIf="isLeafMenu(item)" [form]="form" [menuItem]="item" (iccMenuItemClick)="menuItemClick($event)">
+    <icc-menu-item
+      *ngIf="isLeafMenu(item)"
+      [disabledMenu]="getDisabled(item)"
+      [form]="form"
+      [menuItem]="item"
+      (iccMenuItemClick)="menuItemClick($event)"
+    >
     </icc-menu-item>
 
     <span
@@ -16,6 +22,7 @@
 
     <icc-menu-item
       *ngIf="hasChildItem(item) && level > 0"
+      [disabledMenu]="getDisabled(item)"
       [form]="form"
       [menuItem]="item"
       [iccPopover]="menu"
@@ -32,6 +39,7 @@
         class="icc-menus-sub-level"
         [items]="item.children!"
         [values]="values"
+        [disabled]="disabled"
         [level]="level + 1"
         (iccMenuItemClick)="menuItemClick($event)"
       >

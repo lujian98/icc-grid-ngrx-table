@@ -39,6 +39,7 @@ export class IccMenuItemComponent {
   private _menuItem!: IccMenuItem;
   @Input() menuType!: string;
   @Input() form!: FormGroup;
+  @Input() disabledMenu: boolean = false;
 
   fieldConfig: IccCheckboxFieldConfig = {
     ...defaultCheckboxFieldConfig,

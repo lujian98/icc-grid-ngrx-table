@@ -36,6 +36,7 @@ export class IccMenusComponent {
   private _values: any;
 
   @Input() form: FormGroup | undefined;
+  @Input() disabled!: any;
 
   @Input()
   set items(val: IccMenuItem[]) {
@@ -77,6 +78,10 @@ export class IccMenusComponent {
 
   @Input() level = 0;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
+
+  getDisabled(item: IccMenuItem): boolean {
+    return this.disabled ? this.disabled[item.name] : false;
+  }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
   @Output() iccMenuFormChanges = new EventEmitter<any>(false);

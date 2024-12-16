@@ -83,6 +83,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   private _fieldConfig!: IccCheckboxFieldConfig;
   private _value!: boolean;
 
+  @Input() disabled: boolean = false;
   @Input() showFieldFieldIndicator: boolean = true;
 
   @Input() form!: FormGroup;

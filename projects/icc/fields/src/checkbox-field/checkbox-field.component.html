@@ -12,7 +12,7 @@
       {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
       -->
-    <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
+    <icc-checkbox [disabled]="disabled" [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
 
     <div class="icc-suffix-content" iccSuffix (click)="iccSuffixClick($event)">
       {{ fieldConfig.fieldLabel }}

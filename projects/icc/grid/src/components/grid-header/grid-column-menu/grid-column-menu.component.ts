@@ -48,6 +48,8 @@ export class IccGridColumnMenuComponent {
 
   @Input() column!: IccColumnConfig;
 
+  @Input() disabled!: any;
+
   @Input()
   set values(values: any) {
     this._values = values;
