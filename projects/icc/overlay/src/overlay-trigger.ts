@@ -9,7 +9,7 @@ export enum IccTrigger {
   NOOP = 'noop',
   POINT = 'point',
   HOVER = 'hover',
-  HOVERCLICK = 'hoverclick',
+  //HOVERCLICK = 'hoverclick',
   CONTEXTMENU = 'contextmenu',
   TOOLTIP = 'tooltip',
   FOCUS = 'focus',
@@ -96,6 +96,7 @@ export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
+/*
 export class IccHoverClickTriggerStrategy extends IccTriggerStrategyBase {
   private click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.container() && this.host.contains(event.target as Node), event] as [boolean, Event]),
@@ -137,6 +138,7 @@ export class IccHoverClickTriggerStrategy extends IccTriggerStrategyBase {
     takeWhile(() => this.alive),
   );
 }
+*/
 
 export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
   show$ = fromEvent<Event>(this.host, 'mouseenter').pipe(
@@ -241,8 +243,8 @@ export class IccTriggerStrategyBuilderService {
         return new IccPointTriggerStrategy(this.document, host, container);
       case IccTrigger.HOVER:
         return new IccHoverTriggerStrategy(this.document, host, container, formField);
-      case IccTrigger.HOVERCLICK:
-        return new IccHoverClickTriggerStrategy(this.document, host, container);
+      //     case IccTrigger.HOVERCLICK:
+      //       return new IccHoverClickTriggerStrategy(this.document, host, container);
       case IccTrigger.CONTEXTMENU:
         return new IccContextmenuTriggerStrategy(this.document, host, container);
       case IccTrigger.TOOLTIP:
