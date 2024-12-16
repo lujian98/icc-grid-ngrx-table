@@ -21,6 +21,8 @@ export class IccGridColumnMenuComponent {
   private gridConfig!: IccGridConfig;
   private columns!: IccColumnConfig[];
   private _menuItems: IccMenuItem[] = [];
+  private _values: any;
+
   level = 0;
 
   @Input()
@@ -45,6 +47,14 @@ export class IccGridColumnMenuComponent {
   }
 
   @Input() column!: IccColumnConfig;
+
+  @Input()
+  set values(values: any) {
+    this._values = values;
+  }
+  get values(): any {
+    return this._values;
+  }
 
   set menuItems(val: IccMenuItem[]) {
     this._menuItems = [...val];

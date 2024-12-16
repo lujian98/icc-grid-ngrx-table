@@ -27,10 +27,10 @@ import { IccIconModule } from '@icc/ui/icon';
 export class IccMenusComponent {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
-  //form: FormGroup = new FormGroup({});
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVERCLICK; //HOVER;
+  private _values: any;
 
   @Input() form: FormGroup | undefined;
 
@@ -55,21 +55,17 @@ export class IccMenusComponent {
     return this._items;
   }
 
-  /*
-
-  this.form.addControl(field.fieldName!, new FormControl<string>({ value: '', disabled: !!field.readonly }, []));
-
-    private addFormControls(formFields: IccFormField[]): void {
-    formFields.forEach((field) => {
-      if (field.fieldType === 'fieldset') {
-        this.addFormControls((field as IccFieldsetConfig).formFields);
-      } else if (!this.form.get(field.fieldName!)) {
-        this.form.addControl(field.fieldName!, new FormControl<string>({ value: '', disabled: !!field.readonly }, []));
-        this.setValidators(field);
-      }
-    });
+  @Input()
+  set values(values: any) {
+    this._values = values;
+    if (this.form && values) {
+      this.form.patchValue({ ...values });
+    }
   }
-    */
+  get values(): any {
+    return this._values;
+  }
+
   @Input() level = 0;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 

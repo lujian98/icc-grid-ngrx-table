@@ -90,6 +90,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   @Input()
   set fieldConfig(fieldConfig: Partial<IccCheckboxFieldConfig>) {
     this._fieldConfig = { ...defaultCheckboxFieldConfig, ...fieldConfig };
+    console.log(' this._fieldConfig=', this._fieldConfig);
     this.initForm(this.fieldConfig);
   }
   get fieldConfig(): IccCheckboxFieldConfig {

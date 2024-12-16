@@ -73,11 +73,16 @@ export class IccGridHeaderComponent {
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
+    let values: any = {};
+    [...this.columns].forEach((column) => {
+      values[column.name] = !column.hidden;
+    });
     const popoverContext = {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
+      values: values,
     };
-    console.log(' new nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+    console.log(' new nnnnnnnnnnnnnnnnnnnnpopoverContext =', popoverContext);
     this.buildPopover(popoverContext, menuClick.event);
   }
 
