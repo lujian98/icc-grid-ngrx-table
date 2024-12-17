@@ -40,7 +40,6 @@ export class IccGridColumnMenuComponent {
         if (this.menuItems.length === 0) {
           this.setMenuItems();
         } else {
-          this.checkColumnHidden();
         }
         return [gridConfig, columns];
       }),
@@ -73,19 +72,6 @@ export class IccGridColumnMenuComponent {
     return disabled;
   }
 
-  get checked(): any {
-    // [column.name]: !this.gridConfig.columnHidden || this.column.sortField === false,
-
-    console.log(' 9999999999999988888888 this.columns=', this.columns);
-    const checked = [...this.columns].map((column) => {
-      return {
-        [column.name]: !column.hidden,
-      };
-    });
-    console.log(' 9999999999999988888888  this._disable=', checked);
-    return checked;
-  }
-
   @Input()
   set values(values: any) {
     this._values = values;
@@ -99,19 +85,6 @@ export class IccGridColumnMenuComponent {
   }
   get menuItems(): IccMenuItem[] {
     return this._menuItems;
-  }
-
-  private checkColumnHidden(): void {
-    /*
-    const checked = [...this.columns].map((column) => {
-      return {
-        [column.name]: !this.gridConfig.columnHidden || this.column.sortField === false,
-      };
-    });
-    console.log(' yyyyyyyyyy this.checked=', this.checked)
-    console.log(' yyyyyyyyyythis.columns=', this.columns)
-    this.changeDetectorRef.markForCheck();
-    */
   }
 
   private setMenuItems(): void {

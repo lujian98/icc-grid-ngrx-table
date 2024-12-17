@@ -37,6 +37,7 @@ export class IccMenusComponent {
 
   @Input() form: FormGroup | undefined;
   private _disabled!: any;
+  /*
   private _checked!: any[];
 
   @Input()
@@ -63,48 +64,13 @@ export class IccMenusComponent {
     console.log('vvvvvvvvvvvvvvvvvvvvvvvv values', values);
   }
 
-  /*
-  0
-: 
-{name: 'ID', width: 50, align: 'center', fieldType: 'text'}
-1
-: 
-{name: 'vin', fieldType: 'text', width: 100}
-2
-: 
-{name: 'brand', title: 'this s s     sssssssssssssssssss sssssssssssssss', filterField: 'select', width: 50, fieldType: 'text'}
-3
-: 
-{name: 'year', width: 50, align: 'right', fieldType: 'text'}
-4
-: 
-{name: 'color', width: 80, filterField: 'select', align: 'center', fieldType: 'text'}
-*/
   get checked(): any[] {
     return this._checked;
   }
 
   setFieldValue(checked: any[]): void {
-    // console.log(' sssssss77777777sssss disabled=', checked);
-    /*
-   timer(500)
-   .pipe(take(1))
-   .subscribe(() => {
-    if (Array.isArray(checked) &&  this.form) {
-      [...checked].forEach((item, index) => {
 
-        //const field = this.form?.get(item.name);
-        const field = this.form?.controls?.[item.name]
-        console.log(' fffffffffffffffffffffffffffff  d=, ', this.form?.controls);
-        const value = checked[index];
-        console.log(' sssssss777777field=', field, 'and value=', value)
-        field?.setValue(value);
-      });
-      //console.log(' sssssss77777777sssss disabled=', this.checked)4
-      //this.form?.setValue(checked);
-    }
-   });*/
-  }
+  }*/
 
   @Input()
   set disabled(disabled: any) {
@@ -116,7 +82,6 @@ export class IccMenusComponent {
 
   @Input()
   set items(val: IccMenuItem[]) {
-    // console.log('5555555555 sssssssss disabled =', this.disabled);
     this._items = val;
     if (this.selected) {
       this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
@@ -137,8 +102,6 @@ export class IccMenusComponent {
         this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
       }
     });
-
-    //this.setFieldValue(this.checked);
   }
   get items(): IccMenuItem[] {
     return this._items;
@@ -148,7 +111,7 @@ export class IccMenusComponent {
   set values(values: any) {
     this._values = values;
     if (this.form && values) {
-      console.log('values= ', values);
+      console.log('kkkkkkkkkkkkkkkkkkkvalues= ', values);
       this.form.patchValue({ ...values });
       // this.setFieldValue(this.checked);
     }
