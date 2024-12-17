@@ -74,11 +74,6 @@ export class IccGridHeaderComponent {
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
     let values: any = {};
-    const checked = [...this.columns].map((column) => {
-      return {
-        [column.name]: !this.gridConfig.columnHidden, // || this.column.sortField === false,
-      };
-    });
     [...this.columns].forEach((column) => {
       values[column.name] = !column.hidden;
     });
@@ -86,7 +81,6 @@ export class IccGridHeaderComponent {
       gridId: this.gridConfig.gridId,
       column: menuClick.column,
       values: values,
-      // checked: checked,
     };
     this.buildPopover(popoverContext, menuClick.event);
   }

@@ -37,40 +37,6 @@ export class IccMenusComponent {
 
   @Input() form: FormGroup | undefined;
   private _disabled!: any;
-  /*
-  private _checked!: any[];
-
-  @Input()
-  set checked(val: any[]) {
-    this._checked = val;
-    // const values  = [...val].join();
-    const values: any = {
-      ID: val[0],
-      vin: val[1],
-      brand: val[2],
-      year: val[3],
-      color: val[4],
-    };
-    //this.setFieldValue(values);
-    // this.form?.patchValue({ ...values });
-    //this.values = values;
-
-    timer(100)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.form?.patchValue({ ...values });
-      });
-
-    console.log('vvvvvvvvvvvvvvvvvvvvvvvv values', values);
-  }
-
-  get checked(): any[] {
-    return this._checked;
-  }
-
-  setFieldValue(checked: any[]): void {
-
-  }*/
 
   @Input()
   set disabled(disabled: any) {
@@ -93,6 +59,7 @@ export class IccMenusComponent {
         .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
         .subscribe((val) => {
           this.iccMenuFormChanges.emit(this.form?.value);
+          this.values = this.form?.value;
         });
     }
     this.items.forEach((item) => {
@@ -108,13 +75,11 @@ export class IccMenusComponent {
   }
 
   @Input()
-  set values(values: any) {
-    this._values = values;
+  set values(values: any[]) {
     if (this.form && values) {
-      console.log('kkkkkkkkkkkkkkkkkkkvalues= ', values);
-      this.form.patchValue({ ...values });
-      // this.setFieldValue(this.checked);
+      this.form.patchValue({ ...values }, { emitEvent: false });
     }
+    this._values = values;
   }
   get values(): any {
     return this._values;
@@ -132,7 +97,6 @@ export class IccMenusComponent {
 
   menuItemClick(item: IccMenuItem): void {
     if (!item.checkbox) {
-      console.log(' item click=', item);
       this.iccMenuItemClick.emit(item);
     }
     this.setSelected(item);
@@ -145,16 +109,6 @@ export class IccMenusComponent {
   hasChildItem(item: IccMenuItem): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
-
-  /*
-  itemClicked(event: MouseEvent, selectedItem: IccMenuItem): void {
-    if (selectedItem.disabled) {
-      event.stopPropagation();
-    } else {
-      this.setSelected(selectedItem);
-      this.iccMenuItemClick.emit(selectedItem);
-    }
-  }*/
 
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
-import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
+import { IccGridFacade } from '../../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
@@ -15,8 +15,6 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   imports: [CommonModule, IccGridStateModule, IccMenusComponent],
 })
 export class IccGridColumnMenuComponent {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-
   private gridFacade = inject(IccGridFacade);
   columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   private _gridId!: string;
@@ -50,27 +48,6 @@ export class IccGridColumnMenuComponent {
   }
 
   @Input() column!: IccColumnConfig;
-
-  private _disabled!: any;
-
-  @Input()
-  set disabled(disabled: any) {
-    // this._disabled = [...disabled];
-    //console.log(' 777777777777  this._disable=', disabled)
-    //this.changeDetectorRef.markForCheck();
-  }
-
-  get disabled(): any {
-    //console.log(' 88888888888  this._disable=', this.disabled)
-
-    const disabled = [...this.columns].map((column) => {
-      return {
-        [column.name]: !this.gridConfig.columnHidden || this.column.sortField === false,
-      };
-    });
-    // console.log(' 9999999999999988888888  this._disable=', this.disabled)
-    return disabled;
-  }
 
   @Input()
   set values(values: any) {
@@ -116,7 +93,6 @@ export class IccGridColumnMenuComponent {
         children: columnItems,
       },
     ];
-
     this.menuItems = [...menuItems]; // ...columnItems
   }
 

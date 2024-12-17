@@ -62,14 +62,10 @@ export class IccPopoverComponent implements IccRenderableContainer {
 
   protected attachComponent() {
     const portal = new ComponentPortal(this.content, null, null);
-
-    console.log(' bbbbbbbbbbbb this.context=', this.context);
-    /*
     let context = Object.assign({}, this.context, {
       close: this.close.bind(this),
-    });*/
-
-    const ref = this.overlayContainer.attachComponentPortal(portal, this.context);
+    });
+    const ref = this.overlayContainer.attachComponentPortal(portal, context);
     ref.changeDetectorRef.detectChanges();
   }
 }
