@@ -23,7 +23,7 @@ export const DEFAULT_OVERLAY_SERVICE_CONFIG: IccOverlayServiceConfig = {
   position: IccPosition.BOTTOM,
   popoverLevel: 0,
   trigger: IccTrigger.CLICK,
-  clickToClose: false,
+  clickToClose: true,
   //shouldCloseOnBackdropClick: true,
 };
 
