@@ -107,7 +107,7 @@ export class IccGridColumnMenuComponent {
       },
     ];
 
-    this.menuItems = [...menuItems, ...columnItems]; //
+    this.menuItems = [...menuItems]; // ...columnItems
   }
 
   onMenuFormChanges(values: any): void {
