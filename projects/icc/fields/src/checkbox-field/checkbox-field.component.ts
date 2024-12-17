@@ -83,7 +83,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   private _fieldConfig!: IccCheckboxFieldConfig;
   private _value!: boolean;
 
-  @Input() disabled: boolean = false;
+  //@Input() disabled: boolean = false;
   @Input() showFieldFieldIndicator: boolean = true;
 
   @Input() form!: FormGroup;
@@ -155,7 +155,6 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   iccSuffixClick(event: MouseEvent): void {
     event.stopPropagation();
     const val = this.field.value; // ? true : false;
-    console.log(' iccSuffixClick field =========== val=', val);
     this.field.patchValue(!val);
     this.changeDetectorRef.markForCheck();
   }
