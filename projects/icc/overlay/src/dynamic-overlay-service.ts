@@ -62,16 +62,14 @@ export class IccDynamicOverlayService implements OnDestroy {
   }
 
   private canOverlayClose(event: MouseEvent): boolean {
+    console.log(' event.type=', event.type);
     if (event.type === 'click' || event.type === 'mousemove') {
-      console.log('evengts=', event.type);
-
       if (this.overlayServiceConfig.clickToClose) {
-        console.log('11111111111111111111evengts=', event.type);
         return true;
-      } // TODO level 0 close condition event.type === 'click' &&
-      //return this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!) ? true : false;
-      console.log('222222222222222 =', event.type);
+      }
+      return this.overlayService.isOverlayColasable(this.overlayServiceConfig.popoverLevel!) ? true : false;
     }
+
     return true;
   }
 

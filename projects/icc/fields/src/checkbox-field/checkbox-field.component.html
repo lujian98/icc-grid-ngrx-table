@@ -11,8 +11,7 @@
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
-
-    [disabled]="disabled"
+     [disabled]="disabled"
       -->
     <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
 
