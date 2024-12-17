@@ -32,7 +32,7 @@ export class IccMenusComponent {
   private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
-  hoverTrigger = IccTrigger.HOVER; // HOVERCLICK; //
+  hoverTrigger = IccTrigger.CLICK; // HOVERCLICK; //
   private _values: any;
 
   @Input() form: FormGroup | undefined;

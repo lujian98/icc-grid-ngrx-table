@@ -5,6 +5,10 @@
   }
 
   .icc-suffix-content {
-    width: 100%;
+    min-width: 80px;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
   }
 }
