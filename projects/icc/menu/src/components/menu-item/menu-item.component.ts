@@ -59,6 +59,19 @@ export class IccMenuItemComponent {
     return this._menuItem;
   }
 
+  private _checked!: any;
+
+  @Input()
+  set checked(val: any) {
+    const name = this.menuItem.name;
+    // this._checked = val[name];
+    this._checked = val;
+    //console.log(' jjjjjjjjjjjjjjjjjjj this._checked=', this._checked)
+  }
+  get checked(): any {
+    return this._checked;
+  }
+
   @HostBinding('class.menu-item-separator')
   get separator() {
     return this.menuItem.separator;

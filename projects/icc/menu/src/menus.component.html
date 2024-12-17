@@ -5,6 +5,7 @@
       [disabledMenu]="getDisabled(item)"
       [form]="form"
       [menuItem]="item"
+      [checked]="checked"
       (iccMenuItemClick)="menuItemClick($event)"
     >
     </icc-menu-item>
@@ -25,6 +26,7 @@
       [disabledMenu]="getDisabled(item)"
       [form]="form"
       [menuItem]="item"
+      [checked]="checked"
       [iccPopover]="menu"
       [iccPopoverTrigger]="hoverTrigger"
       [popoverLevel]="level"
@@ -39,7 +41,7 @@
         class="icc-menus-sub-level"
         [items]="item.children!"
         [values]="values"
-        [disabled]="disabled"
+        [checked]="checked"
         [level]="level + 1"
         (iccMenuItemClick)="menuItemClick($event)"
       >

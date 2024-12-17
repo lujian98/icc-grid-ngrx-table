@@ -1,6 +1,6 @@
 <ng-container *ngIf="columnMenus$ | async as vm">
   <icc-menus
-    [disabled]="disabled"
+    [checked]="checked"
     [items]="menuItems"
     [level]="level + 1"
     [values]="values"
@@ -9,3 +9,5 @@
   >
   </icc-menus>
 </ng-container>
+<!--
+    [checked]="checked"-->

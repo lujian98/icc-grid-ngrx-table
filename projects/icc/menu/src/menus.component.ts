@@ -5,7 +5,7 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
-import { Subject } from 'rxjs';
+import { Subject, timer, take } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './models/menu-item.model';
@@ -36,11 +36,87 @@ export class IccMenusComponent {
   private _values: any;
 
   @Input() form: FormGroup | undefined;
-  @Input() disabled!: any;
+  private _disabled!: any;
+  private _checked!: any[];
+
+  @Input()
+  set checked(val: any[]) {
+    this._checked = val;
+    // const values  = [...val].join();
+    const values: any = {
+      ID: val[0],
+      vin: val[1],
+      brand: val[2],
+      year: val[3],
+      color: val[4],
+    };
+    //this.setFieldValue(values);
+    // this.form?.patchValue({ ...values });
+    //this.values = values;
+
+    timer(100)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.form?.patchValue({ ...values });
+      });
+
+    console.log('vvvvvvvvvvvvvvvvvvvvvvvv values', values);
+  }
+
+  /*
+  0
+: 
+{name: 'ID', width: 50, align: 'center', fieldType: 'text'}
+1
+: 
+{name: 'vin', fieldType: 'text', width: 100}
+2
+: 
+{name: 'brand', title: 'this s s     sssssssssssssssssss sssssssssssssss', filterField: 'select', width: 50, fieldType: 'text'}
+3
+: 
+{name: 'year', width: 50, align: 'right', fieldType: 'text'}
+4
+: 
+{name: 'color', width: 80, filterField: 'select', align: 'center', fieldType: 'text'}
+*/
+  get checked(): any[] {
+    return this._checked;
+  }
+
+  setFieldValue(checked: any[]): void {
+    // console.log(' sssssss77777777sssss disabled=', checked);
+    /*
+   timer(500)
+   .pipe(take(1))
+   .subscribe(() => {
+    if (Array.isArray(checked) &&  this.form) {
+      [...checked].forEach((item, index) => {
+
+        //const field = this.form?.get(item.name);
+        const field = this.form?.controls?.[item.name]
+        console.log(' fffffffffffffffffffffffffffff  d=, ', this.form?.controls);
+        const value = checked[index];
+        console.log(' sssssss777777field=', field, 'and value=', value)
+        field?.setValue(value);
+      });
+      //console.log(' sssssss77777777sssss disabled=', this.checked)4
+      //this.form?.setValue(checked);
+    }
+   });*/
+  }
+
+  @Input()
+  set disabled(disabled: any) {
+    this._disabled = disabled;
+  }
+  get disabled(): any {
+    return this._disabled;
+  }
 
   @Input()
   set items(val: IccMenuItem[]) {
-    console.log('5555555555 sssssssss disabled =', this.disabled);
+    // console.log('5555555555 sssssssss disabled =', this.disabled);
     this._items = val;
     if (this.selected) {
       this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
@@ -61,6 +137,8 @@ export class IccMenusComponent {
         this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
       }
     });
+
+    //this.setFieldValue(this.checked);
   }
   get items(): IccMenuItem[] {
     return this._items;
@@ -70,7 +148,9 @@ export class IccMenusComponent {
   set values(values: any) {
     this._values = values;
     if (this.form && values) {
+      console.log('values= ', values);
       this.form.patchValue({ ...values });
+      // this.setFieldValue(this.checked);
     }
   }
   get values(): any {
