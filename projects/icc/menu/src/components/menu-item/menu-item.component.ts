@@ -75,6 +75,12 @@ export class IccMenuItemComponent {
     return !!this.menuItem.disabled;
   }
 
+  @HostBinding('class.disabled')
+  @Input()
+  get disabledMenus(): boolean {
+    return !!this.disabledMenu;
+  }
+
   get title(): string {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
