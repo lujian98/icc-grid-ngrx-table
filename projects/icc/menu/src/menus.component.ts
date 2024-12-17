@@ -40,6 +40,7 @@ export class IccMenusComponent {
 
   @Input()
   set items(val: IccMenuItem[]) {
+    console.log('sssssssss disabled =', this.disabled);
     this._items = val;
     if (this.selected) {
       this.items.forEach((item) => (item.selected = item.name === this.selected!.name));

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, ChangeDetectorRef } from '@angular/core';
 import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -15,6 +15,8 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   imports: [CommonModule, IccGridStateModule, IccMenusComponent],
 })
 export class IccGridColumnMenuComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
   private gridFacade = inject(IccGridFacade);
   columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   private _gridId!: string;
@@ -37,6 +39,8 @@ export class IccGridColumnMenuComponent {
         this.columns = columns;
         if (this.menuItems.length === 0) {
           this.setMenuItems();
+        } else {
+          this.checkColumnHidden();
         }
         return [gridConfig, columns];
       }),
@@ -65,6 +69,14 @@ export class IccGridColumnMenuComponent {
     return this._menuItems;
   }
 
+  private checkColumnHidden(): void {
+    this.disabled = [...this.columns].map((column) => {
+      return {
+        [column.name]: !this.gridConfig.columnHidden || this.column.sortField === false,
+      };
+    });
+    this.changeDetectorRef.markForCheck();
+  }
   private setMenuItems(): void {
     const columnItems = [...this.columns].map((column) => {
       return {

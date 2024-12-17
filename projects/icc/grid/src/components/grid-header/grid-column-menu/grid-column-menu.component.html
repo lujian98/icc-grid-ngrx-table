@@ -1,9 +1,9 @@
 <ng-container *ngIf="columnMenus$ | async as vm">
   <icc-menus
+    [disabled]="disabled"
     [items]="menuItems"
     [level]="level + 1"
     [values]="values"
-    [disabled]="disabled"
     (iccMenuFormChanges)="onMenuFormChanges($event)"
     (iccMenuItemClick)="onMenuItemClick($event)"
   >
