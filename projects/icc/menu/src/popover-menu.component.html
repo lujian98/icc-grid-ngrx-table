@@ -1,4 +1,9 @@
-<div [iccPopover]="menu" [iccPopoverTrigger]="menuTrigger" [iccPopoverPosition]="position">
+<div
+  [iccPopover]="menu"
+  [iccPopoverTrigger]="menuTrigger"
+  [clickToClose]="clickToClose"
+  [iccPopoverPosition]="position"
+>
   <span *ngIf="menuItem.title">{{ menuItem.title }}</span>
   <icc-icon *ngIf="menuItem.icon" [config]="menuItem.icon"></icc-icon>
 </div>

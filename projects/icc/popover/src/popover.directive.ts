@@ -45,6 +45,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
   style: string | undefined;
 
   @Input() popoverLevel = 0;
+  @Input() clickToClose = false;
 
   ngAfterViewInit(): void {
     const overlayServiceConfig: IccOverlayServiceConfig = {
@@ -52,6 +53,7 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
       trigger: this.trigger,
       position: this.position,
       popoverLevel: this.popoverLevel,
+      clickToClose: this.clickToClose,
     };
     this.dynamicOverlayService.build(
       IccPopoverComponent,

@@ -14,6 +14,7 @@
       [iccPopover]="menu"
       [iccPopoverTrigger]="menuTrigger"
       [popoverLevel]="level"
+      [clickToClose]="clickToClose"
       [iccPopoverPosition]="bottom"
     >
       <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
@@ -28,6 +29,7 @@
       [iccPopover]="menu"
       [iccPopoverTrigger]="hoverTrigger"
       [popoverLevel]="level"
+      [clickToClose]="clickToClose"
       [iccPopoverPosition]="rightBottom"
       (iccMenuItemClick)="menuItemClick($event)"
     >
@@ -40,6 +42,7 @@
         [items]="item.children!"
         [values]="values"
         [level]="level + 1"
+        [clickToClose]="clickToClose"
         (iccMenuItemClick)="menuItemClick($event)"
       >
       </icc-menus>

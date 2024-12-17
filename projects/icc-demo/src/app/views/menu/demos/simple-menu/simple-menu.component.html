@@ -4,7 +4,7 @@
   <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row' }">
     Click Popover Menu
     <div [ngStyle]="{ 'padding-left': '5px', width: '10px' }">
-      <icc-popover-menu [menuItem]="testMenuItems"> </icc-popover-menu>
+      <icc-popover-menu [menuItem]="testMenuItems" [clickToClose]="true"> </icc-popover-menu>
     </div>
   </div>
 
@@ -21,6 +21,6 @@
 
   <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
     <div>Context Menu</div>
-    <icc-menus [items]="menuItems" [menuTrigger]="contextmenu"> </icc-menus>
+    <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> </icc-menus>
   </div>
 </div>

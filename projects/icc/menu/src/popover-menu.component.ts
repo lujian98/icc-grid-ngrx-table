@@ -18,6 +18,7 @@ export class IccPopoverMenuComponent {
   @Input() menuItem!: IccMenuItem;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
   @Input() position: IccPosition = IccPosition.BOTTOMRIGHT;
+  @Input() clickToClose = false;
 
   level = 0;
 

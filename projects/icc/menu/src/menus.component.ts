@@ -86,6 +86,7 @@ export class IccMenusComponent {
   }
 
   @Input() level = 0;
+  @Input() clickToClose = false;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   getDisabled(item: IccMenuItem): boolean {
