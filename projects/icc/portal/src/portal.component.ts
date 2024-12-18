@@ -5,7 +5,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
-  ElementRef,
   EmbeddedViewRef,
   Input,
   OnDestroy,
@@ -31,8 +30,6 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
 
-  //constructor(protected elementRef: ElementRef) {}
-
   ngOnInit(): void {
     if (this.content instanceof Type) {
       this.portalType = 'component';
@@ -51,22 +48,10 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.content instanceof Type) {
       const portal = new ComponentPortal(this.content);
       this.attachComponentPortal(portal, this.context);
-      /*
-      const componentRef = this.portalOutlet.attachComponentPortal(portal);
-      if (this.context) {
-        Object.assign(componentRef.instance!, this.context);
-        componentRef.changeDetectorRef.markForCheck();
-        componentRef.changeDetectorRef.detectChanges();
-      }
-        */
     } else if (this.content instanceof TemplateRef) {
       // @ts-ignore
       const portal = new TemplatePortal(this.content, null, this.context);
       this.attachTemplatePortal(portal);
-      /*
-      const templateRef = this.portalOutlet.attachTemplatePortal(portal);
-      templateRef.detectChanges();
-      */
     }
   }
 
