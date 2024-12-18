@@ -10,8 +10,15 @@ icc-layout,
   line-height: 1.25rem;
 }
 
+.cdk-global-overlay-wrapper {
+  display: block;
+  height: unset;
+  width: unset;
+}
+
 // ::ng-deep
 .cdk-overlay-pane {
+  display: block;
   height: auto !important;
 }
 
