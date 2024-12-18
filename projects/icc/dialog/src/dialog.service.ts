@@ -1,22 +1,22 @@
-import { Injectable, Inject, TemplateRef, Type, Injector } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { GlobalPositionStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal, TemplatePortal, PortalInjector } from '@angular/cdk/portal';
+import { ComponentPortal, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-
-import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
-import { IccOverlayService, IccOverlayRef } from '@icc/ui/overlay';
-import { IccDialogRef } from './dialog-ref';
+import { IccOverlayRef, IccOverlayService } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
+import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
+import { IccDialogRef } from './dialog-ref';
 
 @Injectable()
 export class IccDialogService {
+  private overlayService = inject(IccOverlayService);
+  private injector = inject(Injector);
+
   constructor(
     @Inject(DOCUMENT) protected document: Document,
     @Inject(ICC_DIALOG_CONFIG) protected globalConfig: IccDialogConfig,
-    protected overlay: IccOverlayService,
-    protected injector: Injector,
   ) {}
 
   open<T>(
@@ -27,22 +27,21 @@ export class IccDialogService {
     const overlayRef = this.createOverlay(config);
     const dialogRef = new IccDialogRef<T>(overlayRef);
     const container = this.createContainer(config, overlayRef);
+
     this.createContent(config, content, container, dialogRef);
-
     this.registerCloseListeners(config, overlayRef, dialogRef);
-
     return dialogRef;
   }
 
   protected createOverlay(config: IccDialogConfig): IccOverlayRef {
     const positionStrategy = new GlobalPositionStrategy().centerHorizontally().centerVertically();
-    return this.overlay.create({
+    return this.overlayService.create({
       positionStrategy,
       hasBackdrop: config.hasBackdrop,
       backdropClass: config.backdropClass,
     });
   }
-
+  // Injector.create
   protected createContainer(config: IccDialogConfig, overlayRef: IccOverlayRef): IccPortalComponent {
     const injector = new PortalInjector(this.createInjector(config), new WeakMap([[IccDialogConfig, config]]));
     const containerPortal = new ComponentPortal(IccPortalComponent, null, injector);

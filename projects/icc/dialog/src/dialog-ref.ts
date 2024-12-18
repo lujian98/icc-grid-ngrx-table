@@ -4,11 +4,10 @@ import { Subject, Observable } from 'rxjs';
 
 export class IccDialogRef<T> {
   componentRef!: ComponentRef<T>;
-
-  protected onClose$: Subject<any> = new Subject();
+  private onClose$: Subject<any> = new Subject();
   readonly onClose: Observable<any> = this.onClose$.asObservable();
 
-  constructor(protected overlayRef: OverlayRef) {}
+  constructor(private overlayRef: OverlayRef) {}
 
   close(res?: any) {
     console.log(' 999999 close === res', res);

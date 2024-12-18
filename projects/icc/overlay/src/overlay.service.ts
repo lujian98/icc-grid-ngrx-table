@@ -4,8 +4,8 @@ import { IccOverlay, IccOverlayConfig, IccOverlayRef, IccOverlayItem } from './m
 
 @Injectable()
 export class IccOverlayService {
-  private _overlays: IccOverlayItem[] = [];
   private overlay = inject(IccOverlay);
+  private _overlays: IccOverlayItem[] = [];
 
   get scrollStrategies(): ScrollStrategyOptions {
     return this.overlay.scrollStrategies;
