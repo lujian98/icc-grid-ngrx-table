@@ -52,6 +52,7 @@ export class IccMenuItemComponent {
       ...defaultCheckboxFieldConfig,
       fieldName: this.menuItem.name,
       fieldLabel: this.menuItem.title || this.menuItem.name,
+      labelBeforeCheckbox: false,
       editable: true,
     };
   }

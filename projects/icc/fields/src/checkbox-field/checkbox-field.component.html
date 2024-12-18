@@ -6,16 +6,12 @@
     [iccFormFieldControl]="field"
     [showFieldFieldIndicator]="showFieldFieldIndicator"
   >
-    <!--
-      TODO checkbox label after checkbox
-    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined && fieldConfig.labelBeforeCheckbox">
       {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
-     [disabled]="disabled"
-      -->
     <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
 
-    <div class="icc-suffix-content" iccSuffix (click)="iccSuffixClick($event)">
+    <div class="icc-suffix-content" *ngIf="!fieldConfig.labelBeforeCheckbox" iccSuffix (click)="iccSuffixClick($event)">
       {{ fieldConfig.fieldLabel }}
     </div>
 
