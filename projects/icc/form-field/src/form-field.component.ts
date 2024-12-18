@@ -51,7 +51,7 @@ export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _fieldIndicator: string = '';
 
-  @Input() showFieldFieldIndicator: boolean = true;
+  @Input() showFieldEditIndicator: boolean = true;
 
   focused: boolean = false;
   public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
@@ -100,7 +100,7 @@ export class IccFormFieldComponent implements AfterViewInit {
     this._fieldIndicator = val;
   }
   get fieldIndicator(): string {
-    return this.showFieldFieldIndicator ? this._fieldIndicator : '';
+    return this.showFieldEditIndicator ? this._fieldIndicator : '';
   }
 
   @ContentChild(IccInputDirective) public inputDirective!: IccInputDirective;

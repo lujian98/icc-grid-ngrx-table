@@ -108,6 +108,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   selectOptions$!: Observable<any[]>;
 
   @Input() form!: FormGroup;
+  @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
     //console.log(' 0000000000000 fieldConfig =', fieldConfig);

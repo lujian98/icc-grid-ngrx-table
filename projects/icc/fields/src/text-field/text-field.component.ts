@@ -80,7 +80,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   private _fieldConfig!: IccTextFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
-
+  @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccTextFieldConfig>) {
     this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };

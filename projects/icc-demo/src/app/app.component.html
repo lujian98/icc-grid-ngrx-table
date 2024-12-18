@@ -17,6 +17,7 @@
         [fieldConfig]="langSelectionConfig"
         [value]="i18nService.currentLang"
         [options]="i18nService.languages"
+        [showFieldEditIndicator]="false"
         (selectionChange)="setLang($event)"
       ></icc-select-field>
     </icc-layout-header-end>
