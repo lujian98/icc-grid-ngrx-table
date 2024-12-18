@@ -39,7 +39,7 @@ export class IccMenuItemComponent {
   private _menuItem!: IccMenuItem;
   @Input() menuType!: string;
   @Input() form!: FormGroup;
-  @Input() disabledMenu: boolean = false;
+  private _disabled: boolean = false;
 
   fieldConfig: IccCheckboxFieldConfig = {
     ...defaultCheckboxFieldConfig,
@@ -71,14 +71,11 @@ export class IccMenuItemComponent {
 
   @HostBinding('class.disabled')
   @Input()
-  get disabled(): boolean {
-    return !!this.menuItem.disabled;
+  set disabled(disabled: boolean) {
+    this._disabled = disabled;
   }
-
-  @HostBinding('class.disabled')
-  @Input()
-  get disabledMenus(): boolean {
-    return !!this.disabledMenu;
+  get disabled(): boolean {
+    return this._disabled;
   }
 
   get title(): string {

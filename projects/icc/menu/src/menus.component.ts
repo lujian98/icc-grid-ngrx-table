@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
-import { Subject, timer, take } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './models/menu-item.model';
@@ -26,24 +27,21 @@ import { IccMenuItem } from './models/menu-item.model';
     IccButtonComponent,
   ],
 })
-export class IccMenusComponent {
+export class IccMenusComponent implements OnDestroy {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
   private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVER; // HOVERCLICK; //
-  private _values: any;
+  private _values: any[] = [];
 
   @Input() form: FormGroup | undefined;
-  private _disabled!: any;
+  @Input() disabled: IccDisabled[] = [];
 
-  @Input()
-  set disabled(disabled: any) {
-    this._disabled = disabled;
-  }
-  get disabled(): any {
-    return this._disabled;
+  getDisabled(menu: IccMenuItem): boolean {
+    const find = this.disabled.find((item) => item.name === menu.name);
+    return find ? find.disabled : false;
   }
 
   @Input()
@@ -81,17 +79,13 @@ export class IccMenusComponent {
     }
     this._values = values;
   }
-  get values(): any {
+  get values(): any[] {
     return this._values;
   }
 
   @Input() level = 0;
   @Input() clickToClose = false;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
-
-  getDisabled(item: IccMenuItem): boolean {
-    return this.disabled ? this.disabled[item.name] : false;
-  }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
   @Output() iccMenuFormChanges = new EventEmitter<any>(false);
@@ -114,5 +108,10 @@ export class IccMenusComponent {
   private setSelected(selectedItem: IccMenuItem): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
     this.selected = selectedItem;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { IccDisabled } from '@icc/ui/core';
 import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
@@ -16,13 +17,11 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
-  columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   private _gridId!: string;
   private gridConfig!: IccGridConfig;
   private columns!: IccColumnConfig[];
-  private _menuItems: IccMenuItem[] = [];
-  private _values: any;
 
+  columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   level = 0;
 
   @Input()
@@ -37,8 +36,8 @@ export class IccGridColumnMenuComponent {
         this.columns = columns;
         if (this.menuItems.length === 0) {
           this.setMenuItems();
-        } else {
         }
+        this.setDisabledMenu();
         return [gridConfig, columns];
       }),
     );
@@ -48,20 +47,25 @@ export class IccGridColumnMenuComponent {
   }
 
   @Input() column!: IccColumnConfig;
+  @Input() menuItems: IccMenuItem[] = [];
+  @Input() values: any[] = [];
+  @Input() disabled: IccDisabled[] = [];
 
-  @Input()
-  set values(values: any) {
-    this._values = values;
-  }
-  get values(): any {
-    return this._values;
-  }
-
-  set menuItems(val: IccMenuItem[]) {
-    this._menuItems = [...val];
-  }
-  get menuItems(): IccMenuItem[] {
-    return this._menuItems;
+  private setDisabledMenu(): void {
+    this.disabled = [
+      {
+        name: 'asc',
+        disabled: this.sortDisabled('asc'),
+      },
+      {
+        name: 'desc',
+        disabled: this.sortDisabled('desc'),
+      },
+      {
+        name: 'columns',
+        disabled: false,
+      },
+    ];
   }
 
   private setMenuItems(): void {
