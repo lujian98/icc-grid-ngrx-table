@@ -128,7 +128,7 @@ export class AppSimpleMenuComponent implements OnInit {
     const dialogContext = {};
     const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: IccTrigger.POINT,
+      trigger: IccTrigger.NOOP,
       position: IccPosition.BOTTOM_END,
       event,
     };

@@ -55,9 +55,8 @@ export class IccDynamicOverlayService implements OnDestroy {
     });
     // @ts-ignore
     this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
-      console.log('uuuuuuuuuuuuuuuuuu');
       if (this.canOverlayClose(event)) {
-        // this.hide();
+        this.hide();
       }
     });
   }
@@ -142,7 +141,7 @@ export class IccDynamicOverlayService implements OnDestroy {
   }
 
   hide(): void {
-    console.log('88888888888888888888');
+    console.log('88888888888888888888 this.overlayRef=', this.overlayRef);
     this.overlayService.remove(this.overlayRef);
     this.overlayRef?.detach();
     this.containerRef = null;
