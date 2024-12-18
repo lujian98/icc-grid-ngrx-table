@@ -1,5 +1,5 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef, Type } from '@angular/core';
 import { IccPosition } from './overlay-position';
 import { IccTrigger } from './overlay-trigger';
 
@@ -30,4 +30,11 @@ export const DEFAULT_OVERLAY_SERVICE_CONFIG: IccOverlayServiceConfig = {
 export interface IccOverlayItem {
   level: number;
   overlayRef: IccOverlayRef;
+}
+
+export type IccPortalContent<T> = string | TemplateRef<T> | Type<T>;
+
+export interface IccRenderableContainer {
+  // @ts-ignore
+  renderContent();
 }

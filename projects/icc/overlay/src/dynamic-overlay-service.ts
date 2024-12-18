@@ -1,7 +1,6 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, OnDestroy, TemplateRef, Type } from '@angular/core';
-import { IccOverlayRef, IccOverlayServiceConfig } from './mapping';
-import { IccRenderableContainer } from './overlay-container.component';
+import { IccOverlayRef, IccOverlayServiceConfig, IccRenderableContainer } from './mapping';
 import { IccPosition } from './overlay-position';
 import { IccPositionBuilderService, Point } from './overlay-position-builder.service';
 import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay-trigger';
