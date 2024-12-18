@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { IccPortalContent } from './model';
 
+// NOT USED TODO replace by USE IccOverlayContainerComponent
 @Component({
   selector: 'icc-portal',
   templateUrl: './portal.component.html',

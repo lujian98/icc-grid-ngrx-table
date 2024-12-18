@@ -129,19 +129,19 @@ export class IccDynamicOverlayService implements OnDestroy {
     if (this.containerRef) {
       return;
     }
-    console.log('33333333333333333333');
+    //console.log('33333333333333333333');
     if (!this.overlayRef) {
       this.createOverlay(event);
     }
-    console.log('55555555555555555555555555=', this.overlayRef);
+    // console.log('55555555555555555555555555=', this.overlayRef);
     this.containerRef = this.overlayRef?.attach(new ComponentPortal(this.componentType, null, null));
-    console.log('56666666666666666666666666');
+    // console.log('56666666666666666666666666');
     this.updateContext();
-    console.log('77777777777777777');
+    // console.log('77777777777777777');
   }
 
   hide(): void {
-    console.log('88888888888888888888 this.overlayRef=', this.overlayRef);
+    // console.log('88888888888888888888 this.overlayRef=', this.overlayRef);
     this.overlayService.remove(this.overlayRef);
     this.overlayRef?.detach();
     this.containerRef = null;

@@ -12,7 +12,7 @@ import { IccPopoverDirective } from './popover.directive';
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccOverlayModule, IccPopoverDirective],
+  imports: [CommonModule, IccOverlayModule, IccPopoverDirective, IccOverlayContainerComponent],
 })
 export class IccPopoverComponent implements IccRenderableContainer {
   @Input() content: any;

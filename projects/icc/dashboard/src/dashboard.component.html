@@ -30,7 +30,7 @@
           [cdkDragDisabled]="isDragDisabled(tile)"
           [cdkDragData]="i"
         >
-          <icc-portal [content]="tile.content!" [context]="tile.context!"></icc-portal>
+          <icc-overlay-container [content]="tile.content!" [context]="tile.context!"></icc-overlay-container>
         </div>
       </cdk-drop-list>
       <div

@@ -1,18 +1,19 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { ICC_DOCUMENT } from './document';
 import { IccOverlayService } from './overlay.service';
 import { IccOverlay } from './mapping';
-import { IccOverlayContainerComponent } from './overlay-container.component';
+//import { IccOverlayContainerComponent } from './overlay-container.component';
 import { IccPositionBuilderService } from './overlay-position-builder.service';
 import { IccTriggerStrategyBuilderService } from './overlay-trigger';
 
 @NgModule({
-  imports: [PortalModule],
-  declarations: [IccOverlayContainerComponent],
-  exports: [OverlayModule, PortalModule, IccOverlayContainerComponent],
+  imports: [PortalModule, CommonModule],
+  //declarations: [IccOverlayContainerComponent],
+  exports: [OverlayModule, PortalModule],
 })
 export class IccOverlayModule {
   static forRoot(): ModuleWithProviders<IccOverlayModule> {
