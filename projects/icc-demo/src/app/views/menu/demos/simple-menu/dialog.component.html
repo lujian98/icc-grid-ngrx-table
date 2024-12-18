@@ -1,21 +1,4 @@
-<icc-layout [resizeable]="false" height="500px" width="600px" style="padding: 2px">
-  <icc-layout-header
-    >Header
-
-    <button icc-button (click)="close()">Close</button>
-  </icc-layout-header>
-
-  <icc-layout-horizontal [resizeable]="false">
-    <icc-layout-left> </icc-layout-left>
-
-    <icc-layout-center> Horizontal Layout With header and footer panels </icc-layout-center>
-
-    <icc-layout-right> </icc-layout-right>
-  </icc-layout-horizontal>
-
-  <icc-layout-footer> Footer </icc-layout-footer>
-</icc-layout>
-
+<ng-content></ng-content>
 <div
   *ngIf="resizeable"
   IccResizeRight

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, ElementRef } from '
 import { IccPopoverMenuComponent, IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
 import { AppDialogDemoComponent } from './dialog.component';
+import { AppDialogTestDemoComponent } from './dialog-test.component';
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
@@ -128,7 +129,7 @@ export class AppSimpleMenuComponent implements OnInit {
 
   openDialog(event: MouseEvent): void {
     let dialogRef = this.dialogService
-      .open(AppDialogDemoComponent, {
+      .open(AppDialogTestDemoComponent, {
         context: {
           dialog: {
             title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
