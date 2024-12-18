@@ -30,7 +30,7 @@ export class IccPopoverComponent implements IccRenderableContainer {
   constructor(private sanitizer: DomSanitizer) {}
 
   close() {
-    this.dynamicOverlayService.hide();
+    //this.dynamicOverlayService.hide();
   }
 
   renderContent() {

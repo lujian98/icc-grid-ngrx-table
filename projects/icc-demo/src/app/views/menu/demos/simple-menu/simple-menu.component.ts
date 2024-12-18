@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ElementRef } from '@angular/core';
 import { IccPopoverMenuComponent, IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
 import { AppDialogDemoComponent } from './dialog.component';
@@ -21,14 +21,16 @@ import {
   imports: [
     CommonModule,
     IccMenusComponent,
-    IccOverlayModule,
     IccPopoverMenuComponent,
     IccPopoverComponent,
     IccPopoverDirective,
     AppDialogDemoComponent,
   ],
+  providers: [IccDynamicOverlayService],
 })
 export class AppSimpleMenuComponent implements OnInit {
+  private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private elementRef = inject(ElementRef);
   dialog = AppDialogDemoComponent;
   openDialogTrigger = IccTrigger.CLICK;
 
@@ -120,5 +122,33 @@ export class AppSimpleMenuComponent implements OnInit {
 
   menuItemClick(item: IccMenuItem): void {
     console.log(' 999999 end  iccMenuItemClick=', item);
+  }
+
+  openDialog(event: MouseEvent): void {
+    const dialogContext = {};
+    const overlayServiceConfig: IccOverlayServiceConfig = {
+      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
+      trigger: IccTrigger.POINT,
+      position: IccPosition.BOTTOM_END,
+      event,
+    };
+    this.dynamicOverlayService.build(
+      IccPopoverComponent,
+      this.elementRef,
+      overlayServiceConfig,
+      this.dialog,
+      dialogContext,
+    );
+    console.log(' oppppppppppppppppppppppppppppppp');
+    this.showMenu();
+  }
+
+  private showMenu(): void {
+    //this.hideMenu();
+    this.dynamicOverlayService.show();
+  }
+
+  private hideMenu() {
+    this.dynamicOverlayService.hide();
   }
 }

@@ -29,7 +29,7 @@
   <div><br /></div>
   <div><br /></div>
 
-  <div [iccPopover]="dialog" [iccPopoverTrigger]="openDialogTrigger">Open window</div>
+  <div (click)="openDialog($event)">Open window</div>
 </div>
 <!--
     <span

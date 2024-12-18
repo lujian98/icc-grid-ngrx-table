@@ -43,7 +43,7 @@ export class AppDialogDemoComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
 
   close(): void {
-    console.log('close clicked');
+    console.log('tttttttttttttttttttt close clicked');
     this.dynamicOverlayService.hide();
   }
 }
