@@ -23,4 +23,24 @@
     <div>Context Menu</div>
     <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> </icc-menus>
   </div>
+
+  <div><br /></div>
+  <div><br /></div>
+  <div><br /></div>
+  <div><br /></div>
+
+  <div [iccPopover]="dialog" [iccPopoverTrigger]="openDialogTrigger">Open window</div>
 </div>
+<!--
+    <span
+      *ngIf="hasChildItem(item) && level === 0"
+      [iccPopover]="menu"
+      [iccPopoverTrigger]="menuTrigger"
+      [popoverLevel]="level"
+      [clickToClose]="clickToClose"
+      [iccPopoverPosition]="bottom"
+    >
+      <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
+      <span class="icc-menu-item-title"> {{ item.title }}</span>
+    </span>
+    -->

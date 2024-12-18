@@ -2,7 +2,15 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IccPopoverMenuComponent, IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { IccTrigger } from '@icc/ui/overlay';
+import { AppDialogDemoComponent } from './dialog.component';
+import {
+  DEFAULT_OVERLAY_SERVICE_CONFIG,
+  IccDynamicOverlayService,
+  IccOverlayServiceConfig,
+  IccPosition,
+  IccTrigger,
+  IccOverlayModule,
+} from '@icc/ui/overlay';
 
 @Component({
   selector: 'app-simple-menu',
@@ -10,9 +18,20 @@ import { IccTrigger } from '@icc/ui/overlay';
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent, IccPopoverComponent, IccPopoverDirective],
+  imports: [
+    CommonModule,
+    IccMenusComponent,
+    IccOverlayModule,
+    IccPopoverMenuComponent,
+    IccPopoverComponent,
+    IccPopoverDirective,
+    AppDialogDemoComponent,
+  ],
 })
 export class AppSimpleMenuComponent implements OnInit {
+  dialog = AppDialogDemoComponent;
+  openDialogTrigger = IccTrigger.CLICK;
+
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
 
   menuItems: any;
