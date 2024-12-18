@@ -1,18 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject, ElementRef } from '@angular/core';
-import { IccPopoverMenuComponent, IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
+import { IccDialogService, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { AppDialogDemoComponent } from './dialog.component';
 import { AppDialogTestDemoComponent } from './dialog-test.component';
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-  IccOverlayModule,
-  IccDialogService,
-} from '@icc/ui/overlay';
 
 @Component({
   selector: 'app-simple-menu',
@@ -20,21 +11,10 @@ import {
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccMenusComponent,
-    IccPopoverMenuComponent,
-    IccPopoverComponent,
-    IccPopoverDirective,
-    AppDialogDemoComponent,
-  ],
-  providers: [IccDynamicOverlayService, IccDialogService],
+  imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppSimpleMenuComponent implements OnInit {
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
   private dialogService = inject(IccDialogService);
-  private elementRef = inject(ElementRef);
-  dialog = AppDialogDemoComponent;
   openDialogTrigger = IccTrigger.CLICK;
 
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
@@ -141,33 +121,5 @@ export class AppSimpleMenuComponent implements OnInit {
       .onClose.subscribe((res) => {
         console.log(' on close res=', res);
       });
-  }
-
-  openDialog2(event: MouseEvent): void {
-    const dialogContext = {};
-    const overlayServiceConfig: IccOverlayServiceConfig = {
-      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: IccTrigger.NOOP,
-      position: IccPosition.BOTTOM_END,
-      event,
-    };
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      this.elementRef,
-      overlayServiceConfig,
-      this.dialog,
-      dialogContext,
-    );
-    console.log(' oppppppppppppppppppppppppppppppp');
-    this.showMenu();
-  }
-
-  private showMenu(): void {
-    //this.hideMenu();
-    this.dynamicOverlayService.show();
-  }
-
-  private hideMenu() {
-    this.dynamicOverlayService.hide();
   }
 }

@@ -10,7 +10,7 @@ import {
   IccLayoutRightComponent,
 } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
-import { AppDialogDemoComponent } from './dialog.component';
+import { IccWindowComponent } from '@icc/ui/window';
 
 @Component({
   selector: 'app-dialog-test',
@@ -27,7 +27,7 @@ import { AppDialogDemoComponent } from './dialog.component';
     IccLayoutHorizontalComponent,
     IccLayoutLeftComponent,
     IccLayoutRightComponent,
-    AppDialogDemoComponent,
+    IccWindowComponent,
   ],
 })
 export class AppDialogTestDemoComponent {
@@ -36,6 +36,6 @@ export class AppDialogTestDemoComponent {
   dialog: any;
 
   close(): void {
-    this.dialogRef.close('test uujj make love');
+    this.dialogRef.close('test uujj make');
   }
 }

@@ -4,14 +4,14 @@ import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
+  selector: 'icc-window',
+  templateUrl: './window.component.html',
+  styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccResizeDirective],
 })
-export class AppDialogDemoComponent {
+export class IccWindowComponent {
   private elementRef = inject(ElementRef);
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
