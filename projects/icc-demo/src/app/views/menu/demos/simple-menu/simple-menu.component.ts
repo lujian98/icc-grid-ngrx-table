@@ -10,8 +10,8 @@ import {
   IccPosition,
   IccTrigger,
   IccOverlayModule,
+  IccDialogService,
 } from '@icc/ui/overlay';
-import { IccDialogService, IccDialogModule } from '@icc/ui/dialog';
 
 @Component({
   selector: 'app-simple-menu',
@@ -22,7 +22,6 @@ import { IccDialogService, IccDialogModule } from '@icc/ui/dialog';
   imports: [
     CommonModule,
     IccMenusComponent,
-    IccDialogModule, //.forRoot(),
     IccPopoverMenuComponent,
     IccPopoverComponent,
     IccPopoverDirective,

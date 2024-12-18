@@ -8,13 +8,15 @@ import { IccOverlayService } from './overlay/overlay.service';
 import { IccOverlay } from './overlay/overlay.models';
 import { IccPositionBuilderService } from './overlay/overlay-position-builder.service';
 import { IccTriggerStrategyBuilderService } from './overlay/overlay-trigger';
+import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog/dialog.model';
+import { IccDialogService } from './dialog/dialog.service';
 
 @NgModule({
   imports: [PortalModule, CommonModule],
   exports: [OverlayModule, PortalModule],
 })
 export class IccOverlayModule {
-  static forRoot(): ModuleWithProviders<IccOverlayModule> {
+  static forRoot(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccOverlayModule> {
     return {
       ngModule: IccOverlayModule,
       providers: [
@@ -23,6 +25,7 @@ export class IccOverlayModule {
         IccPositionBuilderService,
         IccTriggerStrategyBuilderService,
         { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
+        [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
       ],
     };
   }

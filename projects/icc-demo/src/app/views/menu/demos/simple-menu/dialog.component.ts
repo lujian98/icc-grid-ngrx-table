@@ -1,22 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccCalendarModule } from '@icc/ui/calendar';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccCalendarModule } from '@icc/ui/calendar';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { IccFormComponent } from '@icc/ui/form';
+import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
 
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-  IccOverlayModule,
-} from '@icc/ui/overlay';
-import { IccDialogRef } from '@icc/ui/dialog';
+import { IccDialogRef, IccDynamicOverlayService, IccOverlayModule } from '@icc/ui/overlay';
 
 @Component({
   selector: 'app-dialog',
@@ -41,7 +32,6 @@ import { IccDialogRef } from '@icc/ui/dialog';
   providers: [IccDynamicOverlayService],
 })
 export class AppDialogDemoComponent {
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
   private dialogRef = inject(IccDialogRef<AppDialogDemoComponent>);
 
   dialog: any;
