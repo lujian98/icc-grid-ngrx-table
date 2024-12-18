@@ -2,10 +2,10 @@ import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
 import { IccOverlayRef, IccOverlayService } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
+import { fromEvent } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
 import { IccDialogRef } from './dialog-ref';
 

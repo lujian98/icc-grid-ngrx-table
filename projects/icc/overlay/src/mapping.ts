@@ -1,5 +1,5 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { Injectable, TemplateRef, Type } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IccPosition } from './overlay-position';
 import { IccTrigger } from './overlay-trigger';
 
@@ -14,7 +14,6 @@ export interface IccOverlayServiceConfig {
   popoverLevel?: number;
   trigger: IccTrigger;
   clickToClose: boolean;
-  //shouldCloseOnBackdropClick?: boolean;
   customStyle?: string | undefined;
   event?: MouseEvent;
 }
@@ -24,7 +23,6 @@ export const DEFAULT_OVERLAY_SERVICE_CONFIG: IccOverlayServiceConfig = {
   popoverLevel: 0,
   trigger: IccTrigger.CLICK,
   clickToClose: false,
-  //shouldCloseOnBackdropClick: true,
 };
 
 export interface IccOverlayItem {
