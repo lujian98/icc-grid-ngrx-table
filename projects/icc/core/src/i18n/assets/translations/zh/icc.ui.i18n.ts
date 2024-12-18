@@ -41,7 +41,7 @@ export const ICC = {
       FILE_SELECT_UPLOAD: '文件选择上传',
     },
     GRID: {
-      COLUMNS: 'Columns',
+      COLUMNS: '列数',
       DISPLAYING: '显示',
       FILTER: '过滤器 ...',
       OF: '于',
