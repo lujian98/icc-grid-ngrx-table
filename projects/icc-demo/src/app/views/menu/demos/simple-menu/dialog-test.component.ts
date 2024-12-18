@@ -9,6 +9,7 @@ import {
   IccLayoutLeftComponent,
   IccLayoutRightComponent,
 } from '@icc/ui/layout';
+import { IccButtonComponent } from '@icc/ui/button';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccWindowComponent } from '@icc/ui/window';
 
@@ -27,6 +28,7 @@ import { IccWindowComponent } from '@icc/ui/window';
     IccLayoutHorizontalComponent,
     IccLayoutLeftComponent,
     IccLayoutRightComponent,
+    IccButtonComponent,
     IccWindowComponent,
   ],
 })
