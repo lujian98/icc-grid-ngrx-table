@@ -6,13 +6,11 @@ import { DOCUMENT } from '@angular/common';
 import { ICC_DOCUMENT } from './document';
 import { IccOverlayService } from './overlay.service';
 import { IccOverlay } from './mapping';
-//import { IccOverlayContainerComponent } from './overlay-container.component';
 import { IccPositionBuilderService } from './overlay-position-builder.service';
 import { IccTriggerStrategyBuilderService } from './overlay-trigger';
 
 @NgModule({
   imports: [PortalModule, CommonModule],
-  //declarations: [IccOverlayContainerComponent],
   exports: [OverlayModule, PortalModule],
 })
 export class IccOverlayModule {
