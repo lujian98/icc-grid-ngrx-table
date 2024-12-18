@@ -1,7 +1,7 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { IccPosition } from './overlay/overlay-position';
-import { IccTrigger } from './overlay/overlay-trigger';
+import { IccPosition } from './overlay-position';
+import { IccTrigger } from './overlay-trigger';
 
 @Injectable()
 export class IccOverlay extends Overlay {}

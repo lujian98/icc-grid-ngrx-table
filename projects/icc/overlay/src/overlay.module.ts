@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { ICC_DOCUMENT } from './document';
+import { ICC_DOCUMENT } from './overlay/document';
 import { IccOverlayService } from './overlay/overlay.service';
-import { IccOverlay } from './mapping';
+import { IccOverlay } from './overlay/overlay.models';
 import { IccPositionBuilderService } from './overlay/overlay-position-builder.service';
 import { IccTriggerStrategyBuilderService } from './overlay/overlay-trigger';
 

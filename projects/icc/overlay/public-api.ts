@@ -1,5 +1,5 @@
-export * from './src/document';
-export * from './src/mapping';
+export * from './src/overlay/document';
+export * from './src/overlay/overlay.models';
 export * from './src/dynamic-overlay-service';
 export * from './src/overlay/overlay-position';
 export * from './src/overlay/overlay-position-builder.service';
