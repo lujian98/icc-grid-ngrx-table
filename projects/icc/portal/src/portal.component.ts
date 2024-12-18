@@ -4,6 +4,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
+  ElementRef,
+  EmbeddedViewRef,
   Input,
   OnDestroy,
   OnInit,
@@ -13,7 +16,6 @@ import {
 } from '@angular/core';
 import { IccPortalContent } from './model';
 
-// NOT USED TODO replace by USE IccOverlayContainerComponent
 @Component({
   selector: 'icc-portal',
   templateUrl: './portal.component.html',
@@ -22,12 +24,14 @@ import { IccPortalContent } from './model';
   standalone: true,
   imports: [CommonModule, PortalModule],
 })
-export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
-  @Input() content!: IccPortalContent<T>;
+export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() content!: IccPortalContent<any>;
   @Input() context!: {};
   portalType!: string;
 
-  @ViewChild(CdkPortalOutlet) portalOutlet!: CdkPortalOutlet;
+  @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
+
+  //constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
     if (this.content instanceof Type) {
@@ -46,23 +50,50 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   addPortalContent(): void {
     if (this.content instanceof Type) {
       const portal = new ComponentPortal(this.content);
+      this.attachComponentPortal(portal, this.context);
+      /*
       const componentRef = this.portalOutlet.attachComponentPortal(portal);
       if (this.context) {
         Object.assign(componentRef.instance!, this.context);
         componentRef.changeDetectorRef.markForCheck();
         componentRef.changeDetectorRef.detectChanges();
       }
+        */
     } else if (this.content instanceof TemplateRef) {
       // @ts-ignore
       const portal = new TemplatePortal(this.content, null, this.context);
+      this.attachTemplatePortal(portal);
+      /*
       const templateRef = this.portalOutlet.attachTemplatePortal(portal);
       templateRef.detectChanges();
+      */
+    }
+  }
+
+  attachComponentPortal<T>(portal: ComponentPortal<T>, context?: Object): ComponentRef<T> {
+    const componentRef = this.portalOutlet.attachComponentPortal(portal);
+    if (context) {
+      // @ts-ignore
+      Object.assign(componentRef.instance, context);
+    }
+    componentRef.changeDetectorRef.markForCheck();
+    componentRef.changeDetectorRef.detectChanges();
+    return componentRef;
+  }
+
+  attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+    const templateRef = this.portalOutlet.attachTemplatePortal(portal);
+    templateRef.detectChanges();
+    return templateRef;
+  }
+
+  detach(): void {
+    if (this.portalOutlet.hasAttached()) {
+      this.portalOutlet.detach();
     }
   }
 
   ngOnDestroy(): void {
-    if (this.portalOutlet.hasAttached()) {
-      this.portalOutlet.detach();
-    }
+    this.detach();
   }
 }

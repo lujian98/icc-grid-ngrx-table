@@ -15,7 +15,8 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccPortalContainerComponent } from '@icc/ui/overlay';
+//import { IccPortalContainerComponent } from '@icc/ui/overlay';
+import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
 import { TranslateModule } from '@ngx-translate/core';
 import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
@@ -29,7 +30,7 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
   imports: [
     CommonModule,
     DragDropModule,
-    IccPortalContainerComponent,
+    IccPortalComponent,
     TranslateModule,
     IccIconModule,
     IccButtonComponent,

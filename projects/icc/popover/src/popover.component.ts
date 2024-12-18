@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { IccPortalContainerComponent, IccRenderableContainer, IccDynamicOverlayService } from '@icc/ui/overlay';
+import { IccDynamicOverlayService } from '@icc/ui/overlay';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccPopoverDirective } from './popover.directive';
+import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
 
 @Component({
   selector: 'icc-popover',
@@ -12,7 +13,7 @@ import { IccPopoverDirective } from './popover.directive';
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccOverlayModule, IccPopoverDirective, IccPortalContainerComponent],
+  imports: [CommonModule, IccOverlayModule, IccPopoverDirective, IccPortalComponent],
 })
 export class IccPopoverComponent implements IccRenderableContainer {
   @Input() content: any;
@@ -24,8 +25,8 @@ export class IccPopoverComponent implements IccRenderableContainer {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
   }
 
-  @ViewChild(IccPortalContainerComponent, { static: true })
-  overlayContainer!: IccPortalContainerComponent;
+  @ViewChild(IccPortalComponent, { static: true })
+  overlayContainer!: IccPortalComponent;
 
   constructor(private sanitizer: DomSanitizer) {}
 

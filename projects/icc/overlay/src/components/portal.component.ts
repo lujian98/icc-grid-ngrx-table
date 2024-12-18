@@ -14,7 +14,8 @@ import {
   Type,
   ViewChild,
 } from '@angular/core';
-import { IccPortalContent } from '../mapping';
+
+import { IccPortalContent } from '@icc/ui/portal';
 
 @Component({
   selector: 'icc-portal-container',

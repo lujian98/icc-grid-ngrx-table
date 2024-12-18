@@ -31,10 +31,3 @@ export interface IccOverlayItem {
   level: number;
   overlayRef: IccOverlayRef;
 }
-
-export type IccPortalContent<T> = string | TemplateRef<T> | Type<T>;
-
-export interface IccRenderableContainer {
-  // @ts-ignore
-  renderContent();
-}
