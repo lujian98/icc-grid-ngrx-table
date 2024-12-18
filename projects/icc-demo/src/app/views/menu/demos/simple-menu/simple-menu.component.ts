@@ -127,15 +127,19 @@ export class AppSimpleMenuComponent implements OnInit {
   }
 
   openDialog(event: MouseEvent): void {
-    let dialogRef = this.dialogService.open(AppDialogDemoComponent, {
-      context: {
-        dialog: {
-          title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
-          content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+    let dialogRef = this.dialogService
+      .open(AppDialogDemoComponent, {
+        context: {
+          dialog: {
+            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
+            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+          },
         },
-      },
-      closeOnBackdropClick: false,
-    });
+        closeOnBackdropClick: false,
+      })
+      .onClose.subscribe((res) => {
+        console.log(' on close res=', res);
+      });
   }
 
   openDialog2(event: MouseEvent): void {
