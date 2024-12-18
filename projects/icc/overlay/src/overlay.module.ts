@@ -4,10 +4,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { ICC_DOCUMENT } from './document';
-import { IccOverlayService } from './overlay.service';
+import { IccOverlayService } from './overlay/overlay.service';
 import { IccOverlay } from './mapping';
-import { IccPositionBuilderService } from './overlay-position-builder.service';
-import { IccTriggerStrategyBuilderService } from './overlay-trigger';
+import { IccPositionBuilderService } from './overlay/overlay-position-builder.service';
+import { IccTriggerStrategyBuilderService } from './overlay/overlay-trigger';
 
 @NgModule({
   imports: [PortalModule, CommonModule],
