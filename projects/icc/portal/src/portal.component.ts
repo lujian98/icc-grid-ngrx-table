@@ -13,7 +13,7 @@ import {
   Type,
   ViewChild,
 } from '@angular/core';
-import { IccPortalContent } from './model';
+import { IccPortalContent } from './portal.model';
 
 @Component({
   selector: 'icc-portal',

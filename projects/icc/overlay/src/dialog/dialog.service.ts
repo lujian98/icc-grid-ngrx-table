@@ -1,6 +1,5 @@
 import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
 import { IccOverlayService } from '../overlay/overlay.service';
 import { IccOverlayRef } from '../overlay/overlay.models';
