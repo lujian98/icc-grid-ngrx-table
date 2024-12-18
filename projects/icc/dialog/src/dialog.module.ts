@@ -14,11 +14,4 @@ export class IccDialogModule {
       providers: [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
     };
   }
-
-  static forChild(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccDialogModule> {
-    return {
-      ngModule: IccDialogModule,
-      providers: [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
-    };
-  }
 }
