@@ -11,6 +11,7 @@ import {
   IccTrigger,
   IccOverlayModule,
 } from '@icc/ui/overlay';
+import { IccDialogService, IccDialogModule } from '@icc/ui/dialog';
 
 @Component({
   selector: 'app-simple-menu',
@@ -21,15 +22,17 @@ import {
   imports: [
     CommonModule,
     IccMenusComponent,
+    IccDialogModule, //.forRoot(),
     IccPopoverMenuComponent,
     IccPopoverComponent,
     IccPopoverDirective,
     AppDialogDemoComponent,
   ],
-  providers: [IccDynamicOverlayService],
+  providers: [IccDynamicOverlayService, IccDialogService],
 })
 export class AppSimpleMenuComponent implements OnInit {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private dialogService = inject(IccDialogService);
   private elementRef = inject(ElementRef);
   dialog = AppDialogDemoComponent;
   openDialogTrigger = IccTrigger.CLICK;
@@ -125,6 +128,18 @@ export class AppSimpleMenuComponent implements OnInit {
   }
 
   openDialog(event: MouseEvent): void {
+    let dialogRef = this.dialogService.open(AppDialogDemoComponent, {
+      context: {
+        dialog: {
+          title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
+          content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+        },
+      },
+      closeOnBackdropClick: false,
+    });
+  }
+
+  openDialog2(event: MouseEvent): void {
     const dialogContext = {};
     const overlayServiceConfig: IccOverlayServiceConfig = {
       ...DEFAULT_OVERLAY_SERVICE_CONFIG,

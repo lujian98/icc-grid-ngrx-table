@@ -3,11 +3,11 @@ import { PortalModule } from '@angular/cdk/portal';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccDialogService } from './dialog.service';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
-import { IccDialogContainerComponent } from './dialog-container/dialog-container.component';
+//import { IccDialogContainerComponent } from './dialog-container/dialog-container.component';
 
 //TODO not used
 @NgModule({
-  imports: [PortalModule, IccOverlayModule, IccDialogContainerComponent],
+  imports: [PortalModule, IccOverlayModule],
 })
 export class IccDialogModule {
   static forRoot(dialogConfig: Partial<IccDialogConfig> = {}): ModuleWithProviders<IccDialogModule> {

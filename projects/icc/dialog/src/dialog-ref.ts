@@ -11,6 +11,7 @@ export class IccDialogRef<T> {
   constructor(protected overlayRef: OverlayRef) {}
 
   close(res?: any) {
+    console.log(' 999999 close === res', res);
     this.overlayRef.detach();
     this.overlayRef.dispose();
     this.onClose$.next(res);

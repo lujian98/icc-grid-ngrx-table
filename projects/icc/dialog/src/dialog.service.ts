@@ -8,7 +8,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog-config';
 import { IccOverlayService, IccOverlayRef } from '@icc/ui/overlay';
 import { IccDialogRef } from './dialog-ref';
-import { IccDialogContainerComponent } from './dialog-container/dialog-container.component';
+import { IccPortalComponent } from '@icc/ui/portal';
 
 @Injectable()
 export class IccDialogService {
@@ -43,9 +43,9 @@ export class IccDialogService {
     });
   }
 
-  protected createContainer(config: IccDialogConfig, overlayRef: IccOverlayRef): IccDialogContainerComponent {
+  protected createContainer(config: IccDialogConfig, overlayRef: IccOverlayRef): IccPortalComponent {
     const injector = new PortalInjector(this.createInjector(config), new WeakMap([[IccDialogConfig, config]]));
-    const containerPortal = new ComponentPortal(IccDialogContainerComponent, null, injector);
+    const containerPortal = new ComponentPortal(IccPortalComponent, null, injector);
     const containerRef = overlayRef.attach(containerPortal);
     return containerRef.instance;
   }
@@ -53,7 +53,7 @@ export class IccDialogService {
   protected createContent<T>(
     config: IccDialogConfig,
     content: Type<T> | TemplateRef<T>,
-    container: IccDialogContainerComponent,
+    container: IccPortalComponent,
     dialogRef: IccDialogRef<T>,
   ) {
     if (content instanceof TemplateRef) {

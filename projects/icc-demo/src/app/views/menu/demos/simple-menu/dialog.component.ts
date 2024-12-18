@@ -16,6 +16,7 @@ import {
   IccTrigger,
   IccOverlayModule,
 } from '@icc/ui/overlay';
+import { IccDialogRef } from '@icc/ui/dialog';
 
 @Component({
   selector: 'app-dialog',
@@ -41,9 +42,13 @@ import {
 })
 export class AppDialogDemoComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private dialogRef = inject(IccDialogRef<AppDialogDemoComponent>);
+
+  dialog: any;
 
   close(): void {
-    console.log('tttttttttttttttttttt close clicked');
-    this.dynamicOverlayService.hide();
+    //console.log('tttttttttttttttttttt close clicked');
+    // this.dynamicOverlayService.hide();
+    this.dialogRef.close('test uujj make love');
   }
 }

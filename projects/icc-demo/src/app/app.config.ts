@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-//import { IccDialogModule } from '@icc/ui/dialog';
+import { IccDialogModule } from '@icc/ui/dialog';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccI18nModule } from '@icc/ui/core';
 import { IccThemeModule } from '@icc/ui/theme';
@@ -36,7 +36,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(IccI18nModule.forRoot()),
     importProvidersFrom(IccThemeModule.forRoot({ name: 'dark' })),
     importProvidersFrom(IccOverlayModule.forRoot()),
-    //importProvidersFrom(IccDialogModule.forRoot()),
+    importProvidersFrom(IccDialogModule.forRoot()),
     importProvidersFrom(IccUiModulesModule),
   ],
 };
