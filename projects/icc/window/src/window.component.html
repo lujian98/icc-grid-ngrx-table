@@ -1,26 +1,30 @@
-<ng-content></ng-content>
-<div
-  *ngIf="resizeable"
-  IccResizeRight
-  iccResize
-  [direction]="resizeType.RIGHT"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
-<div
-  *ngIf="resizeable"
-  IccResizeBottom
-  iccResize
-  [direction]="resizeType.BOTTOM"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
-<div
-  *ngIf="resizeable"
-  IccResizeBottomRight
-  iccResize
-  [direction]="resizeType.BOTTOM_RIGHT"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
-<button icc-button (click)="close()">Close Window</button>
+<div class="icc-dragable-window" cdkDragBoundary=".cdk-overlay-container" cdkDrag [cdkDragDisabled]="disabled">
+  <ng-content></ng-content>
+
+  <div
+    *ngIf="resizeable"
+    IccResizeRight
+    iccResize
+    [direction]="resizeType.RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+  <div
+    *ngIf="resizeable"
+    IccResizeBottom
+    iccResize
+    [direction]="resizeType.BOTTOM"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+  <div
+    *ngIf="resizeable"
+    IccResizeBottomRight
+    iccResize
+    [direction]="resizeType.BOTTOM_RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+
+  <button icc-button (click)="close()">Close Window</button>
+</div>

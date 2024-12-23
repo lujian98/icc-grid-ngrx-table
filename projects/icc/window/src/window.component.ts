@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { IccDialogRef } from '@icc/ui/overlay';
@@ -11,7 +12,7 @@ import { IccButtonComponent } from '@icc/ui/button';
   styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccResizeDirective, IccButtonComponent],
+  imports: [CommonModule, CdkDrag, IccResizeDirective, IccButtonComponent],
 })
 export class IccWindowComponent<T> {
   private dialogRef = inject(IccDialogRef<T>);
@@ -20,6 +21,8 @@ export class IccWindowComponent<T> {
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
   @Input() resizeable: boolean = true;
+
+  disabled: boolean = false;
 
   close(): void {
     this.dialogRef.close();
