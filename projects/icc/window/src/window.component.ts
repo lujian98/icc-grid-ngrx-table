@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, AfterViewInit } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
+import { take, timer } from 'rxjs';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { IccDialogRef } from '@icc/ui/overlay';
@@ -14,15 +16,35 @@ import { IccButtonComponent } from '@icc/ui/button';
   standalone: true,
   imports: [CommonModule, CdkDrag, IccResizeDirective, IccButtonComponent],
 })
-export class IccWindowComponent<T> {
+export class IccWindowComponent<T> implements AfterViewInit {
   private dialogRef = inject(IccDialogRef<T>);
-
+  private document = inject(DOCUMENT);
   private elementRef = inject(ElementRef);
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
   @Input() resizeable: boolean = true;
 
   disabled: boolean = false;
+
+  ngAfterViewInit(): void {
+    timer(20)
+      .pipe(take(1))
+      .subscribe(() => this.initWindow());
+  }
+
+  private initWindow(): void {
+    const overlayEl = this.document.querySelector('.cdk-overlay-container');
+    const width = overlayEl?.clientWidth!;
+    const height = overlayEl?.clientHeight!;
+    const element = this.elementRef.nativeElement;
+    const w = element.clientWidth;
+    const h = element.clientHeight;
+    const topAdjust = w > width / 2 ? 4 : 2;
+    const left = width < w ? 0 : (width - w) / 2;
+    const top = height < h ? 0 : (height - h) / topAdjust;
+    element.style.top = `${top}px`;
+    element.style.left = `${left}px`;
+  }
 
   close(): void {
     this.dialogRef.close();
