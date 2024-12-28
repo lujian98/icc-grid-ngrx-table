@@ -7,6 +7,7 @@ import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccWindowConfig, defaultWindowConfig } from './models/window.model';
 
 @Component({
   selector: 'icc-window',
@@ -20,11 +21,18 @@ export class IccWindowComponent<T> implements AfterViewInit {
   private dialogRef = inject(IccDialogRef<T>);
   private document = inject(DOCUMENT);
   private elementRef = inject(ElementRef);
+  private _windowConfig: IccWindowConfig = defaultWindowConfig;
+
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
-  @Input() resizeable: boolean = true;
 
-  disabled: boolean = false;
+  @Input()
+  set windowConfig(val: IccWindowConfig) {
+    this._windowConfig = { ...defaultWindowConfig, ...val };
+  }
+  get windowConfig(): IccWindowConfig {
+    return this._windowConfig;
+  }
 
   ngAfterViewInit(): void {
     timer(20)

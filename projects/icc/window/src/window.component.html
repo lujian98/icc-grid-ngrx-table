@@ -1,8 +1,13 @@
-<div class="icc-dragable-window" cdkDragBoundary=".cdk-overlay-container" cdkDrag [cdkDragDisabled]="disabled">
+<div
+  class="icc-dragable-window"
+  cdkDragBoundary=".cdk-overlay-container"
+  cdkDrag
+  [cdkDragDisabled]="windowConfig.dragDisabled"
+>
   <ng-content></ng-content>
 
   <div
-    *ngIf="resizeable"
+    *ngIf="windowConfig.resizeable"
     IccResizeRight
     iccResize
     [direction]="resizeType.RIGHT"
@@ -10,7 +15,7 @@
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
   <div
-    *ngIf="resizeable"
+    *ngIf="windowConfig.resizeable"
     IccResizeBottom
     iccResize
     [direction]="resizeType.BOTTOM"
@@ -18,7 +23,7 @@
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
   <div
-    *ngIf="resizeable"
+    *ngIf="windowConfig.resizeable"
     IccResizeBottomRight
     iccResize
     [direction]="resizeType.BOTTOM_RIGHT"
