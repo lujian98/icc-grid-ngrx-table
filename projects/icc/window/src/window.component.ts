@@ -35,7 +35,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    timer(20)
+    timer(10)
       .pipe(take(1))
       .subscribe(() => this.initWindow());
   }

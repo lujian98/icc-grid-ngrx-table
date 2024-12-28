@@ -11,7 +11,7 @@ import {
 } from '@icc/ui/layout';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccDialogRef } from '@icc/ui/overlay';
-import { IccWindowComponent } from '@icc/ui/window';
+import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/ui/window';
 
 @Component({
   selector: 'app-dialog-test',
@@ -34,6 +34,12 @@ import { IccWindowComponent } from '@icc/ui/window';
 })
 export class AppDialogTestDemoComponent {
   private dialogRef = inject(IccDialogRef<AppDialogTestDemoComponent>);
+
+  windowConfig: IccWindowConfig = {
+    ...defaultWindowConfig,
+    //resizeable: false,
+    //dragDisabled: true,
+  };
 
   dialog: any;
 
