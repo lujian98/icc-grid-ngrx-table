@@ -3,9 +3,13 @@
   cdkDragBoundary=".cdk-overlay-container"
   cdkDrag
   [cdkDragDisabled]="windowConfig.dragDisabled"
+  (cdkDragEnded)="dragEnded($event)"
 >
   <ng-content></ng-content>
 
+  <!--
+  cdkDrag cdkDragRootElement=".cdk-overlay-pane"
+  -->
   <div
     *ngIf="windowConfig.resizeable"
     IccResizeRight
