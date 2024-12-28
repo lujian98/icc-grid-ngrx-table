@@ -85,6 +85,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
     this.dialogRef.close();
   }
   onResizePanel(resizeInfo: IccResizeInfo): void {
+    // TODO position if move left and/or top
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
       const width = resizeInfo.width * resizeInfo.scaleX;

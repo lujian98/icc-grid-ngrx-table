@@ -10,6 +10,16 @@
   <!--
   cdkDrag cdkDragRootElement=".cdk-overlay-pane"
   -->
+
+  <div
+    *ngIf="windowConfig.resizeable"
+    IccResizeTop
+    iccResize
+    [direction]="resizeType.TOP"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+
   <div
     *ngIf="windowConfig.resizeable"
     IccResizeRight
@@ -26,11 +36,47 @@
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
+
+  <div
+    *ngIf="windowConfig.resizeable"
+    IccResizeLeft
+    iccResize
+    [direction]="resizeType.LEFT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+  <div
+    *ngIf="windowConfig.resizeable"
+    IccResizeTopLeft
+    iccResize
+    [direction]="resizeType.TOP_LEFT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+
+  <div
+    *ngIf="windowConfig.resizeable"
+    IccResizeTopRight
+    iccResize
+    [direction]="resizeType.TOP_RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+
   <div
     *ngIf="windowConfig.resizeable"
     IccResizeBottomRight
     iccResize
     [direction]="resizeType.BOTTOM_RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+
+  <div
+    *ngIf="windowConfig.resizeable"
+    IccResizeBottomLeft
+    iccResize
+    [direction]="resizeType.BOTTOM_LEFT"
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
