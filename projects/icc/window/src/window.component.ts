@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, AfterViewInit } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
-import { take, timer } from 'rxjs';
-import { uniqueId } from '@icc/ui/core';
-import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
-import { IccDialogRef } from '@icc/ui/overlay';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccWindowConfig, defaultWindowConfig } from './models/window.model';
+import { uniqueId } from '@icc/ui/core';
+import { IccDialogRef } from '@icc/ui/overlay';
+import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
+import { take, timer } from 'rxjs';
+import { defaultWindowConfig, IccWindowConfig } from './models/window.model';
 
 @Component({
   selector: 'icc-window',
@@ -34,6 +33,10 @@ export class IccWindowComponent<T> implements AfterViewInit {
     return this._windowConfig;
   }
 
+  get element(): HTMLElement {
+    return this.elementRef.nativeElement;
+  }
+
   ngAfterViewInit(): void {
     timer(10)
       .pipe(take(1))
@@ -44,14 +47,13 @@ export class IccWindowComponent<T> implements AfterViewInit {
     const overlayEl = this.document.querySelector('.cdk-overlay-container');
     const width = overlayEl?.clientWidth!;
     const height = overlayEl?.clientHeight!;
-    const element = this.elementRef.nativeElement;
-    const w = element.clientWidth;
-    const h = element.clientHeight;
+    const w = this.element.clientWidth;
+    const h = this.element.clientHeight;
     const topAdjust = w > width / 2 ? 4 : 2;
     const left = width < w ? 0 : (width - w) / 2;
     const top = height < h ? 0 : (height - h) / topAdjust;
-    element.style.top = `${top}px`;
-    element.style.left = `${left}px`;
+    this.setWindowTop(top);
+    this.setWindowLeft(left);
   }
 
   //TODO drag start issue???
@@ -84,28 +86,53 @@ export class IccWindowComponent<T> implements AfterViewInit {
   close(): void {
     this.dialogRef.close();
   }
+
   onResizePanel(resizeInfo: IccResizeInfo): void {
-    // TODO position if move left and/or top
     if (resizeInfo.isResized) {
-      const height = resizeInfo.height * resizeInfo.scaleY;
-      const width = resizeInfo.width * resizeInfo.scaleX;
-      this.setHeight(`${height}px`);
-      this.setWidth(`${width}px`);
+      this.setWindowPosition(resizeInfo);
+      this.setHeight(resizeInfo.height * resizeInfo.scaleY);
+      this.setWidth(resizeInfo.width * resizeInfo.scaleX);
     }
   }
 
-  private setHeight(height: string): void {
-    const el = this.elementRef.nativeElement;
-    if (el) {
-      el.style.height = height;
+  private setWindowPosition(resizeInfo: IccResizeInfo): void {
+    const top = parseFloat(this.element.style.top);
+    const left = parseFloat(this.element.style.left);
+    switch (resizeInfo.direction) {
+      case IccResizeType.TOP:
+      case IccResizeType.TOP_RIGHT:
+        this.setWindowTop(top + resizeInfo.dy);
+        break;
+      case IccResizeType.LEFT:
+      case IccResizeType.BOTTOM_LEFT:
+        this.setWindowLeft(left + resizeInfo.dx);
+        break;
+      case IccResizeType.TOP_LEFT:
+        this.setWindowTop(top + resizeInfo.dy);
+        this.setWindowLeft(left + resizeInfo.dx);
+        break;
     }
   }
 
-  private setWidth(width: string): void {
-    const el = this.elementRef.nativeElement;
+  private setWindowTop(top: number): void {
+    this.element.style.top = `${top}px`;
+  }
+
+  private setWindowLeft(left: number): void {
+    this.element.style.left = `${left}px`;
+  }
+
+  private setHeight(height: number): void {
+    const el = this.element;
     if (el) {
-      el.style.width = width;
-      //el.parentNode.style.width = width;
+      el.style.height = `${height}px`;
+    }
+  }
+
+  private setWidth(width: number): void {
+    const el = this.element;
+    if (el) {
+      el.style.width = `${width}px`;
     }
   }
 }
