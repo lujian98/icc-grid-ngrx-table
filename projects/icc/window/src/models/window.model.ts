@@ -4,6 +4,8 @@ export interface IccWindowConfig {
   dragDisabled: boolean;
   maximizable: Boolean;
   resizeable: boolean;
+  width: string;
+  height: string;
 }
 
 export const defaultWindowConfig: IccWindowConfig = {
@@ -12,6 +14,8 @@ export const defaultWindowConfig: IccWindowConfig = {
   dragDisabled: false,
   maximizable: true,
   resizeable: true,
+  width: '800px',
+  height: '500px',
 };
 
 export interface IccWindowInfo {
