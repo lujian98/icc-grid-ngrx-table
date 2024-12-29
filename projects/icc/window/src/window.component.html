@@ -7,14 +7,12 @@
 >
   <icc-layout-header [title]="windowConfig.title">
     <button icc-button *ngIf="windowConfig.maximizable && isMaxWindowSize" (click)="restore()">
-      <icc-icon icon="window-restore"></icc-icon>
+      <icc-icon icon="window-restore"></icc-icon>&nbsp;
     </button>
     <button icc-button *ngIf="windowConfig.maximizable && !isMaxWindowSize" (click)="maximize()">
-      <icc-icon icon="expand"></icc-icon>
+      <icc-icon icon="expand"></icc-icon>&nbsp;
     </button>
-    <button icc-button *ngIf="windowConfig.closable" (click)="close()">
-      <icc-icon icon="close"></icc-icon>
-    </button>
+    <button icc-button *ngIf="windowConfig.closable" (click)="close()"><icc-icon icon="close"></icc-icon>&nbsp;</button>
   </icc-layout-header>
 
   <ng-content></ng-content>
