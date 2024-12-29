@@ -76,10 +76,8 @@ export class IccWindowComponent<T> implements AfterViewInit {
     const top = parseFloat(element.style.top) + translateY;
     const left = parseFloat(element.style.left) + translateX;
 
-    // console.log( 'top1 =', top)
-    // console.log( 'left1 =', left)
-    element.style.top = `${top}px`;
-    element.style.left = `${left}px`;
+    this.setWindowTop(top);
+    this.setWindowLeft(left);
     childEl.style.transform = 'none';
   }
 
