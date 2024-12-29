@@ -25,7 +25,6 @@ export class IccWindowComponent<T> implements AfterViewInit {
   private _windowConfig: IccWindowConfig = defaultWindowConfig;
   private windowInfo!: IccWindowInfo;
 
-  title = 'Window Title';
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
 
