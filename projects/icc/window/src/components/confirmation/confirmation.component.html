@@ -1,0 +1,21 @@
+<icc-window [windowConfig]="confirmationConfig">
+  <icc-layout [resizeable]="false">
+    <icc-layout-horizontal [resizeable]="false">
+      {{ confirmationConfig.message }}
+    </icc-layout-horizontal>
+
+    <icc-layout-footer>
+      <button icc-button *ngIf="confirmationConfig.showOkButton" (click)="ok()">
+        {{ confirmationConfig.ok | translate }}
+      </button>
+
+      <button icc-button *ngIf="confirmationConfig.showCancelButton" (click)="cancel()">
+        {{ confirmationConfig.cancel | translate }}
+      </button>
+
+      <button icc-button *ngIf="confirmationConfig.showCloseButton" (click)="close()">
+        {{ confirmationConfig.close | translate }}
+      </button>
+    </icc-layout-footer>
+  </icc-layout>
+</icc-window>

@@ -5,9 +5,12 @@ export const ICC = {
     },
     ACTIONS: {
       ADD: 'Add',
+      CANCEL: 'Cancel',
       CLEAR_ALL_FILTERS: '清除所有过滤器',
+      CLOSE: 'Close',
       EDIT: '编辑',
       ENABLED: '启用',
+      OK: 'Ok',
       REMOVE: 'Remove',
       REFRESH: '刷新',
       RESET: '重置',

@@ -29,7 +29,10 @@ export class AppWindowComponent {
   items: IccAccordion[] = [
     {
       name: 'Window & Dialog',
-      items: [{ name: 'Simple Window', link: 'simple-window' }],
+      items: [
+        { name: 'Simple Window', link: 'simple-window' },
+        { name: 'Confirmation', link: 'confirmation' },
+      ],
     },
   ];
 }

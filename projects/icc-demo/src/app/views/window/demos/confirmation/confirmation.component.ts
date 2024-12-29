@@ -2,26 +2,29 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccDialogService } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { AppDialogTestDemoComponent } from './dialog-test.component';
+import { IccConfirmationComponent, IccConfirmationConfig, defaultConfirmationConfig } from '@icc/ui/window';
 
 @Component({
-  selector: 'app-simple-window',
-  templateUrl: './simple-window.component.html',
-  styleUrls: ['./simple-window.component.scss'],
+  selector: 'app-confirmation',
+  template: `<div (click)="openConfirmationWindow($event)">Click to Open Confirmation Window</div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
 })
-export class AppSimpleWindowComponent {
+export class AppConfirmationComponent {
   private dialogService = inject(IccDialogService);
 
-  openDialog(event: MouseEvent): void {
+  openConfirmationWindow(event: MouseEvent): void {
     let dialogRef = this.dialogService
-      .open(AppDialogTestDemoComponent, {
+      .open(IccConfirmationComponent, {
         context: {
-          dialog: {
-            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
-            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+          confirmationConfig: {
+            ...defaultConfirmationConfig,
+            title: 'Test Confirmation',
+            showOkButton: true,
+            showCancelButton: true,
+            showCloseButton: true,
+            message: 'This is confirmation to exit',
           },
         },
         closeOnBackdropClick: false,

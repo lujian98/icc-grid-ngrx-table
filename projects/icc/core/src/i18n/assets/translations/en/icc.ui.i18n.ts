@@ -2,9 +2,12 @@ export const ICC = {
   UI: {
     ACTIONS: {
       ADD: 'Add',
+      CANCEL: 'Cancel',
       CLEAR_ALL_FILTERS: 'Clear All Filters',
+      CLOSE: 'Close',
       EDIT: 'Edit',
       ENABLED: 'Enabled',
+      OK: 'Ok',
       REMOVE: 'Remove',
       REFRESH: 'Refresh',
       RESET: 'Reset',
