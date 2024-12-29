@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
     { name: 'Menu', link: 'menu' },
     { name: 'D3', link: 'd3' },
     { name: 'Layout', link: 'layout' },
+    { name: 'Window', link: 'window' },
   ];
 
   rangeValue = this.themeService.rangeMax;

@@ -37,6 +37,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/layout/layout.routes').then((m) => m.AppLayoutRoutes),
       },
       {
+        path: 'window',
+        loadChildren: () => import('./views/window/window.routes').then((m) => m.AppWindowRoutes),
+      },
+      {
         path: '**',
         redirectTo: 'grid',
       },

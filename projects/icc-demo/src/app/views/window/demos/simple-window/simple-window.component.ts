@@ -1,0 +1,33 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { IccDialogService, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
+import { AppDialogTestDemoComponent } from './dialog-test.component';
+
+@Component({
+  selector: 'app-simple-window',
+  templateUrl: './simple-window.component.html',
+  styleUrls: ['./simple-window.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
+})
+export class AppSimpleWindowComponent {
+  private dialogService = inject(IccDialogService);
+
+  openDialog(event: MouseEvent): void {
+    let dialogRef = this.dialogService
+      .open(AppDialogTestDemoComponent, {
+        context: {
+          dialog: {
+            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
+            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+          },
+        },
+        closeOnBackdropClick: false,
+      })
+      .onClose.subscribe((res) => {
+        console.log(' on close res=', res);
+      });
+  }
+}

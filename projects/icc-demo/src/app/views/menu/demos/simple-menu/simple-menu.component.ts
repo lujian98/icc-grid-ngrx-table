@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
-import { IccDialogService, IccTrigger } from '@icc/ui/overlay';
+import { IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
-import { AppDialogTestDemoComponent } from './dialog-test.component';
 
 @Component({
   selector: 'app-simple-menu',
@@ -14,9 +13,6 @@ import { AppDialogTestDemoComponent } from './dialog-test.component';
   imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppSimpleMenuComponent implements OnInit {
-  private dialogService = inject(IccDialogService);
-  openDialogTrigger = IccTrigger.CLICK;
-
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
 
   menuItems: any;
@@ -105,21 +101,5 @@ export class AppSimpleMenuComponent implements OnInit {
 
   menuItemClick(item: IccMenuItem): void {
     console.log(' 999999 end  iccMenuItemClick=', item);
-  }
-
-  openDialog(event: MouseEvent): void {
-    let dialogRef = this.dialogService
-      .open(AppDialogTestDemoComponent, {
-        context: {
-          dialog: {
-            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
-            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
-          },
-        },
-        closeOnBackdropClick: false,
-      })
-      .onClose.subscribe((res) => {
-        console.log(' on close res=', res);
-      });
   }
 }
