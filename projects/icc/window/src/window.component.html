@@ -5,11 +5,19 @@
   [cdkDragDisabled]="windowConfig.dragDisabled"
   (cdkDragEnded)="dragEnded($event)"
 >
-  <ng-content></ng-content>
+  <icc-layout-header [title]="windowConfig.title">
+    <button icc-button *ngIf="windowConfig.maximizable && isMaxWindowSize" (click)="restore()">
+      <icc-icon icon="window-restore"></icc-icon>
+    </button>
+    <button icc-button *ngIf="windowConfig.maximizable && !isMaxWindowSize" (click)="maximize()">
+      <icc-icon icon="expand"></icc-icon>
+    </button>
+    <button icc-button *ngIf="windowConfig.closable" (click)="close()">
+      <icc-icon icon="close"></icc-icon>
+    </button>
+  </icc-layout-header>
 
-  <!--
-  cdkDrag cdkDragRootElement=".cdk-overlay-pane"
-  -->
+  <ng-content></ng-content>
 
   <div
     *ngIf="windowConfig.resizeable"
@@ -80,6 +88,4 @@
     [elementKey]="elementKey"
     (iccResizeEvent)="onResizePanel($event)"
   ></div>
-
-  <button icc-button (click)="close()">Close Window</button>
 </div>

@@ -1,9 +1,22 @@
 export interface IccWindowConfig {
-  resizeable: boolean;
+  title: string;
+  closable: Boolean;
   dragDisabled: boolean;
+  maximizable: Boolean;
+  resizeable: boolean;
 }
 
 export const defaultWindowConfig: IccWindowConfig = {
-  resizeable: true,
+  title: '',
+  closable: true,
   dragDisabled: false,
+  maximizable: true,
+  resizeable: true,
 };
+
+export interface IccWindowInfo {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}

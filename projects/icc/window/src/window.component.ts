@@ -3,10 +3,12 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { uniqueId } from '@icc/ui/core';
+import { IccIconModule } from '@icc/ui/icon';
+import { IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { take, timer } from 'rxjs';
-import { defaultWindowConfig, IccWindowConfig } from './models/window.model';
+import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/window.model';
 
 @Component({
   selector: 'icc-window',
@@ -14,14 +16,16 @@ import { defaultWindowConfig, IccWindowConfig } from './models/window.model';
   styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, CdkDrag, IccResizeDirective, IccButtonComponent],
+  imports: [CommonModule, IccIconModule, CdkDrag, IccResizeDirective, IccButtonComponent, IccLayoutHeaderComponent],
 })
 export class IccWindowComponent<T> implements AfterViewInit {
   private dialogRef = inject(IccDialogRef<T>);
   private document = inject(DOCUMENT);
   private elementRef = inject(ElementRef);
   private _windowConfig: IccWindowConfig = defaultWindowConfig;
+  private windowInfo!: IccWindowInfo;
 
+  title = 'Window Title';
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
 
@@ -37,6 +41,16 @@ export class IccWindowComponent<T> implements AfterViewInit {
     return this.elementRef.nativeElement;
   }
 
+  get overlay(): HTMLElement {
+    return this.document.querySelector('.cdk-overlay-container')!;
+  }
+
+  get isMaxWindowSize(): boolean {
+    return (
+      this.element.clientWidth === this.overlay.clientWidth && this.element.clientHeight === this.overlay.clientHeight
+    );
+  }
+
   ngAfterViewInit(): void {
     timer(10)
       .pipe(take(1))
@@ -44,9 +58,8 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   private initWindow(): void {
-    const overlayEl = this.document.querySelector('.cdk-overlay-container');
-    const width = overlayEl?.clientWidth!;
-    const height = overlayEl?.clientHeight!;
+    const width = this.overlay.clientWidth;
+    const height = this.overlay.clientHeight;
     const w = this.element.clientWidth;
     const h = this.element.clientHeight;
     const topAdjust = w > width / 2 ? 4 : 2;
@@ -54,6 +67,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
     const top = height < h ? 0 : (height - h) / topAdjust;
     this.setWindowTop(top);
     this.setWindowLeft(left);
+    this.setWindowInfo();
   }
 
   //TODO drag start issue???
@@ -79,6 +93,30 @@ export class IccWindowComponent<T> implements AfterViewInit {
     this.setWindowTop(top);
     this.setWindowLeft(left);
     childEl.style.transform = 'none';
+  }
+
+  maximize(): void {
+    this.setWindowInfo();
+    this.setWindowTop(0);
+    this.setWindowLeft(0);
+    this.setHeight(this.overlay.clientHeight);
+    this.setWidth(this.overlay.clientWidth);
+  }
+
+  restore(): void {
+    this.setWindowTop(this.windowInfo.top);
+    this.setWindowLeft(this.windowInfo.left);
+    this.setHeight(this.windowInfo.height);
+    this.setWidth(this.windowInfo.width);
+  }
+
+  private setWindowInfo(): void {
+    this.windowInfo = {
+      top: parseFloat(this.element.style.top),
+      left: parseFloat(this.element.style.left),
+      width: this.element.clientWidth,
+      height: this.element.clientHeight,
+    };
   }
 
   close(): void {
