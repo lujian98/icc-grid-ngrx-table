@@ -21,5 +21,4 @@ export const defaultConfirmationConfig: IccConfirmationConfig = {
   close: 'ICC.UI.ACTIONS.CLOSE',
   message: '',
   width: '400px',
-  height: '100px', // TODO min height
 };

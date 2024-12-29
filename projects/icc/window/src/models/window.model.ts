@@ -1,3 +1,5 @@
+import { unset } from 'lodash-es';
+
 export interface IccWindowConfig {
   title: string;
   closable: Boolean;
@@ -15,7 +17,7 @@ export const defaultWindowConfig: IccWindowConfig = {
   maximizable: true,
   resizeable: true,
   width: '800px',
-  height: '600px',
+  height: '100%',
 };
 
 export interface IccWindowInfo {
