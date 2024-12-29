@@ -64,7 +64,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
     const height = this.overlay.clientHeight;
     const w = this.element.clientWidth;
     const h = this.element.clientHeight;
-    const topAdjust = w > width / 2 ? 4 : 2;
+    const topAdjust = h < height / 2 ? 4 : 2;
     const left = width < w ? 0 : (width - w) / 2;
     const top = height < h ? 0 : (height - h) / topAdjust;
     this.setWindowTop(top);
