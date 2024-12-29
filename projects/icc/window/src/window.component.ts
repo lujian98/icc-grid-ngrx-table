@@ -1,4 +1,4 @@
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
@@ -72,23 +72,17 @@ export class IccWindowComponent<T> implements AfterViewInit {
     this.setWindowInfo();
   }
 
-  //TODO drag start issue???
-  dragEnded(event: any): void {
-    console.log(' droped=', event);
+  dragEnded(event: CdkDragEnd): void {
     const element = this.elementRef.nativeElement;
     const childEl = element.firstChild;
-    //console.log( ' this.childEl=', childEl)
     var style = window.getComputedStyle(childEl);
-    //console.log(' style.transform=', style.transform)
     const transformValue = style.getPropertyValue('transform');
     const matrix = transformValue
       .match(/matrix\((.*)\)/)![1]
       .split(',')
       .map(Number);
-    //console.log(' matrix=', matrix)
     const translateX = matrix[4];
     const translateY = matrix[5];
-    //console.log( 'element.style.top=', element.style.top)
     const top = parseFloat(element.style.top) + translateY;
     const left = parseFloat(element.style.left) + translateX;
 
