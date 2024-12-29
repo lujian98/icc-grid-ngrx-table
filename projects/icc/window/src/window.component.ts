@@ -51,7 +51,9 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.setHeight(parseFloat(this.windowConfig.height));
+    if (this.windowConfig.height) {
+      this.setHeight(parseFloat(this.windowConfig.height));
+    }
     this.setWidth(parseFloat(this.windowConfig.width));
 
     timer(10)

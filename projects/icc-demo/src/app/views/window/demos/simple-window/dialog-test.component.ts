@@ -38,6 +38,7 @@ export class AppDialogTestDemoComponent {
   windowConfig: IccWindowConfig = {
     ...defaultWindowConfig,
     title: 'Window',
+    height: '600px',
     //resizeable: false,
     //dragDisabled: true,
   };

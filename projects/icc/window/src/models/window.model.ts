@@ -7,7 +7,7 @@ export interface IccWindowConfig {
   maximizable: Boolean;
   resizeable: boolean;
   width: string;
-  height: string;
+  height?: string;
 }
 
 export const defaultWindowConfig: IccWindowConfig = {
@@ -17,7 +17,6 @@ export const defaultWindowConfig: IccWindowConfig = {
   maximizable: true,
   resizeable: true,
   width: '800px',
-  height: '100%',
 };
 
 export interface IccWindowInfo {
