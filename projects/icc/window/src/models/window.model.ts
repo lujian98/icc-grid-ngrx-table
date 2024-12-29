@@ -1,7 +1,6 @@
-import { unset } from 'lodash-es';
-
 export interface IccWindowConfig {
   title: string;
+  showHeader: boolean;
   closable: Boolean;
   dragDisabled: boolean;
   maximizable: Boolean;
@@ -12,6 +11,7 @@ export interface IccWindowConfig {
 
 export const defaultWindowConfig: IccWindowConfig = {
   title: '',
+  showHeader: true,
   closable: true,
   dragDisabled: false,
   maximizable: true,

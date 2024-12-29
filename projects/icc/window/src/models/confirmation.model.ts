@@ -1,6 +1,7 @@
 import { defaultWindowConfig, IccWindowConfig } from './window.model';
 
 export interface IccConfirmationConfig extends IccWindowConfig {
+  showFooter: boolean;
   showOkButton: boolean;
   ok: string;
   showCancelButton: boolean;
@@ -12,6 +13,7 @@ export interface IccConfirmationConfig extends IccWindowConfig {
 
 export const defaultConfirmationConfig: IccConfirmationConfig = {
   ...defaultWindowConfig,
+  showFooter: true,
   title: 'Confirmation',
   showOkButton: false,
   ok: 'ICC.UI.ACTIONS.OK',

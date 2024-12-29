@@ -4,14 +4,14 @@ export const ICC = {
       TODAY: '今天',
     },
     ACTIONS: {
-      ADD: 'Add',
-      CANCEL: 'Cancel',
+      ADD: '添加',
+      CANCEL: '取消',
       CLEAR_ALL_FILTERS: '清除所有过滤器',
-      CLOSE: 'Close',
+      CLOSE: '关闭',
       EDIT: '编辑',
       ENABLED: '启用',
-      OK: 'Ok',
-      REMOVE: 'Remove',
+      OK: '好的',
+      REMOVE: '除去',
       REFRESH: '刷新',
       RESET: '重置',
       SAVE: '保存',
@@ -57,7 +57,7 @@ export const ICC = {
       NO_RESULT: '没有数据',
     },
     TITLE: {
-      DASHBOARD: 'Dashboard',
+      DASHBOARD: '仪表板',
     },
   },
 };

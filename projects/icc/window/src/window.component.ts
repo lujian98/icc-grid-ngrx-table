@@ -31,6 +31,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
   @Input()
   set windowConfig(val: IccWindowConfig) {
     this._windowConfig = { ...defaultWindowConfig, ...val };
+    this.setWindow();
   }
   get windowConfig(): IccWindowConfig {
     return this._windowConfig;
@@ -51,6 +52,10 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setWindow();
+  }
+
+  private setWindow(): void {
     if (this.windowConfig.height) {
       this.setHeight(parseFloat(this.windowConfig.height));
     }

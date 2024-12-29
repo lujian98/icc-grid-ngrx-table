@@ -4,7 +4,7 @@
       {{ confirmationConfig.message }}
     </icc-layout-horizontal>
 
-    <icc-layout-footer>
+    <icc-layout-footer *ngIf="confirmationConfig.showFooter">
       <button icc-button *ngIf="confirmationConfig.showOkButton" (click)="ok()">
         {{ confirmationConfig.ok | translate }}
       </button>
