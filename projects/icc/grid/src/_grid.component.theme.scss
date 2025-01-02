@@ -70,6 +70,21 @@
       background-color: icc-theme(icc-grid-header-background-color);
       color: icc-theme(app-text-basic-color);
     }
+
+    .grid-cell {
+      //display: flex;
+      align-items: center;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      white-space: nowrap;
+    }
+    .grid-cell-align-center {
+      justify-content: center;
+    }
+
+    .grid-cell-align-right {
+      justify-content: right;
+    }
   }
 
   // preview must be outside
