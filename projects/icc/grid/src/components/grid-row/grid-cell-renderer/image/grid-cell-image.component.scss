@@ -1,6 +1,7 @@
 :host {
   display: flex;
   width: 100%;
+  padding-top: 2px;
 
   .grid-cell {
     //display: flex;
@@ -10,11 +11,11 @@
     white-space: nowrap;
   }
 
-  &.grid-cell-view-align-center {
+  &.grid-cell-image-align-center {
     justify-content: center;
   }
 
-  &.grid-cell-view-align-right {
+  &.grid-cell-image-align-right {
     justify-content: right;
   }
 }

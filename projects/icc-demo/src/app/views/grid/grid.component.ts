@@ -73,7 +73,8 @@ export class AppGridComponent {
           name: '18: Grid In-Memory Test',
           link: 'in-memory-grid-test',
         },
+        { name: '19: Grid Display Image', link: 'grid-display-image' },
       ],
-    },
+    }, // grid-display-image
   ];
 }

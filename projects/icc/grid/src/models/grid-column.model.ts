@@ -32,6 +32,11 @@ export interface IccGridConfig {
   rowHeight: number;
 }
 
+export enum IccRendererType {
+  Text = 'Text',
+  Image = 'Image',
+}
+
 export interface GridState {
   [key: string]: IccGridState;
 }
@@ -119,6 +124,7 @@ export interface IccColumnConfig {
   //minWidth?: number;
   sortField?: boolean;
   filterField?: SunFilterField;
+  rendererType?: IccRendererType;
 
   //field: string;
   //index?: number;

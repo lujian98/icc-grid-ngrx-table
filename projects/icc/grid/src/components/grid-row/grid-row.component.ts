@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
-import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 
@@ -13,13 +12,7 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
   styleUrls: ['./grid-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    IccGridCellViewComponent,
-    IccGridCellComponent,
-    IccDynamicGridCellComponent,
-    IccRowSelectComponent,
-  ],
+  imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];

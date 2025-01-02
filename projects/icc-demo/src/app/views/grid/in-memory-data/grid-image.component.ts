@@ -1,31 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccGridComponent,
+  defaultGridConfig,
+  IccGridData,
+  IccRendererType,
+} from '@icc/ui/grid';
+import { CARSDATA3 } from '../../../data/cars-large';
 
 @Component({
-  selector: 'app-simple-grid',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
+  selector: 'app-grid-image',
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
-export class AppSimpleGridComponent {
+export class AppGridImageComponent {
   gridConfig: Partial<IccGridConfig> = {
-    //...defaultGridConfig,
+    ...defaultGridConfig,
     urlKey: 'DCR',
-    //rowHeight: 80,
-    //columnSort: true,
-    //columnFilter: true,
-    //columnResize: true,
-    //columnReorder: true,
-    //columnMenu: true,
-    //columnHidden: true,
-    //remoteColumnsConfig: false,
-
-    remoteGridData: true,
+    rowHeight: 60,
   };
-
   columnsConfig: IccColumnConfig[] = [
     {
       name: 'ID',
@@ -48,5 +46,12 @@ export class AppSimpleGridComponent {
       width: 80,
       align: 'center',
     },
+    {
+      name: 'image',
+      width: 80,
+      align: 'center',
+      rendererType: IccRendererType.Image,
+    },
   ];
+  gridData: IccGridData<any> = CARSDATA3;
 }

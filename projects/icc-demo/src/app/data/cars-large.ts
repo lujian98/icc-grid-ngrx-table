@@ -1295,6 +1295,7 @@ export const CARSDATA = {
 export const CARSDATA3 = {
   data: CARSDATA0.data.map((item: any, index) => {
     item['ID'] = index + 1;
+    item['image'] = 'assets/test-image.jpg';
     return item;
   }),
   totalCounts: 200,

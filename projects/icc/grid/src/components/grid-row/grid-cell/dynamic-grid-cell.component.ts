@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccGridCellViewComponent } from './grid-cell-view.component';
-import { IccColumnConfig } from '../../../models/grid-column.model';
+import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
+import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
+import { IccColumnConfig, IccRendererType, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-dynamic-grid-cell',
@@ -9,12 +10,14 @@ import { IccColumnConfig } from '../../../models/grid-column.model';
   styleUrls: ['dynamic-grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccGridCellViewComponent],
+  imports: [CommonModule, IccGridCellTextComponent, IccGridCellImageComponent],
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
   private _componentRef: any;
   private _column!: IccColumnConfig;
+
+  @Input() gridConfig!: IccGridConfig;
 
   @Input()
   set column(val: IccColumnConfig) {
@@ -46,9 +49,18 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   }
 
   private loadComponent(): void {
-    const cellComponent = IccGridCellViewComponent; // TODO this.column.component || // to dynamic components
+    const cellComponent = this.getRenderer(); // TODO this.column.component || // to dynamic components
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
+    this._componentRef.instance.gridConfig = this.gridConfig;
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.record = this.record;
+  }
+
+  private getRenderer(): any {
+    if (this.column.rendererType === IccRendererType.Image) {
+      return IccGridCellImageComponent;
+    }
+
+    return IccGridCellTextComponent;
   }
 }
