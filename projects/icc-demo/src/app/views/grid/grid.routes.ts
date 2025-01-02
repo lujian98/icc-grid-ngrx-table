@@ -21,6 +21,7 @@ import { AppGridTest2Component } from './remote-data/grid-test2.component';
 import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-test.component';
 import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scroll.component';
 import { AppGridImageComponent } from './in-memory-data/grid-image.component';
+import { AppGridRendererComponent } from './in-memory-data/grid-renderer-component.component';
 
 import { AppGridComponent } from './grid.component';
 
@@ -77,6 +78,7 @@ export const AppGridRoutes: Routes = [
       { path: 'in-memory-grid-test', component: AppGridinMemoryTestComponent },
       { path: 'in-memory-grid-virtual-scroll', component: AppGridVirtualScrollComponent },
       { path: 'grid-display-image', component: AppGridImageComponent },
+      { path: 'grid-renderer-component', component: AppGridRendererComponent },
       {
         path: '**',
         redirectTo: 'app-default-grid',

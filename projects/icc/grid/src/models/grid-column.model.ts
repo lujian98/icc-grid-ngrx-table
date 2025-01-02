@@ -1,3 +1,5 @@
+import { Type } from '@angular/core';
+
 export interface IccSortField {
   field: string;
   dir: string;
@@ -59,6 +61,14 @@ export interface IccColumnWidth {
   width: number;
 }
 
+export interface IccColumnFilter {
+  name: string;
+  //type: string;
+  value: any; //string | number | boolean; // string[] | number[];
+}
+
+export type IccFilterField = boolean | string;
+
 /*
 export enum FilterType {
   Text = 'Text',
@@ -67,68 +77,60 @@ export enum FilterType {
 }
 */
 
-export type SunFilterField = boolean | string;
+/*
 
-export interface IccColumnFilter {
-  name: string;
-  //type: string;
-  value: any; //string | number | boolean; // string[] | number[];
-}
+
+
 
 export type fieldType = 'text' | 'number' | 'select';
 
-export interface SunFieldType {
+export interface IccFieldType {
   type: fieldType;
   allowBlank?: boolean;
 }
 
-export interface SunTextFieldType extends SunFieldType {
+export interface IccTextFieldType extends IccFieldType {
   minLength?: number;
   maxLength?: number;
 }
 
-export interface SunNumberFieldType extends SunFieldType {
+export interface IccNumberFieldType extends IccFieldType {
   minValue?: number;
   maxValue?: number;
 }
 
-/*
-export interface SunSelectOption {
-  label: string;
-  value: string | number;
-  children?: SunSelectOption[];
-  optionFields?: string[];
-}*/
 
-export interface SunSelectFieldType extends SunFieldType {
+export interface IccSelectFieldType extends IccFieldType {
   key?: string;
   value?: string;
   options?: any[];
   multiSelect?: boolean;
   filterMultiSelect?: boolean;
-  /*
-  showCheckAll?: boolean;
-  showUncheckAll?: boolean;
-  showIsEmpty?: boolean;
-  */
+
+  //showCheckAll?: boolean;
+  //showUncheckAll?: boolean;
+  //showIsEmpty?: boolean;
 }
+  */
 
 export interface IccColumnConfig {
   name: string;
   title?: string;
-  fieldType?: string | SunFieldType | SunTextFieldType | SunNumberFieldType | SunSelectFieldType;
+  fieldType?: string; // | IccFieldType | IccTextFieldType | IccNumberFieldType | IccSelectFieldType;
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
   sortField?: boolean;
-  filterField?: SunFilterField;
+  filterField?: IccFilterField;
   rendererType?: IccRendererType;
+  component?: Type<unknown>;
+  renderer?: Function;
 
   //field: string;
   //index?: number;
-  //validations?: SunValidation[];
+  //validations?: IccValidation[];
 
   //draggable?: boolean;
   //dateFormat?: string;
@@ -137,13 +139,13 @@ export interface IccColumnConfig {
   header?: string;
   headerClass?: string;
 
-  renderer?: SunRendererType;
-  groupField?: SunGroupField;
-  editField?: SunEditField;
+  renderer?: IccRendererType;
+  groupField?: IccGroupField;
+  editField?: IccEditField;
   cellReadonly?: boolean | Function;
   priority?: number;
-  menu?: boolean | SunMenuItem;
-  groupHeader?: SunGroupHeader;
+  menu?: boolean | IccMenuItem;
+  groupHeader?: IccGroupHeader;
   copyToClipboard?: boolean;
   */
 }
