@@ -1,20 +1,17 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
+  inject,
   Input,
   OnInit,
-  inject,
-  ViewContainerRef,
   Type,
-  ComponentRef,
-  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
-import { cloneDeep } from 'lodash-es';
-import { CommonModule } from '@angular/common';
-import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
+import { IccColumnConfig, IccGridConfig, IccRendererType } from '../../../models/grid-column.model';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
-import { IccColumnConfig, IccRendererType, IccGridConfig } from '../../../models/grid-column.model';
-import { IccGridCellDirective } from '../../../directives/grid-cell.directive';
+import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
 
 @Component({
   selector: 'icc-dynamic-grid-cell',
@@ -22,7 +19,7 @@ import { IccGridCellDirective } from '../../../directives/grid-cell.directive';
   styleUrls: ['dynamic-grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccGridCellTextComponent, IccGridCellImageComponent, IccGridCellDirective],
+  imports: [CommonModule, IccGridCellTextComponent, IccGridCellImageComponent],
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
@@ -55,17 +52,13 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     return this._record;
   }
 
-  //@ViewChild(IccGridCellDirective, {read: ViewContainerRef, static: true}) viewContainerRef!: ViewContainerRef;
-
   ngOnInit(): void {
     this.loadComponent();
   }
-  //   @ViewChild(GridCellDirective, {read: ViewContainerRef, static: true}) cellHost: ViewContainerRef;
+
   private loadComponent(): void {
     this.viewContainerRef.clear();
-    const cellComponent = this.getRenderer(); // TODO this.column.component || // to dynamic components
-
-    //const cellComponent = this.column.component || IccGridCellTextComponent;
+    const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.gridConfig = this.gridConfig;
     this._componentRef.instance.column = this.column;
@@ -74,8 +67,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
 
   private getRenderer(): Type<unknown> {
     if (this.column.component) {
-      // cloneDeep(loadParams)
-      return this.column.component; // cloneDeep(this.column.component);
+      return this.column.component;
     } else if (this.column.rendererType === IccRendererType.Image) {
       return IccGridCellImageComponent;
     }

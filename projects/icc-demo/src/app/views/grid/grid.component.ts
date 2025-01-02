@@ -8,17 +8,6 @@ import {
   IccLayoutLeftComponent,
   IccLayoutCenterComponent,
 } from '@icc/ui/layout';
-import { AppGridCellTextComponent2 } from './in-memory-data/grid-renderer-component.component';
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  IccGridComponent,
-  defaultGridConfig,
-  IccGridData,
-  IccRendererType,
-  IccGridCellRendererComponent,
-  IccGridCellTextComponent,
-} from '@icc/ui/grid';
 
 @Component({
   selector: 'app-grid',
@@ -34,8 +23,6 @@ import {
     IccLayoutCenterComponent,
     IccLayoutRightComponent,
     IccAccordionComponent,
-    //AppGridCellTextComponent2,
-    //IccGridCellTextComponent,
   ],
 })
 export class AppGridComponent {

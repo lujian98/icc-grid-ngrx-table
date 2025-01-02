@@ -8,7 +8,6 @@ import {
   IccGridData,
   IccRendererType,
   IccGridCellRendererComponent,
-  IccGridCellTextComponent,
 } from '@icc/ui/grid';
 import { CARSDATA3 } from '../../../data/cars-large';
 
@@ -16,18 +15,18 @@ import { CARSDATA3 } from '../../../data/cars-large';
   selector: 'app-grid-cell-text',
   template: `
     <div class="grid-cell">
-      {{ data }}
+      {{ cellValue }}
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridCellRendererComponent],
 })
-export class AppGridCellTextComponent2<T> extends IccGridCellRendererComponent<any> {
-  override get data(): string {
-    console.log(' mmmmm this.record=', this.record);
-    return 'uuuuuu';
-    //return (this.record as any)[this.column.name];
+export class AppGridCellTextComponent extends IccGridCellRendererComponent<string> {
+  get cellValue(): string {
+    const brand = (this.record as any)['brand'];
+    const year = (this.record as any)['year'];
+    return `${brand} ${year}`;
   }
 }
 
@@ -66,9 +65,8 @@ export class AppGridRendererComponent {
     {
       name: 'year',
       title: 'Make and Year',
-      component: AppGridCellTextComponent2,
-      //width: 50,
-      //align: 'right',
+      filterField: false,
+      component: AppGridCellTextComponent,
     },
     {
       name: 'color',

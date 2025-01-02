@@ -25,7 +25,17 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideRouter(routes),
-    importProvidersFrom(StoreModule.forRoot({ router: routerReducer })),
+    importProvidersFrom(
+      StoreModule.forRoot(
+        { router: routerReducer },
+        {
+          runtimeChecks: {
+            strictStateImmutability: false,
+            strictActionImmutability: false,
+          },
+        },
+      ),
+    ),
     importProvidersFrom(StoreRouterConnectingModule.forRoot({})),
     importProvidersFrom(EffectsModule.forRoot()),
     importProvidersFrom(StoreDevtoolsModule.instrument({ maxAge: 25 })),
