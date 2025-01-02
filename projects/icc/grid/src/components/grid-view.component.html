@@ -19,6 +19,7 @@
     <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
       <icc-grid-row
         [gridConfig]="gridConfig"
+        [rowIndex]="index"
         [columns]="columns"
         [columnWidths]="columnWidths"
         [record]="getRecord(record)"

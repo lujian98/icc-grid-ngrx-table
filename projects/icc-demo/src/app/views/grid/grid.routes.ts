@@ -22,6 +22,7 @@ import { AppGridinMemoryTestComponent } from './in-memory-data/grid-in-memory-te
 import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scroll.component';
 import { AppGridImageComponent } from './in-memory-data/grid-image.component';
 import { AppGridRendererComponent } from './in-memory-data/grid-renderer-component.component';
+import { AppGridRendererFunctionComponent } from './in-memory-data/grid-renderer-function.component';
 
 import { AppGridComponent } from './grid.component';
 
@@ -79,6 +80,7 @@ export const AppGridRoutes: Routes = [
       { path: 'in-memory-grid-virtual-scroll', component: AppGridVirtualScrollComponent },
       { path: 'grid-display-image', component: AppGridImageComponent },
       { path: 'grid-renderer-component', component: AppGridRendererComponent },
+      { path: 'grid-renderer-function', component: AppGridRendererFunctionComponent },
       {
         path: '**',
         redirectTo: 'app-default-grid',

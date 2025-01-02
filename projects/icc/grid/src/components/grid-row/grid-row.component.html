@@ -15,6 +15,7 @@
       'max-width': getColumnWidth(column),
     }"
   >
-    <icc-dynamic-grid-cell [gridConfig]="gridConfig" [record]="record" [column]="column"> </icc-dynamic-grid-cell>
+    <icc-dynamic-grid-cell [gridConfig]="gridConfig" [rowIndex]="rowIndex" [column]="column" [record]="record">
+    </icc-dynamic-grid-cell>
   </icc-grid-cell>
 </ng-container>

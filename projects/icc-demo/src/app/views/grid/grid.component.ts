@@ -75,6 +75,7 @@ export class AppGridComponent {
         },
         { name: '19: Grid Display Image', link: 'grid-display-image' },
         { name: '20: Grid Renderer Component', link: 'grid-renderer-component' },
+        { name: '20: Grid Renderer Function', link: 'grid-renderer-function' },
       ],
     },
   ];

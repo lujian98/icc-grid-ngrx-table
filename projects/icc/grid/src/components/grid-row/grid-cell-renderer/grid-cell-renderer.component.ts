@@ -14,6 +14,7 @@ export class IccGridCellRendererComponent<T> {
   private _record!: T;
 
   @Input() gridConfig!: IccGridConfig;
+  @Input() rowIndex!: number;
   @Input() column!: IccColumnConfig;
 
   @Input()

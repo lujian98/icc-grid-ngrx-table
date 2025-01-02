@@ -17,6 +17,7 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 export class IccGridRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
+  @Input() rowIndex!: number;
   private _record!: T;
   @Input() selected = false;
 

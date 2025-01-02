@@ -10,6 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, IccRendererType } from '../../../models/grid-column.model';
+import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
 
@@ -19,7 +20,7 @@ import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-t
   styleUrls: ['dynamic-grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccGridCellTextComponent, IccGridCellImageComponent],
+  imports: [CommonModule],
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
@@ -27,6 +28,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   private _column!: IccColumnConfig;
 
   @Input() gridConfig!: IccGridConfig;
+  @Input() rowIndex!: number;
 
   @Input()
   set column(val: IccColumnConfig) {
@@ -61,6 +63,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.gridConfig = this.gridConfig;
+    this._componentRef.instance.rowIndex = this.rowIndex;
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.record = this.record;
   }
@@ -68,10 +71,11 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   private getRenderer(): Type<unknown> {
     if (this.column.component) {
       return this.column.component;
+    } else if (this.column.renderer) {
+      return IccGridCellFunctionComponent;
     } else if (this.column.rendererType === IccRendererType.Image) {
       return IccGridCellImageComponent;
     }
-
     return IccGridCellTextComponent;
   }
 }
