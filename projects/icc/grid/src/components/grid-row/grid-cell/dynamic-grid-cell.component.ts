@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  inject,
+  ViewContainerRef,
+  Type,
+  ComponentRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
@@ -14,7 +23,7 @@ import { IccColumnConfig, IccRendererType, IccGridConfig } from '../../../models
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private _componentRef: any;
+  private _componentRef!: ComponentRef<any>;
   private _column!: IccColumnConfig;
 
   @Input() gridConfig!: IccGridConfig;
@@ -56,7 +65,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     this._componentRef.instance.record = this.record;
   }
 
-  private getRenderer(): any {
+  private getRenderer(): Type<unknown> {
     if (this.column.rendererType === IccRendererType.Image) {
       return IccGridCellImageComponent;
     }
