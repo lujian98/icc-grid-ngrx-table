@@ -23,6 +23,12 @@ export class AppGridImageComponent {
     ...defaultGridConfig,
     urlKey: 'DCR',
     rowHeight: 60,
+    columnSort: true,
+    columnFilter: true,
+    columnResize: true,
+    columnReorder: true,
+    columnMenu: true,
+    columnHidden: true,
   };
   columnsConfig: IccColumnConfig[] = [
     {

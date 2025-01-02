@@ -32,7 +32,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   set column(val: IccColumnConfig) {
     this._column = { ...val };
     if (this._componentRef) {
-      this._componentRef.instance.column = this.column;
+      this.loadComponent();
     }
   }
   get column(): IccColumnConfig {
@@ -53,11 +53,11 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
-    this.viewContainerRef.clear();
     this.loadComponent();
   }
 
   private loadComponent(): void {
+    this.viewContainerRef.clear();
     const cellComponent = this.getRenderer(); // TODO this.column.component || // to dynamic components
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this._componentRef.instance.gridConfig = this.gridConfig;
