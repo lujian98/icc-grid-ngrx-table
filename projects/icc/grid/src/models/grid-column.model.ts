@@ -113,6 +113,8 @@ export interface IccSelectFieldType extends IccFieldType {
 }
   */
 
+export type IccGroupField = boolean | string;
+
 export interface IccColumnConfig {
   name: string;
   title?: string;
@@ -127,6 +129,7 @@ export interface IccColumnConfig {
   rendererType?: IccRendererType;
   component?: Type<unknown>;
   renderer?: Function;
+  groupField?: IccGroupField;
 
   //field: string;
   //index?: number;
