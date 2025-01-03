@@ -17,3 +17,5 @@ export * from './src/components/row-select/row-select.component';
 export * from './src/models/constants';
 export * from './src/models/drag-drop-event';
 export * from './src/services/grid-in-memory.service';
+export * from './src/services/row-group/row-group';
+export * from './src/services/row-group/row-groups';
