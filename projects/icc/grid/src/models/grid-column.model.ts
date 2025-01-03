@@ -5,6 +5,11 @@ export interface IccSortField {
   dir: string;
 }
 
+export interface IccRowGroupField {
+  field: string;
+  dir: string;
+}
+
 export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use
   isTreeGrid: boolean;
@@ -32,6 +37,7 @@ export interface IccGridConfig {
   hideTopbar: boolean;
   hideGridFooter: boolean;
   rowHeight: number;
+  rowGroupField?: IccRowGroupField;
 }
 
 export enum IccRendererType {

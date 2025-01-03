@@ -142,6 +142,7 @@ export class IccRowGroups {
   }
 
   getGroupData<T>(data: T[]): T[] {
+    this.isGrouping = true; // TODO ???
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     return this.getSublevel(data, 0, this.groupByColumns, rootGroup);
@@ -151,12 +152,17 @@ export class IccRowGroups {
     if (level >= groupByColumns.length) {
       return data as [];
     }
+    //console.log( ' 1111111 data=', data)
+    //console.log( ' 1111111 groupByColumns=', groupByColumns, ' level=', level, 'this.isGrouping=', this.isGrouping)
+
     if (this.isGrouping) {
       this.initialRowGroups(data, level, groupByColumns, parent);
     }
     const currentColumn = groupByColumns[level].field;
     let subGroups: T[] = [];
+    console.log(' 1111111 this.rowGroups=', this.rowGroups);
     this.rowGroups.forEach((group: IccRowGroup) => {
+      //group.isDisplayed = false;
       group.isDisplayed = false;
       if (group.level === level + 1) {
         const rowsInGroup = this.uniqueBy(
@@ -168,6 +174,7 @@ export class IccRowGroups {
           JSON.stringify,
         );
         const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group as IccRowGroup);
+        /*
         if (this.isGrouping && group.totalCounts === 0) {
           group.totalCounts = rowsInGroup.length;
         } else {
@@ -176,10 +183,15 @@ export class IccRowGroups {
             group.displayedCounts = rowsInGroup.length;
           }
           subGroups = subGroups.concat(group as T);
-        }
+        }*/
+
+        group.isDisplayed = true;
+        group.displayedCounts = rowsInGroup.length;
+        subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);
       }
     });
+    //console.log( ' 22222222 subGroups=', subGroups)
     return subGroups;
   }
 
@@ -200,6 +212,7 @@ export class IccRowGroups {
       }),
       JSON.stringify,
     );
+    console.log(' 22222 groups=', groups);
     this.rowGroups = this.rowGroups.concat(groups);
   }
 

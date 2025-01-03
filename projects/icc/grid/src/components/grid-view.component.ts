@@ -12,6 +12,7 @@ import {
   inject,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
+import { IccRowGroup } from '../services/row-group/row-group';
 import { BehaviorSubject, Observable, interval, map, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
@@ -122,6 +123,17 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         this.sizeChanged$.next(uniqueId(16));
       }
     }
+  }
+
+  isRowGroup(index: number, record: T | IccRowGroup): boolean {
+    return record instanceof IccRowGroup;
+  }
+
+  getRowGroupDisplay(index: number, record: IccRowGroup): string {
+    console.log(' recod=', record);
+    const field = record.field;
+    const value = (record as any)[field];
+    return `${field}: ${value} (${record.displayedCounts})`;
   }
 
   @HostListener('window:resize', ['$event'])

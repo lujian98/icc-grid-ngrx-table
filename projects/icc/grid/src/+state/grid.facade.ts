@@ -50,6 +50,11 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridColumnsConfig({ gridConfig, columnsConfig }));
   }
 
+  setGridGroupBy(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
+    //console.log( ' 333333 column=', columnsConfig)
+    this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, columnsConfig }));
+  }
+
   getGridPageData(gridConfig: IccGridConfig, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
     this.getGridData(gridConfig);

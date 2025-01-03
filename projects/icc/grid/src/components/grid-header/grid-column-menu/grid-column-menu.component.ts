@@ -92,6 +92,12 @@ export class IccGridColumnMenuComponent {
         disabled: this.sortDisabled('desc'),
       },
       {
+        name: 'groupBy',
+        title: 'groupBy',
+        icon: 'arrow-down-wide-short',
+        //disabled: this.sortDisabled('desc'),
+      },
+      {
         name: 'columns',
         title: 'ICC.UI.GRID.COLUMNS',
         children: columnItems,
@@ -107,6 +113,10 @@ export class IccGridColumnMenuComponent {
   onMenuItemClick(item: IccMenuItem): void {
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
+    } else if (item.name === 'groupBy') {
+      console.log(' group by ittem=', item);
+      console.log(' group by column=', this.column);
+      this.gridFacade.setGridGroupBy(this.gridConfig, this.column);
     }
   }
 

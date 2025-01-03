@@ -17,7 +17,11 @@
 >
   <ng-container *ngIf="gridData$ | async as gridData">
     <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
+      <div *ngIf="isRowGroup(index, record)">
+        {{ getRowGroupDisplay(index, record) }}
+      </div>
       <icc-grid-row
+        *ngIf="!isRowGroup(index, record)"
         [gridConfig]="gridConfig"
         [rowIndex]="index"
         [columns]="columns"
