@@ -150,6 +150,8 @@ export class IccRowGroups {
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
+
+    this.initialRowGroups(data, 0, this.groupByColumns, rootGroup);
     return this.getSublevel(data, 0, this.groupByColumns, rootGroup);
   }
 
@@ -160,9 +162,10 @@ export class IccRowGroups {
     //console.log( ' 1111111 data=', data)
     //console.log( ' 1111111 groupByColumns=', groupByColumns, ' level=', level, 'this.isGrouping=', this.isGrouping)
 
-    if (this.isGrouping) {
-      this.initialRowGroups(data, level, groupByColumns, parent);
-    }
+    //if (this.isGrouping) {
+    // if (level === 0) {
+    //  this.initialRowGroups(data, level, groupByColumns, parent);
+    // }
     const currentColumn = groupByColumns[level].field;
     let subGroups: T[] = [];
     console.log(' 1111111 this.rowGroups=', this.rowGroups);
@@ -222,7 +225,7 @@ export class IccRowGroups {
       JSON.stringify,
     );
     console.log(' 22222 groups=', groups);
-    this.rowGroups = this.rowGroups.concat(groups);
+    this.rowGroups = groups; //this.rowGroups.concat(groups);
   }
 
   uniqueBy<T>(a: T[], key: any) {
