@@ -343,11 +343,11 @@ export class InMemoryService extends InMemoryDbService {
   private getSortedData(data: any[], query: any) {
     const sortlist = query.get('order');
     if (sortlist && sortlist.length > 0) {
-      sortlist.forEach((aSort: string) => {
+      sortlist.reverse().forEach((aSort: string) => {
         const sort = aSort.split('.');
-        //console.log(' sort=', sort)
         data = this.dataSortByField(data, sort[0], sort[1]);
       });
+      sortlist.reverse();
     }
     return data;
   }

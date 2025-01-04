@@ -7,9 +7,7 @@ import { IccRowGroups } from '../services/row-group/row-groups';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 
 function getRowGroupData(rowGroups: IccRowGroups, data: any[]): any[] {
-  //[...data].filter((record)=> !(record instanceof IccRowGroup))
-  console.log('iiiiiiiiiiiii groupedData=', data);
-  // TODO in-memory two sort not working
+  //console.log('iiiiiiiiiiiii groupedData=', data);
   const groupedData = rowGroups.getGroupData(data);
   //console.log('ffffffffffffff groupedData=', groupedData);
   return groupedData;

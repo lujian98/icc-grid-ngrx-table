@@ -71,9 +71,13 @@ export class IccGridFacade {
   private getGroupSortField(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): IccSortField[] {
     const sortFields = gridConfig.sortFields;
     const find = sortFields.find((column) => column.field === columnsConfig.name);
-    if (find && sortFields.length > 1) {
-      const sort = sortFields.filter((column) => column.field !== columnsConfig.name)[0];
-      return [...[find], ...[sort]];
+    if (find) {
+      if (sortFields.length > 1) {
+        const sort = sortFields.filter((column) => column.field !== columnsConfig.name)[0];
+        return [...[find], ...[sort]];
+      } else {
+        return [find];
+      }
     } else {
       return [
         {
