@@ -90,11 +90,10 @@ export class IccMenuItemComponent {
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    if (this.menuItem.disabled) {
+    if (this.disabled) {
       event.stopPropagation();
     }
-    if (!this.menuItem.checkbox) {
-      //  && !this.menuItem.disabled TODO disaled not fully work
+    if (!this.menuItem.checkbox && !this.disabled) {
       this.iccMenuItemClick.emit(this.menuItem);
     }
   }
