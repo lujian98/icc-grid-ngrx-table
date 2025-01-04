@@ -3,6 +3,7 @@ import { IccRowGroup } from './row-group';
 export interface IccGroupByColumn {
   title?: string;
   field: string;
+  dir: string;
 }
 
 export class IccRowGroups {

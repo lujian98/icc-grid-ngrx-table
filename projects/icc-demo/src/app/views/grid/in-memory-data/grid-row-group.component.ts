@@ -22,7 +22,7 @@ export class AppGridRowGroupComponent {
     columnHidden: true,
     rowSelection: true,
     rowGroup: true,
-    virtualScroll: true,
+    //virtualScroll: true,
     //sortFields: [],
     //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,

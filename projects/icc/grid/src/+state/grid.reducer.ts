@@ -164,7 +164,7 @@ export const iccGridFeature = createFeature({
             : [...action.gridData.data];
         let totalCounts = action.gridData.totalCounts;
 
-        if (oldState.rowGroups && gridConfig.rowGroupField) {
+        if (gridConfig.rowGroupField && oldState.rowGroups) {
           data = oldState.rowGroups.getRowGroups(data);
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
@@ -209,19 +209,13 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const rowGroups = new IccRowGroups();
-        const column = action.columnsConfig;
-        rowGroups.groupByColumns = [
-          {
-            title: column.title,
-            field: column.name,
-          },
-        ];
+        rowGroups.groupByColumns = [action.groupByColumn];
         newState[key] = {
           ...oldState,
           rowGroups,
           gridConfig: {
             ...oldState.gridConfig,
-            rowGroupField: { field: column.name, dir: 'asc' },
+            rowGroupField: action.groupByColumn,
           },
         };
       }

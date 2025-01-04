@@ -27,7 +27,11 @@ export class IccGridEffects {
               //console.log( ' gridConfig loaded ')
               return gridActions.loadGridColumnsConfig({ gridConfig });
             } else {
-              window.dispatchEvent(new Event('resize'));
+              if (gridConfig.rowGroupField) {
+                this.gridFacade.loadInitRowGroup(gridConfig);
+              } else {
+                window.dispatchEvent(new Event('resize'));
+              }
               return gridActions.loadGridConfigSuccess({ gridConfig });
             }
           }),
@@ -43,7 +47,10 @@ export class IccGridEffects {
         const gridConfig = action.gridConfig;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
-            if (gridConfig.remoteGridConfig || gridConfig.isTreeGrid) {
+            if (gridConfig.rowGroupField) {
+              this.gridFacade.loadInitRowGroup(gridConfig);
+              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
+            } else if (gridConfig.remoteGridConfig || gridConfig.isTreeGrid) {
               // remote config will need trigger window resize to load data
               window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
