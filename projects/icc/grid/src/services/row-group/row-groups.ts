@@ -2,7 +2,8 @@ import { IccRowGroup } from './row-group';
 import { IccColumnConfig } from '../../models/grid-column.model';
 
 export interface IccGroupByColumn {
-  column: string;
+  //column: string;
+  title?: string;
   field: string;
 }
 
@@ -54,6 +55,7 @@ export class IccRowGroups {
     return this._isExpanding;
   }
 
+  /*
   setRowGrouping(column: IccColumnConfig | boolean) {
     this.setGroupByColumns(column);
     this.isCollapsing = false;
@@ -77,7 +79,7 @@ export class IccRowGroups {
       this.groupByColumns = [];
       this.rowGroups = [];
     }
-  }
+  }*/
 
   setRowGroupExpand(row: IccRowGroup) {
     this.isCollapsing = row.expanded ? false : true;
@@ -167,9 +169,9 @@ export class IccRowGroups {
       if (group.level === level + 1) {
         const rowsInGroup = this.uniqueBy(
           data.filter(
-            (row: T) =>
-              // @ts-ignore
-              group.expanded && !(row instanceof IccRowGroup) && group[currentColumn] === (row as any)[currentColumn],
+            (row: T) => group.expanded && !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn],
+            // @ts-ignore
+            //group.expanded && !(row instanceof IccRowGroup) && group[currentColumn] === (row as any)[currentColumn],
           ),
           JSON.stringify,
         );
@@ -202,11 +204,15 @@ export class IccRowGroups {
         group.level = level + 1;
         group.parent = parent;
         for (let i = 0; i <= level; i++) {
-          group.field = groupByColumns[i].field;
-          group[groupByColumns[i].field] = row[groupByColumns[i].field];
-          if (groupByColumns[i].column !== groupByColumns[i].field) {
-            group.value = row[groupByColumns[i].column];
-          }
+          const column = groupByColumns[i];
+          group.field = column.field;
+          group.title = column.title!;
+          group.value = row[column.field];
+
+          //group[column.field] = row[column.field]; // TODO remove this ???
+          //if (groupByColumns[i].column !== groupByColumns[i].field) {
+          //  group.value = row[groupByColumns[i].column];
+          //}
         }
         return group;
       }),
@@ -243,10 +249,11 @@ export class IccRowGroups {
     const groupRows = groupedData.filter((row: T) => {
       if (row instanceof IccRowGroup) {
         let match = true;
-        const nrow = row as { [index: string]: any };
+        //const nrow = row as { [index: string]: any };
         groupByColumns.forEach((group: any) => {
           const field = group.field;
-          if (!nrow[field] || !gdata[field] || nrow[field] !== gdata[field]) {
+          // if (!nrow[field] || !gdata[field] || nrow[field] !== gdata[field]) {
+          if (!row.value || !gdata[field] || row.value !== gdata[field]) {
             match = false;
           }
         });

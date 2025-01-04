@@ -130,10 +130,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   getRowGroupDisplay(index: number, record: IccRowGroup): string {
-    console.log(' recod=', record);
-    const field = record.field;
-    const value = (record as any)[field];
-    return `${field}: ${value} (${record.displayedCounts})`;
+    // console.log(' recod=', record);
+    //const title = record.title;
+    //const value = (record as any)[field];
+    return `${record.title}: ${record.value} (${record.displayedCounts})`;
   }
 
   @HostListener('window:resize', ['$event'])

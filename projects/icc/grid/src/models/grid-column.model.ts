@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { IccRowGroups } from '../services/row-group/row-groups';
 
 export interface IccSortField {
   field: string;
@@ -55,6 +56,7 @@ export interface IccGridState<T extends object = object> {
   data: T[];
   totalCounts: number;
   inMemoryData: T[];
+  rowGroups?: IccRowGroups;
 }
 
 export interface IccGridData<T> {

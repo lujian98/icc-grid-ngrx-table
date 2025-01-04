@@ -68,5 +68,10 @@ export const setGridGroupBy = createAction(
   props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig }>(),
 );
 
+export const setGridUnGroupBy = createAction(
+  '[Grid] Setup Grid UnGroup By a Column',
+  props<{ gridConfig: IccGridConfig }>(),
+);
+
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());
 export const removeGridDataStore = createAction('[Grid] Remove Grid Data Store', props<{ gridId: string }>());

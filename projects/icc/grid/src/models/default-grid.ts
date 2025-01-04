@@ -1,4 +1,5 @@
 import { IccGridConfig, IccGridState } from './grid-column.model';
+import { IccRowGroups } from '../services/row-group/row-groups';
 
 export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
@@ -35,4 +36,5 @@ export const defaultState: IccGridState = {
   data: [],
   totalCounts: 0,
   inMemoryData: [],
+  rowGroups: undefined,
 };
