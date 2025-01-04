@@ -62,6 +62,14 @@ export class IccGridColumnMenuComponent {
         disabled: this.sortDisabled('desc'),
       },
       {
+        name: 'groupBy',
+        disabled: this.groupByDisabled(),
+      },
+      {
+        name: 'unGroupBy',
+        disabled: !this.gridConfig.rowGroupField,
+      },
+      {
         name: 'columns',
         disabled: false,
       },
@@ -95,13 +103,13 @@ export class IccGridColumnMenuComponent {
         name: 'groupBy',
         title: 'groupBy',
         icon: 'arrow-down-wide-short',
-        //disabled: this.sortDisabled('desc'),
+        disabled: this.groupByDisabled(),
       },
       {
         name: 'unGroupBy',
         title: 'unGroupBy',
         icon: 'arrow-down-wide-short',
-        //disabled: this.sortDisabled('desc'),
+        disabled: !this.gridConfig.rowGroupField,
       },
       {
         name: 'columns',
@@ -120,12 +128,15 @@ export class IccGridColumnMenuComponent {
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.name === 'groupBy') {
-      //console.log(' group by ittem=', item);
-      //console.log(' group by column=', this.column);
       this.gridFacade.setGridGroupBy(this.gridConfig, this.column);
     } else if (item.name === 'unGroupBy') {
       this.gridFacade.setGridUnGroupBy(this.gridConfig);
     }
+  }
+
+  private groupByDisabled(): boolean {
+    const rowGroupField = this.gridConfig.rowGroupField;
+    return !!(rowGroupField && rowGroupField.field === this.column.name);
   }
 
   private sortDisabled(dir: string): boolean {
