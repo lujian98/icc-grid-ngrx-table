@@ -51,10 +51,8 @@ export class IccGridFacade {
   }
 
   setGridGroupBy(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
-    console.log(' gridConfig=', gridConfig);
     const sortFields = this.getSortField(gridConfig, columnsConfig);
     this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, columnsConfig }));
-    console.log(' sortFields=', sortFields);
     this.setGridSortFields(gridConfig, sortFields);
   }
 
