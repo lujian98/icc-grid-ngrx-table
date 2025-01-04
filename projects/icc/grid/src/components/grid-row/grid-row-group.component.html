@@ -1,4 +1,4 @@
-<div [ngStyle]="{ height: gridConfig.rowHeight + 'px' }">
+<div [ngStyle]="{ height: gridConfig.rowHeight + 'px' }" (click)="toggleExpand()">
   <icc-icon [icon]="record.expanded ? 'minus' : 'plus'"></icc-icon>
   {{ rowGroup }}
 </div>

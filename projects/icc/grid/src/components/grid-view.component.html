@@ -26,7 +26,7 @@
       </icc-grid-row-group>
 
       <icc-grid-row
-        *ngIf="!isRowGroup(index, record)"
+        *ngIf="showRow(index, record)"
         [gridConfig]="gridConfig"
         [rowIndex]="index"
         [columns]="columns"

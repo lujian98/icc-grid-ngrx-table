@@ -29,6 +29,11 @@ export class IccGridRowGroupComponent<T> {
     return `${this.record.title}: ${this.record.value} (${this.record.displayedCounts})`;
   }
 
+  toggleExpand(): void {
+    this.record.expanded = !this.record.expanded;
+    console.log(' this.record=', this.record);
+  }
+
   @HostBinding('class.icc-grid-row')
   get iccGridRow() {
     return true;

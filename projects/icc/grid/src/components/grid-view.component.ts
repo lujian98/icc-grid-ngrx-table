@@ -33,6 +33,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
+  private rowGroupExpanded: boolean = false;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
   columnHeaderPosition = 0;
@@ -127,14 +128,17 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   isRowGroup(index: number, record: T | IccRowGroup): boolean {
+    if (index === 0) {
+      this.rowGroupExpanded = true;
+    }
+    if (record instanceof IccRowGroup) {
+      this.rowGroupExpanded = record.expanded;
+    }
     return record instanceof IccRowGroup;
   }
 
-  getRowGroupDisplay(index: number, record: IccRowGroup): string {
-    // console.log(' recod=', record);
-    //const title = record.title;
-    //const value = (record as any)[field];
-    return `${record.title}: ${record.value} (${record.displayedCounts})`;
+  showRow(index: number, record: T | IccRowGroup): boolean {
+    return !(record instanceof IccRowGroup) && this.rowGroupExpanded;
   }
 
   @HostListener('window:resize', ['$event'])
