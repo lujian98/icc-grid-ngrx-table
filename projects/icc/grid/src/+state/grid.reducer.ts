@@ -8,6 +8,8 @@ import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/const
 
 function getRowGroupData(rowGroups: IccRowGroups, data: any[]): any[] {
   //[...data].filter((record)=> !(record instanceof IccRowGroup))
+  console.log('iiiiiiiiiiiii groupedData=', data);
+  // TODO in-memory two sort not working
   const groupedData = rowGroups.getGroupData(data);
   //console.log('ffffffffffffff groupedData=', groupedData);
   return groupedData;
