@@ -5,8 +5,7 @@ import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
-import { IccGroupByColumn } from '../../../services/row-group/row-groups';
+import { IccColumnConfig, IccGridConfig, IccRowGroupField } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -131,12 +130,12 @@ export class IccGridColumnMenuComponent {
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.name === 'groupBy') {
-      const groupByColumn: IccGroupByColumn = {
+      const rowGroupField: IccRowGroupField = {
         field: this.column.name,
         title: this.column.title || this.column.name,
         dir: 'asc',
       };
-      this.gridFacade.setGridGroupBy(this.gridConfig, groupByColumn);
+      this.gridFacade.setGridGroupBy(this.gridConfig, rowGroupField);
     } else if (item.name === 'unGroupBy') {
       this.gridFacade.setGridUnGroupBy(this.gridConfig);
     }

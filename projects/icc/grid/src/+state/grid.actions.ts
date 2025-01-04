@@ -5,8 +5,8 @@ import {
   IccGridData,
   IccSortField,
   IccColumnFilter,
+  IccRowGroupField,
 } from '../models/grid-column.model';
-import { IccGroupByColumn } from '../services/row-group/row-groups';
 
 export const initGridConfig = createAction('[Grid] Init Grid Config', props<{ gridConfig: IccGridConfig }>());
 
@@ -66,7 +66,7 @@ export const setGridInMemoryData = createAction(
 
 export const setGridGroupBy = createAction(
   '[Grid] Setup Grid Group By a Column',
-  props<{ gridConfig: IccGridConfig; groupByColumn: IccGroupByColumn }>(),
+  props<{ gridConfig: IccGridConfig; rowGroupField: IccRowGroupField }>(),
 );
 
 export const setGridUnGroupBy = createAction(

@@ -7,10 +7,10 @@ import {
   IccGridData,
   IccSortField,
   IccColumnFilter,
+  IccRowGroupField,
 } from '../models/grid-column.model';
 import * as gridActions from './grid.actions';
 import { selectGridConfig, selectColumnsConfig, selectGridData, selectGridInMemoryData } from './grid.selectors';
-import { IccGroupByColumn } from '../services/row-group/row-groups';
 
 @Injectable()
 export class IccGridFacade {
@@ -23,11 +23,11 @@ export class IccGridFacade {
     } else if (gridConfig.remoteColumnsConfig) {
       this.store.dispatch(gridActions.loadGridColumnsConfig({ gridConfig }));
     } else if (gridConfig.rowGroupField) {
-      this.loadInitRowGroup(gridConfig);
+      this.initRowGroup(gridConfig);
     }
   }
 
-  loadInitRowGroup(gridConfig: IccGridConfig): void {
+  initRowGroup(gridConfig: IccGridConfig): void {
     if (gridConfig.rowGroupField) {
       this.setGridGroupBy(gridConfig, gridConfig.rowGroupField);
     }
@@ -62,9 +62,9 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridColumnsConfig({ gridConfig, columnsConfig }));
   }
 
-  setGridGroupBy(gridConfig: IccGridConfig, groupByColumn: IccGroupByColumn): void {
-    const sortFields = this.getGroupSortField(gridConfig, groupByColumn);
-    this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, groupByColumn }));
+  setGridGroupBy(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
+    const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
+    this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, rowGroupField }));
     this.setGridSortFields(gridConfig, sortFields, false);
   }
 
@@ -79,12 +79,12 @@ export class IccGridFacade {
     return sortFields;
   }
 
-  private getGroupSortField(gridConfig: IccGridConfig, groupByColumn: IccGroupByColumn): IccSortField[] {
+  private getGroupSortField(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): IccSortField[] {
     const sortFields = gridConfig.sortFields;
-    const find = sortFields.find((column) => column.field === groupByColumn.field);
+    const find = sortFields.find((column) => column.field === rowGroupField.field);
     if (find) {
       if (sortFields.length > 1) {
-        const sort = sortFields.filter((column) => column.field !== groupByColumn.field)[0];
+        const sort = sortFields.filter((column) => column.field !== rowGroupField.field)[0];
         return [...[find], ...[sort]];
       } else {
         return [find];
@@ -92,8 +92,8 @@ export class IccGridFacade {
     } else {
       return [
         {
-          field: groupByColumn.field,
-          dir: groupByColumn.dir,
+          field: rowGroupField.field,
+          dir: rowGroupField.dir,
         },
       ];
     }

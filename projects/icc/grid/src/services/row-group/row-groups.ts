@@ -1,13 +1,8 @@
 import { IccRowGroup } from './row-group';
-
-export interface IccGroupByColumn {
-  title?: string;
-  field: string;
-  dir: string;
-}
+import { IccRowGroupField } from '../../models/grid-column.model';
 
 export class IccRowGroups {
-  private _groupByColumns: IccGroupByColumn[] = []; // only support one level more than two use tree grid
+  private _rowGroupFields: IccRowGroupField[] = []; // only support one level more than two use tree grid
   private _rowGroups: IccRowGroup[] = [];
 
   set rowGroups(groups: IccRowGroup[]) {
@@ -18,26 +13,26 @@ export class IccRowGroups {
     return this._rowGroups;
   }
 
-  set groupByColumns(val: IccGroupByColumn[]) {
-    this._groupByColumns = val;
+  set rowGroupFields(val: IccRowGroupField[]) {
+    this._rowGroupFields = val;
   }
 
-  get groupByColumns(): IccGroupByColumn[] {
-    return this._groupByColumns;
+  get rowGroupFields(): IccRowGroupField[] {
+    return this._rowGroupFields;
   }
 
   getRowGroups<T>(data: T[]): T[] {
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
-    this.setRowGroups(data, 0, this.groupByColumns, rootGroup);
-    return this.getSublevel(data, 0, this.groupByColumns, rootGroup);
+    this.setRowGroups(data, 0, this.rowGroupFields, rootGroup);
+    return this.getSublevel(data, 0, this.rowGroupFields, rootGroup);
   }
 
-  private setRowGroups<T>(data: T[], level: number, groupByColumns: IccGroupByColumn[], parent: IccRowGroup) {
+  private setRowGroups<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[], parent: IccRowGroup) {
     const groups = this.uniqueBy(
       data.map((row: any) => {
-        const column = groupByColumns[0];
+        const column = rowGroupFields[0];
         //const find = this.rowGroups.find((item) => item.field === column.field);
         const group = new IccRowGroup();
         group.level = level + 1;
@@ -54,11 +49,11 @@ export class IccRowGroups {
     this.rowGroups = groups;
   }
 
-  private getSublevel<T>(data: T[], level: number, groupByColumns: IccGroupByColumn[], parent: IccRowGroup): T[] {
-    if (level >= groupByColumns.length) {
+  private getSublevel<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[], parent: IccRowGroup): T[] {
+    if (level >= rowGroupFields.length) {
       return data as [];
     }
-    const currentColumn = groupByColumns[level].field;
+    const currentColumn = rowGroupFields[level].field;
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
       if (group.level === level + 1) {
@@ -68,7 +63,7 @@ export class IccRowGroups {
           ),
           JSON.stringify,
         );
-        const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group as IccRowGroup);
+        const subGroup = this.getSublevel(rowsInGroup, level + 1, rowGroupFields, group as IccRowGroup);
         group.displayedCounts = rowsInGroup.length;
         subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);

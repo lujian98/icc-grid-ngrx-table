@@ -1,17 +1,16 @@
 import { Type } from '@angular/core';
-import { IccRowGroups, IccGroupByColumn } from '../services/row-group/row-groups';
+import { IccRowGroups } from '../services/row-group/row-groups';
 
 export interface IccSortField {
   field: string;
   dir: string;
 }
 
-/*
 export interface IccRowGroupField {
   field: string;
   title?: string;
   dir: string;
-}*/
+}
 
 export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use
@@ -41,7 +40,7 @@ export interface IccGridConfig {
   hideTopbar: boolean;
   hideGridFooter: boolean;
   rowHeight: number;
-  rowGroupField?: IccGroupByColumn;
+  rowGroupField?: IccRowGroupField;
 }
 
 export enum IccRendererType {

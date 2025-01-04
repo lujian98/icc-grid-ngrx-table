@@ -209,13 +209,13 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const rowGroups = new IccRowGroups();
-        rowGroups.groupByColumns = [action.groupByColumn];
+        rowGroups.rowGroupFields = [action.rowGroupField];
         newState[key] = {
           ...oldState,
           rowGroups,
           gridConfig: {
             ...oldState.gridConfig,
-            rowGroupField: action.groupByColumn,
+            rowGroupField: action.rowGroupField,
           },
         };
       }
