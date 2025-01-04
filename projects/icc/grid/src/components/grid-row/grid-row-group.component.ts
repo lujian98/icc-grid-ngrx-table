@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccGridConfig } from '../../models/grid-column.model';
 import { IccRowGroup } from '../../services/row-group/row-group';
@@ -29,12 +29,11 @@ export class IccGridRowGroupComponent<T> {
     return `${this.record.title}: ${this.record.value} (${this.record.displayedCounts})`;
   }
 
-  @Output() rowGroupExpand = new EventEmitter<IccRowGroup>();
+  @Output() onToggleRowGroup = new EventEmitter<IccRowGroup>();
 
-  toggleRowExpand(): void {
+  toggleRowGroup(): void {
     this.record.expanded = !this.record.expanded;
-    console.log(' this.record=', this.record);
-    this.rowGroupExpand.emit(this.record);
+    this.onToggleRowGroup.emit(this.record);
   }
 
   @HostBinding('class.icc-grid-row')

@@ -12,15 +12,15 @@ import {
   inject,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { IccRowGroup } from '../services/row-group/row-group';
 import { BehaviorSubject, Observable, interval, map, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
-import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
-import { IccGridRowComponent } from './grid-row/grid-row.component';
-import { IccGridRowGroupComponent } from './grid-row/grid-row-group.component';
+import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
+import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
+import { IccGridRowGroupComponent } from './grid-row/grid-row-group.component';
+import { IccGridRowComponent } from './grid-row/grid-row.component';
 
 @Component({
   selector: 'icc-grid-view',
@@ -148,11 +148,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return !(record instanceof IccRowGroup) && this.rowGroupExpanded;
   }
 
-  onRowGroupExpand(record: IccRowGroup, rowGroups: IccRowGroups | boolean): void {
+  onToggleRowGroup(record: IccRowGroup, rowGroups: IccRowGroups | boolean): void {
     if (rowGroups instanceof IccRowGroups) {
       console.log(' gridConfig=', this.gridConfig);
-      console.log(' onRowGroupExpand=', record);
-      console.log(' onRowGroupExpand rowGroups=', rowGroups);
+      console.log(' onToggleRowGroup=', record);
+      console.log(' onToggleRowGroup rowGroups=', rowGroups);
     }
   }
 
