@@ -17,13 +17,16 @@
 >
   <ng-container *ngIf="gridData$ | async as gridData">
     <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
-      <icc-grid-row-group
-        *ngIf="isRowGroup(index, record)"
-        [gridConfig]="gridConfig"
-        [rowIndex]="index"
-        [record]="record"
-      >
-      </icc-grid-row-group>
+      <ng-container *ngIf="rowGroups$ | async as rowGroups">
+        <icc-grid-row-group
+          *ngIf="isRowGroup(index, record)"
+          [gridConfig]="gridConfig"
+          [rowIndex]="index"
+          [record]="record"
+          (rowGroupExpand)="onRowGroupExpand($event, rowGroups)"
+        >
+        </icc-grid-row-group>
+      </ng-container>
 
       <icc-grid-row
         *ngIf="showRow(index, record)"

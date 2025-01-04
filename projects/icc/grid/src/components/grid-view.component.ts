@@ -20,6 +20,7 @@ import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-c
 import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
 import { IccGridRowGroupComponent } from './grid-row/grid-row-group.component';
+import { IccRowGroups } from '../services/row-group/row-groups';
 
 @Component({
   selector: 'icc-grid-view',
@@ -36,6 +37,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private rowGroupExpanded: boolean = false;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
+  rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
@@ -51,6 +53,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           return data;
         }),
       );
+    }
+
+    if (!this.rowGroups$) {
+      this.rowGroups$ = this.gridFacade.selectRowGroups(this.gridConfig);
     }
   }
   get gridConfig(): IccGridConfig {
@@ -89,6 +95,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onScrolledIndexChange(index: number): void {
     if (this.gridConfig.virtualScroll) {
+      console.log(' index =', index);
       const nextPage = this.gridConfig.page + 1;
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
@@ -139,6 +146,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   showRow(index: number, record: T | IccRowGroup): boolean {
     return !(record instanceof IccRowGroup) && this.rowGroupExpanded;
+  }
+
+  onRowGroupExpand(record: IccRowGroup, rowGroups: IccRowGroups | boolean): void {
+    if (rowGroups instanceof IccRowGroups) {
+      console.log(' gridConfig=', this.gridConfig);
+      console.log(' onRowGroupExpand=', record);
+      console.log(' onRowGroupExpand rowGroups=', rowGroups);
+    }
   }
 
   @HostListener('window:resize', ['$event'])

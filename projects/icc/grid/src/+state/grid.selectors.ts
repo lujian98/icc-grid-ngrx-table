@@ -32,6 +32,16 @@ export const selectGridData = (gridConfig: IccGridConfig) =>
     },
   );
 
+export const selectRowGroups = (gridConfig: IccGridConfig) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: GridState) => {
+      const gridId = gridConfig.gridId;
+      return state[gridId].rowGroups ? state[gridId].rowGroups : true;
+    },
+  );
+
 export const selectGridInMemoryData = (gridConfig: IccGridConfig) =>
   createSelector(
     // @ts-ignore

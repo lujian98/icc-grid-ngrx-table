@@ -10,7 +10,14 @@ import {
   IccRowGroupField,
 } from '../models/grid-column.model';
 import * as gridActions from './grid.actions';
-import { selectGridConfig, selectColumnsConfig, selectGridData, selectGridInMemoryData } from './grid.selectors';
+import { IccRowGroups } from '../services/row-group/row-groups';
+import {
+  selectGridConfig,
+  selectColumnsConfig,
+  selectGridData,
+  selectGridInMemoryData,
+  selectRowGroups,
+} from './grid.selectors';
 
 @Injectable()
 export class IccGridFacade {
@@ -137,6 +144,10 @@ export class IccGridFacade {
 
   selectGridData(gridConfig: IccGridConfig): Observable<any[]> {
     return this.store.select(selectGridData(gridConfig));
+  }
+
+  selectRowGroups(gridConfig: IccGridConfig): Observable<IccRowGroups | boolean> {
+    return this.store.select(selectRowGroups(gridConfig));
   }
 
   selectGridInMemoryData(gridConfig: IccGridConfig): Observable<any[]> {
