@@ -56,9 +56,11 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'ID',
     width: 50,
     align: 'center',
+    groupField: false,
   },
   {
     name: 'vin',
+    groupField: false,
   },
   {
     name: 'brand',
