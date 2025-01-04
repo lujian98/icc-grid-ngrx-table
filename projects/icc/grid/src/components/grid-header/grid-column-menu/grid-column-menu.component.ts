@@ -67,7 +67,7 @@ export class IccGridColumnMenuComponent {
       },
       {
         name: 'unGroupBy',
-        disabled: !this.gridConfig.rowGroupField,
+        disabled: this.unGroupByDisabled(),
       },
       {
         name: 'columns',
@@ -101,15 +101,15 @@ export class IccGridColumnMenuComponent {
       },
       {
         name: 'groupBy',
-        title: 'groupBy',
+        title: 'ICC.UI.GRID.GROUP_BY_THIS_FIELD',
         icon: 'arrow-down-wide-short',
         disabled: this.groupByDisabled(),
       },
       {
         name: 'unGroupBy',
-        title: 'unGroupBy',
+        title: 'ICC.UI.GRID.UNGROUP',
         icon: 'arrow-down-wide-short',
-        disabled: !this.gridConfig.rowGroupField,
+        disabled: this.unGroupByDisabled(),
       },
       {
         name: 'columns',
@@ -125,6 +125,8 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemClick(item: IccMenuItem): void {
+    //if (!item.disabled) { // TODO disabled click not working
+    //  console.log(' item = ', item)
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.name === 'groupBy') {
@@ -132,11 +134,22 @@ export class IccGridColumnMenuComponent {
     } else if (item.name === 'unGroupBy') {
       this.gridFacade.setGridUnGroupBy(this.gridConfig);
     }
+    //}
   }
 
   private groupByDisabled(): boolean {
     const rowGroupField = this.gridConfig.rowGroupField;
-    return !this.gridConfig.rowGroup || !!(rowGroupField && rowGroupField.field === this.column.name);
+    return (
+      !this.gridConfig.rowGroup ||
+      this.column.groupField === false ||
+      !!(rowGroupField && rowGroupField.field === this.column.name)
+    );
+  }
+
+  private unGroupByDisabled(): boolean {
+    return !this.gridConfig.rowGroupField;
+    //const rowGroupField = this.gridConfig.rowGroupField;
+    //return !this.gridConfig.rowGroup || this.column.groupField === false || !!(rowGroupField && rowGroupField.field === this.column.name);
   }
 
   private sortDisabled(dir: string): boolean {

@@ -94,6 +94,7 @@ export class IccMenuItemComponent {
       event.stopPropagation();
     }
     if (!this.menuItem.checkbox) {
+      //  && !this.menuItem.disabled TODO disaled not fully work
       this.iccMenuItemClick.emit(this.menuItem);
     }
   }

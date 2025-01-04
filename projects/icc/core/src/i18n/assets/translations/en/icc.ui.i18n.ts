@@ -48,10 +48,12 @@ export const ICC = {
       DISPLAYING: 'Displaying',
       FILTER: 'Filter ...',
       OF: 'of',
+      GROUP_BY_THIS_FIELD: 'Group By This Field',
       PAGE: 'Page',
       PAGE_SIZE: 'Page Size',
       SORT_ASCENDING: 'Sort Ascending',
       SORT_DESCENDING: 'Sort Descending',
+      UNGROUP: 'Ungroup',
     },
     LIST: {
       NO_RESULT: 'No Result',

@@ -48,10 +48,12 @@ export const ICC = {
       DISPLAYING: '显示',
       FILTER: '过滤器 ...',
       OF: '于',
+      GROUP_BY_THIS_FIELD: 'Group By This Field',
       PAGE: '页',
       PAGE_SIZE: '每页数',
       SORT_ASCENDING: '正序',
       SORT_DESCENDING: '倒序',
+      UNGROUP: 'Ungroup',
     },
     LIST: {
       NO_RESULT: '没有数据',
