@@ -21,16 +21,4 @@ export class IccRowGroup {
   get value(): string {
     return this._value;
   }
-
-  /*
-  get visible(): boolean {
-    return !this.parent || (this.parent.visible && this.parent.expanded);
-  }*/
-
-  /*
-  isSameGroup(group: IccRowGroup): boolean {
-    return this.level === group.level && this.field === group.field && this.value === group.value;
-    // @ts-ignore
-    //return this.level === group.level && this.field === group.field && this[this.field] === group[group.field];
-  }*/
 }

@@ -1,21 +1,15 @@
 import { IccRowGroup } from './row-group';
-import { IccColumnConfig } from '../../models/grid-column.model';
 
 export interface IccGroupByColumn {
-  //column: string;
   title?: string;
   field: string;
 }
 
 export class IccRowGroups {
-  //private isGrouping!: boolean;
   private _groupByColumns: IccGroupByColumn[] = []; // only support one level more than two use tree grid
   private _rowGroups: IccRowGroup[] = [];
-  //private _isCollapsing!: boolean;
-  //private _isExpanding!: boolean;
 
   set rowGroups(groups: IccRowGroup[]) {
-    //console.log(' set row groups =', groups);
     this._rowGroups = groups;
   }
 
@@ -31,122 +25,7 @@ export class IccRowGroups {
     return this._groupByColumns;
   }
 
-  /*
-  get isRowGrouped(): boolean {
-    return this.groupByColumns.length ? true : false;
-  }
-
-  get hasRowGroupCollapsed(): boolean {
-    return this.isRowGrouped && this.rowGroups.filter((group) => !group.expanded).length > 0;
-  }
-
-  set isCollapsing(val: boolean) {
-    this._isCollapsing = val;
-  }
-
-  get isCollapsing(): boolean {
-    return this._isCollapsing;
-  }
-
-  set isExpanding(val: boolean) {
-    this._isExpanding = val;
-  }
-
-  get isExpanding(): boolean {
-    return this._isExpanding;
-  }
-*/
-  /*
-  setRowGrouping(column: IccColumnConfig | boolean) {
-    this.setGroupByColumns(column);
-    this.isCollapsing = false;
-    this.isExpanding = false;
-  }
-
-  private setGroupByColumns(column: IccColumnConfig | boolean) {
-    if (typeof column !== 'boolean') {
-      for (const group of this.groupByColumns) {
-        if (group.column !== column.name) {
-          this.rowGroups = [];
-        }
-      }
-      this.groupByColumns = [
-        {
-          column: column.name,
-          field: column.groupField !== true ? (column.groupField as string) : column.name,
-        },
-      ];
-    } else {
-      this.groupByColumns = [];
-      this.rowGroups = [];
-    }
-  }
-
-  setRowGroupExpand(row: IccRowGroup) {
-    this.isCollapsing = row.expanded ? false : true;
-    this.isExpanding = row.expanded ? true : false;
-    if (this.rowGroups.length > 0) {
-      let countCollapsed = 0;
-      for (const group of this.rowGroups) {
-        if (group.isSameGroup(row)) {
-          group.expanded = row.expanded;
-        }
-        if (!group.expanded) {
-          countCollapsed++;
-        }
-      }
-    }
-  }
-    */
-  /*
-  getRowGroupScrollPosition(end: number): number {
-    let expandedCount = 0;
-    let collapsedCount = 0;
-    for (const group of this.rowGroups) {
-      if (expandedCount <= end) {
-        if (group.expanded) {
-          expandedCount += group.totalCounts;
-        }
-        // if row group collapsed, this may cause the issue since the total counts may not know exactly
-        if (!group.expanded) {
-          collapsedCount += group.totalCounts;
-        }
-      }
-    }
-    return expandedCount + collapsedCount;
-  }
-
-  private resetRowCollapsed(prevRowGroups: IccRowGroup[]) {
-    if (this.rowGroups.length > 0) {
-      for (const group of this.rowGroups) {
-        const findGroup = prevRowGroups.filter((pgroup: IccRowGroup) => group.isSameGroup(pgroup));
-        if (findGroup.length === 1) {
-          group.expanded = findGroup[0].expanded;
-        }
-      }
-    }
-  }
-
-
-  setRowGroups<T>(data: T[]) {
-    this.isGrouping = true;
-    const prevRowGroups: IccRowGroup[] = [...this.rowGroups];
-    this.rowGroups = [];
-    const rootGroup = new IccRowGroup();
-    rootGroup.expanded = true;
-    this.getSublevel(data, 0, this.groupByColumns, rootGroup);
-    this.resetRowCollapsed(prevRowGroups);
-    this.isGrouping = false;
-  }
-
-  getRowGroupData<T>(data: T[]): T[] {
-    this.isExpanding = false;
-    this.isCollapsing = false;
-    const groupedData = this.getGroupData(data);
-    return this.getGroupExpandFilteredData(groupedData);
-  }*/
-
-  getGroupData<T>(data: T[]): T[] {
+  getRowGroups<T>(data: T[]): T[] {
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
@@ -158,14 +37,15 @@ export class IccRowGroups {
     const groups = this.uniqueBy(
       data.map((row: any) => {
         const column = groupByColumns[0];
-        const find = this.rowGroups.find((item) => item.field === column.field);
+        //const find = this.rowGroups.find((item) => item.field === column.field);
         const group = new IccRowGroup();
         group.level = level + 1;
         group.parent = parent;
         group.field = column.field;
         group.title = column.title!;
         group.value = row[column.field];
-        group.expanded = find ? find.expanded : true;
+        //group.expanded = find ? find.expanded : true; // TODO when data changes group keep expanded
+        group.expanded = true;
         return group;
       }),
       JSON.stringify,
@@ -180,7 +60,6 @@ export class IccRowGroups {
     const currentColumn = groupByColumns[level].field;
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
-      //group.isDisplayed = false;
       if (group.level === level + 1) {
         const rowsInGroup = this.uniqueBy(
           data.filter(
@@ -189,18 +68,6 @@ export class IccRowGroups {
           JSON.stringify,
         );
         const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group as IccRowGroup);
-        /*
-        if (this.isGrouping && group.totalCounts === 0) {
-          group.totalCounts = rowsInGroup.length;
-        } else {
-          if (rowsInGroup.length > 0) {
-            group.isDisplayed = true;
-            group.displayedCounts = rowsInGroup.length;
-          }
-          subGroups = subGroups.concat(group as T);
-        }*/
-
-        //group.isDisplayed = true;
         group.displayedCounts = rowsInGroup.length;
         subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);
@@ -216,44 +83,4 @@ export class IccRowGroups {
       return seen.hasOwnProperty(k) ? false : (seen[k] = true);
     });
   }
-
-  /*
-  private getGroupExpandFilteredData<T>(groupedData: any[]): T[] {
-    const data = groupedData.filter((gdata) => {
-      return this.filterGroupExpandedData(gdata, groupedData, this.groupByColumns);
-    });
-    return data;
-  }
-
-  private filterGroupExpandedData<T>(
-    gdata: T[] | IccRowGroup,
-    groupedData: any,
-    groupByColumns: IccGroupByColumn[],
-  ): boolean {
-    return gdata instanceof IccRowGroup ? gdata.visible : this.getDataRowVisible(gdata, groupedData, groupByColumns);
-  }
-
-  private getDataRowVisible<T>(gdata: T[], groupedData: T[], groupByColumns: IccGroupByColumn[]): boolean {
-    const groupRows = groupedData.filter((row: T) => {
-      if (row instanceof IccRowGroup) {
-        let match = true;
-        groupByColumns.forEach((group: any) => {
-          const field = group.field;
-          if (!row.value || !gdata[field] || row.value !== gdata[field]) {
-            match = false;
-          }
-        });
-        return match;
-      } else {
-        return false;
-      }
-    });
-
-    if (groupRows.length === 0) {
-      return true;
-    }
-    const parent = groupRows[0] as any;
-    return parent.visible && parent.expanded;
-  }
-    */
 }

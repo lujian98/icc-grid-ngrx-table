@@ -1,17 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import * as gridActions from './grid.actions';
-import { GridState, IccColumnConfig } from '../models/grid-column.model';
+import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 import { defaultState } from '../models/default-grid';
+import { GridState } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
-import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
-
-function getRowGroupData(rowGroups: IccRowGroups, data: any[]): any[] {
-  //console.log('iiiiiiiiiiiii groupedData=', data);
-  const groupedData = rowGroups.getGroupData(data);
-  //console.log('ffffffffffffff groupedData=', groupedData);
-  return groupedData;
-}
+import * as gridActions from './grid.actions';
 
 export const initialState: GridState = {};
 
@@ -166,8 +159,7 @@ export const iccGridFeature = createFeature({
         let totalCounts = action.gridData.totalCounts;
 
         if (oldState.rowGroups && gridConfig.rowGroupField) {
-          // data = [...data].filter((record)=> !(record instanceof IccRowGroup));
-          data = getRowGroupData(oldState.rowGroups, data);
+          data = oldState.rowGroups.getRowGroups(data);
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
         }
