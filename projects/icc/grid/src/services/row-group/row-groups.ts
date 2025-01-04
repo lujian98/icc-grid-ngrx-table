@@ -15,7 +15,7 @@ export class IccRowGroups {
   private _isExpanding!: boolean;
 
   set rowGroups(groups: IccRowGroup[]) {
-    console.log(' set row groups =', groups);
+    //console.log(' set row groups =', groups);
     this._rowGroups = groups;
   }
 
@@ -96,7 +96,7 @@ export class IccRowGroups {
       }
     }
   }
-
+  /*
   getRowGroupScrollPosition(end: number): number {
     let expandedCount = 0;
     let collapsedCount = 0;
@@ -125,6 +125,7 @@ export class IccRowGroups {
     }
   }
 
+
   setRowGroups<T>(data: T[]) {
     this.isGrouping = true;
     const prevRowGroups: IccRowGroup[] = [...this.rowGroups];
@@ -141,12 +142,14 @@ export class IccRowGroups {
     this.isCollapsing = false;
     const groupedData = this.getGroupData(data);
     return this.getGroupExpandFilteredData(groupedData);
-  }
+  }*/
 
   getGroupData<T>(data: T[]): T[] {
     this.isGrouping = true; // TODO ???
+    this.rowGroups = [];
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
+    data = [...data].filter((record) => !(record instanceof IccRowGroup));
     return this.getSublevel(data, 0, this.groupByColumns, rootGroup);
   }
 

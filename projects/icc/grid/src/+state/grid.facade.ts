@@ -51,7 +51,27 @@ export class IccGridFacade {
   }
 
   setGridGroupBy(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
+    console.log(' gridConfig=', gridConfig);
+    const sortFields = this.getSortField(gridConfig, columnsConfig);
     this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, columnsConfig }));
+    console.log(' sortFields=', sortFields);
+    this.setGridSortFields(gridConfig, sortFields);
+  }
+
+  private getSortField(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): IccSortField[] {
+    const sortFields = gridConfig.sortFields;
+    const find = sortFields.find((column) => column.field === columnsConfig.name);
+    if (find && sortFields.length > 1) {
+      const sort = sortFields.filter((column) => column.field !== columnsConfig.name)[0];
+      return [...[find], ...[sort]];
+    } else {
+      return [
+        {
+          field: columnsConfig.name,
+          dir: 'asc',
+        },
+      ];
+    }
   }
 
   setGridUnGroupBy(gridConfig: IccGridConfig): void {

@@ -7,8 +7,9 @@ import { IccRowGroups } from '../services/row-group/row-groups';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 
 function getRowGroupData(rowGroups: IccRowGroups, data: any[]): any[] {
+  //[...data].filter((record)=> !(record instanceof IccRowGroup))
   const groupedData = rowGroups.getGroupData(data);
-  console.log('ffffffffffffff groupedData=', groupedData);
+  //console.log('ffffffffffffff groupedData=', groupedData);
   return groupedData;
 }
 
@@ -158,17 +159,26 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
-        const data =
+        let data =
           gridConfig.virtualScroll && gridConfig.page > 1
             ? [...oldState.data, ...action.gridData.data]
             : [...action.gridData.data];
+        let totalCounts = action.gridData.totalCounts;
+
+        if (oldState.rowGroups && gridConfig.rowGroupField) {
+          // data = [...data].filter((record)=> !(record instanceof IccRowGroup));
+          data = getRowGroupData(oldState.rowGroups, data);
+          const groups = [...data].filter((record) => record instanceof IccRowGroup);
+          totalCounts += groups.length;
+        }
+
         newState[key] = {
           ...oldState,
           gridConfig: {
             ...gridConfig,
-            totalCounts: action.gridData.totalCounts,
+            totalCounts: totalCounts,
           },
-          totalCounts: action.gridData.totalCounts,
+          totalCounts: totalCounts,
           data: data,
         };
       }
@@ -198,32 +208,23 @@ export const iccGridFeature = createFeature({
     on(gridActions.setGridGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
-      //console.log( ' action =', action)
       if (state[key]) {
         const oldState = state[key];
         const rowGroups = new IccRowGroups();
         const column = action.columnsConfig;
-
-        const groupByColumns = [
+        rowGroups.groupByColumns = [
           {
             title: column.title,
             field: column.name,
           },
         ];
-        rowGroups.groupByColumns = groupByColumns;
-        const data = getRowGroupData(rowGroups, oldState.data);
-        const groups = [...data].filter((record) => record instanceof IccRowGroup);
-        const total = oldState.totalCounts + groups.length;
         newState[key] = {
           ...oldState,
           rowGroups,
           gridConfig: {
             ...oldState.gridConfig,
             rowGroupField: { field: column.name, dir: 'asc' },
-            totalCounts: total,
           },
-          totalCounts: total,
-          data: data,
         };
       }
       //console.log(' new load data setup grid data = ', newState);
