@@ -8,11 +8,11 @@ export interface IccGroupByColumn {
 }
 
 export class IccRowGroups {
-  private isGrouping!: boolean;
-  private _groupByColumns: IccGroupByColumn[] = [];
+  //private isGrouping!: boolean;
+  private _groupByColumns: IccGroupByColumn[] = []; // only support one level more than two use tree grid
   private _rowGroups: IccRowGroup[] = [];
-  private _isCollapsing!: boolean;
-  private _isExpanding!: boolean;
+  //private _isCollapsing!: boolean;
+  //private _isExpanding!: boolean;
 
   set rowGroups(groups: IccRowGroup[]) {
     //console.log(' set row groups =', groups);
@@ -31,6 +31,7 @@ export class IccRowGroups {
     return this._groupByColumns;
   }
 
+  /*
   get isRowGrouped(): boolean {
     return this.groupByColumns.length ? true : false;
   }
@@ -54,7 +55,7 @@ export class IccRowGroups {
   get isExpanding(): boolean {
     return this._isExpanding;
   }
-
+*/
   /*
   setRowGrouping(column: IccColumnConfig | boolean) {
     this.setGroupByColumns(column);
@@ -79,7 +80,7 @@ export class IccRowGroups {
       this.groupByColumns = [];
       this.rowGroups = [];
     }
-  }*/
+  }
 
   setRowGroupExpand(row: IccRowGroup) {
     this.isCollapsing = row.expanded ? false : true;
@@ -96,6 +97,7 @@ export class IccRowGroups {
       }
     }
   }
+    */
   /*
   getRowGroupScrollPosition(end: number): number {
     let expandedCount = 0;
@@ -145,39 +147,44 @@ export class IccRowGroups {
   }*/
 
   getGroupData<T>(data: T[]): T[] {
-    this.isGrouping = true; // TODO ???
-    this.rowGroups = [];
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
-
-    this.initialRowGroups(data, 0, this.groupByColumns, rootGroup);
+    this.setRowGroups(data, 0, this.groupByColumns, rootGroup);
     return this.getSublevel(data, 0, this.groupByColumns, rootGroup);
+  }
+
+  private setRowGroups<T>(data: T[], level: number, groupByColumns: IccGroupByColumn[], parent: IccRowGroup) {
+    const groups = this.uniqueBy(
+      data.map((row: any) => {
+        const column = groupByColumns[0];
+        const find = this.rowGroups.find((item) => item.field === column.field);
+        const group = new IccRowGroup();
+        group.level = level + 1;
+        group.parent = parent;
+        group.field = column.field;
+        group.title = column.title!;
+        group.value = row[column.field];
+        group.expanded = find ? find.expanded : true;
+        return group;
+      }),
+      JSON.stringify,
+    );
+    this.rowGroups = groups;
   }
 
   private getSublevel<T>(data: T[], level: number, groupByColumns: IccGroupByColumn[], parent: IccRowGroup): T[] {
     if (level >= groupByColumns.length) {
       return data as [];
     }
-    //console.log( ' 1111111 data=', data)
-    //console.log( ' 1111111 groupByColumns=', groupByColumns, ' level=', level, 'this.isGrouping=', this.isGrouping)
-
-    //if (this.isGrouping) {
-    // if (level === 0) {
-    //  this.initialRowGroups(data, level, groupByColumns, parent);
-    // }
     const currentColumn = groupByColumns[level].field;
     let subGroups: T[] = [];
-    console.log(' 1111111 this.rowGroups=', this.rowGroups);
     this.rowGroups.forEach((group: IccRowGroup) => {
       //group.isDisplayed = false;
-      group.isDisplayed = false;
       if (group.level === level + 1) {
         const rowsInGroup = this.uniqueBy(
           data.filter(
             (row: T) => group.expanded && !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn],
-            // @ts-ignore
-            //group.expanded && !(row instanceof IccRowGroup) && group[currentColumn] === (row as any)[currentColumn],
           ),
           JSON.stringify,
         );
@@ -193,39 +200,13 @@ export class IccRowGroups {
           subGroups = subGroups.concat(group as T);
         }*/
 
-        group.isDisplayed = true;
+        //group.isDisplayed = true;
         group.displayedCounts = rowsInGroup.length;
         subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);
       }
     });
-    //console.log( ' 22222222 subGroups=', subGroups)
     return subGroups;
-  }
-
-  private initialRowGroups<T>(data: T[], level: number, groupByColumns: IccGroupByColumn[], parent: IccRowGroup) {
-    const groups = this.uniqueBy(
-      data.map((row: any) => {
-        const group = new IccRowGroup() as any;
-        group.level = level + 1;
-        group.parent = parent;
-        for (let i = 0; i <= level; i++) {
-          const column = groupByColumns[i];
-          group.field = column.field;
-          group.title = column.title!;
-          group.value = row[column.field];
-
-          //group[column.field] = row[column.field]; // TODO remove this ???
-          //if (groupByColumns[i].column !== groupByColumns[i].field) {
-          //  group.value = row[groupByColumns[i].column];
-          //}
-        }
-        return group;
-      }),
-      JSON.stringify,
-    );
-    console.log(' 22222 groups=', groups);
-    this.rowGroups = groups; //this.rowGroups.concat(groups);
   }
 
   uniqueBy<T>(a: T[], key: any) {
@@ -236,6 +217,7 @@ export class IccRowGroups {
     });
   }
 
+  /*
   private getGroupExpandFilteredData<T>(groupedData: any[]): T[] {
     const data = groupedData.filter((gdata) => {
       return this.filterGroupExpandedData(gdata, groupedData, this.groupByColumns);
@@ -255,10 +237,8 @@ export class IccRowGroups {
     const groupRows = groupedData.filter((row: T) => {
       if (row instanceof IccRowGroup) {
         let match = true;
-        //const nrow = row as { [index: string]: any };
         groupByColumns.forEach((group: any) => {
           const field = group.field;
-          // if (!nrow[field] || !gdata[field] || nrow[field] !== gdata[field]) {
           if (!row.value || !gdata[field] || row.value !== gdata[field]) {
             match = false;
           }
@@ -275,4 +255,5 @@ export class IccRowGroups {
     const parent = groupRows[0] as any;
     return parent.visible && parent.expanded;
   }
+    */
 }

@@ -36,9 +36,10 @@ export class IccGridFacade {
     }
   }
 
-  setGridSortFields(gridConfig: IccGridConfig, sortFields: IccSortField[]): void {
-    sortFields = this.checkGroupSortField(gridConfig, sortFields);
-    console.log(' sortFields=', sortFields);
+  setGridSortFields(gridConfig: IccGridConfig, sortFields: IccSortField[], checkSort: boolean = true): void {
+    if (checkSort) {
+      sortFields = this.checkGroupSortField(gridConfig, sortFields);
+    }
     this.store.dispatch(gridActions.setGridSortFields({ gridConfig, sortFields }));
     this.getGridData(gridConfig);
   }
@@ -55,7 +56,7 @@ export class IccGridFacade {
   setGridGroupBy(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
     const sortFields = this.getGroupSortField(gridConfig, columnsConfig);
     this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, columnsConfig }));
-    this.setGridSortFields(gridConfig, sortFields);
+    this.setGridSortFields(gridConfig, sortFields, false);
   }
 
   private checkGroupSortField(gridConfig: IccGridConfig, sortFields: IccSortField[]): IccSortField[] {

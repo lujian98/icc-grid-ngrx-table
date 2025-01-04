@@ -1,11 +1,10 @@
 export class IccRowGroup {
-  level = 0;
+  level: number = 0; // Only support one level or use tree grid
   parent!: IccRowGroup;
-  expanded = true;
-  field = '';
-  totalCounts = 0;
-  isDisplayed = false;
+  expanded: boolean = true;
+  field: string = '';
   displayedCounts = 0;
+
   private _title: string = '';
   private _value: string = '';
 
@@ -23,13 +22,15 @@ export class IccRowGroup {
     return this._value;
   }
 
+  /*
   get visible(): boolean {
     return !this.parent || (this.parent.visible && this.parent.expanded);
-  }
+  }*/
 
+  /*
   isSameGroup(group: IccRowGroup): boolean {
     return this.level === group.level && this.field === group.field && this.value === group.value;
     // @ts-ignore
     //return this.level === group.level && this.field === group.field && this[this.field] === group[group.field];
-  }
+  }*/
 }
