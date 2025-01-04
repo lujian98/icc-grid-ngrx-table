@@ -76,6 +76,8 @@ export class AppGridComponent {
         { name: '19: Grid Display Image', link: 'grid-display-image' },
         { name: '20: Grid Renderer Component', link: 'grid-renderer-component' },
         { name: '21: Grid Renderer Function', link: 'grid-renderer-function' },
+        { name: '22: Grid Remote Row Group', link: 'grid-remote-row-group' },
+        { name: '23: Grid In-Memory Row Group', link: 'grid-in-memory-row-group' },
       ],
     },
   ];

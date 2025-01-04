@@ -1,0 +1,56 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
+import { CARSDATA3 } from '../../../data/cars-large';
+
+@Component({
+  selector: 'app-grid-row-group',
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
+  styles: [':host { width: 100%; }'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, IccGridComponent],
+})
+export class AppGridRowGroupComponent {
+  gridConfig: IccGridConfig = {
+    ...defaultGridConfig,
+    columnSort: true,
+    columnFilter: true,
+    columnResize: true,
+    columnReorder: true,
+    columnMenu: true,
+    columnHidden: true,
+    rowSelection: true,
+    rowGroup: true,
+    virtualScroll: true,
+    //sortFields: [],
+    //columnFilters: [{ name: 'vin', value: '9' }],
+    remoteColumnsConfig: false,
+    remoteGridData: false,
+  };
+
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+    },
+    {
+      name: 'brand',
+    },
+    {
+      name: 'year',
+      width: 50,
+      align: 'right',
+    },
+    {
+      name: 'color',
+      width: 80,
+      align: 'center',
+    },
+  ];
+  gridData: IccGridData<any> = CARSDATA3;
+}

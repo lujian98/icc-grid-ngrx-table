@@ -23,6 +23,8 @@ import { AppGridVirtualScrollComponent } from './in-memory-data/grid-virtual-scr
 import { AppGridImageComponent } from './in-memory-data/grid-image.component';
 import { AppGridRendererComponent } from './in-memory-data/grid-renderer-component.component';
 import { AppGridRendererFunctionComponent } from './in-memory-data/grid-renderer-function.component';
+import { AppGridRemoteRowGroupComponent } from './remote-data/grid-remote-row-group.component';
+import { AppGridRowGroupComponent } from './in-memory-data/grid-row-group.component';
 
 import { AppGridComponent } from './grid.component';
 
@@ -81,6 +83,8 @@ export const AppGridRoutes: Routes = [
       { path: 'grid-display-image', component: AppGridImageComponent },
       { path: 'grid-renderer-component', component: AppGridRendererComponent },
       { path: 'grid-renderer-function', component: AppGridRendererFunctionComponent },
+      { path: 'grid-remote-row-group', component: AppGridRemoteRowGroupComponent },
+      { path: 'grid-in-memory-row-group', component: AppGridRowGroupComponent },
       {
         path: '**',
         redirectTo: 'app-default-grid',
