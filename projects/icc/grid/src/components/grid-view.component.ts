@@ -19,6 +19,7 @@ import { IccGridFacade } from '../+state/grid.facade';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { IccGridHeaderViewComponent } from './grid-header-view/grid-header-view.component';
 import { IccGridRowComponent } from './grid-row/grid-row.component';
+import { IccGridRowGroupComponent } from './grid-row/grid-row-group.component';
 
 @Component({
   selector: 'icc-grid-view',
@@ -26,7 +27,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridHeaderViewComponent],
+  imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, HostBinding } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
@@ -53,5 +53,10 @@ export class IccGridRowComponent<T> {
       dataItem: this.record,
       //selectionType: this.selectionType
     });
+  }
+
+  @HostBinding('class.icc-grid-row')
+  get iccGridRow() {
+    return true;
   }
 }
