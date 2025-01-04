@@ -233,13 +233,10 @@ export const iccGridFeature = createFeature({
     on(gridActions.setGridUnGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
-      //console.log( ' action =', action)
       if (state[key]) {
         const oldState = state[key];
-
         const groups = [...oldState.data].filter((record) => record instanceof IccRowGroup);
         const data = [...oldState.data].filter((record) => !(record instanceof IccRowGroup));
-
         const total = oldState.totalCounts - groups.length;
         newState[key] = {
           ...oldState,
