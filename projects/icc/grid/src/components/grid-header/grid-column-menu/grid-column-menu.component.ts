@@ -136,7 +136,7 @@ export class IccGridColumnMenuComponent {
 
   private groupByDisabled(): boolean {
     const rowGroupField = this.gridConfig.rowGroupField;
-    return !!(rowGroupField && rowGroupField.field === this.column.name);
+    return !this.gridConfig.rowGroup || !!(rowGroupField && rowGroupField.field === this.column.name);
   }
 
   private sortDisabled(dir: string): boolean {

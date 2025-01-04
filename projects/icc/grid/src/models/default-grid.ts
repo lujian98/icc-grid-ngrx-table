@@ -15,6 +15,7 @@ export const defaultGridConfig: IccGridConfig = {
   remoteGridConfig: false,
   remoteColumnsConfig: false,
   rowSelection: false,
+  rowGroup: false,
   horizontalScroll: false,
   verticalScroll: false,
   virtualScroll: false,

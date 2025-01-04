@@ -13,7 +13,10 @@ export const iccGridFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(gridActions.initGridConfig, (state, action) => {
-      const gridConfig = { ...action.gridConfig };
+      const gridConfig = {
+        ...action.gridConfig,
+        virtualScroll: action.gridConfig.rowGroup ? true : action.gridConfig.verticalScroll,
+      };
       const key = gridConfig.gridId;
       const newState: GridState = { ...state };
       newState[key] = {
@@ -27,7 +30,10 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.loadGridConfigSuccess, (state, action) => {
-      const gridConfig = { ...action.gridConfig };
+      const gridConfig = {
+        ...action.gridConfig,
+        virtualScroll: action.gridConfig.rowGroup ? true : action.gridConfig.verticalScroll,
+      };
       const key = gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
