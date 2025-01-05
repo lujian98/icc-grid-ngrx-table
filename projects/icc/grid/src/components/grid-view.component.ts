@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -31,6 +32,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
@@ -95,7 +97,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   onScrolledIndexChange(index: number): void {
     if (this.gridConfig.virtualScroll) {
-      console.log(' index =', index);
+      //console.log(' index =', index);
       const nextPage = this.gridConfig.page + 1;
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
@@ -140,6 +142,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
     if (record instanceof IccRowGroup) {
       this.rowGroupExpanded = record.expanded;
+      //console.log(' record=', record)
     }
     return record instanceof IccRowGroup;
   }
@@ -148,13 +151,40 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return !(record instanceof IccRowGroup) && this.rowGroupExpanded;
   }
 
-  onToggleRowGroup(record: IccRowGroup, rowGroups: IccRowGroups | boolean): void {
+  onToggleRowGroup(record: IccRowGroup, rowGroups: IccRowGroups | boolean, gridData: any[]): void {
     if (rowGroups instanceof IccRowGroups) {
+      /*
       console.log(' gridConfig=', this.gridConfig);
       console.log(' onToggleRowGroup=', record);
       console.log(' onToggleRowGroup rowGroups=', rowGroups);
+      console.log(' onToggleRowGroup rowGroups=', rowGroups.rowGroups);
+      console.log(' onToggleRowGroup totalHiddenCounts=', rowGroups.totalHiddenCounts);
+
+      console.log(' onToggleRowGroup gridData=', gridData);
+
+      const nextPage = this.gridConfig.page + 1;
+      const pageSize = this.gridConfig.pageSize;
+      const displayTotal = (nextPage - 1) * pageSize;
+
+      const actualDisplay = displayTotal - rowGroups.totalHiddenCounts;
+      if(actualDisplay  < pageSize - 10 && displayTotal < this.gridConfig.totalCounts ) {
+        //this.gridFacade.getGridPageData(this.gridConfig, nextPage);
+      }
+      this.changeDetectorRef.markForCheck();
+      this.changeDetectorRef.detectChanges();
+      */
     }
   }
+
+  /*
+        console.log(' index =', index);
+      const nextPage = this.gridConfig.page + 1;
+      const pageSize = this.gridConfig.pageSize;
+      const displayTotal = (nextPage - 1) * pageSize;
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
+        this.gridFacade.getGridPageData(this.gridConfig, nextPage);
+      }
+        */
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

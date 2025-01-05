@@ -10,6 +10,7 @@ import {
   IccRowGroupField,
 } from '../models/grid-column.model';
 import * as gridActions from './grid.actions';
+import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import {
   selectGridConfig,
@@ -104,6 +105,10 @@ export class IccGridFacade {
         },
       ];
     }
+  }
+
+  setToggleRowGroup(gridConfig: IccGridConfig, rowGroup: IccRowGroup): void {
+    this.store.dispatch(gridActions.setToggleRowGroup({ gridConfig, rowGroup }));
   }
 
   setGridUnGroupBy(gridConfig: IccGridConfig): void {

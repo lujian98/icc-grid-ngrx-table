@@ -162,6 +162,7 @@ export const iccGridFeature = createFeature({
           gridConfig.virtualScroll && gridConfig.page > 1
             ? [...oldState.data, ...action.gridData.data]
             : [...action.gridData.data];
+        //    console.log( '1111 data=', data)
         let totalCounts = action.gridData.totalCounts;
 
         if (gridConfig.rowGroupField && oldState.rowGroups) {
@@ -169,7 +170,7 @@ export const iccGridFeature = createFeature({
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
         }
-
+        //console.log( '33333333333 data=', data)
         newState[key] = {
           ...oldState,
           gridConfig: {
@@ -217,6 +218,31 @@ export const iccGridFeature = createFeature({
             ...oldState.gridConfig,
             rowGroupField: action.rowGroupField,
           },
+        };
+      }
+      //console.log(' new load data setup grid data = ', newState);
+      return { ...newState };
+    }),
+
+    on(gridActions.setToggleRowGroup, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const gridConfig = oldState.gridConfig;
+        let totalCounts = oldState.data.length;
+        if (gridConfig.rowGroupField && oldState.rowGroups) {
+          const totalHiddenCounts = oldState.rowGroups.totalHiddenCounts;
+          totalCounts -= totalHiddenCounts;
+        }
+
+        newState[key] = {
+          ...oldState,
+          gridConfig: {
+            ...gridConfig,
+            totalCounts: totalCounts,
+          },
+          totalCounts: totalCounts,
         };
       }
       //console.log(' new load data setup grid data = ', newState);

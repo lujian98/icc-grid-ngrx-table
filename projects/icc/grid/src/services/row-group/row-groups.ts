@@ -21,11 +21,24 @@ export class IccRowGroups {
     return this._rowGroupFields;
   }
 
+  get totalHiddenCounts(): number {
+    let total = 0;
+    this.rowGroups
+      .filter((group) => !group.expanded)
+      .forEach((group) => {
+        total += group.displayedCounts;
+      });
+    return total;
+  }
+
   getRowGroups<T>(data: T[]): T[] {
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
+    //console.log( '222222 data=', data)
     this.setRowGroups(data, 0, this.rowGroupFields, rootGroup);
+    //console.log( 'aaaaaaaaaa data=', data)
+    //console.log( 'aaaaaaaaaa this.rowGroups=', this.rowGroups)
     return this.getSublevel(data, 0, this.rowGroupFields, rootGroup);
   }
 
@@ -33,7 +46,7 @@ export class IccRowGroups {
     const groups = this.uniqueBy(
       data.map((row: any) => {
         const column = rowGroupFields[0];
-        //const find = this.rowGroups.find((item) => item.field === column.field);
+        const find = this.rowGroups.find((item) => item.field === column.field);
         const group = new IccRowGroup();
         group.level = level + 1;
         group.parent = parent;
@@ -53,16 +66,17 @@ export class IccRowGroups {
     if (level >= rowGroupFields.length) {
       return data as [];
     }
+    //console.log( 'wwwwwwwwwwwwwww data=', data)
     const currentColumn = rowGroupFields[level].field;
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
       if (group.level === level + 1) {
+        // group.expanded &&
         const rowsInGroup = this.uniqueBy(
-          data.filter(
-            (row: T) => group.expanded && !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn],
-          ),
+          data.filter((row: T) => !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn]),
           JSON.stringify,
         );
+        //console.log( 'sssssssssssssssss data=', rowsInGroup)
         const subGroup = this.getSublevel(rowsInGroup, level + 1, rowGroupFields, group as IccRowGroup);
         group.displayedCounts = rowsInGroup.length;
         subGroups = subGroups.concat(group as T);
