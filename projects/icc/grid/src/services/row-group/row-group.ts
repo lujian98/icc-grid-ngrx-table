@@ -1,11 +1,9 @@
 export class IccRowGroup {
   //level: number = 0; // Only support one level or use tree grid
-  expanded: boolean = true;
-  field: string = '';
-  totalCounts = 0;
-  displayedCounts = 0;
-
   private _value: string = '';
+  field: string = '';
+  expanded: boolean = true;
+  totalCounts = 0;
 
   set value(val: string) {
     this._value = val;

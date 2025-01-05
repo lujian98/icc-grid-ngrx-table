@@ -20,7 +20,9 @@ export class IccRowGroups {
   }
 
   get totalHiddenCounts(): number {
-    return this.rowGroups.filter((group) => !group.expanded).reduce((sum, group) => sum + group.totalCounts, 0);
+    return this.rowGroups
+      .filter((group: IccRowGroup) => !group.expanded)
+      .reduce((sum, group) => sum + group.totalCounts, 0);
   }
 
   getRowGroups<T>(data: T[]): T[] {
@@ -60,7 +62,6 @@ export class IccRowGroups {
       group.totalCounts = rowsInGroup.length;
       const rowsInGroupVisible = group.expanded ? rowsInGroup : [];
       const subGroup = this.getSublevel(rowsInGroupVisible, level + 1, rowGroupFields);
-      group.displayedCounts = rowsInGroupVisible.length;
       subGroups = subGroups.concat(group as T);
       subGroups = subGroups.concat(subGroup);
     });
