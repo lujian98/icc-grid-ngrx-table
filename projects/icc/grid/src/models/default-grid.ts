@@ -30,6 +30,7 @@ export const defaultGridConfig: IccGridConfig = {
   hideTopbar: false,
   hideGridFooter: false,
   rowHeight: 24, //px
+  headerHeight: 30, //px
 };
 
 export const defaultState: IccGridState = {

@@ -27,12 +27,10 @@ export class AppGridGroupHeaderComponent {
   private vehicleGroupHeader: IccGroupHeader = {
     name: 'vehiclegroup',
     title: 'Vehicle Information',
-    align: 'center',
   };
   private valueGroupHeader: IccGroupHeader = {
     name: 'valuegroup',
     title: 'Value Information',
-    align: 'center',
   };
 
   columnsConfig: IccColumnConfig[] = [

@@ -14,7 +14,6 @@ export interface IccRowGroupField {
 export interface IccGroupHeader {
   name: string;
   title?: string;
-  align?: 'start' | 'center' | 'end';
   field?: string;
   isGroupHeader?: boolean;
 }
@@ -47,6 +46,7 @@ export interface IccGridConfig {
   hideTopbar: boolean;
   hideGridFooter: boolean;
   rowHeight: number;
+  headerHeight: number;
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
 }

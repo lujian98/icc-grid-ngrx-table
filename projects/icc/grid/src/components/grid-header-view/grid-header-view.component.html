@@ -3,6 +3,7 @@
     *ngIf="gridConfig.groupHeader"
     [ngStyle]="{
       left: columnHeaderPosition + 'px',
+      height: gridConfig.headerHeight + 'px',
     }"
     [gridConfig]="gridConfig"
     [columns]="columns"
