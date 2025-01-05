@@ -8,7 +8,6 @@ export interface IccSortField {
 
 export interface IccRowGroupField {
   field: string;
-  title?: string;
   dir: string;
 }
 

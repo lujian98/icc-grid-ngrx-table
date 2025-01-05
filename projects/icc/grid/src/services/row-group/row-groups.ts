@@ -8,7 +8,6 @@ export class IccRowGroups {
   set rowGroups(groups: IccRowGroup[]) {
     this._rowGroups = groups;
   }
-
   get rowGroups(): IccRowGroup[] {
     return this._rowGroups;
   }
@@ -16,19 +15,12 @@ export class IccRowGroups {
   set rowGroupFields(val: IccRowGroupField[]) {
     this._rowGroupFields = val;
   }
-
   get rowGroupFields(): IccRowGroupField[] {
     return this._rowGroupFields;
   }
 
   get totalHiddenCounts(): number {
-    let total = 0;
-    this.rowGroups
-      .filter((group) => !group.expanded)
-      .forEach((group) => {
-        total += group.totalCounts;
-      });
-    return total;
+    return this.rowGroups.filter((group) => !group.expanded).reduce((sum, group) => sum + group.totalCounts, 0);
   }
 
   getRowGroups<T>(data: T[]): T[] {
@@ -49,7 +41,6 @@ export class IccRowGroups {
         group.level = level + 1;
         group.parent = parent;
         group.field = column.field;
-        group.title = column.title!;
         group.value = value;
         group.expanded = find ? find.expanded : true;
         return group;

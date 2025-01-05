@@ -22,6 +22,7 @@
           *ngIf="isRowGroup(index, record)"
           [gridConfig]="gridConfig"
           [rowIndex]="index"
+          [columns]="columns"
           [record]="record"
           (onToggleRowGroup)="onToggleRowGroup(rowGroups)"
         >

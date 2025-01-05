@@ -27,7 +27,6 @@ export class AppGridRemoteRowGroupComponent {
     remoteGridData: true,
     rowGroupField: {
       field: 'year',
-      title: 'Year',
       dir: 'desc',
     },
   };

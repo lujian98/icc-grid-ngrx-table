@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output, inject } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccGridConfig } from '../../models/grid-column.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowGroup } from '../../services/row-group/row-group';
 import { IccGridFacade } from '../../+state/grid.facade';
 
@@ -11,13 +12,15 @@ import { IccGridFacade } from '../../+state/grid.facade';
   styleUrls: ['./grid-row-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IccIconModule],
+  imports: [CommonModule, TranslateModule, IccIconModule],
 })
 export class IccGridRowGroupComponent<T> {
   private gridFacade = inject(IccGridFacade);
-  @Input() gridConfig!: IccGridConfig;
-  @Input() rowIndex!: number;
   private _record!: IccRowGroup;
+
+  @Input() gridConfig!: IccGridConfig;
+  @Input() columns: IccColumnConfig[] = [];
+  @Input() rowIndex!: number;
 
   @Input()
   set record(data: IccRowGroup) {
@@ -27,8 +30,9 @@ export class IccGridRowGroupComponent<T> {
     return this._record;
   }
 
-  get rowGroup(): string {
-    return `${this.record.title}: ${this.record.value} (${this.record.totalCounts})`;
+  get title(): string {
+    const column = this.columns.find((item) => item.name === this.record.field)!;
+    return column.title || column.name;
   }
 
   @Output() onToggleRowGroup = new EventEmitter<IccRowGroup>();

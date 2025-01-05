@@ -6,15 +6,7 @@ export class IccRowGroup {
   totalCounts = 0;
   displayedCounts = 0;
 
-  private _title: string = '';
   private _value: string = '';
-
-  set title(val: string) {
-    this._title = val;
-  }
-  get title(): string {
-    return this._title ? this._title : this.field;
-  }
 
   set value(val: string) {
     this._value = val;

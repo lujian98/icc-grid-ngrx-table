@@ -1,4 +1,4 @@
 <div [ngStyle]="{ height: gridConfig.rowHeight + 'px' }" (click)="toggleRowGroup()">
   <icc-icon [icon]="record.expanded ? 'minus' : 'plus'"></icc-icon>
-  {{ rowGroup }}
+  {{ title | translate }}: {{ record.value }} ({{ record.totalCounts }})
 </div>

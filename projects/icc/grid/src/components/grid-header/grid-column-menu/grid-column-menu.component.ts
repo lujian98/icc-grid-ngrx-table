@@ -125,21 +125,17 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuItemClick(item: IccMenuItem): void {
-    //if (!item.disabled) { // TODO disabled click not working
-    //  console.log(' item = ', item)
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.name === 'groupBy') {
       const rowGroupField: IccRowGroupField = {
         field: this.column.name,
-        title: this.column.title || this.column.name,
         dir: 'asc',
       };
       this.gridFacade.setGridGroupBy(this.gridConfig, rowGroupField);
     } else if (item.name === 'unGroupBy') {
       this.gridFacade.setGridUnGroupBy(this.gridConfig);
     }
-    //}
   }
 
   private groupByDisabled(): boolean {
@@ -153,8 +149,6 @@ export class IccGridColumnMenuComponent {
 
   private unGroupByDisabled(): boolean {
     return !this.gridConfig.rowGroupField;
-    //const rowGroupField = this.gridConfig.rowGroupField;
-    //return !this.gridConfig.rowGroup || this.column.groupField === false || !!(rowGroupField && rowGroupField.field === this.column.name);
   }
 
   private sortDisabled(dir: string): boolean {
