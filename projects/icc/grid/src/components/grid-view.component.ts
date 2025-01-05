@@ -32,15 +32,12 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  //private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
-  private rowGroupExpanded: boolean = false;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
-
-  //TODO remove rowGroups$???
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
