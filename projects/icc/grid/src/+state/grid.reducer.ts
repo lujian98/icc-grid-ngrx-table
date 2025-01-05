@@ -238,26 +238,15 @@ export const iccGridFeature = createFeature({
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-        const gridConfig = oldState.gridConfig;
-        let queryData = oldState.data;
-        let data = queryData;
+        const queryData = oldState.queryData;
+        const data = oldState.rowGroups!.getRowGroups(queryData);
+        const groups = [...data].filter((record) => record instanceof IccRowGroup);
+        const totalCounts = queryData.length + groups.length;
 
-        if (gridConfig.rowGroupField && oldState.rowGroups) {
-          queryData = oldState.queryData;
-        }
-
-        let totalCounts = queryData.length;
-
-        if (gridConfig.rowGroupField && oldState.rowGroups) {
-          data = oldState.rowGroups.getRowGroups(queryData);
-          const groups = [...data].filter((record) => record instanceof IccRowGroup);
-          totalCounts += groups.length;
-        }
-        //console.log( '33333333333 data=', data)
         newState[key] = {
           ...oldState,
           gridConfig: {
-            ...gridConfig,
+            ...oldState.gridConfig,
             totalCounts: totalCounts,
           },
           totalCounts: totalCounts,
