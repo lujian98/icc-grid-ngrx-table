@@ -1,5 +1,5 @@
 export class IccRowGroup {
-  level: number = 0; // Only support one level or use tree grid
+  //level: number = 0; // Only support one level or use tree grid
   expanded: boolean = true;
   field: string = '';
   totalCounts = 0;
