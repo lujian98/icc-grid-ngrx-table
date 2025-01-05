@@ -131,9 +131,10 @@ export class IccGridinMemoryService {
 
   private getSortedData<T>(data: T[], sorts: IccSortField[]) {
     if (sorts && sorts.length > 0) {
-      sorts.forEach((sort) => {
+      sorts.reverse().forEach((sort) => {
         data = this.dataSortByField(data, sort.field, sort.dir);
       });
+      sorts.reverse();
     }
     return data;
   }
