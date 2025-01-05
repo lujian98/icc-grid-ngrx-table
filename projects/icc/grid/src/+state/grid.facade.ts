@@ -109,7 +109,7 @@ export class IccGridFacade {
   }
 
   setToggleRowGroup(gridConfig: IccGridConfig, rowGroup: IccRowGroup): void {
-    this.getGridData(gridConfig);
+    this.store.dispatch(gridActions.setToggleRowGroup({ gridConfig, rowGroup }));
   }
 
   setGridUnGroupBy(gridConfig: IccGridConfig): void {

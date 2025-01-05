@@ -233,19 +233,27 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
 
-    /*
     on(gridActions.setToggleRowGroup, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
-        let totalCounts = oldState.data.length;
+        let queryData = oldState.data;
+        let data = queryData;
+
         if (gridConfig.rowGroupField && oldState.rowGroups) {
-          const totalHiddenCounts = oldState.rowGroups.totalHiddenCounts;
-          totalCounts -= totalHiddenCounts;
+          queryData = oldState.queryData;
         }
 
+        let totalCounts = queryData.length;
+
+        if (gridConfig.rowGroupField && oldState.rowGroups) {
+          data = oldState.rowGroups.getRowGroups(queryData);
+          const groups = [...data].filter((record) => record instanceof IccRowGroup);
+          totalCounts += groups.length;
+        }
+        //console.log( '33333333333 data=', data)
         newState[key] = {
           ...oldState,
           gridConfig: {
@@ -253,11 +261,11 @@ export const iccGridFeature = createFeature({
             totalCounts: totalCounts,
           },
           totalCounts: totalCounts,
+          data,
         };
       }
-      //console.log(' new load data setup grid data = ', newState);
       return { ...newState };
-    }),*/
+    }),
 
     on(gridActions.setGridUnGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;

@@ -21,6 +21,7 @@ export class IccRowGroups {
     return this._rowGroupFields;
   }
 
+  /*
   get totalHiddenCounts(): number {
     let total = 0;
     this.rowGroups
@@ -29,16 +30,13 @@ export class IccRowGroups {
         total += group.displayedCounts;
       });
     return total;
-  }
+  }*/
 
   getRowGroups<T>(data: T[]): T[] {
     const rootGroup = new IccRowGroup();
     rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
-    //console.log( '222222 data=', data)
     this.setRowGroups(data, 0, this.rowGroupFields, rootGroup);
-    //console.log( 'aaaaaaaaaa data=', data)
-    //console.log( 'aaaaaaaaaa this.rowGroups=', this.rowGroups)
     return this.getSublevel(data, 0, this.rowGroupFields, rootGroup);
   }
 
@@ -48,7 +46,6 @@ export class IccRowGroups {
         const column = rowGroupFields[0];
         const value = row[column.field];
         const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
-        //console.log( ' ffffffff find =', find)
         const group = new IccRowGroup();
         group.level = level + 1;
         group.parent = parent;
@@ -56,7 +53,6 @@ export class IccRowGroups {
         group.title = column.title!;
         group.value = value;
         group.expanded = find ? find.expanded : true; // TODO when data changes group keep expanded
-        //group.expanded = true;
         return group;
       }),
       JSON.stringify,
@@ -68,25 +64,18 @@ export class IccRowGroups {
     if (level >= rowGroupFields.length) {
       return data as [];
     }
-    //console.log( 'wwwwwwwwwwwwwww data=', data)
     const currentColumn = rowGroupFields[level].field;
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
       if (group.level === level + 1) {
-        const rowsInGroupOrg = this.uniqueBy(
+        const rowsInGroup = this.uniqueBy(
           data.filter((row: T) => !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn]),
           JSON.stringify,
         );
-        group.totalCounts = rowsInGroupOrg.length;
-        const rowsInGroup = this.uniqueBy(
-          data.filter(
-            (row: T) => group.expanded && !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn],
-          ),
-          JSON.stringify,
-        );
-        //console.log( 'sssssssssssssssss data=', rowsInGroup)
-        const subGroup = this.getSublevel(rowsInGroup, level + 1, rowGroupFields, group as IccRowGroup);
-        group.displayedCounts = rowsInGroup.length;
+        group.totalCounts = rowsInGroup.length;
+        const rowsInGroupVisible = group.expanded ? rowsInGroup : [];
+        const subGroup = this.getSublevel(rowsInGroupVisible, level + 1, rowGroupFields, group as IccRowGroup);
+        group.displayedCounts = rowsInGroupVisible.length;
         subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);
       }
