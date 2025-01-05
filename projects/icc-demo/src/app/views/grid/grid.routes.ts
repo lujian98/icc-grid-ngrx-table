@@ -25,6 +25,7 @@ import { AppGridRendererComponent } from './in-memory-data/grid-renderer-compone
 import { AppGridRendererFunctionComponent } from './in-memory-data/grid-renderer-function.component';
 import { AppGridRemoteRowGroupComponent } from './remote-data/grid-remote-row-group.component';
 import { AppGridRowGroupComponent } from './in-memory-data/grid-row-group.component';
+import { AppGridGroupHeaderComponent } from './remote-data/grid-group-header.component';
 
 import { AppGridComponent } from './grid.component';
 
@@ -85,6 +86,7 @@ export const AppGridRoutes: Routes = [
       { path: 'grid-renderer-function', component: AppGridRendererFunctionComponent },
       { path: 'grid-remote-row-group', component: AppGridRemoteRowGroupComponent },
       { path: 'grid-in-memory-row-group', component: AppGridRowGroupComponent },
+      { path: 'grid-group-header', component: AppGridGroupHeaderComponent },
       {
         path: '**',
         redirectTo: 'app-default-grid',

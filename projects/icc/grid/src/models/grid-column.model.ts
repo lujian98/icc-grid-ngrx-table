@@ -11,6 +11,15 @@ export interface IccRowGroupField {
   dir: string;
 }
 
+export interface IccGroupHeader {
+  name: string;
+  title?: string;
+  align?: 'start' | 'center' | 'end';
+  width?: number;
+  colspan?: number;
+  field?: string;
+}
+
 export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use
   isTreeGrid: boolean;
@@ -40,6 +49,7 @@ export interface IccGridConfig {
   hideGridFooter: boolean;
   rowHeight: number;
   rowGroupField?: IccRowGroupField;
+  groupHeader?: boolean;
 }
 
 export enum IccRendererType {
@@ -140,6 +150,7 @@ export interface IccColumnConfig {
   component?: Type<unknown>;
   renderer?: Function;
   groupField?: IccGroupField;
+  groupHeader?: IccGroupHeader;
 
   //field: string;
   //index?: number;
@@ -158,7 +169,7 @@ export interface IccColumnConfig {
   cellReadonly?: boolean | Function;
   priority?: number;
   menu?: boolean | IccMenuItem;
-  groupHeader?: IccGroupHeader;
+
   copyToClipboard?: boolean;
   */
 }
