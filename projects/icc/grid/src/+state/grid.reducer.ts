@@ -159,9 +159,9 @@ export const iccGridFeature = createFeature({
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
 
-        let queryData = oldState.data;
+        let queryData = [...oldState.data];
         if (gridConfig.rowGroupField && oldState.rowGroups) {
-          queryData = oldState.queryData;
+          queryData = [...oldState.queryData];
         }
 
         let data =
@@ -172,7 +172,7 @@ export const iccGridFeature = createFeature({
         let totalCounts = action.gridData.totalCounts;
 
         if (gridConfig.rowGroupField && oldState.rowGroups) {
-          queryData = data;
+          queryData = [...data];
           data = oldState.rowGroups.getRowGroups(data);
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
@@ -226,7 +226,7 @@ export const iccGridFeature = createFeature({
             ...oldState.gridConfig,
             rowGroupField: action.rowGroupField,
           },
-          queryData: oldState.data,
+          queryData: [...oldState.data],
         };
       }
       //console.log(' new load data setup grid data = ', newState);
@@ -238,7 +238,7 @@ export const iccGridFeature = createFeature({
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-        const queryData = oldState.queryData;
+        const queryData = [...oldState.queryData];
         const data = oldState.rowGroups!.getRowGroups(queryData);
         const groups = [...data].filter((record) => record instanceof IccRowGroup);
         const totalCounts = queryData.length + groups.length;
@@ -262,7 +262,8 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const groups = [...oldState.data].filter((record) => record instanceof IccRowGroup);
-        const data = [...oldState.data].filter((record) => !(record instanceof IccRowGroup));
+        //const data = [...oldState.data].filter((record) => !(record instanceof IccRowGroup));
+        const data = [...oldState.queryData];
         const total = oldState.totalCounts - groups.length;
         newState[key] = {
           ...oldState,
