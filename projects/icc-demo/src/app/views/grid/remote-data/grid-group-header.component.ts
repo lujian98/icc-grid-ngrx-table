@@ -19,6 +19,7 @@ export class AppGridGroupHeaderComponent {
     columnSort: true,
     columnHidden: true,
     columnFilter: true,
+    columnResize: true,
     groupHeader: true,
     remoteGridData: true,
   };

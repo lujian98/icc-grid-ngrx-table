@@ -8,6 +8,7 @@ import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/gri
 import { getTableWidth, viewportWidthRatio } from '../../utils/viewport-width-ratio';
 import { IccGridHeaderComponent } from '../grid-header/grid-header.component';
 import { IccGridRowComponent } from '../grid-row/grid-row.component';
+import { IccGridGroupHeaderComponent } from '../grid-header/grid-group-header/grid-group-header.component';
 
 @Component({
   selector: 'icc-grid-header-view',
@@ -15,7 +16,14 @@ import { IccGridRowComponent } from '../grid-row/grid-row.component';
   styleUrls: ['./grid-header-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridRowComponent],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    ScrollingModule,
+    IccGridHeaderComponent,
+    IccGridRowComponent,
+    IccGridGroupHeaderComponent,
+  ],
 })
 export class IccGridHeaderViewComponent {
   private gridFacade = inject(IccGridFacade);

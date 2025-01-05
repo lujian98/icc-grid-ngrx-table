@@ -1,4 +1,15 @@
 <div class="grid-header-container" [ngStyle]="{ flex: '0 0 ' + tableWidth + 'px' }">
+  <icc-grid-group-header
+    *ngIf="gridConfig.groupHeader"
+    [ngStyle]="{
+      left: columnHeaderPosition + 'px',
+    }"
+    [gridConfig]="gridConfig"
+    [columns]="columns"
+    [columnWidths]="columnWidths"
+  >
+  </icc-grid-group-header>
+
   <icc-grid-header
     [ngStyle]="{
       left: columnHeaderPosition + 'px',
