@@ -15,9 +15,8 @@ export interface IccGroupHeader {
   name: string;
   title?: string;
   align?: 'start' | 'center' | 'end';
-  width?: number;
-  colspan?: number;
   field?: string;
+  isGroupHeader?: boolean;
 }
 
 export interface IccGridConfig {

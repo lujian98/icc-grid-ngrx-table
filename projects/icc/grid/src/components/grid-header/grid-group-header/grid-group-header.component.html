@@ -1,11 +1,8 @@
 <icc-grid-header-item *ngIf="gridConfig.rowSelection" [ngStyle]="{ flex: '0 0 ' + rowSelectionCellWidth + 'px' }">
 </icc-grid-header-item>
 
-<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
-  <icc-grid-header-item
-    *ngIf="!column.hidden"
-    [ngStyle]="{ flex: '0 0 ' + getColumnWidth(column), 'max-width': getColumnWidth(column) }"
-  >
-    {{ column.name }}
+<ng-container *ngFor="let header of groupHeaderColumns; trackBy: trackByIndex; let index = index">
+  <icc-grid-header-item [ngStyle]="{ flex: '0 0 ' + getHeaderWidth(header), 'max-width': getHeaderWidth(header) }">
+    {{ header.title }}
   </icc-grid-header-item>
 </ng-container>

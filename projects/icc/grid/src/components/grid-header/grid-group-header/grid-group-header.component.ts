@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../../models/constants';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGroupHeader } from '../../../models/grid-column.model';
 import { IccRowSelectComponent } from '../../row-select/row-select.component';
 import { IccGridHeaderItemComponent } from '../grid-header-item/grid-header-item.component';
 
@@ -14,15 +14,63 @@ import { IccGridHeaderItemComponent } from '../grid-header-item/grid-header-item
   imports: [CommonModule, IccRowSelectComponent, IccGridHeaderItemComponent],
 })
 export class IccGridGroupHeaderComponent {
-  //private elementRef = inject(ElementRef);
-  @Input() columns: IccColumnConfig[] = [];
+  private _columns: IccColumnConfig[] = [];
+  groupHeaderColumns: IccGroupHeader[] = [];
+
   @Input() gridConfig!: IccGridConfig;
   @Input() columnWidths: IccColumnWidth[] = [];
 
+  @Input()
+  set columns(val: IccColumnConfig[]) {
+    this._columns = [...val];
+    this.setGroupHeaderColumns();
+  }
+  get columns(): IccColumnConfig[] {
+    return this._columns;
+  }
+
   rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
 
-  getColumnWidth(column: IccColumnConfig): string {
-    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+  private setGroupHeaderColumns(): void {
+    this.groupHeaderColumns = [];
+    this.columns.forEach((column) => {
+      if (!column.hidden) {
+        this.setGroupHeader(column);
+      }
+    });
+  }
+
+  private setGroupHeader(column: IccColumnConfig): void {
+    if (column.groupHeader) {
+      const find = this.groupHeaderColumns.find((item) => item.name === column.groupHeader?.name);
+      if (!find) {
+        const groupHeader = column.groupHeader;
+        groupHeader.isGroupHeader = true;
+        this.groupHeaderColumns.push(groupHeader);
+      }
+    } else {
+      this.groupHeaderColumns.push({
+        name: `group${column.name}`,
+        title: '',
+        isGroupHeader: false,
+        field: column.name,
+      });
+    }
+  }
+
+  getHeaderWidth(header: IccGroupHeader): string {
+    let width = 0;
+    if (!header.isGroupHeader) {
+      width = this.columnWidths.find((col) => col.name === header.field)!.width;
+    } else {
+      const columns = this.columns.filter((col) => col.groupHeader?.name === header.name);
+      columns.forEach((column) => {
+        const find = this.columnWidths.find((col) => col.name === column.name);
+        if (find) {
+          width += find.width;
+        }
+      });
+    }
     return width ? `${width}px` : '';
   }
 
