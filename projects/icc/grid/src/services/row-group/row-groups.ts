@@ -24,14 +24,12 @@ export class IccRowGroups {
   }
 
   getRowGroups<T>(data: T[]): T[] {
-    const rootGroup = new IccRowGroup();
-    rootGroup.expanded = true;
     data = [...data].filter((record) => !(record instanceof IccRowGroup));
-    this.setRowGroups(data, 0, this.rowGroupFields, rootGroup);
-    return this.getSublevel(data, 0, this.rowGroupFields, rootGroup);
+    this.setRowGroups(data, 0, this.rowGroupFields);
+    return this.getSublevel(data, 0, this.rowGroupFields);
   }
 
-  private setRowGroups<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[], parent: IccRowGroup) {
+  private setRowGroups<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[]) {
     const groups = this.uniqueBy(
       data.map((row: any) => {
         const column = rowGroupFields[0];
@@ -39,7 +37,6 @@ export class IccRowGroups {
         const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
         const group = new IccRowGroup();
         group.level = level + 1;
-        group.parent = parent;
         group.field = column.field;
         group.value = value;
         group.expanded = find ? find.expanded : true;
@@ -50,7 +47,7 @@ export class IccRowGroups {
     this.rowGroups = groups;
   }
 
-  private getSublevel<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[], parent: IccRowGroup): T[] {
+  private getSublevel<T>(data: T[], level: number, rowGroupFields: IccRowGroupField[]): T[] {
     if (level >= rowGroupFields.length) {
       return data as [];
     }
@@ -64,7 +61,7 @@ export class IccRowGroups {
         );
         group.totalCounts = rowsInGroup.length;
         const rowsInGroupVisible = group.expanded ? rowsInGroup : [];
-        const subGroup = this.getSublevel(rowsInGroupVisible, level + 1, rowGroupFields, group as IccRowGroup);
+        const subGroup = this.getSublevel(rowsInGroupVisible, level + 1, rowGroupFields);
         group.displayedCounts = rowsInGroupVisible.length;
         subGroups = subGroups.concat(group as T);
         subGroups = subGroups.concat(subGroup);

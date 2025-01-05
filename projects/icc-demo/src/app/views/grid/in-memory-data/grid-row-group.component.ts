@@ -22,6 +22,10 @@ export class AppGridRowGroupComponent {
     columnHidden: true,
     rowSelection: true,
     rowGroup: true,
+    rowGroupField: {
+      field: 'brand',
+      dir: 'desc',
+    },
     //virtualScroll: true,
     //sortFields: [],
     //columnFilters: [{ name: 'vin', value: '9' }],
