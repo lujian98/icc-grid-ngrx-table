@@ -37,5 +37,6 @@ export const defaultState: IccGridState = {
   data: [],
   totalCounts: 0,
   inMemoryData: [],
+  queryData: [],
   rowGroups: undefined,
 };

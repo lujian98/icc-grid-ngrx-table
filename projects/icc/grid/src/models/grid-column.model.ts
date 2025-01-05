@@ -58,6 +58,7 @@ export interface IccGridState<T extends object = object> {
   data: T[];
   totalCounts: number;
   inMemoryData: T[];
+  queryData: T[];
   rowGroups?: IccRowGroups;
 }
 

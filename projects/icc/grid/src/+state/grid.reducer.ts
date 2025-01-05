@@ -158,14 +158,21 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
+
+        let queryData = oldState.data;
+        if (gridConfig.rowGroupField && oldState.rowGroups) {
+          queryData = oldState.queryData;
+        }
+
         let data =
           gridConfig.virtualScroll && gridConfig.page > 1
-            ? [...oldState.data, ...action.gridData.data]
+            ? [...queryData, ...action.gridData.data]
             : [...action.gridData.data];
         //    console.log( '1111 data=', data)
         let totalCounts = action.gridData.totalCounts;
 
         if (gridConfig.rowGroupField && oldState.rowGroups) {
+          queryData = data;
           data = oldState.rowGroups.getRowGroups(data);
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
@@ -178,7 +185,8 @@ export const iccGridFeature = createFeature({
             totalCounts: totalCounts,
           },
           totalCounts: totalCounts,
-          data: data,
+          data,
+          queryData,
         };
       }
       //console.log(' new load data setup grid data = ', newState);
@@ -218,6 +226,7 @@ export const iccGridFeature = createFeature({
             ...oldState.gridConfig,
             rowGroupField: action.rowGroupField,
           },
+          queryData: oldState.data,
         };
       }
       //console.log(' new load data setup grid data = ', newState);
@@ -267,6 +276,7 @@ export const iccGridFeature = createFeature({
           },
           totalCounts: total,
           data: data,
+          queryData: [],
         };
       }
       //console.log(' new load data setup grid data = ', newState);

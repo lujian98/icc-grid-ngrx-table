@@ -71,6 +71,7 @@ export class IccGridFacade {
   }
 
   setGridGroupBy(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
+    this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
     this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, rowGroupField }));
     this.setGridSortFields(gridConfig, sortFields, false);
