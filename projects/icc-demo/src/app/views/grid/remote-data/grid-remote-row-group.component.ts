@@ -22,7 +22,7 @@ export class AppGridRemoteRowGroupComponent {
     columnHidden: true,
     rowSelection: true,
     rowGroup: true,
-    //virtualScroll: true,
+    virtualScroll: true,
     remoteColumnsConfig: true,
     remoteGridData: true,
     rowGroupField: {

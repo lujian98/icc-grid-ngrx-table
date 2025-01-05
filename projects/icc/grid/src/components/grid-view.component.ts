@@ -106,7 +106,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onToggleRowGroup(rowGroups: IccRowGroups | boolean): void {
-    if (rowGroups instanceof IccRowGroups) {
+    if (this.gridConfig.virtualScroll && rowGroups instanceof IccRowGroups) {
       const nextPage = this.gridConfig.page + 1;
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
