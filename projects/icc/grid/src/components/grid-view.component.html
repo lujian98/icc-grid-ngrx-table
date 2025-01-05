@@ -29,7 +29,7 @@
       </ng-container>
 
       <icc-grid-row
-        *ngIf="showRow(index, record)"
+        *ngIf="!isRowGroup(index, record)"
         [gridConfig]="gridConfig"
         [rowIndex]="index"
         [columns]="columns"

@@ -39,6 +39,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private rowGroupExpanded: boolean = false;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
+
+  //TODO remove rowGroups$???
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
@@ -137,18 +139,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   isRowGroup(index: number, record: T | IccRowGroup): boolean {
-    if (index === 0) {
-      this.rowGroupExpanded = true;
-    }
-    if (record instanceof IccRowGroup) {
-      this.rowGroupExpanded = record.expanded;
-      //console.log(' record=', record)
-    }
     return record instanceof IccRowGroup;
-  }
-
-  showRow(index: number, record: T | IccRowGroup): boolean {
-    return !(record instanceof IccRowGroup) && this.rowGroupExpanded;
   }
 
   onToggleRowGroup(record: IccRowGroup, rowGroups: IccRowGroups | boolean, gridData: any[]): void {

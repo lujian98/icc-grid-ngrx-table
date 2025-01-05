@@ -46,15 +46,17 @@ export class IccRowGroups {
     const groups = this.uniqueBy(
       data.map((row: any) => {
         const column = rowGroupFields[0];
-        const find = this.rowGroups.find((item) => item.field === column.field);
+        const value = row[column.field];
+        const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
+        //console.log( ' ffffffff find =', find)
         const group = new IccRowGroup();
         group.level = level + 1;
         group.parent = parent;
         group.field = column.field;
         group.title = column.title!;
-        group.value = row[column.field];
-        //group.expanded = find ? find.expanded : true; // TODO when data changes group keep expanded
-        group.expanded = true;
+        group.value = value;
+        group.expanded = find ? find.expanded : true; // TODO when data changes group keep expanded
+        //group.expanded = true;
         return group;
       }),
       JSON.stringify,
@@ -71,9 +73,15 @@ export class IccRowGroups {
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
       if (group.level === level + 1) {
-        // group.expanded &&
-        const rowsInGroup = this.uniqueBy(
+        const rowsInGroupOrg = this.uniqueBy(
           data.filter((row: T) => !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn]),
+          JSON.stringify,
+        );
+        group.totalCounts = rowsInGroupOrg.length;
+        const rowsInGroup = this.uniqueBy(
+          data.filter(
+            (row: T) => group.expanded && !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn],
+          ),
           JSON.stringify,
         );
         //console.log( 'sssssssssssssssss data=', rowsInGroup)

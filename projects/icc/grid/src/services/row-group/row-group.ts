@@ -3,6 +3,7 @@ export class IccRowGroup {
   parent!: IccRowGroup;
   expanded: boolean = true;
   field: string = '';
+  totalCounts = 0;
   displayedCounts = 0;
 
   private _title: string = '';

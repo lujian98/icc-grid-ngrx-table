@@ -28,7 +28,7 @@ export class IccGridRowGroupComponent<T> {
   }
 
   get rowGroup(): string {
-    return `${this.record.title}: ${this.record.value} (${this.record.displayedCounts})`;
+    return `${this.record.title}: ${this.record.value} (${this.record.totalCounts})`;
   }
 
   @Output() onToggleRowGroup = new EventEmitter<IccRowGroup>();
