@@ -70,7 +70,6 @@ export const iccGridFeature = createFeature({
           }),
         };
       }
-      //console.log(' setupGridColumnConfigSuccess=', newState)
       return { ...newState };
     }),
     on(gridActions.setViewportPageSize, (state, action) => {
@@ -86,7 +85,6 @@ export const iccGridFeature = createFeature({
           },
         };
       }
-      //console.log(' bbbbbbbbbbbb setViewportPageSize=', newState);
       return { ...newState };
     }),
     on(gridActions.setGridSortFields, (state, action) => {
@@ -102,7 +100,6 @@ export const iccGridFeature = createFeature({
           },
         };
       }
-      //console.log(' setGridSortField=', newState)
       return { ...newState };
     }),
     on(gridActions.setGridColumnFilters, (state, action) => {
@@ -118,7 +115,6 @@ export const iccGridFeature = createFeature({
           },
         };
       }
-      //console.log(' setGridSortField=', newState)
       return { ...newState };
     }),
     on(gridActions.setViewportPage, (state, action) => {
@@ -159,16 +155,12 @@ export const iccGridFeature = createFeature({
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
 
-        let queryData = [...oldState.data];
-        if (gridConfig.rowGroupField && oldState.rowGroups) {
-          queryData = [...oldState.queryData];
-        }
-
+        let queryData = gridConfig.rowGroupField && oldState.rowGroups ? [...oldState.queryData] : [...oldState.data];
         let data =
           gridConfig.virtualScroll && gridConfig.page > 1
             ? [...queryData, ...action.gridData.data]
             : [...action.gridData.data];
-        //    console.log( '1111 data=', data)
+
         let totalCounts = action.gridData.totalCounts;
 
         if (gridConfig.rowGroupField && oldState.rowGroups) {
@@ -177,7 +169,7 @@ export const iccGridFeature = createFeature({
           const groups = [...data].filter((record) => record instanceof IccRowGroup);
           totalCounts += groups.length;
         }
-        //console.log( '33333333333 data=', data)
+
         newState[key] = {
           ...oldState,
           gridConfig: {
@@ -189,13 +181,11 @@ export const iccGridFeature = createFeature({
           queryData,
         };
       }
-      //console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
-      //console.log(' old state=', state)
       if (state[key]) {
         newState[key] = {
           ...state[key],
@@ -204,14 +194,11 @@ export const iccGridFeature = createFeature({
             totalCounts: action.gridData.totalCounts,
           },
           totalCounts: action.gridData.totalCounts,
-          //data: action.gridData.data,
           inMemoryData: action.gridData.data,
         };
       }
-      //console.log(' new load data setup grid data = ', newState)
       return { ...newState };
     }),
-
     on(gridActions.setGridGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
@@ -229,10 +216,8 @@ export const iccGridFeature = createFeature({
           queryData: [...oldState.data],
         };
       }
-      //console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
-
     on(gridActions.setToggleRowGroup, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
@@ -255,14 +240,12 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
-
     on(gridActions.setGridUnGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
         const groups = [...oldState.data].filter((record) => record instanceof IccRowGroup);
-        //const data = [...oldState.data].filter((record) => !(record instanceof IccRowGroup));
         const data = [...oldState.queryData];
         const total = oldState.totalCounts - groups.length;
         newState[key] = {
@@ -278,7 +261,6 @@ export const iccGridFeature = createFeature({
           queryData: [],
         };
       }
-      //console.log(' new load data setup grid data = ', newState);
       return { ...newState };
     }),
 

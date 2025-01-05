@@ -21,16 +21,15 @@ export class IccRowGroups {
     return this._rowGroupFields;
   }
 
-  /*
   get totalHiddenCounts(): number {
     let total = 0;
     this.rowGroups
       .filter((group) => !group.expanded)
       .forEach((group) => {
-        total += group.displayedCounts;
+        total += group.totalCounts;
       });
     return total;
-  }*/
+  }
 
   getRowGroups<T>(data: T[]): T[] {
     const rootGroup = new IccRowGroup();
@@ -52,7 +51,7 @@ export class IccRowGroups {
         group.field = column.field;
         group.title = column.title!;
         group.value = value;
-        group.expanded = find ? find.expanded : true; // TODO when data changes group keep expanded
+        group.expanded = find ? find.expanded : true;
         return group;
       }),
       JSON.stringify,

@@ -24,7 +24,6 @@ export class IccGridEffects {
           map((gridConfig) => {
             if (gridConfig.remoteColumnsConfig) {
               this.store.dispatch(gridActions.loadGridConfigSuccess({ gridConfig }));
-              //console.log( ' gridConfig loaded ')
               return gridActions.loadGridColumnsConfig({ gridConfig });
             } else {
               if (gridConfig.rowGroupField) {
@@ -83,7 +82,6 @@ export class IccGridEffects {
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
             map((gridData) => {
-              //console.log( ' remoteGridData loaded ')
               return gridActions.getGridDataSuccess({ gridConfig, gridData });
             }),
           );

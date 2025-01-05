@@ -79,7 +79,6 @@ export class IccGridFacade {
 
   private checkGroupSortField(gridConfig: IccGridConfig, sortFields: IccSortField[]): IccSortField[] {
     if (gridConfig.rowGroupField) {
-      //console.log( ' sortFields=', sortFields)
       const find = sortFields.find((column) => column.field === gridConfig.sortFields[0].field);
       if (!find) {
         return [...[gridConfig.sortFields[0]], ...[sortFields[0]]];
@@ -157,7 +156,6 @@ export class IccGridFacade {
   }
 
   selectGridInMemoryData(gridConfig: IccGridConfig): Observable<any[]> {
-    //console.log('wwwwwwww selectGridInMemoryData ');
     return this.store.select(selectGridInMemoryData(gridConfig));
   }
 }
