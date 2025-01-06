@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { IccRowGroups } from '../services/row-group/row-groups';
 
 export interface IccSortField {
@@ -32,6 +33,7 @@ export interface IccGridConfig {
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
+  multiRowSelection: boolean;
   rowGroup: boolean;
   horizontalScroll: boolean;
   verticalScroll: boolean;
@@ -66,8 +68,9 @@ export interface IccGridState<T extends object = object> {
   data: T[];
   totalCounts: number;
   inMemoryData: T[];
-  queryData: T[];
-  rowGroups?: IccRowGroups;
+  selection: SelectionModel<T>;
+  queryData: T[]; // for row group temporary data
+  rowGroups?: IccRowGroups; // row group will handle at client side data only and wwith one level
 }
 
 export interface IccGridData<T> {

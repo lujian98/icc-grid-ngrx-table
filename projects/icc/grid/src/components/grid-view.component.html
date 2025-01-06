@@ -29,15 +29,18 @@
         </icc-grid-row-group>
       </ng-container>
 
-      <icc-grid-row
-        *ngIf="!isRowGroup(index, record)"
-        [gridConfig]="gridConfig"
-        [rowIndex]="index"
-        [columns]="columns"
-        [columnWidths]="columnWidths"
-        [record]="getRecord(record)"
-      >
-      </icc-grid-row>
+      <ng-container *ngIf="rowSelection$ | async as selection">
+        <icc-grid-row
+          *ngIf="!isRowGroup(index, record)"
+          [gridConfig]="gridConfig"
+          [rowIndex]="index"
+          [columns]="columns"
+          [columnWidths]="columnWidths"
+          [record]="getRecord(record)"
+          [selection]="selection"
+        >
+        </icc-grid-row>
+      </ng-container>
     </div>
   </ng-container>
 </cdk-virtual-scroll-viewport>

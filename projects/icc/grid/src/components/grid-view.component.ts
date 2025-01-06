@@ -1,5 +1,6 @@
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -37,6 +38,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private scrollIndex: number = 0;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
+  rowSelection$: Observable<SelectionModel<T>> | undefined;
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
@@ -54,7 +56,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         }),
       );
     }
-
+    if (!this.rowSelection$) {
+      this.rowSelection$ = this.gridFacade.selectRowSelection(this.gridConfig);
+    }
     if (!this.rowGroups$) {
       this.rowGroups$ = this.gridFacade.selectRowGroups(this.gridConfig);
     }

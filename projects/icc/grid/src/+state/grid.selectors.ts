@@ -1,4 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { SelectionModel } from '@angular/cdk/collections';
 import { GridState, IccGridConfig } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 
@@ -29,6 +30,16 @@ export const selectGridData = (gridConfig: IccGridConfig) =>
     (state: GridState) => {
       const gridId = gridConfig.gridId;
       return state[gridId] ? state[gridId].data : [];
+    },
+  );
+
+export const selectRowSelection = (gridConfig: IccGridConfig) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: GridState) => {
+      const gridId = gridConfig.gridId;
+      return state[gridId] ? state[gridId].selection : new SelectionModel<any>(false, []);
     },
   );
 

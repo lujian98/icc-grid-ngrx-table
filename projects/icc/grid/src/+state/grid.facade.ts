@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   IccColumnConfig,
   IccGridConfig,
@@ -17,6 +18,7 @@ import {
   selectColumnsConfig,
   selectGridData,
   selectGridInMemoryData,
+  selectRowSelection,
   selectRowGroups,
 } from './grid.selectors';
 
@@ -149,6 +151,10 @@ export class IccGridFacade {
 
   selectGridData(gridConfig: IccGridConfig): Observable<any[]> {
     return this.store.select(selectGridData(gridConfig));
+  }
+
+  selectRowSelection(gridConfig: IccGridConfig): Observable<SelectionModel<any>> {
+    return this.store.select(selectRowSelection(gridConfig));
   }
 
   selectRowGroups(gridConfig: IccGridConfig): Observable<IccRowGroups | boolean> {

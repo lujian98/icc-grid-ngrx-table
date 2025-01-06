@@ -1,5 +1,5 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { IccGridConfig, IccGridState } from './grid-column.model';
-import { IccRowGroups } from '../services/row-group/row-groups';
 
 export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
@@ -15,6 +15,7 @@ export const defaultGridConfig: IccGridConfig = {
   remoteGridConfig: false,
   remoteColumnsConfig: false,
   rowSelection: false,
+  multiRowSelection: false,
   rowGroup: false,
   groupHeader: false,
   horizontalScroll: false,
@@ -41,4 +42,5 @@ export const defaultState: IccGridState = {
   inMemoryData: [],
   queryData: [],
   rowGroups: undefined,
+  selection: new SelectionModel<any>(false, []),
 };

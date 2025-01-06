@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, HostBinding } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
@@ -17,6 +18,7 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 export class IccGridRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
+
   @Input() rowIndex!: number;
   private _record!: T;
   @Input() selected = false;
@@ -30,6 +32,7 @@ export class IccGridRowComponent<T> {
   get record(): T {
     return this._record;
   }
+  @Input() selection!: SelectionModel<T>;
 
   @Output() toggleRow = new EventEmitter<any>();
 
