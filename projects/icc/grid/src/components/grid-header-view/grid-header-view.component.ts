@@ -85,6 +85,77 @@ export class IccGridHeaderViewComponent {
   onColumnDragDrop(events: DragDropEvent): void {
     const previousIndex = this.indexCorrection(events.previousIndex);
     const currentIndex = this.indexCorrection(events.currentIndex);
+    if (this.gridConfig.groupHeader) {
+      this.moveGroupHeader(previousIndex, currentIndex);
+    } else {
+      this.moveColumn(previousIndex, currentIndex);
+    }
+  }
+
+  private moveGroupHeader(previousIndex: number, currentIndex: number): void {
+    const moved = this.columns[previousIndex];
+    const changed = this.columns[currentIndex];
+    if (!moved.groupHeader && !changed.groupHeader) {
+      this.moveColumn(previousIndex, currentIndex);
+    } else if (moved.groupHeader?.name === changed.groupHeader?.name) {
+      this.moveColumn(previousIndex, currentIndex);
+    } else if (moved.groupHeader && !changed.groupHeader) {
+      if (currentIndex < previousIndex) {
+        const lastIndex = this.lastIndex(moved.groupHeader?.name);
+        this.moveColumn(currentIndex, lastIndex);
+      } else {
+        const firstIndex = this.firstIndex(moved.groupHeader?.name);
+        this.moveColumn(currentIndex, firstIndex);
+      }
+    } else if (!moved.groupHeader && changed.groupHeader) {
+      if (currentIndex < previousIndex) {
+        const firstIndex = this.firstIndex(changed.groupHeader?.name);
+        this.moveColumn(previousIndex, firstIndex);
+      } else {
+        const lastIndex = this.lastIndex(changed.groupHeader?.name);
+        this.moveColumn(previousIndex, lastIndex);
+      }
+    } else if (moved.groupHeader && changed.groupHeader) {
+      const columns = [...this.columns];
+      if (currentIndex < previousIndex) {
+        let newIndex = currentIndex;
+        [...this.columns].forEach((col, index) => {
+          if (col.groupHeader?.name === moved.groupHeader?.name) {
+            moveItemInArray(columns, index, newIndex);
+            newIndex++;
+          }
+        });
+      } else if (currentIndex > previousIndex) {
+        let newIndex = previousIndex;
+        [...this.columns].forEach((col, index) => {
+          if (col.groupHeader?.name === changed.groupHeader?.name) {
+            moveItemInArray(columns, index, newIndex);
+            newIndex++;
+          }
+        });
+      }
+      this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+      this.columns = [...columns];
+    }
+  }
+
+  private firstIndex(name: string): number {
+    const firstIndex = [...this.columns].findIndex((col) => col.groupHeader?.name === name);
+    return firstIndex;
+  }
+
+  private lastIndex(name: string): number {
+    const lastIndex =
+      this.columns.length -
+      1 -
+      this.columns
+        .slice()
+        .reverse()
+        .findIndex((col) => col.groupHeader?.name === name);
+    return lastIndex;
+  }
+
+  private moveColumn(previousIndex: number, currentIndex: number): void {
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
     this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
