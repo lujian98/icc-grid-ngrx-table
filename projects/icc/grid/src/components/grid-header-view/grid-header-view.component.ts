@@ -65,14 +65,6 @@ export class IccGridHeaderViewComponent {
 
   @Output() gridColumnWidthsEvent = new EventEmitter<IccColumnWidth[]>();
 
-  onHeaderColumnResizing(columnWidths: IccColumnWidth[]): void {
-    console.log(' columnWidths=', columnWidths);
-    this.setColumWidths(columnWidths, 1);
-    if (this.gridConfig.horizontalScroll) {
-      this.tableWidth = getTableWidth(columnWidths);
-    }
-  }
-
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     this.setColumWidths(columnWidths, 1);
     if (this.gridConfig.horizontalScroll) {

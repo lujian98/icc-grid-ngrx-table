@@ -42,11 +42,8 @@ export class IccGridGroupHeaderComponent {
 
   rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
 
-  getColumn(header: IccGroupHeader, index: number): IccColumnConfig {
-    //console.log(' header=', header)
-    const column = this.columns.find((col) => col.name === header.field)!;
-    console.log(' column=', column);
-    return column;
+  getColumn(header: IccGroupHeader): IccColumnConfig {
+    return this.columns.find((col) => col.name === header.field)!;
   }
 
   private setGroupHeaderColumns(): void {
@@ -56,8 +53,6 @@ export class IccGridGroupHeaderComponent {
         this.setGroupHeader(column);
       }
     });
-
-    console.log(' groupHeaderColumns=', this.groupHeaderColumns);
   }
 
   private setGroupHeader(column: IccColumnConfig): void {

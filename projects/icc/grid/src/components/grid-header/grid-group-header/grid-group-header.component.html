@@ -4,7 +4,8 @@
 <ng-container *ngFor="let header of groupHeaderColumns; trackBy: trackByIndex; let index = index">
   <icc-grid-header-item
     [ngStyle]="{ flex: '0 0 ' + getHeaderWidth(header), 'max-width': getHeaderWidth(header) }"
-    [column]="getColumn(header, index)"
+    [groupHeader]="true"
+    [column]="getColumn(header)"
     [columns]="columns"
     [gridConfig]="gridConfig"
     (columnResizing)="columnResizing.emit($event)"
@@ -12,6 +13,6 @@
     iccColumnResize
   >
     {{ header.title }}
-    <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>
+    <div *ngIf="gridConfig.columnResize" class="icc-grid-column-resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>

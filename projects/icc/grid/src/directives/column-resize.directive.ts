@@ -15,6 +15,7 @@ export class IccColumnResizeDirective {
   @Input() column!: IccColumnConfig;
   @Input() columns!: IccColumnConfig[];
   @Input() gridConfig!: IccGridConfig;
+  @Input() groupHeader: boolean = false;
 
   @Output() readonly columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() readonly columnResized = new EventEmitter<IccColumnWidth[]>();
@@ -34,7 +35,14 @@ export class IccColumnResizeDirective {
   }
 
   get elementWidth(): number {
-    return this.element.getBoundingClientRect().width;
+    const width = this.element.getBoundingClientRect().width;
+    if (this.groupHeader && this.column.groupHeader) {
+      const totalWidth = this.columns
+        .filter((col) => col.groupHeader === this.column.groupHeader)
+        .reduce((sum, col) => sum + col.width!, 0);
+      return (this.column.width! * width) / totalWidth;
+    }
+    return width;
   }
 
   onMouseDown(event: MouseEvent): void {
