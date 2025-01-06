@@ -119,7 +119,7 @@ export class IccGridHeaderViewComponent {
       const columns = [...this.columns];
       if (currentIndex < previousIndex) {
         let newIndex = currentIndex;
-        [...this.columns].forEach((col, index) => {
+        this.columns.forEach((col, index) => {
           if (col.groupHeader?.name === moved.groupHeader?.name) {
             moveItemInArray(columns, index, newIndex);
             newIndex++;
@@ -127,7 +127,7 @@ export class IccGridHeaderViewComponent {
         });
       } else if (currentIndex > previousIndex) {
         let newIndex = previousIndex;
-        [...this.columns].forEach((col, index) => {
+        this.columns.forEach((col, index) => {
           if (col.groupHeader?.name === changed.groupHeader?.name) {
             moveItemInArray(columns, index, newIndex);
             newIndex++;
@@ -140,19 +140,15 @@ export class IccGridHeaderViewComponent {
   }
 
   private firstIndex(name: string): number {
-    const firstIndex = [...this.columns].findIndex((col) => col.groupHeader?.name === name);
-    return firstIndex;
+    return this.columns.findIndex((col) => col.groupHeader?.name === name);
   }
 
   private lastIndex(name: string): number {
-    const lastIndex =
-      this.columns.length -
-      1 -
-      this.columns
-        .slice()
-        .reverse()
-        .findIndex((col) => col.groupHeader?.name === name);
-    return lastIndex;
+    const index = this.columns
+      .slice()
+      .reverse()
+      .findIndex((col) => col.groupHeader?.name === name);
+    return this.columns.length - 1 - index;
   }
 
   private moveColumn(previousIndex: number, currentIndex: number): void {
