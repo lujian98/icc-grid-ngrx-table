@@ -2,7 +2,16 @@
 </icc-grid-header-item>
 
 <ng-container *ngFor="let header of groupHeaderColumns; trackBy: trackByIndex; let index = index">
-  <icc-grid-header-item [ngStyle]="{ flex: '0 0 ' + getHeaderWidth(header), 'max-width': getHeaderWidth(header) }">
+  <icc-grid-header-item
+    [ngStyle]="{ flex: '0 0 ' + getHeaderWidth(header), 'max-width': getHeaderWidth(header) }"
+    [column]="getColumn(header, index)"
+    [columns]="columns"
+    [gridConfig]="gridConfig"
+    (columnResizing)="columnResizing.emit($event)"
+    (columnResized)="columnResized.emit($event)"
+    iccColumnResize
+  >
     {{ header.title }}
+    <div *ngIf="gridConfig.columnResize" class="resize-action" iccColumnResizeTrigger></div>
   </icc-grid-header-item>
 </ng-container>

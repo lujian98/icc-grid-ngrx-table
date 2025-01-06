@@ -8,6 +8,8 @@
     [gridConfig]="gridConfig"
     [columns]="columns"
     [columnWidths]="columnWidths"
+    (columnResizing)="onHeaderColumnResizing($event)"
+    (columnResized)="onColumnResized($event)"
   >
   </icc-grid-group-header>
 
