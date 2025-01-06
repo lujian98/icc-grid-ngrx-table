@@ -144,7 +144,7 @@ export class IccGridHeaderViewComponent {
   }
 
   private lastIndex(name: string): number {
-    const index = this.columns
+    const index = [...this.columns]
       .slice()
       .reverse()
       .findIndex((col) => col.groupHeader?.name === name);
