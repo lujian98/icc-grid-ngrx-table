@@ -3,7 +3,7 @@
   class="icc-grid-cell-row-select"
   [ngStyle]="{ height: gridConfig.rowHeight + 'px', flex: '0 0 ' + selectColumnWidth, 'max-width': selectColumnWidth }"
 >
-  <icc-row-select [isSelected]="selected" (selected)="toggleRowSelection()"> </icc-row-select>
+  <icc-row-select [selected]="selected"> </icc-row-select>
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">

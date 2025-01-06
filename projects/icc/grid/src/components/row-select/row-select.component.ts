@@ -13,11 +13,11 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   imports: [CommonModule, IccCheckboxComponent],
 })
 export class IccRowSelectComponent {
-  @Input() isSelected = false;
+  @Input() selected: boolean = false;
   // @Input() id: any;
   // @Input() type: SelectionType;
 
-  @Output() selected = new EventEmitter();
+  //@Output() selected = new EventEmitter();
 
   /*
   get inputId() {
@@ -31,10 +31,10 @@ export class IccRowSelectComponent {
   isRadio() {
     return isRadioSelection(this.type);
   }
-*/
+
   select() {
     if (!this.isSelected) {
       this.selected.emit();
     }
-  }
+  }*/
 }

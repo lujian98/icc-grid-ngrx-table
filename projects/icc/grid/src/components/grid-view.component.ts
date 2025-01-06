@@ -71,6 +71,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return { ...record };
   }
 
+  selected(record: T, selection: SelectionModel<T>): boolean {
+    return selection.isSelected(record);
+  }
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }

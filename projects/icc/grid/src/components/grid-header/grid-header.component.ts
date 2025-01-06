@@ -9,6 +9,7 @@ import {
   IccTrigger,
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
+import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
@@ -40,6 +41,7 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   providers: [IccDynamicOverlayService],
 })
 export class IccGridHeaderComponent {
+  private gridFacade = inject(IccGridFacade);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
   @Input() columns: IccColumnConfig[] = [];
@@ -67,9 +69,10 @@ export class IccGridHeaderComponent {
     return !this.gridConfig.columnReorder;
   }
 
-  onToggleSelectAllRowsOnCurrentPage() {
-    //console.log( ' view columnConfig=', this.columnConfig)
-    //this.toggleSelectAllRowsOnCurrentPage.emit(!this.allSelected);
+  onToggleSelectAll(): void {
+    this.allSelected = !this.allSelected;
+    //console.log( ' view onToggleSelectAll =', this.allSelected)
+    this.gridFacade.setSelectAllRows(this.gridConfig, this.allSelected);
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {

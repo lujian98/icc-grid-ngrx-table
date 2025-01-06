@@ -16,13 +16,12 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
   imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {
+  private _record!: T;
+
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
-
   @Input() rowIndex!: number;
-  private _record!: T;
   @Input() selected = false;
-
   @Input() columnWidths: IccColumnWidth[] = [];
 
   @Input()
@@ -32,7 +31,7 @@ export class IccGridRowComponent<T> {
   get record(): T {
     return this._record;
   }
-  @Input() selection!: SelectionModel<T>;
+  //@Input() selection!: SelectionModel<T>;
 
   @Output() toggleRow = new EventEmitter<any>();
 
@@ -49,6 +48,7 @@ export class IccGridRowComponent<T> {
     return index;
   }
 
+  /*
   toggleRowSelection() {
     //console.log( ' row columns=', this.columns)
     //console.log( ' row record=', this.record)
@@ -56,7 +56,7 @@ export class IccGridRowComponent<T> {
       dataItem: this.record,
       //selectionType: this.selectionType
     });
-  }
+  }*/
 
   @HostBinding('class.icc-grid-row')
   get iccGridRow() {

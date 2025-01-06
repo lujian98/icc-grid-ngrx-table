@@ -2,8 +2,8 @@
   <icc-row-select
     class="icc-header-row-select"
     [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
-    [isSelected]="allSelected"
-    (selected)="onToggleSelectAllRowsOnCurrentPage()"
+    [selected]="allSelected"
+    (click)="onToggleSelectAll()"
   >
   </icc-row-select>
   <div
