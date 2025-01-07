@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, HostBinding } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { IccColumnConfig, IccGridConfig, IccColumnWidth } from '../../models/grid-column.model';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, Input } from '@angular/core';
+import { IccGridFacade } from '../../+state/grid.facade';
+import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
-import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 
 @Component({
   selector: 'icc-grid-row',
@@ -16,8 +16,8 @@ import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
   imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {
+  private gridFacade = inject(IccGridFacade);
   private _record!: T;
-
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
   @Input() rowIndex!: number;
@@ -31,9 +31,8 @@ export class IccGridRowComponent<T> {
   get record(): T {
     return this._record;
   }
-  //@Input() selection!: SelectionModel<T>;
 
-  @Output() toggleRow = new EventEmitter<any>();
+  //@Output() toggleRow = new EventEmitter<any>();
 
   getColumnWidth(column: IccColumnConfig): string {
     const width = this.columnWidths.find((col) => col.name === column.name)?.width;
@@ -61,5 +60,9 @@ export class IccGridRowComponent<T> {
   @HostBinding('class.icc-grid-row')
   get iccGridRow() {
     return true;
+  }
+
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    this.gridFacade.setSelectRows(this.gridConfig, [this.record], !this.selected);
   }
 }

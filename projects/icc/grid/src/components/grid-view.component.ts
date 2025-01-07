@@ -43,6 +43,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
+  selections!: any;
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()
@@ -68,12 +69,13 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   getRecord(record: T): T {
-    return { ...record };
+    return record; //{ ...record }; // TODO some issue need this but will disable the select record???
   }
 
   selected(record: T, selection: SelectionModel<T>): boolean {
     return selection.isSelected(record);
   }
+
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }

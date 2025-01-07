@@ -221,6 +221,26 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
 
+    on(gridActions.setSelectRows, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const selection = oldState.selection;
+        action.records.forEach((record) => {
+          if (action.select) {
+            selection.select(record);
+          } else {
+            selection.deselect(record);
+          }
+        });
+        newState[key] = {
+          ...oldState,
+        };
+      }
+      return { ...newState };
+    }),
+
     on(gridActions.setGridGroupBy, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };

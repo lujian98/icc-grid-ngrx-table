@@ -70,8 +70,8 @@ export class IccGridHeaderComponent {
   }
 
   onToggleSelectAll(): void {
+    //TODO all selected
     this.allSelected = !this.allSelected;
-    //console.log( ' view onToggleSelectAll =', this.allSelected)
     this.gridFacade.setSelectAllRows(this.gridConfig, this.allSelected);
   }
 

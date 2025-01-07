@@ -66,8 +66,13 @@ export const setGridInMemoryData = createAction(
 );
 
 export const setSelectAllRows = createAction(
-  '[Grid] Setup Grid Set Select All Rows',
+  '[Grid] Setup Grid Set Select or Unselect All Rows',
   props<{ gridConfig: IccGridConfig; selectAll: boolean }>(),
+);
+
+export const setSelectRows = createAction(
+  '[Grid] Setup Grid Set Select or Unselect Rows',
+  props<{ gridConfig: IccGridConfig; records: any[]; select: boolean }>(),
 );
 
 export const setGridGroupBy = createAction(

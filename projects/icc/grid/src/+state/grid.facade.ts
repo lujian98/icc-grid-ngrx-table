@@ -1,25 +1,25 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
 import {
   IccColumnConfig,
+  IccColumnFilter,
   IccGridConfig,
   IccGridData,
-  IccSortField,
-  IccColumnFilter,
   IccRowGroupField,
+  IccSortField,
 } from '../models/grid-column.model';
-import * as gridActions from './grid.actions';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
+import * as gridActions from './grid.actions';
 import {
-  selectGridConfig,
   selectColumnsConfig,
+  selectGridConfig,
   selectGridData,
   selectGridInMemoryData,
-  selectRowSelection,
   selectRowGroups,
+  selectRowSelection,
 } from './grid.selectors';
 
 @Injectable()
@@ -74,6 +74,10 @@ export class IccGridFacade {
 
   setSelectAllRows(gridConfig: IccGridConfig, selectAll: boolean): void {
     this.store.dispatch(gridActions.setSelectAllRows({ gridConfig, selectAll }));
+  }
+
+  setSelectRows<T>(gridConfig: IccGridConfig, records: T[], select: boolean): void {
+    this.store.dispatch(gridActions.setSelectRows({ gridConfig, records, select }));
   }
 
   setGridGroupBy(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {

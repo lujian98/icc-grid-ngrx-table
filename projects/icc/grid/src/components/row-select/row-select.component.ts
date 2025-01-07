@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-//import { SelectionType } from '../../config';
-//import { isCheckboxSelection, isRadioSelection } from '../../util/selection';
 
 @Component({
   selector: 'icc-row-select',
@@ -14,27 +12,4 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 })
 export class IccRowSelectComponent {
   @Input() selected: boolean = false;
-  // @Input() id: any;
-  // @Input() type: SelectionType;
-
-  //@Output() selected = new EventEmitter();
-
-  /*
-  get inputId() {
-    return `${this.id}-${this.type}`;
-  }
-
-  isCheckbox() {
-    return isCheckboxSelection(this.type);
-  }
-
-  isRadio() {
-    return isRadioSelection(this.type);
-  }
-
-  select() {
-    if (!this.isSelected) {
-      this.selected.emit();
-    }
-  }*/
 }
