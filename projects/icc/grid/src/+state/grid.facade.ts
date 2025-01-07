@@ -20,6 +20,7 @@ import {
   selectGridInMemoryData,
   selectRowGroups,
   selectRowSelection,
+  selectAllSelected,
 } from './grid.selectors';
 
 @Injectable()
@@ -163,6 +164,10 @@ export class IccGridFacade {
 
   selectRowSelection(gridConfig: IccGridConfig): Observable<SelectionModel<any>> {
     return this.store.select(selectRowSelection(gridConfig));
+  }
+
+  selectAllSelected(gridConfig: IccGridConfig): Observable<boolean> {
+    return this.store.select(selectAllSelected(gridConfig));
   }
 
   selectRowGroups(gridConfig: IccGridConfig): Observable<IccRowGroups | boolean> {

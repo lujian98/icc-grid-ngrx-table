@@ -12,4 +12,5 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
 })
 export class IccRowSelectComponent {
   @Input() selected: boolean = false;
+  @Input() indeterminate: boolean = false;
 }

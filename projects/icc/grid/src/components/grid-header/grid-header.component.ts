@@ -9,6 +9,8 @@ import {
   IccTrigger,
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
+import { BehaviorSubject, Observable, interval, map, of, combineLatest } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
@@ -40,14 +42,38 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   ],
   providers: [IccDynamicOverlayService],
 })
-export class IccGridHeaderComponent {
+export class IccGridHeaderComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
-  @Input() columns: IccColumnConfig[] = [];
-  @Input() gridConfig!: IccGridConfig;
+  private _gridConfig!: IccGridConfig;
 
-  @Input() allSelected = false;
+  viewModel$: Observable<{ selection: SelectionModel<T>; allSelected: boolean }> | undefined;
+
+  @Input() columns: IccColumnConfig[] = [];
+
+  @Input()
+  set gridConfig(val: IccGridConfig) {
+    this._gridConfig = { ...val };
+
+    if (!this.viewModel$) {
+      this.viewModel$ = combineLatest([
+        this.gridFacade.selectRowSelection(this.gridConfig),
+        this.gridFacade.selectAllSelected(this.gridConfig),
+      ]).pipe(
+        map(([selection, allSelected]) => {
+          return {
+            selection,
+            allSelected,
+          };
+        }),
+      );
+    }
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
+
   @Input() columnWidths: IccColumnWidth[] = [];
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
@@ -69,10 +95,12 @@ export class IccGridHeaderComponent {
     return !this.gridConfig.columnReorder;
   }
 
-  onToggleSelectAll(): void {
-    //TODO all selected
-    this.allSelected = !this.allSelected;
-    this.gridFacade.setSelectAllRows(this.gridConfig, this.allSelected);
+  getIndeterminate(selection: SelectionModel<T>, allSelected: boolean): boolean {
+    return selection.hasValue() && !allSelected;
+  }
+
+  onToggleSelectAll(allSelected: boolean): void {
+    this.gridFacade.setSelectAllRows(this.gridConfig, !allSelected);
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {

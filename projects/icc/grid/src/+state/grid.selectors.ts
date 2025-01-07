@@ -43,6 +43,16 @@ export const selectRowSelection = (gridConfig: IccGridConfig) =>
     },
   );
 
+export const selectAllSelected = (gridConfig: IccGridConfig) =>
+  createSelector(
+    // @ts-ignore
+    featureSelector,
+    (state: GridState) => {
+      const gridId = gridConfig.gridId;
+      return state[gridId] ? state[gridId].allSelected : false;
+    },
+  );
+
 export const selectRowGroups = (gridConfig: IccGridConfig) =>
   createSelector(
     // @ts-ignore
