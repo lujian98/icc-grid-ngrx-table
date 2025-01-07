@@ -75,6 +75,11 @@ export const setSelectRows = createAction(
   props<{ gridConfig: IccGridConfig; records: any[]; select: boolean }>(),
 );
 
+export const setSelectRow = createAction(
+  '[Grid] Setup Grid Set Select a Row and clear all other rows',
+  props<{ gridConfig: IccGridConfig; record: any }>(),
+);
+
 export const setGridGroupBy = createAction(
   '[Grid] Setup Grid Group By a Column',
   props<{ gridConfig: IccGridConfig; rowGroupField: IccRowGroupField }>(),

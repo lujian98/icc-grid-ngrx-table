@@ -38,7 +38,7 @@
           [columnWidths]="columnWidths"
           [record]="getRecord(record)"
           [selected]="selected(record, selection)"
-          (click)="rowClick($event, index, record, selection)"
+          (click)="rowClick($event, index, record, selection, gridData)"
         >
         </icc-grid-row>
       </ng-container>

@@ -81,6 +81,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setSelectRows({ gridConfig, records, select }));
   }
 
+  setSelectRow<T>(gridConfig: IccGridConfig, record: T): void {
+    this.store.dispatch(gridActions.setSelectRow({ gridConfig, record }));
+  }
+
   setGridGroupBy(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
     this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);

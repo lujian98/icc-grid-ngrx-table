@@ -36,6 +36,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private scrollIndex: number = 0;
+  private prevRowIndex: number = -1;
   sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
   gridData$!: Observable<T[]> | undefined;
   rowSelection$: Observable<SelectionModel<T>> | undefined;
@@ -159,49 +160,45 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return record instanceof IccRowGroup;
   }
 
-  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<T>): void {
+  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<T>, data: T[]): void {
+    if (this.prevRowIndex < 0) {
+      this.prevRowIndex = rowIndex;
+    }
     const selected = selection.isSelected(record);
-    this.gridFacade.setSelectRows(this.gridConfig, [record], !selected);
-  }
-
-  /*
-  rowClick(event: MouseEvent, rowIndex: number, record: T, checkbox?: boolean) {
-    if (this.selection) {
-      const range = this.viewport.getRenderedRange();
-      const currentDataId = range.start + rowIndex;
-      if (this.multiRowSelection) {
-        if (event?.shiftKey) {
-          if (this.isRowSelected(record)) {
-            this.selection.toggle(record);
-          } else {
-            this.setSelectionRange(this.previousSelectDataId, currentDataId);
-          }
+    if (this.gridConfig.multiRowSelection) {
+      if (event.ctrlKey || event.metaKey) {
+        this.selectRecord([record], !selected);
+      } else if (event.shiftKey) {
+        if (rowIndex === this.prevRowIndex) {
+          this.selectRecord([record], !selected);
         } else {
-          if (event && !event.ctrlKey && !event.metaKey) {
-            const isRowSelected = this.isRowSelected(record);
-            this.selection.clear();
-            if (isRowSelected) {
-              this.selection.toggle(record);
-            }
-          }
-          if (!record.selectionDisabled) {
-            this.selection.toggle(record);
-          }
+          const records = this.getSelectionRange(this.prevRowIndex, rowIndex, data);
+          this.selectRecord(records, true);
         }
       } else {
-        const isRowSelected = this.isRowSelected(record);
-        this.selection.clear();
-        if (isRowSelected) {
-          this.selection.deselect(record);
-        } else if (!record.selectionDisabled) {
-          this.selection.select(record);
+        if (selected) {
+          this.gridFacade.setSelectAllRows(this.gridConfig, false);
+        } else {
+          this.gridFacade.setSelectRow(this.gridConfig, record);
         }
       }
-      this.previousSelectDataId = currentDataId;
-      this.selectionEventEmit();
+    } else {
+      this.selectRecord([record], !selected);
+    }
+    this.prevRowIndex = rowIndex;
+  }
+
+  private getSelectionRange(prevRowIndex: number, rowIndex: number, data: T[]): T[] {
+    if (prevRowIndex > rowIndex) {
+      return data.slice(rowIndex, prevRowIndex);
+    } else {
+      return data.slice(prevRowIndex, rowIndex + 1);
     }
   }
-    */
+
+  private selectRecord(record: T[], selected: boolean): void {
+    this.gridFacade.setSelectRows(this.gridConfig, record, selected);
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
