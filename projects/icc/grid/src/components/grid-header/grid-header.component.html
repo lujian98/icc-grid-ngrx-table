@@ -1,10 +1,10 @@
 <icc-grid-header-item *ngIf="gridConfig.rowSelection">
   <icc-row-select
-    *ngIf="viewModel$ | async as vm"
+    *ngIf="rowSelections$ | async as vm"
     class="icc-header-row-select"
     [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
     [selected]="vm.allSelected"
-    [indeterminate]="getIndeterminate(vm.selection, vm.allSelected)"
+    [indeterminate]="vm.indeterminate"
     (click)="onToggleSelectAll(vm.allSelected)"
   >
   </icc-row-select>

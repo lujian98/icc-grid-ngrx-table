@@ -69,7 +69,6 @@ export interface IccGridState<T extends object = object> {
   totalCounts: number;
   inMemoryData: T[];
   selection: SelectionModel<T>;
-  allSelected: boolean;
   queryData: T[]; // for row group temporary data
   rowGroups?: IccRowGroups; // row group will handle at client side data only and wwith one level
 }

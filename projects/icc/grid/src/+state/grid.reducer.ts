@@ -157,6 +157,7 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
+        oldState.selection.clear();
 
         let queryData = gridConfig.rowGroupField && oldState.rowGroups ? [...oldState.queryData] : [...oldState.data];
         let data =
@@ -218,7 +219,6 @@ export const iccGridFeature = createFeature({
         }
         newState[key] = {
           ...oldState,
-          allSelected: action.selectAll,
         };
       }
       return { ...newState };
@@ -237,11 +237,8 @@ export const iccGridFeature = createFeature({
             selection.deselect(record);
           }
         });
-        const dataCounts = oldState.data.filter((item) => item && !(item instanceof IccRowGroup)).length;
-
         newState[key] = {
           ...oldState,
-          allSelected: selection.selected.length === dataCounts,
         };
       }
       return { ...newState };

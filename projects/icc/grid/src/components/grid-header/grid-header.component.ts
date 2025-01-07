@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
@@ -9,8 +10,7 @@ import {
   IccTrigger,
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
-import { BehaviorSubject, Observable, interval, map, of, combineLatest } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Observable } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
@@ -47,27 +47,17 @@ export class IccGridHeaderComponent<T> {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
   private _gridConfig!: IccGridConfig;
-
-  viewModel$: Observable<{ selection: SelectionModel<T>; allSelected: boolean }> | undefined;
+  rowSelections$:
+    | Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }>
+    | undefined;
 
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-
-    if (!this.viewModel$) {
-      this.viewModel$ = combineLatest([
-        this.gridFacade.selectRowSelection(this.gridConfig),
-        this.gridFacade.selectAllSelected(this.gridConfig),
-      ]).pipe(
-        map(([selection, allSelected]) => {
-          return {
-            selection,
-            allSelected,
-          };
-        }),
-      );
+    if (!this.rowSelections$) {
+      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridConfig);
     }
   }
   get gridConfig(): IccGridConfig {
@@ -93,10 +83,6 @@ export class IccGridHeaderComponent<T> {
   get dragDisabled(): boolean {
     // TODO add each column enable/disable
     return !this.gridConfig.columnReorder;
-  }
-
-  getIndeterminate(selection: SelectionModel<T>, allSelected: boolean): boolean {
-    return selection.hasValue() && !allSelected;
   }
 
   onToggleSelectAll(allSelected: boolean): void {
