@@ -1,17 +1,22 @@
 <icc-grid-header-item *ngIf="gridConfig.rowSelection">
-  <icc-row-select
-    *ngIf="rowSelections$ | async as vm"
-    class="icc-header-row-select"
-    [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
-    [selected]="vm.allSelected"
-    [indeterminate]="vm.indeterminate"
-    (click)="onToggleSelectAll(vm.allSelected)"
-  >
-  </icc-row-select>
+  <ng-container *ngIf="rowSelections$ | async as vm">
+    <icc-row-select
+      *ngIf="gridConfig.multiRowSelection"
+      class="icc-header-row-select"
+      [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
+      [selected]="vm.allSelected"
+      [indeterminate]="vm.indeterminate"
+      (click)="onToggleSelectAll(vm.allSelected)"
+    >
+    </icc-row-select>
+  </ng-container>
+
+  <div *ngIf="!gridConfig.multiRowSelection" [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"></div>
+
   <div
+    *ngIf="gridConfig.columnFilter"
     class="icc-header-no-filter-border"
     [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
-    *ngIf="gridConfig.columnFilter"
   ></div>
 </icc-grid-header-item>
 

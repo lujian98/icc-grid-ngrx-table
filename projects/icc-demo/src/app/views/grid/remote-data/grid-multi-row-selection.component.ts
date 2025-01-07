@@ -3,22 +3,23 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
 
 @Component({
-  selector: 'app-grid-row-selection',
+  selector: 'app-grid-multi-row-selection',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
-export class AppGridRowSelectionComponent {
+export class AppGridMultiRowSelectionComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     urlKey: 'DCR',
     rowSelection: true,
     columnMenu: true,
     columnSort: true,
-    //columnFilter: true,
+    columnFilter: true,
     columnHidden: true,
+    multiRowSelection: true,
     remoteGridData: true,
   };
 

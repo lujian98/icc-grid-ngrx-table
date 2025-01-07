@@ -79,6 +79,10 @@ export class AppGridComponent {
         { name: '22: Grid Remote Row Group', link: 'grid-remote-row-group' },
         { name: '23: Grid In-Memory Row Group', link: 'grid-in-memory-row-group' },
         { name: '24: Grid Group Header', link: 'grid-group-header' },
+        {
+          name: '25: Grid Multi Row Seletion',
+          link: 'grid-multi-row-selection',
+        },
       ],
     },
   ];
