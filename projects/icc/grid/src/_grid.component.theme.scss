@@ -46,6 +46,7 @@
     .icc-header-no-filter-border {
       display: flex;
       width: 100%;
+      border-top: 1px solid icc-theme(app-border-basic-color);
     }
 
     icc-text-filter,
