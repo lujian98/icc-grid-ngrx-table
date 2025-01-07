@@ -159,6 +159,50 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return record instanceof IccRowGroup;
   }
 
+  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<T>): void {
+    const selected = selection.isSelected(record);
+    this.gridFacade.setSelectRows(this.gridConfig, [record], !selected);
+  }
+
+  /*
+  rowClick(event: MouseEvent, rowIndex: number, record: T, checkbox?: boolean) {
+    if (this.selection) {
+      const range = this.viewport.getRenderedRange();
+      const currentDataId = range.start + rowIndex;
+      if (this.multiRowSelection) {
+        if (event?.shiftKey) {
+          if (this.isRowSelected(record)) {
+            this.selection.toggle(record);
+          } else {
+            this.setSelectionRange(this.previousSelectDataId, currentDataId);
+          }
+        } else {
+          if (event && !event.ctrlKey && !event.metaKey) {
+            const isRowSelected = this.isRowSelected(record);
+            this.selection.clear();
+            if (isRowSelected) {
+              this.selection.toggle(record);
+            }
+          }
+          if (!record.selectionDisabled) {
+            this.selection.toggle(record);
+          }
+        }
+      } else {
+        const isRowSelected = this.isRowSelected(record);
+        this.selection.clear();
+        if (isRowSelected) {
+          this.selection.deselect(record);
+        } else if (!record.selectionDisabled) {
+          this.selection.select(record);
+        }
+      }
+      this.previousSelectDataId = currentDataId;
+      this.selectionEventEmit();
+    }
+  }
+    */
+
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
     this.sizeChanged$.next(event);

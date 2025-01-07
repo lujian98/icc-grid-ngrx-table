@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, Input } from '@angular/core';
-import { IccGridFacade } from '../../+state/grid.facade';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
@@ -16,7 +15,6 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
   imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {
-  private gridFacade = inject(IccGridFacade);
   private _record!: T;
   @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
@@ -32,8 +30,6 @@ export class IccGridRowComponent<T> {
     return this._record;
   }
 
-  //@Output() toggleRow = new EventEmitter<any>();
-
   getColumnWidth(column: IccColumnConfig): string {
     const width = this.columnWidths.find((col) => col.name === column.name)?.width;
     return width ? `${width}px` : '';
@@ -47,22 +43,8 @@ export class IccGridRowComponent<T> {
     return index;
   }
 
-  /*
-  toggleRowSelection() {
-    //console.log( ' row columns=', this.columns)
-    //console.log( ' row record=', this.record)
-    this.toggleRow.emit({
-      dataItem: this.record,
-      //selectionType: this.selectionType
-    });
-  }*/
-
   @HostBinding('class.icc-grid-row')
   get iccGridRow() {
     return true;
-  }
-
-  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    this.gridFacade.setSelectRows(this.gridConfig, [this.record], !this.selected);
   }
 }
