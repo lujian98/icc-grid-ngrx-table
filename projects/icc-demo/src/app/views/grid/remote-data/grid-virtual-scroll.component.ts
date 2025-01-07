@@ -21,6 +21,7 @@ export class AppGridRemoteVirtualScrollComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
+    multiRowSelection: true,
     virtualScroll: true,
     remoteColumnsConfig: true,
     remoteGridData: true,

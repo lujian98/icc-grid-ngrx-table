@@ -15,6 +15,7 @@ export class AppGridGroupHeaderComponent {
     ...defaultGridConfig,
     urlKey: 'DCR',
     rowSelection: true,
+    multiRowSelection: true,
     columnMenu: true,
     columnSort: true,
     columnHidden: true,

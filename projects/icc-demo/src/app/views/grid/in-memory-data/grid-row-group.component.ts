@@ -21,6 +21,7 @@ export class AppGridRowGroupComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
+    multiRowSelection: true,
     rowGroup: true,
     rowGroupField: {
       field: 'brand',

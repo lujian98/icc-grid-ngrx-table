@@ -21,6 +21,7 @@ export class AppGridRemoteRowGroupComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
+    multiRowSelection: true,
     rowGroup: true,
     virtualScroll: true,
     remoteColumnsConfig: true,

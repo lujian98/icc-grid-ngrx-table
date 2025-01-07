@@ -22,6 +22,7 @@ export class AppGridVirtualScrollComponent {
     columnHidden: true,
     rowSelection: true,
     virtualScroll: true,
+    multiRowSelection: true,
     //sortFields: [],
     //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,
