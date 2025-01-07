@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
@@ -41,10 +41,5 @@ export class IccGridRowComponent<T> {
 
   trackByIndex(index: number): number {
     return index;
-  }
-
-  @HostBinding('class.icc-grid-row')
-  get iccGridRow() {
-    return true;
   }
 }

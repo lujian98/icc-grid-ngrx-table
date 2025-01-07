@@ -16,7 +16,7 @@
   (scroll)="onViewportScroll($event)"
 >
   <ng-container *ngIf="gridData$ | async as gridData">
-    <div *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
+    <div class="icc-grid-row" *cdkVirtualFor="let record of gridData; trackBy: trackByIndex; let index = index">
       <ng-container *ngIf="rowGroups$ | async as rowGroups">
         <icc-grid-row-group
           *ngIf="isRowGroup(index, record)"

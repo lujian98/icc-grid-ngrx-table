@@ -17,6 +17,7 @@
 >
   <ng-container *ngIf="treeData$ | async as treeData">
     <div
+      class="icc-grid-row"
       *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
       cdkDropList
       [cdkDropListSortingDisabled]="true"
