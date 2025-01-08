@@ -18,19 +18,6 @@
 >
 </icc-checkbox-field>
 
-<!-- 
-
-<icc-checkbox
-  *ngIf="menuItem.checkbox"
-  class="icc-menu-item"
-  [checked]="!!menuItem.checked"
-  [disabled]="!!menuItem.disabled"
->
-  <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
-  <span class="icc-menu-title"> {{ title | translate }} </span>
-</icc-checkbox>
--->
-
 <div *ngIf="!menuItem.link && !menuItem.checkbox" class="icc-menu-item">
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
   <span class="icc-menu-title"> {{ title | translate }} </span>

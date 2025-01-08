@@ -33,7 +33,7 @@ export class IccMenusComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
-  hoverTrigger = IccTrigger.HOVER; // HOVERCLICK; //
+  hoverTrigger = IccTrigger.HOVER;
   private _values: any[] = [];
 
   @Input() form: FormGroup | undefined;
@@ -47,26 +47,7 @@ export class IccMenusComponent implements OnDestroy {
   @Input()
   set items(val: IccMenuItem[]) {
     this._items = val;
-    if (this.selected) {
-      this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
-    }
-
-    if (!this.form) {
-      this.form = new FormGroup({});
-      this.form.valueChanges
-        .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
-        .subscribe((val) => {
-          this.iccMenuFormChanges.emit(this.form?.value);
-          this.values = this.form?.value;
-        });
-    }
-    this.items.forEach((item) => {
-      // TODO disabled ??
-      const field = this.form!.get(item.name);
-      if (item.checkbox && !field) {
-        this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
-      }
-    });
+    this.setItems();
   }
   get items(): IccMenuItem[] {
     return this._items;
@@ -103,6 +84,28 @@ export class IccMenusComponent implements OnDestroy {
 
   hasChildItem(item: IccMenuItem): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
+  }
+
+  private setItems(): void {
+    if (this.selected) {
+      this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
+    }
+    if (!this.form) {
+      this.form = new FormGroup({});
+      this.form.valueChanges
+        .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
+        .subscribe((val) => {
+          this.iccMenuFormChanges.emit(this.form?.value);
+          this.values = this.form?.value;
+        });
+    }
+    this.items.forEach((item) => {
+      // TODO disabled ??
+      const field = this.form!.get(item.name);
+      if (item.checkbox && !field) {
+        this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
+      }
+    });
   }
 
   private setSelected(selectedItem: IccMenuItem): void {
