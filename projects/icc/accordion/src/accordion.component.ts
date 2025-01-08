@@ -101,7 +101,7 @@ export class IccAccordionComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
+  onResize(event: MouseEvent): void {
     this.setupLayout();
   }
 }

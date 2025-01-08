@@ -235,7 +235,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     }
   }
 
-  @HostListener('blur') onBlur() {
+  @HostListener('blur') onBlur(): void {
     if (!this.overlayRef) {
       this._onTouched();
     }

@@ -13,11 +13,11 @@ export class IccCalendarToggleDirective extends CdkOverlayOrigin implements Afte
     super(elemRef);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.calendarModal.overlayOrigin = this;
   }
 
-  @HostListener('click') toggleOverlay() {
+  @HostListener('click') toggleOverlay(): void {
     if (!this.disabled) {
       this.calendarModal.toggleOverlay();
     }

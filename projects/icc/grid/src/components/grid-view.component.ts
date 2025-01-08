@@ -201,7 +201,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
+  onResize(event: MouseEvent): void {
     this.sizeChanged$.next(event);
   }
 

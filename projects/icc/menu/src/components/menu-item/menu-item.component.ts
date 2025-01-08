@@ -89,7 +89,7 @@ export class IccMenuItemComponent {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
-  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+  @HostListener('click', ['$event']) onClick(event: MouseEvent): void {
     if (this.disabled) {
       event.stopPropagation();
     }

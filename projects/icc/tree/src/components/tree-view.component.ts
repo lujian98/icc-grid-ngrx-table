@@ -62,7 +62,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   getRecord(record: IccTreeNode<T>): IccTreeNode<T> {
-    return { ...record };
+    return { ...record }; // TODO not sure this
   }
 
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
@@ -247,7 +247,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
+  onResize(event: MouseEvent): void {
     this.sizeChanged$.next(event);
   }
 

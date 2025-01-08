@@ -98,7 +98,7 @@ export class AppAccordionLayoutComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
+  onResize(event: MouseEvent): void {
     this.setupView();
   }
 }

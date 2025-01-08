@@ -32,7 +32,6 @@ export class IccTreeNodeComponent<T> {
   @Input()
   set node(data: IccTreeNode<T>) {
     this._node = { ...data };
-    //console.log(' node =', this.node);
     this.changeDetectorRef.markForCheck();
   }
   get node(): IccTreeNode<T> {
@@ -43,7 +42,7 @@ export class IccTreeNodeComponent<T> {
     return (this.node as any)[this.column.name];
   }
 
-  @HostListener('click') nodeToggle() {
+  @HostListener('click') nodeToggle(): void {
     if (!this.node.leaf) {
       this.treeFacade.nodeToggle(this.treeConfig, this.node);
     }

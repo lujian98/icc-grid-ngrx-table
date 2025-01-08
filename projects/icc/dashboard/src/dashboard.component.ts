@@ -413,7 +413,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent) {
+  onResize(event: MouseEvent): void {
     this.setupGrid();
   }
 }
