@@ -3,9 +3,9 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject, Observable } from 'rxjs';
 
 export class IccDialogRef<T> {
-  componentRef!: ComponentRef<T>;
   private onClose$: Subject<T> = new Subject();
   readonly onClose: Observable<T> = this.onClose$.asObservable();
+  componentRef!: ComponentRef<T>;
 
   constructor(private overlayRef: OverlayRef) {}
 
