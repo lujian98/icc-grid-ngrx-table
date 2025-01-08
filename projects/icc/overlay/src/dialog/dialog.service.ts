@@ -9,7 +9,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 import { IccDialogRef } from './dialog-ref';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
-
+// https://stackblitz.com/edit/angular-ivy-sdmh7e?file=src%2Fapp%2Fdialog%2Fdialog.service.ts
 @Injectable()
 export class IccDialogService {
   private overlayService = inject(IccOverlayService);
