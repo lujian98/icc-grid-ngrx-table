@@ -81,7 +81,6 @@ export class IccLayoutComponent {
     const el = this.elementRef.nativeElement;
     if (el) {
       el.style.width = width;
-      //el.parentNode.style.width = width;
     }
   }
 }

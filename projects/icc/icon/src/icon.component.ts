@@ -32,32 +32,7 @@ export class IccIconComponent implements OnChanges, OnInit {
 
   @HostBinding('attr.title')
   title!: string | undefined;
-  /*
-  @HostBinding('class.status-default')
-  get default() {
-    return this.status === 'default';
-  }
 
-  @HostBinding('class.status-primary')
-  get primary() {
-    return this.status === 'primary';
-  }
-
-  @HostBinding('class.status-warning')
-  get warning() {
-    return this.status === 'warning';
-  }
-
-  @HostBinding('class.status-danger')
-  get danger() {
-    return this.status === 'danger';
-  }
-
-  @HostBinding('class.status-success')
-  get success() {
-    return this.status === 'success';
-  }
-*/
   @HostBinding('innerHtml')
   html: SafeHtml = '';
 
