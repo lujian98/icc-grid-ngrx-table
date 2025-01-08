@@ -4,7 +4,6 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  OnDestroy,
   SimpleChanges,
   TemplateRef,
   Type,
@@ -25,7 +24,7 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy {
+export class IccPopoverDirective implements AfterViewInit, OnChanges {
   private elementRef = inject(ElementRef);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
 
@@ -69,9 +68,5 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges, OnDestroy 
     if (changes.context) {
       this.dynamicOverlayService.rebuild(this.context, this.content);
     }
-  }
-
-  ngOnDestroy(): void {
-    //this.dynamicOverlayService.destroy();
   }
 }

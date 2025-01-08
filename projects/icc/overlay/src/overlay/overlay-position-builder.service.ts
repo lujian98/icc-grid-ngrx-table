@@ -7,7 +7,7 @@ import {
 } from '@angular/cdk/overlay';
 
 import { IccPosition } from './overlay-position';
-import { ICC_DOCUMENT } from './document';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 
 export interface Point {
   x: number;

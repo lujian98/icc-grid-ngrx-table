@@ -2,8 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
-import { ICC_DOCUMENT } from './overlay/document';
 import { IccOverlayService } from './overlay/overlay.service';
 import { IccOverlay } from './overlay/overlay.models';
 import { IccPositionBuilderService } from './overlay/overlay-position-builder.service';
@@ -24,7 +22,6 @@ export class IccOverlayModule {
         IccOverlay,
         IccPositionBuilderService,
         IccTriggerStrategyBuilderService,
-        { provide: ICC_DOCUMENT, useExisting: DOCUMENT },
         [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
       ],
     };

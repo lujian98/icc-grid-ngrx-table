@@ -8,7 +8,7 @@ import { fromEvent } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 import { IccDialogRef } from './dialog-ref';
-import { ICC_DOCUMENT } from '../overlay/document';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 
 @Injectable()
 export class IccDialogService {
