@@ -1,8 +1,16 @@
 @mixin icc-menu-theme() {
+  icc-menus {
+    .icc-menu-row:nth-child(odd) {
+      background-color: icc-theme(icc-grid-row-odd-background-color);
+    }
+
+    .icc-menu-row:nth-child(even) {
+      background-color: icc-theme(icc-grid-row-even-background-color);
+    }
+  }
+
   icc-menu-item {
     align-items: center;
-    border-top: 1px solid icc-theme(app-border-basic-color);
-    background-color: icc-theme(icc-menu-item-background-color);
     color: icc-theme(app-text-basic-color);
 
     &:focus,

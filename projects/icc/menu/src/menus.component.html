@@ -1,6 +1,6 @@
 <!-- Use form due to the use checkbox in the menu item -->
 <form *ngIf="form" [formGroup]="form">
-  <ng-container *ngFor="let item of items">
+  <div class="icc-menu-row" *ngFor="let item of items">
     <icc-menu-item
       *ngIf="isLeafMenu(item)"
       [disabled]="getDisabled(item)"
@@ -49,5 +49,5 @@
       >
       </icc-menus>
     </ng-template>
-  </ng-container>
+  </div>
 </form>
