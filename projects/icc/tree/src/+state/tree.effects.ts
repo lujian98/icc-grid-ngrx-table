@@ -79,7 +79,7 @@ export class IccTreeEffects {
 
   setGridSortFields$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setGridSortFields), // gridActions
+      ofType(setGridSortFields),
       switchMap(({ gridConfig }) =>
         of(gridConfig).pipe(
           map((treeConfig: IccTreeConfig) => {

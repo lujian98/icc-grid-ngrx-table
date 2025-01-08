@@ -1,17 +1,9 @@
-import {
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  HostListener,
-  Input,
-  inject,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, inject } from '@angular/core';
 import { IccColumnConfig } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccTreeNode, IccTreeConfig } from '../../../models/tree-grid.model';
 import { IccTreeFacade } from '../../../+state/tree.facade';
+import { IccTreeConfig, IccTreeNode } from '../../../models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree-node',

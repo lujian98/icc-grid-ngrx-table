@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   IccColumnConfig,
-  IccGridCellComponent,
-  IccDynamicGridCellComponent,
-  IccRowSelectComponent,
   IccColumnWidth,
+  IccDynamicGridCellComponent,
+  IccGridCellComponent,
+  IccRowSelectComponent,
   ROW_SELECTION_CELL_WIDTH,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
@@ -53,14 +53,5 @@ export class IccTreeRowComponent<T> {
 
   trackByIndex(index: number): number {
     return index;
-  }
-
-  toggleRowSelection() {
-    //console.log( ' row columns=', this.columns)
-    //console.log( ' row record=', this.record)
-    this.toggleRow.emit({
-      dataItem: this.record,
-      //selectionType: this.selectionType
-    });
   }
 }

@@ -1,10 +1,12 @@
+<!-- not support tree row selection
 <icc-grid-cell
   *ngIf="treeConfig.rowSelection"
   class="icc-tree-cell-row-select"
   [ngStyle]="{ height: treeConfig.rowHeight + 'px', flex: '0 0 ' + selectColumnWidth, 'max-width': selectColumnWidth }"
 >
-  <icc-row-select [selected]="selected" (selected)="toggleRowSelection()"> </icc-row-select>
+  <icc-row-select [selected]="selected"> </icc-row-select>
 </icc-grid-cell>
+-->
 
 <icc-grid-cell
   *ngIf="treeColumn && !treeColumn.hidden"

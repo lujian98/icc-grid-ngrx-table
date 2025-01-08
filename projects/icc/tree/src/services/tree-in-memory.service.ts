@@ -13,8 +13,6 @@ export class IccTreeinMemoryService extends IccGridinMemoryService {
     columns: IccColumnConfig[],
     inMemoryData: IccTreeData[],
   ): Observable<IccTreeData[]> {
-    //console.log('tree service inMemoryData=', inMemoryData);
-
     const sortedData = this.sortTree([...inMemoryData], treeConfig);
     const flatTree = iccFlattenTree([...sortedData], 0);
     const filterParams = this.getFilterParams(treeConfig.columnFilters, columns);

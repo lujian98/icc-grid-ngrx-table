@@ -20,6 +20,7 @@ export class IccPopoverComponent implements IccRenderableContainer {
   @Input() context!: Object;
   @Input() dynamicOverlayService!: IccDynamicOverlayService;
   @Input() customStyle: string | undefined;
+
   @HostBinding('style')
   get style(): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
@@ -30,20 +31,20 @@ export class IccPopoverComponent implements IccRenderableContainer {
 
   constructor(private sanitizer: DomSanitizer) {}
 
-  close() {
+  close(): void {
     this.dynamicOverlayService.hide();
   }
 
-  renderContent() {
+  renderContent(): void {
     this.detachContent();
     this.attachContent();
   }
 
-  protected detachContent() {
+  protected detachContent(): void {
     this.overlayContainer.detach();
   }
 
-  protected attachContent() {
+  protected attachContent(): void {
     if (this.content instanceof TemplateRef) {
       this.attachTemplate();
     } else if (this.content instanceof Type) {
@@ -51,7 +52,7 @@ export class IccPopoverComponent implements IccRenderableContainer {
     }
   }
 
-  protected attachTemplate() {
+  protected attachTemplate(): void {
     this.overlayContainer.attachTemplatePortal(
       // @ts-ignore
       new TemplatePortal(this.content, null, <any>{
@@ -61,9 +62,9 @@ export class IccPopoverComponent implements IccRenderableContainer {
     );
   }
 
-  protected attachComponent() {
+  protected attachComponent(): void {
     const portal = new ComponentPortal(this.content, null, null);
-    let context = Object.assign({}, this.context, {
+    const context = Object.assign({}, this.context, {
       close: this.close.bind(this),
     });
     const ref = this.overlayContainer.attachComponentPortal(portal, context);

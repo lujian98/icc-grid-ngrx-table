@@ -8,9 +8,6 @@ export interface IccTreeConfig extends IccGridConfig {
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
   isTreeGrid: true,
-  //remoteGridConfig: false,
-  //remoteColumnsConfig: false,
-  //remoteGridData: false,
   virtualScroll: true,
   pageSize: 10000,
   remoteLoadAll: false,
@@ -24,9 +21,8 @@ export interface IccTreeData {
   leaf?: boolean;
   expanded?: boolean;
   icon?: string;
-  //readonly?: boolean;
   children?: IccTreeData[];
-  //contextMenu?: SunMenuItem[];
+  //contextMenu?: IccMenuItem[];
 }
 
 export interface IccTreeNode<T> extends IccTreeData {}

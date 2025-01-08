@@ -1,6 +1,0 @@
-@mixin icc-panel-theme() {
-  icc-panel-top-bar,
-  icc-panel-bottom-bar {
-    background-color: icc-theme(icc-panel-top-bar-background-color);
-  }
-}

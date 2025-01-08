@@ -33,13 +33,9 @@ export class IccRadioComponent implements ControlValueAccessor {
     this._disabled = disabled;
   }
 
-  registerOnChange(fn: any): void {
-    //this.onChange = fn;
-  }
+  registerOnChange(fn: any): void {}
 
-  registerOnTouched(fn: any): void {
-    //this.onTouched = fn;
-  }
+  registerOnTouched(fn: any): void {}
 
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
@@ -47,14 +43,5 @@ export class IccRadioComponent implements ControlValueAccessor {
 
   writeValue(value: boolean): void {
     this.checked = value;
-
-    //Fix for issue where we reference .detectChanges
-    //on a destroyed view (such as when toggling control
-    //enabled/disabled from a parent form group)
-    //https://github.com/SAP/fundamental-ngx/issues/2364
-    /*
-    if (!(this.changeDetector as any).destroyed) {
-      this.changeDetector.detectChanges();
-    }*/
   }
 }
