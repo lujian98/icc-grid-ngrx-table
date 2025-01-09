@@ -1,36 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-//@import 'font-awesome/css/font-awesome.css';
-@import "@angular/cdk/overlay-prebuilt.css";
+@use "@angular/cdk/overlay-prebuilt.css";
 
-.mat-mdc-checkbox {
-  --mdc-checkbox-state-layer-size: 16px;
-}
+@use "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@use "@fortawesome/fontawesome-free/scss/regular.scss";
+@use "@fortawesome/fontawesome-free/scss/solid.scss";
+@use "@fortawesome/fontawesome-free/scss/brands.scss";
 
 @import "../../icc/theme/src/theming";
-//@import '../../../dist/icc/theming';
-
-//$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "@fortawesome/fontawesome-free/scss/regular.scss";
-@import "@fortawesome/fontawesome-free/scss/solid.scss";
-@import "@fortawesome/fontawesome-free/scss/brands.scss";
 
 @include icc-install() {
   @include icc-theme-components();
 }
-
-/* // Set box-sizing globally to handle padding and border widths */
-/*
-*,
-*:after, *:before {
-  box-sizing: inherit;
-}
-html {
-  box-sizing: border-box;
-}
-
-
-body {
-	letter-spacing: .01em;
-}
-*/
