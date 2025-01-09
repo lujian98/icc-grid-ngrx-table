@@ -4,7 +4,7 @@
   @if ($icc-enable-css-custom-properties) {
     $value: var(--#{$key});
   } @else {
-    $value: map-get($icc-processed-theme, $key);
+    $value: map.get($icc-processed-theme, $key);
   }
 
   @if ($value == null) {
@@ -18,13 +18,13 @@
   $new: (
     $name: $theme,
   );
-  $icc-themes: map-merge($icc-themes, $new) !global;
+  $icc-themes: map.merge($icc-themes, $new) !global;
 
   @return $icc-themes;
 }
 
 @function icc-deep-find-value($theme, $key, $value) {
-  $parent-value: map-get($theme, $value);
+  $parent-value: map.get($theme, $value);
 
   @if ($parent-value != null) {
     @return icc-deep-find-value($theme, $value, $parent-value);
@@ -39,7 +39,7 @@
     $new: (
       $key: icc-deep-find-value($theme, $key, $value),
     );
-    $processed-theme: map-merge($processed-theme, $new);
+    $processed-theme: map.merge($processed-theme, $new);
   }
   @return $processed-theme;
 }
@@ -51,7 +51,7 @@
 @mixin icc-install-css-properties($theme-name, $theme) {
   .icc-theme-#{$theme-name} {
     @each $var, $value in $theme {
-      @if (type-of($value) == "string" and map-get($theme, $value)) {
+      @if (type-of($value) == "string" and map.get($theme, $value)) {
         --#{$var}: var(--#{$value});
       } @else {
         --#{$var}: #{$value};
