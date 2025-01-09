@@ -22,8 +22,10 @@ export class IccGridRowGroupComponent<T> {
   @Input() rowIndex!: number;
 
   @Input()
-  set record(data: IccRowGroup) {
-    this._record = data;
+  set record(data: T | IccRowGroup) {
+    if (data instanceof IccRowGroup) {
+      this._record = data;
+    }
   }
   get record(): IccRowGroup {
     return this._record;
