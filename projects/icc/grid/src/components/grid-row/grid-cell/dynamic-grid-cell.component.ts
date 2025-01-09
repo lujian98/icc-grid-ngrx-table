@@ -19,7 +19,6 @@ import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-t
   templateUrl: 'dynamic-grid-cell.component.html',
   styleUrls: ['dynamic-grid-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {

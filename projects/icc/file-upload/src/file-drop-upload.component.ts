@@ -19,7 +19,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
   templateUrl: './file-drop-upload.component.html',
   styleUrls: ['./file-drop-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     TranslateModule,

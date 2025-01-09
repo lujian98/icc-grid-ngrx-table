@@ -34,7 +34,6 @@ import { IccFormConfig } from '../models/form.model';
   templateUrl: './form-view.component.html',
   styleUrls: ['./form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

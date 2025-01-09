@@ -9,7 +9,6 @@ import { AppDialogTestDemoComponent } from './dialog-test.component';
   templateUrl: './simple-window.component.html',
   styleUrls: ['./simple-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppSimpleWindowComponent {

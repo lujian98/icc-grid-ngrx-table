@@ -8,7 +8,6 @@ import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
   templateUrl: './simple-form.component.html',
   styleUrls: ['./simple-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccFormComponent],
 })
 export class AppSimpleFromDemoComponent {

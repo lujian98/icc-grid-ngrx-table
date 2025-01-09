@@ -12,7 +12,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component } from '@icc/ui/d3';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppRadialGaugeDemoComponent implements OnInit {

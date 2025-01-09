@@ -7,7 +7,6 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-image.component.html',
   styleUrls: ['./grid-cell-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridCellRendererComponent],
 })
 export class IccGridCellImageComponent<T> extends IccGridCellRendererComponent<T> {

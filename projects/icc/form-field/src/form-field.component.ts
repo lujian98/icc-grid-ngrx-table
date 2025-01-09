@@ -32,7 +32,6 @@ import { IccInputDirective } from './directive/input.directive';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccErrorDirective,

@@ -9,7 +9,6 @@ import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
   templateUrl: './simple-menu.component.html',
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppSimpleMenuComponent implements OnInit {

@@ -25,7 +25,6 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     DragDropModule,

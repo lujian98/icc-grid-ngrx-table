@@ -58,7 +58,6 @@ import {
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -18,7 +18,6 @@ import * as d3Interpolate from 'd3-interpolate';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppRadialGaugeDemo2Component implements OnInit {

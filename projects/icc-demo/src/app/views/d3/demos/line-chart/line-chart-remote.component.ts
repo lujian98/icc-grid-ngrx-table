@@ -16,7 +16,6 @@ import { IccD3Component, defaultD3Config } from '@icc/ui/d3';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppLineChartRemoteComponent {

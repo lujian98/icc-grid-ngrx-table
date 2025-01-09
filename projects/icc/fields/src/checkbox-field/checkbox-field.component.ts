@@ -58,7 +58,6 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

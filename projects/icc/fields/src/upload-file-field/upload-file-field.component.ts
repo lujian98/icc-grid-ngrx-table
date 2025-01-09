@@ -59,7 +59,6 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

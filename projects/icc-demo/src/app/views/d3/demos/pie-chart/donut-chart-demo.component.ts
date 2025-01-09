@@ -13,7 +13,6 @@ import * as d3Format from 'd3-format';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppDonutChartDemoComponent implements OnInit {

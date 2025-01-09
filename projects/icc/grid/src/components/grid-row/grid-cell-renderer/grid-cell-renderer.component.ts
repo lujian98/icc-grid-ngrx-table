@@ -6,7 +6,6 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   selector: 'icc-grid-cell-renderer',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccGridCellRendererComponent<T> {

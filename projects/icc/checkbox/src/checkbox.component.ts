@@ -18,6 +18,7 @@ import { IccIconModule } from '@icc/ui/icon';
 
 @Directive({
   selector: '[ghost]',
+  standalone: false,
 })
 export class GhostCheckboxDirective {
   @HostBinding('class.ghost-checkbox')
@@ -28,7 +29,6 @@ export class GhostCheckboxDirective {
   selector: 'icc-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
-  standalone: true,
   imports: [CommonModule, IccIconModule, IccInputDirective],
   providers: [
     {

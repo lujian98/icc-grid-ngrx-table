@@ -43,7 +43,6 @@ export class IccLayoutRightComponent {}
   templateUrl: './layout-horizontal.component.html',
   styleUrls: ['./layout-horizontal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccResizeDirective,

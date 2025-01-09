@@ -15,7 +15,6 @@ import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {

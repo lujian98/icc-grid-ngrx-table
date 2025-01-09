@@ -13,7 +13,6 @@ import {
   selector: 'app-window',
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,

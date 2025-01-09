@@ -17,7 +17,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     TranslateModule,

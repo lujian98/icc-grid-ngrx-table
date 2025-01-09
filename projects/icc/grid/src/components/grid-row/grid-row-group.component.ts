@@ -11,7 +11,6 @@ import { IccGridFacade } from '../../+state/grid.facade';
   templateUrl: './grid-row-group.component.html',
   styleUrls: ['./grid-row-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccIconModule],
 })
 export class IccGridRowGroupComponent<T> {

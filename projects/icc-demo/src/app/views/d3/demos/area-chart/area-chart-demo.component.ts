@@ -17,7 +17,6 @@ interface Stock {
     <icc-d3 [chartConfigs]="chartConfigs2" [data]="data"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppAreaChartDemoComponent implements OnInit {

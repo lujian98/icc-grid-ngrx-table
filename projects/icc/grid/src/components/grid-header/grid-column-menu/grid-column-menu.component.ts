@@ -12,7 +12,6 @@ import { IccColumnConfig, IccGridConfig, IccRowGroupField } from '../../../model
   templateUrl: './grid-column-menu.component.html',
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridStateModule, IccMenusComponent],
 })
 export class IccGridColumnMenuComponent {

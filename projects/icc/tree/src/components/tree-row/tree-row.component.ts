@@ -16,7 +16,6 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
   templateUrl: './tree-row.component.html',
   styleUrls: ['./tree-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccTreeNodeComponent,

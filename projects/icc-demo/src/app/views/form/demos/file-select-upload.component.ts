@@ -7,7 +7,6 @@ import { IccFileSelectUploadComponent } from '@icc/ui/file-upload';
   template: `<icc-file-select-upload [fileUploadConfig]="fileUploadConfig"></icc-file-select-upload>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccFileSelectUploadComponent],
 })
 export class AppFileSelectUploadComponent {

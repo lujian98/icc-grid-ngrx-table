@@ -12,7 +12,6 @@ import { IccColumnResizeDirective } from '../../../directives/column-resize.dire
   templateUrl: './grid-group-header.component.html',
   styleUrls: ['./grid-group-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccRowSelectComponent,

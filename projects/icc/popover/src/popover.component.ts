@@ -12,7 +12,6 @@ import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccOverlayModule, IccPopoverDirective, IccPortalComponent],
 })
 export class IccPopoverComponent implements IccRenderableContainer {

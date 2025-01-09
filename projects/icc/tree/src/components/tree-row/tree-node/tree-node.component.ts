@@ -10,7 +10,6 @@ import { IccTreeConfig, IccTreeNode } from '../../../models/tree-grid.model';
   templateUrl: './tree-node.component.html',
   styleUrls: ['./tree-node.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccIconModule],
 })
 export class IccTreeNodeComponent<T> {

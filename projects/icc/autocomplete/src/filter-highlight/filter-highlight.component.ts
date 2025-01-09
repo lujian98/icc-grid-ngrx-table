@@ -5,7 +5,6 @@ import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } 
   selector: 'icc-filter-highlight',
   templateUrl: './filter-highlight.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccFilterHighlightComponent {

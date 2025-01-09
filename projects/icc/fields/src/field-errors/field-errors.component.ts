@@ -11,7 +11,6 @@ import { IccFormFieldError } from './models/field-errors.model';
   templateUrl: './field-errors.component.html',
   styleUrls: ['./field-errors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccIconModule, IccErrorDirective],
 })
 export class IccFieldsErrorsComponent {

@@ -14,7 +14,6 @@ import { IccConfirmationComponent, defaultConfirmationConfig } from '@icc/ui/win
     <div (click)="openWindowOnly($event)">Click to Open Window Only</div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
 })
 export class AppConfirmationComponent {

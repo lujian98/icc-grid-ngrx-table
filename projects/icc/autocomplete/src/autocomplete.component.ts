@@ -26,7 +26,6 @@ import { IccOverlayModule } from '@icc/ui/overlay';
   templateUrl: './autocomplete.component.html',
   exportAs: 'iccAutocomplete',
   styleUrls: ['./autocomplete.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     IccOptionComponent,

@@ -16,7 +16,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from 
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppLineChartDemoComponent implements OnInit {

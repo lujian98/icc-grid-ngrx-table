@@ -12,7 +12,6 @@ import { STATISTICS } from '../../data';
     <icc-d3 [chartConfigs]="chartConfigs2" [data]="data3"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppBarChartDemoComponent implements OnInit {

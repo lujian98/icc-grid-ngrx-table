@@ -13,7 +13,6 @@ import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/g
   templateUrl: './dashboard-demo.component.html',
   styleUrls: ['./dashboard-demo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccDashboardComponent],
 })
 export class AppDashboardDemoComponent {

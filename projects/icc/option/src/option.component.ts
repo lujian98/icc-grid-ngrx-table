@@ -17,7 +17,6 @@ import { Subject, Observable } from 'rxjs';
   templateUrl: './option.component.html',
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
   host: {
     role: 'option',

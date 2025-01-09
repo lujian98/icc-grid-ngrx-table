@@ -10,7 +10,6 @@ import { IccD3ChartConfig, IccD3Options, IccD3Component, defaultD3Config } from 
     <icc-d3 [chartConfigs]="chartConfigs2" [data]="data2"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppGroupedBarChartDemoComponent implements OnInit {

@@ -58,7 +58,6 @@ import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

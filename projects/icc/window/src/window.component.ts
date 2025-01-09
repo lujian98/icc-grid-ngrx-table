@@ -15,7 +15,6 @@ import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/wi
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccIconModule, CdkDrag, IccResizeDirective, IccButtonComponent, IccLayoutHeaderComponent],
 })
 export class IccWindowComponent<T> implements AfterViewInit {

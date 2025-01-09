@@ -18,7 +18,6 @@ import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/u
   templateUrl: './dialog-test.component.html',
   styleUrls: ['./dialog-test.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccLayoutComponent,

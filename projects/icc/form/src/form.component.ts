@@ -15,7 +15,6 @@ import { IccFormConfig } from './models/form.model';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
 })
 export class IccFormComponent {

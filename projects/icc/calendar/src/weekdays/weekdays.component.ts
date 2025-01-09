@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './weekdays.component.html',
   styleUrls: ['./weekdays.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class IccWeekdaysComponent implements OnInit {
   private translateService = inject(TranslateService);

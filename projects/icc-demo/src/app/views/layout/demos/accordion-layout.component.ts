@@ -15,7 +15,6 @@ import {
   templateUrl: './accordion-layout.component.html',
   styleUrls: ['./accordion-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccLayoutComponent,
