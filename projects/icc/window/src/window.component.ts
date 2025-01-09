@@ -2,6 +2,7 @@ import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -19,7 +20,7 @@ import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/wi
 })
 export class IccWindowComponent<T> implements AfterViewInit {
   private dialogRef = inject(IccDialogRef<T>);
-  private document = inject(DOCUMENT);
+  private document = inject(ICC_DOCUMENT);
   private elementRef = inject(ElementRef);
   private _windowConfig: IccWindowConfig = defaultWindowConfig;
   private windowInfo!: IccWindowInfo;
@@ -51,7 +52,14 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setOverlayPane();
     this.setWindow();
+  }
+
+  private setOverlayPane(): void {
+    const overlayPane = this.document.querySelector('.cdk-overlay-pane')! as HTMLElement;
+    overlayPane.style.width = '100%';
+    overlayPane.style.height = '100%';
   }
 
   private setWindow(): void {
