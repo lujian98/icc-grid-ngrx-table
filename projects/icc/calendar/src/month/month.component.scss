@@ -1,16 +1,17 @@
-@import "../styles/calendar-constants";
-@import "../styles/calendar-mixins";
+@use "../styles/calendar-constants" as calendarConstants;
+@use "../styles/calendar-mixins" as calendar;
+@use "sass:list";
 
 .icc-month {
-  @include calendarGrid();
+  @include calendar.calendarGrid();
 
-  @each $first-weekday, $weekdays in $first-weekday-to-weekdays {
+  @each $first-weekday, $weekdays in calendarConstants.$first-weekday-to-weekdays {
     @each $day in $weekdays {
       :host-context(.icc-calendar--first-weekday-#{$first-weekday}) &--first-day-#{$day} {
         time:first-child {
-          margin-left: (index($weekdays, $day) - 1) * $cal-cell-size;
+          margin-left: (list.index($weekdays, $day) - 1) * calendarConstants.$cal-cell-size;
 
-          grid-column: index($weekdays, $day);
+          grid-column: list.index($weekdays, $day);
           @supports (display: grid) {
             margin-left: 0;
           }
@@ -20,7 +21,7 @@
   }
 
   &__day {
-    @include calendarGridCell();
+    @include calendar.calendarGridCell();
     cursor: pointer;
     border-radius: 3px;
 
