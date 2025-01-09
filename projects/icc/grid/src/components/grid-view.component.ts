@@ -42,6 +42,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
+  //private
 
   selections!: any;
   @Input() columns: IccColumnConfig[] = [];
@@ -52,7 +53,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     if (!this.gridData$) {
       this.gridData$ = this.gridFacade.selectGridData(this.gridConfig).pipe(
         map((data) => {
+          console.log(' data=', data);
+          console.log(' gridConfig.viewportReady=', this.gridConfig.viewportReady);
           this.checkViewport(data);
+          // window.dispatchEvent(new Event('resize'));
           return data;
         }),
       );
@@ -91,7 +95,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.sizeChanged$
       .pipe(
         skip(1),
-        debounceTime(250),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
       )
@@ -134,8 +138,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
+    console.log(' set view port 2222 clientHeight=', clientHeight);
     const pageSize =
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
+    console.log(' set view port 2222 pageSize=', pageSize);
+    console.log('000000000 gridConfig.viewportReady=', this.gridConfig.viewportReady);
     this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, loadData);
   }
 

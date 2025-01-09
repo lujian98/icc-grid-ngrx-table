@@ -30,6 +30,9 @@ export const selectGridData = (gridConfig: IccGridConfig) =>
     featureSelector,
     (state: GridState) => {
       const gridId = gridConfig.gridId;
+      if (state[gridId]) {
+        console.log(' data=', state[gridId].data);
+      }
       return state[gridId] ? state[gridId].data : [];
     },
   );
