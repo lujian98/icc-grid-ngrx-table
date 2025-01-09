@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
