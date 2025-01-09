@@ -19,7 +19,7 @@ import { CARSDATA3 } from '../../../data/cars-large';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridCellRendererComponent],
+  imports: [CommonModule],
 })
 export class AppGridCellTextComponent extends IccGridCellRendererComponent<string> {
   get cellValue(): string {

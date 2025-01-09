@@ -36,8 +36,6 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
     IccColumnResizeTriggerDirective,
     IccColumnFilterComponent,
     IccRowSelectComponent,
-    IccPopoverComponent,
-    IccGridColumnMenuComponent,
   ],
   providers: [IccDynamicOverlayService],
 })

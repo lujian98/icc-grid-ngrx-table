@@ -55,7 +55,7 @@ import { IccD3Config } from '../models/d3.model';
   styleUrls: ['./d3-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccPopoverDirective, IccPopoverComponent, IccD3PopoverComponent2, IccD3LegendComponent],
+  imports: [CommonModule, IccD3LegendComponent],
   providers: [IccDrawServie, IccDynamicOverlayService],
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -77,7 +77,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
 
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
-    //console.log(' 777777 view chartConfigs=', val);
     this._chartConfigs = [...val];
   }
   get chartConfigs(): IccD3ChartConfig[] {

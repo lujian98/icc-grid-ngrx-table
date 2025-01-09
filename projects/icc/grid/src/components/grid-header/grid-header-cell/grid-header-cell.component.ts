@@ -5,14 +5,13 @@ import { IccPopoverComponent } from '@icc/ui/popover';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
-import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 @Component({
   selector: 'icc-grid-header-cell',
   templateUrl: './grid-header-cell.component.html',
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
+  imports: [CommonModule, TranslateModule, IccIconModule],
   providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {

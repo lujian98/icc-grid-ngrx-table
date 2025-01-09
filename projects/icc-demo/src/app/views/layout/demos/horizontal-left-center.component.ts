@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-  IccLayoutCenterComponent,
-  IccLayoutHorizontalComponent,
-  IccLayoutLeftComponent,
-  IccLayoutRightComponent,
-} from '@icc/ui/layout';
+import { IccLayoutCenterComponent, IccLayoutHorizontalComponent, IccLayoutLeftComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'app-horizontal-left-center',
@@ -17,12 +12,6 @@ import {
   `,
   styles: [':host { display: flex; width: 100%; flex-direction: column;}'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccLayoutRightComponent,
-    IccLayoutHorizontalComponent,
-    IccLayoutLeftComponent,
-    IccLayoutCenterComponent,
-  ],
+  imports: [CommonModule, IccLayoutHorizontalComponent, IccLayoutLeftComponent, IccLayoutCenterComponent],
 })
 export class AppHorizontalLeftCenterComponent {}

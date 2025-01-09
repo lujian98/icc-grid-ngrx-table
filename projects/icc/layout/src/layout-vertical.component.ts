@@ -43,13 +43,7 @@ export class IccLayoutBottomComponent {}
   templateUrl: './layout-vertical.component.html',
   styleUrls: ['./layout-vertical.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccResizeDirective,
-    IccLayoutTopComponent,
-    IccLayoutMiddleComponent,
-    IccLayoutBottomComponent,
-  ],
+  imports: [CommonModule, IccResizeDirective],
 })
 export class IccLayoutVerticalComponent implements AfterViewInit {
   private elementRef = inject(ElementRef);

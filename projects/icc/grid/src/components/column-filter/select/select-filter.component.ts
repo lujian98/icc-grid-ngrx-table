@@ -8,7 +8,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   templateUrl: './select-filter.component.html',
   styleUrls: ['select-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccSelectFieldComponent, IccFieldFilterComponent],
+  imports: [CommonModule, IccSelectFieldComponent],
 })
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
   fieldConfig!: Partial<IccSelectFieldConfig>;

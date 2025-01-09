@@ -12,18 +12,17 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
+  IccFormFieldControlDirective,
+  IccInputDirective,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccSuffixDirective,
-  IccFormFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
 @Component({
@@ -49,7 +48,6 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     FormsModule,
     TranslateModule,
     IccFormFieldComponent,
-    IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,

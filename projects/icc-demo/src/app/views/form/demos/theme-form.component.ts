@@ -1,50 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccCalendarModule } from '@icc/ui/calendar';
-import { IccFormFieldComponent, IccLabelDirective, IccSuffixDirective } from '@icc/ui/form-field';
-import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
-import {
-  IccNumberFieldComponent,
-  defaultNumberFieldConfig,
-  IccDisplayFieldComponent,
-  IccCheckboxFieldComponent,
-  IccHiddenFieldComponent,
-  IccDateFieldComponent,
-  IccDisplayFieldConfig,
-  defaultDisplayFieldConfig,
-  IccTextFieldComponent,
-  IccSelectFieldComponent,
-  IccTextareaFieldComponent,
-} from '@icc/ui/fields';
-import { State, STATES } from '../../../data/states';
+import { IccFormField } from '@icc/ui/fields';
+import { IccFormComponent } from '@icc/ui/form';
+import { STATES } from '../../../data/states';
 
 @Component({
   selector: 'app-theme-form',
   templateUrl: './theme-form.component.html',
   styleUrls: ['./theme-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccFormComponent,
-    ReactiveFormsModule,
-    IccNumberFieldComponent,
-    IccCheckboxFieldComponent,
-    IccDateFieldComponent,
-    IccDisplayFieldComponent,
-    IccHiddenFieldComponent,
-    IccCheckboxComponent,
-    IccCalendarModule,
-    IccSelectFieldComponent,
-    IccFormFieldComponent,
-    IccLabelDirective,
-    IccSuffixDirective,
-    IccTextFieldComponent,
-    IccTextareaFieldComponent,
-  ],
+  imports: [CommonModule, IccFormComponent, ReactiveFormsModule],
 })
 export class AppThemeFormDemoComponent {
   formConfig = {

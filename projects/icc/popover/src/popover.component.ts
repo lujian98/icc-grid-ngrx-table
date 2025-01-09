@@ -4,7 +4,6 @@ import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { IccDynamicOverlayService } from '@icc/ui/overlay';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccOverlayModule } from '@icc/ui/overlay';
-import { IccPopoverDirective } from './popover.directive';
 import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
 
 @Component({
@@ -12,7 +11,7 @@ import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccOverlayModule, IccPopoverDirective, IccPortalComponent],
+  imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent implements IccRenderableContainer {
   @Input() content: any;

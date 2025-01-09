@@ -1,16 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
-import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
-import { IccButtonComponent } from '@icc/ui/button';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
+import { IccButtonConfg, IccBUTTONS, IccButtonType, uniqueId } from '@icc/ui/core';
+import { IccColumnConfig, IccGridFacade, IccGridStateModule } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
-import { IccTreeViewComponent } from './components/tree-view.component';
-import { IccTreeConfig, defaultTreeConfig, IccTreeNode } from './models/tree-grid.model';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
-import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccTreeViewComponent } from './components/tree-view.component';
+import { defaultTreeConfig, IccTreeConfig, IccTreeNode } from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -24,7 +23,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
     IccTreeStateModule,
     IccGridStateModule,
     IccTreeViewComponent,
-    IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
   ],

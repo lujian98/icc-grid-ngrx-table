@@ -25,7 +25,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent 
     IccGridStateModule,
     IccGridViewComponent,
     IccGridFooterComponent,
-    IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
     IccLayoutFooterComponent,

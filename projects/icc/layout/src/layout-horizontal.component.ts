@@ -43,13 +43,7 @@ export class IccLayoutRightComponent {}
   templateUrl: './layout-horizontal.component.html',
   styleUrls: ['./layout-horizontal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccResizeDirective,
-    IccLayoutLeftComponent,
-    IccLayoutCenterComponent,
-    IccLayoutRightComponent,
-  ],
+  imports: [CommonModule, IccResizeDirective],
 })
 export class IccLayoutHorizontalComponent implements AfterViewInit {
   private elementRef = inject(ElementRef);

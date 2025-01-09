@@ -5,7 +5,6 @@ import {
   IccColumnWidth,
   IccDynamicGridCellComponent,
   IccGridCellComponent,
-  IccRowSelectComponent,
   ROW_SELECTION_CELL_WIDTH,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
@@ -16,13 +15,7 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
   templateUrl: './tree-row.component.html',
   styleUrls: ['./tree-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccTreeNodeComponent,
-    IccGridCellComponent,
-    IccDynamicGridCellComponent,
-    IccRowSelectComponent,
-  ],
+  imports: [CommonModule, IccTreeNodeComponent, IccGridCellComponent, IccDynamicGridCellComponent],
 })
 export class IccTreeRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];

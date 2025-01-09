@@ -12,13 +12,7 @@ import { IccColumnResizeDirective } from '../../../directives/column-resize.dire
   templateUrl: './grid-group-header.component.html',
   styleUrls: ['./grid-group-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccRowSelectComponent,
-    IccGridHeaderItemComponent,
-    IccColumnResizeTriggerDirective,
-    IccColumnResizeDirective,
-  ],
+  imports: [CommonModule, IccGridHeaderItemComponent, IccColumnResizeTriggerDirective, IccColumnResizeDirective],
 })
 export class IccGridGroupHeaderComponent {
   private _columns: IccColumnConfig[] = [];

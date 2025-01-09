@@ -11,7 +11,6 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -31,7 +30,6 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
     IccPortalComponent,
     TranslateModule,
     IccIconModule,
-    IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
     IccResizeDirective,

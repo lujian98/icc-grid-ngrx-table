@@ -19,7 +19,7 @@ export class IccLayoutHeaderEndComponent {}
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule, IccLayoutHeaderEndComponent],
+  imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule],
 })
 export class IccLayoutHeaderComponent {
   private router = inject(Router);

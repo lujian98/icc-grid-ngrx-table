@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-  IccLayoutTopComponent,
-  IccLayoutVerticalComponent,
-  IccLayoutMiddleComponent,
-  IccLayoutBottomComponent,
-} from '@icc/ui/layout';
+import { IccLayoutVerticalComponent, IccLayoutMiddleComponent, IccLayoutBottomComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'app-vertical-middle-bottom',
@@ -17,12 +12,6 @@ import {
   `,
   styles: [':host { display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccLayoutTopComponent,
-    IccLayoutVerticalComponent,
-    IccLayoutMiddleComponent,
-    IccLayoutBottomComponent,
-  ],
+  imports: [CommonModule, IccLayoutVerticalComponent, IccLayoutMiddleComponent, IccLayoutBottomComponent],
 })
 export class AppVerticalMiddleBottomComponent {}

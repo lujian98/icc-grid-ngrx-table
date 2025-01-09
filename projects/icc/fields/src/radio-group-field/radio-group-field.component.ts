@@ -28,7 +28,6 @@ import {
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccSuffixDirective,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
@@ -64,7 +63,6 @@ import {
     FormsModule,
     TranslateModule,
     IccFormFieldComponent,
-    IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,
