@@ -18,7 +18,7 @@
   $new: (
     $name: $theme,
   );
-  $icc-themes: map-merge($icc-themes, $new) !global;
+  $icc-themes: map.merge($icc-themes, $new) !global;
 
   @return $icc-themes;
 }
@@ -39,7 +39,7 @@
     $new: (
       $key: icc-deep-find-value($theme, $key, $value),
     );
-    $processed-theme: map-merge($processed-theme, $new);
+    $processed-theme: map.merge($processed-theme, $new);
   }
   @return $processed-theme;
 }

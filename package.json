@@ -52,6 +52,7 @@
     "lint-staged": "^15.2.10",
     "ng-packagr": "^19.0.1",
     "prettier": "^3.3.3",
+    "sass": "^1.83.1",
     "scss-bundle": "^3.1.2",
     "typescript": "~5.5.2"
   },
