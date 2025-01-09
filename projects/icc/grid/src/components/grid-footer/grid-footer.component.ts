@@ -13,7 +13,6 @@ import { IccButtonComponent } from '@icc/ui/button';
   templateUrl: './grid-footer.component.html',
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccInputDirective, IccButtonComponent],
 })
 export class IccGridFooterComponent implements OnDestroy {

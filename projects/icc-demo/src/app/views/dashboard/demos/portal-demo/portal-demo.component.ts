@@ -5,15 +5,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './portal-demo.component.html',
   styleUrls: ['./portal-demo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class PortalDemoComponent implements OnInit {
   skills = [];
   values!: string;
 
-  constructor() // private popoverRef: IccOverlayComponentRef<any>
-  {}
+  constructor() {} // private popoverRef: IccOverlayComponentRef<any>
 
   ngOnInit() {
     this.values = this.skills.toString().replace(/[',"]+/g, ', ');

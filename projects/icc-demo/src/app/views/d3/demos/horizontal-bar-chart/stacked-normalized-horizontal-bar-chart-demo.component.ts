@@ -9,7 +9,6 @@ import { POPULATION } from '../../data/population2';
   styles: [':host {width: 100%; height: 100%; display: flex;}'],
   template: ` <icc-d3 [chartConfigs]="chartConfigs" [data]="data"></icc-d3> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppStackedNormalizedHorizontalBarDemoComponent implements OnInit {

@@ -13,7 +13,6 @@ import * as d3TimeFormat from 'd3-time-format';
     <icc-d3 [d3Config]="d3Config3" [chartConfigs]="chartConfigs3" [data]="data3" style="height: 200px"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppBulletChartDemoComponent implements OnInit {

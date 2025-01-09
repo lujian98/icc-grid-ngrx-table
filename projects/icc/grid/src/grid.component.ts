@@ -18,7 +18,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent 
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     TranslateModule,

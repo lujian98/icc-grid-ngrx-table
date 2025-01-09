@@ -39,7 +39,6 @@ const NESTED_DATA: NestedFoodNode[] = [
   template: `<icc-tree [treeConfig]="treeConfig" [treeData]="treeData"></icc-tree>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccTreeComponent],
 })
 export class AppTreeRemoteConfigColumnComponent {

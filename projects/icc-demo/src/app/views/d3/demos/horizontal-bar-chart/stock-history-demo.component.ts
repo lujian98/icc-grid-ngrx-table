@@ -9,7 +9,6 @@ import { STOCK_PRICE } from '../../data/stock_price';
   styles: [':host {width: 100%; height: 100%; display: flex;}'],
   template: ` <icc-d3 [d3Config]="d3Config" [chartConfigs]="chartConfigs" [data]="data"></icc-d3> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
   providers: [
     {

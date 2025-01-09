@@ -19,7 +19,6 @@ export class IccLayoutHeaderEndComponent {}
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule, IccLayoutHeaderEndComponent],
 })
 export class IccLayoutHeaderComponent {

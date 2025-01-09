@@ -7,7 +7,6 @@ import { IccD3Popover } from '../../models';
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccD3PopoverComponent2 implements OnInit {

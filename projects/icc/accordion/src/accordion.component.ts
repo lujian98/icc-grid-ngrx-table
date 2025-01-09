@@ -25,7 +25,6 @@ import { IccAccordion } from './models/accordion.model';
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccIconModule,

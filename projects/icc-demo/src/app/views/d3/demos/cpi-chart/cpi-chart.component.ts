@@ -11,7 +11,6 @@ import * as d3TimeFormat from 'd3-time-format';
     <icc-d3 [chartConfigs]="chartConfigs2" [data]="cpiMonthToMonthData"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppCPIChartComponent implements OnInit {

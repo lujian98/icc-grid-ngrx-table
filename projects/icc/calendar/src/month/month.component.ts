@@ -17,6 +17,7 @@ import { getDaysOfMonth, isDateAfter, isSameDate, isValidDate, startOfDay } from
   templateUrl: './month.component.html',
   styleUrls: ['./month.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class IccMonthComponent implements AfterViewInit, OnChanges {
   daysOfMonth!: readonly Date[];

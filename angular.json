@@ -51,11 +51,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/icc-demo",
+            "outputPath": {
+              "base": "dist/icc-demo"
+            },
             "index": "projects/icc-demo/src/index.html",
-            "main": "projects/icc-demo/src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "projects/icc-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -67,7 +68,10 @@
               "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "projects/icc-demo/src/styles.scss"
             ],
-            "scripts": ["./node_modules/d3/dist/d3.js"]
+            "scripts": [
+              "./node_modules/d3/dist/d3.js"
+            ],
+            "browser": "projects/icc-demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -86,9 +90,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

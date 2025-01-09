@@ -39,6 +39,7 @@ import { Subscription } from 'rxjs';
       useExisting: IccCalendarComponent,
     },
   ],
+  standalone: false,
 })
 export class IccCalendarComponent
   extends CustomControl<Date>

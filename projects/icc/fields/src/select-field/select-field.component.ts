@@ -69,7 +69,6 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

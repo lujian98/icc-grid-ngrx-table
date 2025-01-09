@@ -7,7 +7,6 @@ import { IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid
   template: `<icc-grid [gridConfig]="gridConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridOverallComponent {

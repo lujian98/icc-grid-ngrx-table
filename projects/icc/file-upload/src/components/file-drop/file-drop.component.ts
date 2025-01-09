@@ -24,7 +24,6 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   templateUrl: './file-drop.component.html',
   styleUrls: ['./file-drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccFileDropContentTemplateDirective],
 })
 export class IccFileDropComponent implements OnDestroy {

@@ -8,7 +8,6 @@ import { CARSDATA3 } from '../../../data/cars-large';
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridRowGroupComponent {

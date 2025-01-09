@@ -20,7 +20,6 @@ import { IccPortalContent } from './portal.model';
   templateUrl: './portal.component.html',
   styleUrls: ['./portal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, PortalModule],
 })
 export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {

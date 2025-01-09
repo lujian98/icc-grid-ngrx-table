@@ -56,7 +56,6 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

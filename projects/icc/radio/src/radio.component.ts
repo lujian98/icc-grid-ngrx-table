@@ -6,7 +6,6 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModu
   selector: 'icc-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   providers: [
     {

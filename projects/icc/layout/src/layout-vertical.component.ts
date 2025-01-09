@@ -43,7 +43,6 @@ export class IccLayoutBottomComponent {}
   templateUrl: './layout-vertical.component.html',
   styleUrls: ['./layout-vertical.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccResizeDirective,

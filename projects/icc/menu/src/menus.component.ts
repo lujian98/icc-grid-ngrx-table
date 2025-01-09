@@ -16,7 +16,6 @@ import { IccMenuItem } from './models/menu-item.model';
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

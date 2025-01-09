@@ -12,7 +12,6 @@ export type IccButtonStatus = 'default' | 'primary' | 'danger';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class IccButtonComponent {

@@ -7,7 +7,6 @@ import { IccTreeComponent, defaultTreeConfig, IccTreeConfig } from '@icc/ui/tree
   template: `<icc-tree [treeConfig]="treeConfig"></icc-tree>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccTreeComponent],
 })
 export class AppTreeRemoteColumnDataComponent {

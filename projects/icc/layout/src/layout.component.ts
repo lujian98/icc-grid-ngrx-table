@@ -17,7 +17,6 @@ export class IccLayoutFooterComponent {}
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccLayoutHeaderComponent, IccLayoutFooterComponent, IccResizeDirective],
 })
 export class IccLayoutComponent {

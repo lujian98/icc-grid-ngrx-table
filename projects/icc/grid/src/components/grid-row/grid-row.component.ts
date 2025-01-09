@@ -11,7 +11,6 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
   templateUrl: './grid-row.component.html',
   styleUrls: ['./grid-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {

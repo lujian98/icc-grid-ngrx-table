@@ -14,7 +14,6 @@ import { IccMenuItem } from '@icc/ui/menu';
   selector: 'app-d3',
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,

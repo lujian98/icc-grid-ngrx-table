@@ -4,6 +4,7 @@ import { IccCalendarComponent } from '../calendar.component';
 
 @Directive({
   selector: '[iccCalendarToggle]',
+  standalone: false,
 })
 export class IccCalendarToggleDirective extends CdkOverlayOrigin implements AfterViewInit {
   @Input() calendarModal!: IccCalendarComponent;

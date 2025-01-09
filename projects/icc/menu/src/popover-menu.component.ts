@@ -11,7 +11,6 @@ import { IccIconModule } from '@icc/ui/icon';
   templateUrl: 'popover-menu.component.html',
   styleUrls: ['./popover-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccIconModule, IccMenusComponent, IccPopoverComponent, IccPopoverDirective],
 })
 export class IccPopoverMenuComponent {

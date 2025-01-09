@@ -15,7 +15,6 @@ import { IccGridGroupHeaderComponent } from '../grid-header/grid-group-header/gr
   templateUrl: './grid-header-view.component.html',
   styleUrls: ['./grid-header-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     DragDropModule,

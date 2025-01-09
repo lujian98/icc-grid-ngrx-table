@@ -9,6 +9,7 @@ import {
 
 @Pipe({
   name: 'monthAndYear',
+  standalone: false,
 })
 export class IccMonthYearPipe implements PipeTransform {
   private readonly toLocaleStringSupportsLocales: boolean;

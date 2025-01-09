@@ -12,7 +12,6 @@ import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.mode
   templateUrl: './fieldset.component.html',
   styleUrls: ['./fieldset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

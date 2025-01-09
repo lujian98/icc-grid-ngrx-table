@@ -12,7 +12,6 @@ import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu
   templateUrl: './grid-header-cell.component.html',
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, TranslateModule, IccPopoverComponent, IccIconModule, IccGridColumnMenuComponent],
   providers: [IccGridFacade],
 })

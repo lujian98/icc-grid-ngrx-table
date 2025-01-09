@@ -27,7 +27,6 @@ import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {

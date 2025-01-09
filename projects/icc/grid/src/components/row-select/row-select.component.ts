@@ -7,7 +7,6 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   templateUrl: 'row-select.component.html',
   styleUrls: ['./row-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccCheckboxComponent],
 })
 export class IccRowSelectComponent {

@@ -33,7 +33,6 @@ import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFormFieldComponent, IccInputDirective],
 })
 export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor, Validator {

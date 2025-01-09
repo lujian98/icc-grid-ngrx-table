@@ -27,7 +27,6 @@ import { State, STATES } from '../../../data/states';
   templateUrl: './theme-form.component.html',
   styleUrls: ['./theme-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccFormComponent,

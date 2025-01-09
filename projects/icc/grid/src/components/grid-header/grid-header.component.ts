@@ -27,7 +27,6 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   templateUrl: './grid-header.component.html',
   styleUrls: ['./grid-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     DragDropModule,

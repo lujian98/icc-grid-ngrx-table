@@ -8,7 +8,6 @@ import { IccFileUploadFacade } from '../../+state/file-upload.facade';
   templateUrl: './file-upload-grid.component.html',
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class IccFileUploadGridComponent {

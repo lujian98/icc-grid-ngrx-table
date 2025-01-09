@@ -6,6 +6,7 @@ import { addMonths, startofMonth } from '../date-utils/date.utils';
   templateUrl: './month-header.component.html',
   styleUrls: ['./month-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class IccMonthHeaderComponent {
   @Input() month = startofMonth(new Date());

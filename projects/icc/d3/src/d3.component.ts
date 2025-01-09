@@ -24,7 +24,6 @@ import { IccD3Config, defaultD3Config } from './models/d3.model';
   templateUrl: './d3.component.html',
   styleUrls: ['./d3.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3StateModule, IccD3ViewComponent],
 })
 export class IccD3Component<T> implements OnDestroy {

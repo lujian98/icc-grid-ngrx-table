@@ -11,7 +11,6 @@ import { State, STATES } from '../../../data/states';
   templateUrl: './password-page.component.html',
   styleUrls: ['./password-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccFormComponent],
 })
 export class AppPasswordPageDemoComponent {

@@ -22,7 +22,6 @@ import { IccMenuItem } from '../../models/menu-item.model';
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     RouterModule,

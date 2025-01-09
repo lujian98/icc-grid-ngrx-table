@@ -18,7 +18,6 @@ import { IccWindowComponent } from '../../window.component';
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     TranslateModule,

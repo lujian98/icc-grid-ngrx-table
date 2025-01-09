@@ -7,7 +7,6 @@ import { IccFileDropEntry, IccFileDropComponent } from '@icc/ui/file-upload';
   templateUrl: './file-drop.component.html',
   styleUrls: ['./file-drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccFileDropComponent],
 })
 export class AppFileDropDemoComponent {

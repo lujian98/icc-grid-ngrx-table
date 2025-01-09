@@ -55,7 +55,6 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -17,7 +17,6 @@ import {
   `,
   styles: [':host { display: flex; width: 100%; flex-direction: column;}'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     IccLayoutRightComponent,

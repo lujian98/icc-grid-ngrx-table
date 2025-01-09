@@ -8,7 +8,6 @@ import { IccGridConfig, IccColumnConfig } from '../../models/grid-column.model';
   selector: 'icc-column-filter',
   templateUrl: 'column-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccTextFilterComponent, IccSelectFilterComponent],
 })
 export class IccColumnFilterComponent implements OnInit {

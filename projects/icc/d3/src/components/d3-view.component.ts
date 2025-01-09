@@ -55,7 +55,6 @@ import { IccD3Config } from '../models/d3.model';
   styleUrls: ['./d3-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccPopoverDirective, IccPopoverComponent, IccD3PopoverComponent2, IccD3LegendComponent],
   providers: [IccDrawServie, IccDynamicOverlayService],
 })

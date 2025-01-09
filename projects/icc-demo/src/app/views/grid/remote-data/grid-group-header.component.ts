@@ -7,7 +7,6 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig, Ic
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridGroupHeaderComponent {

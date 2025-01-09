@@ -8,7 +8,6 @@ import { State, STATES } from '../../../../data/states';
   templateUrl: './simple-select.component.html',
   styleUrls: ['./simple-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccSelectFieldComponent],
 })
 export class AppSimpleSelectComponent {

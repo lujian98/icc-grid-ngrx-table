@@ -56,7 +56,6 @@ import { defaultTextareaFieldConfig, IccTextareaFieldConfig } from './models/tex
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

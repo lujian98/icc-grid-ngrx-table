@@ -19,7 +19,6 @@ import { CARSDATA3 } from '../../../data/cars-large';
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridCellRendererComponent],
 })
 export class AppGridCellTextComponent extends IccGridCellRendererComponent<string> {
@@ -35,7 +34,6 @@ export class AppGridCellTextComponent extends IccGridCellRendererComponent<strin
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridRendererComponent {

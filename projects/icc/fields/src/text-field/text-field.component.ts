@@ -56,7 +56,6 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

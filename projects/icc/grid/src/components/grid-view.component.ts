@@ -28,7 +28,6 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {

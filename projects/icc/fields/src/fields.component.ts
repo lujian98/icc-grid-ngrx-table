@@ -19,7 +19,6 @@ import { IccFormField } from './models/fields.model';
   templateUrl: './fields.component.html',
   styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

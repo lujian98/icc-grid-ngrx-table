@@ -43,7 +43,6 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

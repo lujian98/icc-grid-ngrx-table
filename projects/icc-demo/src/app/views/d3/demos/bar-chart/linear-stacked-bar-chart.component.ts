@@ -11,7 +11,6 @@ import * as d3Array from 'd3-array';
     <icc-d3 [chartConfigs]="chartConfigs2" [data]="data"></icc-d3>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppLinearStackedBarChartComponent implements OnInit {

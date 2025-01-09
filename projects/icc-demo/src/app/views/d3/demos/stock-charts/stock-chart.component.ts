@@ -8,7 +8,6 @@ import * as d3TimeFormat from 'd3-time-format';
   styles: [':host { width: 100%; height: 100%; display: flex; flex-direction: column;}'],
   template: ` <icc-d3 [chartConfigs]="chartConfigs" [data]="stockData"></icc-d3> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IccD3Component],
 })
 export class AppStockChartComponent implements OnInit {
