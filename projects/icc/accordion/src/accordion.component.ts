@@ -90,7 +90,7 @@ export class IccAccordionComponent {
     const expanded = children.find((el) => el.children.length === 2);
     if (expanded) {
       const expandedChild = expanded?.children[1] as HTMLDivElement;
-      const availaleH = clientHeight - children.length * ICC_LAYOUT_HEADER_HEIGHT - 10;
+      const availaleH = clientHeight - children.length * ICC_LAYOUT_HEADER_HEIGHT - 0;
       if (availaleH < expandedChild.scrollHeight) {
         expandedChild!.style.setProperty('flex', `0 0 ${availaleH}px`);
       } else {
