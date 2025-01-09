@@ -1,15 +1,15 @@
-@import "calendar-constants";
+@use "calendar-constants" as calendarConstants;
 
 @mixin calendarGrid() {
   flex-wrap: wrap;
-  width: $num-weekdays * $cal-cell-size;
+  width: calendarConstants.$num-weekdays * calendarConstants.$cal-cell-size;
   margin: 0 auto;
-  line-height: $cal-cell-size;
+  line-height: calendarConstants.$cal-cell-size;
 
   // grid
   display: grid;
-  grid-template-columns: repeat($num-weekdays, $cal-cell-size);
-  grid-auto-rows: $cal-cell-size;
+  grid-template-columns: repeat(calendarConstants.$num-weekdays, calendarConstants.$cal-cell-size);
+  grid-auto-rows: calendarConstants.$cal-cell-size;
 
   // IE does not support the @supports query
   @supports (display: grid) {
@@ -23,7 +23,7 @@
 
 @mixin calendarGridCell() {
   // flex item fallback
-  flex-basis: $cal-cell-size;
+  flex-basis: calendarConstants.$cal-cell-size;
 
   // grid
   display: flex;

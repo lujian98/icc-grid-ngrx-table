@@ -1,7 +1,7 @@
-@import "utils";
+@use "utils.scss" as utils;
 
 $num-weekdays: 7;
-$cal-cell-size: pxToRem(42);
+$cal-cell-size: utils.pxToRem(42);
 
 $first-weekday-to-weekdays: (
   sunday: (
