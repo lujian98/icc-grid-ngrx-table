@@ -13,7 +13,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IccInputDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 
 @Directive({
@@ -29,7 +28,7 @@ export class GhostCheckboxDirective {
   selector: 'icc-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
-  imports: [CommonModule, IccIconModule, IccInputDirective],
+  imports: [CommonModule, IccIconModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

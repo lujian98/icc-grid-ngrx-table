@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccDialogService } from '@icc/ui/overlay';
-import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
 import { AppDialogTestDemoComponent } from './dialog-test.component';
 
 @Component({
@@ -9,7 +8,7 @@ import { AppDialogTestDemoComponent } from './dialog-test.component';
   templateUrl: './simple-window.component.html',
   styleUrls: ['./simple-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
+  imports: [CommonModule],
 })
 export class AppSimpleWindowComponent {
   private dialogService = inject(IccDialogService);

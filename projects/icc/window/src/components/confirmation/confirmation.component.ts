@@ -1,13 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import {
-  IccLayoutCenterComponent,
-  IccLayoutComponent,
-  IccLayoutFooterComponent,
-  IccLayoutHeaderComponent,
-  IccLayoutHorizontalComponent,
-} from '@icc/ui/layout';
+import { IccLayoutComponent, IccLayoutFooterComponent, IccLayoutHorizontalComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { TranslateModule } from '@ngx-translate/core';
 import { defaultConfirmationConfig, IccConfirmationConfig } from '../../models/confirmation.model';
@@ -22,9 +16,7 @@ import { IccWindowComponent } from '../../window.component';
     CommonModule,
     TranslateModule,
     IccLayoutComponent,
-    IccLayoutHeaderComponent,
     IccLayoutFooterComponent,
-    IccLayoutCenterComponent,
     IccLayoutHorizontalComponent,
     IccButtonComponent,
     IccWindowComponent,

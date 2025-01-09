@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { map } from 'rxjs';
@@ -26,7 +25,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
     IccIconModule,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
-    IccButtonComponent,
     IccFileDropComponent,
     IccFileUploadGridComponent,
     IccCheckboxComponent,

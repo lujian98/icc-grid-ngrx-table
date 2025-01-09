@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../../models/constants';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGroupHeader } from '../../../models/grid-column.model';
-import { IccRowSelectComponent } from '../../row-select/row-select.component';
 import { IccGridHeaderItemComponent } from '../grid-header-item/grid-header-item.component';
 import { IccColumnResizeTriggerDirective } from '../../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../../directives/column-resize.directive';
@@ -12,13 +11,7 @@ import { IccColumnResizeDirective } from '../../../directives/column-resize.dire
   templateUrl: './grid-group-header.component.html',
   styleUrls: ['./grid-group-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccRowSelectComponent,
-    IccGridHeaderItemComponent,
-    IccColumnResizeTriggerDirective,
-    IccColumnResizeDirective,
-  ],
+  imports: [CommonModule, IccGridHeaderItemComponent, IccColumnResizeTriggerDirective, IccColumnResizeDirective],
 })
 export class IccGridGroupHeaderComponent {
   private _columns: IccColumnConfig[] = [];

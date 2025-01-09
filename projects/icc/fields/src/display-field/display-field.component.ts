@@ -18,11 +18,10 @@ import {
   IccFormFieldComponent,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccSuffixDirective,
   IccFormFieldControlDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
+import { timer, take } from 'rxjs';
 import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
@@ -49,7 +48,6 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     FormsModule,
     TranslateModule,
     IccFormFieldComponent,
-    IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,

@@ -37,7 +37,6 @@ import {
 import { IccIconModule } from '@icc/ui/icon';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from './models/checkbox-field.model';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 
@@ -68,7 +67,6 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,
-    IccInputDirective,
     IccIconModule,
     IccCheckboxComponent,
     IccFormFieldErrorsDirective,

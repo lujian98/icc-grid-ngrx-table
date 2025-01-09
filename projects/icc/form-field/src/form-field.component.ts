@@ -14,16 +14,12 @@ import {
 } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { take, timer } from 'rxjs';
-import { IccErrorDirective } from './directive/error.directive';
 import { IccFormFieldControlDirective } from './directive/form-field-control.directive';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
-import { IccFormFieldErrorsDirective } from './directive/form-field-errors.directive';
 import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
-import { IccHintDirective } from './directive/hint.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
 import { IccLabelDirective } from './directive/label.directive';
-import { IccSuffixDirective } from './directive/suffix.directive';
 import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
 import { IccInputDirective } from './directive/input.directive';
 
@@ -32,19 +28,7 @@ import { IccInputDirective } from './directive/input.directive';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccErrorDirective,
-    IccHintDirective,
-    IccLabelDirective,
-    IccLabelWidthDirective,
-    IccSuffixDirective,
-    IccFormLabelWidthDirective,
-    IccFieldsetLabelWidthDirective,
-    IccFormFieldErrorsDirective,
-    IccFormFieldControlDirective,
-    IccInputDirective,
-  ],
+  imports: [CommonModule],
 })
 export class IccFormFieldComponent implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);

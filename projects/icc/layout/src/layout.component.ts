@@ -17,7 +17,7 @@ export class IccLayoutFooterComponent {}
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccLayoutHeaderComponent, IccLayoutFooterComponent, IccResizeDirective],
+  imports: [CommonModule, IccResizeDirective],
 })
 export class IccLayoutComponent {
   private elementRef = inject(ElementRef);

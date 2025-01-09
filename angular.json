@@ -60,6 +60,11 @@
             "polyfills": ["zone.js"],
             "tsConfig": "projects/icc-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": ["color-functions", "global-builtin", "import", "mixed-decls"]
+              }
+            },
             "assets": ["projects/icc-demo/src/favicon.ico", "projects/icc-demo/src/assets"],
             "styles": [
               "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",

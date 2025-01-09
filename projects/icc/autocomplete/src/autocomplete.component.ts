@@ -26,13 +26,7 @@ import { IccOverlayModule } from '@icc/ui/overlay';
   templateUrl: './autocomplete.component.html',
   exportAs: 'iccAutocomplete',
   styleUrls: ['./autocomplete.component.scss'],
-  imports: [
-    CommonModule,
-    IccOptionComponent,
-    IccOverlayModule,
-    IccAutocompleteDirective,
-    IccAutocompleteContentDirective,
-  ],
+  imports: [CommonModule, IccOverlayModule],
 })
 export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy {
   @Input() displayWith!: (value: T) => string;

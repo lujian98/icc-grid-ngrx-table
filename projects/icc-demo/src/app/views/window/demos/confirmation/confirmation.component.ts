@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccDialogService } from '@icc/ui/overlay';
-import { IccPopoverComponent, IccPopoverDirective } from '@icc/ui/popover';
 import { IccConfirmationComponent, defaultConfirmationConfig } from '@icc/ui/window';
 
 @Component({
@@ -14,7 +13,7 @@ import { IccConfirmationComponent, defaultConfirmationConfig } from '@icc/ui/win
     <div (click)="openWindowOnly($event)">Click to Open Window Only</div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccPopoverComponent, IccPopoverDirective],
+  imports: [CommonModule],
 })
 export class AppConfirmationComponent {
   private dialogService = inject(IccDialogService);

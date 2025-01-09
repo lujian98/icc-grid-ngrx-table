@@ -10,9 +10,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
-import { IccSuffixDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { IccMenuItem } from '../../models/menu-item.model';
@@ -28,10 +26,8 @@ import { IccMenuItem } from '../../models/menu-item.model';
     FormsModule,
     ReactiveFormsModule,
     IccCheckboxFieldComponent,
-    IccSuffixDirective,
     TranslateModule,
     IccIconModule,
-    IccCheckboxComponent,
   ],
 })
 export class IccMenuItemComponent {

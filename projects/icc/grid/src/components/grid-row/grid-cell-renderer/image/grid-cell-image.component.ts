@@ -7,7 +7,7 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-image.component.html',
   styleUrls: ['./grid-cell-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridCellRendererComponent],
+  imports: [CommonModule],
 })
 export class IccGridCellImageComponent<T> extends IccGridCellRendererComponent<T> {
   get rowHeight(): number {

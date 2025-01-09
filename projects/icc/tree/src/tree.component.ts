@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridStateModule, IccGridFacade } from '@icc/ui/grid';
 import { IccTreeViewComponent } from './components/tree-view.component';
@@ -24,7 +23,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
     IccTreeStateModule,
     IccGridStateModule,
     IccTreeViewComponent,
-    IccButtonComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
   ],

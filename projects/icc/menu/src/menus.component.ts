@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
@@ -16,15 +15,7 @@ import { IccMenuItem } from './models/menu-item.model';
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    IccIconModule,
-    IccMenuItemComponent,
-    IccPopoverDirective,
-    IccButtonComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
 export class IccMenusComponent implements OnDestroy {
   private _items: IccMenuItem[] = [];
