@@ -7,17 +7,17 @@ icc-layout,
   font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.75rem;
   line-height: 1.25rem;
-}
 
-.cdk-global-overlay-wrapper {
-  display: block;
-  height: unset;
-  width: unset;
-}
+  .cdk-global-overlay-wrapper {
+    display: block;
+    height: unset;
+    width: unset;
 
-.cdk-overlay-pane {
-  display: block;
-  //height: auto !important;
+    .cdk-overlay-pane {
+      display: block;
+      height: auto;
+    }
+  }
 }
 
 .cdk-visually-hidden {
