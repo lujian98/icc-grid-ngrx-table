@@ -1,5 +1,5 @@
-@import "../../icc/theme/src/theming";
+@use "../../icc/theme/src/theming" as iccTheme;
 
-@include icc-install() {
-  @include icc-theme-components();
+@include iccTheme.icc-install() {
+  @include iccTheme.icc-theme-components();
 }
