@@ -57,6 +57,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   private setOverlayPane(): void {
+    //TODO this possible due to the @angular/cdk/overlay-prebuilt.css is not load due the scss Sass @import rules are deprecated
     const overlayPane = this.document.querySelector('.cdk-overlay-pane')! as HTMLElement;
     overlayPane.style.width = '100%';
     overlayPane.style.height = '100%';
