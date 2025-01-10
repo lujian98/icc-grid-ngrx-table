@@ -28,6 +28,8 @@ import { AppGridRowGroupComponent } from './in-memory-data/grid-row-group.compon
 import { AppGridGroupHeaderComponent } from './remote-data/grid-group-header.component';
 import { AppGridMultiRowSelectionComponent } from './remote-data/grid-multi-row-selection.component';
 
+import { AppTestVirtualScrollComponent } from './in-memory-data/test-virtual-scroll.component';
+
 import { AppGridComponent } from './grid.component';
 
 export const AppGridRoutes: Routes = [
@@ -89,6 +91,9 @@ export const AppGridRoutes: Routes = [
       { path: 'grid-in-memory-row-group', component: AppGridRowGroupComponent },
       { path: 'grid-group-header', component: AppGridGroupHeaderComponent },
       { path: 'grid-multi-row-selection', component: AppGridMultiRowSelectionComponent },
+
+      { path: 'test-virtual-scroll', component: AppTestVirtualScrollComponent },
+
       {
         path: '**',
         redirectTo: 'app-default-grid',
