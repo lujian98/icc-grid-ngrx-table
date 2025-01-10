@@ -84,5 +84,9 @@ export class AppGridComponent {
         },
       ],
     },
+    {
+      name: 'Test',
+      items: [{ name: 'Test Virtual Scroll', link: 'test-virtual-scroll' }],
+    },
   ];
 }
