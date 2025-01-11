@@ -18,9 +18,7 @@ export class IccFieldsErrorsComponent {
 
   @Input()
   set errors(errors: ValidationErrors) {
-    //console.log(' errors=', errors);
     this._errors = Object.keys(errors).map((key) => ({ type: key, ...errors[key] }));
-    //console.log(' mmm=', this._errors);
   }
   get errors(): IccFormFieldError[] {
     return this._errors;
