@@ -1,15 +1,17 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-button-theme() {
   [icc-button] {
     font-size: 0.6875rem;
     font-weight: 500;
     line-height: 28px;
     padding-block: 0px;
-    color: icc-theme(app-text-basic-color);
+    color: icc.icc-theme(app-text-basic-color);
 
     &.status-default {
-      background-color: icc-theme(icc-button-default-color);
+      background-color: icc.icc-theme(icc-button-default-color);
       &[disabled]:hover {
-        background-color: icc-theme(icc-button-default-color);
+        background-color: icc.icc-theme(icc-button-default-color);
         border-color: transparent;
       }
     }

@@ -1,10 +1,12 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-accordion-theme() {
   icc-accordion {
     icc-layout-header {
-      border-bottom: 1px solid icc-theme(app-border-basic-color);
+      border-bottom: 1px solid icc.icc-theme(app-border-basic-color);
       &:focus,
       &:hover {
-        background-color: icc-theme(icc-accordion-item-hover-background-color);
+        background-color: icc.icc-theme(icc-accordion-item-hover-background-color);
       }
     }
 

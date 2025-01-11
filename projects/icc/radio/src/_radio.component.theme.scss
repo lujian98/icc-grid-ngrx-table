@@ -1,3 +1,5 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-radio-theme() {
   icc-radio {
     .icc-radio-outer-circle,
@@ -7,18 +9,18 @@
     }
 
     .icc-radio-outer-circle {
-      border: 1px solid icc-theme(radio-border-color);
-      background-color: icc-theme(radio-background-color);
+      border: 1px solid icc.icc-theme(radio-border-color);
+      background-color: icc.icc-theme(radio-background-color);
     }
 
     input:checked {
       & + .icc-radio-outer-circle {
-        border-color: icc-theme(radio-checked-border-color);
-        background-color: icc-theme(radio-checked-background-color);
+        border-color: icc.icc-theme(radio-checked-border-color);
+        background-color: icc.icc-theme(radio-checked-background-color);
       }
 
       & ~ .icc-radio-inner-circle {
-        background: icc-theme(radio-inner-circle-color);
+        background: icc.icc-theme(radio-inner-circle-color);
       }
 
       & ~ .icc-radio-label-content {
@@ -46,7 +48,7 @@
       font-weight: 300;
       line-height: 1rem;
 
-      color: icc-theme(radio-text-color);
+      color: icc.icc-theme(radio-text-color);
     }
   }
 }

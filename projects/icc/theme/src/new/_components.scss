@@ -1,0 +1,27 @@
+@use "../../../layout/src/layout.component.theme" as layout;
+@use "../../../grid/src/grid.component.theme" as grid;
+@use "../../../menu/src/menu.component.theme" as menu;
+@use "../../../accordion/src/accordion.component.theme" as accordion;
+@use "../../../option//src/option.component.theme" as option;
+@use "../../../form-field/src/form-field.component.theme" as formfield;
+@use "../../../checkbox/src/checkbox.component.theme" as checkbox;
+@use "../../../radio/src/radio.component.theme" as radio;
+@use "../../../button/src/button.component.theme" as button;
+@use "../../../resize/src/resize.directive.theme" as resize;
+@use "../../../dashboard/src/dashboard.component.theme" as dashboard;
+@use "../../../calendar/src/calendar.component.theme" as calendar;
+
+@mixin icc-theme-components() {
+  @include layout.icc-layout-theme();
+  @include grid.icc-grid-theme();
+  @include menu.icc-menu-theme();
+  @include accordion.icc-accordion-theme();
+  @include option.icc-option-theme();
+  @include formfield.icc-form-field-theme();
+  @include checkbox.icc-checkbox-theme();
+  @include radio.icc-radio-theme();
+  @include button.icc-button-theme();
+  @include resize.icc-resize-directive-theme();
+  @include dashboard.icc-dashboard-theme();
+  @include calendar.icc-calendar-theme();
+}

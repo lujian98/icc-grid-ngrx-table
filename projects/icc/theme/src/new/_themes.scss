@@ -1,0 +1,15 @@
+@use "./light" as light;
+@use "./dark" as dark;
+@use "./register" as register;
+
+$icc-enable-css-custom-properties: false !default;
+
+$icc-themes: ();
+
+$icc-processed-theme: ();
+
+$icc-themes: register.icc-register-theme($icc-themes, light.$theme, light);
+
+$icc-themes: register.icc-register-theme($icc-themes, dark.$theme, dark);
+
+$icc-processed-theme: register.icc-process-themes($icc-themes);

@@ -1,0 +1,40 @@
+@use "sass:map";
+
+@function icc-register-theme($icc-themes, $theme, $name) {
+  $new: (
+    $name: $theme,
+  );
+
+  $new-icc-themes: map.merge($icc-themes, $new) !global;
+
+  @return $new-icc-themes;
+}
+
+@function icc-deep-find-value($theme, $key, $value) {
+  $parent-value: map.get($theme, $value);
+
+  @if ($parent-value != null) {
+    @return icc-deep-find-value($theme, $value, $parent-value);
+  }
+
+  @return $value;
+}
+
+@function icc-process-theme($theme-name, $theme) {
+  $processed-theme: ();
+  @each $key, $value in $theme {
+    $new: (
+      $key: icc-deep-find-value($theme, $key, $value),
+    );
+    $processed-theme: map.merge($processed-theme, $new);
+  }
+  @return $processed-theme;
+}
+
+@function icc-process-themes($icc-themes) {
+  $processed-theme: ();
+  @each $theme-name, $theme in $icc-themes {
+    $processed-theme: icc-process-theme($theme-name, $theme);
+  }
+  @return $processed-theme;
+}

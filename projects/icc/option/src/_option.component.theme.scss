@@ -1,21 +1,23 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-option-theme() {
   icc-option {
-    background-color: icc-theme(icc-option-item-background-color);
-    color: icc-theme(app-text-basic-color);
-    border-top: 1px solid icc-theme(app-border-basic-color);
+    background-color: icc.icc-theme(icc-option-item-background-color);
+    color: icc.icc-theme(app-text-basic-color);
+    border-top: 1px solid icc.icc-theme(app-border-basic-color);
 
     &.selected {
-      background-color: icc-theme(icc-option-item-selected-background-color);
+      background-color: icc.icc-theme(icc-option-item-selected-background-color);
       font-weight: bold;
     }
 
     &:hover {
       cursor: pointer;
-      background-color: icc-theme(icc-option-item-hover-background-color);
+      background-color: icc.icc-theme(icc-option-item-hover-background-color);
     }
 
     &:last-child {
-      border-bottom: solid 1px icc-theme(app-border-basic-color);
+      border-bottom: solid 1px icc.icc-theme(app-border-basic-color);
     }
   }
 }

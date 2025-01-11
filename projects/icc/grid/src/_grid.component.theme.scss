@@ -1,67 +1,69 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-grid-theme() {
   icc-grid,
   icc-tree {
     icc-grid-header,
     icc-grid-header-view {
-      background-color: icc-theme(icc-grid-header-background-color);
+      background-color: icc.icc-theme(icc-grid-header-background-color);
     }
 
     icc-grid-footer {
-      background-color: icc-theme(icc-grid-toolbar-background-color);
-      border-bottom: 1px solid icc-theme(app-border-basic-color);
+      background-color: icc.icc-theme(icc-grid-toolbar-background-color);
+      border-bottom: 1px solid icc.icc-theme(app-border-basic-color);
     }
 
     icc-grid-row-group {
-      border-left: 1px solid icc-theme(app-border-basic-color);
-      border-right: 1px solid icc-theme(app-border-basic-color);
-      border-bottom: 1px solid icc-theme(app-border-basic-color);
+      border-left: 1px solid icc.icc-theme(app-border-basic-color);
+      border-right: 1px solid icc.icc-theme(app-border-basic-color);
+      border-bottom: 1px solid icc.icc-theme(app-border-basic-color);
     }
 
     .icc-grid-row:nth-child(odd) {
-      background-color: icc-theme(icc-grid-row-odd-background-color);
+      background-color: icc.icc-theme(icc-grid-row-odd-background-color);
       &:focus,
       &:hover {
-        background-color: icc-theme(icc-grid-row-hover-background-color);
+        background-color: icc.icc-theme(icc-grid-row-hover-background-color);
       }
     }
 
     .icc-grid-row:nth-child(even) {
-      background-color: icc-theme(icc-grid-row-even-background-color);
+      background-color: icc.icc-theme(icc-grid-row-even-background-color);
       &:focus,
       &:hover {
-        background-color: icc-theme(icc-grid-row-hover-background-color);
+        background-color: icc.icc-theme(icc-grid-row-hover-background-color);
       }
     }
 
     icc-grid-header-item {
       border-style: solid;
-      border-color: icc-theme(app-border-basic-color);
+      border-color: icc.icc-theme(app-border-basic-color);
       border-width: 1px 0px 1px 1px;
     }
 
     icc-grid-header-item:last-child {
-      border-right: solid 1px icc-theme(app-border-basic-color);
+      border-right: solid 1px icc.icc-theme(app-border-basic-color);
     }
 
     .icc-header-no-filter-border {
       display: flex;
       width: 100%;
-      border-top: 1px solid icc-theme(app-border-basic-color);
+      border-top: 1px solid icc.icc-theme(app-border-basic-color);
     }
 
     icc-text-filter,
     icc-select-filter {
-      border-top: 1px solid icc-theme(app-border-basic-color);
+      border-top: 1px solid icc.icc-theme(app-border-basic-color);
     }
 
     icc-grid-cell {
       border-style: solid;
-      border-color: icc-theme(app-border-basic-color);
+      border-color: icc.icc-theme(app-border-basic-color);
       border-width: 0px 0px 1px 1px;
     }
 
     icc-grid-cell:last-child {
-      border-right: solid 1px icc-theme(app-border-basic-color);
+      border-right: solid 1px icc.icc-theme(app-border-basic-color);
     }
 
     icc-grid-header {
@@ -73,8 +75,8 @@
     }
 
     input {
-      background-color: icc-theme(icc-grid-header-background-color);
-      color: icc-theme(app-text-basic-color);
+      background-color: icc.icc-theme(icc-grid-header-background-color);
+      color: icc.icc-theme(app-text-basic-color);
     }
 
     .grid-cell {

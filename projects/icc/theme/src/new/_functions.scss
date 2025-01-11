@@ -1,0 +1,84 @@
+@use "sass:map";
+@use "./themes" as themes;
+
+@function icc-theme($key) {
+  $value: ();
+
+  @if (themes.$icc-enable-css-custom-properties) {
+    $value: var(--#{$key});
+  } @else {
+    $value: map.get(themes.$icc-processed-theme, $key);
+  }
+
+  @if ($value == null) {
+    @warn "Theme: `icc-theme()` cannot find value for key `" + $key (+"`");
+  }
+
+  @return $value;
+}
+
+@mixin icc-install-css-properties($theme-name, $theme) {
+  .icc-theme-#{$theme-name} {
+    @each $var, $value in $theme {
+      @if (type-of($value) == "string" and map.get($theme, $value)) {
+        --#{$var}: var(--#{$value});
+      } @else {
+        --#{$var}: #{$value};
+      }
+    }
+  }
+}
+
+@mixin icc-install-component-with-css-props() {
+  :host {
+    @content;
+  }
+}
+
+@mixin icc-install-component-with-scss-vars() {
+  @each $theme-name, $theme in $icc-themes {
+    .icc-theme-#{$theme-name} :host {
+      @content;
+    }
+  }
+}
+
+@mixin icc-install-component() {
+  @if (themes.$icc-enable-css-custom-properties) {
+    @include icc-install-component-with-css-props() {
+      @content;
+    }
+  } @else {
+    @include icc-install-component-with-scss-vars() {
+      @content;
+    }
+  }
+}
+
+@mixin icc-install-with-css-props() {
+  @content;
+
+  @each $theme-name, $theme in themes.$icc-themes {
+    @include icc-install-css-properties($theme-name, $theme);
+  }
+}
+
+@mixin icc-install-with-scss-vars() {
+  @each $theme-name, $theme in themes.$icc-themes {
+    .icc-theme-#{$theme-name} {
+      @content;
+    }
+  }
+}
+
+@mixin icc-install() {
+  @if (themes.$icc-enable-css-custom-properties) {
+    @include icc-install-with-css-props() {
+      @content;
+    }
+  } @else {
+    @include icc-install-with-scss-vars() {
+      @content;
+    }
+  }
+}

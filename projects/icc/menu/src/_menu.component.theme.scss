@@ -1,30 +1,32 @@
+@use "../../theme/src/new/functions" as icc;
+
 @mixin icc-menu-theme() {
   icc-menus {
     .icc-menu-row:nth-child(odd) {
-      background-color: icc-theme(icc-grid-row-odd-background-color);
+      background-color: icc.icc-theme(icc-grid-row-odd-background-color);
     }
 
     .icc-menu-row:nth-child(even) {
-      background-color: icc-theme(icc-grid-row-even-background-color);
+      background-color: icc.icc-theme(icc-grid-row-even-background-color);
     }
   }
 
   icc-menu-item {
     align-items: center;
-    color: icc-theme(app-text-basic-color);
+    color: icc.icc-theme(app-text-basic-color);
 
     &:focus,
     &:hover {
-      background-color: icc-theme(icc-menu-item-hover-background-color);
+      background-color: icc.icc-theme(icc-menu-item-hover-background-color);
     }
 
     &.selected {
-      background-color: icc-theme(icc-menu-item-selected-background-color);
+      background-color: icc.icc-theme(icc-menu-item-selected-background-color);
       font-weight: bold;
     }
 
     &:last-child {
-      border-bottom: solid 1px icc-theme(app-border-basic-color);
+      border-bottom: solid 1px icc.icc-theme(app-border-basic-color);
     }
   }
 }
