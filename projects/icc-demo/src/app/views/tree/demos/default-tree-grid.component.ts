@@ -42,7 +42,7 @@ const NESTED_DATA: NestedFoodNode[] = [
 @Component({
   selector: 'app-default-tree-grid',
   template: `<icc-tree [columnsConfig]="columnsConfig" [treeData]="treeData"></icc-tree>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTreeComponent],
 })

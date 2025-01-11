@@ -5,7 +5,7 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 @Component({
   selector: 'app-grid-horizontal-scroll',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })

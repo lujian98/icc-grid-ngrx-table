@@ -13,7 +13,7 @@ import { CARSDATA3 } from '../../../data/cars-large';
 @Component({
   selector: 'app-grid-renderer-function',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })

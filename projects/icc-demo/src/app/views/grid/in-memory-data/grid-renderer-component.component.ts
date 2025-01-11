@@ -32,7 +32,7 @@ export class AppGridCellTextComponent extends IccGridCellRendererComponent<strin
 @Component({
   selector: 'app-grid-renderer-component',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })

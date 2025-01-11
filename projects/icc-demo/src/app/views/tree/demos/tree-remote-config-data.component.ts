@@ -6,7 +6,7 @@ import { IccTreeComponent, defaultTreeConfig, IccTreeConfig } from '@icc/ui/tree
 @Component({
   selector: 'app-tree-remote-config-data',
   template: `<icc-tree [treeConfig]="treeConfig" [columnsConfig]="columnsConfig"></icc-tree>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTreeComponent],
 })

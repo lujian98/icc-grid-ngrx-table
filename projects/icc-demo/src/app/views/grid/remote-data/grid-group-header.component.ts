@@ -5,7 +5,7 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig, Ic
 @Component({
   selector: 'app-grid-group-header',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
-  styles: [':host { width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })
