@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.i18nService.currentLang = 'zh-CN';
+    this.i18nService.currentLang = 'en-US';
   }
 
   toggleTheme(): void {
