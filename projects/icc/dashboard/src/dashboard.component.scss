@@ -29,6 +29,9 @@
     // this keep in the same row cdkDropListOrientation="horizontal" seems not working
     display: flex;
     flex-direction: row;
+    icc-portal {
+      display: flex;
+    }
   }
 
   [cdkDragHandle] {
