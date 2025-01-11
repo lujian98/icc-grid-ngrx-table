@@ -69,10 +69,15 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private setupGrid(): void {
     // TODO should this be this.elementRef.nativeElement.parentNode or this.elementRef.nativeElement???
     const size = this.getDashboardSize()!;
-    this.gridWidth = (size.width - this.cols * this.gridGap - 4) / this.cols;
-    this.gridHeight = (size.height - this.cols * this.gridGap - 4) / this.rows;
-    this.setGridTemplate();
-    this.changeDetectorRef.detectChanges();
+    const width = (size.width - this.cols * this.gridGap - 4) / this.cols;
+    const height = (size.height - this.cols * this.gridGap - 4) / this.rows;
+
+    if (width !== this.gridWidth || height !== this.gridHeight) {
+      this.gridWidth = width;
+      this.gridHeight = height;
+      this.setGridTemplate();
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   private getDashboardSize(): IccSize | null {
