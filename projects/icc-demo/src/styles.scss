@@ -1,6 +1,1 @@
-@use "../../icc/theme/src/theme";
-@use "../../icc/theme/src/icc";
-
-@include icc.icc-install() {
-  @include icc.icc-theme-components();
-}
+@use "../../icc/theme/src/theming";

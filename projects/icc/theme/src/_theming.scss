@@ -1,0 +1,6 @@
+@use "./theme";
+@use "./icc";
+
+@include icc.icc-install() {
+  @include icc.icc-theme-components();
+}
