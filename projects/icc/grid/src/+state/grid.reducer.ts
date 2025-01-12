@@ -157,7 +157,7 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
-        oldState.selection.clear();
+        //oldState.selection.clear();
 
         let queryData = gridConfig.rowGroupField && oldState.rowGroups ? [...oldState.queryData] : [...oldState.data];
         let data =
