@@ -96,7 +96,7 @@ export const AppGridRoutes: Routes = [
 
       {
         path: '**',
-        redirectTo: 'app-default-grid',
+        redirectTo: 'grid-multi-row-selection',
       },
     ],
   },

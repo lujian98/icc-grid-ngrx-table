@@ -77,6 +77,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
       this.gridHeight = height;
       this.setGridTemplate();
       this.changeDetectorRef.detectChanges();
+      window.dispatchEvent(new Event('resize'));
     }
   }
 

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccDashboardComponent, Tile } from '@icc/ui/dashboard';
 import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
 import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
+import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
 import { PortalDemoComponent } from '../portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
 
@@ -69,7 +70,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 4,
         colWidth: 7,
-        content: AppGridRemoteVirtualScrollComponent,
+        content: AppGridMultiRowSelectionComponent, //AppGridRemoteVirtualScrollComponent,
       },
     ];
   }
