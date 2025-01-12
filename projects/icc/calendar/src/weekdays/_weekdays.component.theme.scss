@@ -1,7 +1,0 @@
-@mixin icc-calendar-weekdays-theme() {
-  icc-weekdays {
-    .icc-weekdays__day {
-      color: icc-theme(calendar-weekdays-text-color);
-    }
-  }
-}

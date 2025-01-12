@@ -1,5 +1,5 @@
 @use "./theme";
-@use "./icc";
+@use "./components" as icc;
 
 @mixin icc-theme-components() {
   @include icc.icc-layout-theme();
