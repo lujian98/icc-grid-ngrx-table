@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Tile, getColor, IccDashboardComponent } from '@icc/ui/dashboard';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccDashboardComponent, Tile } from '@icc/ui/dashboard';
+import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
+import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 import { PortalDemoComponent } from '../portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
-import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
-//import { AppDefaultGridComponent } from '../../../grid/in-memory-data/default-grid.component';
-import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 
 @Component({
   selector: 'app-dashboard-demo',
@@ -35,8 +33,6 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 1,
         colWidth: 10,
-        //color: '#e8eaed',
-        //color: getColor(),
         content: AppStockChartComponent,
         context: this.portalData,
         dblClickDrag: true,
@@ -47,7 +43,6 @@ export class AppDashboardDemoComponent {
         rowHeight: 2,
         colStart: 1,
         colWidth: 2,
-        //color: getColor(),
         content: PortalDemoComponent,
         context: this.portalData,
       },
@@ -57,7 +52,6 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        //color: getColor(),
         content: PortalDemo2Component,
       },
       {
@@ -66,7 +60,6 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        //color: getColor(),
         content: PortalDemoComponent,
         context: this.portalData2,
       },
@@ -77,10 +70,7 @@ export class AppDashboardDemoComponent {
         colStart: 4,
         colWidth: 7,
         content: AppGridRemoteVirtualScrollComponent,
-        //color: getColor(),
       },
     ];
-
-    console.log(' this.tiles =', this.tiles);
   }
 }

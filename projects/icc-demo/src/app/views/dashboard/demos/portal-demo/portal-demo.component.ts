@@ -11,13 +11,9 @@ export class PortalDemoComponent implements OnInit {
   skills = [];
   values!: string;
 
-  constructor() {} // private popoverRef: IccOverlayComponentRef<any>
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.values = this.skills.toString().replace(/[',"]+/g, ', ');
   }
 
-  close() {
-    // this.popoverRef.close({ id: 1 });
-  }
+  close(): void {}
 }
