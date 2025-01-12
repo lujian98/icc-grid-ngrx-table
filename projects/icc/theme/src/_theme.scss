@@ -2,3 +2,6 @@
 @use "./core/variables";
 @use "./core/reset";
 @use "./core/typography";
+
+@use "./themes/light";
+@use "./themes/dark";
