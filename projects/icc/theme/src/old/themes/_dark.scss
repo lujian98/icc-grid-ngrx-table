@@ -70,4 +70,4 @@ $theme: (
   radio-text-color: #adadad,
 );
 
-//$icc-themes: icc-register-theme($theme, dark);
+$icc-themes: icc-register-theme($theme, dark);

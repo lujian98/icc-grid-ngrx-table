@@ -1,10 +1,13 @@
+@use "sass:map";
+@use "../themes" as themes;
+
 @function icc-theme($key) {
   $value: ();
 
-  @if ($icc-enable-css-custom-properties) {
+  @if (themes.$icc-enable-css-custom-properties) {
     $value: var(--#{$key});
   } @else {
-    $value: map.get($icc-processed-theme, $key);
+    $value: map.get(themes.$icc-processed-theme, $key);
   }
 
   @if ($value == null) {
@@ -12,40 +15,6 @@
   }
 
   @return $value;
-}
-
-@function icc-register-theme($theme, $name) {
-  $new: (
-    $name: $theme,
-  );
-  $icc-themes: map.merge($icc-themes, $new) !global;
-
-  @return $icc-themes;
-}
-
-@function icc-deep-find-value($theme, $key, $value) {
-  $parent-value: map.get($theme, $value);
-
-  @if ($parent-value != null) {
-    @return icc-deep-find-value($theme, $value, $parent-value);
-  }
-
-  @return $value;
-}
-
-@function icc-process-theme($theme-name, $theme) {
-  $processed-theme: ();
-  @each $key, $value in $theme {
-    $new: (
-      $key: icc-deep-find-value($theme, $key, $value),
-    );
-    $processed-theme: map.merge($processed-theme, $new);
-  }
-  @return $processed-theme;
-}
-
-@mixin icc-pre-process-context($theme-name, $theme) {
-  $icc-processed-theme: icc-process-theme($theme-name, $theme) !global;
 }
 
 @mixin icc-install-css-properties($theme-name, $theme) {
@@ -68,8 +37,6 @@
 
 @mixin icc-install-component-with-scss-vars() {
   @each $theme-name, $theme in $icc-themes {
-    @include icc-pre-process-context($theme-name, $theme);
-
     .icc-theme-#{$theme-name} :host {
       @content;
     }
@@ -77,7 +44,7 @@
 }
 
 @mixin icc-install-component() {
-  @if ($icc-enable-css-custom-properties) {
+  @if (themes.$icc-enable-css-custom-properties) {
     @include icc-install-component-with-css-props() {
       @content;
     }
@@ -91,15 +58,13 @@
 @mixin icc-install-with-css-props() {
   @content;
 
-  @each $theme-name, $theme in $icc-themes {
+  @each $theme-name, $theme in themes.$icc-themes {
     @include icc-install-css-properties($theme-name, $theme);
   }
 }
 
 @mixin icc-install-with-scss-vars() {
-  @each $theme-name, $theme in $icc-themes {
-    @include icc-pre-process-context($theme-name, $theme);
-
+  @each $theme-name, $theme in themes.$icc-themes {
     .icc-theme-#{$theme-name} {
       @content;
     }
@@ -107,7 +72,7 @@
 }
 
 @mixin icc-install() {
-  @if ($icc-enable-css-custom-properties) {
+  @if (themes.$icc-enable-css-custom-properties) {
     @include icc-install-with-css-props() {
       @content;
     }

@@ -1,5 +1,3 @@
-@use "../../theme/src/new/functions" as icc;
-
 @mixin icc-resize-directive-theme() {
   [IccResizeLeft],
   [IccResizeRight] {

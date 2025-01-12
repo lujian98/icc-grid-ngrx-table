@@ -5,7 +5,7 @@
     $name: $theme,
   );
 
-  $new-icc-themes: map.merge($icc-themes, $new) !global;
+  $new-icc-themes: map.merge($icc-themes, $new);
 
   @return $new-icc-themes;
 }

@@ -1,8 +1,8 @@
-@use "../../icc/theme/src/theming2";
+@use "../../icc/theme/src/theming";
 
-@use "../../icc/theme/src/new/functions" as iccFun;
-@use "../../icc/theme/src/new/components" as iccCom;
+@use "../../icc/theme/src/core/functions";
+@use "../../icc/theme/src/components";
 
-@include iccFun.icc-install() {
-  @include iccCom.icc-theme-components();
+@include functions.icc-install() {
+  @include components.icc-theme-components();
 }

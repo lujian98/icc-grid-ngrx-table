@@ -1,25 +1,4 @@
-@use "sass:map";
-
-$icc-enable-css-custom-properties: false !default;
-
-$icc-themes: ();
-$icc-processed-theme: ();
-
-html {
-  box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  border: 0;
-}
-
-@import "core/common";
-@import "core/variables";
-@import "reset";
-@import "typography";
-@import "core/functions";
-@import "components";
-@import "themes";
+@use "./core/common";
+@use "./core/variables";
+@use "./core/reset";
+@use "./core/typography";

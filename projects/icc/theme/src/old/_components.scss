@@ -1,0 +1,36 @@
+@import "../../layout/src/layout.component.theme";
+@import "../../grid/src/grid.component.theme";
+@import "../../menu/src/menu.component.theme";
+@import "../../accordion/src/accordion.component.theme";
+@import "../../option//src/option.component.theme";
+@import "../../form-field/src/form-field.component.theme";
+@import "../../checkbox/src/checkbox.component.theme";
+@import "../../radio/src/radio.component.theme";
+@import "../../button/src/button.component.theme";
+
+@import "../../resize/src/resize.directive.theme";
+@import "../../dashboard/src/dashboard.component.theme";
+
+@import "../../calendar/src/calendar.component.theme";
+@import "../../calendar/src/weekdays/weekdays.component.theme";
+@import "../../calendar/src/month/month.component.theme";
+@import "../../calendar/src/month-header/month-header.component.theme";
+
+@mixin icc-theme-components() {
+  @include icc-layout-theme();
+  @include icc-grid-theme();
+  @include icc-menu-theme();
+  @include icc-accordion-theme();
+  @include icc-option-theme();
+  @include icc-form-field-theme();
+  @include icc-checkbox-theme();
+  @include icc-radio-theme();
+  @include icc-button-theme();
+  @include icc-resize-directive-theme();
+  @include icc-dashboard-theme();
+
+  @include icc-calendar-theme();
+  @include icc-calendar-weekdays-theme();
+  @include icc-calendar-month-theme();
+  @include icc-calendar-month-header-theme();
+}
