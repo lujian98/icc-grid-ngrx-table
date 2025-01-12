@@ -140,18 +140,20 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private checkViewport(data: T[]): void {
+    const el = this.viewport.elementRef.nativeElement;
+    const clientWidth = el.clientWidth;
+    const clientHeight = el.clientHeight;
+    const pageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
     if (this.gridConfig.virtualScroll || this.gridConfig.verticalScroll) {
       // make sure column width with vertical scroll are correct
-      const el = this.viewport.elementRef.nativeElement;
-      const clientHeight = el.clientHeight;
-      const clientWidth = el.clientWidth;
       const widowWidth = this.elementRef.nativeElement.clientWidth;
-      const pageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
       if (data.length > pageSize && clientWidth === widowWidth) {
         this.sizeChanged$.next(uniqueId(16));
       } else if (data.length <= pageSize && clientWidth < widowWidth) {
         this.sizeChanged$.next(uniqueId(16));
       }
+    } else if (pageSize !== this.gridConfig.pageSize) {
+      this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, true);
     }
   }
 
