@@ -6,9 +6,9 @@
   },
   "assets": [
     {
-      "input": "./theme/src",
+      "input": "./",
       "glob": "**/_*.scss",
-      "output": "./theme/src"
+      "output": "./"
     }
   ]
 }
