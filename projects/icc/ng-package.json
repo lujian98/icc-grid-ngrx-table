@@ -3,5 +3,12 @@
   "dest": "../../dist/icc",
   "lib": {
     "entryFile": "public-api.ts"
-  }
+  },
+  "assets": [
+    {
+      "input": "./theme/src",
+      "glob": "**/_*.scss",
+      "output": "./theme/src"
+    }
+  ]
 }
