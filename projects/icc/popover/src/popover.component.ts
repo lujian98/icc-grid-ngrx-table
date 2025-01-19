@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, HostBinding } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  Type,
+  ViewChild,
+  HostBinding,
+  inject,
+  ViewContainerRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { IccDynamicOverlayService } from '@icc/ui/overlay';
@@ -14,6 +24,7 @@ import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent implements IccRenderableContainer {
+  private viewContainerRef = inject(ViewContainerRef);
   @Input() content: any;
   @Input() context!: Object;
   @Input() dynamicOverlayService!: IccDynamicOverlayService;
@@ -52,8 +63,7 @@ export class IccPopoverComponent implements IccRenderableContainer {
 
   protected attachTemplate(): void {
     this.overlayContainer.attachTemplatePortal(
-      // @ts-ignore
-      new TemplatePortal(this.content, null, <any>{
+      new TemplatePortal(this.content, this.viewContainerRef, <any>{
         $implicit: this.context,
         close: this.close.bind(this),
       }),

@@ -15,8 +15,8 @@ export enum IccTrigger {
 }
 
 export interface IccTriggerStrategy {
-  show$: Observable<never | Event>;
-  hide$: Observable<never | Event>;
+  show$: Observable<Event>;
+  hide$: Observable<Event>;
 
   destroy(): void;
 }

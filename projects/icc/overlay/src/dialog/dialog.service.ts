@@ -1,6 +1,6 @@
 import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
+import { Inject, Injectable, Injector, TemplateRef, Type, inject, ViewContainerRef } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { fromEvent } from 'rxjs';
@@ -12,6 +12,7 @@ import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 
 @Injectable()
 export class IccDialogService {
+  private viewContainerRef = inject(ViewContainerRef);
   private overlayService = inject(IccOverlayService);
   private injector = inject(Injector);
 
@@ -63,8 +64,7 @@ export class IccDialogService {
     injector: Injector,
   ) {
     if (content instanceof TemplateRef) {
-      // @ts-ignore
-      const portal = new TemplatePortal(content, null, <any>{
+      const portal = new TemplatePortal(content, this.viewContainerRef, <any>{
         $implicit: config.context,
         dialogRef,
       });

@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  TemplateRef,
-  Type,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, TemplateRef, Type, inject } from '@angular/core';
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
@@ -24,15 +14,22 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit, OnChanges {
+export class IccPopoverDirective implements AfterViewInit {
   private elementRef = inject(ElementRef);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private _context: Object = {};
 
   @Input('iccPopover')
   content!: Type<any> | TemplateRef<any>;
 
   @Input('iccPopoverContext')
-  context: Object = {};
+  set context(value: {}) {
+    this._context = { ...value };
+    this.dynamicOverlayService.rebuild(this.context, this.content);
+  }
+  get context(): {} {
+    return this._context;
+  }
 
   @Input('iccPopoverPosition')
   position: IccPosition = IccPosition.BOTTOM;
@@ -61,12 +58,5 @@ export class IccPopoverDirective implements AfterViewInit, OnChanges {
       this.content,
       this.context,
     );
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // @ts-ignore
-    if (changes.context) {
-      this.dynamicOverlayService.rebuild(this.context, this.content);
-    }
   }
 }

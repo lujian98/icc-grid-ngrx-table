@@ -45,23 +45,20 @@ export class IccDynamicOverlayService implements OnDestroy {
     }
     this.triggerStrategy = this.triggerStrategyBuilder.build(
       this.hostElement.nativeElement,
-      // @ts-ignore
-      () => this.container(),
+      () => this.container()!,
       this.overlayServiceConfig.trigger,
     );
-    // @ts-ignore
-    this.triggerStrategy.show$.subscribe((event: MouseEvent) => {
+    this.triggerStrategy.show$.subscribe((event: Event) => {
       this.show(event);
     });
-    // @ts-ignore
-    this.triggerStrategy.hide$.subscribe((event: MouseEvent) => {
+    this.triggerStrategy.hide$.subscribe((event: Event) => {
       if (this.canOverlayClose(event)) {
         this.hide();
       }
     });
   }
 
-  private canOverlayClose(event: MouseEvent): boolean {
+  private canOverlayClose(event: Event): boolean {
     if (event.type === 'click' || event.type === 'mousemove') {
       if (this.overlayServiceConfig.clickToClose) {
         return true;
@@ -79,8 +76,8 @@ export class IccDynamicOverlayService implements OnDestroy {
     }
   }
 
-  private createOverlay(event: MouseEvent | null = null): void {
-    const positionStrategy = this.createPositionStrategy(event);
+  private createOverlay(event: Event | null = null): void {
+    const positionStrategy = this.createPositionStrategy(event as MouseEvent);
     this.overlayRef = this.overlayService.create({
       scrollStrategy: this.overlayService.scrollStrategies.close(),
       positionStrategy,
@@ -115,12 +112,11 @@ export class IccDynamicOverlayService implements OnDestroy {
     return this.overlayPositionBuilder.flexibleConnectedTo(origin, this.overlayServiceConfig.position);
   }
 
-  // @ts-ignore
-  private container(): ComponentRef<IccRenderableContainer> | null | undefined {
-    return this.containerRef;
+  private container(): ComponentRef<IccRenderableContainer> {
+    return this.containerRef!;
   }
 
-  show(event: MouseEvent | null = null): void {
+  show(event: Event | null = null): void {
     if (this.overlayServiceConfig?.trigger === IccTrigger.CONTEXTMENU && event) {
       this.hide();
       this.overlayRef = null;
