@@ -301,7 +301,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
       return ret;
     }
     if (resizeMap.colChange !== 0) {
-      const gmap = gridMap.map((items, i) => {
+      const gmap: number[][] = gridMap.map((items, i) => {
         if (resizeMap.colChange < 0) {
           items.reverse();
         }
@@ -315,8 +315,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
           })
           .filter((item) => item !== undefined);
       });
-      // @ts-ignore
-      ret.dx = Math.min(...[].concat(...gmap), resizeMap.endCol - resizeMap.startCol, dx);
+      ret.dx = Math.min(...([] as number[]).concat(...gmap), resizeMap.endCol - resizeMap.startCol, dx);
     }
     if (resizeMap.rowChange !== 0) {
       const tGridMap = gridMap[0].map((x, i) => gridMap.map((y) => y[i]));
@@ -338,8 +337,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
           })
           .filter((item) => item !== undefined);
       });
-      // @ts-ignore
-      ret.dy = Math.min(...[].concat(...gmap), resizeMap.endRow - resizeMap.startRow, dy);
+      ret.dy = Math.min(...([] as number[]).concat(...gmap), resizeMap.endRow - resizeMap.startRow, dy);
     }
     return ret;
   }
@@ -409,8 +407,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
           .filter((item) => item !== undefined)
           .concat();
       });
-      // @ts-ignore
-      return Math.max(...[].concat(...gmap), -1) === -1;
+      return Math.max(...([] as number[]).concat(...gmap), -1) === -1;
     }
     return false;
   }
