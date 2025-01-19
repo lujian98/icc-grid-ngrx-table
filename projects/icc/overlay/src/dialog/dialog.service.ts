@@ -12,7 +12,7 @@ import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 
 @Injectable()
 export class IccDialogService {
-  private viewContainerRef = inject(ViewContainerRef);
+  //private viewContainerRef = inject(ViewContainerRef);
   private overlayService = inject(IccOverlayService);
   private injector = inject(Injector);
 
@@ -64,7 +64,8 @@ export class IccDialogService {
     injector: Injector,
   ) {
     if (content instanceof TemplateRef) {
-      const portal = new TemplatePortal(content, this.viewContainerRef, <any>{
+      // @ts-ignore
+      const portal = new TemplatePortal(content, null, <any>{
         $implicit: config.context,
         dialogRef,
       });
@@ -86,8 +87,7 @@ export class IccDialogService {
     if (config.closeOnEsc) {
       fromEvent(this.document, 'keyup')
         .pipe(
-          // @ts-ignore
-          filter((event: KeyboardEvent) => event.keyCode === 27),
+          filter((event: Event) => (event as KeyboardEvent).code === 'Escape'),
           takeUntil(dialogRef.onClose),
         )
         .subscribe(() => dialogRef.close());
