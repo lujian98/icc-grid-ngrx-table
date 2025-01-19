@@ -105,25 +105,12 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   }
 
   container(): ComponentRef<any> {
-    // @ts-ignore
     return {
       location: {
         nativeElement: this.overlayRef?.overlayElement,
       },
       // @ts-ignore
-      injector: null,
-      // @ts-ignore
-      instance: null,
-      // @ts-ignore
       hostView: null,
-      // @ts-ignore
-      changeDetectorRef: null,
-      // @ts-ignore
-      componentType: null,
-      // @ts-ignore
-      destroy: null,
-      // @ts-ignore
-      onDestroy: null,
     };
   }
 

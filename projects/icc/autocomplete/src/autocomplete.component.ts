@@ -1,3 +1,6 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { SelectionModel } from '@angular/cdk/collections';
+import { CommonModule } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectorRef,
@@ -11,15 +14,11 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { SelectionModel } from '@angular/cdk/collections';
-import { merge, Observable } from 'rxjs';
-import { filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
-import { IccAutocompleteDirective } from './autocomplete.directive';
-import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccOverlayModule } from '@icc/ui/overlay';
+import { merge, Observable } from 'rxjs';
+import { filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
+import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
 
 @Component({
   selector: 'icc-autocomplete',
