@@ -1,32 +1,26 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 import { FormState } from '../models/form.model';
 import { defaultFormState } from '../models/default-form';
 
-const featureSelector = createFeatureSelector('iccForm');
+//const featureSelector = createFeatureSelector('iccForm');
+
+export interface AppFormState {
+  iccForm: FormState;
+}
+
+export const featureSelector = (state: AppFormState) => state.iccForm;
 
 export const selectFormConfig = (formId: string) =>
-  createSelector(
-    // @ts-ignore
-    featureSelector,
-    (state: FormState) => {
-      return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
-    },
-  );
+  createSelector(featureSelector, (state: FormState) => {
+    return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
+  });
 
 export const selectFormFieldsConfig = (formId: string) =>
-  createSelector(
-    // @ts-ignore
-    featureSelector,
-    (state: FormState) => {
-      return state[formId] ? state[formId].formFields : [];
-    },
-  );
+  createSelector(featureSelector, (state: FormState) => {
+    return state[formId] ? state[formId].formFields : [];
+  });
 
 export const selectFormData = (formId: string) =>
-  createSelector(
-    // @ts-ignore
-    featureSelector,
-    (state: FormState) => {
-      return state[formId] ? state[formId].formData : [];
-    },
-  );
+  createSelector(featureSelector, (state: FormState) => {
+    return state[formId] ? state[formId].formData : [];
+  });
