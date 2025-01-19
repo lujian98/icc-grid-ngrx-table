@@ -140,14 +140,15 @@ export class IccDynamicOverlayService implements OnDestroy {
   }
 
   private updateContext(): void {
-    // @ts-ignore
-    Object.assign(this.containerRef?.instance, {
-      content: this.content,
-      context: this.context,
-      customStyle: this.overlayServiceConfig.customStyle,
-    });
-    this.containerRef?.instance.renderContent();
-    this.containerRef?.changeDetectorRef.detectChanges();
+    if (this.containerRef?.instance) {
+      Object.assign(this.containerRef.instance, {
+        content: this.content,
+        context: this.context,
+        customStyle: this.overlayServiceConfig.customStyle,
+      });
+      this.containerRef.instance.renderContent();
+      this.containerRef.changeDetectorRef.detectChanges();
+    }
   }
 
   ngOnDestroy(): void {

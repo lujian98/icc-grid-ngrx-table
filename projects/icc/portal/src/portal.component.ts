@@ -58,8 +58,7 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   attachComponentPortal<T>(portal: ComponentPortal<T>, context?: Object): ComponentRef<T> {
     const componentRef = this.portalOutlet.attachComponentPortal(portal);
-    if (context) {
-      // @ts-ignore
+    if (context && componentRef.instance) {
       Object.assign(componentRef.instance, context);
     }
     componentRef.changeDetectorRef.markForCheck();

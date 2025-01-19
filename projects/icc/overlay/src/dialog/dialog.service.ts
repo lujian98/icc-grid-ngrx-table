@@ -73,8 +73,7 @@ export class IccDialogService {
     } else {
       const portal = new ComponentPortal(content, null, injector);
       dialogRef.componentRef = container.attachComponentPortal(portal);
-      if (config.context) {
-        // @ts-ignore
+      if (config.context && dialogRef.componentRef.instance) {
         Object.assign(dialogRef.componentRef.instance, { ...config.context });
       }
     }
