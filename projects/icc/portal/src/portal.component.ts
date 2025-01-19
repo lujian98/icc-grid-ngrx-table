@@ -12,6 +12,8 @@ import {
   TemplateRef,
   Type,
   ViewChild,
+  ViewContainerRef,
+  inject,
 } from '@angular/core';
 import { IccPortalContent } from './portal.model';
 
@@ -23,6 +25,7 @@ import { IccPortalContent } from './portal.model';
   imports: [CommonModule, PortalModule],
 })
 export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
+  private viewContainerRef = inject(ViewContainerRef);
   @Input() content!: IccPortalContent<any>;
   @Input() context!: {};
   portalType!: string;
@@ -48,8 +51,7 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
       const portal = new ComponentPortal(this.content);
       this.attachComponentPortal(portal, this.context);
     } else if (this.content instanceof TemplateRef) {
-      // @ts-ignore
-      const portal = new TemplatePortal(this.content, null, this.context);
+      const portal = new TemplatePortal(this.content, this.viewContainerRef, this.context);
       this.attachTemplatePortal(portal);
     }
   }
