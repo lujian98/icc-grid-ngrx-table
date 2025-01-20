@@ -1,20 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  TemplateRef,
-  Type,
-  ViewChild,
-  HostBinding,
-  inject,
-  ViewContainerRef,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { IccDynamicOverlayService } from '@icc/ui/overlay';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, TemplateRef, Type, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { IccOverlayModule } from '@icc/ui/overlay';
-import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
+import { IccDynamicOverlayService, IccOverlayModule } from '@icc/ui/overlay';
+import { IccPortalComponent, IccRenderableContainer, IccPortalContent } from '@icc/ui/portal';
 
 @Component({
   selector: 'icc-popover',
@@ -23,11 +11,10 @@ import { IccPortalComponent, IccRenderableContainer } from '@icc/ui/portal';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
-export class IccPopoverComponent implements IccRenderableContainer {
-  private viewContainerRef = inject(ViewContainerRef);
-  @Input() content: any;
+export class IccPopoverComponent<T> implements IccRenderableContainer {
+  @Input() content!: IccPortalContent<T>;
   @Input() context!: Object;
-  @Input() dynamicOverlayService!: IccDynamicOverlayService;
+  @Input() dynamicOverlayService!: IccDynamicOverlayService<T>;
   @Input() customStyle: string | undefined;
 
   @HostBinding('style')
@@ -36,7 +23,7 @@ export class IccPopoverComponent implements IccRenderableContainer {
   }
 
   @ViewChild(IccPortalComponent, { static: true })
-  overlayContainer!: IccPortalComponent;
+  overlayContainer!: IccPortalComponent<T>;
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -49,33 +36,22 @@ export class IccPopoverComponent implements IccRenderableContainer {
     this.attachContent();
   }
 
-  protected detachContent(): void {
+  private detachContent(): void {
     this.overlayContainer.detach();
   }
 
-  protected attachContent(): void {
+  private attachContent(): void {
     if (this.content instanceof TemplateRef) {
-      this.attachTemplate();
-    } else if (this.content instanceof Type) {
-      this.attachComponent();
-    }
-  }
-
-  protected attachTemplate(): void {
-    this.overlayContainer.attachTemplatePortal(
-      new TemplatePortal(this.content, this.viewContainerRef, <any>{
+      const context = {
         $implicit: this.context,
         close: this.close.bind(this),
-      }),
-    );
-  }
-
-  protected attachComponent(): void {
-    const portal = new ComponentPortal(this.content, null, null);
-    const context = Object.assign({}, this.context, {
-      close: this.close.bind(this),
-    });
-    const ref = this.overlayContainer.attachComponentPortal(portal, context);
-    ref.changeDetectorRef.detectChanges();
+      };
+      this.overlayContainer.createTemplatePortal(this.content, context);
+    } else if (this.content instanceof Type) {
+      const context = Object.assign({}, this.context, {
+        close: this.close.bind(this),
+      });
+      this.overlayContainer.createComponentPortal(this.content, context);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { GlobalPositionStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Inject, Injectable, Injector, TemplateRef, Type, inject, ViewContainerRef } from '@angular/core';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { fromEvent } from 'rxjs';
@@ -12,7 +12,6 @@ import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 
 @Injectable()
 export class IccDialogService {
-  //private viewContainerRef = inject(ViewContainerRef);
   private overlayService = inject(IccOverlayService);
   private injector = inject(Injector);
 
@@ -50,7 +49,7 @@ export class IccDialogService {
     });
   }
 
-  private createContainer(overlayRef: IccOverlayRef, injector: Injector): IccPortalComponent {
+  private createContainer(overlayRef: IccOverlayRef, injector: Injector): IccPortalComponent<any> {
     const containerPortal = new ComponentPortal(IccPortalComponent, null, injector);
     const containerRef = overlayRef.attach(containerPortal);
     return containerRef.instance;
@@ -59,23 +58,17 @@ export class IccDialogService {
   private createContent<T>(
     config: IccDialogConfig,
     content: Type<T> | TemplateRef<T>,
-    container: IccPortalComponent,
+    container: IccPortalComponent<T>,
     dialogRef: IccDialogRef<T>,
     injector: Injector,
   ) {
     if (content instanceof TemplateRef) {
-      // @ts-ignore
-      const portal = new TemplatePortal(content, null, <any>{
+      container.createTemplatePortal(content, {
         $implicit: config.context,
         dialogRef,
       });
-      container.attachTemplatePortal(portal);
     } else {
-      const portal = new ComponentPortal(content, null, injector);
-      dialogRef.componentRef = container.attachComponentPortal(portal);
-      if (config.context && dialogRef.componentRef.instance) {
-        Object.assign(dialogRef.componentRef.instance, { ...config.context });
-      }
+      dialogRef.componentRef = container.createComponentPortal(content, config.context, injector);
     }
   }
 

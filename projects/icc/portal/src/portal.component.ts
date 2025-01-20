@@ -14,6 +14,7 @@ import {
   ViewChild,
   ViewContainerRef,
   inject,
+  Injector,
 } from '@angular/core';
 import { IccPortalContent } from './portal.model';
 
@@ -24,9 +25,9 @@ import { IccPortalContent } from './portal.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, PortalModule],
 })
-export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef);
-  @Input() content!: IccPortalContent<any>;
+  @Input() content!: IccPortalContent<T>;
   @Input() context!: {};
   portalType!: string;
 
@@ -43,20 +44,29 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.addPortalContent();
+    this.addPortalContent(this.content, this.context);
   }
 
-  addPortalContent(): void {
-    if (this.content instanceof Type) {
-      const portal = new ComponentPortal(this.content);
-      this.attachComponentPortal(portal, this.context);
-    } else if (this.content instanceof TemplateRef) {
-      const portal = new TemplatePortal(this.content, this.viewContainerRef, this.context);
-      this.attachTemplatePortal(portal);
+  addPortalContent(content: IccPortalContent<T>, context: Object, injector?: Injector): void {
+    if (content instanceof Type) {
+      this.createComponentPortal(content, context, injector);
+    } else if (content instanceof TemplateRef) {
+      this.createTemplatePortal(content, context);
     }
   }
 
-  attachComponentPortal<T>(portal: ComponentPortal<T>, context?: Object): ComponentRef<T> {
+  createComponentPortal(content: Type<T>, context?: Object, injector?: Injector): ComponentRef<T> {
+    const portal = new ComponentPortal(content, null, injector);
+    const componentRef = this.attachComponentPortal(portal, context);
+    return componentRef;
+  }
+
+  createTemplatePortal(content: TemplateRef<T>, context: Object): void {
+    const portal = new TemplatePortal(content, this.viewContainerRef, <T>context);
+    this.attachTemplatePortal(portal);
+  }
+
+  private attachComponentPortal(portal: ComponentPortal<T>, context?: Object): ComponentRef<T> {
     const componentRef = this.portalOutlet.attachComponentPortal(portal);
     if (context && componentRef.instance) {
       Object.assign(componentRef.instance, context);
@@ -66,7 +76,7 @@ export class IccPortalComponent implements OnInit, AfterViewInit, OnDestroy {
     return componentRef;
   }
 
-  attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+  private attachTemplatePortal(portal: TemplatePortal<T>): EmbeddedViewRef<T> {
     const templateRef = this.portalOutlet.attachTemplatePortal(portal);
     templateRef.detectChanges();
     return templateRef;

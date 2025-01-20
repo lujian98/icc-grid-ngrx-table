@@ -8,14 +8,14 @@ import { IccOverlayService } from './overlay/overlay.service';
 import { IccRenderableContainer } from '@icc/ui/portal';
 
 @Injectable()
-export class IccDynamicOverlayService implements OnDestroy {
+export class IccDynamicOverlayService<T> implements OnDestroy {
   private overlayPositionBuilder = inject(IccPositionBuilderService);
   private overlayService = inject(IccOverlayService);
   private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
 
   private componentType!: Type<IccRenderableContainer>;
   private context: Object = {};
-  private content!: Type<any> | TemplateRef<any> | string;
+  private content!: Type<T> | TemplateRef<T> | string;
   private hostElement!: ElementRef;
   private overlayRef!: IccOverlayRef | null;
   private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
@@ -26,7 +26,7 @@ export class IccDynamicOverlayService implements OnDestroy {
     componentType: Type<IccRenderableContainer>,
     hostElement: ElementRef,
     overlayServiceConfig: IccOverlayServiceConfig,
-    content: Type<any> | TemplateRef<any> | string,
+    content: Type<T> | TemplateRef<T> | string,
     context: {},
   ): void {
     this.componentType = componentType;
@@ -68,7 +68,7 @@ export class IccDynamicOverlayService implements OnDestroy {
     return true;
   }
 
-  rebuild(context: {}, content: Type<any> | TemplateRef<any> | string): void {
+  rebuild(context: {}, content: Type<T> | TemplateRef<T> | string): void {
     this.context = context;
     this.content = content;
     if (this.containerRef) {

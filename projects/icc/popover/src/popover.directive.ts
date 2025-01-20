@@ -14,13 +14,13 @@ import { IccPopoverComponent } from './popover.component';
   standalone: true,
   providers: [IccDynamicOverlayService],
 })
-export class IccPopoverDirective implements AfterViewInit {
+export class IccPopoverDirective<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private _context: Object = {};
 
   @Input('iccPopover')
-  content!: Type<any> | TemplateRef<any>;
+  content!: Type<T> | TemplateRef<T>;
 
   @Input('iccPopoverContext')
   set context(value: {}) {
