@@ -5,7 +5,7 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 @Component({
   selector: 'app-grid-multi-row-selection',
   template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
-  styles: [':host {  display: flex; width: 100%; }'],
+  styles: [':host {  display: flex; width: 100%; padding: 0 10px }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })
@@ -18,6 +18,8 @@ export class AppGridMultiRowSelectionComponent {
     columnSort: true,
     columnFilter: true,
     columnHidden: true,
+    columnResize: true,
+    columnReorder: true,
     multiRowSelection: true,
     remoteColumnsConfig: true,
     remoteGridData: true,
