@@ -15,6 +15,7 @@ import {
 import { uniqueId } from '@icc/ui/core';
 import { BehaviorSubject, Observable, interval, map, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
+import { getTableWidth } from '../utils/viewport-width-ratio';
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
@@ -66,6 +67,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
+  }
+
+  get tableWidth(): number {
+    return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
   }
 
   getRecord(record: T): T {

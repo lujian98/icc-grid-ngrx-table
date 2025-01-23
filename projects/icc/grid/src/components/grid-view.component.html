@@ -32,6 +32,7 @@
       <ng-container *ngIf="rowSelection$ | async as selection">
         <icc-grid-row
           *ngIf="!isRowGroup(index, record)"
+          [ngStyle]="{ width: tableWidth + 'px' }"
           [gridConfig]="gridConfig"
           [rowIndex]="index"
           [columns]="columns"
