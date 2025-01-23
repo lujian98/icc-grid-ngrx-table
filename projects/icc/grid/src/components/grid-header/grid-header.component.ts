@@ -66,7 +66,9 @@ export class IccGridHeaderComponent<T> {
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
 
-  rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
+  get selectColumnWidth(): string {
+    return `${ROW_SELECTION_CELL_WIDTH}px`;
+  }
 
   getColumnWidth(column: IccColumnConfig): string {
     const width = this.columnWidths.find((col) => col.name === column.name)?.width;

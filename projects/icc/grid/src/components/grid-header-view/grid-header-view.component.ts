@@ -3,6 +3,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccGridFacade } from '../../+state/grid.facade';
+import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { DragDropEvent } from '../../models/drag-drop-event';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { getTableWidth, viewportWidthRatio } from '../../utils/viewport-width-ratio';
@@ -150,14 +151,19 @@ export class IccGridHeaderViewComponent {
 
   private setColumWidths(columns: any[], widthRatio: number): void {
     this.tableWidth = this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
-    this.columnWidths = [...columns]
-      .filter((column) => column.hidden !== true)
-      .map((column) => {
-        return {
-          name: column.name,
-          width: widthRatio * column.width!,
-        };
-      });
+    const displayColumns = [...columns].filter((column) => column.hidden !== true);
+    let tot = this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0;
+    this.columnWidths = displayColumns.map((column, index) => {
+      let width = Math.round(widthRatio * column.width);
+      tot += width;
+      if (index === displayColumns.length - 1) {
+        width += this.tableWidth - tot;
+      }
+      return {
+        name: column.name,
+        width: width,
+      };
+    });
   }
 
   private indexCorrection(idx: number): number {

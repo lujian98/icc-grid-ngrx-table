@@ -1,4 +1,4 @@
-<icc-grid-header-item *ngIf="gridConfig.rowSelection">
+<icc-grid-header-item *ngIf="gridConfig.rowSelection" [ngStyle]="{ flex: '0 0 ' + selectColumnWidth }">
   <ng-container *ngIf="rowSelections$ | async as vm">
     <icc-row-select
       *ngIf="gridConfig.multiRowSelection"

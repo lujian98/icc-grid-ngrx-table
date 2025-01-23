@@ -1,7 +1,7 @@
 <icc-grid-cell
   *ngIf="gridConfig.rowSelection"
   class="icc-grid-cell-row-select"
-  [ngStyle]="{ height: gridConfig.rowHeight + 'px', flex: '0 0 ' + selectColumnWidth, 'max-width': selectColumnWidth }"
+  [ngStyle]="{ height: gridConfig.rowHeight + 'px', flex: '0 0 ' + selectColumnWidth }"
 >
   <icc-row-select [selected]="selected"> </icc-row-select>
 </icc-grid-cell>
