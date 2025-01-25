@@ -93,26 +93,3 @@
     </icc-form-field>
   </ng-container>
 </ng-container>
-
-<!--
-
-          <cdk-virtual-scroll-viewport class="icc-select-virtual-scroll" [itemSize]="28">
-            <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
-              <icc-option *cdkVirtualFor="let option of result" [value]="option" #ref (click)="clickOption(ref)">
-                <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected">
-                  <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
-                  </icc-filter-highlight>
-                </icc-checkbox>
-                <ng-container *ngIf="!fieldConfig.multiSelection">
-                  <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
-                  </icc-filter-highlight>
-                </ng-container>
-              </icc-option>
-              <icc-option class="no-result" *ngIf="!result.length">{{
-                "ICC.UI.LIST.NO_RESULT" | translate
-              }}</icc-option>
-            </ng-container>
-          </cdk-virtual-scroll-viewport>
-
-
--->

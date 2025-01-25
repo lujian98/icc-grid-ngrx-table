@@ -36,7 +36,7 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccFilterPipe, uniqueId } from '@icc/ui/core';
+import { IccFilterPipe, uniqueId, isEqual } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { Observable, Subject, filter, map, takeUntil, timer, take } from 'rxjs';
@@ -270,11 +270,11 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.clickedOption = this.clickedOptions++;
   }
   onScrolledIndexChange(index: number): void {
-    console.log(' index=', index);
-    //console.log( ' 1111 options =', options);
-    console.log(' 1111 optionList =', this.optionList);
-    //console.log( ' 1111 optionList =', this.autocomplete.selection);
-    console.log(' 1111 vales =', this.value);
+    const values = this.value as any[];
+    this.optionList.toArray().forEach((option) => {
+      const find = values.find((item) => isEqual(item, option.value));
+      option.selected = find;
+    });
   }
 
   get selectedField(): AbstractControl {
