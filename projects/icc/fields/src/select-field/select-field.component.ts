@@ -10,6 +10,9 @@ import {
   ViewChild,
   forwardRef,
   inject,
+  ContentChildren,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -266,6 +269,13 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.autocomplete.setSelectionOption(option);
     this.clickedOption = this.clickedOptions++;
   }
+  onScrolledIndexChange(index: number): void {
+    console.log(' index=', index);
+    //console.log( ' 1111 options =', options);
+    console.log(' 1111 optionList =', this.optionList);
+    //console.log( ' 1111 optionList =', this.autocomplete.selection);
+    console.log(' 1111 vales =', this.value);
+  }
 
   get selectedField(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
@@ -287,6 +297,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
     { [key: string]: T } | { [key: string]: T }[]
   >;
+  //@ContentChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
+  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
