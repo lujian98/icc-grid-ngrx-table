@@ -27,6 +27,7 @@ icc-layout,
     .cdk-overlay-pane {
       display: block;
       height: auto;
+      //min-height: 320px; // select drop down height 320px
     }
   }
 }
