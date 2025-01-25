@@ -24,6 +24,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   IccAutocompleteComponent,
@@ -71,6 +72,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    ScrollingModule,
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,
