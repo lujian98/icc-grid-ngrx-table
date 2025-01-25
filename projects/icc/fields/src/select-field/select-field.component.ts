@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -7,12 +8,11 @@ import {
   Input,
   OnDestroy,
   Output,
+  QueryList,
   ViewChild,
+  ViewChildren,
   forwardRef,
   inject,
-  ContentChildren,
-  QueryList,
-  ViewChildren,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -27,8 +27,6 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { TranslateModule } from '@ngx-translate/core';
 import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
@@ -36,21 +34,22 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccFilterPipe, uniqueId, isEqual } from '@icc/ui/core';
-import { IccIconModule } from '@icc/ui/icon';
-import { IccOptionComponent } from '@icc/ui/option';
-import { Observable, Subject, filter, map, takeUntil, timer, take } from 'rxjs';
+import { IccFilterPipe, isEqual, uniqueId } from '@icc/ui/core';
 import {
-  IccLabelDirective,
-  IccSuffixDirective,
-  IccLabelWidthDirective,
   IccFieldWidthDirective,
   IccFormFieldComponent,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccInputDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
 } from '@icc/ui/form-field';
+import { IccIconModule } from '@icc/ui/icon';
+import { IccOptionComponent } from '@icc/ui/option';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
-import { IccInputDirective } from '@icc/ui/form-field';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
@@ -115,7 +114,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    //console.log(' 0000000000000 fieldConfig =', fieldConfig);
     if (fieldConfig.options) {
       this.options = [...fieldConfig.options];
       delete fieldConfig.options;
@@ -143,7 +141,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
       map((fieldConfig) => {
         this._fieldConfig = fieldConfig!;
         this.initSelectField();
-        //console.log(' 22222222 fieldConfig =', fieldConfig);
         return fieldConfig;
       }),
     );
@@ -177,12 +174,9 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   @Input()
   set options(val: { [key: string]: T }[] | string[]) {
-    //console.log( ' 1111 options =', val)
     //local set option only, not used here
     const isStringsArray = val.every((item) => typeof item === 'string');
-    //console.log( ' isStringsArray=', isStringsArray)
     if (!this.fieldConfig) {
-      //console.log( ' 2222 options =', val)
       this.initFieldConfig({ ...defaultSelectFieldConfig });
     }
 
@@ -201,7 +195,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   @Input()
   set value(val: any) {
-    //console.log( 'eeeeeeeeeeeeee val =', val)
     if (this.form && val !== undefined) {
       this._value = this.getInitValue(val);
       this.setFormvalue();
@@ -215,17 +208,14 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private setFormvalue(): void {
-    //console.log( ' set form value =', this.value)
     this.selectedField.setValue(this.value);
   }
 
   private getInitValue(val: any): any {
-    //console.log('aaaaaaa val=', val)
     let value: any = val;
     if (typeof val === 'string') {
       value = [val];
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
-      //console.log(' object val=', val);
       return val;
     }
     const isStringsArray = value.every((item: any) => typeof item === 'string');
@@ -243,7 +233,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     } else {
       value = value ? [...value] : value;
     }
-    //console.log('bbbbbbbbbbbb val=', value)
     return value;
   }
 
@@ -270,11 +259,16 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.clickedOption = this.clickedOptions++;
   }
   onScrolledIndexChange(index: number): void {
-    const values = this.value as any[];
+    this.setSelectChecked();
+  }
+
+  private setSelectChecked(): void {
+    const values = this.value as T[];
     this.optionList.toArray().forEach((option) => {
       const find = values.find((item) => isEqual(item, option.value));
-      option.selected = find;
+      option.selected = !!find;
     });
+    this.changeDetectorRef.markForCheck();
   }
 
   get selectedField(): AbstractControl {
@@ -297,14 +291,11 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
     { [key: string]: T } | { [key: string]: T }[]
   >;
-  //@ContentChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
-    //console.log('ddddddddd  this.fieldConfig.optionLabel=', this.fieldConfig.optionLabel)
     if (Array.isArray(value)) {
-      //console.log('eeeeeeeeee  value=', value)
       if (value.length > 0) {
         return (
           value
@@ -325,19 +316,25 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
   }
 
+  private delaySetSelected(): void {
+    timer(10)
+      .pipe(take(1))
+      .subscribe(() => this.setSelectChecked());
+  }
+
   overlayOpen(event: boolean): void {
     this.isOverlayOpen = event;
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
+      this.delaySetSelected();
     } else {
-      //console.log( '5555555  close overlay this.form=', this.form)
     }
   }
 
   onChange(options: any): void {
-    //console.log( 'qqqqqqqqqqqqqqq options=', options)
     if (this.fieldConfig.multiSelection) {
       this.selectionChange.emit([options]);
+      this.delaySetSelected();
     } else {
       this.selectionChange.emit(options);
     }

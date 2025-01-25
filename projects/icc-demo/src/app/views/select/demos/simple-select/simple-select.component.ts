@@ -24,7 +24,7 @@ export class AppSimpleSelectComponent {
   singleListState2 = 'Louisiana';
 
   singleObjectState = [STATES[32]];
-  multiObjectStates = [STATES[32], STATES[36]];
+  multiObjectStates = [STATES[2], STATES[32], STATES[36]];
   singleListState = 'Louisiana';
   multiListStates = ['Louisiana', 'Nevada'];
 
