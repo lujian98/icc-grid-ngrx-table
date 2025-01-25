@@ -260,6 +260,13 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
+  clickedOption: number | undefined;
+  private clickedOptions = 1;
+  clickOption(option: IccOptionComponent): void {
+    this.autocomplete.setSelectionOption(option);
+    this.clickedOption = this.clickedOptions++;
+  }
+
   get selectedField(): AbstractControl {
     return this.form!.get(this.fieldConfig.fieldName!)!;
   }

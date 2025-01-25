@@ -15,6 +15,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
+  virtualScroll: false,
   ...defaultBaseField,
   //placeholder: '',
   //clearValue: true,

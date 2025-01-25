@@ -12,6 +12,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   optionLabel: string;
   optionKey: string;
   options?: any[];
+  virtualScroll: boolean;
 }
 
 export interface SelectFieldState {

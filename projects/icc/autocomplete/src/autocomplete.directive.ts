@@ -58,6 +58,18 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     }
   }
 
+  @Input('iccAutocompleteClickOption')
+  set autocompleteClickOption(clicked: number | undefined) {
+    if (clicked) {
+      this.setTriggerValue();
+      this.change.emit(this.autocomplete.value);
+      this._onChange(this.autocomplete.value);
+      if (!this.autocomplete.multiSelection) {
+        this.hide();
+      }
+    }
+  }
+
   get origin(): HTMLInputElement {
     return this.host.nativeElement;
   }
@@ -139,6 +151,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       .optionsClick()
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent) => {
+        //console.log( ' click eeeeeee option=', option)
         this.autocomplete.setSelectionOption(option);
         this.setTriggerValue();
         this.change.emit(this.autocomplete.value);
