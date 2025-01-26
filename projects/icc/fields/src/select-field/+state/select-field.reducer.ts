@@ -58,7 +58,6 @@ export const iccSelectFieldFeature = createFeature({
       if (state[key]) {
         delete newState[key];
       }
-      //console.log(' 333333  clear State key=', key);
       return { ...newState };
     }),
   ),

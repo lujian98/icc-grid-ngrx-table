@@ -45,8 +45,8 @@
         [compareWith]="compareFn.bind(this)"
       >
         <ng-template iccAutocompleteContent>
-          <div *ngIf="fieldConfig.checkAll" class="icc-select-field-sticky-header">
-            <icc-option *ngIf="fieldConfig.multiSelection" (click)="checkAll(selectOptions)">
+          <div *ngIf="fieldConfig.multiSelection" class="icc-select-field-sticky-header">
+            <icc-option *ngIf="fieldConfig.checkAll" (click)="checkAll(selectOptions)">
               <icc-checkbox [checked]="isAllChecked">
                 {{ "ICC.UI.ACTIONS.CHECK_ALL" | translate }}
               </icc-checkbox>
