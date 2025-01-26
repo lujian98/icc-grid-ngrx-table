@@ -85,7 +85,13 @@
                 [itemSize]="28"
                 (scrolledIndexChange)="onScrolledIndexChange($event)"
               >
-                <icc-option *cdkVirtualFor="let option of result" [value]="option" #ref (click)="clickOption(ref)">
+                <icc-option
+                  class="icc-select-field-option"
+                  *cdkVirtualFor="let option of result"
+                  [value]="option"
+                  #ref
+                  (click)="clickOption(ref)"
+                >
                   <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected">
                     <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
                     </icc-filter-highlight>

@@ -3,9 +3,13 @@
   flex-direction: row;
   width: 100%;
 
+  .right-panel {
+    padding: 0 15px;
+  }
+
   div {
     display: flex;
     flex-direction: column;
-    width: 600px;
+    width: 550px;
   }
 }

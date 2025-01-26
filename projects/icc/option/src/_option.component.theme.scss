@@ -20,4 +20,20 @@
       border-bottom: solid 1px icc.icc-theme(app-border-basic-color);
     }
   }
+
+  .icc-select-field-option:nth-child(odd) {
+    background-color: icc.icc-theme(icc-grid-row-odd-background-color);
+    &:focus,
+    &:hover {
+      background-color: icc.icc-theme(icc-grid-row-hover-background-color);
+    }
+  }
+
+  .icc-select-field-option:nth-child(even) {
+    background-color: icc.icc-theme(icc-grid-row-even-background-color);
+    &:focus,
+    &:hover {
+      background-color: icc.icc-theme(icc-grid-row-hover-background-color);
+    }
+  }
 }
