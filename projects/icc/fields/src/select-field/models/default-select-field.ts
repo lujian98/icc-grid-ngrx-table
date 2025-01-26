@@ -21,9 +21,6 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   optionKey: 'name',
   virtualScroll: true,
   ...defaultBaseField,
-  //placeholder: '',
-  //clearValue: true,
-  //editable: true,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {
