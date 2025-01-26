@@ -353,7 +353,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private setVirtualScrollPosition(): void {
-    if (this.hasValue && !this.isAllChecked) {
+    if (this.viewport && this.hasValue && !this.isAllChecked) {
       const values = sortByField([...this.fieldValue], this.fieldConfig.optionLabel, 'asc');
       const index = this.selectOptions.findIndex((option) => isEqual(option, values[0]));
       this.viewport.scrollToIndex(index);
