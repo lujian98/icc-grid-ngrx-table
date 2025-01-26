@@ -356,6 +356,17 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.selectionChange.emit([]);
   }
 
+  checkAll(checkAll: boolean): void {
+    console.log('checkAll= ', checkAll);
+    if (!checkAll) {
+      this.value = [];
+      //this.selectedField.setValue([]);
+      //this.selectionChange.emit([]);
+    }
+    this.delaySetSelected();
+    this.changeDetectorRef.markForCheck();
+  }
+
   registerOnChange(fn: any): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
