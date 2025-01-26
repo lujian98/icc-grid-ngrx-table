@@ -386,6 +386,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.delaySetSelected();
   }
 
+  isEmpty(isEmpty: boolean): void {
+    console.log(' isEmpty=', isEmpty); // TODO filter data select need use cases???
+  }
+
   registerOnChange(fn: any): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }

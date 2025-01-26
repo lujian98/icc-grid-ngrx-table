@@ -8,10 +8,14 @@ export interface IccSelectFieldConfig extends IccBaseField {
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete
   multiSelection: boolean;
+  checkAll: boolean; // only for multiSelection is true
+  uncheckAll: boolean; // only for multiSelection is true
+  isEmpty: boolean; // only for multiSelection is true
+  notEmpty: boolean; // only for multiSelection is true
   singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
-  options?: any[];
+  options?: any[]; // only used for local initial input
   virtualScroll: boolean;
 }
 

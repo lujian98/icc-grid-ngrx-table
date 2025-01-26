@@ -45,20 +45,25 @@
         [compareWith]="compareFn.bind(this)"
       >
         <ng-template iccAutocompleteContent>
-          <div *ngIf="fieldConfig.multiSelection" class="icc-select-field-sticky-header">
-            <icc-option (click)="checkAll(selectOptions)">
+          <div *ngIf="fieldConfig.checkAll" class="icc-select-field-sticky-header">
+            <icc-option *ngIf="fieldConfig.multiSelection" (click)="checkAll(selectOptions)">
               <icc-checkbox [checked]="isAllChecked">
-                {{ "CHECK_ALL" | translate }}
+                {{ "ICC.UI.ACTIONS.CHECK_ALL" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option (click)="checkAll([])">
+            <icc-option *ngIf="fieldConfig.uncheckAll" (click)="checkAll([])">
               <icc-checkbox [checked]="!hasValue">
-                {{ "UNCHECK_ALL" | translate }}
+                {{ "ICC.UI.ACTIONS.UNCHECK_ALL" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option>
+            <icc-option *ngIf="fieldConfig.isEmpty" (click)="isEmpty(true)">
               <icc-checkbox>
-                {{ "IS_EMPTY" | translate }}
+                {{ "ICC.UI.ACTIONS.IS_EMPTY" | translate }}
+              </icc-checkbox>
+            </icc-option>
+            <icc-option *ngIf="fieldConfig.notEmpty" (click)="isEmpty(false)">
+              <icc-checkbox>
+                {{ "ICC.UI.ACTIONS.NOT_EMPTY" | translate }}
               </icc-checkbox>
             </icc-option>
           </div>
