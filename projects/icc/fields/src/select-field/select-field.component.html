@@ -46,12 +46,12 @@
       >
         <ng-template iccAutocompleteContent>
           <div *ngIf="fieldConfig.multiSelection" class="icc-select-field-sticky-header">
-            <icc-option (click)="checkAll(true, selectOptions)">
+            <icc-option (click)="checkAll(selectOptions)">
               <icc-checkbox [checked]="isAllChecked">
                 {{ "CHECK_ALL" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option (click)="checkAll(false, [])">
+            <icc-option (click)="checkAll([])">
               <icc-checkbox [checked]="!hasValue">
                 {{ "UNCHECK_ALL" | translate }}
               </icc-checkbox>
