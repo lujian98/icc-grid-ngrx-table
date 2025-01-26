@@ -176,6 +176,10 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   }
 
   private setOverlayHeight(): void {
+    const overlay = this.document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLDivElement;
+    overlay.style.height = 'unset';
+
+    /*
     const overlayPane = this.document.querySelector('.cdk-overlay-pane') as HTMLDivElement;
     const options = this.document.querySelectorAll('icc-option');
     let height = 320;
@@ -192,7 +196,8 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       console.log(' h h h h =', h);
     }
     console.log(' height =', height);
-    overlayPane.style.flex = `0 0 ${height}px`;
+    //overlayPane.style.flex = `0 0 ${height}px`;
+    */
   }
 
   private setTriggerValue(): void {
