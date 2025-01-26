@@ -67,7 +67,7 @@
               </icc-checkbox>
             </icc-option>
           </div>
-          <ng-container *ngIf="selectOptions | filter: selectedField.value : fieldConfig.optionLabel as result">
+          <ng-container *ngIf="selectOptions | filter: field.value : fieldConfig.optionLabel as result">
             <ng-container *ngIf="!fieldConfig.virtualScroll">
               <icc-option *ngFor="let option of result" [value]="option" #ref>
                 <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected">

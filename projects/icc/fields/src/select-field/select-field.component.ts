@@ -214,7 +214,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private setFormvalue(): void {
-    this.selectedField.setValue(this.value);
+    this.field.setValue(this.value);
   }
 
   private getInitValue(val: any): any {
@@ -245,6 +245,11 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
+
+  /*
+  get selectedField(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+  }*/
 
   get fieldValue(): T[] {
     return this.field.value instanceof Array ? this.field.value : [this.field.value];
@@ -281,12 +286,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.changeDetectorRef.markForCheck();
   }
 
-  get selectedField(): AbstractControl {
-    return this.form!.get(this.fieldConfig.fieldName!)!;
-  }
-
   get hasValue(): boolean {
-    const value = this.selectedField.value;
+    const value = this.field.value;
     return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
   }
 
@@ -295,7 +296,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   get filterValue(): string {
-    return typeof this.selectedField.value === 'object' ? '' : this.selectedField.value;
+    return typeof this.field.value === 'object' ? '' : this.field.value;
   }
 
   get toDisplay(): string {
@@ -376,9 +377,9 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   clearSelected(event: MouseEvent): void {
     event.stopPropagation();
     if (this.fieldConfig.multiSelection) {
-      this.selectedField.setValue([]);
+      this.field.setValue([]);
     } else {
-      this.selectedField.setValue('');
+      this.field.setValue('');
     }
     this.changeDetectorRef.markForCheck();
 
