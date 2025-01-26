@@ -1,5 +1,7 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import {
   ComponentRef,
   Directive,
@@ -8,6 +10,7 @@ import {
   forwardRef,
   Host,
   HostListener,
+  inject,
   Input,
   OnDestroy,
   OnInit,
@@ -15,9 +18,9 @@ import {
   Output,
   ViewContainerRef,
 } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { takeUntil, tap } from 'rxjs/operators';
+import { IccFormFieldComponent } from '@icc/ui/form-field';
+import { IccOptionComponent } from '@icc/ui/option';
 import {
   IccPosition,
   IccPositionBuilderService,
@@ -25,8 +28,7 @@ import {
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
-import { IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccOptionComponent } from '@icc/ui/option';
+import { takeUntil, tap } from 'rxjs/operators';
 import { IccAutocompleteComponent } from './autocomplete.component';
 
 @Directive({
@@ -44,6 +46,7 @@ import { IccAutocompleteComponent } from './autocomplete.component';
   ],
 })
 export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit, OnDestroy {
+  private document = inject(ICC_DOCUMENT);
   @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T>;
   private overlayRef!: OverlayRef | null;
   private position: IccPosition = IccPosition.BOTTOM;
@@ -151,7 +154,6 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
       .optionsClick()
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent) => {
-        //console.log( ' click eeeeeee option=', option)
         this.autocomplete.setSelectionOption(option);
         this.setTriggerValue();
         this.change.emit(this.autocomplete.value);
@@ -160,6 +162,9 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
           this.hide();
         }
       });
+
+    const overlayPane = this.document.querySelector('.cdk-overlay-pane') as HTMLDivElement;
+    overlayPane.style.flex = '0 0 320px'; // TODO max 320px;
   }
 
   private getOverlayHeight(): string | undefined {
