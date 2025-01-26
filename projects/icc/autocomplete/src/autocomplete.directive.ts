@@ -1,7 +1,6 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { ICC_DOCUMENT } from '@icc/ui/theme';
 import {
   ComponentRef,
   Directive,
@@ -28,7 +27,8 @@ import {
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
-import { Observable, Subject, map, take, takeUntil, timer, tap } from 'rxjs';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
+import { take, takeUntil, tap, timer } from 'rxjs';
 import { IccAutocompleteComponent } from './autocomplete.component';
 
 @Directive({
@@ -165,21 +165,55 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     timer(10)
       .pipe(take(1))
       .subscribe(() => this.setOverlayHeight());
-
-    // this.setOverlayHeight();
   }
 
   private setOverlayHeight(): void {
     const overlay = this.document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLDivElement;
     overlay.style.height = 'unset';
+
+    const overlayHeight = this.getOverlayHeight();
+    /*
+    const el = overlay.querySelector('.cdk-overlay-pane') as HTMLDivElement;
+    console.log( ' el=', el)
+    const pos = el.getBoundingClientRect();
+    console.log( ' el.clientHeight=', el.clientHeight)
+    console.log( ' pos.bottom=', pos.bottom)
+    const height = el.clientHeight - pos.bottom;
+    console.log( ' height=', height)
+    */
+
     const virtualScrollWrapper = overlay.querySelector('.cdk-virtual-scroll-content-wrapper') as HTMLDivElement;
     if (virtualScrollWrapper) {
       const styles = window.getComputedStyle(virtualScrollWrapper);
-      if (parseFloat(styles.height) < 320) {
+      // const height = overlayHeight < parseFloat(styles.height) ? overlayHeight : parseFloat(styles.height);
+      const height = parseFloat(styles.height);
+      if (height < 320) {
         const viewport = overlay.querySelector('cdk-virtual-scroll-viewport') as HTMLDivElement;
-        viewport.style.flex = `1 1 ${styles.height}`;
+        viewport.style.flex = `1 1 ${height}px`;
+      }
+    } else {
+      if (overlayHeight < 320) {
+        const el = overlay.querySelector('.icc-option-list') as HTMLDivElement;
+        //el.style.flex = `0 0 ${overlayHeight}px`;
       }
     }
+  }
+
+  // TODO to close to bottom
+  private getOverlayHeight(): number {
+    const el = this.formField?.elementRef?.nativeElement;
+    if (el) {
+      const pos = el.getBoundingClientRect();
+      const height = el.offsetParent.clientHeight - pos.bottom;
+      /* default .sun-option-list max-height: 20rem; is 320px */
+      if (height < 320) {
+        /* prevent blink if the height is negative or too small */
+        const h = height < 20 ? 20 : height;
+        return h;
+        //return `${h}px`;
+      }
+    }
+    return 320;
   }
 
   private setTriggerValue(): void {
