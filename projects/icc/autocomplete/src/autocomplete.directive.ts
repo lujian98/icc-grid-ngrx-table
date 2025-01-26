@@ -28,7 +28,7 @@ import {
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, map, take, takeUntil, timer, tap } from 'rxjs';
 import { IccAutocompleteComponent } from './autocomplete.component';
 
 @Directive({
@@ -140,7 +140,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     this.isShow = true;
     this.overlayRef = this.overlay.create({
       width: this.width,
-      height: this.getOverlayHeight(),
+      // height: 320,
       scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.inputHost, this.position, 0),
     });
@@ -163,23 +163,36 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
         }
       });
 
-    const overlayPane = this.document.querySelector('.cdk-overlay-pane') as HTMLDivElement;
-    overlayPane.style.flex = '0 0 320px'; // TODO max 320px;
+    //  const overlayWrapper = this.document.querySelector('.cdk-virtual-scroll-content-wrapper') as HTMLDivElement;
+    //  const styles = window.getComputedStyle(overlayWrapper);
+    // console.log(' styles H=',styles.height);
+    // console.log(' oppppps =', this.autocomplete.options.length)
+    //console.log(' height=', height)
+    timer(10)
+      .pipe(take(1))
+      .subscribe(() => this.setOverlayHeight());
+
+    // this.setOverlayHeight();
   }
 
-  private getOverlayHeight(): string | undefined {
-    const el = this.formField?.elementRef?.nativeElement;
-    if (el) {
-      const pos = el.getBoundingClientRect();
-      const height = el.offsetParent.clientHeight - pos.bottom;
-      /* default .icc-option-list max-height: 20rem; is 320px */
-      if (height < 320) {
-        /* prevent blink if the height is negative or too small */
-        const h = height < 20 ? 20 : height;
-        return `${h}px`;
+  private setOverlayHeight(): void {
+    const overlayPane = this.document.querySelector('.cdk-overlay-pane') as HTMLDivElement;
+    const options = this.document.querySelectorAll('icc-option');
+    let height = 320;
+    console.log(' options=', options);
+    if (options.length > 0) {
+      const rowHeight = options[0].clientHeight + 1;
+      const h = rowHeight * options.length;
+      if (h < height) {
+        height = h;
       }
+      if (height < rowHeight) {
+        height = rowHeight * 3;
+      }
+      console.log(' h h h h =', h);
     }
-    return undefined;
+    console.log(' height =', height);
+    overlayPane.style.flex = `0 0 ${height}px`;
   }
 
   private setTriggerValue(): void {

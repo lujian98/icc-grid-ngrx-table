@@ -4,6 +4,8 @@
 }
 
 .icc-option-list {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   max-height: 320px;
   overflow: auto;
