@@ -1,4 +1,4 @@
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -109,7 +109,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
-  private totalOptions: number | undefined;
+  private selectOptions: { [key: string]: T }[] = [];
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -161,7 +161,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
-            this.totalOptions = selectOptions.length;
+            this.selectOptions = selectOptions;
             return selectOptions;
           }),
         );
@@ -287,7 +287,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   get isAllChecked(): boolean {
-    return this.value.length === this.totalOptions;
+    return this.value.length === this.selectOptions.length;
   }
 
   get filterValue(): string {
@@ -302,6 +302,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     { [key: string]: T } | { [key: string]: T }[]
   >;
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
+  @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
@@ -326,18 +327,30 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
   }
 
-  private delaySetSelected(): void {
+  private delaySetSelected(overlayOpen?: boolean): void {
     timer(10)
       .pipe(take(1))
-      .subscribe(() => this.setSelectChecked());
+      .subscribe(() => {
+        this.setSelectChecked();
+        if (overlayOpen) {
+          this.setVirtualScrollPosition();
+        }
+      });
   }
 
   overlayOpen(event: boolean): void {
     this.isOverlayOpen = event;
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
-      this.delaySetSelected();
+      this.delaySetSelected(true);
     } else {
+    }
+  }
+
+  private setVirtualScrollPosition(): void {
+    if (this.hasValue && !this.isAllChecked) {
+      const index = this.selectOptions.findIndex((option) => isEqual(option, this.value[0]));
+      this.viewport.scrollToIndex(index);
     }
   }
 
