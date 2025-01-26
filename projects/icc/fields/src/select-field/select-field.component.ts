@@ -246,6 +246,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
+  get fieldValue(): T[] {
+    return this.field.value instanceof Array ? this.field.value : [this.field.value];
+  }
+
   get required(): boolean {
     return this.field.hasValidator(Validators.required) && !this.field.disabled;
   }
@@ -269,7 +273,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   private setSelectChecked(): void {
-    const values = this.value as T[];
+    const values = this.fieldValue;
     this.optionList.toArray().forEach((option) => {
       const find = values.find((item) => isEqual(item, option.value));
       option.selected = !!find;
@@ -287,7 +291,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   get isAllChecked(): boolean {
-    return this.value.length === this.selectOptions.length;
+    return this.fieldValue.length === this.selectOptions.length;
   }
 
   get filterValue(): string {
@@ -349,7 +353,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   private setVirtualScrollPosition(): void {
     if (this.hasValue && !this.isAllChecked) {
-      const values = sortByField([...this.value], this.fieldConfig.optionLabel, 'asc');
+      const values = sortByField([...this.fieldValue], this.fieldConfig.optionLabel, 'asc');
       const index = this.selectOptions.findIndex((option) => isEqual(option, values[0]));
       this.viewport.scrollToIndex(index);
     }
