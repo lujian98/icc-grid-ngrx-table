@@ -46,12 +46,12 @@
       >
         <ng-template iccAutocompleteContent>
           <div *ngIf="fieldConfig.multiSelection" class="icc-select-field-sticky-header">
-            <icc-option (click)="checkAll(true)">
-              <icc-checkbox>
+            <icc-option (click)="checkAll(true, selectOptions)">
+              <icc-checkbox [checked]="isAllChecked">
                 {{ "CHECK_ALL" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option (click)="checkAll(false)">
+            <icc-option (click)="checkAll(false, [])">
               <icc-checkbox [checked]="!hasValue">
                 {{ "UNCHECK_ALL" | translate }}
               </icc-checkbox>
@@ -110,32 +110,3 @@
     </icc-form-field>
   </ng-container>
 </ng-container>
-
-<!--
-    <sun-option *ngIf="column.showCheckAll && column.filterMultiSelect"
-      class="sun-select-filter-option-divider"
-      [value]="selectFilterValue.CHECK_ALL">
-      <sun-checkbox class="sun-select-filter-checkbox" [checked]="isAllChecked" ghost>
-        {{ 'COMMON.LABEL.CHECK_ALL' | translate }}
-      </sun-checkbox>
-      <div class="sun-dropdown-divider" *ngIf="!column.showUncheckAll && !column.showIsEmpty"></div>
-    </sun-option>
-
-    <sun-option *ngIf="column.showUncheckAll && column.filterMultiSelect"
-      class="sun-select-filter-option-divider"
-      [value]="selectFilterValue.UNCHECK_ALL">
-      <sun-checkbox class="sun-select-filter-checkbox" [checked]="value && value.length ===0" ghost>
-        {{ 'COMMON.LABEL.UNCHECK_ALL' | translate }}
-      </sun-checkbox>
-      <div class="sun-dropdown-divider" *ngIf="!column.showIsEmpty"></div>
-    </sun-option>
-
-    <sun-option *ngIf="column.showIsEmpty && column.filterMultiSelect"
-      class="sun-select-filter-option-divider"
-      [value]="selectFilterValue.IS_EMPTY" #refIsEmpty>
-      <sun-checkbox class="sun-select-filter-checkbox" [checked]="isChecked(refIsEmpty)" ghost>
-        {{ 'GRID.IS_EMPTY' | translate }}
-      </sun-checkbox>
-      <div class="sun-dropdown-divider" *ngIf="column.showCheckAll || column.showUncheckAll"></div>
-    </sun-option>
--->

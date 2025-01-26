@@ -109,6 +109,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
+  private totalOptions: number | undefined;
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -158,7 +159,12 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   private initSelectField(): void {
     if (this.fieldConfig?.viewportReady) {
       if (!this.selectOptions$) {
-        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
+        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
+          map((selectOptions) => {
+            this.totalOptions = selectOptions.length;
+            return selectOptions;
+          }),
+        );
       }
       if (!this.form) {
         if (!this.form) {
@@ -280,6 +286,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
   }
 
+  get isAllChecked(): boolean {
+    return this.value.length === this.totalOptions;
+  }
+
   get filterValue(): string {
     return typeof this.selectedField.value === 'object' ? '' : this.selectedField.value;
   }
@@ -356,13 +366,14 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.selectionChange.emit([]);
   }
 
-  checkAll(checkAll: boolean): void {
-    console.log('checkAll= ', checkAll);
+  checkAll(checkAll: boolean, selectOptions: { [key: string]: T }[] | string[]): void {
+    /*
     if (!checkAll) {
       this.value = [];
-      //this.selectedField.setValue([]);
-      //this.selectionChange.emit([]);
-    }
+    } else {
+      this.value = selectOptions;
+    }*/
+    this.value = selectOptions;
     this.delaySetSelected();
     this.changeDetectorRef.markForCheck();
   }
