@@ -49,6 +49,7 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
         });*/
       });
     }
+    console.log(' 2222 params=', params);
     return params as T[];
   }
 

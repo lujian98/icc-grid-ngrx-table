@@ -28,13 +28,13 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
     //console.log( ' xxxxxxx this.fieldConfig=', this.fieldConfig)
   }
 
-  onSelectionChange<T>(value: any): void {
-    console.log(' filtr select change options=', value);
+  onSelectionChange<T>(value: any[]): void {
+    console.log(' 55555555555555 filtr select change options=', value);
     // TODO if mutiple select filter use this.filterChanged$.next(value);
     if (Array.isArray(value)) {
       this.applyFilter(value);
     } else {
-      this.applyFilter([value]);
+      // this.applyFilter([...value]);
     }
   }
 }
