@@ -34,7 +34,7 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccFilterPipe, isEqual, uniqueId } from '@icc/ui/core';
+import { IccFilterPipe, isEqual, uniqueId, sortByField } from '@icc/ui/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -349,7 +349,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   private setVirtualScrollPosition(): void {
     if (this.hasValue && !this.isAllChecked) {
-      const index = this.selectOptions.findIndex((option) => isEqual(option, this.value[0]));
+      const values = sortByField([...this.value], this.fieldConfig.optionLabel, 'asc');
+      const index = this.selectOptions.findIndex((option) => isEqual(option, values[0]));
       this.viewport.scrollToIndex(index);
     }
   }

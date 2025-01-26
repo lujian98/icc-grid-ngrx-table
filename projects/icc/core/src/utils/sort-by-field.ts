@@ -1,0 +1,21 @@
+export function sortByField<T>(data: T[], field: string, direction: string) {
+  const order = direction === 'asc' ? 1 : -1;
+  data.sort(function (d1: T, d2: T) {
+    const v1 = (d1 as any)[field];
+    const v2 = (d2 as any)[field];
+    let res = null;
+    if (v1 == null && v2 != null) {
+      res = -1;
+    } else if (v1 != null && v2 == null) {
+      res = 1;
+    } else if (v1 == null && v2 == null) {
+      res = 0;
+    } else if (typeof v1 === 'string' && typeof v2 === 'string') {
+      res = v1.localeCompare(v2);
+    } else {
+      res = v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+    }
+    return order * res;
+  });
+  return data;
+}
