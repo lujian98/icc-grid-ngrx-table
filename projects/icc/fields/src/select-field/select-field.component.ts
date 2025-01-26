@@ -246,11 +246,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
-  /*
-  get selectedField(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
-  }*/
-
   get fieldValue(): T[] {
     return this.field.value instanceof Array ? this.field.value : [this.field.value];
   }
