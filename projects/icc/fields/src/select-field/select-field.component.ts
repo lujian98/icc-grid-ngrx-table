@@ -359,6 +359,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
       this.selectionChange.emit([options]);
       this.delaySetSelected();
     } else {
+      this.value = [options];
       this.selectionChange.emit(options);
     }
   }
