@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccSelectFieldConfig, IccSelectFieldComponent } from '@icc/ui/fields';
+import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -11,10 +11,11 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   imports: [CommonModule, IccSelectFieldComponent],
 })
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
-  fieldConfig!: Partial<IccSelectFieldConfig>;
+  override fieldConfig!: Partial<IccSelectFieldConfig>;
 
   override checkField(): void {
-    this.fieldConfig = {
+    const fieldConfig = {
+      ...defaultSelectFieldConfig,
       fieldName: this.column.name,
       clearValue: true,
       urlKey: this.gridConfig.urlKey,
@@ -22,10 +23,13 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       editable: true,
       placeholder: 'Filter ...',
     };
+    this.fieldConfig = this.fieldConfig ? { ...fieldConfig, ...this.fieldConfig } : { ...fieldConfig };
+
+    //console.log( ' xxxxxxx this.fieldConfig=', this.fieldConfig)
   }
 
   onSelectionChange<T>(value: any): void {
-    //console.log(' filtr select change options=', value);
+    console.log(' filtr select change options=', value);
     // TODO if mutiple select filter use this.filterChanged$.next(value);
     if (Array.isArray(value)) {
       this.applyFilter(value);

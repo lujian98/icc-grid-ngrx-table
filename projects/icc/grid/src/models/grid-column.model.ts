@@ -1,6 +1,7 @@
 import { Type } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IccRowGroups } from '../services/row-group/row-groups';
+import { IccSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 export interface IccSortField {
   field: string;
@@ -90,13 +91,17 @@ export interface IccColumnFilter {
 }
 
 export type IccFilterField = boolean | string;
+export type IccFilterFieldConfig = Partial<IccFormField>;
 
 /*
+Partial<IccTreeConfig>
 export enum FilterType {
   Text = 'Text',
   Number = 'Number',
   Boolean = 'Boolean'
 }
+
+
 */
 
 /*
@@ -148,6 +153,7 @@ export interface IccColumnConfig {
   //minWidth?: number;
   sortField?: boolean;
   filterField?: IccFilterField;
+  filterFieldConfig?: IccFilterFieldConfig;
   rendererType?: IccRendererType;
   component?: Type<unknown>;
   renderer?: Function;

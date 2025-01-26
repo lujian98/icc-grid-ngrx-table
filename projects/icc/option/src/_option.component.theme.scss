@@ -9,6 +9,7 @@
     &.selected {
       background-color: icc.icc-theme(icc-option-item-selected-background-color);
       font-weight: bold;
+      color: orangered;
     }
 
     &:hover {

@@ -11,6 +11,7 @@ import {
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 @Component({
   template: '',
@@ -24,6 +25,8 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   private _value: string = '';
   _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
+
+  fieldConfig!: Partial<IccFormField>;
 
   @Input()
   set gridConfig(value: IccGridConfig) {

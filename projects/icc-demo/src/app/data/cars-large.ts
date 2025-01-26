@@ -1,4 +1,11 @@
-import { IccColumnConfig, IccGridConfig, IccGridData, IccSortField, IccColumnFilter } from '@icc/ui/grid';
+import {
+  IccColumnConfig,
+  IccGridConfig,
+  IccFilterFieldConfig,
+  IccSortField,
+  IccColumnFilter,
+  IccFilterField,
+} from '@icc/ui/grid';
 
 export const DCRBrands = [
   { title: 'Audi', name: 'Audi' },
@@ -51,6 +58,11 @@ export const DCRGridConfig: Partial<IccGridConfig> = {
   rowSelection: true,
 };
 
+const brandSelectFilterConfig: IccFilterFieldConfig = {
+  fieldType: 'select',
+  multiSelection: true,
+};
+
 export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'ID',
@@ -66,6 +78,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'brand',
     title: 'this s s     sssssssssssssssssss sssssssssssssss',
     filterField: 'select',
+    filterFieldConfig: brandSelectFilterConfig,
     width: 50,
   },
   {
