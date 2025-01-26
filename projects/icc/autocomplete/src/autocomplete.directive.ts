@@ -140,7 +140,6 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     this.isShow = true;
     this.overlayRef = this.overlay.create({
       width: this.width,
-      // height: 320,
       scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.inputHost, this.position, 0),
     });
@@ -163,11 +162,6 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
         }
       });
 
-    //  const overlayWrapper = this.document.querySelector('.cdk-virtual-scroll-content-wrapper') as HTMLDivElement;
-    //  const styles = window.getComputedStyle(overlayWrapper);
-    // console.log(' styles H=',styles.height);
-    // console.log(' oppppps =', this.autocomplete.options.length)
-    //console.log(' height=', height)
     timer(10)
       .pipe(take(1))
       .subscribe(() => this.setOverlayHeight());
@@ -178,26 +172,14 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
   private setOverlayHeight(): void {
     const overlay = this.document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLDivElement;
     overlay.style.height = 'unset';
-
-    /*
-    const overlayPane = this.document.querySelector('.cdk-overlay-pane') as HTMLDivElement;
-    const options = this.document.querySelectorAll('icc-option');
-    let height = 320;
-    console.log(' options=', options);
-    if (options.length > 0) {
-      const rowHeight = options[0].clientHeight + 1;
-      const h = rowHeight * options.length;
-      if (h < height) {
-        height = h;
+    const virtualScrollWrapper = overlay.querySelector('.cdk-virtual-scroll-content-wrapper') as HTMLDivElement;
+    if (virtualScrollWrapper) {
+      const styles = window.getComputedStyle(virtualScrollWrapper);
+      if (parseFloat(styles.height) < 320) {
+        const viewport = overlay.querySelector('cdk-virtual-scroll-viewport') as HTMLDivElement;
+        viewport.style.flex = `1 1 ${styles.height}`;
       }
-      if (height < rowHeight) {
-        height = rowHeight * 3;
-      }
-      console.log(' h h h h =', h);
     }
-    console.log(' height =', height);
-    //overlayPane.style.flex = `0 0 ${height}px`;
-    */
   }
 
   private setTriggerValue(): void {
