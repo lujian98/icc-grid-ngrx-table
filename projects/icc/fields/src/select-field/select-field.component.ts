@@ -115,7 +115,6 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     name: 'isEmpty',
     title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
   };
-
   notEmptyValue: any = {
     name: 'notEmpty',
     title: this.translateService.instant('ICC.UI.ACTIONS.NOT_EMPTY'),
