@@ -24,8 +24,6 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridConfig>(url, { params }).pipe(
       map((config) => {
-        //console.log(' gridConfig default =', gridConfig);
-        //console.log(' gridConfig res=', config);
         return {
           ...gridConfig,
           ...config,
@@ -39,38 +37,30 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<any[]>(url, { params }).pipe(
       map((res) => {
-        //console.log(' columnConfig res=', res);
         return res;
       }),
     );
   }
 
   getGridInMemoeryData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
-    // TODO where to store local data and process these data?
-    //console.log(' kkkkkkkkkkkkkkkkkkk');
     return of();
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
-    //console.log(' service getGridData gridConfig =', gridConfig);
     let params = this.backendService.getParams(gridConfig.urlKey, 'gridData');
-    //console.log(' service columnFilters =', gridConfig.columnFilters);
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
-    //console.log(' params =', params);
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridData<T>>(url, { params }).pipe(
       map((res) => {
-        //console.log('1444444 res=', res);
         return res;
       }),
       catchError((error) =>
         throwError(() => {
-          //console.log(' error=', error);
           return error;
         }),
       ),

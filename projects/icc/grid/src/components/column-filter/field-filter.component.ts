@@ -8,10 +8,10 @@ import {
   OnDestroy,
   inject,
 } from '@angular/core';
+import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
-import { IccSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 @Component({
   template: '',
@@ -31,9 +31,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
-    //if (this.column.filterField === 'select') {
     this.checkField();
-    // }
 
     const find = this.gridConfig.columnFilters.find((column) => column.name === this.column.name);
     if (find) {

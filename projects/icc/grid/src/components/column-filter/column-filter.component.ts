@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccSelectFieldConfig, defaultSelectFieldConfig } from '@icc/ui/fields';
-import { IccTextFilterComponent } from './text/text-filter.component';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccSelectFilterComponent } from './select/select-filter.component';
-import { IccGridConfig, IccColumnConfig, IccFilterField } from '../../models/grid-column.model';
+import { IccTextFilterComponent } from './text/text-filter.component';
 
 @Component({
   selector: 'icc-column-filter',
