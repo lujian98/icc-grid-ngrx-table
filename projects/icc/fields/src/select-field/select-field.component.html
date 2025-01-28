@@ -56,12 +56,22 @@
                 {{ "ICC.UI.ACTIONS.UNCHECK_ALL" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option *ngIf="fieldConfig.isEmpty" #refIsEmpty (click)="headerOptionClick(refIsEmpty)">
+            <icc-option
+              *ngIf="fieldConfig.isEmpty"
+              [value]="isEmptyValue"
+              #refIsEmpty
+              (click)="headerOptionClick(refIsEmpty)"
+            >
               <icc-checkbox [checked]="refIsEmpty.selected">
                 {{ "ICC.UI.ACTIONS.IS_EMPTY" | translate }}
               </icc-checkbox>
             </icc-option>
-            <icc-option *ngIf="fieldConfig.notEmpty" #refIsNotEmpty (click)="headerOptionClick(refIsNotEmpty)">
+            <icc-option
+              *ngIf="fieldConfig.notEmpty"
+              [value]="notEmptyValue"
+              #refIsNotEmpty
+              (click)="headerOptionClick(refIsNotEmpty)"
+            >
               <icc-checkbox [checked]="refIsNotEmpty.selected">
                 {{ "ICC.UI.ACTIONS.NOT_EMPTY" | translate }}
               </icc-checkbox>

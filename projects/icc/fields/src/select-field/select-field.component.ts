@@ -47,7 +47,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
@@ -100,6 +100,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
 })
 export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig; // = defaultSelectFieldConfig;
@@ -110,9 +111,14 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
   private selectOptions: { [key: string]: T }[] = [];
-  isEmptyValue = {
+  isEmptyValue: any = {
     name: 'isEmpty',
-    title: 'isEmpty',
+    title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
+  };
+
+  notEmptyValue: any = {
+    name: 'notEmpty',
+    title: this.translateService.instant('ICC.UI.ACTIONS.NOT_EMPTY'),
   };
 
   @Input() form!: FormGroup;
@@ -146,6 +152,12 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
       map((fieldConfig) => {
         this._fieldConfig = fieldConfig!;
         this.initSelectField();
+        if (this.fieldConfig) {
+          this.isEmptyValue[this.fieldConfig.optionKey] = this.isEmptyValue.name;
+          this.isEmptyValue[this.fieldConfig.optionLabel] = this.isEmptyValue.title;
+          this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
+          this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
+        }
         return fieldConfig;
       }),
     );
@@ -397,7 +409,23 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   headerOptionClick(option: IccOptionComponent): void {
     option.selected = !option.selected;
-    console.log(' isEmpty=', option); // TODO filter data select need use cases???
+    if (this.fieldConfig.multiSelection) {
+      if (option.selected) {
+        this.value = [...this.value, option.value];
+      } else {
+        this.value = [...this.value].filter(
+          (item) => item[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey],
+        );
+      }
+    } else {
+      if (option.selected) {
+        this.value = [option.value];
+      } else {
+        this.value = [];
+      }
+    }
+    this.field.setValue(this.value);
+    this.selectionChange.emit(this.value);
   }
 
   registerOnChange(fn: any): void {
