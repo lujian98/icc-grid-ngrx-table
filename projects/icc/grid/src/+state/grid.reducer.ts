@@ -64,6 +64,8 @@ export const iccGridFeature = createFeature({
           ...state[key],
           gridConfig,
           columnsConfig: action.columnsConfig.map((column) => {
+            //console.log( ' uuuuuuuuuuuuu column =', column)
+            // TODO add default column filter config based on type ???
             return {
               ...column,
               fieldType: column.fieldType || 'text',

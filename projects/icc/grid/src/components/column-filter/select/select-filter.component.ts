@@ -24,7 +24,7 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       placeholder: 'Filter ...',
     };
     this.fieldConfig = this.fieldConfig ? { ...fieldConfig, ...this.fieldConfig } : { ...fieldConfig };
-
+    this.column.filterFieldConfig = { ...this.fieldConfig };
     //console.log( ' xxxxxxx this.fieldConfig=', this.fieldConfig)
   }
 

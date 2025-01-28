@@ -1,6 +1,5 @@
-//import { IccSelectFieldType } from '../../fields/fieldConfig.model';
+import { IccSelectFieldConfig } from '@icc/ui/fields';
 import { IccColumnConfig } from '../../models/grid-column.model';
-//import { IccSelectField } from '../../fields/select_field';
 import { IccFilter } from './filter';
 
 export enum IccSelectFilterValues {
@@ -32,8 +31,8 @@ export class IccSelectFilter<T> extends IccFilter {
   }
 
   constructor(column: IccColumnConfig, key: string) {
-    super(column, key, 'select');
-    const filterFieldConfig = column.filterFieldConfig as any; // TODO type
+    super(column, key, 'select'); // TODO need add default filterFieldConfig for column type
+    const filterFieldConfig = column.filterFieldConfig as IccSelectFieldConfig;
     this.multiSelect = !!filterFieldConfig?.multiSelection;
   }
 }
