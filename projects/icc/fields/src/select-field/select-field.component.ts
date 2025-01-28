@@ -357,7 +357,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   onChange(options: any): void {
     if (this.fieldConfig.multiSelection) {
-      this.selectionChange.emit([options]);
+      this.selectionChange.emit(options);
       this.delaySetSelected();
     } else {
       this.value = [options];

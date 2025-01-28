@@ -54,7 +54,7 @@ export class IccGridService {
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
     //console.log(' service getGridData gridConfig =', gridConfig);
     let params = this.backendService.getParams(gridConfig.urlKey, 'gridData');
-
+    //console.log(' service columnFilters =', gridConfig.columnFilters);
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
@@ -78,7 +78,6 @@ export class IccGridService {
   }
 
   appendFilterHttpParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[], params: HttpParams): HttpParams {
-    //console.log(' 888888888 gridConfig.columnFilters=', columnFilters, ' columns=', columns);
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
     columnFilters.forEach((col) => {

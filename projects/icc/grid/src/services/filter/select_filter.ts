@@ -22,21 +22,18 @@ export class IccSelectFilter<T> extends IccFilter {
 
   // since the set search can only call at parent, the choices need to set when call
   get choices(): any[] {
-    //console.log(' 2222 this.search=', this.search);
     // TODO if select object id is not use name
     if (this.search instanceof Array) {
       this._choices = this.search.map((item) => item.name);
     } else {
       this._choices = [];
     }
-    //console.log(' 2222 this._choices=', this._choices);
     return this._choices;
   }
 
   constructor(column: IccColumnConfig, key: string) {
     super(column, key, 'select');
-    //const fieldType = column.fieldType as IccSelectFieldType;
-    //this.multiSelect = !!fieldType.filterMultiSelect;
-    this.multiSelect = false;
+    const filterFieldConfig = column.filterFieldConfig as any; // TODO type
+    this.multiSelect = !!filterFieldConfig?.multiSelection;
   }
 }

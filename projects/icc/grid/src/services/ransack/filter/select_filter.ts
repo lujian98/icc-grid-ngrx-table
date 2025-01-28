@@ -18,11 +18,10 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
   getParams(): T[] {
     const choices = this.filter.choices;
     const params: T[] = [];
-    //console.log(' 2222 choices=', choices);
+    let key = '';
     if (choices.length > 0) {
       const column = this.filter.column;
-      const key = this.filter.field + (this.filter.multiSelect ? '_in[]' : '_in');
-      //console.log(' 2222 key=', key);
+      key = this.filter.field + (this.filter.multiSelect ? '_in[]' : '_in');
       choices.forEach((value) => {
         const p: { [index: string]: any } = {};
         const val = value;
@@ -49,7 +48,7 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
         });*/
       });
     }
-    console.log(' 2222 params=', params);
+    //console.log(' 2222 params=', params);
     return params as T[];
   }
 
