@@ -299,7 +299,9 @@ export class InMemoryService extends InMemoryDbService {
           const val = item[filterKey];
           const value = this.getTypedValue(search, val, val);
           const filter = this.getTypedValue(search, val, search);
-          switch (compareKey) {
+          switch (
+            compareKey // TODO should use or for the same key???
+          ) {
             case 'cont':
               return value && value.toString().toLowerCase().includes(filter.toString());
             case 'i_cont':

@@ -403,7 +403,11 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
-    return fieldConfig.checkAll || fieldConfig.uncheckAll || fieldConfig.isEmpty || fieldConfig.notEmpty;
+    return (
+      (fieldConfig.multiSelection && (fieldConfig.checkAll || fieldConfig.uncheckAll)) ||
+      fieldConfig.isEmpty ||
+      fieldConfig.notEmpty
+    );
   }
 
   headerOptionClick(option: IccOptionComponent): void {
@@ -417,6 +421,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
         );
       }
     } else {
+      this.autocompleteClose = true;
       if (option.selected) {
         this.value = [option.value];
       } else {
