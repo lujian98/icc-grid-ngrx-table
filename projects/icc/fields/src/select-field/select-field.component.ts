@@ -110,6 +110,10 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<any[]>;
   private selectOptions: { [key: string]: T }[] = [];
+  isEmptyValue = {
+    name: 'isEmpty',
+    title: 'isEmpty',
+  };
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -387,8 +391,13 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     this.selectionChange.emit(this.value);
   }
 
-  isEmpty(isEmpty: boolean): void {
-    console.log(' isEmpty=', isEmpty); // TODO filter data select need use cases???
+  hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
+    return fieldConfig.checkAll || fieldConfig.uncheckAll || fieldConfig.isEmpty || fieldConfig.notEmpty;
+  }
+
+  headerOptionClick(option: IccOptionComponent): void {
+    option.selected = !option.selected;
+    console.log(' isEmpty=', option); // TODO filter data select need use cases???
   }
 
   registerOnChange(fn: any): void {
