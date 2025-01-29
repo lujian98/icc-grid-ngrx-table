@@ -22,10 +22,8 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
         let val = value;
         if (value === 'isEmpty') {
           key = this.filter.field + '_null';
-          val = 1;
         } else if (value === 'notEmpty') {
           key = this.filter.field + '_not_null';
-          val = 1;
         }
         p[key] = val;
         params.push(p as T);

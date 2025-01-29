@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, Input, OnInit, ViewContaine
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
+import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 @Component({
   selector: 'icc-column-filter',
@@ -54,14 +55,26 @@ export class IccColumnFilterComponent implements OnInit {
 
   private loadComponent(): void {
     const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
-    // TODO if pass this.column.component  to dynamic components
+    // TODO support input filter dynamic component
 
-    const cellComponent = this.componentMapper[filterType]; //IccTextFilterComponent;
+    const cellComponent = this.componentMapper[filterType];
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     if (this.column.filterFieldConfig) {
       this._componentRef.instance.fieldConfig = this.column.filterFieldConfig;
     }
     this._componentRef.instance.column = this.column;
     this._componentRef.instance.gridConfig = this.gridConfig;
+  }
+
+  private getFilterFieldConfig(filterType: string): IccFormField {
+    if (filterType === 'select') {
+      return {
+        ...defaultSelectFieldConfig,
+        ...this.column.filterFieldConfig,
+      };
+    }
+    return {
+      ...defaultTextFieldConfig,
+    };
   }
 }

@@ -21,7 +21,7 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       urlKey: this.gridConfig.urlKey,
       remoteOptions: true,
       editable: true,
-      placeholder: 'Filter ...',
+      placeholder: `ICC.UI.GRID.FILTER`,
     };
     this.fieldConfig = this.fieldConfig ? { ...fieldConfig, ...this.fieldConfig } : { ...fieldConfig };
     this.column.filterFieldConfig = { ...this.fieldConfig };

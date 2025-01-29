@@ -7,7 +7,7 @@ export enum IccSelectFilterValues {
 }
 
 export class IccSelectFilter<T> extends IccFilter {
-  private _choices: any[] = [];
+  private _choices: T[] = [];
   private _multiSelect = false;
 
   set multiSelect(val: boolean) {
@@ -18,9 +18,9 @@ export class IccSelectFilter<T> extends IccFilter {
     return this._multiSelect;
   }
 
-  get choices(): any[] {
+  get choices(): T[] {
     if (this.search instanceof Array) {
-      this._choices = this.search.map((item) => item.name || item.id);
+      this._choices = this.search.map((item) => item.name);
     } else {
       this._choices = [];
     }

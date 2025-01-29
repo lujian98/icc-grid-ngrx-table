@@ -316,8 +316,8 @@ export class InMemoryService extends InMemoryDbService {
     return data;
   }
 
-  private getFilterCondition(filters: any, item: any): any {
-    let ret: any = undefined;
+  private getFilterCondition(filters: any, item: any): boolean {
+    let ret: boolean | undefined = undefined;
 
     filters.forEach((query: any) => {
       const filterKey = query.filterKey;
@@ -328,7 +328,7 @@ export class InMemoryService extends InMemoryDbService {
       const val = item[filterKey];
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
-      let newRet: any = undefined;
+      let newRet: boolean | undefined = undefined;
 
       switch (compareKey) {
         case 'cont':
@@ -377,7 +377,7 @@ export class InMemoryService extends InMemoryDbService {
         }
       }
     });
-    return ret;
+    return !!ret;
   }
 
   private isNumeric(num: any): boolean {
