@@ -210,12 +210,10 @@ export class InMemoryService extends InMemoryDbService {
   }
 
   get(reqInfo: RequestInfo) {
-    //console.log( ' reqInfo=', reqInfo)
     const action = reqInfo.query.get('action');
     if (reqInfo.id) {
       return this.getDataDetail(reqInfo);
     } else if (action?.[0] === 'treeData') {
-      //console.log( ' action=', action)
       return this.getTreeData(reqInfo);
     } else if (reqInfo.query.size > 0) {
       return this.getQueryData(reqInfo);
@@ -240,10 +238,8 @@ export class InMemoryService extends InMemoryDbService {
     return reqInfo.utils.createResponse$(() => {
       const collection = reqInfo.collection.data.slice();
       const filteredData = this.getFilteredData(collection, reqInfo);
-      //console.log( ' filteredData=', filteredData)
       const sortedData = this.getSortedData(filteredData, reqInfo.query);
       const data = this.getOffsetData(sortedData, reqInfo.query);
-      //console.log( ' offset data=', data)
       const body = {
         totalCounts: filteredData.length,
         data: data,
@@ -287,6 +283,7 @@ export class InMemoryService extends InMemoryDbService {
   }
 
   private getFilteredData(data: any[], reqInfo: RequestInfo) {
+    const filters: { [index: string]: any } = {};
     [...reqInfo.query.keys()].forEach((key) => {
       if (key.indexOf('_') > 1) {
         const compareKey = this.getCompareKey(key);
@@ -294,44 +291,93 @@ export class InMemoryService extends InMemoryDbService {
         const searches = reqInfo.query.get(key)!;
         const search =
           ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches[0].toLowerCase() : searches;
-
-        data = data.filter((item) => {
-          const val = item[filterKey];
-          const value = this.getTypedValue(search, val, val);
-          const filter = this.getTypedValue(search, val, search);
-          switch (
-            compareKey // TODO should use or for the same key???
-          ) {
-            case 'cont':
-              return value && value.toString().toLowerCase().includes(filter.toString());
-            case 'i_cont':
-              return value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
-            case 'in':
-            case 'in[]':
-              return searches.includes(val);
-            case 'eq':
-              return value === filter;
-            case 'not_null':
-              return value !== null;
-            case 'null':
-              return value === null;
-            case 'gteq':
-              return value >= filter;
-            case 'gt':
-              return value > filter;
-            case 'lteq':
-              return value <= filter;
-            case 'lt':
-              return value < filter;
-            case 'start':
-              return value && value.toString().startsWith(filter.toString());
-            case 'end':
-              return value && value.toString().endsWith(filter.toString());
-          }
-        });
+        if (!filters[filterKey]) {
+          filters[filterKey] = [];
+        }
+        const find = filters[filterKey].find(
+          (item: any) => `${item.filterKey}_${item.compareKey}` === `${filterKey}_${compareKey}`,
+        );
+        if (!find) {
+          filters[filterKey].push({
+            filterKey,
+            compareKey,
+            searches,
+            search,
+          });
+        }
       }
     });
+
+    Object.keys(filters).forEach((key) => {
+      data = data.filter((item) => {
+        return this.getFilterCondition(filters[key], item);
+      });
+    });
     return data;
+  }
+
+  private getFilterCondition(filters: any, item: any): any {
+    let ret: any = undefined;
+
+    filters.forEach((query: any) => {
+      const filterKey = query.filterKey;
+      const compareKey = query.compareKey;
+      const searches = query.searches;
+      const search = query.search;
+
+      const val = item[filterKey];
+      const value = this.getTypedValue(search, val, val);
+      const filter = this.getTypedValue(search, val, search);
+      let newRet: any = undefined;
+
+      switch (compareKey) {
+        case 'cont':
+          newRet = value && value.toString().toLowerCase().includes(filter.toString());
+          break;
+        case 'i_cont':
+          newRet = value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
+          break;
+        case 'in':
+        case 'in[]':
+          newRet = searches.includes(val);
+          break;
+        case 'eq':
+          newRet = value === filter;
+          break;
+        case 'not_null':
+          newRet = value !== null;
+          break;
+        case 'null':
+          newRet = value === null;
+          break;
+        case 'gteq':
+          newRet = value >= filter;
+          break;
+        case 'gt':
+          newRet = value > filter;
+          break;
+        case 'lteq':
+          newRet = value <= filter;
+          break;
+        case 'lt':
+          newRet = value < filter;
+          break;
+        case 'start':
+          newRet = value && value.toString().startsWith(filter.toString());
+          break;
+        case 'end':
+          newRet = value && value.toString().endsWith(filter.toString());
+          break;
+      }
+      if (newRet !== undefined) {
+        if (ret !== undefined) {
+          ret = ret || newRet;
+        } else {
+          ret = newRet;
+        }
+      }
+    });
+    return ret;
   }
 
   private isNumeric(num: any): boolean {
@@ -356,7 +402,6 @@ export class InMemoryService extends InMemoryDbService {
 
   private dataSortByField(data: any[], field: string, direction: string) {
     const order = direction === 'asc' ? 1 : -1;
-    //console.log( ' data=', data)
     data.sort((d1: any, d2: any) => {
       const v1 = (d1 as any)[field];
       const v2 = (d2 as any)[field];
