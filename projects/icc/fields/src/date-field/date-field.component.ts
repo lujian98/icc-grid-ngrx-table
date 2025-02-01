@@ -36,7 +36,7 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { delay, Subject, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
@@ -62,7 +62,7 @@ import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslatePipe,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

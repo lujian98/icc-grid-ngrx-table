@@ -16,7 +16,6 @@ import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
-import { TranslateModule } from '@ngx-translate/core';
 import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 
 @Component({
@@ -28,7 +27,6 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
     CommonModule,
     DragDropModule,
     IccPortalComponent,
-    TranslateModule,
     IccIconModule,
     IccLayoutComponent,
     IccLayoutHeaderComponent,

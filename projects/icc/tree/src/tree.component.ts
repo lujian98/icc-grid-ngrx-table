@@ -4,7 +4,6 @@ import { IccButtonConfg, IccBUTTONS, IccButtonType, uniqueId } from '@icc/ui/cor
 import { IccColumnConfig, IccGridFacade, IccGridStateModule } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
@@ -18,7 +17,6 @@ import { defaultTreeConfig, IccTreeConfig, IccTreeNode } from './models/tree-gri
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
     IccIconModule,
     IccTreeStateModule,
     IccGridStateModule,

@@ -1,11 +1,9 @@
 import { ModuleWithProviders, NgModule, inject } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { iccUiTranslations } from './assets/translations/translations';
 import { IccI18nService } from './i18n.service';
 
-@NgModule({
-  imports: [TranslateModule],
-})
+@NgModule()
 export class IccI18nModule {
   private translateService = inject(TranslateService);
 

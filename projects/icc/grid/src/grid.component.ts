@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { IccGridFacade } from './+state/grid.facade';
 import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
@@ -20,7 +18,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent 
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
     IccIconModule,
     IccGridStateModule,
     IccGridViewComponent,

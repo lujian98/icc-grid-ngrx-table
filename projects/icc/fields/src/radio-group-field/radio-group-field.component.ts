@@ -22,7 +22,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -61,7 +61,7 @@ import {
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslatePipe,
     IccFormFieldComponent,
     IccLabelDirective,
     IccLabelWidthDirective,

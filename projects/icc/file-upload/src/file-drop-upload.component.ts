@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, Input } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
 import { map } from 'rxjs';
@@ -20,7 +20,7 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     IccFileUploadStateModule,
     IccIconModule,
     IccLayoutComponent,

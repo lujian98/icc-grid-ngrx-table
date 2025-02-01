@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPopoverComponent } from '@icc/ui/popover';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
 import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
 
@@ -11,7 +10,7 @@ import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '.
   templateUrl: './grid-header-cell.component.html',
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccIconModule],
+  imports: [CommonModule, TranslatePipe, IccIconModule],
   providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {

@@ -24,7 +24,7 @@ import {
 import { IccFormLabelWidthDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig } from '../models/form.model';
@@ -37,7 +37,7 @@ import { IccFormConfig } from '../models/form.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslateModule,
+    TranslatePipe,
     FormsModule,
     IccFieldsetComponent,
     IccFormLabelWidthDirective,

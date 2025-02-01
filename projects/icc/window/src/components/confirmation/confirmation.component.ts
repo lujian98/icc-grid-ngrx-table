@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } 
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccLayoutComponent, IccLayoutFooterComponent, IccLayoutHorizontalComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { defaultConfirmationConfig, IccConfirmationConfig } from '../../models/confirmation.model';
 import { IccWindowComponent } from '../../window.component';
 
@@ -14,7 +14,7 @@ import { IccWindowComponent } from '../../window.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     IccLayoutComponent,
     IccLayoutFooterComponent,
     IccLayoutHorizontalComponent,

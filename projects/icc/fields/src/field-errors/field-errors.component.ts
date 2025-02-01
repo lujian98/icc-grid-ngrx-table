@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { IccErrorDirective } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccFormFieldError } from './models/field-errors.model';
 
 @Component({
@@ -11,7 +11,7 @@ import { IccFormFieldError } from './models/field-errors.model';
   templateUrl: './field-errors.component.html',
   styleUrls: ['./field-errors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccIconModule, IccErrorDirective],
+  imports: [CommonModule, TranslatePipe, IccIconModule, IccErrorDirective],
 })
 export class IccFieldsErrorsComponent {
   private _errors!: IccFormFieldError[];

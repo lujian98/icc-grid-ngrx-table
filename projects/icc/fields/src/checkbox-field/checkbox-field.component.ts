@@ -24,7 +24,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   IccFormFieldComponent,
   IccLabelDirective,
@@ -61,7 +61,7 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslatePipe,
     IccFormFieldComponent,
     IccSuffixDirective,
     IccLabelDirective,

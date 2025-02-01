@@ -5,7 +5,7 @@ import { IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
 import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
@@ -19,7 +19,7 @@ import { defaultFileUploadConfig, IccFileUpload, IccFileUploadConfig } from './m
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     IccFileUploadStateModule,
     IccIconModule,
     IccLayoutComponent,

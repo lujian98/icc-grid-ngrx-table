@@ -21,7 +21,7 @@ import {
   IccLabelWidthDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
@@ -46,7 +46,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslatePipe,
     IccFormFieldComponent,
     IccLabelDirective,
     IccLabelWidthDirective,

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output, inject } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowGroup } from '../../services/row-group/row-group';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -11,7 +11,7 @@ import { IccGridFacade } from '../../+state/grid.facade';
   templateUrl: './grid-row-group.component.html',
   styleUrls: ['./grid-row-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccIconModule],
+  imports: [CommonModule, TranslatePipe, IccIconModule],
 })
 export class IccGridRowGroupComponent<T> {
   private gridFacade = inject(IccGridFacade);

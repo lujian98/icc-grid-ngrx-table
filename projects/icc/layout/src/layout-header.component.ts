@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'icc-layout-header-end',
@@ -19,7 +19,7 @@ export class IccLayoutHeaderEndComponent {}
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateModule, IccButtonComponent, IccIconModule],
+  imports: [CommonModule, TranslatePipe, IccButtonComponent, IccIconModule],
 })
 export class IccLayoutHeaderComponent {
   private router = inject(Router);

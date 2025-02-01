@@ -12,7 +12,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccMenuItem } from '../../models/menu-item.model';
 
 @Component({
@@ -26,7 +26,7 @@ import { IccMenuItem } from '../../models/menu-item.model';
     FormsModule,
     ReactiveFormsModule,
     IccCheckboxFieldComponent,
-    TranslateModule,
+    TranslatePipe,
     IccIconModule,
   ],
 })
