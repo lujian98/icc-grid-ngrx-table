@@ -144,11 +144,11 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
     this.valueChange.emit('');
   }
 
-  registerOnChange(fn: { [key: string]: string }): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: { [key: string]: string }): void {
+  registerOnTouched(fn: (value: string) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 

@@ -32,9 +32,9 @@ export class IccRadioComponent implements ControlValueAccessor {
     this._disabled = disabled;
   }
 
-  registerOnChange(fn: boolean): void {}
+  registerOnChange(fn: (value: boolean) => void): void {}
 
-  registerOnTouched(fn: boolean): void {}
+  registerOnTouched(fn: (value: boolean) => void): void {}
 
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;

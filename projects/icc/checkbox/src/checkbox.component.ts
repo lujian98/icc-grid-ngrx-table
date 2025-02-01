@@ -45,8 +45,8 @@ export class IccCheckboxComponent implements ControlValueAccessor {
 
   @Output() change = new EventEmitter<boolean>();
 
-  protected onChange = (value: any) => {};
-  protected onTouched = () => {};
+  protected onChange = (value: boolean) => {};
+  protected onTouched = (value: boolean) => {};
 
   @Input()
   get checked(): boolean {
@@ -74,11 +74,11 @@ export class IccCheckboxComponent implements ControlValueAccessor {
 
   constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: (value: boolean) => void): void {
     this.onTouched = fn;
   }
 
@@ -86,7 +86,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: any): void {
+  writeValue(value: boolean): void {
     this._checked = value;
 
     //Fix for issue where we reference .detectChanges

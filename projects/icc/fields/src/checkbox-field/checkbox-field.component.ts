@@ -198,11 +198,11 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     }
   }
 
-  registerOnChange(fn: { [key: string]: boolean }): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: { [key: string]: boolean }): void {
+  registerOnTouched(fn: (value: boolean) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
