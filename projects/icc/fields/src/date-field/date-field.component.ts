@@ -163,11 +163,11 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
     this.valueChange.emit('');
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: { [key: string]: Date }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: { [key: string]: Date }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -175,7 +175,7 @@ export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, V
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: any): void {
+  writeValue(value: { [key: string]: Date }): void {
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }

@@ -73,11 +73,11 @@ export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor,
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: { [key: string]: any }): void {
     //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: { [key: string]: any }): void {
     //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -85,7 +85,7 @@ export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor,
     //isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: any): void {
+  writeValue(value: { [key: string]: any }): void {
     //this.form.patchValue(value, { emitEvent: false });
     //this.changeDetectorRef.markForCheck();
   }

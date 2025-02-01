@@ -198,11 +198,11 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: { [key: string]: boolean }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: { [key: string]: boolean }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -210,7 +210,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: any): void {
+  writeValue(value: { [key: string]: boolean }): void {
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }

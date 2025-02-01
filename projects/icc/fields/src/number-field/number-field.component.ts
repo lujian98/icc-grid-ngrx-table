@@ -144,11 +144,11 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     this.valueChange.emit(null);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: { [key: string]: number }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: { [key: string]: number }): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -156,7 +156,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: any): void {
+  writeValue(value: { [key: string]: number }): void {
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }

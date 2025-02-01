@@ -14,7 +14,7 @@ export class IccFormService {
   getRemoteFormConfig(formConfig: IccFormConfig): Observable<IccFormConfig> {
     const params = this.backendService.getParams(formConfig.urlKey, 'formConfig');
     const url = this.backendService.apiUrl;
-    return this.http.get<any>(url, { params }).pipe(
+    return this.http.get<IccFormConfig>(url, { params }).pipe(
       map((res) => {
         //console.log(' formConfig res=', res);
         return {

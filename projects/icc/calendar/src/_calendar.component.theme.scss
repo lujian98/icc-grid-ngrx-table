@@ -1,10 +1,8 @@
 @use "../../theme/src/icc";
 
 @mixin icc-calendar-theme() {
-  icc-calendar {
-    .icc-calendar {
-      background-color: icc.icc-theme(calendar-panel-background-color);
-    }
+  .icc-calendar {
+    background-color: icc.icc-theme(calendar-panel-background-color);
   }
 
   icc-month-header {
