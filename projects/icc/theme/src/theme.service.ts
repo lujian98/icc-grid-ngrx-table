@@ -8,7 +8,7 @@ export class IccThemeService {
   private options: IccThemeOptions = inject(ICC_THEME_OPTIONS);
   private renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
   currentTheme!: string;
-  rangeMax = 20;
+  rangeMax = 20; // background color lightness
 
   constructor() {
     if (this.options?.name) {
@@ -34,7 +34,7 @@ export class IccThemeService {
   }
 
   setBackgroundColor(value: number): void {
-    const root: any = document.querySelector(':root');
+    const root: HTMLBodyElement = document.querySelector(':root')!;
     const range = this.rangeMax - Number(value);
     const lightness = this.currentTheme === 'light' ? 100 - range : range;
     const backgroundColor = `hsl(0 0% ${lightness}%)`;

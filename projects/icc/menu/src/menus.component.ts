@@ -17,14 +17,14 @@ import { IccMenuItem } from './models/menu-item.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
-export class IccMenusComponent implements OnDestroy {
+export class IccMenusComponent<T> implements OnDestroy {
   private _items: IccMenuItem[] = [];
   private selected: IccMenuItem | undefined;
   private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVER;
-  private _values: any[] = [];
+  private _values: T[] = [];
 
   @Input() form: FormGroup | undefined;
   @Input() disabled: IccDisabled[] = [];
@@ -44,13 +44,13 @@ export class IccMenusComponent implements OnDestroy {
   }
 
   @Input()
-  set values(values: any[]) {
+  set values(values: T[]) {
     if (this.form && values) {
       this.form.patchValue({ ...values }, { emitEvent: false });
     }
     this._values = values;
   }
-  get values(): any[] {
+  get values(): T[] {
     return this._values;
   }
 
@@ -59,7 +59,7 @@ export class IccMenusComponent implements OnDestroy {
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
-  @Output() iccMenuFormChanges = new EventEmitter<any>(false);
+  @Output() iccMenuFormChanges = new EventEmitter<T[]>(false);
 
   menuItemClick(item: IccMenuItem): void {
     if (!item.checkbox) {

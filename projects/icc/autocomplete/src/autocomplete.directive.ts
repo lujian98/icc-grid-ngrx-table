@@ -102,7 +102,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     private vcr: ViewContainerRef,
     private overlay: Overlay,
     private overlayPositionBuilder: IccPositionBuilderService,
-    private triggerStrategyBuilder: IccTriggerStrategyBuilderService,
+    private triggerStrategyBuilder: IccTriggerStrategyBuilderService<T>,
     @Optional() @Host() private formField: IccFormFieldComponent,
   ) {}
 

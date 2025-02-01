@@ -21,7 +21,7 @@ export interface IccTriggerStrategy {
   destroy(): void;
 }
 
-export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
+export abstract class IccTriggerStrategyBase<T> implements IccTriggerStrategy {
   protected alive = true;
   abstract show$: Observable<Event>;
   abstract hide$: Observable<Event>;
@@ -33,18 +33,18 @@ export abstract class IccTriggerStrategyBase implements IccTriggerStrategy {
   constructor(
     protected document: Document,
     protected host: HTMLElement,
-    protected container: () => ComponentRef<any>,
+    protected container: () => ComponentRef<T>,
     protected formField?: IccFormFieldComponent,
   ) {}
 }
 
-export class IccNoopTriggerStrategy extends IccTriggerStrategyBase {
+export class IccNoopTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = EMPTY;
   hide$ = EMPTY;
 }
 
 // ONLY USED
-export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
+export class IccPointTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = EMPTY;
   private firstTime: boolean = false; // seems not needed
   protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
@@ -72,7 +72,7 @@ export class IccPointTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
-export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
+export class IccClickTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.container() && this.host.contains(event.target as Node), event] as [boolean, Event]),
     share(),
@@ -95,7 +95,7 @@ export class IccClickTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
-export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
+export class IccHoverTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = fromEvent<Event>(this.host, 'mouseenter').pipe(
     filter(() => !this.container()),
     delay(100),
@@ -120,7 +120,7 @@ export class IccHoverTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
-export class IccTooltipTriggerStrategy extends IccTriggerStrategyBase {
+export class IccTooltipTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = fromEvent<Event>(this.host, 'mouseenter').pipe(
     filter(() => !this.container()),
     delay(750),
@@ -132,7 +132,7 @@ export class IccTooltipTriggerStrategy extends IccTriggerStrategyBase {
   hide$ = fromEvent<Event>(this.host, 'mouseleave').pipe(takeWhile(() => this.alive));
 }
 
-export class IccContextmenuTriggerStrategy extends IccTriggerStrategyBase {
+export class IccContextmenuTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   protected rightClick$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
     map((event: Event) => [this.host.contains(event.target as Node), event] as [boolean, Event]),
     share(),
@@ -163,7 +163,7 @@ export class IccContextmenuTriggerStrategy extends IccTriggerStrategyBase {
   );
 }
 
-export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
+export class IccFocusTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = merge(
     fromEvent<Event>(this.host, 'focus'),
     fromEvent<Event>(this.host, 'click'),
@@ -186,10 +186,10 @@ export class IccFocusTriggerStrategy extends IccTriggerStrategyBase {
 }
 
 @Injectable()
-export class IccTriggerStrategyBuilderService {
+export class IccTriggerStrategyBuilderService<T> {
   constructor(@Inject(ICC_DOCUMENT) protected document: Document) {}
 
-  build(host: HTMLElement, container: () => ComponentRef<any>, trigger: IccTrigger, formField?: any) {
+  build(host: HTMLElement, container: () => ComponentRef<T>, trigger: IccTrigger, formField?: any) {
     switch (trigger) {
       case IccTrigger.CLICK:
         return new IccClickTriggerStrategy(this.document, host, container);

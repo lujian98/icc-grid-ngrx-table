@@ -22,7 +22,8 @@ export class IccOverlayModule {
         IccOverlay,
         IccPositionBuilderService,
         IccTriggerStrategyBuilderService,
-        [IccDialogService, { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig }],
+        IccDialogService,
+        { provide: ICC_DIALOG_CONFIG, useValue: dialogConfig },
       ],
     };
   }

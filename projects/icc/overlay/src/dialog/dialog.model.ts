@@ -2,7 +2,7 @@ import { InjectionToken, ViewContainerRef } from '@angular/core';
 
 export const ICC_DIALOG_CONFIG = new InjectionToken<IccDialogConfig>('Default dialog options');
 
-export class IccDialogConfig<D = any> {
+export class IccDialogConfig<D = {}> {
   hasBackdrop = true;
   backdropClass = 'cdk-overlay-dark-backdrop';
   closeOnBackdropClick = true;

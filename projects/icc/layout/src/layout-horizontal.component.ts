@@ -45,13 +45,13 @@ export class IccLayoutRightComponent {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccResizeDirective],
 })
-export class IccLayoutHorizontalComponent implements AfterViewInit {
+export class IccLayoutHorizontalComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
   elementKey = uniqueId(16);
   resizeType = IccResizeType;
   @Input() resizeable!: boolean;
-  @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight!: TemplateRef<any>;
-  @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft!: TemplateRef<any>;
+  @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight!: TemplateRef<T>;
+  @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft!: TemplateRef<T>;
   @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight!: ViewContainerRef;
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft!: ViewContainerRef;
 

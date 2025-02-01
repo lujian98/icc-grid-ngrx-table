@@ -45,14 +45,14 @@ export class IccLayoutBottomComponent {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccResizeDirective],
 })
-export class IccLayoutVerticalComponent implements AfterViewInit {
+export class IccLayoutVerticalComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
   elementKey = uniqueId(16);
   resizeType = IccResizeType;
   @Input() resizeable!: boolean;
 
-  @ViewChild('tplResizeTopBottom', { static: true }) tplResizeTopBottom!: TemplateRef<any>;
-  @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop!: TemplateRef<any>;
+  @ViewChild('tplResizeTopBottom', { static: true }) tplResizeTopBottom!: TemplateRef<T>;
+  @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop!: TemplateRef<T>;
   @ViewChild('contentResizeTopBottom', { read: ViewContainerRef }) contentResizeTopBottom!: ViewContainerRef;
   @ViewChild('contentResizeBottomTop', { read: ViewContainerRef }) contentResizeBottomTop!: ViewContainerRef;
 
