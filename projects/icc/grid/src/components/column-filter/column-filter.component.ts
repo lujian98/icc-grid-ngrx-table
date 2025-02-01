@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  OnInit,
+  ViewContainerRef,
+  ComponentRef,
+} from '@angular/core';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
@@ -11,7 +19,7 @@ import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class IccColumnFilterComponent implements OnInit {
+export class IccColumnFilterComponent<T> implements OnInit {
   private componentMapper: { [index: string]: any } = {
     text: IccTextFilterComponent,
     number: IccTextFilterComponent,
@@ -19,7 +27,7 @@ export class IccColumnFilterComponent implements OnInit {
   };
 
   private viewContainerRef = inject(ViewContainerRef);
-  private _componentRef: any;
+  private _componentRef: ComponentRef<any> | undefined;
   private _gridConfig!: IccGridConfig;
 
   private _column!: IccColumnConfig;

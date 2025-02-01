@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'icc-form-field-errors', // tslint:disable-line: directive-selector
+  selector: 'icc-form-field-errors',
   standalone: true,
 })
 export class IccFormFieldErrorsDirective {}

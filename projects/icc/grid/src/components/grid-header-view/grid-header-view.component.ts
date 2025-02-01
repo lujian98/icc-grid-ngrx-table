@@ -149,12 +149,12 @@ export class IccGridHeaderViewComponent {
     this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
   }
 
-  private setColumWidths(columns: any[], widthRatio: number): void {
+  private setColumWidths(columns: IccColumnConfig[], widthRatio: number): void {
     this.tableWidth = this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
     const displayColumns = [...columns].filter((column) => column.hidden !== true);
     let tot = this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0;
     this.columnWidths = displayColumns.map((column, index) => {
-      let width = Math.round(widthRatio * column.width);
+      let width = Math.round(widthRatio * column.width!);
       tot += width;
       if (index === displayColumns.length - 1) {
         width += this.tableWidth - tot;

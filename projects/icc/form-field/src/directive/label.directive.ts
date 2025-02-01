@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'icc-label', // tslint:disable-line: directive-selector
+  selector: 'icc-label',
   standalone: true,
 })
 export class IccLabelDirective {}

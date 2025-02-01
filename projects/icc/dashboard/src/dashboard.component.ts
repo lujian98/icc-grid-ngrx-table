@@ -370,11 +370,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   onDblClick(event: MouseEvent, tile: Tile<T>): void {
-    tile.dragDisabled = tile.dblClickDrag ? this.targetHasD3Brush(event.target) : tile.dragDisabled;
+    tile.dragDisabled = tile.dblClickDrag ? this.targetHasD3Brush(event.target as HTMLElement) : tile.dragDisabled;
   }
 
   // D3 zoom brush not able to fire mouseup event, use dblClickDrag:true and dropped dragDisabled: true
-  private targetHasD3Brush(el: any): boolean {
+  private targetHasD3Brush(el: HTMLElement): boolean {
     if (el.classList.contains('brush')) {
       return true;
     } else if (el.parentElement) {

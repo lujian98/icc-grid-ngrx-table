@@ -108,7 +108,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  private checkViewport(data: any[]): void {
+  private checkViewport(data: IccTreeNode<T>[]): void {
     if (this.treeConfig.virtualScroll || this.treeConfig.verticalScroll) {
       // make sure column width with vertical scroll are correct
       const el = this.viewport.elementRef.nativeElement;

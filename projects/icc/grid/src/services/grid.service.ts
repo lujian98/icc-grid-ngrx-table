@@ -35,7 +35,7 @@ export class IccGridService {
   getGridColumnsConfig(gridConfig: IccGridConfig): Observable<IccColumnConfig[]> {
     const params = this.backendService.getParams(gridConfig.urlKey, 'columnConfig');
     const url = this.backendService.apiUrl;
-    return this.http.get<any[]>(url, { params }).pipe(
+    return this.http.get<IccColumnConfig[]>(url, { params }).pipe(
       map((res) => {
         return res;
       }),
@@ -77,7 +77,7 @@ export class IccGridService {
       const ransackFilter = ransackFilterFactory.getFilter(filter);
       const filterParams = ransackFilter.getParams();
       if (filterParams && filterParams.length > 0) {
-        filterParams.forEach((pairs: any) => {
+        filterParams.forEach((pairs: { [index: string]: any }) => {
           Object.keys(pairs).forEach((key) => {
             let value = pairs[key];
             value = value || value === 0 ? value.toString() : '';

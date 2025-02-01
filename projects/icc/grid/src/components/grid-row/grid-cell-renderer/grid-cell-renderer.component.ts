@@ -26,7 +26,7 @@ export class IccGridCellRendererComponent<T> {
   }
 
   get data(): T {
-    return (this.record as any)[this.column.name];
+    return (this.record as { [index: string]: any })[this.column.name];
   }
 
   get align(): string {

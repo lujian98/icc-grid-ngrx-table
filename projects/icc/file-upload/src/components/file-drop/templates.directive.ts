@@ -4,6 +4,6 @@ import { Directive, TemplateRef } from '@angular/core';
   selector: '[icc-file-drop-content-tmp]',
   standalone: true,
 })
-export class IccFileDropContentTemplateDirective {
-  constructor(public template: TemplateRef<any>) {}
+export class IccFileDropContentTemplateDirective<T> {
+  constructor(public template: TemplateRef<T>) {}
 }

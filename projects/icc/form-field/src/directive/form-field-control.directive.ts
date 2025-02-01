@@ -2,7 +2,7 @@ import { Directive, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Directive({
-  selector: 'icc-form-field[iccFormFieldControl] ', // tslint:disable-line: directive-selector
+  selector: 'icc-form-field[iccFormFieldControl] ',
   standalone: true,
 })
 export class IccFormFieldControlDirective {

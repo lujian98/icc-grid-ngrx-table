@@ -2,7 +2,6 @@ import { Directive, Input } from '@angular/core';
 import { isNumeric } from '@icc/ui/core';
 
 @Directive({
-  //selector: 'form[iccLabelWidth], fieldset[iccLabelWidth], icc-form-field[iccLabelWidth]',
   selector: 'icc-form-field[iccLabelWidth]',
   standalone: true,
 })

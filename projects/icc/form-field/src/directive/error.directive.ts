@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'icc-error', // tslint:disable-line: directive-selector
+  selector: 'icc-error',
   standalone: true,
 })
 export class IccErrorDirective {}

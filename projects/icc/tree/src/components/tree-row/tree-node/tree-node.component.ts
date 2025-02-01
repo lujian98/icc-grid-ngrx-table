@@ -30,7 +30,7 @@ export class IccTreeNodeComponent<T> {
   }
 
   get data(): T {
-    return (this.node as any)[this.column.name];
+    return (this.node as { [index: string]: any })[this.column.name];
   }
 
   @HostListener('click') nodeToggle(): void {
