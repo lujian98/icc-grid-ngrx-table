@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IccButtonConfg } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
+import { IccFormField } from '@icc/ui/fields';
 
 export const initFormConfig = createAction('[Form] Init Form Panel Config', props<{ formConfig: IccFormConfig }>());
 
@@ -21,7 +22,7 @@ export const loadFormFieldsConfig = createAction(
 
 export const loadFormFieldsConfigSuccess = createAction(
   '[Form] Load Remote Form Fields Config Success',
-  props<{ formConfig: IccFormConfig; formFields: any[] }>(),
+  props<{ formConfig: IccFormConfig; formFields: IccFormField[] }>(),
 );
 
 export const setFormEditable = createAction(
@@ -33,17 +34,17 @@ export const getFormData = createAction('[Form] Get Form Data', props<{ formConf
 
 export const getFormDataSuccess = createAction(
   '[Form] Get Form Data Success',
-  props<{ formConfig: IccFormConfig; formData: any }>(),
+  props<{ formConfig: IccFormConfig; formData: object }>(),
 );
 
 export const saveFormData = createAction(
   '[Form] Save Form Data',
-  props<{ formConfig: IccFormConfig; formData: any }>(),
+  props<{ formConfig: IccFormConfig; formData: object }>(),
 );
 
 export const saveFormDataSuccess = createAction(
   '[Form] Save Form Data Success',
-  props<{ formConfig: IccFormConfig; formData: any }>(),
+  props<{ formConfig: IccFormConfig; formData: object }>(),
 );
 
 /*

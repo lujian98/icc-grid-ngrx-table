@@ -24,5 +24,10 @@ export interface FormState {
 export interface IccFormState<T extends object = object> {
   formConfig: IccFormConfig;
   formFields: IccFormField[];
-  formData: T | undefined;
+  formData: object | undefined;
+}
+
+export interface IccFormButtonClick {
+  button: IccButtonConfg;
+  formData: object;
 }

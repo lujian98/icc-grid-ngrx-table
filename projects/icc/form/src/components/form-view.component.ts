@@ -27,7 +27,7 @@ import { IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig } from '../models/form.model';
+import { IccFormConfig, IccFormButtonClick } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -54,7 +54,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   form: FormGroup = new FormGroup({});
   private _formFields: IccFormField[] = [];
-  private _values: any;
+  private _values!: object;
 
   @Input() formConfig!: IccFormConfig;
   @Input()
@@ -119,13 +119,13 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  set values(values: any) {
+  set values(values: object) {
     this._values = values;
     if (this.form) {
       this.form.patchValue({ ...values });
     }
   }
-  get values(): any {
+  get values(): object {
     return this._values;
   }
 
@@ -143,7 +143,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return item.title === undefined ? item.name : item.title;
   }
 
-  @Output() formButtonClick = new EventEmitter<any>(false);
+  @Output() formButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => this.checkFormValueChanged(values));
@@ -154,16 +154,18 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return index;
   }
 
-  private checkFormValueChanged(values: any): void {
+  private checkFormValueChanged(values: object): void {
     isEqual(values, this.values) ? this.form.markAsPristine() : this.form.markAsDirty();
     this.setFieldDirty(values, this.values);
     this.changeDetectorRef.markForCheck();
   }
 
-  private setFieldDirty(values: any, orgValues: any): void {
+  private setFieldDirty<T>(values: object, orgValues: object): void {
     Object.keys(values).forEach((key) => {
       const formField = this.form.get(key)!;
-      isEqual(values[key], orgValues[key]) ? formField.markAsPristine() : formField.markAsDirty();
+      isEqual((values as { [key: string]: T })[key], (orgValues as { [key: string]: T })[key])
+        ? formField.markAsPristine()
+        : formField.markAsDirty();
     });
   }
 

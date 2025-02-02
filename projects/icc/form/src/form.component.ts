@@ -8,7 +8,7 @@ import { IccFormStateModule } from './+state/form-state.module';
 import { IccFormFacade } from './+state/form.facade';
 import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
-import { IccFormConfig } from './models/form.model';
+import { IccFormConfig, IccFormButtonClick } from './models/form.model';
 
 @Component({
   selector: 'icc-form',
@@ -24,7 +24,7 @@ export class IccFormComponent {
   private formId = uniqueId(16);
   formConfig$!: Observable<IccFormConfig>;
   formFieldsConfig$!: Observable<IccFormField[]>;
-  formData$!: Observable<any>;
+  formData$!: Observable<object | undefined>;
 
   @Input()
   set formConfig(formConfig: Partial<IccFormConfig>) {
@@ -60,13 +60,14 @@ export class IccFormComponent {
   }
 
   @Input()
-  set values(val: any) {
+  set values(val: object) {
     this.formFacade.setFormData(this.formConfig, val);
   }
 
-  @Output() iccFormButtonClick = new EventEmitter<any>(false);
+  @Output() iccFormButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
-  formButtonClick(buttonClick: any): void {
+  formButtonClick(buttonClick: IccFormButtonClick): void {
+    console.log(' buttonClick=', buttonClick);
     this.iccFormButtonClick.emit(buttonClick);
   }
 

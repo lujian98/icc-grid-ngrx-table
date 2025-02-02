@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccButtonConfg } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
+import { IccFormField } from '@icc/ui/fields';
 import * as formActions from './form.actions';
 import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
 
@@ -20,14 +21,14 @@ export class IccFormFacade {
     }
   }
 
-  setFormFieldsConfig(formConfig: IccFormConfig, formFields: any[]): void {
+  setFormFieldsConfig(formConfig: IccFormConfig, formFields: IccFormField[]): void {
     this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
     if (formConfig.remoteFormData) {
       this.store.dispatch(formActions.getFormData({ formConfig }));
     }
   }
 
-  setFormData(formConfig: IccFormConfig, formData: any): void {
+  setFormData(formConfig: IccFormConfig, formData: object): void {
     this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
   }
 
@@ -41,7 +42,7 @@ export class IccFormFacade {
     }
   }
 
-  saveFormData(formConfig: IccFormConfig, formData: any): void {
+  saveFormData(formConfig: IccFormConfig, formData: object): void {
     if (formConfig.remoteFormData) {
       this.store.dispatch(formActions.saveFormData({ formConfig, formData }));
     }
@@ -62,11 +63,11 @@ export class IccFormFacade {
     return this.store.select(selectFormConfig(formId));
   }
 
-  selectFormFieldsConfig(formId: string): Observable<any[]> {
+  selectFormFieldsConfig(formId: string): Observable<IccFormField[]> {
     return this.store.select(selectFormFieldsConfig(formId));
   }
 
-  selectFormData(formId: string): Observable<any> {
+  selectFormData(formId: string): Observable<object | undefined> {
     return this.store.select(selectFormData(formId));
   }
 }

@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { IccBackendService, IccUploadFile } from '@icc/ui/core';
 import { IccFormConfig } from '../models/form.model';
+import { IccFormField } from '@icc/ui/fields';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +26,10 @@ export class IccFormService {
     );
   }
 
-  getFormFieldsConfig(formConfig: IccFormConfig): Observable<any[]> {
+  getFormFieldsConfig(formConfig: IccFormConfig): Observable<IccFormField[]> {
     const params = this.backendService.getParams(formConfig.urlKey, 'formFields');
     const url = this.backendService.apiUrl;
-    return this.http.get<any[]>(url, { params }).pipe(
+    return this.http.get<IccFormField[]>(url, { params }).pipe(
       map((res) => {
         //console.log(' formFields res=', res);
         return [...res];
@@ -36,10 +37,10 @@ export class IccFormService {
     );
   }
 
-  getFormData(formConfig: IccFormConfig): Observable<{ formConfig: IccFormConfig; formData: any }> {
+  getFormData(formConfig: IccFormConfig): Observable<{ formConfig: IccFormConfig; formData: object }> {
     const params = this.backendService.getParams(formConfig.urlKey, 'formData');
     const url = this.backendService.apiUrl;
-    return this.http.get<{ formConfig: IccFormConfig; formData: any }>(url, { params }).pipe(
+    return this.http.get<{ formConfig: IccFormConfig; formData: object }>(url, { params }).pipe(
       map((res) => {
         //console.log(' formData res=', res);
         return {
@@ -50,10 +51,13 @@ export class IccFormService {
     );
   }
 
-  saveFormData(formConfig: IccFormConfig, formData: any): Observable<{ formConfig: IccFormConfig; formData: any }> {
+  saveFormData(
+    formConfig: IccFormConfig,
+    formData: object,
+  ): Observable<{ formConfig: IccFormConfig; formData: object }> {
     const params = this.backendService.getParams(formConfig.urlKey, 'saveFormData');
     const url = this.backendService.apiUrl;
-    return this.http.put<{ formConfig: IccFormConfig; formData: any }>(url, { params }).pipe(
+    return this.http.put<{ formConfig: IccFormConfig; formData: object }>(url, { params }).pipe(
       map((res) => {
         //console.log(' formData res=', res);
         return {
