@@ -2,12 +2,12 @@ import { IccIconPackParams } from './icon-libraries';
 
 export interface IccIcon {
   getClasses(): string[];
-  getContent(): string | null;
+  getContent(): string | IccIcon | null;
 }
 export class IccSvgIcon implements IccIcon {
   constructor(
     protected name: string,
-    protected content: any,
+    protected content: string | IccIcon,
     protected params: IccIconPackParams = {},
   ) {}
 
@@ -20,7 +20,7 @@ export class IccSvgIcon implements IccIcon {
     return classes;
   }
 
-  getContent(): string {
+  getContent(): string | IccIcon | null {
     return this.content;
   }
 }

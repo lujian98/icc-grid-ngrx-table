@@ -27,7 +27,7 @@ import { IccAutocompleteContentDirective } from './autocomplete-content.directiv
   styleUrls: ['./autocomplete.component.scss'],
   imports: [CommonModule, IccOverlayModule],
 })
-export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy {
+export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestroy {
   @Input() displayWith!: (value: T) => string;
   @Input() compareWith!: (value: T, option: T) => boolean;
   private _selection = new SelectionModel<IccOptionComponent<T>>(this.multiSelection, []);
@@ -77,9 +77,9 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
     }
   }
 
-  @ViewChild('root', { static: true }) rootTemplate!: TemplateRef<any>;
+  @ViewChild('root', { static: true }) rootTemplate!: TemplateRef<G>;
   @ViewChild('options', { read: ElementRef }) optionList!: ElementRef;
-  @ContentChild(IccAutocompleteContentDirective, { static: true }) content!: IccAutocompleteContentDirective;
+  @ContentChild(IccAutocompleteContentDirective, { static: true }) content!: IccAutocompleteContentDirective<G>;
   @ContentChildren(IccOptionComponent) options!: QueryList<IccOptionComponent<T>>;
 
   constructor(protected changeDetectorRef: ChangeDetectorRef) {}

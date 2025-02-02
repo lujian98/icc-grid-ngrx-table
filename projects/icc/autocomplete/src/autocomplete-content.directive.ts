@@ -4,6 +4,6 @@ import { Directive, TemplateRef } from '@angular/core';
   selector: '[iccAutocompleteContent]',
   standalone: true,
 })
-export class IccAutocompleteContentDirective {
-  constructor(public tpl: TemplateRef<any>) {}
+export class IccAutocompleteContentDirective<T> {
+  constructor(public tpl: TemplateRef<T>) {}
 }

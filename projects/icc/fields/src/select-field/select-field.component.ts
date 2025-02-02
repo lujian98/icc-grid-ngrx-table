@@ -98,7 +98,7 @@ import { IccSelectFieldConfig } from './models/select-field.model';
     IccFormFieldControlDirective,
   ],
 })
-export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccessor, Validator {
+export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
@@ -314,7 +314,8 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   }
 
   @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
-    { [key: string]: T } | { [key: string]: T }[]
+    { [key: string]: T } | { [key: string]: T }[],
+    G
   >;
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<any>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;

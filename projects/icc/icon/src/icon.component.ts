@@ -95,7 +95,7 @@ export class IccIconComponent implements OnChanges, OnInit {
     this.assignClasses(iconDefinition.icon.getClasses());
 
     const content = iconDefinition.icon.getContent();
-    if (content) {
+    if (content && typeof content === 'string') {
       this.html = this.sanitizer.bypassSecurityTrustHtml(content);
     }
 

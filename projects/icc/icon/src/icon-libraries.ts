@@ -20,7 +20,7 @@ export enum IccIconPackType {
 
 export interface IccIconPackParams {
   packClass?: string;
-  [name: string]: any;
+  [name: string]: string | undefined;
   iconClassPrefix?: string;
 }
 

@@ -45,9 +45,9 @@ import { IccAutocompleteComponent } from './autocomplete.component';
     },
   ],
 })
-export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit, OnDestroy {
+export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnInit, OnDestroy {
   private document = inject(ICC_DOCUMENT);
-  @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T>;
+  @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T, G>;
   private overlayRef!: OverlayRef | null;
   private position: IccPosition = IccPosition.BOTTOM;
   private triggerStrategy!: IccTriggerStrategy;
