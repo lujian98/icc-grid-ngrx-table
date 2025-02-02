@@ -26,7 +26,7 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslatePipe],
 })
-export class IccFileDropComponent implements OnDestroy {
+export class IccFileDropComponent<T> implements OnDestroy {
   @Input()
   public accept: string = '*';
 
@@ -61,13 +61,13 @@ export class IccFileDropComponent implements OnDestroy {
   public onFileDrop: EventEmitter<IccFileDropEntry[]> = new EventEmitter();
 
   @Output()
-  public onFileOver: EventEmitter<any> = new EventEmitter();
+  public onFileOver: EventEmitter<DragEvent | Event> = new EventEmitter();
 
   @Output()
-  public onFileLeave: EventEmitter<any> = new EventEmitter();
+  public onFileLeave: EventEmitter<Event> = new EventEmitter();
 
   // custom templates
-  @ContentChild(IccFileDropContentTemplateDirective, { read: TemplateRef }) contentTemplate?: TemplateRef<any>;
+  @ContentChild(IccFileDropContentTemplateDirective, { read: TemplateRef }) contentTemplate?: TemplateRef<T>;
 
   @ViewChild('fileSelector', { static: true })
   public fileSelector?: ElementRef;
@@ -189,8 +189,10 @@ export class IccFileDropComponent implements OnDestroy {
       return;
     }
     if (event.target) {
-      const items = (event.target as HTMLInputElement).files || ([] as any);
-      this.checkFiles(items);
+      const items = (event.target as HTMLInputElement).files;
+      if (items) {
+        this.checkFiles(items);
+      }
       this.resetFileInput();
     }
   }
@@ -206,9 +208,6 @@ export class IccFileDropComponent implements OnDestroy {
   }
 
   private checkFile(item: DataTransferItem | File): void {
-    if (!item) {
-      return;
-    }
     // if ("getAsFile" in item) {
     //   const file = item.getAsFile();
     //   if (file) {
@@ -291,7 +290,7 @@ export class IccFileDropComponent implements OnDestroy {
   }
 
   /**
-   * Clears any added files from the file input element so the same file can subsequently be added multiple times.
+   * Clears added files from the file input element so the same file can subsequently be added multiple times.
    */
   private resetFileInput(): void {
     if (this.fileSelector && this.fileSelector.nativeElement) {
@@ -306,7 +305,7 @@ export class IccFileDropComponent implements OnDestroy {
         this.renderer.insertBefore(fileInputContainerEl, fileInputPlaceholderEl, fileInputEl);
         // Add the form input as child of the temporary form element, removing the form input from the DOM.
         this.renderer.appendChild(helperFormEl, fileInputEl);
-        // Reset the form, thus clearing the input element of any files.
+        // Reset the form, thus clearing the input element of files.
         helperFormEl.reset();
         // Add the file input back to the DOM in place of the file input placeholder element.
         this.renderer.insertBefore(fileInputContainerEl, fileInputEl, fileInputPlaceholderEl);
