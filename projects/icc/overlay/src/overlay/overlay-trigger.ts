@@ -189,7 +189,7 @@ export class IccFocusTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
 export class IccTriggerStrategyBuilderService<T> {
   constructor(@Inject(ICC_DOCUMENT) protected document: Document) {}
 
-  build(host: HTMLElement, container: () => ComponentRef<T>, trigger: IccTrigger, formField?: any) {
+  build(host: HTMLElement, container: () => ComponentRef<T>, trigger: IccTrigger, formField?: IccFormFieldComponent) {
     switch (trigger) {
       case IccTrigger.CLICK:
         return new IccClickTriggerStrategy(this.document, host, container);

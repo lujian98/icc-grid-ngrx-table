@@ -49,10 +49,10 @@ export class IccDialogService {
     });
   }
 
-  private createContainer(overlayRef: IccOverlayRef, injector: Injector): IccPortalComponent<any> {
+  private createContainer<T>(overlayRef: IccOverlayRef, injector: Injector): IccPortalComponent<T> {
     const containerPortal = new ComponentPortal(IccPortalComponent, null, injector);
     const containerRef = overlayRef.attach(containerPortal);
-    return containerRef.instance;
+    return containerRef.instance as IccPortalComponent<T>;
   }
 
   private createContent<T>(
