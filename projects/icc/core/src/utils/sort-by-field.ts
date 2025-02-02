@@ -1,8 +1,8 @@
 export function sortByField<T>(data: T[], field: string, direction: string) {
   const order = direction === 'asc' ? 1 : -1;
   data.sort(function (d1: T, d2: T) {
-    const v1 = (d1 as any)[field];
-    const v2 = (d2 as any)[field];
+    const v1 = (d1 as { [key: string]: string })[field];
+    const v2 = (d2 as { [key: string]: string })[field];
     let res = null;
     if (v1 == null && v2 != null) {
       res = -1;

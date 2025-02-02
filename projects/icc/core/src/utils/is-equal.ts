@@ -1,5 +1,5 @@
 // https://github.com/epoberezkin/fast-deep-equal#readme
-export function isEqual(a: any, b: any) {
+export function isEqual<T>(a: any, b: any) {
   if (a === b) return true;
 
   if (a && b && typeof a == 'object' && typeof b == 'object') {

@@ -347,7 +347,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const x = Math.min(Math.max(draggedTile.colStart! + dx, 1), this.cols);
     const y = Math.min(Math.max(draggedTile.rowStart! + dy, 1), this.rows);
     const xyState = this.gridMap[y - 1][x - 1];
-    // if drop into empty space check if tile will cover any other tile
+    // if drop into empty space check if tile will cover other tile
     if (e.item.data === tile.index || xyState < 0) {
       if (this.isDroppable(x, y, draggedTile, tile.index!) && this.isDroppable(x, y, draggedTile, -1)) {
         draggedTile.colStart = x;

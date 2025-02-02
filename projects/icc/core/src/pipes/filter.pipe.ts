@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class IccFilterPipe implements PipeTransform {
-  transform(items: { [key: string]: any }[], searchTerm: string, labelKey?: string): { [key: string]: any }[] {
+  transform(items: { [key: string]: string }[], searchTerm: string, labelKey?: string): { [key: string]: string }[] {
     if (!items || !searchTerm || typeof searchTerm === 'object' || searchTerm.includes(',')) {
       return items;
     }

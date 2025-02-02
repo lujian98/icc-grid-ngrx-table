@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 export class IccLocaleDatePipe implements PipeTransform {
   private translateService = inject(TranslateService);
 
-  transform(value: any, format?: string) {
+  transform(value: Date, format?: string) {
     if (!value) {
       return '';
     }
