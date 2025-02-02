@@ -22,16 +22,16 @@ import { Subject, Observable } from 'rxjs';
     role: 'option',
   },
 })
-export class IccOptionComponent implements OnDestroy {
+export class IccOptionComponent<T> implements OnDestroy {
   selected: boolean = false;
   protected alive: boolean = true;
-  protected click$: Subject<IccOptionComponent> = new Subject<IccOptionComponent>();
+  protected click$: Subject<IccOptionComponent<T>> = new Subject<IccOptionComponent<T>>();
 
-  get click(): Observable<IccOptionComponent> {
+  get click(): Observable<IccOptionComponent<T>> {
     return this.click$.asObservable();
   }
 
-  @Input() value: any;
+  @Input() value!: T;
 
   @HostBinding('class.selected')
   get selectedClass(): boolean {
@@ -45,7 +45,7 @@ export class IccOptionComponent implements OnDestroy {
     event.preventDefault();
   }
 
-  @Output() change: EventEmitter<IccOptionComponent> = new EventEmitter();
+  @Output() change: EventEmitter<IccOptionComponent<T>> = new EventEmitter();
 
   constructor(public elementRef: ElementRef) {}
 

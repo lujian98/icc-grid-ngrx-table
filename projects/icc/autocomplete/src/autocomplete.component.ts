@@ -30,7 +30,7 @@ import { IccAutocompleteContentDirective } from './autocomplete-content.directiv
 export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy {
   @Input() displayWith!: (value: T) => string;
   @Input() compareWith!: (value: T, option: T) => boolean;
-  private _selection = new SelectionModel<IccOptionComponent>(this.multiSelection, []);
+  private _selection = new SelectionModel<IccOptionComponent<T>>(this.multiSelection, []);
   private _multiSelection: boolean = false;
   private _value: T | null = null;
   private alive = true;
@@ -41,13 +41,13 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
   }
   set multiSelection(val: boolean) {
     this._multiSelection = coerceBooleanProperty(val);
-    this.selection = new SelectionModel<IccOptionComponent>(this._multiSelection, []);
+    this.selection = new SelectionModel<IccOptionComponent<T>>(this._multiSelection, []);
   }
 
-  get selection(): SelectionModel<IccOptionComponent> {
+  get selection(): SelectionModel<IccOptionComponent<T>> {
     return this._selection;
   }
-  set selection(selection: SelectionModel<IccOptionComponent>) {
+  set selection(selection: SelectionModel<IccOptionComponent<T>>) {
     this._selection = selection;
   }
 
@@ -80,7 +80,7 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
   @ViewChild('root', { static: true }) rootTemplate!: TemplateRef<any>;
   @ViewChild('options', { read: ElementRef }) optionList!: ElementRef;
   @ContentChild(IccAutocompleteContentDirective, { static: true }) content!: IccAutocompleteContentDirective;
-  @ContentChildren(IccOptionComponent) options!: QueryList<IccOptionComponent>;
+  @ContentChildren(IccOptionComponent) options!: QueryList<IccOptionComponent<T>>;
 
   constructor(protected changeDetectorRef: ChangeDetectorRef) {}
 
@@ -98,16 +98,16 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
       });
   }
 
-  optionsClick(): Observable<IccOptionComponent> {
+  optionsClick(): Observable<IccOptionComponent<T>> {
     return this.options.changes.pipe(
-      switchMap((options: QueryList<IccOptionComponent>) => {
+      switchMap((options: QueryList<IccOptionComponent<T>>) => {
         const clicks$ = options.map((option) => option.click);
         return merge(...clicks$);
       }),
     );
   }
 
-  setSelectionOption(option: IccOptionComponent): void {
+  setSelectionOption(option: IccOptionComponent<T>): void {
     if (this.multiSelection && Array.isArray(this.value)) {
       const find = this.value.findIndex((item: T) => this.compareValue(option.value, item));
       if (find > -1) {
@@ -135,7 +135,7 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
     if (Array.isArray(value)) {
       let offset = -1;
       value.forEach((selected) => {
-        const find = this.options.find((item: IccOptionComponent) => this.compareValue(selected, item.value));
+        const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value));
         if (find) {
           find.select();
           const isSelected = this.selection.selected.find((item) => this.compareValue(selected, item.value));
@@ -167,7 +167,7 @@ export class IccAutocompleteComponent<T> implements AfterContentInit, OnDestroy 
       }
     } else {
       this.selection.clear();
-      const option = this.options.find((item: IccOptionComponent) => this.compareValue(value!, item.value));
+      const option = this.options.find((item: IccOptionComponent<T>) => this.compareValue(value!, item.value));
       if (option) {
         option.select();
         this.selection.select(option);

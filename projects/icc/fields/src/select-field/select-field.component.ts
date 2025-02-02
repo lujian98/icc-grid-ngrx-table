@@ -279,7 +279,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
 
   clickedOption: number | undefined;
   private clickedOptions = 1;
-  clickOption(option: IccOptionComponent): void {
+  clickOption(option: IccOptionComponent<any>): void {
     this.autocomplete.setSelectionOption(option);
     this.clickedOption = this.clickedOptions++;
   }
@@ -316,7 +316,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
   @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
     { [key: string]: T } | { [key: string]: T }[]
   >;
-  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent>;
+  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<any>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
@@ -410,7 +410,7 @@ export class IccSelectFieldComponent<T> implements OnDestroy, ControlValueAccess
     );
   }
 
-  headerOptionClick(option: IccOptionComponent): void {
+  headerOptionClick(option: IccOptionComponent<any>): void {
     option.selected = !option.selected;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {

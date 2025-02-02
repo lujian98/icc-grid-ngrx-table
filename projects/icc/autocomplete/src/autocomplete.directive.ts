@@ -119,7 +119,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     this.triggerStrategy.show$.subscribe(() => this.show());
   }
 
-  container(): ComponentRef<any> {
+  container<G>(): ComponentRef<G> {
     return {
       location: {
         nativeElement: this.overlayRef?.overlayElement,
@@ -152,7 +152,7 @@ export class IccAutocompleteDirective<T> implements ControlValueAccessor, OnInit
     this.autocomplete
       .optionsClick()
       .pipe(takeUntil(this.overlayRef.detachments()))
-      .subscribe((option: IccOptionComponent) => {
+      .subscribe((option: IccOptionComponent<T>) => {
         this.autocomplete.setSelectionOption(option);
         this.setTriggerValue();
         this.change.emit(this.autocomplete.value);
