@@ -72,7 +72,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
 
   @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 
-  selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File): void {
+  selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File | null): void {
     this.fileUploadFacade.selectUploadFile(fieldConfig.fieldName!, file);
   }
 

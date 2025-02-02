@@ -81,7 +81,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   private uploadFileService = inject(IccUploadFileService);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccUploadFileFieldConfig;
-  private _value!: any;
+  private _value!: string;
   @Input() form!: FormGroup;
 
   @Input()
@@ -110,18 +110,18 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   @Input()
-  set value(val: any) {
+  set value(val: string) {
     this._value = val;
     this.initForm({ ...defaultUploadFileFieldConfig });
     this.field.setValue(val);
   }
 
-  get value(): any {
+  get value(): string {
     return this._value;
   }
 
-  @Output() valueChange = new EventEmitter<any>(false);
-  @Output() selectUploadFile = new EventEmitter<File>(false);
+  @Output() valueChange = new EventEmitter<string>(false);
+  @Output() selectUploadFile = new EventEmitter<File | null>(false);
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
@@ -141,7 +141,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
 
   @ViewChild('fileInput') fileInput?: ElementRef;
 
-  get selectedFile(): any {
+  get selectedFile(): File | null {
     if (this.fileInput?.nativeElement.files.length > 0) {
       return this.fileInput?.nativeElement.files[0];
     } else {
@@ -149,8 +149,8 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     }
   }
 
-  onChange(event: any): void {
-    var files = event.target.files;
+  onChange(event: Event): void {
+    //var files = event.target.files;
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     // TODO still need use uploadFileService.formUploadFileChanged ?? for from field save with upload file???
@@ -159,17 +159,17 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   clearValue(): void {
-    this.value = null;
+    this.value = '';
     this.field.markAsPristine();
-    this.valueChange.emit(null);
+    this.valueChange.emit('');
     this.selectUploadFile.emit(this.selectedFile);
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: (value: any) => void): void {
+  registerOnTouched(fn: (value: string) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -177,7 +177,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: { [key: string]: any }): void {
+  writeValue(value: { [key: string]: string }): void {
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }

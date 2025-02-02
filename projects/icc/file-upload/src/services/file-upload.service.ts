@@ -11,7 +11,7 @@ export class IccFileUploadService {
   private http = inject(HttpClient);
   private backendService = inject(IccBackendService);
 
-  sendUploadFiles(fileUploadConfig: IccFileUploadConfig, files: IccUploadFile[]): Observable<any> {
+  sendUploadFiles(fileUploadConfig: IccFileUploadConfig, files: IccUploadFile[]): Observable<object> {
     const url = this.backendService.apiUrl;
     const formData = this.backendService.getFormData(fileUploadConfig.urlKey, 'uploadFiles');
     files.forEach((file) => {
