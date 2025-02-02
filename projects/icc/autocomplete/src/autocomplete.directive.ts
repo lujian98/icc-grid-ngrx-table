@@ -91,10 +91,10 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     return !this.formField ? this.origin.offsetWidth : this._getFormfieldWidth('.icc-form-field-wrapper');
   }
 
-  @Output() change = new EventEmitter<any>();
+  @Output() change = new EventEmitter<T | null>();
   @Output() isOverlayOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  _onChange: (value: any) => void = () => {};
+  _onChange: (value: T | null) => void = () => {};
   _onTouched = () => {};
 
   constructor(
@@ -246,7 +246,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     Promise.resolve(null).then(() => this.setTriggerValue());
   }
 
-  registerOnChange(fn: (value: T) => {}): void {
+  registerOnChange(fn: (value: T | null) => {}): void {
     this._onChange = fn;
   }
 
@@ -264,7 +264,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     if (target.type === 'number') {
       value = value === '' ? null : parseFloat(value);
     }
-    this._onChange(value);
+    this._onChange(value as T);
   }
 
   ngOnDestroy(): void {
