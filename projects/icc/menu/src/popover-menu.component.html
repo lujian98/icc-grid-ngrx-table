@@ -9,5 +9,6 @@
 </div>
 
 <ng-template #menu>
-  <icc-menus [items]="menuItem.children!" [level]="level + 1" (click)="onMenuItemChanged($event)"> </icc-menus>
+  <icc-menus [items]="menuItem.children!" [level]="level + 1" (iccMenuItemClick)="onMenuItemChanged($event)">
+  </icc-menus>
 </ng-template>

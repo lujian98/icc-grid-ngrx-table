@@ -21,9 +21,9 @@ export class IccPopoverMenuComponent {
 
   level = 0;
 
-  @Output() iccItemChangedEvent: EventEmitter<any> = new EventEmitter();
+  @Output() iccItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
-  onMenuItemChanged(menuItem: any) {
+  onMenuItemChanged(menuItem: IccMenuItem) {
     if (!menuItem.disabled) {
       this.iccItemChangedEvent.emit(menuItem);
     }
