@@ -29,7 +29,7 @@ export class IccTreeNodeComponent<T> {
     return this._node;
   }
 
-  get data(): T {
+  get data(): string {
     return (this.node as { [index: string]: any })[this.column.name];
   }
 

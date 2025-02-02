@@ -24,8 +24,6 @@ export class IccTreeRowComponent<T> {
   @Input() selected = false;
   @Input() columnWidths: IccColumnWidth[] = [];
 
-  //@Output() toggleRow = new EventEmitter<any>();
-
   get treeColumn(): IccColumnConfig | undefined {
     return this.columns.find((col) => col.name === 'name');
   }

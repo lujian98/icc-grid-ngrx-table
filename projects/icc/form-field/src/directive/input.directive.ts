@@ -5,7 +5,7 @@ import { Directive, ElementRef } from '@angular/core';
   standalone: true,
 })
 export class IccInputDirective {
-  private _inputValueAccessor: { value: any };
+  private _inputValueAccessor: { value: string };
 
   set value(value: string) {
     if (this.value !== value) {

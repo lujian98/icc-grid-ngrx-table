@@ -131,8 +131,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  onViewportScroll(event: any): void {
-    this.columnHeaderPosition = -event.target.scrollLeft;
+  onViewportScroll(event: Event): void {
+    this.columnHeaderPosition = -(event.target as HTMLElement).scrollLeft;
   }
 
   private setViewportPageSize(loadData: boolean = true): void {
