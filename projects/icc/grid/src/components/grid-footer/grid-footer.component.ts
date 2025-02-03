@@ -78,8 +78,9 @@ export class IccGridFooterComponent implements OnDestroy {
     this.gridFacade.getGridPageData(this.gridConfig, page);
   }
 
-  valueChanged(event: any): void {
-    let page: number = event.target.value | 1;
+  valueChanged(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    let page: number = parseInt(target.value) | 1;
     if (page < 1) {
       page = 1;
     } else if (page > this.lastPage) {
