@@ -11,6 +11,11 @@ import { IccFilterFactory } from './filter/filter_factory';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
 import { sortByField } from '@icc/ui/core';
 
+export interface IccInMemoryFilterValue {
+  key: string;
+  value: string | string[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -136,8 +141,8 @@ export class IccGridinMemoryService {
     return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
-  protected getFilterParams<T>(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
-    const params: any[] = [];
+  protected getFilterParams<T>(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): IccInMemoryFilterValue[] {
+    const params: IccInMemoryFilterValue[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
     columnFilters.forEach((col) => {
@@ -147,11 +152,10 @@ export class IccGridinMemoryService {
       const ransackFilter = ransackFilterFactory.getFilter(filter);
       const filterParams = ransackFilter.getParams();
       if (filterParams && filterParams.length > 0) {
-        filterParams.forEach((pairs: any) => {
+        filterParams.forEach((pairs: { [index: string]: any }) => {
           Object.keys(pairs).forEach((key) => {
             let value = pairs[key];
             value = value || value === 0 ? value.toString() : '';
-            // params = params.append(key, value);
             params.push({
               key: key,
               value: value,
