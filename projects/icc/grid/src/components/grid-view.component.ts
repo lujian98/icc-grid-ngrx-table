@@ -37,7 +37,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private _gridConfig!: IccGridConfig;
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
-  sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+  sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
   gridData$!: Observable<T[]> | undefined;
   rowSelection$: Observable<SelectionModel<T>> | undefined;
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;

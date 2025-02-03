@@ -87,7 +87,7 @@ export interface IccColumnWidth {
 export interface IccColumnFilter {
   name: string;
   //type: string;
-  value: any; //string | number | boolean; // string[] | number[];
+  value: string | number | boolean | string[] | number[] | object[];
 }
 
 export type IccFilterField = boolean | string;
@@ -130,7 +130,7 @@ export interface IccNumberFieldType extends IccFieldType {
 export interface IccSelectFieldType extends IccFieldType {
   key?: string;
   value?: string;
-  options?: any[];
+  options?: string[] | object[];
   multiSelect?: boolean;
   filterMultiSelect?: boolean;
 

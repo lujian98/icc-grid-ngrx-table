@@ -29,8 +29,9 @@ export class IccTreeNodeComponent<T> {
     return this._node;
   }
 
-  get data(): string {
-    return (this.node as { [index: string]: any })[this.column.name];
+  get data(): T {
+    const record = this.node as T;
+    return (record as { [index: string]: T })[this.column.name];
   }
 
   @HostListener('click') nodeToggle(): void {

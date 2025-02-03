@@ -35,7 +35,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
-  sizeChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+  sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
