@@ -42,53 +42,103 @@ export class IccGridinMemoryService {
   }
 
   protected getFilteredData(data: any[], filterParams: any[]) {
+    const filters: { [index: string]: any } = {};
     [...filterParams].forEach((params) => {
       const key = params.key;
       if (key.indexOf('_') > 1) {
         const compareKey = this.getCompareKey(key);
         const filterKey = key.substring(0, key.length - compareKey.length - 1);
         const searches = params.value;
-        //console.log( ' value=', searches)
         const search =
-          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches.toLowerCase() : searches;
+          ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches[0].toLowerCase() : searches;
 
-        //console.log( ' filterKey=', filterKey)
-        //console.log( ' value=', search)
-        data = data.filter((item) => {
-          const val = item[filterKey];
-          const value = this.getTypedValue(search, val, val);
-          const filter = this.getTypedValue(search, val, search);
-          switch (compareKey) {
-            case 'cont':
-              return value && value.toString().toLowerCase().includes(filter.toString());
-            case 'i_cont':
-              return value && value.toString().toLowerCase().includes(filter.toString().toLowerCase());
-            case 'in':
-            case 'in[]':
-              return searches.includes(val);
-            case 'eq':
-              return value === filter;
-            case 'not_null':
-              return value !== null;
-            case 'null':
-              return value === null;
-            case 'gteq':
-              return value >= filter;
-            case 'gt':
-              return value > filter;
-            case 'lteq':
-              return value <= filter;
-            case 'lt':
-              return value < filter;
-            case 'start':
-              return value && value.toString().startsWith(filter.toString());
-            case 'end':
-              return value && value.toString().endsWith(filter.toString());
-          }
-        });
+        if (!filters[filterKey]) {
+          filters[filterKey] = [];
+        }
+        const find = filters[filterKey].find(
+          (item: any) => `${item.filterKey}_${item.compareKey}` === `${filterKey}_${compareKey}`,
+        );
+        if (!find) {
+          filters[filterKey].push({
+            filterKey,
+            compareKey,
+            searches,
+            search,
+          });
+        }
       }
     });
+
+    Object.keys(filters).forEach((key) => {
+      data = data.filter((item) => {
+        return this.getFilterCondition(filters[key], item);
+      });
+    });
     return data;
+  }
+
+  private getFilterCondition(filters: any, item: any): boolean {
+    let ret: boolean | undefined = undefined;
+
+    filters.forEach((query: any) => {
+      const filterKey = query.filterKey;
+      const compareKey = query.compareKey;
+      const searches = query.searches;
+      const search = query.search;
+
+      const val = item[filterKey];
+      const value = this.getTypedValue(search, val, val);
+      const filter = this.getTypedValue(search, val, search);
+      let newRet: boolean | undefined = undefined;
+
+      switch (compareKey) {
+        case 'cont':
+          newRet = !!(value && value.toString().toLowerCase().includes(filter.toString()));
+          break;
+        case 'i_cont':
+          newRet = !!(value && value.toString().toLowerCase().includes(filter.toString().toLowerCase()));
+          break;
+        case 'in':
+        case 'in[]':
+          newRet = searches.includes(val);
+          break;
+        case 'eq':
+          newRet = value === filter;
+          break;
+        case 'not_null':
+          newRet = value !== null;
+          break;
+        case 'null':
+          newRet = value === null;
+          break;
+        case 'gteq':
+          newRet = value >= filter;
+          break;
+        case 'gt':
+          newRet = value > filter;
+          break;
+        case 'lteq':
+          newRet = value <= filter;
+          break;
+        case 'lt':
+          newRet = value < filter;
+          break;
+        case 'start':
+          newRet = !!(value && value.toString().startsWith(filter.toString()));
+          break;
+        case 'end':
+          newRet = !!(value && value.toString().endsWith(filter.toString()));
+          break;
+      }
+      if (newRet !== undefined) {
+        if (ret !== undefined) {
+          ret = ret || newRet;
+        } else {
+          ret = newRet;
+        }
+      }
+    });
+    return !!ret;
   }
 
   private getCompareKey(key: string): string {
