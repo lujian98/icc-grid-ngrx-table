@@ -42,5 +42,5 @@ export const defaultState: IccGridState = {
   inMemoryData: [],
   queryData: [],
   rowGroups: undefined,
-  selection: new SelectionModel<any>(false, []),
+  selection: new SelectionModel<object>(false, []),
 };
