@@ -104,7 +104,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig; // = defaultSelectFieldConfig;
-  private _value!: any;
+  private _value!: string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
 
@@ -224,7 +224,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  get value(): any {
+  get value(): string[] | object[] {
     return this._value;
   }
 
@@ -273,7 +273,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
   }
 
-  @Output() selectionChange = new EventEmitter<any>(true);
+  @Output() selectionChange = new EventEmitter<T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
@@ -377,7 +377,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.delaySetSelected();
     } else {
       this.value = [options];
-      this.selectionChange.emit(this.value);
+      this.selectionChange.emit(this.value as T[]);
     }
   }
 
@@ -400,7 +400,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   checkAll(selectOptions: { [key: string]: T }[] | string[]): void {
     this.value = selectOptions;
     this.delaySetSelected();
-    this.selectionChange.emit(this.value);
+    this.selectionChange.emit(this.value as T[]);
   }
 
   hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
@@ -419,7 +419,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       } else {
         this.value = [...this.value].filter(
           (item) =>
-            item[this.fieldConfig.optionKey] !== (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
+            (item as { [key: string]: T })[this.fieldConfig.optionKey] !==
+            (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
         );
       }
     } else {
@@ -431,7 +432,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       }
     }
     this.field.setValue(this.value);
-    this.selectionChange.emit(this.value);
+    this.selectionChange.emit(this.value as T[]);
   }
 
   registerOnChange(fn: (value: string[] | object[]) => void): void {
