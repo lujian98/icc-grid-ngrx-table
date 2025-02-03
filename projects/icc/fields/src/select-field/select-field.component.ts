@@ -215,11 +215,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   @Input()
-  set value(val: any) {
+  set value(val: string | string[] | object[]) {
     if (this.form && val !== undefined) {
       this._value = this.getInitValue(val);
       this.setFormvalue();
-    } else {
+    } else if (Array.isArray(val)) {
       this._value = val;
     }
   }
@@ -232,14 +232,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.field.setValue(this.value);
   }
 
-  private getInitValue(val: any): string[] | object[] {
-    let value: any = val;
+  private getInitValue(val: string | string[] | object[]): string[] | object[] {
+    let value: string | string[] | object[] = val;
     if (typeof val === 'string') {
       value = [val];
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
       return val;
     }
-    const isStringsArray = value.every((item: any) => typeof item === 'string');
+    const isStringsArray = (value as string[]).every((item: string) => typeof item === 'string');
     if ((this.fieldConfig.singleListOption || isStringsArray) && Array.isArray(value)) {
       value = [...value].map((item) => {
         if (typeof item === 'string') {
@@ -252,9 +252,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         }
       });
     } else {
-      value = value ? [...value] : value;
+      return (value ? [...value] : value) as string[] | object[];
     }
-    return value;
+    return value as string[] | object[];
   }
 
   get field(): FormControl {
@@ -376,7 +376,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.selectionChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
-      this.value = [options];
+      this.value = options ? [options] : [];
       this.selectionChange.emit(this.value as T[]);
     }
   }
@@ -415,18 +415,18 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     option.selected = !option.selected;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {
-        this.value = [...this.value, option.value];
+        this.value = [...this.value, option.value] as object[];
       } else {
         this.value = [...this.value].filter(
           (item) =>
             (item as { [key: string]: T })[this.fieldConfig.optionKey] !==
             (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
-        );
+        ) as object[];
       }
     } else {
       this.autocompleteClose = true;
       if (option.selected) {
-        this.value = [option.value];
+        this.value = [option.value as object];
       } else {
         this.value = [];
       }
