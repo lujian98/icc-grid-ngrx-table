@@ -26,10 +26,10 @@ export class IccSelectFieldService {
     );
   }
 
-  getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<any[]> {
+  getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<string[] | object[]> {
     const params = this.backendService.getParams(fieldConfig.urlKey, 'select', fieldConfig.fieldName);
     const url = this.backendService.apiUrl;
-    return this.http.get<any[]>(url, { params }).pipe(
+    return this.http.get<string[] | object[]>(url, { params }).pipe(
       map((options) => {
         if (fieldConfig.singleListOption) {
           return options.map((item) => ({
