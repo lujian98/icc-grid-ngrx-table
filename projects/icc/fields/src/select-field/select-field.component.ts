@@ -109,7 +109,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private firstTimeLoad = true;
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
-  selectOptions$!: Observable<any[]>;
+  selectOptions$!: Observable<{ [key: string]: T }[]>;
   private selectOptions: { [key: string]: T }[] = [];
   isEmptyValue: any = {
     name: 'isEmpty',
@@ -177,7 +177,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
             this.selectOptions = selectOptions as { [key: string]: T }[];
-            return selectOptions;
+            return this.selectOptions;
           }),
         );
       }

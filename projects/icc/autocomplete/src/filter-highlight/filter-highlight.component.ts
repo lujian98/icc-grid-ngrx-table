@@ -7,15 +7,15 @@ import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } 
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class IccFilterHighlightComponent {
+export class IccFilterHighlightComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _value: string = '';
   private _filterValue: string = '';
   values: string[] = [];
 
   @Input()
-  set value(val: string) {
-    this._value = val;
+  set value(val: T) {
+    this._value = val as string;
     this.setValues();
   }
   get value(): string {
