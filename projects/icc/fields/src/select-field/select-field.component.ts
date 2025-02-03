@@ -371,9 +371,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  onChange(options: any): void {
+  onChange(options: { [key: string]: string } | null): void {
     if (this.fieldConfig.multiSelection) {
-      this.selectionChange.emit(options);
+      this.selectionChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
       this.value = [options];
