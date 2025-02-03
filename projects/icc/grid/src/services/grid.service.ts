@@ -77,7 +77,7 @@ export class IccGridService {
       const ransackFilter = ransackFilterFactory.getFilter(filter);
       const filterParams = ransackFilter.getParams();
       if (filterParams && filterParams.length > 0) {
-        filterParams.forEach((pairs: { [index: string]: any }) => {
+        filterParams.forEach((pairs: { [index: string]: string | number }) => {
           Object.keys(pairs).forEach((key) => {
             let value = pairs[key];
             value = value || value === 0 ? value.toString() : '';
