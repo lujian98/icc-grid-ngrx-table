@@ -30,7 +30,7 @@ export const selectGridData = (gridConfig: IccGridConfig) =>
 export const selectRowSelection = (gridConfig: IccGridConfig) =>
   createSelector(featureSelector, (state: GridState) => {
     const gridId = gridConfig.gridId;
-    return state[gridId] ? state[gridId].selection : new SelectionModel<any>(false, []);
+    return state[gridId] ? state[gridId].selection : new SelectionModel<object>(false, []);
   });
 
 export const selectRowSelections = (gridConfig: IccGridConfig) =>
@@ -48,7 +48,7 @@ export const selectRowSelections = (gridConfig: IccGridConfig) =>
       };
     } else {
       return {
-        selection: new SelectionModel<any>(false, []),
+        selection: new SelectionModel<object>(false, []),
         allSelected: false,
         indeterminate: false,
       };

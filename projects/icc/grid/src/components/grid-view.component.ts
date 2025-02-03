@@ -39,12 +39,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private prevRowIndex: number = -1;
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
   gridData$!: Observable<T[]> | undefined;
-  rowSelection$: Observable<SelectionModel<T>> | undefined;
+  rowSelection$: Observable<SelectionModel<object>> | undefined;
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
-  selections!: any;
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()
@@ -77,8 +76,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return record; //{ ...record }; // TODO some issue need this but will disable the select record???
   }
 
-  selected(record: T, selection: SelectionModel<T>): boolean {
-    return selection.isSelected(record);
+  selected(record: T, selection: SelectionModel<object>): boolean {
+    return selection.isSelected(record as object);
   }
 
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
@@ -166,11 +165,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return record instanceof IccRowGroup;
   }
 
-  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<T>, data: T[]): void {
+  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<object>, data: T[]): void {
     if (this.prevRowIndex < 0) {
       this.prevRowIndex = rowIndex;
     }
-    const selected = selection.isSelected(record);
+    const selected = selection.isSelected(record as object);
     if (this.gridConfig.multiRowSelection) {
       if (event.ctrlKey || event.metaKey) {
         this.selectRecord([record], !selected);
@@ -185,7 +184,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         if (selected) {
           this.gridFacade.setSelectAllRows(this.gridConfig, false);
         } else {
-          this.gridFacade.setSelectRow(this.gridConfig, record);
+          this.gridFacade.setSelectRow(this.gridConfig, record as object);
         }
       }
     } else {
@@ -203,7 +202,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private selectRecord(record: T[], selected: boolean): void {
-    this.gridFacade.setSelectRows(this.gridConfig, record, selected);
+    this.gridFacade.setSelectRows(this.gridConfig, record as object[], selected);
   }
 
   @HostListener('window:resize', ['$event'])

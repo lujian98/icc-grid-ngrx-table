@@ -72,12 +72,12 @@ export const setSelectAllRows = createAction(
 
 export const setSelectRows = createAction(
   '[Grid] Setup Grid Set Select or Unselect Rows',
-  props<{ gridConfig: IccGridConfig; records: any[]; select: boolean }>(),
+  props<{ gridConfig: IccGridConfig; records: object[]; select: boolean }>(),
 );
 
 export const setSelectRow = createAction(
   '[Grid] Setup Grid Set Select a Row and clear all other rows',
-  props<{ gridConfig: IccGridConfig; record: any }>(),
+  props<{ gridConfig: IccGridConfig; record: object }>(),
 );
 
 export const setGridGroupBy = createAction(

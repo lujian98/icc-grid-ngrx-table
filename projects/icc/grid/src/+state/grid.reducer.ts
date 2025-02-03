@@ -70,7 +70,7 @@ export const iccGridFeature = createFeature({
               width: column.width || MIN_GRID_COLUMN_WIDTH,
             };
           }),
-          selection: gridConfig.multiRowSelection ? new SelectionModel<any>(true, []) : state[key].selection,
+          selection: gridConfig.multiRowSelection ? new SelectionModel<object>(true, []) : state[key].selection,
         };
       }
       return { ...newState };

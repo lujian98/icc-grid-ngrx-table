@@ -77,11 +77,11 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setSelectAllRows({ gridConfig, selectAll }));
   }
 
-  setSelectRows<T>(gridConfig: IccGridConfig, records: T[], select: boolean): void {
+  setSelectRows(gridConfig: IccGridConfig, records: object[], select: boolean): void {
     this.store.dispatch(gridActions.setSelectRows({ gridConfig, records, select }));
   }
 
-  setSelectRow<T>(gridConfig: IccGridConfig, record: T): void {
+  setSelectRow(gridConfig: IccGridConfig, record: object): void {
     this.store.dispatch(gridActions.setSelectRow({ gridConfig, record }));
   }
 
@@ -166,7 +166,7 @@ export class IccGridFacade {
     return this.store.select(selectGridData(gridConfig));
   }
 
-  selectRowSelection(gridConfig: IccGridConfig): Observable<SelectionModel<any>> {
+  selectRowSelection<T>(gridConfig: IccGridConfig): Observable<SelectionModel<object>> {
     return this.store.select(selectRowSelection(gridConfig));
   }
 
