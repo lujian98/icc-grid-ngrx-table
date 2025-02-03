@@ -38,7 +38,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
-  gridData$!: Observable<T[]> | undefined;
+  gridData$!: Observable<object[]> | undefined;
   rowSelection$: Observable<SelectionModel<object>> | undefined;
   rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
@@ -72,11 +72,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
   }
 
-  getRecord(record: T): T {
+  getRecord(record: object): object {
     return record; //{ ...record }; // TODO some issue need this but will disable the select record???
   }
 
-  selected(record: T, selection: SelectionModel<object>): boolean {
+  selected(record: object, selection: SelectionModel<object>): boolean {
     return selection.isSelected(record as object);
   }
 
@@ -143,7 +143,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, loadData);
   }
 
-  private checkViewport(data: T[]): void {
+  private checkViewport(data: object[]): void {
     const el = this.viewport.elementRef.nativeElement;
     const clientWidth = el.clientWidth;
     const clientHeight = el.clientHeight;
@@ -161,11 +161,17 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  isRowGroup(index: number, record: T | IccRowGroup): boolean {
+  isRowGroup(index: number, record: object | IccRowGroup): boolean {
     return record instanceof IccRowGroup;
   }
 
-  rowClick(event: MouseEvent, rowIndex: number, record: T, selection: SelectionModel<object>, data: T[]): void {
+  rowClick(
+    event: MouseEvent,
+    rowIndex: number,
+    record: object,
+    selection: SelectionModel<object>,
+    data: object[],
+  ): void {
     if (this.prevRowIndex < 0) {
       this.prevRowIndex = rowIndex;
     }
@@ -193,7 +199,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.prevRowIndex = rowIndex;
   }
 
-  private getSelectionRange(prevRowIndex: number, rowIndex: number, data: T[]): T[] {
+  private getSelectionRange(prevRowIndex: number, rowIndex: number, data: object[]): object[] {
     if (prevRowIndex > rowIndex) {
       return data.slice(rowIndex, prevRowIndex);
     } else {
@@ -201,7 +207,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  private selectRecord(record: T[], selected: boolean): void {
+  private selectRecord(record: object[], selected: boolean): void {
     this.gridFacade.setSelectRows(this.gridConfig, record as object[], selected);
   }
 

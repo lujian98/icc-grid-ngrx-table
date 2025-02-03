@@ -162,8 +162,8 @@ export class IccGridFacade {
     return this.store.select(selectColumnsConfig(gridId));
   }
 
-  selectGridData(gridConfig: IccGridConfig): Observable<any[]> {
-    return this.store.select(selectGridData(gridConfig));
+  selectGridData(gridConfig: IccGridConfig): Observable<object[]> {
+    return this.store.select(selectGridData(gridConfig)) as Observable<object[]>;
   }
 
   selectRowSelection<T>(gridConfig: IccGridConfig): Observable<SelectionModel<object>> {
@@ -180,7 +180,7 @@ export class IccGridFacade {
     return this.store.select(selectRowGroups(gridConfig));
   }
 
-  selectGridInMemoryData(gridConfig: IccGridConfig): Observable<any[]> {
-    return this.store.select(selectGridInMemoryData(gridConfig));
+  selectGridInMemoryData<T>(gridConfig: IccGridConfig): Observable<T[]> {
+    return this.store.select(selectGridInMemoryData(gridConfig)) as Observable<T[]>;
   }
 }
