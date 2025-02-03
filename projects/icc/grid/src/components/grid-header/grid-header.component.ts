@@ -89,7 +89,7 @@ export class IccGridHeaderComponent<T> {
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
-    let values: any = {};
+    let values: { [key: string]: boolean } = {};
     [...this.columns].forEach((column) => {
       values[column.name] = !column.hidden;
     });

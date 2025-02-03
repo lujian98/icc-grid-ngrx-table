@@ -59,7 +59,7 @@ export class IccMenusComponent<T> implements OnDestroy {
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
-  @Output() iccMenuFormChanges = new EventEmitter<T[]>(false);
+  @Output() iccMenuFormChanges = new EventEmitter<T>(false);
 
   menuItemClick(item: IccMenuItem): void {
     if (!item.checkbox) {

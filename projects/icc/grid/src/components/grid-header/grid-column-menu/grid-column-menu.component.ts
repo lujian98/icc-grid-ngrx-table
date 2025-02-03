@@ -47,7 +47,7 @@ export class IccGridColumnMenuComponent {
 
   @Input() column!: IccColumnConfig;
   @Input() menuItems: IccMenuItem[] = [];
-  @Input() values: any[] = [];
+  @Input() values: { [key: string]: boolean }[] = [];
   @Input() disabled: IccDisabled[] = [];
 
   private setDisabledMenu(): void {
@@ -119,7 +119,7 @@ export class IccGridColumnMenuComponent {
     this.menuItems = [...menuItems]; // ...columnItems
   }
 
-  onMenuFormChanges(values: any): void {
+  onMenuFormChanges(values: { [key: string]: boolean }): void {
     this.columnHideShow(values, this.columns);
   }
 
@@ -163,7 +163,7 @@ export class IccGridColumnMenuComponent {
     this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
   }
 
-  private columnHideShow(values: any, columns: IccColumnConfig[]): void {
+  private columnHideShow(values: { [key: string]: boolean }, columns: IccColumnConfig[]): void {
     const column = columns.find((col) => {
       const checked = values[col.name];
       const colChecked = !col.hidden;
