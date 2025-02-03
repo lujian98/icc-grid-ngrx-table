@@ -14,6 +14,13 @@ import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/gri
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
 
+export interface IccDynamicGridCell<T> {
+  gridConfig: IccGridConfig;
+  rowIndex: number;
+  column: IccColumnConfig;
+  record: T;
+}
+
 @Component({
   selector: 'icc-dynamic-grid-cell',
   templateUrl: 'dynamic-grid-cell.component.html',
@@ -23,7 +30,8 @@ import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-t
 })
 export class IccDynamicGridCellComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private _componentRef!: ComponentRef<any>;
+  private instance!: IccDynamicGridCell<T>;
+  private _componentRef!: ComponentRef<unknown>;
   private _column!: IccColumnConfig;
 
   @Input() gridConfig!: IccGridConfig;
@@ -46,7 +54,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   set record(data: T) {
     this._record = { ...data };
     if (this._componentRef) {
-      this._componentRef.instance.record = this.record;
+      this.instance.record = this.record;
     }
   }
   get record(): T {
@@ -61,10 +69,11 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     this.viewContainerRef.clear();
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
-    this._componentRef.instance.gridConfig = this.gridConfig;
-    this._componentRef.instance.rowIndex = this.rowIndex;
-    this._componentRef.instance.column = this.column;
-    this._componentRef.instance.record = this.record;
+    this.instance = this._componentRef.instance as IccDynamicGridCell<T>;
+    this.instance.gridConfig = this.gridConfig;
+    this.instance.rowIndex = this.rowIndex;
+    this.instance.column = this.column;
+    this.instance.record = this.record;
   }
 
   private getRenderer(): Type<unknown> {
