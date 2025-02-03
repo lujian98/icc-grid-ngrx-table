@@ -239,7 +239,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
       return val;
     }
-    const isStringsArray = (value as string[]).every((item: string) => typeof item === 'string');
+    const isStringsArray =
+      Array.isArray(value) && (value as string[]).every((item: string) => typeof item === 'string');
     if ((this.fieldConfig.singleListOption || isStringsArray) && Array.isArray(value)) {
       value = [...value].map((item) => {
         if (typeof item === 'string') {
