@@ -7,11 +7,18 @@ import {
   OnInit,
   ViewContainerRef,
   ComponentRef,
+  Type,
 } from '@angular/core';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
 import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '@icc/ui/fields';
+
+export interface IccDynamicColumnFilter {
+  gridConfig: IccGridConfig;
+  fieldConfig: Partial<IccFormField>;
+  column: IccColumnConfig;
+}
 
 @Component({
   selector: 'icc-column-filter',
@@ -19,15 +26,10 @@ import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class IccColumnFilterComponent<T> implements OnInit {
-  private componentMapper: { [index: string]: any } = {
-    text: IccTextFilterComponent,
-    number: IccTextFilterComponent,
-    select: IccSelectFilterComponent,
-  };
-
+export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private _componentRef: ComponentRef<any> | undefined;
+  private _componentRef: ComponentRef<unknown> | undefined;
+  private instance!: IccDynamicColumnFilter;
   private _gridConfig!: IccGridConfig;
 
   private _column!: IccColumnConfig;
@@ -49,7 +51,7 @@ export class IccColumnFilterComponent<T> implements OnInit {
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = value;
     if (this._componentRef) {
-      this._componentRef.instance.gridConfig = this.gridConfig;
+      this.instance.gridConfig = this.gridConfig;
     }
   }
   get gridConfig(): IccGridConfig {
@@ -65,13 +67,21 @@ export class IccColumnFilterComponent<T> implements OnInit {
     const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
     // TODO support input filter dynamic component
 
-    const cellComponent = this.componentMapper[filterType];
+    const cellComponent = this.getFilterType(filterType);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
+    this.instance = this._componentRef.instance as IccDynamicColumnFilter;
     if (this.column.filterFieldConfig) {
-      this._componentRef.instance.fieldConfig = this.column.filterFieldConfig;
+      this.instance.fieldConfig = this.column.filterFieldConfig;
     }
-    this._componentRef.instance.column = this.column;
-    this._componentRef.instance.gridConfig = this.gridConfig;
+    this.instance.column = this.column;
+    this.instance.gridConfig = this.gridConfig;
+  }
+
+  private getFilterType(filterType: string): Type<unknown> {
+    if (filterType === 'select') {
+      return IccSelectFilterComponent;
+    }
+    return IccTextFilterComponent;
   }
 
   private getFilterFieldConfig(filterType: string): IccFormField {

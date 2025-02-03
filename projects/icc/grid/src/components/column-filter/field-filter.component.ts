@@ -20,9 +20,9 @@ import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 })
 export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   changeDetectorRef = inject(ChangeDetectorRef);
-  filterChanged$: BehaviorSubject<any> = new BehaviorSubject({});
+  filterChanged$ = new BehaviorSubject<string | null>(null);
   private gridFacade = inject(IccGridFacade);
-  private _value: string = '';
+  protected _value: string | string[] | object[] | null = '';
   _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
 
@@ -45,11 +45,11 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
     return this._gridConfig;
   }
 
-  set value(val: any) {
+  set value(val: string | string[] | object[] | null) {
     this._value = val;
   }
 
-  get value(): any {
+  get value(): string | string[] | object[] | null {
     return this._value;
   }
 
@@ -66,7 +66,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
 
   checkField(): void {}
 
-  applyFilter(filterValue: any): void {
+  applyFilter<T>(filterValue: string | string[] | object[] | null): void {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 

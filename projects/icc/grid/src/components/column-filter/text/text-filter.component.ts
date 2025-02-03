@@ -22,6 +22,14 @@ export class IccTextFilterComponent extends IccFieldFilterComponent {
     };
   }
 
+  override set value(val: string) {
+    this._value = val;
+  }
+
+  override get value(): string {
+    return this._value as string;
+  }
+
   onValueChange(value: string): void {
     this.filterChanged$.next(value);
   }

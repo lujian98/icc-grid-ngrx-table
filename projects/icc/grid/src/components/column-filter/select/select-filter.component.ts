@@ -27,7 +27,15 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
     this.column.filterFieldConfig = { ...this.fieldConfig };
   }
 
-  onSelectionChange<T>(value: T[]): void {
+  override set value(val: string[] | object[]) {
+    this._value = val;
+  }
+
+  override get value(): string[] | object[] {
+    return this._value as string[] | object[];
+  }
+
+  onSelectionChange(value: string[] | object[]): void {
     if (Array.isArray(value)) {
       this.applyFilter(value);
     }
