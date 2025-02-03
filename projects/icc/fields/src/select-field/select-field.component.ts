@@ -125,7 +125,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
     if (fieldConfig.options) {
-      this.options = [...fieldConfig.options];
+      this.options = [...fieldConfig.options] as string[] | object[];
       delete fieldConfig.options;
     }
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
@@ -176,7 +176,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
-            this.selectOptions = selectOptions;
+            this.selectOptions = selectOptions as { [key: string]: T }[];
             return selectOptions;
           }),
         );
@@ -194,7 +194,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   @Input()
-  set options(val: { [key: string]: T }[] | string[]) {
+  set options(val: string[] | object[]) {
     //local set option only, not used here
     const isStringsArray = val.every((item) => typeof item === 'string');
     if (!this.fieldConfig) {
@@ -232,7 +232,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.field.setValue(this.value);
   }
 
-  private getInitValue(val: any): any {
+  private getInitValue(val: any): string[] | object[] {
     let value: any = val;
     if (typeof val === 'string') {
       value = [val];
@@ -317,7 +317,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     { [key: string]: T } | { [key: string]: T }[],
     G
   >;
-  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<any>>;
+  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<T>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
@@ -411,14 +411,15 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     );
   }
 
-  headerOptionClick(option: IccOptionComponent<any>): void {
+  headerOptionClick(option: IccOptionComponent<T>): void {
     option.selected = !option.selected;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {
         this.value = [...this.value, option.value];
       } else {
         this.value = [...this.value].filter(
-          (item) => item[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey],
+          (item) =>
+            item[this.fieldConfig.optionKey] !== (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
         );
       }
     } else {
@@ -433,11 +434,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.selectionChange.emit(this.value);
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: string[] | object[]) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
-  registerOnTouched(fn: (value: any) => void): void {
+  registerOnTouched(fn: (value: string[] | object[]) => void): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
@@ -445,7 +446,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
-  writeValue(value: { [key: string]: any }): void {
+  writeValue(value: { [key: string]: string[] | object[] }): void {
     //TODO value formant use setFormvalue ??
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();

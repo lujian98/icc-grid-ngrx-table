@@ -23,7 +23,7 @@ export const loadSelectFieldOptions = createAction(
 
 export const loadSelectFieldOptionsSuccess = createAction(
   '[SelectField] Load Select Field Options Success',
-  props<{ fieldId: string; options: any[] }>(),
+  props<{ fieldId: string; options: string[] | object[] }>(),
 );
 
 export const clearSelectFieldStore = createAction(

@@ -47,7 +47,7 @@ export const iccSelectFieldFeature = createFeature({
             ...state[key].fieldConfig,
             viewportReady: true,
           },
-          options: [...action.options],
+          options: [...action.options] as string[] | object[],
         };
       }
       return { ...newState };

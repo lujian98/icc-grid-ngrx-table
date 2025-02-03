@@ -20,7 +20,7 @@ export class IccSelectFieldFacade {
     }
   }
 
-  setSelectFieldOptions(fieldId: string, options: any[]): void {
+  setSelectFieldOptions(fieldId: string, options: string[] | object[]): void {
     this.store.dispatch(selectFieldActions.loadSelectFieldOptionsSuccess({ fieldId, options }));
   }
 
@@ -32,7 +32,7 @@ export class IccSelectFieldFacade {
     return this.store.select(selectFieldConfig(fieldId));
   }
 
-  selectOptions(fieldId: string): Observable<any[]> {
+  selectOptions(fieldId: string): Observable<string[] | object[]> {
     return this.store.select(selectOptions(fieldId));
   }
 }

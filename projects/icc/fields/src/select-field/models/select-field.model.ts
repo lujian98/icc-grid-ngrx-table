@@ -15,7 +15,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
-  options?: any[]; // only used for local initial input
+  options?: string[] | object[]; // only used for local initial input
   virtualScroll: boolean;
 }
 
@@ -23,7 +23,7 @@ export interface SelectFieldState {
   [key: string]: IccSelectFieldState;
 }
 
-export interface IccSelectFieldState<T extends object = object> {
+export interface IccSelectFieldState {
   fieldConfig: IccSelectFieldConfig;
-  options: T[];
+  options: string[] | object[];
 }
