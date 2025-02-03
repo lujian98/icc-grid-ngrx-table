@@ -279,8 +279,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   clickedOption: number | undefined;
   private clickedOptions = 1;
-  clickOption(option: IccOptionComponent<any>): void {
-    this.autocomplete.setSelectionOption(option);
+  clickOption(option: IccOptionComponent<{ [key: string]: T }>): void {
+    this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
     this.clickedOption = this.clickedOptions++;
   }
   onScrolledIndexChange(index: number): void {
