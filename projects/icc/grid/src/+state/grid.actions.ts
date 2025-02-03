@@ -57,12 +57,12 @@ export const getGridData = createAction('[Grid] Get Grid Data', props<{ gridConf
 
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
-  props<{ gridConfig: IccGridConfig; gridData: IccGridData<any> }>(),
+  props<{ gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
 );
 
 export const setGridInMemoryData = createAction(
   '[Grid] Get Grid In Memory Data',
-  props<{ gridConfig: IccGridConfig; gridData: IccGridData<any> }>(),
+  props<{ gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
 );
 
 export const setSelectAllRows = createAction(

@@ -46,7 +46,7 @@ export class IccGridService {
     return of();
   }
 
-  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<T>> {
+  getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<object>> {
     let params = this.backendService.getParams(gridConfig.urlKey, 'gridData');
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);
     params = this.appendSortHttpParams(gridConfig.sortFields, params);
@@ -55,7 +55,7 @@ export class IccGridService {
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
     const url = this.backendService.apiUrl;
-    return this.http.get<IccGridData<T>>(url, { params }).pipe(
+    return this.http.get<IccGridData<object>>(url, { params }).pipe(
       map((res) => {
         return res;
       }),

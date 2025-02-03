@@ -141,11 +141,11 @@ export class IccGridFacade {
     }
   }
 
-  setGridData(gridConfig: IccGridConfig, gridData: IccGridData<any>): void {
+  setGridData(gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
     this.store.dispatch(gridActions.getGridDataSuccess({ gridConfig, gridData }));
   }
 
-  setGridInMemoryData(gridConfig: IccGridConfig, gridData: IccGridData<any>): void {
+  setGridInMemoryData(gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
     this.store.dispatch(gridActions.setGridInMemoryData({ gridConfig, gridData }));
     this.getGridData(gridConfig);
   }

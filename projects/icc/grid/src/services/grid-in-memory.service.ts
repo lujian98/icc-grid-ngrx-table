@@ -18,7 +18,7 @@ export class IccGridinMemoryService {
     gridConfig: IccGridConfig,
     columns: IccColumnConfig[],
     inMemoryData: any[],
-  ): Observable<IccGridData<T>> {
+  ): Observable<IccGridData<object>> {
     //console.log('grid service inMemoryData=', inMemoryData);
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
