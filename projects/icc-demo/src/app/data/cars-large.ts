@@ -58,11 +58,6 @@ export const DCRGridConfig: Partial<IccGridConfig> = {
   rowSelection: true,
 };
 
-const brandSelectFilterConfig: IccFilterFieldConfig = {
-  fieldType: 'select',
-  multiSelection: true,
-};
-
 export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'ID',
@@ -77,8 +72,10 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'brand',
     title: 'this s s     sssssssssssssssssss sssssssssssssss',
-    //filterField: 'select',
-    filterFieldConfig: brandSelectFilterConfig,
+    filterFieldConfig: {
+      fieldType: 'select',
+      multiSelection: true,
+    },
     width: 50,
   },
   {
@@ -89,7 +86,11 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'color',
     width: 80,
-    filterField: 'select',
+    filterFieldConfig: {
+      fieldType: 'select',
+      isEmpty: true,
+      notEmpty: true,
+    },
     align: 'center',
   },
 ];
