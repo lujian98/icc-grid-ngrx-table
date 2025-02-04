@@ -7,7 +7,7 @@ export class IccFilters {
     return this._filters;
   }
 
-  update(filteredValues: { [index: string]: any }) {
+  update<T>(filteredValues: { [index: string]: string | string[] }) {
     this.filters.forEach((filter) => {
       const key = filter.key;
       /*

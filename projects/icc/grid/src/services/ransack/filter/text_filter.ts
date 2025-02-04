@@ -31,7 +31,7 @@ export class IccRansackTextFilter<T> extends IccRansackFilter<T> {
       }
 
       const key = this.filter.field + query;
-      const p: { [index: string]: any } = {};
+      const p: { [index: string]: string } = {};
       p[key] = value;
       params.push(p);
     }

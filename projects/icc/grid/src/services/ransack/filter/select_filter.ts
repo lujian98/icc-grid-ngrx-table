@@ -18,7 +18,7 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
     if (choices.length > 0) {
       choices.forEach((value) => {
         let key = this.filter.field + (choices.length > 1 ? '_in[]' : '_in');
-        const p: { [index: string]: any } = {};
+        const p: { [index: string]: T } = {};
         let val = value;
         if (value === 'isEmpty') {
           key = this.filter.field + '_null';

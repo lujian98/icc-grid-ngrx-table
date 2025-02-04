@@ -45,7 +45,7 @@ export class IccRansackNumberFilter<T> extends IccRansackFilter<T> {
           key += 'cont';
           break;
       }
-      const p: { [index: string]: any } = {};
+      const p: { [index: string]: number | null } = {};
       p[key] = value;
       params.push(p);
     }

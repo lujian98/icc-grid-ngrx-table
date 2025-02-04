@@ -16,6 +16,14 @@ export class IccNumberFilter extends IccFilter {
   protected _value!: number | null;
   protected _action!: NumericFilterActions | null;
 
+  override set search(val: string) {
+    this._search = val;
+  }
+
+  override get search(): string {
+    return this._search as string;
+  }
+
   // always call the value first, then action
   get value(): number | null {
     this.setValue(this.search);

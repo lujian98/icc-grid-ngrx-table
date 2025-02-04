@@ -1,12 +1,17 @@
 import { IccColumnConfig } from '../../models/grid-column.model';
 
+export interface IccColumnFilterValue {
+  name: string;
+  value: string | number | object[];
+}
+
 export abstract class IccFilter {
   private _column!: IccColumnConfig;
   private _key!: string;
   private _field!: string;
   private _type!: string;
   private _enabled!: boolean;
-  protected _search!: any;
+  protected _search!: string | number | IccColumnFilterValue;
 
   set column(val: IccColumnConfig) {
     this._column = val;
@@ -48,11 +53,11 @@ export abstract class IccFilter {
     return this._enabled;
   }
 
-  set search(val: any) {
+  set search(val: string | number | IccColumnFilterValue) {
     this._search = val;
   }
 
-  get search(): any {
+  get search(): string | number | IccColumnFilterValue {
     return this._search;
   }
 
