@@ -15,6 +15,7 @@ export class IccFilterFactory {
   }
 
   getFilter(column: IccColumnConfig) {
+    console.log(' column=', column);
     const filerType = typeof column.filterField === 'string' ? column.filterField : 'text';
     let component = this.componentMapper[filerType];
     if (!component) {
