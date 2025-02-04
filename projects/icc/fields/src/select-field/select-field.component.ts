@@ -216,10 +216,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   @Input()
   set value(val: string | string[] | object[]) {
+    console.log(' val=', val);
     if (this.form && val !== undefined) {
+      console.log('1111 val=', val);
       this._value = this.getInitValue(val);
       this.setFormvalue();
     } else if (Array.isArray(val)) {
+      console.log('222 val=', val);
       this._value = val;
     }
   }

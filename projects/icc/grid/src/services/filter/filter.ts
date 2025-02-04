@@ -57,7 +57,7 @@ export abstract class IccFilter {
     this._search = val;
   }
 
-  get search(): string | number | IccColumnFilterValue {
+  get search(): any {
     return this._search;
   }
 
