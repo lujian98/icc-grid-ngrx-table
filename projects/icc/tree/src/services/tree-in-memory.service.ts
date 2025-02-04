@@ -3,6 +3,7 @@ import { IccColumnConfig, IccGridinMemoryService } from '@icc/ui/grid';
 import { Observable, of } from 'rxjs';
 import { IccTreeConfig, IccTreeData } from '../models/tree-grid.model';
 import { iccFlattenTree } from '../utils/nested-tree';
+import { sortByField } from '@icc/ui/core';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class IccTreeinMemoryService extends IccGridinMemoryService {
   }
 
   private sortNodes(nodes: IccTreeData[], field: string, dir: string): IccTreeData[] {
-    return this.dataSortByField([...nodes], field, dir).map((node) => {
+    return sortByField([...nodes], field, dir).map((node) => {
       return {
         ...node,
         children: node.children ? this.sortNodes([...node.children], field, dir) : undefined,

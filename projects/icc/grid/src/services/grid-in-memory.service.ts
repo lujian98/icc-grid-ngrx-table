@@ -9,6 +9,7 @@ import {
 } from '../models/grid-column.model';
 import { IccFilterFactory } from './filter/filter_factory';
 import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
+import { sortByField } from '@icc/ui/core';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,8 @@ export class IccGridinMemoryService {
   getGridData<T>(
     gridConfig: IccGridConfig,
     columns: IccColumnConfig[],
-    inMemoryData: any[],
-  ): Observable<IccGridData<object>> {
+    inMemoryData: T[],
+  ): Observable<IccGridData<any>> {
     //console.log('grid service inMemoryData=', inMemoryData);
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...inMemoryData], filterParams);
@@ -34,32 +35,7 @@ export class IccGridinMemoryService {
       totalCounts: filteredData.length,
     });
   }
-  private getTreeNodes(records: any[]) {
-    let nodesData: any[] = [];
-    let maker = '';
-    records.forEach((item) => {
-      if (maker !== item.brand) {
-        maker = item.brand;
-        const children = records
-          .filter((r) => r.brand === maker)
-          .map((record) => {
-            return {
-              name: record.color,
-              brand: maker,
-              color: record.color,
-              vin: record.vin,
-              year: record.year,
-            };
-          });
-        nodesData.push({
-          name: maker,
-          children: children,
-        });
-      }
-    });
 
-    console.log('nodes=', nodesData);
-  }
   protected getFilteredData(data: any[], filterParams: any[]) {
     [...filterParams].forEach((params) => {
       const key = params.key;
@@ -132,35 +108,10 @@ export class IccGridinMemoryService {
   private getSortedData<T>(data: T[], sorts: IccSortField[]) {
     if (sorts && sorts.length > 0) {
       sorts.reverse().forEach((sort) => {
-        data = this.dataSortByField(data, sort.field, sort.dir);
+        data = sortByField(data, sort.field, sort.dir);
       });
       sorts.reverse();
     }
-    return data;
-  }
-
-  protected dataSortByField(data: any[], field: string, direction: string) {
-    const order = direction === 'asc' ? 1 : -1;
-    //console.log( ' data=', data)
-    data.sort((d1: any, d2: any) => {
-      const v1 = (d1 as any)[field];
-      const v2 = (d2 as any)[field];
-      let res = null;
-      if (v1 == null && v2 != null) {
-        res = -1;
-      } else if (v1 != null && v2 == null) {
-        res = 1;
-      } else if (v1 == null && v2 == null) {
-        res = 0;
-      } else if (this.isNumeric(v1) && this.isNumeric(v2)) {
-        res = Number(v1) < Number(v2) ? -1 : Number(v1) > Number(v2) ? 1 : 0;
-      } else if (typeof v1 === 'string' && typeof v2 === 'string') {
-        res = v1.localeCompare(v2);
-      } else {
-        res = v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-      }
-      return order * res;
-    });
     return data;
   }
 
@@ -177,11 +128,11 @@ export class IccGridinMemoryService {
     return value;
   }
 
-  private isDate(date: any): boolean {
+  private isDate(date: string): boolean {
     return !isNaN(Date.parse(date));
   }
 
-  private isNumeric(num: any): boolean {
+  private isNumeric(num: number | string): boolean {
     return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
