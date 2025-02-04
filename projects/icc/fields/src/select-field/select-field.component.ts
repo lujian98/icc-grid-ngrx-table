@@ -215,12 +215,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   @Input()
-  set value(val: string | string[] | object[]) {
+  set value(val: string | object | string[] | object[]) {
     if (this.form && val !== undefined) {
       this._value = this.getInitValue(val);
       this.setFormvalue();
     } else if (Array.isArray(val)) {
       this._value = val;
+    } else if (!Array.isArray(val)) {
+      this._value = [val] as string[] | object[];
     }
   }
 
@@ -232,12 +234,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.field.setValue(this.value);
   }
 
-  private getInitValue(val: string | string[] | object[]): string[] | object[] {
-    let value: string | string[] | object[] = val;
+  private getInitValue(val: string | object | string[] | object[]): string[] | object[] {
+    let value: string | object | string[] | object[] = val;
     if (typeof val === 'string') {
       value = [val];
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
-      return val;
+      return Array.isArray(val) ? val : [val];
     }
     const isStringsArray =
       Array.isArray(value) && (value as string[]).every((item: string) => typeof item === 'string');
@@ -253,7 +255,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         }
       });
     } else {
-      return (value ? [...value] : value) as string[] | object[];
+      return (value && !Array.isArray(value) ? [value] : value) as string[] | object[];
     }
     return value as string[] | object[];
   }

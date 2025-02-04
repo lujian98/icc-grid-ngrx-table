@@ -15,7 +15,7 @@
 
       <icc-select-field
         [fieldConfig]="langSelectionConfig"
-        [value]="[i18nService.currentLang]"
+        [value]="i18nService.currentLang"
         [options]="i18nService.languages"
         [showFieldEditIndicator]="false"
         (selectionChange)="setLang($event)"
