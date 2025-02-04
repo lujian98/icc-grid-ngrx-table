@@ -16,6 +16,13 @@ export interface IccInMemoryFilterValue {
   value: string | string[];
 }
 
+export interface IccInMemoryFilters {
+  filterKey: string;
+  compareKey: string;
+  searches: string[];
+  search: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,16 +31,12 @@ export class IccGridinMemoryService {
     gridConfig: IccGridConfig,
     columns: IccColumnConfig[],
     inMemoryData: T[],
-  ): Observable<IccGridData<any>> {
-    //console.log('grid service inMemoryData=', inMemoryData);
+  ): Observable<IccGridData<object>> {
     const filterParams = this.getFilterParams(gridConfig.columnFilters, columns);
-    const filteredData = this.getFilteredData([...inMemoryData], filterParams);
+    const filteredData = this.getFilteredData([...inMemoryData] as object[], filterParams);
     const sortedData = this.getSortedData(filteredData, gridConfig.sortFields);
-    //console.log('grid sortedData=', sortedData);
-    //this.getTreeNodes(sortedData);
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
-    //console.log( 'offset, limit=', offset, limit)
     const offsetData = this.getOffsetData(sortedData, offset, limit);
     return of({
       data: offsetData,
@@ -41,7 +44,7 @@ export class IccGridinMemoryService {
     });
   }
 
-  protected getFilteredData(data: any[], filterParams: any[]) {
+  protected getFilteredData(data: object[], filterParams: IccInMemoryFilterValue[]) {
     const filters: { [index: string]: any } = {};
     [...filterParams].forEach((params) => {
       const key = params.key;
@@ -56,7 +59,7 @@ export class IccGridinMemoryService {
           filters[filterKey] = [];
         }
         const find = filters[filterKey].find(
-          (item: any) => `${item.filterKey}_${item.compareKey}` === `${filterKey}_${compareKey}`,
+          (item: IccInMemoryFilters) => `${item.filterKey}_${item.compareKey}` === `${filterKey}_${compareKey}`,
         );
         if (!find) {
           filters[filterKey].push({
@@ -64,7 +67,7 @@ export class IccGridinMemoryService {
             compareKey,
             searches,
             search,
-          });
+          } as IccInMemoryFilters);
         }
       }
     });
@@ -77,16 +80,16 @@ export class IccGridinMemoryService {
     return data;
   }
 
-  private getFilterCondition(filters: any, item: any): boolean {
+  private getFilterCondition(filters: IccInMemoryFilters[], item: object): boolean {
     let ret: boolean | undefined = undefined;
 
-    filters.forEach((query: any) => {
+    filters.forEach((query: IccInMemoryFilters) => {
       const filterKey = query.filterKey;
       const compareKey = query.compareKey;
       const searches = query.searches;
       const search = query.search;
 
-      const val = item[filterKey];
+      const val = (item as { [index: string]: any })[filterKey];
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
       let newRet: boolean | undefined = undefined;

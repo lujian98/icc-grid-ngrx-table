@@ -18,7 +18,7 @@ export class IccTreeinMemoryService extends IccGridinMemoryService {
     const flatTree = iccFlattenTree([...sortedData], 0);
     const filterParams = this.getFilterParams(treeConfig.columnFilters, columns);
     const filteredData = this.getFilteredData([...flatTree], filterParams);
-    return of([...filteredData]);
+    return of([...filteredData] as IccTreeData[]);
   }
 
   private sortTree(nodes: IccTreeData[], treeConfig: IccTreeConfig): IccTreeData[] {

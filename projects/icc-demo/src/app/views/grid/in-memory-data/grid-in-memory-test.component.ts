@@ -42,6 +42,12 @@ export class AppGridinMemoryTestComponent {
     },
     {
       name: 'brand',
+      /*
+      filterField: 'select',
+      filterFieldConfig: {
+        fieldType: 'select',
+        multiSelection: true,
+      },*/
     },
     {
       name: 'year',
@@ -52,6 +58,7 @@ export class AppGridinMemoryTestComponent {
       name: 'color',
       width: 80,
       align: 'center',
+      //filterField: 'select',
     },
   ];
   gridData: IccGridData<any> = CARSDATA3;

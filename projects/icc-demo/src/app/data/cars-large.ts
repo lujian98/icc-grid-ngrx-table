@@ -77,7 +77,6 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'brand',
     title: 'this s s     sssssssssssssssssss sssssssssssssss',
-    filterField: 'select',
     filterFieldConfig: brandSelectFilterConfig,
     width: 50,
   },
