@@ -15,13 +15,22 @@ export class IccFilterFactory {
   }
 
   getFilter(column: IccColumnConfig) {
-    console.log(' column=', column);
-    const filerType = typeof column.filterField === 'string' ? column.filterField : 'text';
-    let component = this.componentMapper[filerType];
+    const filterType = this.getFilterType(column);
+    let component = this.componentMapper[filterType];
     if (!component) {
       component = this.componentMapper['text'];
     }
     const componentRef = new component(column, column.name);
     return componentRef;
+  }
+
+  private getFilterType(column: IccColumnConfig): string {
+    if (typeof column.filterField === 'string') {
+      return column.filterField;
+    } else if (column.filterFieldConfig?.fieldType) {
+      return column.filterFieldConfig?.fieldType;
+    }
+
+    return 'text';
   }
 }

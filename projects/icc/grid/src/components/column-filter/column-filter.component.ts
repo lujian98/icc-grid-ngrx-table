@@ -64,10 +64,9 @@ export class IccColumnFilterComponent implements OnInit {
   }
 
   private loadComponent(): void {
-    const filterType = typeof this.column.filterField === 'string' ? this.column.filterField : 'text';
-    // TODO support input filter dynamic component
+    const filterType = this.getFilterType(this.column);
 
-    const cellComponent = this.getFilterType(filterType);
+    const cellComponent = this.getFilterTypeComponent(filterType);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccDynamicColumnFilter;
     if (this.column.filterFieldConfig) {
@@ -77,7 +76,16 @@ export class IccColumnFilterComponent implements OnInit {
     this.instance.gridConfig = this.gridConfig;
   }
 
-  private getFilterType(filterType: string): Type<unknown> {
+  private getFilterType(column: IccColumnConfig): string {
+    if (typeof column.filterField === 'string') {
+      return column.filterField;
+    } else if (column.filterFieldConfig?.fieldType) {
+      return column.filterFieldConfig?.fieldType;
+    }
+    return 'text';
+  }
+
+  private getFilterTypeComponent(filterType: string): Type<unknown> {
     if (filterType === 'select') {
       return IccSelectFilterComponent;
     }
