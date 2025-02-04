@@ -33,9 +33,9 @@ export class IccRowGroups {
 
   private setRowGroups<T>(data: T[], rowGroupFields: IccRowGroupField[]) {
     const groups = this.uniqueBy(
-      data.map((row: any) => {
+      data.map((row: T) => {
         const column = rowGroupFields[0];
-        const value = row[column.field];
+        const value = (row as any)[column.field];
         const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
         const group = new IccRowGroup();
         group.field = column.field;
