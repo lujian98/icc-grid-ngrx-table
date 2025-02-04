@@ -35,7 +35,7 @@ export class IccRowGroups {
     const groups = this.uniqueBy(
       data.map((row: T) => {
         const column = rowGroupFields[0];
-        const value = (row as any)[column.field];
+        const value = (row as { [index: string]: any })[column.field];
         const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
         const group = new IccRowGroup();
         group.field = column.field;
@@ -56,7 +56,9 @@ export class IccRowGroups {
     let subGroups: T[] = [];
     this.rowGroups.forEach((group: IccRowGroup) => {
       const rowsInGroup = this.uniqueBy(
-        data.filter((row: T) => !(row instanceof IccRowGroup) && group.value === (row as any)[currentColumn]),
+        data.filter(
+          (row: T) => !(row instanceof IccRowGroup) && group.value === (row as { [index: string]: any })[currentColumn],
+        ),
         JSON.stringify,
       );
       group.totalCounts = rowsInGroup.length;
@@ -68,7 +70,7 @@ export class IccRowGroups {
     return subGroups;
   }
 
-  uniqueBy<T>(a: T[], key: any) {
+  uniqueBy<T>(a: T[], key: Function) {
     const seen: { [index: string]: any } = {};
     return a.filter((item) => {
       const k = key(item);
