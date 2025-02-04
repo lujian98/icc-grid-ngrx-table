@@ -115,7 +115,7 @@ export class IccGridinMemoryService {
     return data;
   }
 
-  private getTypedValue(search: any, val: any, value: any): any {
+  private getTypedValue(search: string, val: string, value: string): string | number | Date {
     if (value) {
       search = decodeURIComponent(search);
       value = decodeURIComponent(value);
@@ -136,7 +136,7 @@ export class IccGridinMemoryService {
     return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
-  protected getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
+  protected getFilterParams<T>(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): any[] {
     const params: any[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
