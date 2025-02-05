@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     this.themeService.setBackgroundColor(value);
   }
 
-  setLang(selected: IccLanguage[]): void {
-    this.i18nService.setLang(selected[0]);
+  setLang(selected: IccLanguage): void {
+    this.i18nService.setLang(selected);
   }
 }

@@ -276,7 +276,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
   }
 
-  @Output() selectionChange = new EventEmitter<T[]>(true);
+  @Output() selectionChange = new EventEmitter<T | T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
@@ -379,8 +379,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.selectionChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
-      this.value = options ? [options] : [];
-      this.selectionChange.emit(this.value as T[]);
+      const value = options ? options : '';
+      this.selectionChange.emit(value as T);
+      this.value = value;
     }
   }
 
@@ -392,12 +393,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     event.stopPropagation();
     if (this.fieldConfig.multiSelection) {
       this.field.setValue([]);
+      this.selectionChange.emit([]);
     } else {
       this.field.setValue('');
+      this.selectionChange.emit('' as T);
     }
     this.changeDetectorRef.markForCheck();
     this.delaySetSelected();
-    this.selectionChange.emit([]);
   }
 
   checkAll(selectOptions: { [key: string]: T }[] | string[]): void {
@@ -426,16 +428,18 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
             (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
         ) as object[];
       }
+      this.selectionChange.emit(this.value as T[]);
     } else {
       this.autocompleteClose = true;
       if (option.selected) {
-        this.value = [option.value as object];
+        this.selectionChange.emit(option.value as T);
+        this.value = option.value as object;
       } else {
-        this.value = [];
+        this.selectionChange.emit('' as T);
+        this.value = '';
       }
     }
     this.field.setValue(this.value);
-    this.selectionChange.emit(this.value as T[]);
   }
 
   registerOnChange(fn: (value: string[] | object[]) => void): void {

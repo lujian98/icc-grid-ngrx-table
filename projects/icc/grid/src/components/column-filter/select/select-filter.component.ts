@@ -35,10 +35,11 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
     return this._value as string[] | object[];
   }
 
-  onSelectionChange(value: string[] | object[]): void {
-    console.log(' value =', value);
+  onSelectionChange(value: string | object | string[] | object[]): void {
     if (Array.isArray(value)) {
       this.applyFilter(value);
+    } else {
+      this.applyFilter((value ? [value] : []) as string[] | object[]);
     }
   }
 }
