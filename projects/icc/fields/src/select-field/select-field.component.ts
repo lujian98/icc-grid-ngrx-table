@@ -222,7 +222,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     } else if (Array.isArray(val)) {
       this._value = val;
     } else if (!Array.isArray(val)) {
-      this._value = [val] as string[] | object[];
+      this._value = (val ? [val] : []) as string[] | object[];
     }
   }
 
@@ -254,8 +254,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
           return item;
         }
       });
+    } else if (Array.isArray(value)) {
+      return value;
     } else {
-      return (value && !Array.isArray(value) ? [value] : value) as string[] | object[];
+      return (value ? [value] : []) as string[] | object[];
     }
     return value as string[] | object[];
   }
@@ -376,6 +378,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   onChange(options: { [key: string]: string } | null): void {
     if (this.fieldConfig.multiSelection) {
+      console.log(' options=', options);
+      console.log(' this.fieldValue=', this.fieldValue);
       this.selectionChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
