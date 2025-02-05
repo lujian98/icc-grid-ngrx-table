@@ -3,7 +3,7 @@
   class="icc-menu-item"
   [routerLink]="menuItem.link"
   [queryParams]="menuItem.queryParams"
-  [routerLinkActiveOptions]="menuItem.routerOptions || {}"
+  [routerLinkActiveOptions]="menuItem.routerOptions || { exact: false }"
   routerLinkActive="active"
 >
   <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>

@@ -1,5 +1,5 @@
+import { IsActiveMatchOptions, Params } from '@angular/router';
 import { IccIconConfig } from '@icc/ui/icon';
-import { Params } from '@angular/router';
 
 export interface IccMenuItem {
   name: string;
@@ -10,7 +10,7 @@ export interface IccMenuItem {
   icon?: string | IccIconConfig;
   link?: string;
   queryParams?: Params;
-  routerOptions?: any;
+  routerOptions?: { exact: boolean } | IsActiveMatchOptions;
   checkbox?: boolean;
   checked?: boolean;
   separator?: boolean;
