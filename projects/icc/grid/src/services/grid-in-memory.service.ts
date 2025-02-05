@@ -45,7 +45,7 @@ export class IccGridinMemoryService {
   }
 
   protected getFilteredData(data: object[], filterParams: IccInMemoryFilterValue[]) {
-    const filters: { [index: string]: any } = {};
+    const filters: { [index: string]: IccInMemoryFilters[] } = {};
     [...filterParams].forEach((params) => {
       const key = params.key;
       if (key.indexOf('_') > 1) {
@@ -89,7 +89,7 @@ export class IccGridinMemoryService {
       const searches = query.searches;
       const search = query.search;
 
-      const val = (item as { [index: string]: any })[filterKey];
+      const val = (item as { [index: string]: string })[filterKey];
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
       let newRet: boolean | undefined = undefined;
@@ -205,7 +205,7 @@ export class IccGridinMemoryService {
       const ransackFilter = ransackFilterFactory.getFilter(filter);
       const filterParams = ransackFilter.getParams();
       if (filterParams && filterParams.length > 0) {
-        filterParams.forEach((pairs: { [index: string]: any }) => {
+        filterParams.forEach((pairs: { [index: string]: string | number }) => {
           Object.keys(pairs).forEach((key) => {
             let value = pairs[key];
             value = value || value === 0 ? value.toString() : '';
