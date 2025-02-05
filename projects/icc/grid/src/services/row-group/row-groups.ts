@@ -35,7 +35,7 @@ export class IccRowGroups {
     const groups = this.uniqueBy(
       data.map((row: T) => {
         const column = rowGroupFields[0];
-        const value = (row as { [index: string]: any })[column.field];
+        const value = (row as { [index: string]: string })[column.field];
         const find = this.rowGroups.find((item) => item.field === column.field && item.value === value);
         const group = new IccRowGroup();
         group.field = column.field;
@@ -57,7 +57,8 @@ export class IccRowGroups {
     this.rowGroups.forEach((group: IccRowGroup) => {
       const rowsInGroup = this.uniqueBy(
         data.filter(
-          (row: T) => !(row instanceof IccRowGroup) && group.value === (row as { [index: string]: any })[currentColumn],
+          (row: T) =>
+            !(row instanceof IccRowGroup) && group.value === (row as { [index: string]: string })[currentColumn],
         ),
         JSON.stringify,
       );
@@ -71,7 +72,7 @@ export class IccRowGroups {
   }
 
   uniqueBy<T>(a: T[], key: Function) {
-    const seen: { [index: string]: any } = {};
+    const seen: { [index: string]: boolean } = {};
     return a.filter((item) => {
       const k = key(item);
       return seen.hasOwnProperty(k) ? false : (seen[k] = true);
