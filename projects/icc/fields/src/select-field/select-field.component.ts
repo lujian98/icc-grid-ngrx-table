@@ -219,10 +219,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.form && val !== undefined) {
       this._value = this.getInitValue(val);
       this.setFormvalue();
-    } else if (Array.isArray(val)) {
-      this._value = val;
-    } else if (!Array.isArray(val)) {
-      this._value = (val ? [val] : []) as string[] | object[];
+    } else if (!this.form) {
+      this._value = val as string[] | object[];
     }
   }
 
@@ -236,7 +234,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   private getInitValue(val: string | object | string[] | object[]): string[] | object[] {
     let value: string | object | string[] | object[] = val;
-    if (typeof val === 'string') {
+    if (typeof val === 'string' && val) {
       value = [val];
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
       return Array.isArray(val) ? val : [val];
@@ -245,7 +243,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       Array.isArray(value) && (value as string[]).every((item: string) => typeof item === 'string');
     if ((this.fieldConfig.singleListOption || isStringsArray) && Array.isArray(value)) {
       value = [...value].map((item) => {
-        if (typeof item === 'string') {
+        if (typeof item === 'string' && item) {
           return {
             name: item,
             title: item,
@@ -378,8 +376,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   onChange(options: { [key: string]: string } | null): void {
     if (this.fieldConfig.multiSelection) {
-      console.log(' options=', options);
-      console.log(' this.fieldValue=', this.fieldValue);
       this.selectionChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
