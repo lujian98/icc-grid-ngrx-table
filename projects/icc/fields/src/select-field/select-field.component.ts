@@ -55,6 +55,12 @@ import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccSelectFieldConfig } from './models/select-field.model';
 
+export interface IccHeaderOption {
+  name: string;
+  title: string;
+  [key: string]: string;
+}
+
 @Component({
   selector: 'icc-select-field',
   templateUrl: './select-field.component.html',
@@ -111,11 +117,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<{ [key: string]: T }[]>;
   private selectOptions: { [key: string]: T }[] = [];
-  isEmptyValue: any = {
+  isEmptyValue: IccHeaderOption = {
     name: 'isEmpty',
     title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
   };
-  notEmptyValue: any = {
+  notEmptyValue: IccHeaderOption = {
     name: 'notEmpty',
     title: this.translateService.instant('ICC.UI.ACTIONS.NOT_EMPTY'),
   };
@@ -416,7 +422,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     );
   }
 
-  headerOptionClick(option: IccOptionComponent<T>): void {
+  headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
     option.selected = !option.selected;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {
@@ -424,8 +430,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       } else {
         this.value = [...this.value].filter(
           (item) =>
-            (item as { [key: string]: T })[this.fieldConfig.optionKey] !==
-            (option.value as { [key: string]: T })[this.fieldConfig.optionKey],
+            (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey],
         ) as object[];
       }
       this.selectionChange.emit(this.value as T[]);
