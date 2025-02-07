@@ -1,0 +1,21 @@
+<div>
+  <icc-form-field class="icc-date-range-date-display">
+    <input
+      #calendarInput
+      class="icc-date-range-date-input"
+      iccInput
+      placeholder="{{ options.placeholder! | translate }}..."
+      [value]="selectedDateRange"
+      (click)="openCalendar($event)"
+      readonly
+    />
+    <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)"></div>
+    <button *ngIf="selectedDateRange" iccSuffix icc-button [ghost]="true" (click)="clearDateRange($event)">
+      <icc-icon icon="times-circle-o"></icc-icon>
+    </button>
+  </icc-form-field>
+</div>
+<!--
+      [iccTooltip]="selectedDateRange"
+      [iccTooltipPosition]="tooltipPosition"
+      -->
