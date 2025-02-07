@@ -1,6 +1,6 @@
 import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
+import { Inject, Injectable, Injector, TemplateRef, Type, inject, ClassProvider } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { fromEvent } from 'rxjs';
@@ -23,13 +23,15 @@ export class IccDialogService {
   open<T>(
     content: Type<T> | TemplateRef<T>,
     userConfig: Partial<IccDialogConfig<Partial<T> | string>> = {},
+    provides: ClassProvider[] = [],
   ): IccDialogRef<T> {
     const config = new IccDialogConfig({ ...this.globalConfig, ...userConfig });
     const overlayRef = this.createOverlay(config);
     const dialogRef = new IccDialogRef<T>(overlayRef);
     const injector = Injector.create({
-      parent: this.injector,
+      parent: userConfig.injector || this.injector,
       providers: [
+        ...provides,
         { provide: IccDialogRef, useValue: dialogRef },
         { provide: ICC_DIALOG_CONFIG, useValue: config },
       ],
