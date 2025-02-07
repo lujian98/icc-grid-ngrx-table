@@ -1,0 +1,18 @@
+:host {
+  .icc-date-range-calendar-container {
+    display: flex;
+
+    .icc-date-range-calendar-item {
+      width: 250px;
+    }
+  }
+
+  ::ng-deep mat-calendar-header {
+    .mat-calendar-header {
+      padding: 0px;
+      .mat-calendar-controls {
+        margin: 0px;
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideNoopAnimations, provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccI18nModule } from '@icc/ui/core';
@@ -18,6 +19,7 @@ import { InMemoryService } from './mock/in-memory-service';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
@@ -43,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(TranslateModule.forRoot({ defaultLanguage: 'en-US', extend: true })),
     //importProvidersFrom(InMemoryWebApiModule.forRoot(InMemoryService, { delay: 1000 })),
     importProvidersFrom(IccI18nModule.forRoot()),
-    importProvidersFrom(IccThemeModule.forRoot({ name: 'dark' })),
+    importProvidersFrom(IccThemeModule.forRoot({ name: 'light' })),
     importProvidersFrom(IccOverlayModule.forRoot()),
     importProvidersFrom(IccUiModulesModule),
   ],

@@ -29,6 +29,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/menu/menu.routes').then((m) => m.AppMenuRoutes),
       },
       {
+        path: 'date',
+        loadChildren: () => import('./views/date/date.routes').then((m) => m.AppDateRoutes),
+      },
+      {
         path: 'd3',
         loadChildren: () => import('./views/d3/d3.routes').then((m) => m.AppD3Routes),
       },

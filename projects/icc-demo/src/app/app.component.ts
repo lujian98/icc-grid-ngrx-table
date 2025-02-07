@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
     { name: 'Form', link: 'form' },
     { name: 'Select', link: 'select' },
     { name: 'Menu', link: 'menu' },
+    { name: 'Date', link: 'date' },
     { name: 'D3', link: 'd3' },
     { name: 'Layout', link: 'layout' },
     { name: 'Window', link: 'window' },

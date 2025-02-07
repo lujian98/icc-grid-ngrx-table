@@ -1,20 +1,22 @@
-@mixin sun-date-picker-theme() {
-  sun-calendar-wrapper,
-  sun-date-picker,
-  sun-date-range-picker {
-    color: sun-theme(text-basic-color);
+@use "../../theme/src/icc";
+
+@mixin icc-date-picker-theme() {
+  icc-calendar-wrapper,
+  icc-date-picker,
+  icc-date-range-picker {
+    color: icc.icc-theme(app-text-basic-color);
     .mat-mdc-icon-button:disabled {
       opacity: 0.25;
     }
   }
 
-  .sun-date-range-dates::before {
-    color: sun-theme(color-basic-default);
-    background-color: sun-theme(color-basic-transparent-default);
+  .icc-date-range-dates::before {
+    color: icc.icc-theme(color-basic-default);
+    background-color: icc.icc-theme(color-basic-transparent-default);
   }
 
-  sun-calendar-wrapper {
-    .sun-date-range-selected-date-end {
+  icc-calendar-wrapper {
+    .icc-date-range-selected-date-end {
       .mat-calendar-body-cell-content {
         border-radius: 0 0.25rem 0.25rem 0;
       }
