@@ -20,7 +20,7 @@ import {
 export class AppSimpleDateComponent implements OnInit {
   range: IccDateRange = { fromDate: new Date(), toDate: new Date() };
   options!: IccDateRangeOptions;
-  dateoptions!: IccDateSelectionOptions;
+  dateoptions!: IccDateRangeOptions; //IccDateSelectionOptions;
 
   presets: Array<IccDatePresetItem> = [];
   presets2: Array<IccDatePresetItem> = [];
@@ -47,6 +47,7 @@ export class AppSimpleDateComponent implements OnInit {
     this.dateoptions = {
       presets: this.presets2,
       format: 'mediumDate',
+      range: { fromDate: today, toDate: today },
       selectedDate: selectedDate,
       minMax: { fromDate: minDate, toDate: maxDate },
     };

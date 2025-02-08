@@ -13,8 +13,8 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
 @Component({
   selector: 'icc-date-picker-overlay',
   templateUrl: './date-picker-overlay.component.html',
+  styleUrls: ['./date-picker-overlay.component.scss'],
   animations: [IccPickerOverlayAnimations.transformPanel],
-  encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, TranslateDirective, IccCalendarWrapperComponent, IccCalendarPresetsComponent],
 })
 export class IccDatePickerOverlayComponent implements OnInit {

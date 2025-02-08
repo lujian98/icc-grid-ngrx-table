@@ -1,6 +1,11 @@
 @use "../../theme/src/icc";
 
 @mixin icc-date-picker-theme() {
+  icc-date-range-picker-overlay,
+  icc-date-picker-overlay {
+    background-color: icc.icc-theme(icc-header-background-color);
+  }
+
   icc-calendar-wrapper,
   icc-date-picker,
   icc-date-range-picker,
