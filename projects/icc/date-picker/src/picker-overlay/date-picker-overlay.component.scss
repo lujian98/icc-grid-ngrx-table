@@ -1,5 +1,9 @@
 :host {
-  .icc-date-picker-calendar-container {
-    //display: flex;
+  display: flex;
+  flex-direction: column;
+
+  .icc-date-bottom-bar {
+    display: flex;
+    justify-content: end;
   }
 }

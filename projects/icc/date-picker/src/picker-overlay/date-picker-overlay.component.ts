@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarPresetsComponent } from '../calendar-presets/calendar-presets.component';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
 import { IccDatePresetItem } from '../model/model';
@@ -16,7 +17,13 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   styleUrls: ['./date-picker-overlay.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
-  imports: [CommonModule, TranslateDirective, IccCalendarWrapperComponent, IccCalendarPresetsComponent],
+  imports: [
+    CommonModule,
+    IccButtonComponent,
+    TranslateDirective,
+    IccCalendarWrapperComponent,
+    IccCalendarPresetsComponent,
+  ],
 })
 export class IccDatePickerOverlayComponent implements OnInit {
   selectedDate: Date | null | undefined;
