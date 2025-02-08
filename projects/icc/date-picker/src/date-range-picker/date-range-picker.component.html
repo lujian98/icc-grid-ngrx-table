@@ -6,10 +6,10 @@
       iccInput
       placeholder="{{ options.placeholder! | translate }}..."
       [value]="selectedDateRange"
-      (click)="openCalendar($event)"
+      (click)="openCalendar()"
       readonly
     />
-    <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)"></div>
+    <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar()"></div>
     <button *ngIf="selectedDateRange" iccSuffix icc-button [ghost]="true" (click)="clearDateRange($event)">
       <icc-icon icon="times-circle-o"></icc-icon>
     </button>

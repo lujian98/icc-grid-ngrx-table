@@ -7,6 +7,7 @@ import { takeWhile } from 'rxjs/operators';
 import { IccDatePickerOverlayComponent } from '../picker-overlay/date-picker-overlay.component';
 import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
 
+//TODO remove not used
 const DEFAULT_CONFIG: IccCalendarOverlayConfig = {
   panelClass: 'icc-date-range-overlay',
   hasBackdrop: true,

@@ -1,6 +1,6 @@
-import { GlobalPositionStrategy } from '@angular/cdk/overlay';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Inject, Injectable, Injector, TemplateRef, Type, inject, ClassProvider } from '@angular/core';
+import { ClassProvider, Inject, Injectable, Injector, TemplateRef, Type, inject } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { fromEvent } from 'rxjs';
@@ -32,6 +32,7 @@ export class IccDialogService {
       parent: userConfig.injector || this.injector,
       providers: [
         ...provides,
+        { provide: OverlayRef, useValue: overlayRef },
         { provide: IccDialogRef, useValue: dialogRef },
         { provide: ICC_DIALOG_CONFIG, useValue: config },
       ],
@@ -43,9 +44,8 @@ export class IccDialogService {
   }
 
   private createOverlay(config: IccDialogConfig): IccOverlayRef {
-    const positionStrategy = new GlobalPositionStrategy().centerHorizontally().centerVertically();
     return this.overlayService.create({
-      positionStrategy,
+      positionStrategy: this.overlayService.getPositionStrategy(config.hostElemRef),
       hasBackdrop: config.hasBackdrop,
       backdropClass: config.backdropClass,
     });

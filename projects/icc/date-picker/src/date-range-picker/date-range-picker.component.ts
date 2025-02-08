@@ -10,9 +10,13 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
+  Injector,
 } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { IccFormFieldComponent } from '@icc/ui/form-field';
+import { IccDialogService } from '@icc/ui/overlay';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -21,35 +25,36 @@ import { IccDateRange, IccDateRangeOptions } from '../model/model';
 import { IccCalendarOverlayService } from '../services/calendar-overlay.service';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
+import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
 
 @Component({
   selector: 'icc-date-range-picker',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
-  providers: [IccCalendarOverlayService, IccDateRangeStoreService, IccDateConfigStoreService, DatePipe],
+  providers: [IccDateRangeStoreService, IccDateConfigStoreService, provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslatePipe, IccIconModule, IccFormFieldComponent, IccButtonComponent],
 })
 export class IccDateRangePickerComponent implements OnInit, OnDestroy {
+  private dialogService = inject(IccDialogService);
+  private injector = inject(Injector);
+
   @ViewChild('calendarInput', { static: true }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output()
-  readonly selectedDateRangeChanged: EventEmitter<IccDateRange> = new EventEmitter<IccDateRange>();
-  @Input()
-  options!: IccDateRangeOptions;
+  @Output() readonly selectedDateRangeChanged: EventEmitter<IccDateRange> = new EventEmitter<IccDateRange>();
+  @Input() options!: IccDateRangeOptions;
+
   private rangeUpdate$!: Subscription;
   selectedDateRange = '';
   tooltipPosition: IccPosition = IccPosition.BOTTOM;
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
-    private datePipe: DatePipe,
     private translationService: TranslateService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.configStoreService.dateRangeOptions = this.options;
     this.options.placeholder = this.options.placeholder || 'DATE_PICKER.CHOOSE_A_DATE_RANGE';
     this.options.locale = this.translationService.currentLang || 'en-US';
@@ -76,8 +81,12 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
     this.changeDetectionRef.detectChanges();
   }
 
-  openCalendar(event: MouseEvent) {
-    this.calendarOverlayService.open(this.options.calendarOverlayConfig, this.calendarInput, 'date-range-picker');
+  openCalendar(): void {
+    this.dialogService.open(IccDateRangePickerOverlayComponent, {
+      hostElemRef: this.calendarInput,
+      injector: this.injector,
+      closeOnBackdropClick: true,
+    });
   }
 
   public resetDates(range: IccDateRange) {

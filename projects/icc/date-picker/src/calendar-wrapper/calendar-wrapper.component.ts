@@ -32,10 +32,10 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   @Input() set selectedDate(value: Date | null | undefined) {
     if (value instanceof Date) {
       this._selectedDate = value;
+      this.matCalendar.activeDate = this.selectedDate!;
     } else {
       this._selectedDate = null;
     }
-    this.matCalendar.activeDate = this.selectedDate!;
   }
   get selectedDate(): Date | null {
     return this._selectedDate;

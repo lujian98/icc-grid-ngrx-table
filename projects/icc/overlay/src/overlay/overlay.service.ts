@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { ElementRef, Injectable, inject } from '@angular/core';
+import { GlobalPositionStrategy, ScrollStrategyOptions, PositionStrategy } from '@angular/cdk/overlay';
 import { IccOverlay, IccOverlayConfig, IccOverlayRef, IccOverlayItem } from './overlay.models';
 
 @Injectable()
@@ -9,6 +9,45 @@ export class IccOverlayService {
 
   get scrollStrategies(): ScrollStrategyOptions {
     return this.overlay.scrollStrategies;
+  }
+
+  getPositionStrategy(hostElemRef?: ElementRef): PositionStrategy {
+    if (!hostElemRef) {
+      return new GlobalPositionStrategy().centerHorizontally().centerVertically();
+    } else {
+      return this.overlay
+        .position()
+        .flexibleConnectedTo(hostElemRef)
+        .withFlexibleDimensions(false)
+        .withViewportMargin(8)
+        .withDefaultOffsetY(12)
+        .withPositions([
+          {
+            originX: 'start',
+            originY: 'bottom',
+            overlayX: 'start',
+            overlayY: 'top',
+          },
+          {
+            originX: 'start',
+            originY: 'top',
+            overlayX: 'start',
+            overlayY: 'bottom',
+          },
+          {
+            originX: 'end',
+            originY: 'bottom',
+            overlayX: 'end',
+            overlayY: 'top',
+          },
+          {
+            originX: 'end',
+            originY: 'top',
+            overlayX: 'end',
+            overlayY: 'bottom',
+          },
+        ]);
+    }
   }
 
   create(config?: IccOverlayConfig): IccOverlayRef {
