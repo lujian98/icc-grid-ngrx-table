@@ -21,23 +21,26 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
   selector: 'icc-calendar-wrapper',
   templateUrl: './calendar-wrapper.component.html',
   styleUrls: ['./calendar-wrapper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Default, // use Default to sync calendar
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
   dateFormat: string | undefined;
   currentMonth: Date | null;
   _selectedDate: Date | null = null;
-  get selectedDate(): Date | null {
-    return this._selectedDate;
-  }
+
   @Input() set selectedDate(value: Date | null | undefined) {
     if (value instanceof Date) {
       this._selectedDate = value;
     } else {
       this._selectedDate = null;
     }
+    this.matCalendar.activeDate = this.selectedDate!;
   }
+  get selectedDate(): Date | null {
+    return this._selectedDate;
+  }
+
   @Input() prefixLabel!: string;
   @Input() minDate!: Date | null;
   @Input() maxDate!: Date | null;
@@ -71,11 +74,6 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
 
   ngOnChanges(changes: SimpleChanges) {
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
-    // @ts-ignore
-    if (changes.selectedDate?.currentValue) {
-      // @ts-ignore
-      this.matCalendar.activeDate = changes.selectedDate.currentValue;
-    }
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
       setTimeout(() => {
@@ -129,9 +127,9 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
             d.getFullYear() === date.getFullYear(),
         );
         if (find === 0) {
-          return 'icc-date-range-selected-date';
+          return 'icc-date-range-selected-date-start';
         } else if (find === this.selectedRangeDates.length - 1) {
-          return 'icc-date-range-selected-date icc-date-range-selected-date-end';
+          return 'icc-date-range-selected-date-end';
         } else if (find > 0) {
           return 'icc-date-range-dates';
         }

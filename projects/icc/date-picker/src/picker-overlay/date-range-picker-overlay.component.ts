@@ -1,8 +1,9 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, AfterViewInit, Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarPresetsComponent } from '../calendar-presets/calendar-presets.component';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
@@ -15,7 +16,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   selector: 'icc-date-range-picker-overlay',
   templateUrl: './date-range-picker-overlay.component.html',
   styleUrls: ['./date-range-picker-overlay.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default, // use Default to sync calendar
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   ],
 })
 export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   fromDate!: Date | null;
   toDate!: Date | null;
   fromMinDate!: Date | null;
@@ -71,15 +73,17 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     if (this.fromDate) {
       this.fromMonthViewChange(this.fromDate);
     }
-    setTimeout(() => {
-      if (this.rangeStoreService.toDate) {
-        this.toDate = this.rangeStoreService.toDate;
-        if (!this.isRangeInCurrentMonth()) {
-          this.toMonthViewChange(this.toDate);
+    timer(50)
+      .pipe(take(1))
+      .subscribe(() => {
+        if (this.rangeStoreService.toDate) {
+          this.toDate = this.rangeStoreService.toDate;
+          if (!this.isRangeInCurrentMonth()) {
+            this.toMonthViewChange(this.toDate);
+          }
+          this.setSelectedRangeDates();
         }
-        this.setSelectedRangeDates();
-      }
-    }, 50);
+      });
   }
 
   private isRangeInCurrentMonth(): boolean {
@@ -150,9 +154,10 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.fromDate = null;
     this.toDate = null;
     this.updateFromDate(presetItem.range?.fromDate ? presetItem.range.fromDate : null);
-    setTimeout(() => {
-      this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
-    }, 50);
+
+    //setTimeout(() => {
+    //this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
+    //}, 50);
   }
 
   applyNewDates(e: MouseEvent) {

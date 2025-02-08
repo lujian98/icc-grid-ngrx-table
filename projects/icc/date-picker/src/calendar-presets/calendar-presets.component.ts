@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IccDatePresetItem } from '../model/model';
-
+// TODO not used
 @Component({
   selector: 'icc-calendar-presets',
   templateUrl: './calendar-presets.component.html',

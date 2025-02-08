@@ -53,6 +53,11 @@
   }
 
   icc-calendar-wrapper {
+    .icc-date-range-selected-date-start {
+      .mat-calendar-body-cell-content {
+        border-radius: 0.25rem 0 0 0.25rem;
+      }
+    }
     .icc-date-range-selected-date-end {
       .mat-calendar-body-cell-content {
         border-radius: 0 0.25rem 0.25rem 0;
