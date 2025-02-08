@@ -34,7 +34,7 @@ export class AppSimpleDateComponent implements OnInit {
 
     this.setupPresets();
     this.options = {
-      presets: this.presets,
+      //presets: this.presets,
       format: 'mediumDate',
       range: { fromDate: today, toDate: today },
       fromMinMax: { fromDate: null, toDate: fromMax },

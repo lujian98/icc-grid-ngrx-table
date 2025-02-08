@@ -2,6 +2,7 @@
 @use "../../icc/theme/src/theming" as icc;
 
 // TODO remove material
+
 @use "@angular/material" as mat;
 
 @include mat.all-component-typographies();
