@@ -22,6 +22,14 @@ export class AppSimpleDateComponent implements OnInit {
   options!: IccDateRangeOptions;
   dateoptions!: IccDateRangeOptions; //IccDateSelectionOptions;
 
+  fieldConfig = {
+    fieldType: 'date',
+    fieldName: 'createdate',
+    fieldLabel: 'Create Date',
+    editable: true,
+    readonly: true,
+  };
+
   presets: Array<IccDatePresetItem> = [];
   presets2: Array<IccDatePresetItem> = [];
 
@@ -58,7 +66,7 @@ export class AppSimpleDateComponent implements OnInit {
     this.range = range;
   }
 
-  updateDate(date: Date) {
+  valueChange(date: Date | string) {
     console.log(date);
   }
 
