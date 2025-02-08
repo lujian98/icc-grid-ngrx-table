@@ -22,7 +22,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
     IccButtonComponent,
     TranslateDirective,
     IccCalendarWrapperComponent,
-    IccCalendarPresetsComponent,
+    //IccCalendarPresetsComponent,
   ],
 })
 export class IccDatePickerOverlayComponent implements OnInit {

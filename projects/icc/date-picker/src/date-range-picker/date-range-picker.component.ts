@@ -5,35 +5,33 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
-  inject,
-  Injector,
 } from '@angular/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { IccButtonComponent } from '@icc/ui/button';
 import { IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccDialogService } from '@icc/ui/overlay';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPosition } from '@icc/ui/overlay';
+import { IccDialogService, IccPosition } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { IccDateRange, IccDateRangeOptions } from '../model/model';
-import { IccCalendarOverlayService } from '../services/calendar-overlay.service';
+import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
-import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
 
 @Component({
   selector: 'icc-date-range-picker',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
-  providers: [IccDateRangeStoreService, IccDateConfigStoreService, provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslatePipe, IccIconModule, IccFormFieldComponent, IccButtonComponent],
+  providers: [IccDateRangeStoreService, IccDateConfigStoreService, provideNativeDateAdapter()],
 })
 export class IccDateRangePickerComponent implements OnInit, OnDestroy {
   private dialogService = inject(IccDialogService);
@@ -81,11 +79,11 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
     this.changeDetectionRef.detectChanges();
   }
 
+  // TODO add options.calendarOverlayConfig
   openCalendar(): void {
     this.dialogService.open(IccDateRangePickerOverlayComponent, {
       hostElemRef: this.calendarInput,
       injector: this.injector,
-      closeOnBackdropClick: true,
     });
   }
 

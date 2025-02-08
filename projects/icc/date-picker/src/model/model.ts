@@ -18,6 +18,13 @@ export interface IccCalendarOverlayConfig {
   shouldCloseOnBackdropClick?: boolean;
 }
 
+const DEFAULT_CONFIG: IccCalendarOverlayConfig = {
+  panelClass: 'icc-date-range-overlay',
+  hasBackdrop: true,
+  backdropClass: 'icc-date-range-overlay-backdrop',
+  shouldCloseOnBackdropClick: true,
+};
+
 export const ICC_CALENDAR_OVERLAY_CONFIG = new InjectionToken<IccCalendarOverlayConfig>('Calendar Overlay options');
 
 export interface IccDateSelectionOptions {

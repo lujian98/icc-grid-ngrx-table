@@ -6,10 +6,10 @@
       iccInput
       [placeholder]="options.placeholder! | translate"
       [value]="selectedDate"
-      (click)="openCalendar($event)"
+      (click)="openCalendar()"
       readonly
     />
-    <button iccSuffix icc-button [ghost]="true" (click)="openCalendar($event)">
+    <button iccSuffix icc-button [ghost]="true" (click)="openCalendar()">
       <icc-icon icon="calendar"></icc-icon>
     </button>
     <button *ngIf="selectedDate" iccSuffix icc-button [ghost]="true" (click)="clearSelectedDate($event)">
