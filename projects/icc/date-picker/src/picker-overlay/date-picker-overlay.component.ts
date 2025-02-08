@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccCalendarPresetsComponent } from '../calendar-presets/calendar-presets.component';
@@ -14,6 +14,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   selector: 'icc-date-picker-overlay',
   templateUrl: './date-picker-overlay.component.html',
   styleUrls: ['./date-picker-overlay.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [CommonModule, TranslateDirective, IccCalendarWrapperComponent, IccCalendarPresetsComponent],
 })

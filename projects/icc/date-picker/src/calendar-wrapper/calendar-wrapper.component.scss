@@ -17,4 +17,9 @@
       }
     }
   }
+
+  ::ng-deep mat-month-view {
+    display: block;
+    height: 230px;
+  }
 }
