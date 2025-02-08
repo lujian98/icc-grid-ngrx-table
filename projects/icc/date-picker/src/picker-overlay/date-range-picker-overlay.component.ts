@@ -15,7 +15,6 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   templateUrl: './date-range-picker-overlay.component.html',
   styleUrls: ['./date-range-picker-overlay.component.scss'],
   animations: [IccPickerOverlayAnimations.transformPanel],
-  //encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, TranslateDirective, IccCalendarWrapperComponent, IccCalendarPresetsComponent],
 })
 export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit {

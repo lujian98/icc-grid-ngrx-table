@@ -20,6 +20,7 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
 @Component({
   selector: 'icc-calendar-wrapper',
   templateUrl: './calendar-wrapper.component.html',
+  styleUrls: ['./calendar-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })

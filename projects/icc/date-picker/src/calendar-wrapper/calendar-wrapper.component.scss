@@ -1,0 +1,20 @@
+:host {
+  .icc-date-range-date-label {
+    display: flex;
+    justify-content: center;
+
+    .icc-date-range-selected-date-label {
+      padding-left: 5px;
+    }
+  }
+
+  ::ng-deep mat-calendar-header {
+    .mat-calendar-header {
+      padding: 0px;
+
+      .mat-calendar-controls {
+        margin: 0px;
+      }
+    }
+  }
+}
