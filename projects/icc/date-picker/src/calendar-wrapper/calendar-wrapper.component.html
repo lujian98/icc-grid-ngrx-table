@@ -1,8 +1,3 @@
-<span class="icc-date-range-date-label">
-  <label translate>{{ prefixLabel }}</label
-  ><span>:</span>
-  <label class="icc-date-range-selected-date-label">{{ selectedDate! | localeDate: dateFormat }}</label>
-</span>
 <mat-calendar
   [startAt]="selectedDate"
   [selected]="selectedDate"
@@ -16,3 +11,9 @@
   [dateFilter]="weekendFilter"
 >
 </mat-calendar>
+
+<span class="icc-date-selected-label">
+  <label translate>{{ prefixLabel }}</label
+  ><span>:</span>
+  <label class="icc-date-range-selected-date-label">{{ selectedDate! | localeDate: dateFormat }}</label>
+</span>

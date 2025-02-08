@@ -25,6 +25,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
 @Component({
   selector: 'icc-date-picker',
   templateUrl: './date-picker.component.html',
+  styleUrls: ['./date-picker.component.scss'],
   providers: [IccCalendarOverlayService, IccDateRangeStoreService, IccDateConfigStoreService, DatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslatePipe, IccIconModule, IccFormFieldComponent, IccButtonComponent],

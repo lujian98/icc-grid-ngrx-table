@@ -9,7 +9,7 @@
       (click)="openCalendar($event)"
       readonly
     />
-    <button iccPrefix icc-button [ghost]="true" (click)="openCalendar($event)">
+    <button iccSuffix icc-button [ghost]="true" (click)="openCalendar($event)">
       <icc-icon icon="calendar"></icc-icon>
     </button>
     <button *ngIf="selectedDate" iccSuffix icc-button [ghost]="true" (click)="clearSelectedDate($event)">

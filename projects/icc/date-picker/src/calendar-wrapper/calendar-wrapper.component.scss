@@ -1,25 +1,29 @@
 :host {
-  .icc-date-range-date-label {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  mat-calendar {
+    width: 300px;
+    height: 300px;
 
-    .icc-date-range-selected-date-label {
-      padding-left: 5px;
-    }
-  }
+    ::ng-deep mat-calendar-header {
+      .mat-calendar-header {
+        padding: 0px 8px;
 
-  ::ng-deep mat-calendar-header {
-    .mat-calendar-header {
-      padding: 0px;
-
-      .mat-calendar-controls {
-        margin: 0px;
+        .mat-calendar-controls {
+          margin: 0px;
+        }
       }
     }
   }
 
-  ::ng-deep mat-month-view {
-    display: block;
-    height: 230px;
+  .icc-date-selected-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+
+    .icc-date-range-selected-date-label {
+      padding-left: 5px;
+    }
   }
 }

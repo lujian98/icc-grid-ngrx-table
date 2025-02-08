@@ -29,6 +29,14 @@
     fill: icc.icc-theme(app-text-basic-color);
   }
 
+  .mat-calendar-body-label:not(:last-of-type) {
+    visibility: hidden;
+  }
+
+  .mat-calendar-body-label:last-of-type {
+    display: none;
+  }
+
   /*
   .mat-calendar-body-selected.mat-calendar-body-today {
     //box-shadow: inset 0 0 0 1px var(--mat-datepicker-calendar-date-today-selected-state-outline-color, var(--mat-sys-primary));
