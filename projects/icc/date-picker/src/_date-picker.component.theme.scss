@@ -3,11 +3,25 @@
 @mixin icc-date-picker-theme() {
   icc-calendar-wrapper,
   icc-date-picker,
-  icc-date-range-picker {
+  icc-date-range-picker,
+  .mat-mdc-button:not(:disabled),
+  .mat-calendar-body-label,
+  .mat-calendar-body-cell-content,
+  .mat-calendar-table-header th {
     color: icc.icc-theme(app-text-basic-color);
-    .mat-mdc-icon-button:disabled {
-      opacity: 0.25;
-    }
+  }
+
+  .mat-mdc-icon-button[disabled] {
+    color: icc.icc-theme(app-text-basic-color);
+    opacity: 0.25;
+  }
+
+  .mat-calendar-table-header-divider::after {
+    background-color: icc.icc-theme(app-border-basic-color) !important;
+  }
+
+  .mat-calendar-arrow {
+    fill: icc.icc-theme(app-text-basic-color);
   }
 
   .icc-date-range-dates::before {
