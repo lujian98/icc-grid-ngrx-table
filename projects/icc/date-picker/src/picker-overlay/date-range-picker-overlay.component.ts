@@ -156,9 +156,9 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.toDate = null;
     this.updateFromDate(presetItem.range?.fromDate ? presetItem.range.fromDate : null);
 
-    setTimeout(() => {
-      this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
-    }, 50);
+    //setTimeout(() => {
+    // this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
+    //}, 50);
   }
 
   applyNewDates(e: MouseEvent) {
