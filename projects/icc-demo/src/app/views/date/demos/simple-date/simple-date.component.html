@@ -4,8 +4,8 @@
 </icc-date-range-picker>
 
 <icc-date-picker
-  *ngIf="dateoptions"
   [fieldConfig]="dateFieldConfig"
+  [value]="selectedDate"
   (valueChange)="valueChange($event)"
   [options]="dateoptions"
 >

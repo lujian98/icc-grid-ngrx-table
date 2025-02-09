@@ -28,6 +28,7 @@ export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldName: 'datefield',
   placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
   clearValue: true,
+  format: 'mediumDate',
   //selectedDate?: Date | null;
 };
 

@@ -1,15 +1,28 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, inject, ChangeDetectorRef } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+  Validators,
+} from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccCalendarPresetsComponent } from '../calendar-presets/calendar-presets.component';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
 import { IccDatePresetItem } from '../model/model';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccPickerOverlayAnimations } from './picker-overlay.animations';
+import { IccDateFieldConfig } from '../model/date-field.model';
 
 @Component({
   selector: 'icc-date-picker-overlay',
@@ -17,15 +30,13 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   styleUrls: ['./date-picker-overlay.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
-  imports: [
-    CommonModule,
-    IccButtonComponent,
-    TranslateDirective,
-    IccCalendarWrapperComponent,
-    //IccCalendarPresetsComponent,
-  ],
+  imports: [CommonModule, IccButtonComponent, TranslateDirective, IccCalendarWrapperComponent],
 })
 export class IccDatePickerOverlayComponent implements OnInit {
+  //private changeDetectorRef = inject(ChangeDetectorRef);
+  @Input() fieldConfig!: IccDateFieldConfig;
+  //@Input() field!: FormControl;
+
   selectedDate: Date | null | undefined;
   minDate!: Date | null;
   maxDate!: Date | null;
@@ -63,6 +74,7 @@ export class IccDatePickerOverlayComponent implements OnInit {
 
   updateSelectedDate(date: Date | null) {
     this.selectedDate = date;
+    //this.rangeStoreService.updateSelected(this.selectedDate);
   }
 
   updateSelectDateByPreset(presetItem: IccDatePresetItem) {

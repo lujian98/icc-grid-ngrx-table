@@ -36,6 +36,8 @@ export class AppSimpleDateComponent implements OnInit {
     maxDate: new Date(this.today.getFullYear(), this.today.getMonth() + 3, 0),
   };
 
+  selectedDate = new Date(this.today.getTime() + 7 * (24 * 60 * 60 * 1000));
+
   presets: Array<IccDatePresetItem> = [];
   presets2: Array<IccDatePresetItem> = [];
 
