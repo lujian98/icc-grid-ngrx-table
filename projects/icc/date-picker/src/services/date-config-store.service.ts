@@ -8,7 +8,7 @@ export class IccDateConfigStoreService {
     animation: true,
     locale: 'en-US',
     format: 'mediumDate',
-    minMax: { fromDate: null, toDate: null },
+    minMax: { fromDate: new Date('1900-01-01T18:30:00.000Z'), toDate: new Date('2222-06-24T18:30:00.000Z') },
     fromMinMax: { fromDate: null, toDate: null },
     toMinMax: { fromDate: null, toDate: null },
   };

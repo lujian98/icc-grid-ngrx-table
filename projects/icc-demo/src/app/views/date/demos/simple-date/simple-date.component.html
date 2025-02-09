@@ -3,10 +3,5 @@
 <icc-date-range-picker *ngIf="options" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #pickerOne>
 </icc-date-range-picker>
 
-<icc-date-picker
-  [fieldConfig]="dateFieldConfig"
-  [value]="selectedDate"
-  (valueChange)="valueChange($event)"
-  [options]="dateoptions"
->
+<icc-date-picker [fieldConfig]="dateFieldConfig" [value]="selectedDate" (valueChange)="valueChange($event)">
 </icc-date-picker>

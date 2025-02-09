@@ -155,8 +155,6 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
     return !!this.field.value && !this.field.disabled;
   }
 
-  @Input() options!: IccDateRangeOptions; //TODO remove this
-
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
 
   @Output() valueChange = new EventEmitter<Date | string>(undefined);
@@ -173,78 +171,6 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   ngOnInit(): void {
-    const today = new Date();
-    const fromMax = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const toMin = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    const range = {
-      fromDate: new Date(),
-      toDate: new Date(today.getFullYear(), today.getMonth() + 2, 0),
-    };
-
-    this.configStoreService.dateRangeOptions = {
-      excludeWeekends: false,
-      animation: true,
-      locale: 'en-US',
-      format: 'mediumDate',
-      range: range,
-      minMax: { fromDate: null, toDate: null },
-      fromMinMax: { fromDate: null, toDate: fromMax },
-      toMinMax: { fromDate: toMin, toDate: null },
-    };
-
-    const options = {
-      presets: [],
-      format: 'mediumDate',
-      range: {
-        fromDate: '2025-02-09T19:45:58.767Z',
-        toDate: '2025-02-09T19:45:58.767Z',
-      },
-      selectedDate: '2025-02-03T19:45:58.767Z',
-      minMax: {
-        fromDate: '2024-10-01T05:00:00.000Z',
-        toDate: '2025-04-30T05:00:00.000Z',
-      },
-    };
-
-    console.log(' this.options=', this.options);
-    this.configStoreService.dateRangeOptions = this.options as any;
-    /*
-   
-
-    {
-    "format": "mediumDate",
-    "range": {
-        "fromDate": "2025-02-09T19:42:28.681Z",
-        "toDate": "2025-03-31T05:00:00.000Z"
-    },
-    "fromMinMax": {
-        "fromDate": null,
-        "toDate": "2025-02-28T06:00:00.000Z"
-    },
-    "toMinMax": {
-        "fromDate": "2025-03-01T06:00:00.000Z",
-        "toDate": null
-    },
-    "placeholder": "DATE_PICKER.CHOOSE_A_DATE_RANGE",
-    "locale": "en-US"
-}
-
-        const today = new Date();
-    const fromMax = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const toMin = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-
-    this.options = {
-      format: 'mediumDate',
-      range: this.range,
-      fromMinMax: { fromDate: null, toDate: fromMax },
-      toMinMax: { fromDate: toMin, toDate: null },
-    };
-
-    this.options.placeholder = this.options.placeholder || 'DATE_PICKER.SELECTED_A_DATE';
-    this.options.locale = this.translateService.currentLang || 'en-US';
-    this.options.inputPrefix = this.options.inputPrefix || '';
-    */
-
     this.dateUpdate$ = this.rangeStoreService.updateSelected$.subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
       this.valueChange.emit(selectedDate);

@@ -75,7 +75,7 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
       this.selectedDateRangeChanged.emit(range);
     });
 
-    this.rangeStoreService.updateRange(this.options.range.fromDate, this.options.range.toDate);
+    this.rangeStoreService.updateRange(this.options.range.fromDate!, this.options.range.toDate!);
     this.changeDetectionRef.detectChanges();
   }
 
@@ -88,7 +88,7 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
   }
 
   public resetDates(range: IccDateRange) {
-    this.rangeStoreService.updateRange(range.fromDate, range.toDate);
+    this.rangeStoreService.updateRange(range.fromDate!, range.toDate!);
   }
 
   clearDateRange(event: MouseEvent) {
