@@ -127,6 +127,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
       this.fromDate = this.toDate;
       this.toDate = tdate;
     }
+    console.log(' date clicked 888888888888888');
     this.setSelectedRangeDates();
   }
 

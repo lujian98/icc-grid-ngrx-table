@@ -23,7 +23,7 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
   selector: 'icc-calendar-wrapper',
   templateUrl: './calendar-wrapper.component.html',
   styleUrls: ['./calendar-wrapper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // use Default to sync calendar
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -64,6 +64,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   private sub!: Subscription;
 
   weekendFilter = (d: Date) => true;
+
   constructor(private configStore: IccDateConfigStoreService) {
     this.dateFormat = configStore.dateRangeOptions.format;
     if (configStore.dateRangeOptions.excludeWeekends) {
@@ -75,7 +76,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     this.currentMonth = this.getFirstDay(new Date());
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.matCalendar) {
       this.sub = this.matCalendar.stateChanges.subscribe(() => {
         this.onMonthSelected(this.matCalendar.activeDate);
@@ -83,7 +84,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
@@ -99,11 +100,11 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     }
   }
 
-  onSelectedChange(date: Date | null) {
+  onSelectedChange(date: Date | null): void {
     this.selectedDateChange.emit(date ? date : undefined);
   }
 
-  onMonthSelected(date: Date) {
+  onMonthSelected(date: Date): void {
     if (date) {
       const newMonth = new Date(date.getFullYear(), date.getMonth(), 1);
       if (this.currentMonth && !this.isSameMonth(newMonth, this.currentMonth)) {
@@ -124,13 +125,12 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     return null;
   }
 
-  onYearSelected(e: Date) {}
+  onYearSelected(e: Date): void {}
 
-  onUserSelection(e: MatCalendarUserEvent<Date | null>) {}
+  onUserSelection(e: MatCalendarUserEvent<Date | null>): void {}
 
   dateClass() {
     return (date: Date): MatCalendarCellCssClasses => {
-      //console.log( ' this.selectedRangeDates=', this.selectedRangeDates)
       if (this.selectedRangeDates.length > 0) {
         const find = this.selectedRangeDates.findIndex(
           (d) =>
@@ -150,7 +150,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     };
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.sub) {
       this.sub.unsubscribe();
     }
