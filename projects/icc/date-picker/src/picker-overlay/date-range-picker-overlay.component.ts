@@ -16,7 +16,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
   selector: 'icc-date-range-picker-overlay',
   templateUrl: './date-range-picker-overlay.component.html',
   styleUrls: ['./date-range-picker-overlay.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default, // use Default to sync calendar
+  changeDetection: ChangeDetectionStrategy.OnPush, // use Default to sync calendar
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [
     CommonModule,
@@ -73,7 +73,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     if (this.fromDate) {
       this.fromMonthViewChange(this.fromDate);
     }
-    timer(50)
+    timer(100)
       .pipe(take(1))
       .subscribe(() => {
         if (this.rangeStoreService.toDate) {
@@ -140,6 +140,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
         mdate = new Date(mdate.setDate(mdate.getDate() + 1));
       }
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   fromMonthViewChange(date: Date) {
@@ -155,9 +156,9 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.toDate = null;
     this.updateFromDate(presetItem.range?.fromDate ? presetItem.range.fromDate : null);
 
-    //setTimeout(() => {
-    //this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
-    //}, 50);
+    setTimeout(() => {
+      this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
+    }, 50);
   }
 
   applyNewDates(e: MouseEvent) {

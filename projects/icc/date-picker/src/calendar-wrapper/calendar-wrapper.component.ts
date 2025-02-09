@@ -9,6 +9,8 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   SimpleChanges,
+  ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -21,13 +23,15 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
   selector: 'icc-calendar-wrapper',
   templateUrl: './calendar-wrapper.component.html',
   styleUrls: ['./calendar-wrapper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default, // use Default to sync calendar
+  changeDetection: ChangeDetectionStrategy.OnPush, // use Default to sync calendar
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   dateFormat: string | undefined;
   currentMonth: Date | null;
   _selectedDate: Date | null = null;
+  private _selectedRangeDates: Array<Date> = [];
 
   @Input() set selectedDate(value: Date | null | undefined) {
     if (value instanceof Date) {
@@ -44,7 +48,14 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   @Input() prefixLabel!: string;
   @Input() minDate!: Date | null;
   @Input() maxDate!: Date | null;
-  @Input() selectedRangeDates: Array<Date> = [];
+
+  @Input() set selectedRangeDates(value: Array<Date>) {
+    this._selectedRangeDates = value;
+    this.changeDetectorRef.detectChanges();
+  }
+  get selectedRangeDates(): Array<Date> {
+    return this._selectedRangeDates;
+  }
 
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
   @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
@@ -119,6 +130,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
 
   dateClass() {
     return (date: Date): MatCalendarCellCssClasses => {
+      //console.log( ' this.selectedRangeDates=', this.selectedRangeDates)
       if (this.selectedRangeDates.length > 0) {
         const find = this.selectedRangeDates.findIndex(
           (d) =>
