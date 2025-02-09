@@ -193,25 +193,21 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
     };
 
     const options = {
+      presets: [],
       format: 'mediumDate',
       range: {
-        fromDate: '2025-02-09T19:42:28.681Z',
-        toDate: '2025-03-31T05:00:00.000Z',
+        fromDate: '2025-02-09T19:45:58.767Z',
+        toDate: '2025-02-09T19:45:58.767Z',
       },
-      fromMinMax: {
-        fromDate: null,
-        toDate: '2025-02-28T06:00:00.000Z',
+      selectedDate: '2025-02-03T19:45:58.767Z',
+      minMax: {
+        fromDate: '2024-10-01T05:00:00.000Z',
+        toDate: '2025-04-30T05:00:00.000Z',
       },
-      toMinMax: {
-        fromDate: '2025-03-01T06:00:00.000Z',
-        toDate: null,
-      },
-      placeholder: 'DATE_PICKER.CHOOSE_A_DATE_RANGE',
-      locale: 'en-US',
     };
 
     console.log(' this.options=', this.options);
-    this.configStoreService.dateRangeOptions = this.options;
+    this.configStoreService.dateRangeOptions = this.options as any;
     /*
    
 
