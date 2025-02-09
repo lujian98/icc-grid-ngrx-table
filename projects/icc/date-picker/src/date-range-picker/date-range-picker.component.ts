@@ -29,7 +29,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
   selector: 'icc-date-range-picker',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   imports: [CommonModule, TranslatePipe, IccIconModule, IccFormFieldComponent, IccButtonComponent],
   providers: [IccDateRangeStoreService, IccDateConfigStoreService, provideNativeDateAdapter()],
 })

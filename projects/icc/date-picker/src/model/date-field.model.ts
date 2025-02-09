@@ -2,9 +2,12 @@ import { IccBaseField } from '@icc/ui/fields';
 
 export interface IccDateFieldConfig extends IccBaseField {
   //selectedDate?: Date | null; -> should be input value
-  selectedLabe?: string; // -> prefixLabel
+  selectedLabel?: string; // -> prefixLabel
   minDate?: Date;
   maxDate?: Date;
+  format?: string; // 'mediumDate'
+  //locale?: string; //???
+  // inputPrefix: string; ??? no need
 }
 
 export interface IccDateRange {
@@ -35,7 +38,6 @@ export const defaultDateFieldConfig: IccDateFieldConfig = {
     [maxDate]="maxDate"
 
 export interface IccDateSelectionOptions {
-  presets?: Array<IccDatePresetItem>;
   format?: string;
   excludeWeekends?: boolean;
   locale?: string;
@@ -46,9 +48,7 @@ export interface IccDateSelectionOptions {
   clearLabel?: string;
   animation?: boolean;
   calendarOverlayConfig?: IccCalendarOverlayConfig;
-  placeholder?: string;
   datePrefix?: string;
-  inputPrefix?: string;
 }
 
 */
