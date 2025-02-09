@@ -2,6 +2,8 @@
   <icc-calendar-wrapper
     [prefixLabel]="startDatePrefix"
     [selectedDate]="fromDate"
+    [dateFormat]="dateFormat"
+    [excludeWeekends]="excludeWeekends"
     [minDate]="fromMinDate"
     [maxDate]="fromMaxDate"
     [selectedRangeDates]="selectedRangeDates"
@@ -13,6 +15,8 @@
   <icc-calendar-wrapper
     [prefixLabel]="endDatePrefix"
     [selectedDate]="toDate"
+    [dateFormat]="dateFormat"
+    [excludeWeekends]="excludeWeekends"
     [minDate]="toMinDate"
     [maxDate]="toMaxDate"
     [selectedRangeDates]="selectedRangeDates"

@@ -48,7 +48,6 @@ import { delay, Subject, Subscription, take, takeUntil, timer } from 'rxjs';
 import { defaultDateFieldConfig, IccDateFieldConfig } from '../model/date-field.model';
 import { IccDatePickerOverlayComponent } from '../picker-overlay/date-picker-overlay.component';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
-import { IccDateConfigStoreService } from '../services/date-config-store.service';
 
 @Component({
   selector: 'icc-date-picker',
@@ -86,7 +85,6 @@ import { IccDateConfigStoreService } from '../services/date-config-store.service
       multi: true,
     },
     IccDateRangeStoreService,
-    //IccDateConfigStoreService,
     provideNativeDateAdapter(),
   ],
 })

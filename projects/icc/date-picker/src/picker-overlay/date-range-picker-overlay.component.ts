@@ -42,6 +42,9 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
   shouldAnimate!: string;
   selectedRangeDates: Array<Date> = [];
 
+  dateFormat = 'mediumDate';
+  excludeWeekends = false;
+
   constructor(
     private rangeStoreService: IccDateRangeStoreService,
     private configStoreService: IccDateConfigStoreService,
@@ -127,7 +130,6 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
       this.fromDate = this.toDate;
       this.toDate = tdate;
     }
-    console.log(' date clicked 888888888888888');
     this.setSelectedRangeDates();
   }
 

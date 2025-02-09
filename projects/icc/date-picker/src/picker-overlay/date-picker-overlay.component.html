@@ -2,6 +2,8 @@
   <icc-calendar-wrapper
     [prefixLabel]="datePrefix"
     [selectedDate]="selectedDate"
+    [dateFormat]="fieldConfig.dateFormat"
+    [excludeWeekends]="fieldConfig.excludeWeekends"
     [minDate]="minDate"
     [maxDate]="maxDate"
     (selectedDateChange)="updateSelectedDate($event)"

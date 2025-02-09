@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
 import { MatCalendar, MatCalendarUserEvent, MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
-import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccLocaleDatePipe } from '@icc/ui/core';
 
 @Component({
@@ -25,14 +24,14 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
   styleUrls: ['./calendar-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
-  providers: [IccDateConfigStoreService],
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  dateFormat: string | undefined;
+
   currentMonth: Date | null;
   _selectedDate: Date | null = null;
   private _selectedRangeDates: Array<Date> = [];
+  private _excludeWeekends: boolean = false;
 
   @Input() set selectedDate(value: Date | null | undefined) {
     if (value instanceof Date) {
@@ -49,6 +48,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   @Input() prefixLabel!: string;
   @Input() minDate!: Date | null;
   @Input() maxDate!: Date | null;
+  @Input() dateFormat: string | undefined;
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
@@ -56,6 +56,19 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   }
   get selectedRangeDates(): Array<Date> {
     return this._selectedRangeDates;
+  }
+
+  @Input() set excludeWeekends(value: boolean) {
+    this._excludeWeekends = value;
+    if (this.excludeWeekends) {
+      this.weekendFilter = (d: Date): boolean => {
+        const day = d.getDay();
+        return day !== 0 && day !== 6;
+      };
+    }
+  }
+  get excludeWeekends(): boolean {
+    return this._excludeWeekends;
   }
 
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
@@ -66,14 +79,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
 
   weekendFilter = (d: Date) => true;
 
-  constructor(private configStore: IccDateConfigStoreService) {
-    this.dateFormat = configStore.dateRangeOptions.format;
-    if (configStore.dateRangeOptions.excludeWeekends) {
-      this.weekendFilter = (d: Date): boolean => {
-        const day = d.getDay();
-        return day !== 0 && day !== 6;
-      };
-    }
+  constructor() {
     this.currentMonth = this.getFirstDay(new Date());
   }
 
