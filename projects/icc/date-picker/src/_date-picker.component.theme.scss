@@ -53,6 +53,13 @@
   }
 
   icc-calendar-wrapper {
+    /*
+    .mat-calendar-body-active {
+      .mat-calendar-body-cell-content {
+        background-color: unset !important;
+      }
+    }*/
+
     .icc-date-range-selected-date-start {
       .mat-calendar-body-cell-content {
         border-radius: 0.25rem 0 0 0.25rem;
@@ -64,6 +71,10 @@
         border-radius: 0 0.25rem 0.25rem 0;
         background-color: blue;
       }
+    }
+
+    .mat-calendar-body-today {
+      background-color: orangered !important;
     }
   }
 }
