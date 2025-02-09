@@ -46,10 +46,9 @@ import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { delay, Subject, Subscription, take, takeUntil, timer } from 'rxjs';
 import { defaultDateFieldConfig, IccDateFieldConfig } from '../model/date-field.model';
-import { IccDateRangeOptions } from '../model/model';
 import { IccDatePickerOverlayComponent } from '../picker-overlay/date-picker-overlay.component';
-import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
+import { IccDateConfigStoreService } from '../services/date-config-store.service';
 
 @Component({
   selector: 'icc-date-picker',
@@ -87,7 +86,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
       multi: true,
     },
     IccDateRangeStoreService,
-    IccDateConfigStoreService,
+    //IccDateConfigStoreService,
     provideNativeDateAdapter(),
   ],
 })
@@ -96,6 +95,7 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
   private translateService = inject(TranslateService);
   private dialogService = inject(IccDialogService);
   private injector = inject(Injector);
+  private rangeStoreService = inject(IccDateRangeStoreService);
 
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDateFieldConfig;
@@ -161,10 +161,7 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
 
   private dateUpdate$!: Subscription;
 
-  constructor(
-    public rangeStoreService: IccDateRangeStoreService,
-    public configStoreService: IccDateConfigStoreService,
-  ) {
+  constructor() {
     this.translateService.onLangChange
       .pipe(delay(50), takeUntil(this.destroy$))
       .subscribe(() => this.setLocaleChange());

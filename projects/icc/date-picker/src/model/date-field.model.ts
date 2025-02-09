@@ -3,8 +3,8 @@ import { IccBaseField } from '@icc/ui/fields';
 export interface IccDateFieldConfig extends IccBaseField {
   //selectedDate?: Date | null; -> should be input value
   selectedLabel?: string; // -> prefixLabel
-  minDate?: Date;
-  maxDate?: Date;
+  minDate: Date;
+  maxDate: Date;
   format?: string; // 'mediumDate'
   //locale?: string; //???
   // inputPrefix: string; ??? no need
@@ -29,6 +29,8 @@ export const defaultDateFieldConfig: IccDateFieldConfig = {
   placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
   clearValue: true,
   format: 'mediumDate',
+  minDate: new Date('1900-01-01T18:30:00.000Z'),
+  maxDate: new Date('2222-06-24T18:30:00.000Z'),
   //selectedDate?: Date | null;
 };
 

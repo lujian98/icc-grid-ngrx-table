@@ -25,6 +25,7 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
   styleUrls: ['./calendar-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
+  providers: [IccDateConfigStoreService],
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
