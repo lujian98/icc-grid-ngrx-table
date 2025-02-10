@@ -1,20 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccDatePickerComponent, IccDateRangePickerComponent, IccDateRange } from '@icc/ui/date-picker';
-import { IccDateFieldComponent, IccDateRangeFieldComponent } from '@icc/ui/fields';
+import { IccDateFieldComponent, IccDateRangeFieldComponent, IccDateRange } from '@icc/ui/fields';
 
 @Component({
   selector: 'app-simple-date',
   templateUrl: './simple-date.component.html',
   styleUrls: ['./simple-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccDateFieldComponent,
-    IccDateRangeFieldComponent,
-    IccDatePickerComponent,
-    IccDateRangePickerComponent,
-  ],
+  imports: [CommonModule, IccDateFieldComponent, IccDateRangeFieldComponent],
 })
 export class AppSimpleDateComponent implements OnInit {
   today = new Date();
