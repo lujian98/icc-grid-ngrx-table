@@ -2,8 +2,10 @@ export const ICC = {
   UI: {
     ACTIONS: {
       ADD: 'Add',
+      APPLY: 'Apply',
       CANCEL: 'Cancel',
       CHECK_ALL: 'Check All',
+      CLEAR: 'Clear',
       CLEAR_ALL_FILTERS: 'Clear All Filters',
       CLOSE: 'Close',
       EDIT: 'Edit',
@@ -19,12 +21,26 @@ export const ICC = {
       UPLOAD_FILE: 'Upload File',
       VIEW: 'View',
     },
-    CALENDAR: {
-      TODAY: 'Today',
+    DATE: {
+      FILTER: {
+        LAST_7_DAYS: 'Last 7 Days',
+        LAST_30_DAYS: 'Last 30 Days',
+        LAST_MONTH: 'Last Month',
+        THIS_MONTH: 'This Month',
+        TODAY: 'Today',
+        YESTERDAY: 'Yesterday',
+      },
+      PICKER: {
+        FROM: 'From',
+        SELECT_DATE: 'Select a date',
+        SELECT_DATE_RANGE: 'Choose a date range',
+        SELECTED_DATE: 'Selected Date',
+        TO: 'To',
+      },
     },
     FIELDS: {
       DATE: {
-        PLACEHOLDER: 'Select Date',
+        // PLACEHOLDER: 'Select Date',
       },
       ERRORS: {
         NOT_MATCH: 'The passwords do not match.',

@@ -11,10 +11,10 @@ export interface IccDateFieldConfig extends IccBaseField {
 export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldType: 'date',
   fieldName: 'datefield',
-  placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
+  placeholder: 'ICC.UI.DATE.PICKER.SELECT_DATE',
   clearValue: true,
 
-  selectedLabel: 'DATE_PICKER.SELECTED_DATE',
+  selectedLabel: 'ICC.UI.DATE.PICKER.SELECTED_DATE',
   dateFormat: 'mediumDate',
   excludeWeekends: false,
   minDate: null,

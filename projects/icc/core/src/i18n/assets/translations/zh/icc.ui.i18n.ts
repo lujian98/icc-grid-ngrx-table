@@ -1,12 +1,11 @@
 export const ICC = {
   UI: {
-    CALENDAR: {
-      TODAY: '今天',
-    },
     ACTIONS: {
       ADD: '添加',
+      APPLY: '应用',
       CANCEL: '取消',
       CHECK_ALL: 'Check All',
+      CLEAR: '清除',
       CLEAR_ALL_FILTERS: '清除所有过滤器',
       CLOSE: '关闭',
       EDIT: '编辑',
@@ -22,10 +21,24 @@ export const ICC = {
       UPLOAD_FILE: '上传文件',
       VIEW: '查看',
     },
-    FIELDS: {
-      DATE: {
-        PLACEHOLDER: '选择日期',
+    DATE: {
+      FILTER: {
+        LAST_7_DAYS: '过去 7 天',
+        LAST_30_DAYS: '过去 30 天',
+        LAST_MONTH: '上个月',
+        THIS_MONTH: '这个月',
+        TODAY: '今天',
+        YESTERDAY: '昨天',
       },
+      PICKER: {
+        FROM: '从',
+        SELECT_DATE: '选择日期',
+        SELECT_DATE_RANGE: '选择日期范围',
+        SELECTED_DATE: '选定日期',
+        TO: '到',
+      },
+    },
+    FIELDS: {
       ERRORS: {
         NOT_MATCH: '确认密码与密码字段不匹配.',
         FIELD_IS_REQUIRED: '此字段必填.',

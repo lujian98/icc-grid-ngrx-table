@@ -1,8 +1,6 @@
 export const DATE_PICKER = {
-  APPLY: '应用',
+  //APPLY: '应用',
   CHOOSE_A_DATE_RANGE: '选择日期范围',
-  CLEAR: '清除',
-  CANCEL: '取消',
   FROM: '从',
   SELECTED_A_DATE: '选择一个日期',
   SELECTED_DATE: '选定日期',

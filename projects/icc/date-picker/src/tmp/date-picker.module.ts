@@ -4,7 +4,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TranslateService } from '@ngx-translate/core';
 import { datePickerViewBaseTranslations } from './assets/translations/translations';
-
+// TODO remove this
 @NgModule({
   imports: [CommonModule, MatDatepickerModule, MatNativeDateModule],
 })

@@ -1,8 +1,6 @@
 export const DATE_PICKER = {
-  APPLY: 'Apply',
+  //APPLY: 'Apply',
   CHOOSE_A_DATE_RANGE: 'Choose a date range',
-  CLEAR: 'Clear',
-  CANCEL: 'Cancel',
   FROM: 'From',
   SELECTED_A_DATE: 'Select a date',
   SELECTED_DATE: 'Selected Date',

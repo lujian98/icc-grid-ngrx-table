@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import {
-  IccDatePickerModule,
   IccDatePickerComponent,
   IccDateRangePickerComponent,
   IccDateRange,
   IccDateRangeOptions,
-  IccDateSelectionOptions,
-  IccDatePresetItem,
 } from '@icc/ui/date-picker';
 
 @Component({
@@ -15,7 +12,7 @@ import {
   templateUrl: './simple-date.component.html',
   styleUrls: ['./simple-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccDatePickerModule, IccDatePickerComponent, IccDateRangePickerComponent],
+  imports: [CommonModule, IccDatePickerComponent, IccDateRangePickerComponent],
 })
 export class AppSimpleDateComponent implements OnInit {
   today = new Date();

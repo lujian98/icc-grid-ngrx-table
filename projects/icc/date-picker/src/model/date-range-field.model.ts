@@ -15,13 +15,13 @@ export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
 export const defaultDateRangeFieldConfig: IccDateRangeFieldConfig = {
   fieldType: 'daterange',
   fieldName: 'daterangefield',
-  placeholder: 'DATE_PICKER.CHOOSE_A_DATE_RANGE',
+  placeholder: 'ICC.UI.DATE.PICKER.SELECT_DATE_RANGE',
   clearValue: true,
 
   dateFormat: 'mediumDate',
   excludeWeekends: false,
-  startDateLabel: 'DATE_PICKER.FROM',
-  endDateLabel: 'DATE_PICKER.TO',
+  startDateLabel: 'ICC.UI.DATE.PICKER.FROM',
+  endDateLabel: 'ICC.UI.DATE.PICKER.TO',
   fromMinMax: { fromDate: null, toDate: null },
   toMinMax: { fromDate: null, toDate: null },
 };

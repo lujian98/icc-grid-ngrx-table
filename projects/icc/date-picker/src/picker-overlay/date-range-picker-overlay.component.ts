@@ -50,17 +50,17 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
 
     console.log(' xxxxxxxxxxxx fieldConfig=', this.fieldConfig);
     this.fromCalendarConfig = {
-      selectedLabel: 'DATE_PICKER.FROM',
-      dateFormat: 'mediumDate',
-      excludeWeekends: false,
+      selectedLabel: this.fieldConfig.startDateLabel,
+      dateFormat: this.fieldConfig.dateFormat,
+      excludeWeekends: this.fieldConfig.excludeWeekends,
       minDate: this.fieldConfig.fromMinMax.fromDate,
       maxDate: this.fieldConfig.fromMinMax.toDate,
     };
 
     this.toCalendarConfig = {
-      selectedLabel: 'DATE_PICKER.TO',
-      dateFormat: 'mediumDate',
-      excludeWeekends: false,
+      selectedLabel: this.fieldConfig.endDateLabel,
+      dateFormat: this.fieldConfig.dateFormat,
+      excludeWeekends: this.fieldConfig.excludeWeekends,
       minDate: this.fieldConfig.toMinMax.fromDate,
       maxDate: this.fieldConfig.toMinMax.toDate,
     };
