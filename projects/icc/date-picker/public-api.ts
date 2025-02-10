@@ -1,4 +1,5 @@
 export * from './src/model/model';
+export * from './src/model/calendar.model';
 export * from './src/calendar-wrapper/calendar-wrapper.component';
 export * from './src/picker-overlay/date-picker-overlay.component';
 export * from './src/picker-overlay/date-range-picker-overlay.component';

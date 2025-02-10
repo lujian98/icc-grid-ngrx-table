@@ -5,6 +5,7 @@ export * from './src/fieldset';
 export * from './src/checkbox-field';
 export * from './src/radio-group-field';
 export * from './src/date-field';
+export * from './src/date-range-field';
 export * from './src/display-field';
 export * from './src/hidden-field';
 export * from './src/number-field';

@@ -1,224 +1,166 @@
-import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { getLocaleFirstDayOfWeek, WeekDay } from './common/common';
 import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
+  AfterViewInit,
   Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  TemplateRef,
+  OnDestroy,
   ViewChild,
+  Output,
+  Input,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectorRef,
   inject,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CustomControl } from './modal/custom-control';
-import { addMonths, isValidDate, startOfDay, startofMonth } from './date-utils/date.utils';
-import { CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { TranslateDirective } from '@ngx-translate/core';
+import { MatCalendar, MatCalendarUserEvent, MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
+import { IccLocaleDatePipe } from '@icc/ui/core';
+import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.model';
 
 @Component({
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => IccCalendarComponent),
-      multi: true,
-    },
-    {
-      provide: CustomControl,
-      useExisting: IccCalendarComponent,
-    },
-  ],
-  standalone: false,
+  imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
-export class IccCalendarComponent
-  extends CustomControl<Date>
-  implements AfterContentInit, ControlValueAccessor, OnChanges, OnInit
-{
-  private translateService = inject(TranslateService);
+export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
+  private _selectedRangeDates: Array<Date> = [];
+  private _selectedDate: Date | null = null;
 
-  @ViewChild('content') modalRef!: TemplateRef<any>;
-  months!: readonly Date[];
-  touched = false;
-  disabled = false;
-  showMonthStepper = true;
-  activeMonth?: Date;
-  langSub$: Subscription = new Subscription();
+  currentMonth!: Date | null;
+  minDate!: Date | null;
+  maxDate!: Date | null;
 
-  private onChange?: (updatedValue: Date) => void;
-  private onTouched?: () => void;
-
-  @Input() isOverlayOpen = false;
-  @Input() closeOnValueChange = true;
-
-  private _overlayOrigin!: CdkOverlayOrigin;
-
-  set overlayOrigin(overlayOrigin: CdkOverlayOrigin) {
-    this._overlayOrigin = overlayOrigin;
-    this.changeDetectorRef.markForCheck();
+  @Input() set calendarConfig(value: Partial<IccCalendarConfig>) {
+    this._calendarConfig = { ...defaultCalendarConfig, ...value };
+    if (this.calendarConfig.excludeWeekends) {
+      this.weekendFilter = (d: Date): boolean => {
+        const day = d.getDay();
+        return day !== 0 && day !== 6;
+      };
+    }
+    this.minDate = this.calendarConfig.minDate;
+    this.maxDate = this.calendarConfig.maxDate;
+    console.log(' this.calendarConfig=', this.calendarConfig);
+  }
+  get calendarConfig(): IccCalendarConfig {
+    return this._calendarConfig;
   }
 
-  get overlayOrigin() {
-    return this._overlayOrigin;
+  @Input() set selectedDate(value: Date | null | undefined) {
+    if (value instanceof Date) {
+      this._selectedDate = value;
+      this.matCalendar.activeDate = this.selectedDate!;
+    } else {
+      this._selectedDate = null;
+    }
+  }
+  get selectedDate(): Date | null {
+    return this._selectedDate;
   }
 
-  @Input() value?: Date;
-  @Input() min?: Date | null;
-  @Input() monthAndYearFormat?: string;
-
-  private _locale?: string; // = 'en-US';
-
-  @Input()
-  get locale() {
-    return this._locale;
+  @Input() set selectedRangeDates(value: Array<Date>) {
+    this._selectedRangeDates = value;
+    this.changeDetectorRef.detectChanges();
+  }
+  get selectedRangeDates(): Array<Date> {
+    return this._selectedRangeDates;
   }
 
-  set locale(locale: string | undefined) {
-    this._locale = locale;
+  @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
+  @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() readonly monthViewChange: EventEmitter<Date> = new EventEmitter<Date>();
+
+  private sub!: Subscription;
+
+  weekendFilter = (d: Date) => true;
+
+  constructor() {
+    //this.currentMonth = this.getFirstDay(new Date());
   }
 
-  private _firstDayOfWeek?: keyof typeof WeekDay;
-
-  @Input()
-  get firstDayOfWeek() {
-    return this._firstDayOfWeek || this.getDefaultFirstDayOfWeek();
-  }
-
-  set firstDayOfWeek(firstDayOfWeek: keyof typeof WeekDay) {
-    this._firstDayOfWeek = firstDayOfWeek;
-  }
-
-  private _firstMonth?: Date | null;
-
-  @Input()
-  get firstMonth(): Date | undefined | null {
-    return this._firstMonth;
-  }
-
-  set firstMonth(firstMonth: Date | undefined | null) {
-    this._firstMonth = firstMonth;
-    this.activeMonth = this._firstMonth || undefined;
-  }
-
-  private _numberOfMonths = 1;
-
-  @Input()
-  get numberOfMonths() {
-    return this._numberOfMonths;
-  }
-
-  set numberOfMonths(numberOfMonths: any) {
-    this._numberOfMonths = coerceNumberProperty(numberOfMonths);
-    this.showMonthStepper = this._numberOfMonths <= 2;
-  }
-
-  @Output() valueChange = new EventEmitter<Date>();
-
-  constructor(public changeDetectorRef: ChangeDetectorRef) {
-    super();
-  }
-
-  ngOnInit(): void {
-    if (!this.locale) {
-      this.locale = this.translateService.currentLang;
+  ngAfterViewInit(): void {
+    if (this.matCalendar) {
+      this.sub = this.matCalendar.stateChanges.subscribe(() => {
+        this.onMonthSelected(this.matCalendar.activeDate);
+      });
     }
   }
 
-  ngAfterContentInit() {
-    this.months = this.getMonths();
-    this.langSub$ = this.translateService.onLangChange.subscribe((val) => {
-      this.locale = val.lang;
-      //console.log('Locale:', this.locale, 'Service Locale', val.lang);
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    /*
-    if (
-      (changes.numberOfMonths && !changes.numberOfMonths.firstChange) ||
-      (changes.firstMonth && !changes.firstMonth.firstChange)
-    ) {
-      this.months = this.getMonths();
-    }*/
-  }
-
-  ngOnDestroy() {
-    if (this.langSub$) {
-      this.langSub$.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    // Material calendar bug - sometime not able refresh view when set maxDate/minDate
+    if (!this.maxDate) {
+      this.maxDate = new Date('2222-06-24T18:30:00.000Z');
+      setTimeout(() => {
+        this.maxDate = null;
+      }, 10);
+    }
+    if (!this.minDate) {
+      this.minDate = new Date('1900-01-01T18:30:00.000Z');
+      setTimeout(() => {
+        this.minDate = null;
+      }, 10);
     }
   }
 
-  onActiveMonthChange(activeMonth: Date) {
-    this.activeMonth = activeMonth;
-    this.months = this.getMonths();
+  onSelectedChange(date: Date | null): void {
+    this.selectedDateChange.emit(date ? date : undefined);
   }
 
-  onSelect(date: Date) {
-    if (!this.disabled) {
-      this.value = date;
-      this.activeMonth = date;
-      this.valueChange.emit(date);
-      if (this.onChange) {
-        this.onChange(date);
-        this.isOverlayOpen = false;
-        this.changeDetectorRef.markForCheck();
-      }
-      if (this.onTouched) {
-        this.onTouched();
+  onMonthSelected(date: Date): void {
+    if (date) {
+      const newMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      if (this.currentMonth && !this.isSameMonth(newMonth, this.currentMonth)) {
+        this.currentMonth = newMonth;
+        this.monthViewChange.emit(newMonth);
       }
     }
   }
 
-  writeValue(value: Date) {
-    this.value = isValidDate(value) ? startOfDay(value) : undefined;
-    this.changeDetectorRef.markForCheck();
+  isSameMonth(date: Date, pDate: Date): boolean {
+    return date.getFullYear() === pDate.getFullYear() && date.getMonth() === pDate.getMonth();
+  }
 
-    if (this.showMonthStepper && this.value) {
-      this.activeMonth = this.value;
-      this.months = this.getMonths();
+  getFirstDay(date: Date): Date | null {
+    if (date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
     }
+    return null;
   }
 
-  registerOnChange(onChangeCallback: (updatedValue: Date) => void) {
-    this.onChange = onChangeCallback;
-  }
+  onYearSelected(e: Date): void {}
 
-  registerOnTouched(onTouchedCallback: () => void) {
-    this.onTouched = () => {
-      this.touched = true;
-      onTouchedCallback();
+  onUserSelection(e: MatCalendarUserEvent<Date | null>): void {}
+
+  dateClass() {
+    return (date: Date): MatCalendarCellCssClasses => {
+      if (this.selectedRangeDates.length > 0) {
+        const find = this.selectedRangeDates.findIndex(
+          (d) =>
+            d.getDate() === date.getDate() &&
+            d.getMonth() === date.getMonth() &&
+            d.getFullYear() === date.getFullYear(),
+        );
+        if (find === 0) {
+          return 'icc-date-range-selected-date-start';
+        } else if (find === this.selectedRangeDates.length - 1) {
+          return 'icc-date-range-selected-date-end';
+        } else if (find > 0) {
+          return 'icc-date-range-dates';
+        }
+      }
+      return '';
     };
   }
 
-  toggleOverlay() {
-    this.isOverlayOpen = !this.isOverlayOpen;
-    this.changeDetectorRef.markForCheck();
-  }
-
-  setDateToday() {
-    const d = new Date();
-    const today = new Date(`${d.toISOString().slice(0, 10)}` + 'T00:00');
-
-    this.onSelect(today);
-  }
-
-  private getMonths() {
-    const firstMonth = (this.showMonthStepper ? this.activeMonth : this.firstMonth) || new Date();
-    const startofFirstMonth = startofMonth(firstMonth);
-    return Array.from({ length: this.numberOfMonths }, (_, index) => addMonths(startofFirstMonth, index));
-  }
-
-  private getDefaultFirstDayOfWeek() {
-    return WeekDay[getLocaleFirstDayOfWeek(this.locale!)] as keyof typeof WeekDay;
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

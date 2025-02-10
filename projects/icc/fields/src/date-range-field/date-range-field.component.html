@@ -8,18 +8,20 @@
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
+
     <input
       #calendarInput
-      class="icc-date-field-input"
+      class="icc-date-range-field-input"
       type="text"
       iccInput
-      [value]="field.value | localeDate"
+      [value]="display"
       (click)="openCalendar()"
-      [placeholder]="fieldConfig.placeholder! | translate"
+      placeholder="{{ fieldConfig.placeholder! | translate }}..."
       [disabled]="field.disabled"
       [required]="required"
       readonly
     />
+
     <button iccSuffix icc-button [ghost]="true" (click)="openCalendar()">
       <icc-icon icon="calendar"></icc-icon>
     </button>
@@ -30,12 +32,19 @@
     </icc-form-field-errors>
   </icc-form-field>
 </ng-container>
-
 <!--
 
+     #calendarInput
+      class="icc-date-range-date-input"
+      type="text"
+      iccInput
+      [value]="field.value | localeDate"
+      (click)="openCalendar()"
+      [placeholder]="fieldConfig.placeholder! | translate"
+      [disabled]="field.disabled"
+      [required]="required"
+      readonly
 
-    
-  <icc-form-field class="icc-date-range-date-display" appearance="fill">
-      [iccTooltip]="selectedDate"
+      [iccTooltip]="selectedDateRange"
       [iccTooltipPosition]="tooltipPosition"
       -->

@@ -1,40 +1,80 @@
 @use "../../theme/src/icc";
 
 @mixin icc-calendar-theme() {
-  .icc-calendar {
-    background-color: icc.icc-theme(calendar-panel-background-color);
+  icc-date-range-picker,
+  icc-date-picker {
+    background-color: icc.icc-theme(icc-header-background-color);
   }
 
-  icc-month-header {
-    .icc-month-header {
-      background-color: icc.icc-theme(calendar-month-header-background-color);
-      color: icc.icc-theme(calendar-month-header-text-color);
+  icc-calendar,
+  icc-date-field,
+  icc-date-range-field,
+  .mat-mdc-button:not(:disabled),
+  .mat-calendar-body-label,
+  .mat-calendar-body-cell-content,
+  .mat-calendar-table-header th {
+    color: icc.icc-theme(app-text-basic-color);
+  }
+
+  .mat-mdc-icon-button[disabled] {
+    color: icc.icc-theme(app-text-basic-color);
+    opacity: 0.25;
+  }
+
+  .mat-calendar-table-header-divider::after {
+    background-color: icc.icc-theme(app-border-basic-color) !important;
+  }
+
+  .mat-calendar-arrow {
+    fill: icc.icc-theme(app-text-basic-color);
+  }
+
+  .mat-calendar-body-label:not(:last-of-type) {
+    visibility: hidden;
+  }
+
+  .mat-calendar-body-label:last-of-type {
+    display: none;
+  }
+
+  /*
+  .mat-calendar-body-selected.mat-calendar-body-today {
+    //box-shadow: inset 0 0 0 1px var(--mat-datepicker-calendar-date-today-selected-state-outline-color, var(--mat-sys-primary));
+    box-shadow: inset 0 0 0 1px red;
+  }
+
+  .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+    background-color: cyan;
+  }*/
+
+  .icc-date-range-dates::before {
+    color: icc.icc-theme(color-basic-default);
+    background-color: icc.icc-theme(color-basic-transparent-default);
+  }
+
+  icc-calendar {
+    /*
+    .mat-calendar-body-active {
+      .mat-calendar-body-cell-content {
+        background-color: unset !important;
+      }
+    }*/
+
+    .icc-date-range-selected-date-start {
+      .mat-calendar-body-cell-content {
+        border-radius: 0.25rem 0 0 0.25rem;
+        background-color: blue;
+      }
     }
-  }
-
-  icc-month {
-    .icc-month__day {
-      color: icc.icc-theme(calendar-month-day-text-color);
-
-      &--today {
-        border-color: icc.icc-theme(calendar-month-today-border-color);
-      }
-
-      &--selected {
-        color: icc.icc-theme(calendar-month-day-selected-text-color);
-        background-color: icc.icc-theme(calendar-month-day-selected-background-color);
-      }
-
-      &:hover {
-        color: icc.icc-theme(calendar-month-day-hover-text-color);
-        background-color: icc.icc-theme(calendar-month-day-hover-background-color);
+    .icc-date-range-selected-date-end {
+      .mat-calendar-body-cell-content {
+        border-radius: 0 0.25rem 0.25rem 0;
+        background-color: blue;
       }
     }
-  }
 
-  icc-weekdays {
-    .icc-weekdays__day {
-      color: icc.icc-theme(calendar-weekdays-text-color);
+    .mat-calendar-body-today {
+      background-color: orangered !important;
     }
   }
 }

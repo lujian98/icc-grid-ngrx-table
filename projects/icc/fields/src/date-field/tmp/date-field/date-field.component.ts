@@ -3,16 +3,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   forwardRef,
   inject,
-  Injector,
   Input,
   OnDestroy,
-  OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -27,10 +23,8 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { IccButtonComponent } from '@icc/ui/button';
+import { IccCalendarModule } from '@icc/ui/calendar';
 import { IccLocaleDatePipe } from '@icc/ui/core';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -42,37 +36,15 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { delay, Subject, Subscription, take, takeUntil, timer } from 'rxjs';
+import { delay, Subject, take, takeUntil, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
-import { IccDatePickerComponent } from './date-picker/date-picker.component';
-import { IccDateStoreService } from './services/date-store.service';
 
 @Component({
   selector: 'icc-date-field',
   templateUrl: './date-field.component.html',
   styleUrls: ['./date-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    TranslatePipe,
-    IccIconModule,
-    IccFormFieldComponent,
-    IccButtonComponent,
-
-    IccSuffixDirective,
-    IccLabelDirective,
-    IccLabelWidthDirective,
-    IccFieldWidthDirective,
-    IccInputDirective,
-    IccLocaleDatePipe,
-    IccFormFieldErrorsDirective,
-    IccFieldsErrorsComponent,
-    IccFormFieldControlDirective,
-  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -84,17 +56,30 @@ import { IccDateStoreService } from './services/date-store.service';
       useExisting: forwardRef(() => IccDateFieldComponent),
       multi: true,
     },
-    IccDateStoreService,
-    provideNativeDateAdapter(),
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslatePipe,
+    IccFormFieldComponent,
+    IccSuffixDirective,
+    IccLabelDirective,
+    IccLabelWidthDirective,
+    IccFieldWidthDirective,
+    IccInputDirective,
+    IccIconModule,
+    IccCalendarModule,
+    IccLocaleDatePipe,
+    IccFormFieldErrorsDirective,
+    IccFieldsErrorsComponent,
+    IccFormFieldControlDirective,
   ],
 })
-export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+export class IccDateFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private translateService = inject(TranslateService);
-  private dialogService = inject(IccDialogService);
-  private injector = inject(Injector);
-  private dateStoreService = inject(IccDateStoreService);
-
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDateFieldConfig;
   private _value!: Date | string;
@@ -102,7 +87,6 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
 
   @Input()
   set fieldConfig(fieldConfig: Partial<IccDateFieldConfig>) {
-    console.log(' ssssss fieldConfig=', fieldConfig);
     this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
   }
@@ -131,11 +115,13 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this._value = val;
     this.initForm({ ...defaultDateFieldConfig });
     this.field.setValue(val);
-    this.dateStoreService.updateSelected(val as Date);
   }
+
   get value(): Date | string {
     return this._value;
   }
+
+  @Output() valueChange = new EventEmitter<Date | string>(undefined);
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
@@ -153,21 +139,10 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     return !!this.field.value && !this.field.disabled;
   }
 
-  @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output() valueChange = new EventEmitter<Date | string>(undefined);
-  private dateUpdate$!: Subscription;
-
   constructor() {
     this.translateService.onLangChange
       .pipe(delay(50), takeUntil(this.destroy$))
       .subscribe(() => this.setLocaleChange());
-  }
-
-  ngOnInit(): void {
-    this.dateUpdate$ = this.dateStoreService.updateSelected$.subscribe((selectedDate) => {
-      this.field.setValue(selectedDate);
-      this.valueChange.emit(selectedDate);
-    });
   }
 
   private setLocaleChange(): void {
@@ -176,25 +151,6 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     timer(5)
       .pipe(take(1))
       .subscribe(() => this.field.setValue(fieldValue));
-  }
-
-  // TODO add options.calendarOverlayConfig
-  openCalendar(): void {
-    this.dialogService.open(IccDatePickerComponent, {
-      context: {
-        fieldConfig: this.fieldConfig,
-      },
-      hostElemRef: this.calendarInput,
-      injector: this.injector,
-    });
-  }
-
-  public resetSelectedDate(selectedDate: Date | null) {
-    this.dateStoreService.updateSelected(selectedDate);
-  }
-
-  clearSelectedDate(event: MouseEvent) {
-    this.resetSelectedDate(null);
   }
 
   onChange(val: Date): void {
@@ -231,8 +187,5 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    if (this.dateUpdate$) {
-      this.dateUpdate$.unsubscribe();
-    }
   }
 }

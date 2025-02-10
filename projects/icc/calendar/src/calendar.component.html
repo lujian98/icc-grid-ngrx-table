@@ -1,38 +1,19 @@
-<ng-template
-  #content
-  cdkConnectedOverlay
-  cdkConnectedOverlayHasBackdrop="true"
-  [cdkConnectedOverlayOrigin]="overlayOrigin"
-  [cdkConnectedOverlayOpen]="isOverlayOpen"
-  cdkConnectedOverlayPanelClass="overlay__panel"
-  cdkConnectedOverlayBackdropClass="overlay__backdrop"
-  (backdropClick)="toggleOverlay()"
+<mat-calendar
+  [startAt]="selectedDate"
+  [selected]="selectedDate"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [dateClass]="dateClass()"
+  (selectedChange)="onSelectedChange($event)"
+  (yearSelected)="onYearSelected($event)"
+  (monthSelected)="onMonthSelected($event)"
+  (_userSelection)="onUserSelection($event)"
+  [dateFilter]="weekendFilter"
 >
-  <div [cdkTrapFocus]="isOverlayOpen" [cdkTrapFocusAutoCapture]="isOverlayOpen">
-    <div class="icc-calendar" [ngClass]="'icc-calendar--first-weekday-' + (firstDayOfWeek | lowercase)">
-      <icc-weekdays [locale]="locale"></icc-weekdays>
+</mat-calendar>
 
-      <ng-container *ngFor="let month of months">
-        <icc-month-header
-          [month]="month"
-          [activeMonth]="activeMonth"
-          (activeMonthChange)="onActiveMonthChange($event)"
-          [locale]="locale"
-        ></icc-month-header>
-
-        <icc-month
-          [month]="month"
-          [selectedDate]="value"
-          (selectedDateChange)="onSelect($event)"
-          [locale]="locale"
-        ></icc-month>
-      </ng-container>
-
-      <div class="today-btn">
-        <button icc-button status="primary" (click)="setDateToday()">
-          {{ "ICC.UI.CALENDAR.TODAY" | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-</ng-template>
+<span class="icc-date-selected-label">
+  <label translate>{{ calendarConfig.selectedLabel }}</label
+  ><span>:</span>
+  <label class="icc-date-range-selected-date-label">{{ selectedDate! | localeDate: calendarConfig.dateFormat }}</label>
+</span>

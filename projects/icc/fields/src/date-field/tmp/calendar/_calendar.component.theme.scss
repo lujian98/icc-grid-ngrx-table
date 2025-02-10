@@ -1,0 +1,40 @@
+@use "../../theme/src/icc";
+
+@mixin icc-calendar-theme() {
+  .icc-calendar {
+    background-color: icc.icc-theme(calendar-panel-background-color);
+  }
+
+  icc-month-header {
+    .icc-month-header {
+      background-color: icc.icc-theme(calendar-month-header-background-color);
+      color: icc.icc-theme(calendar-month-header-text-color);
+    }
+  }
+
+  icc-month {
+    .icc-month__day {
+      color: icc.icc-theme(calendar-month-day-text-color);
+
+      &--today {
+        border-color: icc.icc-theme(calendar-month-today-border-color);
+      }
+
+      &--selected {
+        color: icc.icc-theme(calendar-month-day-selected-text-color);
+        background-color: icc.icc-theme(calendar-month-day-selected-background-color);
+      }
+
+      &:hover {
+        color: icc.icc-theme(calendar-month-day-hover-text-color);
+        background-color: icc.icc-theme(calendar-month-day-hover-background-color);
+      }
+    }
+  }
+
+  icc-weekdays {
+    .icc-weekdays__day {
+      color: icc.icc-theme(calendar-weekdays-text-color);
+    }
+  }
+}
