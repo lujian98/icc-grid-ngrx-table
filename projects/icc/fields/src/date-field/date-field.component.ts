@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -29,8 +29,6 @@ import {
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccLocaleDatePipe } from '@icc/ui/core';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -45,8 +43,9 @@ import { IccIconModule } from '@icc/ui/icon';
 import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { delay, Subject, Subscription, take, takeUntil, timer } from 'rxjs';
-import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccDatePickerComponent } from './date-picker/date-picker.component';
+import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
 import { IccDateStoreService } from './services/date-store.service';
 
 @Component({
@@ -62,13 +61,11 @@ import { IccDateStoreService } from './services/date-store.service';
     IccIconModule,
     IccFormFieldComponent,
     IccButtonComponent,
-
     IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,
     IccInputDirective,
-    IccLocaleDatePipe,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFormFieldControlDirective,
@@ -152,6 +149,16 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     return !!this.field.value && !this.field.disabled;
   }
 
+  get display(): string {
+    const date = this.field.value;
+    if (date) {
+      const locale = this.translateService.currentLang || 'en-US';
+      return new DatePipe(locale).transform(date, this.fieldConfig.dateFormat)!;
+    } else {
+      return '';
+    }
+  }
+
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
   @Output() valueChange = new EventEmitter<Date | string>(undefined);
   private dateUpdate$!: Subscription;
@@ -175,7 +182,9 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this.field.setValue('');
     timer(5)
       .pipe(take(1))
-      .subscribe(() => this.field.setValue(fieldValue));
+      .subscribe(() => {
+        this.field.setValue(fieldValue);
+      });
   }
 
   // TODO add options.calendarOverlayConfig

@@ -13,7 +13,7 @@
       class="icc-date-field-input"
       type="text"
       iccInput
-      [value]="field.value | localeDate"
+      [value]="display"
       (click)="openCalendar()"
       [placeholder]="fieldConfig.placeholder! | translate"
       [disabled]="field.disabled"
@@ -30,12 +30,3 @@
     </icc-form-field-errors>
   </icc-form-field>
 </ng-container>
-
-<!--
-
-
-    
-  <icc-form-field class="icc-date-range-date-display" appearance="fill">
-      [iccTooltip]="selectedDate"
-      [iccTooltipPosition]="tooltipPosition"
-      -->

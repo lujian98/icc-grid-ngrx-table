@@ -40,7 +40,6 @@ export class IccI18nService {
   }
 
   private initLang(): void {
-    this.translateService.use(this.currentLang.isocode);
     this.localeInitializer(this.currentLang.isocode);
   }
 
@@ -74,8 +73,8 @@ export class IccI18nService {
     combineLatest([base, extra])
       .pipe(take(1))
       .subscribe(([baseModule, extraModule]) => {
-        //console.log(' baseModule=', baseModule);
         registerLocaleData(baseModule.default, key, extraModule.default);
+        this.translateService.use(this.currentLang.isocode);
       });
   }
 }
