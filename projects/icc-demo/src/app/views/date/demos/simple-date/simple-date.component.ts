@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  IccDatePickerComponent,
-  IccDateRangePickerComponent,
-  IccDateRange,
-  IccDateRangeOptions,
-} from '@icc/ui/date-picker';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { IccDatePickerComponent, IccDateRangePickerComponent, IccDateRange } from '@icc/ui/date-picker';
 
 @Component({
   selector: 'app-simple-date',
@@ -43,19 +38,10 @@ export class AppSimpleDateComponent implements OnInit {
     toMinMax: { fromDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 1), toDate: null },
   };
 
-  options: IccDateRangeOptions = {
-    format: 'mediumDate',
-    //range: this.range,
-    fromMinMax: { fromDate: null, toDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0) },
-    toMinMax: { fromDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 1), toDate: null },
-  };
-
-  @ViewChild('pickerOne', { static: true }) pickerOne!: any;
-
   ngOnInit(): void {}
 
-  updateRange(range: IccDateRange) {
-    this.range = range;
+  updateRange(range: IccDateRange | null) {
+    console.log(range);
   }
 
   valueChange(date: Date | string) {

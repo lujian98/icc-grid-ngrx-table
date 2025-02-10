@@ -154,9 +154,7 @@ export class IccDatePickerComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-
   @Output() valueChange = new EventEmitter<Date | string>(undefined);
-
   private dateUpdate$!: Subscription;
 
   constructor() {

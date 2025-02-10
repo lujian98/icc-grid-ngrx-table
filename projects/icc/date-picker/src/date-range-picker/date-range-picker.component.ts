@@ -41,11 +41,10 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccDialogService, IccPosition } from '@icc/ui/overlay';
+import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription, take, takeUntil, timer } from 'rxjs';
 import { defaultDateRangeFieldConfig, IccDateRange, IccDateRangeFieldConfig } from '../model/date-range-field.model';
-import { IccDateRangeOptions } from '../model/model';
 import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
@@ -88,8 +87,10 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
 })
 export class IccDateRangePickerComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private translateService = inject(TranslateService);
   private dialogService = inject(IccDialogService);
   private injector = inject(Injector);
+  private rangeStoreService = inject(IccDateRangeStoreService);
 
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDateRangeFieldConfig;
@@ -155,39 +156,25 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy, ControlVa
     } else if (!range.fromDate && range.toDate) {
       range.fromDate = range.toDate;
     }
-    const locale = this.translationService.currentLang || 'en-US';
+    const locale = this.translateService.currentLang || 'en-US';
     const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig.dateFormat);
     const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig.dateFormat);
     if (range.fromDate && range.toDate) {
-      this.selectedDateRange = `${from} - ${to}`;
+      return `${from} - ${to}`;
     } else {
-      this.selectedDateRange = '';
+      return '';
     }
-    return this.selectedDateRange;
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-
   @Output() valueChange = new EventEmitter<IccDateRange | null>(undefined);
-
-  @Output() readonly selectedDateRangeChanged: EventEmitter<IccDateRange> = new EventEmitter<IccDateRange>();
-  @Input() options!: IccDateRangeOptions;
-
   private rangeUpdate$!: Subscription;
-  selectedDateRange = '';
-  tooltipPosition: IccPosition = IccPosition.BOTTOM;
-
-  constructor(
-    private changeDetectionRef: ChangeDetectorRef,
-    private rangeStoreService: IccDateRangeStoreService,
-    private translationService: TranslateService,
-  ) {}
 
   ngOnInit(): void {
     this.rangeUpdate$ = this.rangeStoreService.rangeUpdate$.subscribe((range) => {
       this.field.setValue(range);
       this.valueChange.emit(range);
-      this.changeDetectionRef.detectChanges();
+      this.changeDetectorRef.detectChanges();
     });
   }
 

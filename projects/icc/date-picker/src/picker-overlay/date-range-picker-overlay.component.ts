@@ -48,7 +48,6 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this._fieldConfig = fieldConfig;
     this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
 
-    console.log(' xxxxxxxxxxxx fieldConfig=', this.fieldConfig);
     this.fromCalendarConfig = {
       selectedLabel: this.fieldConfig.startDateLabel,
       dateFormat: this.fieldConfig.dateFormat,
