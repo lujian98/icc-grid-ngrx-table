@@ -167,6 +167,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this.dateUpdate$ = this.dateStoreService.updateSelected$.subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
       this.valueChange.emit(selectedDate);
+      this.changeDetectorRef.markForCheck();
     });
   }
 
