@@ -1,16 +1,16 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, AfterViewInit, Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
+import { IccButtonComponent } from '@icc/ui/button';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
+import { IccCalendarConfig } from '../model/calendar.model';
 import { IccDatePresetItem } from '../model/model';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccPickerOverlayAnimations } from './picker-overlay.animations';
-import { IccCalendarConfig } from '../model/calendar.model';
 
 @Component({
   selector: 'icc-date-range-picker-overlay',
@@ -22,51 +22,22 @@ import { IccCalendarConfig } from '../model/calendar.model';
 })
 export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private overlayRef = inject(OverlayRef);
+  private translateService = inject(TranslateService);
+  private rangeStoreService = inject(IccDateRangeStoreService);
+  private adapter = inject(DateAdapter<Date>);
+  private configStoreService = inject(IccDateConfigStoreService);
 
   fromCalendarConfig!: Partial<IccCalendarConfig>;
   toCalendarConfig!: Partial<IccCalendarConfig>;
-
   fromDate!: Date | null;
   toDate!: Date | null;
-  /*
-  fromMinDate!: Date | null;
-  fromMaxDate!: Date | null;
-  toMinDate!: Date | null;
-  toMaxDate!: Date | null;
-  presets: Array<IccDatePresetItem> | undefined = [];
-  startDatePrefix!: string;
-  endDatePrefix!: string;
-  applyLabel!: string;
-  cancelLabel!: string;
-  */
-  shouldAnimate: string = 'enter'; // 'enter' : 'noop';
   selectedRangeDates: Array<Date> = [];
+  shouldAnimate: string = 'enter'; // 'enter' : 'noop';
 
-  dateFormat = 'mediumDate';
-  excludeWeekends = false;
-
-  constructor(
-    private rangeStoreService: IccDateRangeStoreService,
-    private configStoreService: IccDateConfigStoreService,
-    private overlayRef: OverlayRef,
-    private translationService: TranslateService,
-    private adapter: DateAdapter<Date>,
-  ) {}
-
-  ngOnInit() {
-    this.adapter.setLocale(this.translationService.currentLang);
+  ngOnInit(): void {
+    this.adapter.setLocale(this.translateService.currentLang);
     this.fromDate = this.rangeStoreService.fromDate;
-    //this.startDatePrefix = this.configStoreService.dateRangeOptions.startDatePrefix || 'DATE_PICKER.FROM';
-    //this.endDatePrefix = this.configStoreService.dateRangeOptions.endDatePrefix || 'DATE_PICKER.TO';
-    //this.applyLabel = this.configStoreService.dateRangeOptions.applyLabel || 'DATE_PICKER.APPLY';
-    //this.cancelLabel = this.configStoreService.dateRangeOptions.cancelLabel || 'DATE_PICKER.CANCEL';
-    //this.presets = this.configStoreService.dateRangeOptions.presets;
-    //this.shouldAnimate = this.configStoreService.dateRangeOptions.animation ? 'enter' : 'noop';
-    //this.fromMinDate = this.getOptionDateValue(this.configStoreService.dateRangeOptions.fromMinMax?.fromDate);
-    //this.fromMaxDate = this.getOptionDateValue(this.configStoreService.dateRangeOptions.fromMinMax?.toDate);
-    //this.toMinDate = this.getOptionDateValue(this.configStoreService.dateRangeOptions.toMinMax?.fromDate);
-    //this.toMaxDate = this.getOptionDateValue(this.configStoreService.dateRangeOptions.toMinMax?.toDate);
-
     this.fromCalendarConfig = {
       selectedLabel: 'DATE_PICKER.FROM',
       dateFormat: 'mediumDate',
@@ -88,7 +59,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     return date ? date : null;
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.fromDate) {
       this.fromMonthViewChange(this.fromDate);
     }
@@ -117,15 +88,15 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     return false;
   }
 
-  updateFromDate(date: Date | null) {
+  updateFromDate(date: Date | null): void {
     this.checkSelectDateRange(date, 'from');
   }
 
-  updateToDate(date: Date | null) {
+  updateToDate(date: Date | null): void {
     this.checkSelectDateRange(date, 'to');
   }
 
-  private checkSelectDateRange(date: Date | null, type: string) {
+  private checkSelectDateRange(date: Date | null, type: string): void {
     if (this.fromDate && this.toDate) {
       if (type === 'from') {
         this.fromDate = date;
@@ -149,7 +120,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.setSelectedRangeDates();
   }
 
-  private setSelectedRangeDates() {
+  private setSelectedRangeDates(): void {
     this.selectedRangeDates = [];
     if (this.fromDate && this.toDate) {
       let mdate = new Date(this.fromDate.getTime());
@@ -162,21 +133,21 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.changeDetectorRef.markForCheck();
   }
 
-  fromMonthViewChange(date: Date) {
+  fromMonthViewChange(date: Date): void {
     // TODO only run initial???
     //this.toMinDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
     this.toCalendarConfig.minDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
     this.changeDetectorRef.markForCheck();
   }
 
-  toMonthViewChange(date: Date) {
+  toMonthViewChange(date: Date): void {
     // TODO only run initial???
     this.fromCalendarConfig.maxDate = new Date(date.getFullYear(), date.getMonth(), 0);
     this.changeDetectorRef.markForCheck();
     //this.fromMaxDate = new Date(date.getFullYear(), date.getMonth(), 0);
   }
 
-  updateRangeByPreset(presetItem: IccDatePresetItem) {
+  updateRangeByPreset(presetItem: IccDatePresetItem): void {
     this.fromDate = null;
     this.toDate = null;
     this.updateFromDate(presetItem.range?.fromDate ? presetItem.range.fromDate : null);
@@ -186,7 +157,7 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     //}, 50);
   }
 
-  applyNewDates(e: MouseEvent) {
+  applyNewDates(e: MouseEvent): void {
     if (this.fromDate && !this.toDate) {
       this.toDate = new Date(this.fromDate);
     } else if (!this.fromDate && this.toDate) {
@@ -199,11 +170,11 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
     this.disposeOverLay();
   }
 
-  discardNewDates(e: MouseEvent) {
+  discardNewDates(e: MouseEvent): void {
     this.disposeOverLay();
   }
 
-  private disposeOverLay() {
+  private disposeOverLay(): void {
     this.overlayRef.dispose();
   }
 }

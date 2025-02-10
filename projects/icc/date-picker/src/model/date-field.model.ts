@@ -1,27 +1,11 @@
 import { IccBaseField } from '@icc/ui/fields';
 
 export interface IccDateFieldConfig extends IccBaseField {
-  //selectedDate?: Date | null; -> should be input value
   selectedLabel?: string; // -> prefixLabel
-  minDate: Date;
-  maxDate: Date;
-  dateFormat?: string; // 'mediumDate'
+  dateFormat: string; // 'mediumDate'
   excludeWeekends: boolean;
-  //locale?: string; //???
-  // inputPrefix: string; ??? no need
-}
-
-export interface IccDateRange {
-  fromDate?: Date | null;
-  toDate?: Date | null;
-}
-
-export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
-  range: IccDateRange;
-  fromMinMax?: IccDateRange;
-  toMinMax?: IccDateRange;
-  startDateLabel?: string;
-  endDateLabel?: string;
+  minDate?: Date | null;
+  maxDate?: Date | null;
 }
 
 export const defaultDateFieldConfig: IccDateFieldConfig = {
@@ -29,31 +13,10 @@ export const defaultDateFieldConfig: IccDateFieldConfig = {
   fieldName: 'datefield',
   placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
   clearValue: true,
+
+  selectedLabel: 'DATE_PICKER.SELECTED_DATE',
   dateFormat: 'mediumDate',
   excludeWeekends: false,
-  minDate: new Date('1900-01-01T18:30:00.000Z'),
-  maxDate: new Date('2222-06-24T18:30:00.000Z'),
-  //selectedDate?: Date | null;
+  minDate: null,
+  maxDate: null,
 };
-
-/*
-    [prefixLabel]="datePrefix"
-    [selectedDate]="selectedDate"
-    [minDate]="minDate"
-    [maxDate]="maxDate"
-
-export interface IccDateSelectionOptions {
-  format?: string;
-  excludeWeekends?: boolean;
-  locale?: string;
-  selectedDate?: Date | null;
-  minMax?: IccDateRange;
-  applyLabel?: string;
-  cancelLabel?: string;
-  clearLabel?: string;
-  animation?: boolean;
-  calendarOverlayConfig?: IccCalendarOverlayConfig;
-  datePrefix?: string;
-}
-
-*/
