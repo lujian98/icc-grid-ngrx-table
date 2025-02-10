@@ -102,7 +102,6 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
 
   @Input()
   set fieldConfig(fieldConfig: Partial<IccDateFieldConfig>) {
-    console.log(' ssssss fieldConfig=', fieldConfig);
     this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
   }
@@ -166,7 +165,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   ngOnInit(): void {
     this.dateUpdate$ = this.dateStoreService.updateSelected$.subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
-      this.valueChange.emit(selectedDate);
+      this.valueChange.emit(selectedDate!);
       this.changeDetectorRef.markForCheck();
     });
   }

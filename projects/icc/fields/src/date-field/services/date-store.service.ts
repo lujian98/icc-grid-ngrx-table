@@ -3,21 +3,20 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class IccDateStoreService {
-  private _selectedDate: Date | null | undefined;
+  private _selectedDate!: Date | null;
+  updateSelected$ = new Subject<Date | null>();
 
-  updateSelected$: Subject<Date | undefined> = new Subject<Date | undefined>();
-
-  get selectedDate(): Date | null | undefined {
+  get selectedDate(): Date | null {
     return this._selectedDate;
   }
 
-  updateSelected(selectedDate: Date | null | undefined) {
+  updateSelected(selectedDate: Date | null): void {
     this._selectedDate = selectedDate;
-    this.updateSelected$.next(this._selectedDate ? this._selectedDate : undefined);
+    this.updateSelected$.next(this._selectedDate ? this._selectedDate : null);
   }
 
-  clearSelected() {
+  clearSelected(): void {
     this._selectedDate = null;
-    this.updateSelected$.next(undefined);
+    this.updateSelected$.next(null);
   }
 }

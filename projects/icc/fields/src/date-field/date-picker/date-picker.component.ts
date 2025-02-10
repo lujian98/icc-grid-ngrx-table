@@ -1,10 +1,10 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
+import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccDateFieldConfig, defaultDateFieldConfig } from '../models/date-field.model';
 import { IccDateStoreService } from '../services/date-store.service';
 
@@ -17,7 +17,6 @@ import { IccDateStoreService } from '../services/date-store.service';
   imports: [CommonModule, IccButtonComponent, TranslateDirective, IccCalendarComponent],
 })
 export class IccDatePickerComponent implements OnInit {
-  private changeDetectorRef = inject(ChangeDetectorRef);
   private overlayRef = inject(OverlayRef);
   private translateService = inject(TranslateService);
   private dateStoreService = inject(IccDateStoreService);
@@ -59,8 +58,7 @@ export class IccDatePickerComponent implements OnInit {
   //}
 
   applyNewDates(e: MouseEvent): void {
-    this.dateStoreService.updateSelected(this.selectedDate);
-    //this.changeDetectorRef.markForCheck();
+    this.dateStoreService.updateSelected(this.selectedDate!);
     this.disposeOverLay();
   }
 

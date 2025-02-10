@@ -1,8 +1,8 @@
 import { IccBaseField } from '../../models/base-field.model';
 
 export interface IccDateFieldConfig extends IccBaseField {
-  selectedLabel?: string; // -> prefixLabel
-  dateFormat: string; // 'mediumDate'
+  selectedLabel?: string;
+  dateFormat: string;
   excludeWeekends: boolean;
   minDate?: Date | null;
   maxDate?: Date | null;

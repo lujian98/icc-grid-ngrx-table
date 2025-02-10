@@ -46,7 +46,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     }
     this.minDate = this.calendarConfig.minDate;
     this.maxDate = this.calendarConfig.maxDate;
-    console.log(' this.calendarConfig=', this.calendarConfig);
   }
   get calendarConfig(): IccCalendarConfig {
     return this._calendarConfig;
