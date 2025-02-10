@@ -1,11 +1,8 @@
 <div [@transformPickerOverlay]="shouldAnimate" class="icc-date-picker-calendar-container">
   <icc-calendar-wrapper
-    [prefixLabel]="datePrefix"
+    *ngIf="calendarConfig"
+    [calendarConfig]="calendarConfig"
     [selectedDate]="selectedDate"
-    [dateFormat]="fieldConfig.dateFormat"
-    [excludeWeekends]="fieldConfig.excludeWeekends"
-    [minDate]="minDate"
-    [maxDate]="maxDate"
     (selectedDateChange)="updateSelectedDate($event)"
   >
   </icc-calendar-wrapper>

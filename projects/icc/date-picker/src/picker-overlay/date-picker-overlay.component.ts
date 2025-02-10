@@ -5,9 +5,10 @@ import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
-import { IccDateFieldConfig } from '../model/date-field.model';
+import { IccDateFieldConfig, defaultDateFieldConfig } from '../model/date-field.model';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccPickerOverlayAnimations } from './picker-overlay.animations';
+import { IccCalendarConfig } from '../model/calendar.model';
 
 @Component({
   selector: 'icc-date-picker-overlay',
@@ -23,23 +24,30 @@ export class IccDatePickerOverlayComponent implements OnInit {
   private rangeStoreService = inject(IccDateRangeStoreService);
   private adapter = inject(DateAdapter<Date>);
 
-  datePrefix: string = 'DATE_PICKER.SELECTED_DATE';
+  calendarConfig!: Partial<IccCalendarConfig>;
+  selectedDate: Date | null | undefined;
   shouldAnimate: string = 'enter'; //  'enter' : 'noop';
-  minDate!: Date;
-  maxDate!: Date;
+  //minDate!: Date;
+  //maxDate!: Date;
 
   private _fieldConfig!: IccDateFieldConfig;
   @Input()
   set fieldConfig(fieldConfig: IccDateFieldConfig) {
     this._fieldConfig = fieldConfig;
-    this.minDate = fieldConfig.minDate;
-    this.maxDate = fieldConfig.maxDate;
+    this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };
+    this.calendarConfig = {
+      selectedLabel: 'DATE_PICKER.SELECTED_DATE',
+      dateFormat: this.fieldConfig.dateFormat,
+      excludeWeekends: this.fieldConfig.excludeWeekends,
+      minDate: this.fieldConfig.minDate,
+      maxDate: this.fieldConfig.maxDate,
+    };
+    //this.minDate = fieldConfig.minDate;
+    //this.maxDate = fieldConfig.maxDate;
   }
   get fieldConfig(): IccDateFieldConfig {
     return this._fieldConfig;
   }
-
-  selectedDate: Date | null | undefined;
 
   ngOnInit(): void {
     this.adapter.setLocale(this.translateService.currentLang);

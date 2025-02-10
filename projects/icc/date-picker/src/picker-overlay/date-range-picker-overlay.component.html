@@ -1,11 +1,8 @@
 <div [@transformPickerOverlay]="shouldAnimate" class="icc-date-range-calendar-container">
   <icc-calendar-wrapper
-    [prefixLabel]="startDatePrefix"
+    *ngIf="fromCalendarConfig"
+    [calendarConfig]="fromCalendarConfig"
     [selectedDate]="fromDate"
-    [dateFormat]="dateFormat"
-    [excludeWeekends]="excludeWeekends"
-    [minDate]="fromMinDate"
-    [maxDate]="fromMaxDate"
     [selectedRangeDates]="selectedRangeDates"
     (monthViewChange)="fromMonthViewChange($event)"
     (selectedDateChange)="updateFromDate($event)"
@@ -13,12 +10,9 @@
   </icc-calendar-wrapper>
 
   <icc-calendar-wrapper
-    [prefixLabel]="endDatePrefix"
+    *ngIf="toCalendarConfig"
+    [calendarConfig]="toCalendarConfig"
     [selectedDate]="toDate"
-    [dateFormat]="dateFormat"
-    [excludeWeekends]="excludeWeekends"
-    [minDate]="toMinDate"
-    [maxDate]="toMaxDate"
     [selectedRangeDates]="selectedRangeDates"
     (monthViewChange)="toMonthViewChange($event)"
     (selectedDateChange)="updateToDate($event)"
@@ -28,10 +22,10 @@
 
 <div class="icc-date-bottom-bar">
   <button icc-button status="primary" (click)="applyNewDates($event)">
-    <span translate>{{ applyLabel }}</span>
+    <span translate>{{ "DATE_PICKER.APPLY" }}</span>
   </button>
   <button icc-button (click)="discardNewDates($event)">
-    <span translate>{{ cancelLabel }}</span>
+    <span translate>{{ "DATE_PICKER.CANCEL" }}</span>
   </button>
 </div>
 <!--

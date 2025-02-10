@@ -17,6 +17,7 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { MatCalendar, MatCalendarUserEvent, MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
 import { IccLocaleDatePipe } from '@icc/ui/core';
+import { IccCalendarConfig, defaultCalendarConfig } from '../model/calendar.model';
 
 @Component({
   selector: 'icc-calendar-wrapper',
@@ -27,11 +28,29 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
+  private _selectedRangeDates: Array<Date> = [];
+  private _selectedDate: Date | null = null;
 
   currentMonth!: Date | null;
-  _selectedDate: Date | null = null;
-  private _selectedRangeDates: Array<Date> = [];
-  private _excludeWeekends: boolean = false;
+  minDate!: Date | null;
+  maxDate!: Date | null;
+
+  @Input() set calendarConfig(value: Partial<IccCalendarConfig>) {
+    this._calendarConfig = { ...defaultCalendarConfig, ...value };
+    if (this.calendarConfig.excludeWeekends) {
+      this.weekendFilter = (d: Date): boolean => {
+        const day = d.getDay();
+        return day !== 0 && day !== 6;
+      };
+    }
+    this.minDate = this.calendarConfig.minDate;
+    this.maxDate = this.calendarConfig.maxDate;
+    console.log(' this.calendarConfig=', this.calendarConfig);
+  }
+  get calendarConfig(): IccCalendarConfig {
+    return this._calendarConfig;
+  }
 
   @Input() set selectedDate(value: Date | null | undefined) {
     if (value instanceof Date) {
@@ -45,30 +64,12 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
     return this._selectedDate;
   }
 
-  @Input() prefixLabel!: string;
-  @Input() minDate!: Date | null;
-  @Input() maxDate!: Date | null;
-  @Input() dateFormat: string | undefined;
-
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
     this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
     return this._selectedRangeDates;
-  }
-
-  @Input() set excludeWeekends(value: boolean) {
-    this._excludeWeekends = value;
-    if (this.excludeWeekends) {
-      this.weekendFilter = (d: Date): boolean => {
-        const day = d.getDay();
-        return day !== 0 && day !== 6;
-      };
-    }
-  }
-  get excludeWeekends(): boolean {
-    return this._excludeWeekends;
   }
 
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;

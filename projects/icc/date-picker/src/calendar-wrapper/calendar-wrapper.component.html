@@ -13,7 +13,7 @@
 </mat-calendar>
 
 <span class="icc-date-selected-label">
-  <label translate>{{ prefixLabel }}</label
+  <label translate>{{ calendarConfig.selectedLabel }}</label
   ><span>:</span>
-  <label class="icc-date-range-selected-date-label">{{ selectedDate! | localeDate: dateFormat }}</label>
+  <label class="icc-date-range-selected-date-label">{{ selectedDate! | localeDate: calendarConfig.dateFormat }}</label>
 </span>
