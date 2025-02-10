@@ -28,7 +28,7 @@ import { IccLocaleDatePipe } from '@icc/ui/core';
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
 
-  currentMonth: Date | null;
+  currentMonth!: Date | null;
   _selectedDate: Date | null = null;
   private _selectedRangeDates: Array<Date> = [];
   private _excludeWeekends: boolean = false;
@@ -80,7 +80,7 @@ export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, On
   weekendFilter = (d: Date) => true;
 
   constructor() {
-    this.currentMonth = this.getFirstDay(new Date());
+    //this.currentMonth = this.getFirstDay(new Date());
   }
 
   ngAfterViewInit(): void {
