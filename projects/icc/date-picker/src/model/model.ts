@@ -45,7 +45,7 @@ export interface IccDateSelectionOptions {
 }
 
 export interface IccDateRangeOptions extends IccDateSelectionOptions {
-  range: IccDateRange;
+  range?: IccDateRange;
   fromMinMax?: IccDateRange;
   toMinMax?: IccDateRange;
   startDatePrefix?: string;

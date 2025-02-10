@@ -6,7 +6,6 @@ export interface IccDateRange {
 }
 
 export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
-  //range: IccDateRange;
   startDateLabel: string;
   endDateLabel: string;
   fromMinMax: IccDateRange;
@@ -14,9 +13,9 @@ export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
 }
 
 export const defaultDateRangeFieldConfig: IccDateRangeFieldConfig = {
-  fieldType: 'date',
-  fieldName: 'datefield',
-  placeholder: 'ICC.UI.FIELDS.DATE.PLACEHOLDER',
+  fieldType: 'daterange',
+  fieldName: 'daterangefield',
+  placeholder: 'DATE_PICKER.CHOOSE_A_DATE_RANGE',
   clearValue: true,
 
   dateFormat: 'mediumDate',

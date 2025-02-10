@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   inject,
   Injector,
   Input,
@@ -13,16 +14,39 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+  Validators,
+} from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccFormFieldComponent } from '@icc/ui/form-field';
+import { IccFieldsErrorsComponent } from '@icc/ui/fields'; // TODO '../field-errors/field-errors.component';
+import {
+  IccFieldWidthDirective,
+  IccFormFieldComponent,
+  IccFormFieldControlDirective,
+  IccFormFieldErrorsDirective,
+  IccInputDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
+} from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccDialogService, IccPosition } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { IccDateRange, IccDateRangeOptions } from '../model/model';
+import { Subject, Subscription, take, takeUntil, timer } from 'rxjs';
+import { defaultDateRangeFieldConfig, IccDateRange, IccDateRangeFieldConfig } from '../model/date-range-field.model';
+import { IccDateRangeOptions } from '../model/model';
 import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range-picker-overlay.component';
-import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
 @Component({
@@ -30,14 +54,122 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [CommonModule, TranslatePipe, IccIconModule, IccFormFieldComponent, IccButtonComponent],
-  providers: [IccDateRangeStoreService, IccDateConfigStoreService, provideNativeDateAdapter()],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslatePipe,
+    IccIconModule,
+    IccFormFieldComponent,
+    IccButtonComponent,
+    IccSuffixDirective,
+    IccLabelDirective,
+    IccLabelWidthDirective,
+    IccFieldWidthDirective,
+    IccInputDirective,
+    IccFormFieldErrorsDirective,
+    IccFieldsErrorsComponent,
+    IccFormFieldControlDirective,
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IccDateRangePickerComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => IccDateRangePickerComponent),
+      multi: true,
+    },
+    IccDateRangeStoreService,
+    provideNativeDateAdapter(),
+  ],
 })
-export class IccDateRangePickerComponent implements OnInit, OnDestroy {
+export class IccDateRangePickerComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private dialogService = inject(IccDialogService);
   private injector = inject(Injector);
 
-  @ViewChild('calendarInput', { static: true }) calendarInput!: ElementRef<HTMLInputElement>;
+  private destroy$ = new Subject<void>();
+  private _fieldConfig!: IccDateRangeFieldConfig;
+  private _value!: IccDateRange | null;
+  @Input() form!: FormGroup;
+
+  @Input()
+  set fieldConfig(fieldConfig: Partial<IccDateRangeFieldConfig>) {
+    this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
+    this.initForm(this.fieldConfig);
+  }
+  get fieldConfig(): IccDateRangeFieldConfig {
+    return this._fieldConfig;
+  }
+
+  private initForm(fieldConfig: IccDateRangeFieldConfig): void {
+    if (!this.form) {
+      this._fieldConfig = { ...fieldConfig };
+      this.form = new FormGroup({
+        [this.fieldConfig.fieldName!]: new FormControl<IccDateRange | null>(null),
+      });
+    }
+    this.setFieldEditable();
+  }
+
+  private setFieldEditable(): void {
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
+  }
+
+  @Input()
+  set value(val: IccDateRange | null) {
+    this._value = val;
+    this.initForm({ ...defaultDateRangeFieldConfig });
+    this.field.setValue(val);
+    this.rangeStoreService.updateRange(val?.fromDate!, val?.toDate!);
+  }
+  get value(): IccDateRange | null {
+    return this._value;
+  }
+
+  get field(): FormControl {
+    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+  }
+
+  get required(): boolean {
+    return this.field.hasValidator(Validators.required) && !this.field.disabled;
+  }
+
+  get hidden(): boolean {
+    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
+  get hasValue(): boolean {
+    return !!this.field.value && !this.field.disabled;
+  }
+
+  get display(): string {
+    const range = this.field.value;
+    if (range.fromDate && !range.toDate) {
+      range.toDate = range.fromDate;
+    } else if (!range.fromDate && range.toDate) {
+      range.fromDate = range.toDate;
+    }
+    const locale = this.translationService.currentLang || 'en-US';
+    const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig.dateFormat);
+    const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig.dateFormat);
+    if (range.fromDate && range.toDate) {
+      this.selectedDateRange = `${from} - ${to}`;
+    } else {
+      this.selectedDateRange = '';
+    }
+    return this.selectedDateRange;
+  }
+
+  @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
+
+  @Output() valueChange = new EventEmitter<IccDateRange | null>(undefined);
+
   @Output() readonly selectedDateRangeChanged: EventEmitter<IccDateRange> = new EventEmitter<IccDateRange>();
   @Input() options!: IccDateRangeOptions;
 
@@ -47,55 +179,71 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    public rangeStoreService: IccDateRangeStoreService,
-    public configStoreService: IccDateConfigStoreService,
+    private rangeStoreService: IccDateRangeStoreService,
     private translationService: TranslateService,
   ) {}
 
   ngOnInit(): void {
-    this.configStoreService.dateRangeOptions = this.options;
-    this.options.placeholder = this.options.placeholder || 'DATE_PICKER.CHOOSE_A_DATE_RANGE';
-    this.options.locale = this.translationService.currentLang || 'en-US';
-
     this.rangeUpdate$ = this.rangeStoreService.rangeUpdate$.subscribe((range) => {
-      if (range.fromDate && !range.toDate) {
-        range.toDate = range.fromDate;
-      } else if (!range.fromDate && range.toDate) {
-        range.fromDate = range.toDate;
-      }
-      const locale = this.translationService.currentLang || 'en-US';
-      this.options.locale = locale;
-      const from = new DatePipe(locale).transform(range.fromDate, this.options.format);
-      const to = new DatePipe(locale).transform(range.toDate, this.options.format);
-      if (range.fromDate && range.toDate) {
-        this.selectedDateRange = `${from} - ${to}`;
-      } else {
-        this.selectedDateRange = '';
-      }
-      this.selectedDateRangeChanged.emit(range);
+      this.field.setValue(range);
+      this.valueChange.emit(range);
+      this.changeDetectionRef.detectChanges();
     });
-
-    this.rangeStoreService.updateRange(this.options.range.fromDate!, this.options.range.toDate!);
-    this.changeDetectionRef.detectChanges();
   }
 
   // TODO add options.calendarOverlayConfig
   openCalendar(): void {
     this.dialogService.open(IccDateRangePickerOverlayComponent, {
+      context: {
+        fieldConfig: this.fieldConfig,
+      },
       hostElemRef: this.calendarInput,
       injector: this.injector,
     });
   }
 
-  public resetDates(range: IccDateRange) {
+  public resetDates(range: IccDateRange): void {
     this.rangeStoreService.updateRange(range.fromDate!, range.toDate!);
   }
 
-  clearDateRange(event: MouseEvent) {
+  clearDateRange(event: MouseEvent): void {
     this.rangeStoreService.updateRange(null, null);
   }
 
-  ngOnDestroy() {
+  onChange(val: IccDateRange): void {
+    this.field.markAsTouched();
+    this.valueChange.emit(val);
+  }
+
+  clearValue(): void {
+    this.value = null;
+    this.valueChange.emit(null);
+  }
+
+  registerOnChange(fn: (value: IccDateRange) => void): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  registerOnTouched(fn: (value: IccDateRange) => void): void {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.form.disable() : this.form.enable();
+  }
+
+  writeValue(value: { [key: string]: IccDateRange }): void {
+    this.form.patchValue(value, { emitEvent: false });
+    this.changeDetectorRef.markForCheck();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.rangeUpdate$) {
       this.rangeUpdate$.unsubscribe();
     }

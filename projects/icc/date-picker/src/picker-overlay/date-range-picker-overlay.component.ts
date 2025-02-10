@@ -1,14 +1,22 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
 import { IccCalendarWrapperComponent } from '../calendar-wrapper/calendar-wrapper.component';
 import { IccCalendarConfig } from '../model/calendar.model';
+import { IccDateRangeFieldConfig, defaultDateRangeFieldConfig } from '../model/date-range-field.model';
 import { IccDatePresetItem } from '../model/model';
-import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccPickerOverlayAnimations } from './picker-overlay.animations';
 
@@ -26,7 +34,6 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
   private translateService = inject(TranslateService);
   private rangeStoreService = inject(IccDateRangeStoreService);
   private adapter = inject(DateAdapter<Date>);
-  private configStoreService = inject(IccDateConfigStoreService);
 
   fromCalendarConfig!: Partial<IccCalendarConfig>;
   toCalendarConfig!: Partial<IccCalendarConfig>;
@@ -35,28 +42,36 @@ export class IccDateRangePickerOverlayComponent implements AfterViewInit, OnInit
   selectedRangeDates: Array<Date> = [];
   shouldAnimate: string = 'enter'; // 'enter' : 'noop';
 
-  ngOnInit(): void {
-    this.adapter.setLocale(this.translateService.currentLang);
-    this.fromDate = this.rangeStoreService.fromDate;
+  private _fieldConfig!: IccDateRangeFieldConfig;
+  @Input()
+  set fieldConfig(fieldConfig: IccDateRangeFieldConfig) {
+    this._fieldConfig = fieldConfig;
+    this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
+
+    console.log(' xxxxxxxxxxxx fieldConfig=', this.fieldConfig);
     this.fromCalendarConfig = {
       selectedLabel: 'DATE_PICKER.FROM',
       dateFormat: 'mediumDate',
       excludeWeekends: false,
-      minDate: this.getOptionDateValue(this.configStoreService.dateRangeOptions.fromMinMax?.fromDate),
-      maxDate: this.getOptionDateValue(this.configStoreService.dateRangeOptions.fromMinMax?.toDate),
+      minDate: this.fieldConfig.fromMinMax.fromDate,
+      maxDate: this.fieldConfig.fromMinMax.toDate,
     };
 
     this.toCalendarConfig = {
       selectedLabel: 'DATE_PICKER.TO',
       dateFormat: 'mediumDate',
       excludeWeekends: false,
-      minDate: this.getOptionDateValue(this.configStoreService.dateRangeOptions.toMinMax?.fromDate),
-      maxDate: this.getOptionDateValue(this.configStoreService.dateRangeOptions.toMinMax?.toDate),
+      minDate: this.fieldConfig.toMinMax.fromDate,
+      maxDate: this.fieldConfig.toMinMax.toDate,
     };
   }
+  get fieldConfig(): IccDateRangeFieldConfig {
+    return this._fieldConfig;
+  }
 
-  private getOptionDateValue(date: Date | undefined | null): Date | null {
-    return date ? date : null;
+  ngOnInit(): void {
+    this.adapter.setLocale(this.translateService.currentLang);
+    this.fromDate = this.rangeStoreService.fromDate;
   }
 
   ngAfterViewInit(): void {

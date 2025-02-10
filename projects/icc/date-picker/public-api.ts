@@ -5,7 +5,5 @@ export * from './src/picker-overlay/date-picker-overlay.component';
 export * from './src/picker-overlay/date-range-picker-overlay.component';
 export * from './src/date-picker/date-picker.component';
 export * from './src/date-range-picker/date-range-picker.component';
-export * from './src/services/calendar-overlay.service';
-export * from './src/services/date-config-store.service';
 export * from './src/services/date-range-store.service';
 export * from './src/date-picker.module';

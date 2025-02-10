@@ -23,8 +23,6 @@ export class AppSimpleDateComponent implements OnInit {
     fromDate: new Date(),
     toDate: new Date(this.today.getFullYear(), this.today.getMonth() + 2, 0),
   };
-  options!: IccDateRangeOptions;
-  dateoptions!: IccDateRangeOptions; //IccDateSelectionOptions;
 
   dateFieldConfig = {
     fieldType: 'date',
@@ -38,36 +36,26 @@ export class AppSimpleDateComponent implements OnInit {
 
   selectedDate = new Date(this.today.getTime() + 7 * (24 * 60 * 60 * 1000));
 
-  presets: Array<IccDatePresetItem> = [];
-  presets2: Array<IccDatePresetItem> = [];
+  dateRangeFieldConfig = {
+    fieldType: 'daterange',
+    fieldName: 'daterangefield',
+    fieldLabel: 'Select Date Range',
+    editable: true,
+    readonly: true,
+    fromMinMax: { fromDate: null, toDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0) },
+    toMinMax: { fromDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 1), toDate: null },
+  };
+
+  options: IccDateRangeOptions = {
+    format: 'mediumDate',
+    //range: this.range,
+    fromMinMax: { fromDate: null, toDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0) },
+    toMinMax: { fromDate: new Date(this.today.getFullYear(), this.today.getMonth() + 1, 1), toDate: null },
+  };
 
   @ViewChild('pickerOne', { static: true }) pickerOne!: any;
 
-  ngOnInit(): void {
-    const today = new Date();
-    const fromMax = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const toMin = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-
-    this.options = {
-      format: 'mediumDate',
-      range: this.range,
-      fromMinMax: { fromDate: null, toDate: fromMax },
-      toMinMax: { fromDate: toMin, toDate: null },
-    };
-
-    const maxDate = new Date(today.getFullYear(), today.getMonth() + 3, 0);
-    const minDate = new Date(today.getFullYear(), today.getMonth() - 4, 1);
-    const selectedDate = new Date(today.getTime() - 6 * (24 * 60 * 60 * 1000));
-
-    this.dateoptions = {
-      presets: this.presets2,
-      format: 'mediumDate',
-      range: { fromDate: today, toDate: today },
-      selectedDate: selectedDate,
-      minMax: { fromDate: minDate, toDate: maxDate },
-    };
-    console.log(' this.options=', this.options);
-  }
+  ngOnInit(): void {}
 
   updateRange(range: IccDateRange) {
     this.range = range;
