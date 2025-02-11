@@ -1,8 +1,8 @@
 // use local src theming sass when dev
 @use "../../icc/theme/src/theming" as icc;
 
-// TODO remove material
-
+/*
+// TODO remove material css
 @use "@angular/material" as mat;
 
 @include mat.all-component-typographies();
@@ -25,9 +25,8 @@ $theme: mat.m2-define-light-theme(
 );
 
 @include mat.all-component-themes($theme);
+*/
 
 @include icc.icc-install() {
   @include icc.icc-theme-components();
 }
-
-// TODO remove in the angular.json of "projects/icc-demo/src/app/material-theme/themes.scss"
