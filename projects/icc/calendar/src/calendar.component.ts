@@ -52,7 +52,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     return this._calendarConfig;
   }
 
-  @Input() set selectedDate(value: Date | null | undefined) {
+  @Input() set selectedDate(value: Date | null) {
     if (value instanceof Date) {
       this._selectedDate = value;
       this.matCalendar.activeDate = this.selectedDate!;

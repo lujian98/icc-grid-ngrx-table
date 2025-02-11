@@ -23,7 +23,7 @@ export class IccDatePickerComponent implements OnInit {
   private adapter = inject(DateAdapter<Date>);
 
   calendarConfig!: Partial<IccCalendarConfig>;
-  selectedDate: Date | null | undefined;
+  selectedDate!: Date | null;
   shouldAnimate: string = 'enter'; //  'enter' : 'noop';
 
   private _fieldConfig!: IccDateFieldConfig;

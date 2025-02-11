@@ -166,6 +166,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this.translateService.onLangChange
       .pipe(delay(50), takeUntil(this.destroy$))
       .subscribe(() => this.setLocaleChange());
+
     this.dateStoreService.updateSelected$.pipe(takeUntil(this.destroy$)).subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
       this.valueChange.emit(selectedDate!);
