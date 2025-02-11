@@ -1,4 +1,4 @@
-<div [@transformPickerOverlay]="shouldAnimate" class="icc-date-picker-calendar-container">
+<icc-layout [@transformPickerOverlay]="shouldAnimate">
   <icc-calendar
     *ngIf="calendarConfig"
     [calendarConfig]="calendarConfig"
@@ -6,12 +6,13 @@
     (selectedDateChange)="updateSelectedDate($event)"
   >
   </icc-calendar>
-</div>
-<div class="icc-date-bottom-bar">
-  <button icc-button status="primary" (click)="applyNewDates($event)">
-    <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
-  </button>
-  <button icc-button (click)="discardNewDates($event)">
-    <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
-  </button>
-</div>
+
+  <icc-layout-footer class="icc-date-bottom-bar">
+    <button icc-button status="primary" (click)="applyNewDates($event)">
+      <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
+    </button>
+    <button icc-button (click)="discardNewDates($event)">
+      <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
+    </button>
+  </icc-layout-footer>
+</icc-layout>

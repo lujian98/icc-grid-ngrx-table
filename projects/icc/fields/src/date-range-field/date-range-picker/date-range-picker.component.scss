@@ -6,6 +6,11 @@
     display: flex;
   }
 
+  ::ng-deep mat-calendar {
+    width: 300px;
+    height: 300px;
+  }
+
   .icc-date-bottom-bar {
     display: flex;
     justify-content: end;

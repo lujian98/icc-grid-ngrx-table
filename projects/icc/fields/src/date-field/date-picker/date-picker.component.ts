@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angu
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
+import { IccLayoutComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { IccDateFieldConfig, defaultDateFieldConfig } from '../models/date-field.model';
 import { IccDateStoreService } from '../services/date-store.service';
@@ -14,7 +15,14 @@ import { IccDateStoreService } from '../services/date-store.service';
   styleUrls: ['./date-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
-  imports: [CommonModule, IccButtonComponent, TranslateDirective, IccCalendarComponent],
+  imports: [
+    CommonModule,
+    IccButtonComponent,
+    TranslateDirective,
+    IccCalendarComponent,
+    IccLayoutComponent,
+    IccLayoutFooterComponent,
+  ],
 })
 export class IccDatePickerComponent implements OnInit {
   private overlayRef = inject(OverlayRef);

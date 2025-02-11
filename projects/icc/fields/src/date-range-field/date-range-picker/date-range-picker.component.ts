@@ -11,9 +11,10 @@ import {
 } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
+import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
+import { IccLayoutComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
-import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
 import { IccDateRangeFieldConfig, defaultDateRangeFieldConfig } from '../models/date-range-field.model';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
@@ -23,7 +24,14 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
   styleUrls: ['./date-range-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, // use Default to sync calendar
   animations: [IccPickerOverlayAnimations.transformPanel],
-  imports: [CommonModule, IccButtonComponent, TranslateDirective, IccCalendarComponent],
+  imports: [
+    CommonModule,
+    IccButtonComponent,
+    TranslateDirective,
+    IccCalendarComponent,
+    IccLayoutComponent,
+    IccLayoutFooterComponent,
+  ],
 })
 export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);

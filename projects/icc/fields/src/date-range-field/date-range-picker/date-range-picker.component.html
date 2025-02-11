@@ -1,30 +1,32 @@
-<div [@transformPickerOverlay]="shouldAnimate" class="icc-date-range-calendar-container">
-  <icc-calendar
-    *ngIf="fromCalendarConfig"
-    [calendarConfig]="fromCalendarConfig"
-    [selectedDate]="fromDate"
-    [selectedRangeDates]="selectedRangeDates"
-    (monthViewChange)="fromMonthViewChange($event)"
-    (selectedDateChange)="updateFromDate($event)"
-  >
-  </icc-calendar>
+<icc-layout [@transformPickerOverlay]="shouldAnimate">
+  <div class="icc-date-range-calendar-container">
+    <icc-calendar
+      *ngIf="fromCalendarConfig"
+      [calendarConfig]="fromCalendarConfig"
+      [selectedDate]="fromDate"
+      [selectedRangeDates]="selectedRangeDates"
+      (monthViewChange)="fromMonthViewChange($event)"
+      (selectedDateChange)="updateFromDate($event)"
+    >
+    </icc-calendar>
 
-  <icc-calendar
-    *ngIf="toCalendarConfig"
-    [calendarConfig]="toCalendarConfig"
-    [selectedDate]="toDate"
-    [selectedRangeDates]="selectedRangeDates"
-    (monthViewChange)="toMonthViewChange($event)"
-    (selectedDateChange)="updateToDate($event)"
-  >
-  </icc-calendar>
-</div>
+    <icc-calendar
+      *ngIf="toCalendarConfig"
+      [calendarConfig]="toCalendarConfig"
+      [selectedDate]="toDate"
+      [selectedRangeDates]="selectedRangeDates"
+      (monthViewChange)="toMonthViewChange($event)"
+      (selectedDateChange)="updateToDate($event)"
+    >
+    </icc-calendar>
+  </div>
 
-<div class="icc-date-bottom-bar">
-  <button icc-button status="primary" (click)="applyNewDates($event)">
-    <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
-  </button>
-  <button icc-button (click)="discardNewDates($event)">
-    <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
-  </button>
-</div>
+  <icc-layout-footer class="icc-date-bottom-bar">
+    <button icc-button status="primary" (click)="applyNewDates($event)">
+      <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
+    </button>
+    <button icc-button (click)="discardNewDates($event)">
+      <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
+    </button>
+  </icc-layout-footer>
+</icc-layout>

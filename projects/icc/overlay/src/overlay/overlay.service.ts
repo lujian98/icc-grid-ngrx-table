@@ -20,7 +20,7 @@ export class IccOverlayService {
         .flexibleConnectedTo(hostElemRef)
         .withFlexibleDimensions(false)
         .withViewportMargin(8)
-        .withDefaultOffsetY(12)
+        .withDefaultOffsetY(2)
         .withPositions([
           {
             originX: 'start',
