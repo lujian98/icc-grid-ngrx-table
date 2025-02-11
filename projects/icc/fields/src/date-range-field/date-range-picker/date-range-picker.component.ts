@@ -74,7 +74,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     if (this.fromDate) {
       this.fromMonthViewChange(this.fromDate);
     }
-    timer(100)
+    timer(50)
       .pipe(take(1))
       .subscribe(() => {
         if (this.rangeStoreService.toDate) {

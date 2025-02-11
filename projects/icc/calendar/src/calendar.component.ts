@@ -1,22 +1,22 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
-  Component,
-  OnDestroy,
-  ViewChild,
-  Output,
-  Input,
-  EventEmitter,
   ChangeDetectionStrategy,
-  OnChanges,
-  SimpleChanges,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateDirective } from '@ngx-translate/core';
-import { MatCalendar, MatCalendarUserEvent, MatCalendarCellCssClasses } from '@angular/material/datepicker';
-import { Subscription } from 'rxjs';
+import { MatCalendar, MatCalendarCellCssClasses, MatCalendarUserEvent } from '@angular/material/datepicker';
 import { IccLocaleDatePipe } from '@icc/ui/core';
+import { TranslateDirective } from '@ngx-translate/core';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.model';
 
 @Component({
@@ -28,6 +28,7 @@ import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.mode
 })
 export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
   private _selectedRangeDates: Array<Date> = [];
   private _selectedDate: Date | null = null;
@@ -75,8 +76,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() readonly monthViewChange: EventEmitter<Date> = new EventEmitter<Date>();
 
-  private sub!: Subscription;
-
   weekendFilter = (d: Date) => true;
 
   constructor() {
@@ -85,7 +84,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   ngAfterViewInit(): void {
     if (this.matCalendar) {
-      this.sub = this.matCalendar.stateChanges.subscribe(() => {
+      this.matCalendar.stateChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
         this.onMonthSelected(this.matCalendar.activeDate);
       });
     }
@@ -95,15 +94,15 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
-      setTimeout(() => {
-        this.maxDate = null;
-      }, 10);
+      timer(10)
+        .pipe(take(1))
+        .subscribe(() => (this.maxDate = null));
     }
     if (!this.minDate) {
       this.minDate = new Date('1900-01-01T18:30:00.000Z');
-      setTimeout(() => {
-        this.minDate = null;
-      }, 10);
+      timer(10)
+        .pipe(take(1))
+        .subscribe(() => (this.minDate = null));
     }
   }
 
@@ -158,8 +157,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

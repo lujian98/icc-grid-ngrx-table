@@ -42,7 +42,7 @@ import {
 import { IccIconModule } from '@icc/ui/icon';
 import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { delay, Subject, Subscription, take, takeUntil, timer } from 'rxjs';
+import { delay, Subject, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccDatePickerComponent } from './date-picker/date-picker.component';
 import { defaultDateFieldConfig, IccDateFieldConfig } from './models/date-field.model';
@@ -161,16 +161,12 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
   @Output() valueChange = new EventEmitter<Date | string>(undefined);
-  private dateUpdate$!: Subscription;
 
-  constructor() {
+  ngOnInit(): void {
     this.translateService.onLangChange
       .pipe(delay(50), takeUntil(this.destroy$))
       .subscribe(() => this.setLocaleChange());
-  }
-
-  ngOnInit(): void {
-    this.dateUpdate$ = this.dateStoreService.updateSelected$.subscribe((selectedDate) => {
+    this.dateStoreService.updateSelected$.pipe(takeUntil(this.destroy$)).subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
       this.valueChange.emit(selectedDate!);
       this.changeDetectorRef.markForCheck();
@@ -240,8 +236,5 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    if (this.dateUpdate$) {
-      this.dateUpdate$.unsubscribe();
-    }
   }
 }

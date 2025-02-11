@@ -29,7 +29,6 @@ import {
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -43,9 +42,10 @@ import {
 import { IccIconModule } from '@icc/ui/icon';
 import { IccDialogService } from '@icc/ui/overlay';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Subject, Subscription, take, takeUntil, timer } from 'rxjs';
-import { defaultDateRangeFieldConfig, IccDateRange, IccDateRangeFieldConfig } from './models/date-range-field.model';
+import { Subject, take, takeUntil, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccDateRangePickerComponent } from './date-range-picker/date-range-picker.component';
+import { defaultDateRangeFieldConfig, IccDateRange, IccDateRangeFieldConfig } from './models/date-range-field.model';
 import { IccDateRangeStoreService } from './services/date-range-store.service';
 
 @Component({
@@ -168,10 +168,9 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
   @Output() valueChange = new EventEmitter<IccDateRange | null>(undefined);
-  private rangeUpdate$!: Subscription;
 
   ngOnInit(): void {
-    this.rangeUpdate$ = this.rangeStoreService.rangeUpdate$.subscribe((range) => {
+    this.rangeStoreService.rangeUpdate$.pipe(takeUntil(this.destroy$)).subscribe((range) => {
       this.field.setValue(range);
       this.valueChange.emit(range);
       this.changeDetectorRef.detectChanges();
@@ -231,8 +230,5 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    if (this.rangeUpdate$) {
-      this.rangeUpdate$.unsubscribe();
-    }
   }
 }
