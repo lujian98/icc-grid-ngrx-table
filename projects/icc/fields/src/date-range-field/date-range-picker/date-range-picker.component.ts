@@ -198,9 +198,9 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     this.toDate = null;
     this.updateFromDate(item.range.fromDate ? item.range.fromDate : null);
 
-    setTimeout(() => {
-      this.updateToDate(item.range.toDate ? item.range.toDate : null);
-    }, 50);
+    timer(50)
+      .pipe(take(1))
+      .subscribe(() => this.updateToDate(item.range.toDate ? item.range.toDate : null));
   }
 
   applyNewDates(e: MouseEvent): void {
