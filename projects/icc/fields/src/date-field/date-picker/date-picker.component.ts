@@ -10,8 +10,15 @@ import {
   IccLayoutFooterEndComponent,
   IccLayoutFooterStartComponent,
 } from '@icc/ui/layout';
+import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
-import { IccDateFieldConfig, defaultDateFieldConfig } from '../models/date-field.model';
+import {
+  IccDateFieldConfig,
+  defaultDateFieldConfig,
+  presetDateSelectionConfig,
+  IccDatePresetItem,
+  iccDefaultDatePresets,
+} from '../models/date-field.model';
 import { IccDateStoreService } from '../services/date-store.service';
 
 @Component({
@@ -29,6 +36,7 @@ import { IccDateStoreService } from '../services/date-store.service';
     IccLayoutFooterComponent,
     IccLayoutFooterEndComponent,
     IccLayoutFooterStartComponent,
+    IccSelectFieldComponent,
   ],
 })
 export class IccDatePickerComponent implements OnInit {
@@ -58,9 +66,19 @@ export class IccDatePickerComponent implements OnInit {
     return this._fieldConfig;
   }
 
+  presetSelectionConfig = presetDateSelectionConfig;
+  presets: IccDatePresetItem[] = [];
+
   ngOnInit(): void {
     this.adapter.setLocale(this.translateService.currentLang);
     this.selectedDate = this.dateStoreService.selectedDate;
+
+    this.presets = [...iccDefaultDatePresets].map((item) => {
+      return {
+        label: this.translateService.instant(item.label),
+        date: item.date,
+      };
+    });
   }
 
   updateSelectedDate(date: Date | null): void {
@@ -68,9 +86,9 @@ export class IccDatePickerComponent implements OnInit {
     //this.rangeStoreService.updateSelected(this.selectedDate);
   }
 
-  //updateSelectDateByPreset(presetItem: IccDatePresetItem): void {
-  //  this.updateSelectedDate(presetItem.selectedDate ? presetItem.selectedDate : null);
-  //}
+  updateSelectDateByPreset(item: IccDatePresetItem): void {
+    this.updateSelectedDate(item.date ? item.date : null);
+  }
 
   applyNewDates(e: MouseEvent): void {
     this.dateStoreService.updateSelected(this.selectedDate!);

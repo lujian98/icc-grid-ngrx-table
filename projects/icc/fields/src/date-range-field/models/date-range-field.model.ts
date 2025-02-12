@@ -26,7 +26,7 @@ export const defaultDateRangeFieldConfig: IccDateRangeFieldConfig = {
   toMinMax: { fromDate: null, toDate: null },
 };
 
-export interface IccDatePresetItem {
+export interface IccDateRangePresetItem {
   label: string;
   range: IccDateRange;
 }
@@ -54,7 +54,7 @@ const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
 const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
 
-export const iccDefaultPresets = [
+export const iccDefaultDateRangePresets: IccDateRangePresetItem[] = [
   {
     label: 'ICC.UI.DATE.FILTER.YESTERDAY',
     range: { fromDate: yesterday, toDate: today },

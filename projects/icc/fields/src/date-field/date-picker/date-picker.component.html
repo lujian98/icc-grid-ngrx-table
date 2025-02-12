@@ -8,7 +8,14 @@
   </icc-calendar>
 
   <icc-layout-footer>
-    <icc-layout-footer-start>Start</icc-layout-footer-start>
+    <icc-layout-footer-start>
+      <icc-select-field
+        [fieldConfig]="presetSelectionConfig"
+        [options]="presets"
+        [showFieldEditIndicator]="false"
+        (selectionChange)="updateSelectDateByPreset($event)"
+      ></icc-select-field>
+    </icc-layout-footer-start>
     <icc-layout-footer-end>
       <button icc-button status="primary" (click)="applyNewDates($event)">
         <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>

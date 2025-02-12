@@ -25,9 +25,9 @@ import { take, timer } from 'rxjs';
 import {
   IccDateRangeFieldConfig,
   defaultDateRangeFieldConfig,
-  iccDefaultPresets,
+  iccDefaultDateRangePresets,
   presetSelectionConfig,
-  IccDatePresetItem,
+  IccDateRangePresetItem,
 } from '../models/date-range-field.model';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
@@ -91,13 +91,13 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   }
 
   presetSelectionConfig = presetSelectionConfig;
-  presets: IccDatePresetItem[] = [];
+  presets: IccDateRangePresetItem[] = [];
 
   ngOnInit(): void {
     this.adapter.setLocale(this.translateService.currentLang);
     this.fromDate = this.rangeStoreService.fromDate;
 
-    this.presets = [...iccDefaultPresets].map((item) => {
+    this.presets = [...iccDefaultDateRangePresets].map((item) => {
       return {
         label: this.translateService.instant(item.label),
         range: item.range,
@@ -193,7 +193,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     //this.fromMaxDate = new Date(date.getFullYear(), date.getMonth(), 0);
   }
 
-  updateRangeByPreset(item: IccDatePresetItem): void {
+  updateRangeByPreset(item: IccDateRangePresetItem): void {
     this.fromDate = null;
     this.toDate = null;
     this.updateFromDate(item.range.fromDate ? item.range.fromDate : null);
