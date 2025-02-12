@@ -180,17 +180,17 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   }
 
   fromMonthViewChange(date: Date): void {
-    // TODO only run initial???
-    //this.toMinDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    this.toCalendarConfig.minDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    this.changeDetectorRef.markForCheck();
+    this.toCalendarConfig = {
+      ...this.toCalendarConfig,
+      minDate: new Date(date.getFullYear(), date.getMonth() + 1, 1),
+    };
   }
 
   toMonthViewChange(date: Date): void {
-    // TODO only run initial???
-    this.fromCalendarConfig.maxDate = new Date(date.getFullYear(), date.getMonth(), 0);
-    this.changeDetectorRef.markForCheck();
-    //this.fromMaxDate = new Date(date.getFullYear(), date.getMonth(), 0);
+    this.fromCalendarConfig = {
+      ...this.fromCalendarConfig,
+      maxDate: new Date(date.getFullYear(), date.getMonth(), 0),
+    };
   }
 
   updateRangeByPreset(item: IccDateRangePresetItem): void {

@@ -52,7 +52,7 @@ import { IccDateRangeStoreService } from './services/date-range-store.service';
   selector: 'icc-date-range-field',
   templateUrl: './date-range-field.component.html',
   styleUrls: ['./date-range-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,

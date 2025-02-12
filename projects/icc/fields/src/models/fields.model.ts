@@ -1,5 +1,6 @@
 import { IccCheckboxFieldConfig } from '../checkbox-field/models/checkbox-field.model';
 import { IccDateFieldConfig } from '../date-field/models/date-field.model';
+import { IccDateRangeFieldConfig } from '../date-range-field/models/date-range-field.model';
 import { IccDisplayFieldConfig } from '../display-field/models/display-field.model';
 import { IccFieldsetConfig } from '../fieldset/models/fieldset.model';
 import { IccHiddenFieldConfig } from '../hidden-field/models/hidden-field.model';
@@ -16,6 +17,7 @@ export type IccFormField =
   | IccBaseField
   | IccCheckboxFieldConfig
   | IccDateFieldConfig
+  | IccDateRangeFieldConfig
   | IccDisplayFieldConfig
   | IccFieldsetConfig
   | IccHiddenFieldConfig

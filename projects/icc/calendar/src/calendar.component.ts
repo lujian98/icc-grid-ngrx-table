@@ -79,7 +79,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   weekendFilter = (d: Date) => true;
 
   constructor() {
-    //this.currentMonth = this.getFirstDay(new Date());
+    this.currentMonth = this.getFirstDay(new Date());
   }
 
   ngAfterViewInit(): void {
