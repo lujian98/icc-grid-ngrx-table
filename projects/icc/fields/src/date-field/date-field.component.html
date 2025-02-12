@@ -20,7 +20,7 @@
       [required]="required"
       readonly
     />
-    <button iccSuffix icc-button [ghost]="true" (click)="openCalendar()">
+    <button iccSuffix icc-button [ghost]="true" [disabled]="field.disabled" (click)="openCalendar()">
       <icc-icon icon="calendar"></icc-icon>
     </button>
 

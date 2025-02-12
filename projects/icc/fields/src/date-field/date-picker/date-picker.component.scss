@@ -1,9 +1,13 @@
 :host {
   display: flex;
   flex-direction: column;
+  width: 300px;
 
-  ::ng-deep mat-calendar {
-    width: 300px;
+  ::ng-deep icc-calendar {
     height: 300px;
+  }
+
+  icc-layout-footer-start {
+    width: 180px;
   }
 }

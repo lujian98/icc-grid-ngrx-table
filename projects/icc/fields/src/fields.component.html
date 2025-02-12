@@ -7,6 +7,9 @@
 
 <icc-date-field *ngIf="fieldConfig.fieldType === 'date'" [fieldConfig]="fieldConfig" [form]="form"> </icc-date-field>
 
+<icc-date-range-field *ngIf="fieldConfig.fieldType === 'daterange'" [fieldConfig]="fieldConfig" [form]="form">
+</icc-date-range-field>
+
 <icc-display-field *ngIf="fieldConfig.fieldType === 'display'" [fieldConfig]="fieldConfig" [form]="form">
 </icc-display-field>
 

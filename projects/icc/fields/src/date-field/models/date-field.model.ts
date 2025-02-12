@@ -29,7 +29,7 @@ export interface IccDatePresetItem {
 export const presetDateSelectionConfig = {
   fieldName: 'preset',
   fieldLabel: 'ICC.UI.DATE.PICKER.SELECT_DATE',
-  labelWidth: 100,
+  labelWidth: 60,
   optionLabel: 'label',
   optionKey: 'date',
   clearValue: false,
