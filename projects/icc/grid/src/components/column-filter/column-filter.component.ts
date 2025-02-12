@@ -2,19 +2,19 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
   inject,
   Input,
   OnInit,
-  ViewContainerRef,
-  ComponentRef,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
+import { defaultSelectFieldConfig, defaultTextFieldConfig, IccFormField } from '@icc/ui/fields';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccDateRangeFilterComponent } from './date-range/date-range-filter.component';
+import { IccNumberFilterComponent } from './number/number-filter.component';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
-import { IccNumberFilterComponent } from './number/number-filter.component';
-import { IccDateRangeFilterComponent } from './date-range/date-range-filter.component';
-import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 export interface IccDynamicColumnFilter {
   gridConfig: IccGridConfig;
@@ -30,10 +30,9 @@ export interface IccDynamicColumnFilter {
 })
 export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private _componentRef: ComponentRef<unknown> | undefined;
   private instance!: IccDynamicColumnFilter;
+  private _componentRef: ComponentRef<unknown> | undefined;
   private _gridConfig!: IccGridConfig;
-
   private _column!: IccColumnConfig;
 
   @Input()

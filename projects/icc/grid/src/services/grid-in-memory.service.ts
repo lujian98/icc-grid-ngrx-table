@@ -194,7 +194,7 @@ export class IccGridinMemoryService {
     return (typeof num === 'number' || (typeof num === 'string' && num.trim() !== '')) && !isNaN(num as number);
   }
 
-  protected getFilterParams<T>(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): IccInMemoryFilterValue[] {
+  protected getFilterParams(columnFilters: IccColumnFilter[], columns: IccColumnConfig[]): IccInMemoryFilterValue[] {
     const params: IccInMemoryFilterValue[] = [];
     const ransackFilterFactory = new IccRansackFilterFactory();
     const filterFactory = new IccFilterFactory();
