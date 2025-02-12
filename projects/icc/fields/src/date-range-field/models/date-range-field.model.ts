@@ -13,7 +13,7 @@ export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
 }
 
 export const defaultDateRangeFieldConfig: IccDateRangeFieldConfig = {
-  fieldType: 'daterange',
+  fieldType: 'dateRange',
   fieldName: 'daterangefield',
   placeholder: 'ICC.UI.DATE.PICKER.SELECT_DATE_RANGE',
   clearValue: true,

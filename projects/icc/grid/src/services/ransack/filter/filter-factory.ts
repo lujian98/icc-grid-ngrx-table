@@ -4,6 +4,7 @@ import { IccRansackFilter } from './filter';
 import { IccRansackTextFilter } from './text-filter';
 import { IccRansackNumberFilter } from './number-filter';
 import { IccRansackSelectFilter } from './select-filter';
+import { IccRansackDateRangeFilter } from './date-range-filter';
 
 export class IccRansackFilterFactory<T> {
   componentMapper: { [index: string]: any };
@@ -13,6 +14,7 @@ export class IccRansackFilterFactory<T> {
       text: IccRansackTextFilter,
       number: IccRansackNumberFilter,
       select: IccRansackSelectFilter,
+      dateRange: IccRansackDateRangeFilter,
     };
   }
 

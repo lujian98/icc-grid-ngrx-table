@@ -30,7 +30,7 @@ export class IccNumberFilterComponent extends IccFieldFilterComponent {
     return this._value as number;
   }
 
-  onValueChange(value: number): void {
+  onValueChange(value: number | null): void {
     this.filterChanged$.next(value);
   }
 }

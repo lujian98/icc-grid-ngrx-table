@@ -12,6 +12,8 @@ import {
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
+import { IccNumberFilterComponent } from './number/number-filter.component';
+import { IccDateRangeFilterComponent } from './date-range/date-range-filter.component';
 import { defaultTextFieldConfig, defaultSelectFieldConfig, IccFormField } from '@icc/ui/fields';
 
 export interface IccDynamicColumnFilter {
@@ -88,6 +90,10 @@ export class IccColumnFilterComponent implements OnInit {
   private getFilterTypeComponent(filterType: string): Type<unknown> {
     if (filterType === 'select') {
       return IccSelectFilterComponent;
+    } else if (filterType === 'number') {
+      return IccNumberFilterComponent;
+    } else if (filterType === 'dateRange') {
+      return IccDateRangeFilterComponent;
     }
     return IccTextFilterComponent;
   }

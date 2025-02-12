@@ -96,7 +96,7 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   private _value!: IccDateRange | null;
 
   @Input() form!: FormGroup;
-
+  @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccDateRangeFieldConfig>) {
     this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };

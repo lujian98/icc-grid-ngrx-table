@@ -2,6 +2,7 @@ import { IccColumnConfig } from '../../models/grid-column.model';
 import { IccNumberFilter } from './number-filter';
 import { IccTextFilter } from './text-filter';
 import { IccSelectFilter } from './select-filter';
+import { IccDateRangeFilter } from './date-range-filter';
 
 export class IccFilterFactory {
   componentMapper: { [index: string]: any } = {};
@@ -11,6 +12,7 @@ export class IccFilterFactory {
       text: IccTextFilter,
       number: IccNumberFilter,
       select: IccSelectFilter,
+      dateRange: IccDateRangeFilter,
     };
   }
 

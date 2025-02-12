@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccDateRangeFieldComponent, IccDateRangeFieldConfig } from '@icc/ui/fields';
+import { IccDateRangeFieldComponent, IccDateRangeFieldConfig, IccDateRange } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -22,15 +22,15 @@ export class IccDateRangeFilterComponent extends IccFieldFilterComponent {
     };
   }
 
-  override set value(val: Date) {
+  override set value(val: IccDateRange) {
     this._value = val;
   }
 
-  override get value(): Date {
-    return this._value as Date;
+  override get value(): IccDateRange {
+    return this._value as IccDateRange;
   }
 
-  onValueChange(value: Date): void {
+  onValueChange(value: IccDateRange | null): void {
     this.filterChanged$.next(value);
   }
 }

@@ -14,6 +14,6 @@ export class IccDateRangeFilter extends IccFilter {
   }
 
   constructor(column: IccColumnConfig, key: string) {
-    super(column, key, 'date');
+    super(column, key, 'dateRange');
   }
 }

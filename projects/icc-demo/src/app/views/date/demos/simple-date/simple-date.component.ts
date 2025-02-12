@@ -29,7 +29,7 @@ export class AppSimpleDateComponent implements OnInit {
   selectedDate = new Date(this.today.getTime() + 7 * (24 * 60 * 60 * 1000));
 
   dateRangeFieldConfig = {
-    fieldType: 'daterange',
+    fieldType: 'dateRange',
     fieldName: 'daterangefield',
     fieldLabel: 'Select Date Range',
     editable: true,

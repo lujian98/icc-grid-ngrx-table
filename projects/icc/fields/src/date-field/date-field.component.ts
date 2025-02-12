@@ -96,7 +96,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   private _value!: Date | string;
 
   @Input() form!: FormGroup;
-
+  @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccDateFieldConfig>) {
     this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };

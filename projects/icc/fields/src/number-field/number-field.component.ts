@@ -77,7 +77,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   private _fieldConfig!: IccNumberFieldConfig;
   private _value!: number | null;
   @Input() form!: FormGroup;
-
+  @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccNumberFieldConfig>) {
     this._fieldConfig = { ...defaultNumberFieldConfig, ...fieldConfig };
