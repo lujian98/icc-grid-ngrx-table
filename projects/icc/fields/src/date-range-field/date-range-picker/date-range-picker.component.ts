@@ -12,7 +12,13 @@ import {
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
-import { IccLayoutComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
+import {
+  IccLayoutComponent,
+  IccLayoutFooterCenterComponent,
+  IccLayoutFooterComponent,
+  IccLayoutFooterEndComponent,
+  IccLayoutFooterStartComponent,
+} from '@icc/ui/layout';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
 import { IccDateRangeFieldConfig, defaultDateRangeFieldConfig } from '../models/date-range-field.model';
@@ -31,6 +37,9 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
     IccCalendarComponent,
     IccLayoutComponent,
     IccLayoutFooterComponent,
+    IccLayoutFooterEndComponent,
+    IccLayoutFooterStartComponent,
+    IccLayoutFooterCenterComponent,
   ],
 })
 export class IccDateRangePickerComponent implements AfterViewInit, OnInit {

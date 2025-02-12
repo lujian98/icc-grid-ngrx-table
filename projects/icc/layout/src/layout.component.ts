@@ -4,14 +4,6 @@ import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
 @Component({
-  selector: 'icc-layout-footer',
-  template: `<ng-content></ng-content>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-})
-export class IccLayoutFooterComponent {}
-
-@Component({
   selector: 'icc-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],

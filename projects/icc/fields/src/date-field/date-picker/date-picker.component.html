@@ -7,12 +7,15 @@
   >
   </icc-calendar>
 
-  <icc-layout-footer class="icc-date-bottom-bar">
-    <button icc-button status="primary" (click)="applyNewDates($event)">
-      <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
-    </button>
-    <button icc-button (click)="discardNewDates($event)">
-      <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
-    </button>
+  <icc-layout-footer>
+    <icc-layout-footer-start>Start</icc-layout-footer-start>
+    <icc-layout-footer-end>
+      <button icc-button status="primary" (click)="applyNewDates($event)">
+        <span translate>{{ "ICC.UI.ACTIONS.APPLY" }}</span>
+      </button>
+      <button icc-button (click)="discardNewDates($event)">
+        <span translate>{{ "ICC.UI.ACTIONS.CANCEL" }}</span>
+      </button>
+    </icc-layout-footer-end>
   </icc-layout-footer>
 </icc-layout>
