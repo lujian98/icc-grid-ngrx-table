@@ -1,4 +1,4 @@
-import { IccSelectFilter } from '../../filter/select_filter';
+import { IccSelectFilter } from '../../filter/select-filter';
 import { IccRansackFilter } from './filter';
 
 export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {

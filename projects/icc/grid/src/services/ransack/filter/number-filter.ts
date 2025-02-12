@@ -1,4 +1,4 @@
-import { IccNumberFilter, NumericFilterActions } from '../../filter/number_filter';
+import { IccNumberFilter, NumericFilterActions } from '../../filter/number-filter';
 import { IccRansackFilter } from './filter';
 
 export class IccRansackNumberFilter<T> extends IccRansackFilter<T> {

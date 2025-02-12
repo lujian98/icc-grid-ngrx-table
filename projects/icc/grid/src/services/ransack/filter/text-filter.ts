@@ -1,4 +1,4 @@
-import { IccTextFilter } from '../../filter/text_filter';
+import { IccTextFilter } from '../../filter/text-filter';
 import { IccRansackFilter } from './filter';
 
 export class IccRansackTextFilter<T> extends IccRansackFilter<T> {

@@ -7,8 +7,8 @@ import {
   IccGridData,
   IccSortField,
 } from '../models/grid-column.model';
-import { IccFilterFactory } from './filter/filter_factory';
-import { IccRansackFilterFactory } from './ransack/filter/filter_factory';
+import { IccFilterFactory } from './filter/filter-factory';
+import { IccRansackFilterFactory } from './ransack/filter/filter-factory';
 import { sortByField } from '@icc/ui/core';
 
 export interface IccInMemoryFilterValue {

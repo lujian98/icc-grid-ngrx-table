@@ -84,32 +84,18 @@ export interface IccColumnWidth {
   width: number;
 }
 
+export type IccFilterValueType = string | number | boolean | Date | string[] | number[] | object[] | null;
+
 export interface IccColumnFilter {
   name: string;
   //type: string;
-  value: string | number | boolean | string[] | number[] | object[];
+  value: IccFilterValueType;
 }
 
 export type IccFilterField = boolean | string;
 export type IccFilterFieldConfig = Partial<IccFormField>;
 
 /*
-Partial<IccTreeConfig>
-export enum FilterType {
-  Text = 'Text',
-  Number = 'Number',
-  Boolean = 'Boolean'
-}
-
-
-*/
-
-/*
-
-
-
-
-export type fieldType = 'text' | 'number' | 'select';
 
 export interface IccFieldType {
   type: fieldType;

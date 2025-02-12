@@ -11,7 +11,7 @@ import {
 import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
 
 @Component({
   template: '',
@@ -20,9 +20,9 @@ import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 })
 export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   changeDetectorRef = inject(ChangeDetectorRef);
-  filterChanged$ = new BehaviorSubject<string | null>(null);
+  filterChanged$ = new BehaviorSubject<IccFilterValueType>(null);
   private gridFacade = inject(IccGridFacade);
-  protected _value: string | string[] | object[] | null = '';
+  protected _value: IccFilterValueType = '';
   _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
 
@@ -45,11 +45,11 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
     return this._gridConfig;
   }
 
-  set value(val: string | string[] | object[] | null) {
+  set value(val: IccFilterValueType) {
     this._value = val;
   }
 
-  get value(): string | string[] | object[] | null {
+  get value(): IccFilterValueType {
     return this._value;
   }
 
@@ -66,7 +66,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
 
   checkField(): void {}
 
-  applyFilter<T>(filterValue: string | string[] | object[] | null): void {
+  applyFilter<T>(filterValue: IccFilterValueType): void {
     this.value = filterValue;
     let columnFilters = [...this.gridConfig.columnFilters];
 

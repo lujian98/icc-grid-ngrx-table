@@ -1,7 +1,7 @@
 import { IccColumnConfig } from '../../models/grid-column.model';
-import { IccNumberFilter } from './number_filter';
-import { IccTextFilter } from './text_filter';
-import { IccSelectFilter } from './select_filter';
+import { IccNumberFilter } from './number-filter';
+import { IccTextFilter } from './text-filter';
+import { IccSelectFilter } from './select-filter';
 
 export class IccFilterFactory {
   componentMapper: { [index: string]: any } = {};
