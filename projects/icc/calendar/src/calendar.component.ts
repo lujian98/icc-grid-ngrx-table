@@ -120,11 +120,11 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     }
   }
 
-  isSameMonth(date: Date, pDate: Date): boolean {
+  private isSameMonth(date: Date, pDate: Date): boolean {
     return date.getFullYear() === pDate.getFullYear() && date.getMonth() === pDate.getMonth();
   }
 
-  getFirstDay(date: Date): Date | null {
+  private getFirstDay(date: Date): Date | null {
     if (date) {
       return new Date(date.getFullYear(), date.getMonth(), 1);
     }
