@@ -32,8 +32,8 @@ export const ICC = {
       },
       PICKER: {
         FROM: 'From',
-        SELECT_DATE: 'Select a date',
-        SELECT_DATE_RANGE: 'Choose a date range',
+        SELECT_DATE: 'Select a Date',
+        SELECT_DATE_RANGE: 'Select Date Range',
         SELECTED_DATE: 'Selected Date',
         TO: 'To',
       },

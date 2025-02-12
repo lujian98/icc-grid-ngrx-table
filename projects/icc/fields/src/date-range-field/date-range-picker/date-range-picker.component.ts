@@ -19,9 +19,16 @@ import {
   IccLayoutFooterEndComponent,
   IccLayoutFooterStartComponent,
 } from '@icc/ui/layout';
+import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
-import { IccDateRangeFieldConfig, defaultDateRangeFieldConfig } from '../models/date-range-field.model';
+import {
+  IccDateRangeFieldConfig,
+  defaultDateRangeFieldConfig,
+  iccDefaultPresets,
+  presetSelectionConfig,
+  IccDatePresetItem,
+} from '../models/date-range-field.model';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
 @Component({
@@ -40,6 +47,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
     IccLayoutFooterEndComponent,
     IccLayoutFooterStartComponent,
     IccLayoutFooterCenterComponent,
+    IccSelectFieldComponent,
   ],
 })
 export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
@@ -82,9 +90,19 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     return this._fieldConfig;
   }
 
+  presetSelectionConfig = presetSelectionConfig;
+  presets: IccDatePresetItem[] = [];
+
   ngOnInit(): void {
     this.adapter.setLocale(this.translateService.currentLang);
     this.fromDate = this.rangeStoreService.fromDate;
+
+    this.presets = [...iccDefaultPresets].map((item) => {
+      return {
+        label: this.translateService.instant(item.label),
+        range: item.range,
+      };
+    });
   }
 
   ngAfterViewInit(): void {
@@ -175,16 +193,15 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     //this.fromMaxDate = new Date(date.getFullYear(), date.getMonth(), 0);
   }
 
-  /*
-  updateRangeByPreset(presetItem: IccDatePresetItem): void {
+  updateRangeByPreset(item: IccDatePresetItem): void {
     this.fromDate = null;
     this.toDate = null;
-    this.updateFromDate(presetItem.range?.fromDate ? presetItem.range.fromDate : null);
+    this.updateFromDate(item.range.fromDate ? item.range.fromDate : null);
 
-    //setTimeout(() => {
-    // this.updateToDate(presetItem.range?.toDate ? presetItem.range.toDate : null);
-    //}, 50);
-  }*/
+    setTimeout(() => {
+      this.updateToDate(item.range.toDate ? item.range.toDate : null);
+    }, 50);
+  }
 
   applyNewDates(e: MouseEvent): void {
     if (this.fromDate && !this.toDate) {

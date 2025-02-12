@@ -23,7 +23,14 @@
 
   <icc-layout-footer>
     <icc-layout-footer-start></icc-layout-footer-start>
-    <icc-layout-footer-center>Middle</icc-layout-footer-center>
+    <icc-layout-footer-center>
+      <icc-select-field
+        [fieldConfig]="presetSelectionConfig"
+        [options]="presets"
+        [showFieldEditIndicator]="false"
+        (selectionChange)="updateRangeByPreset($event)"
+      ></icc-select-field>
+    </icc-layout-footer-center>
 
     <icc-layout-footer-end>
       <button icc-button status="primary" (click)="applyNewDates($event)">
