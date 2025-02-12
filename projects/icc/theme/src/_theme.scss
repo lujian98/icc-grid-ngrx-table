@@ -14,10 +14,12 @@
   @include icc.icc-accordion-theme();
   @include icc.icc-option-theme();
   @include icc.icc-form-field-theme();
+  @include icc.icc-fields-theme();
   @include icc.icc-checkbox-theme();
   @include icc.icc-radio-theme();
   @include icc.icc-button-theme();
   @include icc.icc-resize-directive-theme();
   @include icc.icc-dashboard-theme();
   @include icc.icc-calendar-theme();
+  @include icc.icc-window-theme();
 }
