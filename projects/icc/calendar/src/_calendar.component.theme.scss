@@ -1,11 +1,6 @@
 @use "../../theme/src/icc";
 
 @mixin icc-calendar-theme() {
-  icc-date-range-picker,
-  icc-date-picker {
-    background-color: icc.icc-theme(icc-header-background-color);
-  }
-
   icc-calendar,
   icc-date-field,
   icc-date-range-field,
@@ -43,6 +38,8 @@
   }
 
   icc-calendar {
+    background-color: icc.icc-theme(background-basic-color);
+
     .mat-calendar-body-selected {
       background-color: blue;
     }
