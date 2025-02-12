@@ -91,10 +91,10 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   private dialogService = inject(IccDialogService);
   private injector = inject(Injector);
   private dateStoreService = inject(IccDateStoreService);
-
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDateFieldConfig;
   private _value!: Date | string;
+
   @Input() form!: FormGroup;
 
   @Input()

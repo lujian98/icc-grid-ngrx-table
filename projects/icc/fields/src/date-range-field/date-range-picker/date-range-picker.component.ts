@@ -35,7 +35,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
   selector: 'icc-date-range-picker',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // use Default to sync calendar
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [
     CommonModule,
@@ -56,6 +56,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   private translateService = inject(TranslateService);
   private rangeStoreService = inject(IccDateRangeStoreService);
   private adapter = inject(DateAdapter<Date>);
+  private _fieldConfig!: IccDateRangeFieldConfig;
 
   fromCalendarConfig!: Partial<IccCalendarConfig>;
   toCalendarConfig!: Partial<IccCalendarConfig>;
@@ -64,7 +65,6 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   selectedRangeDates: Array<Date> = [];
   shouldAnimate: string = 'enter'; // 'enter' : 'noop';
 
-  private _fieldConfig!: IccDateRangeFieldConfig;
   @Input()
   set fieldConfig(fieldConfig: IccDateRangeFieldConfig) {
     this._fieldConfig = fieldConfig;

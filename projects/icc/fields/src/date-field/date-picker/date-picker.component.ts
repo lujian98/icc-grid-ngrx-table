@@ -44,12 +44,12 @@ export class IccDatePickerComponent implements OnInit {
   private translateService = inject(TranslateService);
   private dateStoreService = inject(IccDateStoreService);
   private adapter = inject(DateAdapter<Date>);
+  private _fieldConfig!: IccDateFieldConfig;
 
   calendarConfig!: Partial<IccCalendarConfig>;
   selectedDate!: Date | null;
   shouldAnimate: string = 'enter'; //  'enter' : 'noop';
 
-  private _fieldConfig!: IccDateFieldConfig;
   @Input()
   set fieldConfig(fieldConfig: IccDateFieldConfig) {
     this._fieldConfig = fieldConfig;
