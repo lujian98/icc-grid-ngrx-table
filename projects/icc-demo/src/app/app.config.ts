@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(TranslateModule.forRoot({ defaultLanguage: 'en-US', extend: true })),
     //importProvidersFrom(InMemoryWebApiModule.forRoot(InMemoryService, { delay: 1000 })),
     importProvidersFrom(IccI18nModule.forRoot()),
-    importProvidersFrom(IccThemeModule.forRoot({ name: 'light' })),
+    importProvidersFrom(IccThemeModule.forRoot({ name: 'dark' })),
     importProvidersFrom(IccOverlayModule.forRoot()),
     importProvidersFrom(IccUiModulesModule),
   ],
