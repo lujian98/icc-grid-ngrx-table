@@ -49,7 +49,7 @@ export class IccInkBar {
 }
 
 @Directive()
-export abstract class InkBarItem implements OnInit, OnDestroy {
+export abstract class IccInkBarItemDirective implements OnInit, OnDestroy {
   private _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private _inkBarElement!: HTMLElement | null;
   private _inkBarContentElement!: HTMLElement | null;

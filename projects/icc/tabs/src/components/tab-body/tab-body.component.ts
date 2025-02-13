@@ -24,8 +24,8 @@ import { Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
 @Directive({ selector: '[iccTabBodyHost]' })
-export class IccTabBodyPortal extends CdkPortalOutlet implements OnInit, OnDestroy {
-  private _host = inject(IccTabBody);
+export class IccTabBodyPortalDirective extends CdkPortalOutlet implements OnInit, OnDestroy {
+  private _host = inject(IccTabBodyComponent);
   private _centeringSub = Subscription.EMPTY;
   private _leavingSub = Subscription.EMPTY;
 
@@ -88,15 +88,15 @@ export type IccTabBodyOriginState = 'left' | 'right';
 
 @Component({
   selector: 'icc-tab-body',
-  templateUrl: 'tab-body.html',
+  templateUrl: 'tab-body.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'icc-mdc-tab-body',
     '[attr.inert]': '_position === "center" ? null : ""',
   },
-  imports: [IccTabBodyPortal, CdkScrollable],
+  imports: [IccTabBodyPortalDirective, CdkScrollable],
 })
-export class IccTabBody implements OnInit, OnDestroy {
+export class IccTabBodyComponent implements OnInit, OnDestroy {
   private _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private _dir = inject(Directionality, { optional: true });
   private _ngZone = inject(NgZone);
@@ -115,7 +115,7 @@ export class IccTabBody implements OnInit, OnDestroy {
   @Output() readonly _beforeCentering: EventEmitter<boolean> = new EventEmitter<boolean>();
   readonly _afterLeavingCenter: EventEmitter<void> = new EventEmitter<void>();
   @Output() readonly _onCentered: EventEmitter<void> = new EventEmitter<void>(true);
-  @ViewChild(IccTabBodyPortal) _portalHost!: IccTabBodyPortal;
+  @ViewChild(IccTabBodyPortalDirective) _portalHost!: IccTabBodyPortalDirective;
   @ViewChild('content') _contentElement: ElementRef<HTMLElement> | undefined;
   @Input('content') _content!: TemplatePortal;
   @Input() animationDuration: string = '500ms';

@@ -14,8 +14,8 @@ import {
   booleanAttribute,
   inject,
 } from '@angular/core';
-import { IccTabContent } from './tab-content';
-import { ICC_TAB, IccTabLabel } from './tab-label';
+import { IccTabContentDirective } from '../../directives/tab-content.directive';
+import { ICC_TAB, IccTabLabelDirective } from '../../directives/tab-label.directive';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Subject } from 'rxjs';
 
@@ -23,31 +23,31 @@ export const ICC_TAB_GROUP = new InjectionToken<any>('ICC_TAB_GROUP');
 
 @Component({
   selector: 'icc-tab',
-  templateUrl: 'tab.html',
+  templateUrl: 'tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'iccTab',
-  providers: [{ provide: ICC_TAB, useExisting: IccTab }],
+  providers: [{ provide: ICC_TAB, useExisting: IccTabComponent }],
   host: {
     hidden: '',
   },
 })
-export class IccTab implements OnInit, OnChanges, OnDestroy {
+export class IccTabComponent implements OnInit, OnChanges, OnDestroy {
   private _viewContainerRef = inject(ViewContainerRef);
   _closestTabGroup = inject(ICC_TAB_GROUP, { optional: true });
 
   @Input({ transform: booleanAttribute })
   disabled: boolean = false;
 
-  @ContentChild(IccTabLabel)
-  get templateLabel(): IccTabLabel {
+  @ContentChild(IccTabLabelDirective)
+  get templateLabel(): IccTabLabelDirective {
     return this._templateLabel;
   }
-  set templateLabel(value: IccTabLabel) {
+  set templateLabel(value: IccTabLabelDirective) {
     this._setTemplateLabelInput(value);
   }
-  private _templateLabel!: IccTabLabel;
+  private _templateLabel!: IccTabLabelDirective;
 
-  @ContentChild(IccTabContent, { read: TemplateRef, static: true })
+  @ContentChild(IccTabContentDirective, { read: TemplateRef, static: true })
   private _explicitContent: TemplateRef<any> = undefined!;
 
   @ViewChild(TemplateRef, { static: true }) _implicitContent!: TemplateRef<any>;
@@ -86,7 +86,7 @@ export class IccTab implements OnInit, OnChanges, OnDestroy {
     this._contentPortal = new TemplatePortal(this._explicitContent || this._implicitContent, this._viewContainerRef);
   }
 
-  private _setTemplateLabelInput(value: IccTabLabel | undefined) {
+  private _setTemplateLabelInput(value: IccTabLabelDirective | undefined) {
     if (value && value._closestTab === this) {
       this._templateLabel = value;
     }

@@ -11,14 +11,14 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
-import { IccTabLabelWrapper } from './tab-label-wrapper';
-import { IccInkBar } from './ink-bar';
-import { IccPaginatedTabHeader } from './paginated-tab-header';
+import { IccTabLabelWrapperDirective } from '../../directives/tab-label-wrapper.directive';
+import { IccInkBar } from '../../directives/ink-bar.directive';
+import { IccPaginatedTabHeaderDirective } from '../../directives/paginated-tab-header.directive';
 import { CdkObserveContent } from '@angular/cdk/observers';
 
 @Component({
   selector: 'icc-tab-header',
-  templateUrl: 'tab-header.html',
+  templateUrl: 'tab-header.component.html',
   //styleUrls: ['./tab-header.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -28,11 +28,11 @@ import { CdkObserveContent } from '@angular/cdk/observers';
   },
   imports: [CdkObserveContent],
 })
-export class IccTabHeader
-  extends IccPaginatedTabHeader
+export class IccTabHeaderComponent
+  extends IccPaginatedTabHeaderDirective
   implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy
 {
-  @ContentChildren(IccTabLabelWrapper, { descendants: false }) _items!: QueryList<IccTabLabelWrapper>;
+  @ContentChildren(IccTabLabelWrapperDirective, { descendants: false }) _items!: QueryList<IccTabLabelWrapperDirective>;
   @ViewChild('tabListContainer', { static: true }) _tabListContainer!: ElementRef;
   @ViewChild('tabList', { static: true }) _tabList!: ElementRef;
   @ViewChild('tabListInner', { static: true }) _tabListInner!: ElementRef;

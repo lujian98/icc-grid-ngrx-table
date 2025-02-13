@@ -37,7 +37,9 @@ const HEADER_SCROLL_INTERVAL = 100;
 export type IccPaginatedTabHeaderItem = FocusableOption & { elementRef: ElementRef };
 
 @Directive()
-export abstract class IccPaginatedTabHeader implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy {
+export abstract class IccPaginatedTabHeaderDirective
+  implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy
+{
   protected _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   protected _changeDetectorRef = inject(ChangeDetectorRef);
   private _viewportRuler = inject(ViewportRuler);

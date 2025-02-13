@@ -1,7 +1,5 @@
 import { Directive, ElementRef, Input, booleanAttribute, inject } from '@angular/core';
-import { InkBarItem } from './ink-bar';
-
-// used in tab-groups.ts and tab-header.ts
+import { IccInkBarItemDirective } from './ink-bar.directive';
 
 @Directive({
   selector: '[iccTabLabelWrapper]',
@@ -10,7 +8,7 @@ import { InkBarItem } from './ink-bar';
     '[attr.aria-disabled]': '!!disabled',
   },
 })
-export class IccTabLabelWrapper extends InkBarItem {
+export class IccTabLabelWrapperDirective extends IccInkBarItemDirective {
   elementRef = inject(ElementRef);
 
   @Input({ transform: booleanAttribute })

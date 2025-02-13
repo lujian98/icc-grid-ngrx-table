@@ -20,15 +20,15 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { ICC_TAB_GROUP, IccTab } from './tab';
-import { IccTabHeader } from './tab-header';
+import { ICC_TAB_GROUP, IccTabComponent } from '../tab/tab.component';
+import { IccTabHeaderComponent } from '../tab-header/tab-header.component';
 import { merge, Subscription } from 'rxjs';
-import { ICC_TABS_CONFIG, IccTabsConfig } from './tab-config';
+import { ICC_TAB_GROUP_CONFIG, IccTabGroupConfig } from '../../models/tab-group.model';
 import { startWith } from 'rxjs/operators';
 import { _IdGenerator, CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
-import { IccTabBody } from './tab-body';
+import { IccTabBodyComponent } from '../tab-body/tab-body.component';
 import { CdkPortalOutlet } from '@angular/cdk/portal';
-import { IccTabLabelWrapper } from './tab-label-wrapper';
+import { IccTabLabelWrapperDirective } from '../../directives/tab-label-wrapper.directive';
 import { Platform } from '@angular/cdk/platform';
 
 export interface IccTabGroupBaseHeader {
@@ -42,12 +42,12 @@ export type IccTabHeaderPosition = 'above' | 'below';
 @Component({
   selector: 'icc-tab-group',
   exportAs: 'iccTabGroup',
-  templateUrl: 'tab-group.html',
+  templateUrl: 'tab-group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: ICC_TAB_GROUP,
-      useExisting: IccTabGroup,
+      useExisting: IccTabGroupComponent,
     },
   ],
   host: {
@@ -59,9 +59,9 @@ export type IccTabHeaderPosition = 'above' | 'below';
     '[attr.mat-align-tabs]': 'alignTabs',
     '[style.--mat-tab-animation-duration]': 'animationDuration',
   },
-  imports: [IccTabHeader, IccTabLabelWrapper, CdkMonitorFocus, CdkPortalOutlet, IccTabBody],
+  imports: [IccTabHeaderComponent, IccTabLabelWrapperDirective, CdkMonitorFocus, CdkPortalOutlet, IccTabBodyComponent],
 })
-export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy {
+export class IccTabGroupComponent implements AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy {
   readonly _elementRef = inject(ElementRef);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _ngZone = inject(NgZone);
@@ -71,12 +71,12 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
 
   _animationMode = inject(ANIMATION_MODULE_TYPE, { optional: true });
 
-  @ContentChildren(IccTab, { descendants: true }) _allTabs!: QueryList<IccTab>;
-  @ViewChildren(IccTabBody) _tabBodies: QueryList<IccTabBody> | undefined;
+  @ContentChildren(IccTabComponent, { descendants: true }) _allTabs!: QueryList<IccTabComponent>;
+  @ViewChildren(IccTabBodyComponent) _tabBodies: QueryList<IccTabBodyComponent> | undefined;
   @ViewChild('tabBodyWrapper') _tabBodyWrapper!: ElementRef;
-  @ViewChild('tabHeader') _tabHeader!: IccTabHeader;
+  @ViewChild('tabHeader') _tabHeader!: IccTabHeaderComponent;
 
-  _tabs: QueryList<IccTab> = new QueryList<IccTab>();
+  _tabs: QueryList<IccTabComponent> = new QueryList<IccTabComponent>();
   private _indexToSelect: number | null = 0;
   private _lastFocusedTabIndex: number | null = null;
   private _tabBodyWrapperHeight: number = 0;
@@ -146,7 +146,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   constructor(...args: unknown[]);
 
   constructor() {
-    const defaultConfig = inject<IccTabsConfig>(ICC_TABS_CONFIG, { optional: true });
+    const defaultConfig = inject<IccTabGroupConfig>(ICC_TAB_GROUP_CONFIG, { optional: true });
 
     this._groupId = inject(_IdGenerator).getId('mat-tab-group-');
     this.animationDuration =
@@ -185,7 +185,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
       });
     }
 
-    this._tabs.forEach((tab: IccTab, index: number) => {
+    this._tabs.forEach((tab: IccTabComponent, index: number) => {
       tab.position = index - indexToSelect;
       if (this._selectedIndex != null && tab.position == 0 && !tab.origin) {
         tab.origin = indexToSelect - this._selectedIndex;
@@ -207,7 +207,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
       const indexToSelect = this._clampTabIndex(this._indexToSelect);
       if (indexToSelect === this._selectedIndex) {
         const tabs = this._tabs.toArray();
-        let selectedTab: IccTab | undefined;
+        let selectedTab: IccTabComponent | undefined;
 
         for (let i = 0; i < tabs.length; i++) {
           if (tabs[i].isActive) {
@@ -235,7 +235,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   }
 
   private _subscribeToAllTabChanges() {
-    this._allTabs.changes.pipe(startWith(this._allTabs)).subscribe((tabs: QueryList<IccTab>) => {
+    this._allTabs.changes.pipe(startWith(this._allTabs)).subscribe((tabs: QueryList<IccTabComponent>) => {
       this._tabs.reset(
         tabs.filter((tab) => {
           return tab._closestTabGroup === this || !tab._closestTabGroup;
@@ -329,7 +329,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this._ngZone.run(() => this.animationDone.emit());
   }
 
-  _handleClick(tab: IccTab, tabHeader: IccTabGroupBaseHeader, index: number) {
+  _handleClick(tab: IccTabComponent, tabHeader: IccTabGroupBaseHeader, index: number) {
     tabHeader.focusIndex = index;
 
     if (!tab.disabled) {
@@ -357,5 +357,5 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
 
 export class IccTabChangeEvent {
   index!: number;
-  tab!: IccTab;
+  tab!: IccTabComponent;
 }

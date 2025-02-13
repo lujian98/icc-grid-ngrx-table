@@ -1,7 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-// used in tab-groups.ts
-export interface IccTabsConfig {
+export interface IccTabGroupConfig {
   animationDuration?: string;
   disablePagination?: boolean;
   fitInkBarToContent?: boolean;
@@ -11,4 +10,5 @@ export interface IccTabsConfig {
   stretchTabs?: boolean;
   alignTabs?: 'start' | 'center' | 'end';
 }
-export const ICC_TABS_CONFIG = new InjectionToken<IccTabsConfig>('ICC_TABS_CONFIG');
+
+export const ICC_TAB_GROUP_CONFIG = new InjectionToken<IccTabGroupConfig>('ICC_TAB_GROUP_CONFIG');

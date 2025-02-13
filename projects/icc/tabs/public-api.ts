@@ -1,2 +1,2 @@
-export * from './src/mat/tab';
-export * from './src/mat/tab-group';
+export * from './src/components/tab/tab.component';
+export * from './src/components/tab-group/tab-group.component';
