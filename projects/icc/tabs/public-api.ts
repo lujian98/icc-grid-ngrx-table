@@ -1,2 +1,2 @@
-export * from './src/tab';
-export * from './src/tab-group';
+export * from './src/mat/tab';
+export * from './src/mat/tab-group';
