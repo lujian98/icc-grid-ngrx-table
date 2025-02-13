@@ -1,0 +1,19 @@
+<icc-tab-group
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="drop($event)"
+  cdkDropListElementContainer=".icc-mdc-tab-labels"
+  class="icc-drag-tabs"
+  [selectedIndex]="selectedTabIndex"
+  animationDuration="0"
+>
+  @for (tab of tabs; track $index) {
+    <icc-tab>
+      <ng-template icc-tab-label>
+        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab">{{ tab }}</span>
+      </ng-template>
+
+      <h3>Content for {{ tab }}</h3>
+    </icc-tab>
+  }
+</icc-tab-group>
