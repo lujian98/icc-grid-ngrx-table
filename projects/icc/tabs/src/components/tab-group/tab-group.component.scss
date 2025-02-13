@@ -1,4 +1,12 @@
 :host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .icc-mdc-tab-body-wrapper {
+    height: 100%;
+    border: 1px solid orangered;
+  }
   .icc-mdc-tab {
     padding: 0 10px;
   }
