@@ -1,6 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { IccPortalComponent } from '@icc/ui/portal';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
@@ -19,6 +20,7 @@ import { IccTabConfig } from './models/tabs.model';
     IccTabLabelDirective,
     IccTabComponent,
     IccTabGroupComponent,
+    IccPortalComponent,
   ],
 })
 export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {

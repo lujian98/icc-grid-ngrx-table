@@ -13,22 +13,28 @@ export class AppSimpleTabsComponent {
   tabs = [
     {
       name: 'one',
+      content: 'test1',
     },
     {
       name: 'two',
       title: 'Two',
+      content: 'test2',
     },
     {
       name: 'three',
+      content: 'test3',
     },
     {
       name: 'four',
+      content: 'test4',
     },
     {
       name: 'five',
+      content: 'test5',
     },
     {
       name: 'six',
+      //content: 'test6',
     },
   ];
 }

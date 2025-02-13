@@ -15,8 +15,7 @@
           getTabLabel(tab)
         }}</span>
       </ng-template>
-
-      <span>Content for {{ tab.name }}</span>
+      <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
     </icc-tab>
   }
 </icc-tab-group>
