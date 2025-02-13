@@ -36,7 +36,7 @@ import { CdkObserveContent } from '@angular/cdk/observers';
 @Component({
   selector: 'mat-tab-header',
   templateUrl: 'tab-header.html',
-  styleUrls: ['./tab-header.scss'],
+  //styleUrls: ['./tab-header.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'mat-mdc-tab-header',
