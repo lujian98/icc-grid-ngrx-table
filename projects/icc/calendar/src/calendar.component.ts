@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -11,7 +10,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  inject,
 } from '@angular/core';
 import { MatCalendar, MatCalendarCellCssClasses, MatCalendarUserEvent } from '@angular/material/datepicker';
 import { IccLocaleDatePipe } from '@icc/ui/core';
@@ -19,15 +17,15 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.model';
 
+//need ChangeDetectionStrategy.Default for date range click, changeDetectorRef is not enough
 @Component({
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default, // need default for the date range click
+  changeDetection: ChangeDetectionStrategy.Default,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
   private _selectedRangeDates: Array<Date> = [];
@@ -67,11 +65,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
-    /*
-    timer(10)
-      .pipe(take(1))
-      .subscribe(() => this.changeDetectorRef.detectChanges());
-    this.changeDetectorRef.detectChanges();*/
   }
   get selectedRangeDates(): Array<Date> {
     return this._selectedRangeDates;
