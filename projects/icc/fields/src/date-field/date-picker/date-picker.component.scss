@@ -9,5 +9,8 @@
 
   icc-layout-footer-start {
     width: 180px;
+    ::ng-deep .icc-form-field-container {
+      background-color: unset;
+    }
   }
 }

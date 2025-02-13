@@ -13,5 +13,8 @@
 
   icc-layout-footer-center {
     width: 240px;
+    ::ng-deep .icc-form-field-container {
+      background-color: unset;
+    }
   }
 }

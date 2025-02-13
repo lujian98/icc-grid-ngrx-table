@@ -33,7 +33,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   private _selectedRangeDates: Array<Date> = [];
   private _selectedDate: Date | null = null;
 
-  currentMonth: Date | null = this.getFirstDay(new Date());
+  currentMonth!: Date | null;
   minDate!: Date | null;
   maxDate!: Date | null;
   weekendFilter = (d: Date) => true;
@@ -67,6 +67,9 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
+    timer(10)
+      .pipe(take(1))
+      .subscribe(() => this.changeDetectorRef.detectChanges());
     this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
@@ -76,6 +79,10 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
   @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() readonly monthViewChange: EventEmitter<Date> = new EventEmitter<Date>();
+
+  constructor() {
+    this.currentMonth = this.getFirstDay(new Date());
+  }
 
   ngAfterViewInit(): void {
     if (this.matCalendar) {

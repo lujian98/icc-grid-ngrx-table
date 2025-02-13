@@ -1,8 +1,0 @@
-@use "../../theme/src/icc";
-
-@mixin icc-fields-theme() {
-  icc-date-picker,
-  icc-date-range-picker {
-    border: solid 1px icc.icc-theme(app-border-basic-color);
-  }
-}

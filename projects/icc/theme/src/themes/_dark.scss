@@ -3,7 +3,7 @@
 $theme: (
   --app-background-color: hsl(0, 0%, 0%),
   app-border-basic-color: #4b4f54,
-  background-basic-color: #282828,
+  //background-basic-color: #282828,
   app-text-basic-color: #adadad,
   color-basic-default: #4b4f54,
   color-basic-transparent-default: #f6f1ed,
@@ -54,18 +54,12 @@ $theme: (
   checkmark-background-color: transparent,
   checkmark-checked-background-color: transparent,
 
-  calendar-panel-background-color: #191919,
-  calendar-weekdays-text-color: #757575,
-
-  calendar-month-day-text-color: #adadad,
-  calendar-month-today-border-color: #adadad,
-  calendar-month-day-selected-text-color: #4b4f54,
-  calendar-month-day-selected-background-color: #f18a20,
-  calendar-month-day-hover-text-color: #adadad,
-  calendar-month-day-hover-background-color: #4b4f54,
-
-  calendar-month-header-background-color: #4b4f54,
-  calendar-month-header-text-color: #adadad,
+  calendar-panel-background-color: #353535,
+  calendar-date-range-dates-color: #1f1f1f,
+  calendar-date-range-dates-background-color: #f6f1ed,
+  calendar-date-selected-background-color: #f8c48f,
+  calendar-today-background-color: orangered,
+  calendar-date-hover-background-color: lightgreen,
 
   radio-background-color: #353535,
   radio-border-color: #adadad,
