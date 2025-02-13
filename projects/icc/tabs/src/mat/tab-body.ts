@@ -36,9 +36,9 @@ import { startWith } from 'rxjs/operators';
  * The portal host directive for the contents of the tab.
  * @docs-private
  */
-@Directive({ selector: '[matTabBodyHost]' })
-export class MatTabBodyPortal extends CdkPortalOutlet implements OnInit, OnDestroy {
-  private _host = inject(MatTabBody);
+@Directive({ selector: '[iccTabBodyHost]' })
+export class IccTabBodyPortal extends CdkPortalOutlet implements OnInit, OnDestroy {
+  private _host = inject(IccTabBody);
 
   /** Subscription to events for when the tab body begins centering. */
   private _centeringSub = Subscription.EMPTY;
@@ -91,7 +91,7 @@ export class MatTabBodyPortal extends CdkPortalOutlet implements OnInit, OnDestr
  * @deprecated Will stop being exported.
  * @breaking-change 21.0.0
  */
-export type MatTabBodyPositionState = 'left' | 'center' | 'right';
+export type IccTabBodyPositionState = 'left' | 'center' | 'right';
 
 /**
  * The origin state is an internally used state that is set on a new tab body indicating if it
@@ -102,30 +102,30 @@ export type MatTabBodyPositionState = 'left' | 'center' | 'right';
  * @deprecated No longer being used. Will be removed.
  * @breaking-change 21.0.0
  */
-export type MatTabBodyOriginState = 'left' | 'right';
+export type IccTabBodyOriginState = 'left' | 'right';
 
 /**
  * Wrapper for the contents of a tab.
  * @docs-private
  */
 @Component({
-  selector: 'mat-tab-body',
+  selector: 'icc-tab-body',
   templateUrl: 'tab-body.html',
   //styleUrl: 'tab-body.css',
   //encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:validate-decorators
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'mat-mdc-tab-body',
+    class: 'icc-mdc-tab-body',
     // In most cases the `visibility: hidden` that we set on the off-screen content is enough
     // to stop interactions with it, but if a child element sets its own `visibility`, it'll
     // override the one from the parent. This ensures that even those elements will be removed
     // from the accessibility tree.
     '[attr.inert]': '_position === "center" ? null : ""',
   },
-  imports: [MatTabBodyPortal, CdkScrollable],
+  imports: [IccTabBodyPortal, CdkScrollable],
 })
-export class MatTabBody implements OnInit, OnDestroy {
+export class IccTabBody implements OnInit, OnDestroy {
   private _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private _dir = inject(Directionality, { optional: true });
   private _ngZone = inject(NgZone);
@@ -143,10 +143,10 @@ export class MatTabBody implements OnInit, OnDestroy {
   private _dirChangeSubscription = Subscription.EMPTY;
 
   /** Current position of the body within the tab group. */
-  _position!: MatTabBodyPositionState;
+  _position!: IccTabBodyPositionState;
 
   /** Previous position of the body. */
-  protected _previousPosition: MatTabBodyPositionState | undefined;
+  protected _previousPosition: IccTabBodyPositionState | undefined;
 
   /** Event emitted when the tab begins to animate towards the center as the active tab. */
   @Output() readonly _onCentering: EventEmitter<number> = new EventEmitter<number>();
@@ -161,7 +161,7 @@ export class MatTabBody implements OnInit, OnDestroy {
   @Output() readonly _onCentered: EventEmitter<void> = new EventEmitter<void>(true);
 
   /** The portal host inside of this container into which the tab body content will be loaded. */
-  @ViewChild(MatTabBodyPortal) _portalHost!: MatTabBodyPortal;
+  @ViewChild(IccTabBodyPortal) _portalHost!: IccTabBodyPortal;
 
   /** Element in which the content is rendered. */
   @ViewChild('content') _contentElement: ElementRef<HTMLElement> | undefined;

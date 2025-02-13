@@ -22,7 +22,7 @@ import {
  * Item inside a tab header relative to which the ink bar can be aligned.
  * @docs-private
  */
-export interface MatInkBarItem extends OnInit, OnDestroy {
+export interface IccInkBarItem extends OnInit, OnDestroy {
   elementRef: ElementRef<HTMLElement>;
   activateInkBar(previousIndicatorClientRect?: DOMRect): void;
   deactivateInkBar(): void;
@@ -39,11 +39,11 @@ const NO_TRANSITION_CLASS = 'mdc-tab-indicator--no-transition';
  * Abstraction around the MDC tab indicator that acts as the tab header's ink bar.
  * @docs-private
  */
-export class MatInkBar {
+export class IccInkBar {
   /** Item to which the ink bar is aligned currently. */
-  private _currentItem: MatInkBarItem | undefined;
+  private _currentItem: IccInkBarItem | undefined;
 
-  constructor(private _items: QueryList<MatInkBarItem>) {}
+  constructor(private _items: QueryList<IccInkBarItem>) {}
 
   /** Hides the ink bar. */
   hide() {
@@ -179,7 +179,7 @@ export abstract class InkBarItem implements OnInit, OnDestroy {
  * Interface for a MatInkBar positioner method, defining the positioning and width of the ink
  * bar in a set of tabs.
  */
-export interface _MatInkBarPositioner {
+export interface _IccInkBarPositioner {
   (element: HTMLElement): { left: string; width: string };
 }
 
@@ -187,7 +187,7 @@ export interface _MatInkBarPositioner {
  * The default positioner function for the MatInkBar.
  * @docs-private
  */
-export function _MAT_INK_BAR_POSITIONER_FACTORY(): _MatInkBarPositioner {
+export function _ICC_INK_BAR_POSITIONER_FACTORY(): _IccInkBarPositioner {
   const method = (element: HTMLElement) => ({
     left: element ? (element.offsetLeft || 0) + 'px' : '0',
     width: element ? (element.offsetWidth || 0) + 'px' : '0',
@@ -196,8 +196,8 @@ export function _MAT_INK_BAR_POSITIONER_FACTORY(): _MatInkBarPositioner {
   return method;
 }
 
-/** Injection token for the MatInkBar's Positioner. */
-export const _MAT_INK_BAR_POSITIONER = new InjectionToken<_MatInkBarPositioner>('MatInkBarPositioner', {
+/** Injection token for the IccInkBar's Positioner. */
+export const _ICC_INK_BAR_POSITIONER = new InjectionToken<_IccInkBarPositioner>('IccInkBarPositioner', {
   providedIn: 'root',
-  factory: _MAT_INK_BAR_POSITIONER_FACTORY,
+  factory: _ICC_INK_BAR_POSITIONER_FACTORY,
 });

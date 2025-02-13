@@ -21,9 +21,9 @@ import {
   ViewEncapsulation,
   booleanAttribute,
 } from '@angular/core';
-import { MatTabLabelWrapper } from './tab-label-wrapper';
-import { MatInkBar } from './ink-bar';
-import { MatPaginatedTabHeader } from './paginated-tab-header';
+import { IccTabLabelWrapper } from './tab-label-wrapper';
+import { IccInkBar } from './ink-bar';
+import { IccPaginatedTabHeader } from './paginated-tab-header';
 import { CdkObserveContent } from '@angular/cdk/observers';
 
 /**
@@ -34,7 +34,7 @@ import { CdkObserveContent } from '@angular/cdk/observers';
  * @docs-private
  */
 @Component({
-  selector: 'mat-tab-header',
+  selector: 'icc-tab-header',
   templateUrl: 'tab-header.html',
   //styleUrls: ['./tab-header.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,17 +45,17 @@ import { CdkObserveContent } from '@angular/cdk/observers';
   },
   imports: [CdkObserveContent],
 })
-export class MatTabHeader
-  extends MatPaginatedTabHeader
+export class IccTabHeader
+  extends IccPaginatedTabHeader
   implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy
 {
-  @ContentChildren(MatTabLabelWrapper, { descendants: false }) _items!: QueryList<MatTabLabelWrapper>;
+  @ContentChildren(IccTabLabelWrapper, { descendants: false }) _items!: QueryList<IccTabLabelWrapper>;
   @ViewChild('tabListContainer', { static: true }) _tabListContainer!: ElementRef;
   @ViewChild('tabList', { static: true }) _tabList!: ElementRef;
   @ViewChild('tabListInner', { static: true }) _tabListInner!: ElementRef;
   @ViewChild('nextPaginator') _nextPaginator!: ElementRef<HTMLElement>;
   @ViewChild('previousPaginator') _previousPaginator!: ElementRef<HTMLElement>;
-  _inkBar!: MatInkBar;
+  _inkBar!: IccInkBar;
 
   /** Aria label of the header. */
   @Input('aria-label') ariaLabel!: string;
@@ -64,7 +64,7 @@ export class MatTabHeader
   @Input('aria-labelledby') ariaLabelledby!: string;
 
   override ngAfterContentInit() {
-    this._inkBar = new MatInkBar(this._items);
+    this._inkBar = new IccInkBar(this._items);
     super.ngAfterContentInit();
   }
 

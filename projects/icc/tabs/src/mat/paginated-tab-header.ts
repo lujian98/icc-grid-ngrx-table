@@ -61,14 +61,14 @@ const HEADER_SCROLL_DELAY = 650;
 const HEADER_SCROLL_INTERVAL = 100;
 
 /** Item inside a paginated tab header. */
-export type MatPaginatedTabHeaderItem = FocusableOption & { elementRef: ElementRef };
+export type IccPaginatedTabHeaderItem = FocusableOption & { elementRef: ElementRef };
 
 /**
  * Base class for a tab header that supported pagination.
  * @docs-private
  */
 @Directive()
-export abstract class MatPaginatedTabHeader implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy {
+export abstract class IccPaginatedTabHeader implements AfterContentChecked, AfterContentInit, AfterViewInit, OnDestroy {
   protected _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   protected _changeDetectorRef = inject(ChangeDetectorRef);
   private _viewportRuler = inject(ViewportRuler);
@@ -81,7 +81,7 @@ export abstract class MatPaginatedTabHeader implements AfterContentChecked, Afte
   _animationMode = inject(ANIMATION_MODULE_TYPE, { optional: true });
   private _eventCleanups: (() => void)[];
 
-  abstract _items: QueryList<MatPaginatedTabHeaderItem>;
+  abstract _items: QueryList<IccPaginatedTabHeaderItem>;
   abstract _inkBar: { hide: () => void; alignToElement: (element: HTMLElement) => void };
   abstract _tabListContainer: ElementRef<HTMLElement>;
   abstract _tabList: ElementRef<HTMLElement>;
@@ -117,7 +117,7 @@ export abstract class MatPaginatedTabHeader implements AfterContentChecked, Afte
   private _scrollDistanceChanged!: boolean;
 
   /** Used to manage focus between the tabs. */
-  private _keyManager!: FocusKeyManager<MatPaginatedTabHeaderItem>;
+  private _keyManager!: FocusKeyManager<IccPaginatedTabHeaderItem>;
 
   /** Cached text content of the header. */
   private _currentTextContent!: string;
@@ -209,7 +209,7 @@ export abstract class MatPaginatedTabHeader implements AfterContentChecked, Afte
       this._alignInkBarToSelectedTab();
     };
 
-    this._keyManager = new FocusKeyManager<MatPaginatedTabHeaderItem>(this._items)
+    this._keyManager = new FocusKeyManager<IccPaginatedTabHeaderItem>(this._items)
       .withHorizontalOrientation(this._getLayoutDirection())
       .withHomeAndEnd()
       .withWrap()
@@ -259,7 +259,7 @@ export abstract class MatPaginatedTabHeader implements AfterContentChecked, Afte
     return this._items.changes.pipe(
       startWith(this._items),
       switchMap(
-        (tabItems: QueryList<MatPaginatedTabHeaderItem>) =>
+        (tabItems: QueryList<IccPaginatedTabHeaderItem>) =>
           new Observable((observer: Observer<ResizeObserverEntry[]>) =>
             this._ngZone.runOutsideAngular(() => {
               const resizeObserver = new ResizeObserver((entries) => observer.next(entries));

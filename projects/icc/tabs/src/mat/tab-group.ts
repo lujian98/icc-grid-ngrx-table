@@ -29,26 +29,26 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { MAT_TAB_GROUP, MatTab } from './tab';
-import { MatTabHeader } from './tab-header';
+import { ICC_TAB_GROUP, IccTab } from './tab';
+import { IccTabHeader } from './tab-header';
 import { merge, Subscription } from 'rxjs';
-import { MAT_TABS_CONFIG, MatTabsConfig } from './tab-config';
+import { ICC_TABS_CONFIG, IccTabsConfig } from './tab-config';
 import { startWith } from 'rxjs/operators';
 import { _IdGenerator, CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
-import { MatTabBody } from './tab-body';
+import { IccTabBody } from './tab-body';
 import { CdkPortalOutlet } from '@angular/cdk/portal';
-import { MatTabLabelWrapper } from './tab-label-wrapper';
+import { IccTabLabelWrapper } from './tab-label-wrapper';
 import { Platform } from '@angular/cdk/platform';
 
 /** @docs-private */
-export interface MatTabGroupBaseHeader {
+export interface IccTabGroupBaseHeader {
   _alignInkBarToSelectedTab(): void;
   updatePagination(): void;
   focusIndex: number;
 }
 
 /** Possible positions for the tab header. */
-export type MatTabHeaderPosition = 'above' | 'below';
+export type IccTabHeaderPosition = 'above' | 'below';
 
 /**
  * Material design tab-group component. Supports basic tab pairs (label + content) and includes
@@ -56,14 +56,14 @@ export type MatTabHeaderPosition = 'above' | 'below';
  * See: https://material.io/design/components/tabs.html
  */
 @Component({
-  selector: 'mat-tab-group',
-  exportAs: 'matTabGroup',
+  selector: 'icc-tab-group',
+  exportAs: 'iccTabGroup',
   templateUrl: 'tab-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
-      provide: MAT_TAB_GROUP,
-      useExisting: MatTabGroup,
+      provide: ICC_TAB_GROUP,
+      useExisting: IccTabGroup,
     },
   ],
   host: {
@@ -75,9 +75,9 @@ export type MatTabHeaderPosition = 'above' | 'below';
     '[attr.mat-align-tabs]': 'alignTabs',
     '[style.--mat-tab-animation-duration]': 'animationDuration',
   },
-  imports: [MatTabHeader, MatTabLabelWrapper, CdkMonitorFocus, CdkPortalOutlet, MatTabBody],
+  imports: [IccTabHeader, IccTabLabelWrapper, CdkMonitorFocus, CdkPortalOutlet, IccTabBody],
 })
-export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy {
+export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy {
   readonly _elementRef = inject(ElementRef);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _ngZone = inject(NgZone);
@@ -91,13 +91,13 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
    * All tabs inside the tab group. This includes tabs that belong to groups that are nested
    * inside the current one. We filter out only the tabs that belong to this group in `_tabs`.
    */
-  @ContentChildren(MatTab, { descendants: true }) _allTabs!: QueryList<MatTab>;
-  @ViewChildren(MatTabBody) _tabBodies: QueryList<MatTabBody> | undefined;
+  @ContentChildren(IccTab, { descendants: true }) _allTabs!: QueryList<IccTab>;
+  @ViewChildren(IccTabBody) _tabBodies: QueryList<IccTabBody> | undefined;
   @ViewChild('tabBodyWrapper') _tabBodyWrapper!: ElementRef;
-  @ViewChild('tabHeader') _tabHeader!: MatTabHeader;
+  @ViewChild('tabHeader') _tabHeader!: IccTabHeader;
 
   /** All of the tabs that belong to the group. */
-  _tabs: QueryList<MatTab> = new QueryList<MatTab>();
+  _tabs: QueryList<IccTab> = new QueryList<IccTab>();
 
   /** The tab index that should be selected after the content has been checked. */
   private _indexToSelect: number | null = 0;
@@ -142,7 +142,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   private _selectedIndex: number | null = null;
 
   /** Position of the tab header. */
-  @Input() headerPosition: MatTabHeaderPosition = 'above';
+  @Input() headerPosition: IccTabHeaderPosition = 'above';
 
   /** Duration for the tab animation. Will be normalized to milliseconds if no units are set. */
   @Input()
@@ -197,13 +197,13 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   @Output() readonly selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
   /** Event emitted when focus has changed within a tab group. */
-  @Output() readonly focusChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
+  @Output() readonly focusChange: EventEmitter<IccTabChangeEvent> = new EventEmitter<IccTabChangeEvent>();
 
   /** Event emitted when the body animation has completed */
   @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
 
   /** Event emitted when the tab selection has changed. */
-  @Output() readonly selectedTabChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>(true);
+  @Output() readonly selectedTabChange: EventEmitter<IccTabChangeEvent> = new EventEmitter<IccTabChangeEvent>(true);
 
   private _groupId: string;
 
@@ -213,7 +213,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   constructor(...args: unknown[]);
 
   constructor() {
-    const defaultConfig = inject<MatTabsConfig>(MAT_TABS_CONFIG, { optional: true });
+    const defaultConfig = inject<IccTabsConfig>(ICC_TABS_CONFIG, { optional: true });
 
     this._groupId = inject(_IdGenerator).getId('mat-tab-group-');
     this.animationDuration =
@@ -270,7 +270,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     }
 
     // Setup the position for each tab and optionally setup an origin on the next selected tab.
-    this._tabs.forEach((tab: MatTab, index: number) => {
+    this._tabs.forEach((tab: IccTab, index: number) => {
       tab.position = index - indexToSelect;
 
       // If there is already a selected tab, then set up an origin for the next selected tab
@@ -300,7 +300,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
       // explicit change that selects a different tab.
       if (indexToSelect === this._selectedIndex) {
         const tabs = this._tabs.toArray();
-        let selectedTab: MatTab | undefined;
+        let selectedTab: IccTab | undefined;
 
         for (let i = 0; i < tabs.length; i++) {
           if (tabs[i].isActive) {
@@ -338,7 +338,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     // Since we use a query with `descendants: true` to pick up the tabs, we may end up catching
     // some that are inside of nested tab groups. We filter them out manually by checking that
     // the closest group to the tab is the current one.
-    this._allTabs.changes.pipe(startWith(this._allTabs)).subscribe((tabs: QueryList<MatTab>) => {
+    this._allTabs.changes.pipe(startWith(this._allTabs)).subscribe((tabs: QueryList<IccTab>) => {
       this._tabs.reset(
         tabs.filter((tab) => {
           return tab._closestTabGroup === this || !tab._closestTabGroup;
@@ -392,8 +392,8 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this.focusChange.emit(this._createChangeEvent(index));
   }
 
-  private _createChangeEvent(index: number): MatTabChangeEvent {
-    const event = new MatTabChangeEvent();
+  private _createChangeEvent(index: number): IccTabChangeEvent {
+    const event = new IccTabChangeEvent();
     event.index = index;
     if (this._tabs && this._tabs.length) {
       event.tab = this._tabs.toArray()[index];
@@ -465,7 +465,7 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   }
 
   /** Handle click events, setting new selected index if appropriate. */
-  _handleClick(tab: MatTab, tabHeader: MatTabGroupBaseHeader, index: number) {
+  _handleClick(tab: IccTab, tabHeader: IccTabGroupBaseHeader, index: number) {
     tabHeader.focusIndex = index;
 
     if (!tab.disabled) {
@@ -509,9 +509,9 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
 }
 
 /** A simple change event emitted on focus or selection changes. */
-export class MatTabChangeEvent {
+export class IccTabChangeEvent {
   /** Index of the currently-selected tab. */
   index!: number;
   /** Reference to the currently-selected tab. */
-  tab!: MatTab;
+  tab!: IccTab;
 }

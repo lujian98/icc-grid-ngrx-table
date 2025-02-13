@@ -23,8 +23,8 @@ import {
   booleanAttribute,
   inject,
 } from '@angular/core';
-import { MatTabContent } from './tab-content';
-import { MAT_TAB, MatTabLabel } from './tab-label';
+import { IccTabContent } from './tab-content';
+import { ICC_TAB, IccTabLabel } from './tab-label';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Subject } from 'rxjs';
 
@@ -32,10 +32,10 @@ import { Subject } from 'rxjs';
  * Used to provide a tab group to a tab without causing a circular dependency.
  * @docs-private
  */
-export const MAT_TAB_GROUP = new InjectionToken<any>('MAT_TAB_GROUP');
+export const ICC_TAB_GROUP = new InjectionToken<any>('ICC_TAB_GROUP');
 
 @Component({
-  selector: 'mat-tab',
+  selector: 'icc-tab',
   // Note that usually we'd go through a bit more trouble and set up another class so that
   // the inlined template of `MatTab` isn't duplicated, however the template is small enough
   // that creating the extra class will generate more code than just duplicating the template.
@@ -43,36 +43,36 @@ export const MAT_TAB_GROUP = new InjectionToken<any>('MAT_TAB_GROUP');
   // tslint:disable-next-line:validate-decorators
   changeDetection: ChangeDetectionStrategy.OnPush,
   //encapsulation: ViewEncapsulation.None,
-  exportAs: 'matTab',
-  providers: [{ provide: MAT_TAB, useExisting: MatTab }],
+  exportAs: 'iccTab',
+  providers: [{ provide: ICC_TAB, useExisting: IccTab }],
   host: {
     // This element will be rendered on the server in order to support hydration.
     // Hide it so it doesn't cause a layout shift when it's removed on the client.
     hidden: '',
   },
 })
-export class MatTab implements OnInit, OnChanges, OnDestroy {
+export class IccTab implements OnInit, OnChanges, OnDestroy {
   private _viewContainerRef = inject(ViewContainerRef);
-  _closestTabGroup = inject(MAT_TAB_GROUP, { optional: true });
+  _closestTabGroup = inject(ICC_TAB_GROUP, { optional: true });
 
   /** whether the tab is disabled. */
   @Input({ transform: booleanAttribute })
   disabled: boolean = false;
 
   /** Content for the tab label given by `<ng-template mat-tab-label>`. */
-  @ContentChild(MatTabLabel)
-  get templateLabel(): MatTabLabel {
+  @ContentChild(IccTabLabel)
+  get templateLabel(): IccTabLabel {
     return this._templateLabel;
   }
-  set templateLabel(value: MatTabLabel) {
+  set templateLabel(value: IccTabLabel) {
     this._setTemplateLabelInput(value);
   }
-  private _templateLabel!: MatTabLabel;
+  private _templateLabel!: IccTabLabel;
 
   /**
    * Template provided in the tab content that will be used if present, used to enable lazy-loading
    */
-  @ContentChild(MatTabContent, { read: TemplateRef, static: true })
+  @ContentChild(IccTabContent, { read: TemplateRef, static: true })
   // We need an initializer here to avoid a TS error. The value will be set in `ngAfterViewInit`.
   private _explicitContent: TemplateRef<any> = undefined!;
 
@@ -151,7 +151,7 @@ export class MatTab implements OnInit, OnChanges, OnDestroy {
    * TS 4.0 doesn't allow properties to override accessors or vice-versa.
    * @docs-private
    */
-  private _setTemplateLabelInput(value: MatTabLabel | undefined) {
+  private _setTemplateLabelInput(value: IccTabLabel | undefined) {
     // Only update the label if the query managed to find one. This works around an issue where a
     // user may have manually set `templateLabel` during creation mode, which would then get
     // clobbered by `undefined` when the query resolves. Also note that we check that the closest

@@ -1,4 +1,4 @@
-<mat-tab-header
+<icc-tab-header
   #tabHeader
   [selectedIndex]="selectedIndex || 0"
   [disablePagination]="disablePagination"
@@ -12,7 +12,7 @@
     class="mdc-tab mat-mdc-tab mat-focus-indicator"
     #tabNode
     role="tab"
-    matTabLabelWrapper
+    iccTabLabelWrapper
     cdkMonitorElementFocus
     [id]="_getTabLabelId(i)"
     [attr.tabIndex]="_getTabIndex(i)"
@@ -43,7 +43,7 @@
     </span>
   </div>
   }
-</mat-tab-header>
+</icc-tab-header>
 
 <!--
   We need to project the content somewhere to avoid hydration errors. Some observations:
@@ -61,7 +61,7 @@
   #tabBodyWrapper
 >
   @for (tab of _tabs; track tab;) {
-  <mat-tab-body
+  <icc-tab-body
     role="tabpanel"
     [id]="_getTabContentId($index)"
     [attr.tabindex]="(contentTabIndex != null && selectedIndex === $index) ? contentTabIndex : null"
