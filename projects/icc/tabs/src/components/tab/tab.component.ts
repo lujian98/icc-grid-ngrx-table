@@ -23,7 +23,7 @@ export const ICC_TAB_GROUP = new InjectionToken<any>('ICC_TAB_GROUP');
 
 @Component({
   selector: 'icc-tab',
-  templateUrl: 'tab.component.html',
+  templateUrl: './tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'iccTab',
   providers: [{ provide: ICC_TAB, useExisting: IccTabComponent }],

@@ -42,7 +42,8 @@ export type IccTabHeaderPosition = 'above' | 'below';
 @Component({
   selector: 'icc-tab-group',
   exportAs: 'iccTabGroup',
-  templateUrl: 'tab-group.component.html',
+  templateUrl: './tab-group.component.html',
+  styleUrls: ['./tab-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

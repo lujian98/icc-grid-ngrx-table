@@ -88,7 +88,7 @@ export type IccTabBodyOriginState = 'left' | 'right';
 
 @Component({
   selector: 'icc-tab-body',
-  templateUrl: 'tab-body.component.html',
+  templateUrl: './tab-body.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'icc-mdc-tab-body',
