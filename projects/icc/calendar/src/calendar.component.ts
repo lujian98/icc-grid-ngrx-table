@@ -23,7 +23,7 @@ import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.mode
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default, // need default for the date range click
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -67,10 +67,11 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
+    /*
     timer(10)
       .pipe(take(1))
       .subscribe(() => this.changeDetectorRef.detectChanges());
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.detectChanges();*/
   }
   get selectedRangeDates(): Array<Date> {
     return this._selectedRangeDates;
@@ -109,6 +110,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   onSelectedChange(date: Date | null): void {
+    console.log('select change=', date);
     this.selectedDateChange.emit(date ? date : undefined);
   }
 
