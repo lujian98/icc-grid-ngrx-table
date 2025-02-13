@@ -33,6 +33,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/date/date.routes').then((m) => m.AppDateRoutes),
       },
       {
+        path: 'tabs',
+        loadChildren: () => import('./views/tabs/tabs.routes').then((m) => m.AppTabsRoutes),
+      },
+      {
         path: 'd3',
         loadChildren: () => import('./views/d3/d3.routes').then((m) => m.AppD3Routes),
       },
