@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IccDateFieldComponent, IccDateRangeFieldComponent, IccDateRange } from '@icc/ui/fields';
+import { MatTab, MatTabGroup } from '@icc/ui/tabs';
 
 @Component({
   selector: 'app-simple-date',
   templateUrl: './simple-date.component.html',
   styleUrls: ['./simple-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccDateFieldComponent, IccDateRangeFieldComponent],
+  imports: [CommonModule, IccDateFieldComponent, IccDateRangeFieldComponent, MatTab, MatTabGroup],
 })
 export class AppSimpleDateComponent implements OnInit {
   today = new Date();
