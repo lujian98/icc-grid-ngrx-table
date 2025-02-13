@@ -1,6 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
@@ -21,14 +21,18 @@ import { IccTabLabelDirective } from './directives/tab-label.directive';
   ],
 })
 export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
-  protected tabs = ['One', 'Two', 'Three', 'Four', 'Five'];
   protected selectedTabIndex = 0;
 
-  drop(event: CdkDragDrop<string[]>): void {
+  @Input() tabs!: T[];
+
+  onSelectedIndexChange(index: number): void {
+    this.selectedTabIndex = index;
+  }
+
+  drop(event: CdkDragDrop<T[]>): void {
     const prevActive = this.tabs[this.selectedTabIndex];
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
-    console.log(' event.previousIndex =', event.currentIndex);
-    this.selectedTabIndex = event.currentIndex; //this.tabs.indexOf(prevActive);
+    this.selectedTabIndex = this.tabs.indexOf(prevActive);
   }
 
   ngOnInit(): void {}

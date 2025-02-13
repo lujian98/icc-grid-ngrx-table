@@ -6,6 +6,7 @@
   class="icc-drag-tabs"
   [selectedIndex]="selectedTabIndex"
   animationDuration="0"
+  (selectedIndexChange)="onSelectedIndexChange($event)"
 >
   @for (tab of tabs; track $index) {
     <icc-tab>

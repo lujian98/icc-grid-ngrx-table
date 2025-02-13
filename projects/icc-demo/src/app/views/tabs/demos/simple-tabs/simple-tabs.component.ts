@@ -9,4 +9,6 @@ import { IccTabComponent, IccTabGroupComponent, IccTabsComponent } from '@icc/ui
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTabComponent, IccTabGroupComponent, IccTabsComponent],
 })
-export class AppSimpleTabsComponent {}
+export class AppSimpleTabsComponent {
+  tabs = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+}
