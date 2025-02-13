@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.dev/license
- */
-
 import {
   AfterContentChecked,
   AfterContentInit,
@@ -20,7 +12,6 @@ import {
   Output,
   QueryList,
   ViewChild,
-  ViewEncapsulation,
   booleanAttribute,
   inject,
   numberAttribute,
@@ -40,21 +31,14 @@ import { CdkPortalOutlet } from '@angular/cdk/portal';
 import { IccTabLabelWrapper } from './tab-label-wrapper';
 import { Platform } from '@angular/cdk/platform';
 
-/** @docs-private */
 export interface IccTabGroupBaseHeader {
   _alignInkBarToSelectedTab(): void;
   updatePagination(): void;
   focusIndex: number;
 }
 
-/** Possible positions for the tab header. */
 export type IccTabHeaderPosition = 'above' | 'below';
 
-/**
- * Material design tab-group component. Supports basic tab pairs (label + content) and includes
- * animated ink-bar, keyboard navigation, and screen reader.
- * See: https://material.io/design/components/tabs.html
- */
 @Component({
   selector: 'icc-tab-group',
   exportAs: 'iccTabGroup',
@@ -87,28 +71,16 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
 
   _animationMode = inject(ANIMATION_MODULE_TYPE, { optional: true });
 
-  /**
-   * All tabs inside the tab group. This includes tabs that belong to groups that are nested
-   * inside the current one. We filter out only the tabs that belong to this group in `_tabs`.
-   */
   @ContentChildren(IccTab, { descendants: true }) _allTabs!: QueryList<IccTab>;
   @ViewChildren(IccTabBody) _tabBodies: QueryList<IccTabBody> | undefined;
   @ViewChild('tabBodyWrapper') _tabBodyWrapper!: ElementRef;
   @ViewChild('tabHeader') _tabHeader!: IccTabHeader;
 
-  /** All of the tabs that belong to the group. */
   _tabs: QueryList<IccTab> = new QueryList<IccTab>();
-
-  /** The tab index that should be selected after the content has been checked. */
   private _indexToSelect: number | null = 0;
-
-  /** Index of the tab that was focused last. */
   private _lastFocusedTabIndex: number | null = null;
-
-  /** Snapshot of the height of the tab body wrapper before another tab is activated. */
   private _tabBodyWrapperHeight: number = 0;
 
-  /** Whether the ink bar should fit its width to the size of the tab label content. */
   @Input({ transform: booleanAttribute })
   get fitInkBarToContent(): boolean {
     return this._fitInkBarToContent;
@@ -119,19 +91,15 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   }
   private _fitInkBarToContent = false;
 
-  /** Whether tabs should be stretched to fill the header. */
   @Input({ alias: 'mat-stretch-tabs', transform: booleanAttribute })
   stretchTabs: boolean = true;
 
-  /** Alignment for tabs label. */
   @Input({ alias: 'mat-align-tabs' })
   alignTabs: string | null = null;
 
-  /** Whether the tab group should grow to the size of the active tab. */
   @Input({ transform: booleanAttribute })
   dynamicHeight: boolean = false;
 
-  /** The index of the active tab. */
   @Input({ transform: numberAttribute })
   get selectedIndex(): number | null {
     return this._selectedIndex;
@@ -141,10 +109,8 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   }
   private _selectedIndex: number | null = null;
 
-  /** Position of the tab header. */
   @Input() headerPosition: IccTabHeaderPosition = 'above';
 
-  /** Duration for the tab animation. Will be normalized to milliseconds if no units are set. */
   @Input()
   get animationDuration(): string {
     return this._animationDuration;
@@ -155,61 +121,28 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   }
   private _animationDuration!: string;
 
-  /**
-   * `tabindex` to be set on the inner element that wraps the tab content. Can be used for improved
-   * accessibility when the tab does not have focusable elements or if it has scrollable content.
-   * The `tabindex` will be removed automatically for inactive tabs.
-   * Read more at https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
-   */
   @Input({ transform: numberAttribute })
   get contentTabIndex(): number | null {
     return this._contentTabIndex;
   }
-
   set contentTabIndex(value: number) {
     this._contentTabIndex = isNaN(value) ? null : value;
   }
-
   private _contentTabIndex!: number | null;
 
-  /**
-   * Whether pagination should be disabled. This can be used to avoid unnecessary
-   * layout recalculations if it's known that pagination won't be required.
-   */
   @Input({ transform: booleanAttribute })
   disablePagination: boolean = false;
-
-  /**
-   * By default tabs remove their content from the DOM while it's off-screen.
-   * Setting this to `true` will keep it in the DOM which will prevent elements
-   * like iframes and videos from reloading next time it comes back into the view.
-   */
   @Input({ transform: booleanAttribute })
   preserveContent: boolean = false;
-
-  /** Aria label of the inner `tablist` of the group. */
   @Input('aria-label') ariaLabel!: string;
-
-  /** Sets the `aria-labelledby` of the inner `tablist` of the group. */
   @Input('aria-labelledby') ariaLabelledby!: string;
-
-  /** Output to enable support for two-way binding on `[(selectedIndex)]` */
   @Output() readonly selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
-
-  /** Event emitted when focus has changed within a tab group. */
   @Output() readonly focusChange: EventEmitter<IccTabChangeEvent> = new EventEmitter<IccTabChangeEvent>();
-
-  /** Event emitted when the body animation has completed */
   @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
-
-  /** Event emitted when the tab selection has changed. */
   @Output() readonly selectedTabChange: EventEmitter<IccTabChangeEvent> = new EventEmitter<IccTabChangeEvent>(true);
 
   private _groupId: string;
-
-  /** Whether the tab group is rendered on the server. */
   protected _isServer: boolean = !inject(Platform).isBrowser;
-
   constructor(...args: unknown[]);
 
   constructor() {
@@ -231,50 +164,29 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this.alignTabs = defaultConfig && defaultConfig.alignTabs != null ? defaultConfig.alignTabs : null;
   }
 
-  /**
-   * After the content is checked, this component knows what tabs have been defined
-   * and what the selected index should be. This is where we can know exactly what position
-   * each tab should be in according to the new selected index, and additionally we know how
-   * a new selected tab should transition in (from the left or right).
-   */
   ngAfterContentChecked() {
-    // Don't clamp the `indexToSelect` immediately in the setter because it can happen that
-    // the amount of tabs changes before the actual change detection runs.
     const indexToSelect = (this._indexToSelect = this._clampTabIndex(this._indexToSelect));
-
-    // If there is a change in selected index, emit a change event. Should not trigger if
-    // the selected index has not yet been initialized.
     if (this._selectedIndex != indexToSelect) {
       const isFirstRun = this._selectedIndex == null;
 
       if (!isFirstRun) {
         this.selectedTabChange.emit(this._createChangeEvent(indexToSelect));
-        // Preserve the height so page doesn't scroll up during tab change.
-        // Fixes https://stackblitz.com/edit/mat-tabs-scroll-page-top-on-tab-change
         const wrapper = this._tabBodyWrapper.nativeElement;
         wrapper.style.minHeight = wrapper.clientHeight + 'px';
       }
 
-      // Changing these values after change detection has run
-      // since the checked content may contain references to them.
       Promise.resolve().then(() => {
         this._tabs.forEach((tab, index) => (tab.isActive = index === indexToSelect));
 
         if (!isFirstRun) {
           this.selectedIndexChange.emit(indexToSelect);
-          // Clear the min-height, this was needed during tab change to avoid
-          // unnecessary scrolling.
           this._tabBodyWrapper.nativeElement.style.minHeight = '';
         }
       });
     }
 
-    // Setup the position for each tab and optionally setup an origin on the next selected tab.
     this._tabs.forEach((tab: IccTab, index: number) => {
       tab.position = index - indexToSelect;
-
-      // If there is already a selected tab, then set up an origin for the next selected tab
-      // if it doesn't have one already.
       if (this._selectedIndex != null && tab.position == 0 && !tab.origin) {
         tab.origin = indexToSelect - this._selectedIndex;
       }
@@ -291,22 +203,14 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this._subscribeToAllTabChanges();
     this._subscribeToTabLabels();
 
-    // Subscribe to changes in the amount of tabs, in order to be
-    // able to re-render the content as new tabs are added or removed.
     this._tabsSubscription = this._tabs.changes.subscribe(() => {
       const indexToSelect = this._clampTabIndex(this._indexToSelect);
-
-      // Maintain the previously-selected tab if a new tab is added or removed and there is no
-      // explicit change that selects a different tab.
       if (indexToSelect === this._selectedIndex) {
         const tabs = this._tabs.toArray();
         let selectedTab: IccTab | undefined;
 
         for (let i = 0; i < tabs.length; i++) {
           if (tabs[i].isActive) {
-            // Assign both to the `_indexToSelect` and `_selectedIndex` so we don't fire a changed
-            // event, otherwise the consumer may end up in an infinite loop in some edge cases like
-            // adding a tab within the `selectedIndexChange` event.
             this._indexToSelect = this._selectedIndex = i;
             this._lastFocusedTabIndex = null;
             selectedTab = tabs[i];
@@ -314,9 +218,6 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
           }
         }
 
-        // If we haven't found an active tab and a tab exists at the selected index, it means
-        // that the active tab was swapped out. Since this won't be picked up by the rendering
-        // loop in `ngAfterContentChecked`, we need to sync it up manually.
         if (!selectedTab && tabs[indexToSelect]) {
           Promise.resolve().then(() => {
             tabs[indexToSelect].isActive = true;
@@ -333,11 +234,7 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this._tabBodySubscription = this._tabBodies!.changes.subscribe(() => this._bodyCentered(true));
   }
 
-  /** Listens to changes in all of the tabs. */
   private _subscribeToAllTabChanges() {
-    // Since we use a query with `descendants: true` to pick up the tabs, we may end up catching
-    // some that are inside of nested tab groups. We filter them out manually by checking that
-    // the closest group to the tab is the current one.
     this._allTabs.changes.pipe(startWith(this._allTabs)).subscribe((tabs: QueryList<IccTab>) => {
       this._tabs.reset(
         tabs.filter((tab) => {
@@ -355,30 +252,18 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this._tabBodySubscription.unsubscribe();
   }
 
-  /** Re-aligns the ink bar to the selected tab element. */
   realignInkBar() {
     if (this._tabHeader) {
       this._tabHeader._alignInkBarToSelectedTab();
     }
   }
 
-  /**
-   * Recalculates the tab group's pagination dimensions.
-   *
-   * WARNING: Calling this method can be very costly in terms of performance. It should be called
-   * as infrequently as possible from outside of the Tabs component as it causes a reflow of the
-   * page.
-   */
   updatePagination() {
     if (this._tabHeader) {
       this._tabHeader.updatePagination();
     }
   }
 
-  /**
-   * Sets focus to a particular tab.
-   * @param index Index of the tab to be focused.
-   */
   focusTab(index: number) {
     const header = this._tabHeader;
 
@@ -401,12 +286,6 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     return event;
   }
 
-  /**
-   * Subscribes to changes in the tab labels. This is needed, because the @Input for the label is
-   * on the MatTab component, whereas the data binding is inside the MatTabGroup. In order for the
-   * binding to be updated, we need to subscribe to changes in it and trigger change detection
-   * manually.
-   */
   private _subscribeToTabLabels() {
     if (this._tabLabelSubscription) {
       this._tabLabelSubscription.unsubscribe();
@@ -417,28 +296,18 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     );
   }
 
-  /** Clamps the given index to the bounds of 0 and the tabs length. */
   private _clampTabIndex(index: number | null): number {
-    // Note the `|| 0`, which ensures that values like NaN can't get through
-    // and which would otherwise throw the component into an infinite loop
-    // (since Math.max(NaN, 0) === NaN).
     return Math.min(this._tabs.length - 1, Math.max(index || 0, 0));
   }
 
-  /** Returns a unique id for each tab label element */
   _getTabLabelId(i: number): string {
     return `${this._groupId}-label-${i}`;
   }
 
-  /** Returns a unique id for each tab content element */
   _getTabContentId(i: number): string {
     return `${this._groupId}-content-${i}`;
   }
 
-  /**
-   * Sets the height of the body wrapper to the height of the activating tab if dynamic
-   * height property is true.
-   */
   _setTabBodyWrapperHeight(tabHeight: number): void {
     if (!this.dynamicHeight || !this._tabBodyWrapperHeight) {
       this._tabBodyWrapperHeight = tabHeight;
@@ -446,17 +315,13 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     }
 
     const wrapper: HTMLElement = this._tabBodyWrapper.nativeElement;
-
     wrapper.style.height = this._tabBodyWrapperHeight + 'px';
 
-    // This conditional forces the browser to paint the height so that
-    // the animation to the new height can have an origin.
     if (this._tabBodyWrapper.nativeElement.offsetHeight) {
       wrapper.style.height = tabHeight + 'px';
     }
   }
 
-  /** Removes the height of the tab body wrapper. */
   _removeTabBodyWrapperHeight(): void {
     const wrapper = this._tabBodyWrapper.nativeElement;
     this._tabBodyWrapperHeight = wrapper.clientHeight;
@@ -464,7 +329,6 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     this._ngZone.run(() => this.animationDone.emit());
   }
 
-  /** Handle click events, setting new selected index if appropriate. */
   _handleClick(tab: IccTab, tabHeader: IccTabGroupBaseHeader, index: number) {
     tabHeader.focusIndex = index;
 
@@ -473,45 +337,25 @@ export class IccTabGroup implements AfterViewInit, AfterContentInit, AfterConten
     }
   }
 
-  /** Retrieves the tabindex for the tab. */
   _getTabIndex(index: number): number {
     const targetIndex = this._lastFocusedTabIndex ?? this.selectedIndex;
     return index === targetIndex ? 0 : -1;
   }
 
-  /** Callback for when the focused state of a tab has changed. */
   _tabFocusChanged(focusOrigin: FocusOrigin, index: number) {
-    // Mouse/touch focus happens during the `mousedown`/`touchstart` phase which
-    // can cause the tab to be moved out from under the pointer, interrupting the
-    // click sequence (see #21898). We don't need to scroll the tab into view for
-    // such cases anyway, because it will be done when the tab becomes selected.
     if (focusOrigin && focusOrigin !== 'mouse' && focusOrigin !== 'touch') {
       this._tabHeader.focusIndex = index;
     }
   }
 
-  /**
-   * Callback invoked when the centered state of a tab body changes.
-   * @param isCenter Whether the tab will be in the center.
-   */
   protected _bodyCentered(isCenter: boolean) {
-    // Marks all the existing tabs as inactive and the center tab as active. Note that this can
-    // be achieved much easier by using a class binding on each body. The problem with
-    // doing so is that we can't control the timing of when the class is removed from the
-    // previously-active element and added to the newly-active one. If there's a tick between
-    // removing the class and adding the new one, the content will jump in a very jarring way.
-    // We go through the trouble of setting the classes ourselves to guarantee that they're
-    // swapped out at the same time.
     if (isCenter) {
       this._tabBodies?.forEach((body, i) => body._setActiveClass(i === this._selectedIndex));
     }
   }
 }
 
-/** A simple change event emitted on focus or selection changes. */
 export class IccTabChangeEvent {
-  /** Index of the currently-selected tab. */
   index!: number;
-  /** Reference to the currently-selected tab. */
   tab!: IccTab;
 }

@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.dev/license
- */
-
 import {
   Directive,
   ElementRef,
@@ -18,10 +10,6 @@ import {
   inject,
 } from '@angular/core';
 
-/**
- * Item inside a tab header relative to which the ink bar can be aligned.
- * @docs-private
- */
 export interface IccInkBarItem extends OnInit, OnDestroy {
   elementRef: ElementRef<HTMLElement>;
   activateInkBar(previousIndicatorClientRect?: DOMRect): void;
@@ -29,29 +17,19 @@ export interface IccInkBarItem extends OnInit, OnDestroy {
   fitInkBarToContent: boolean;
 }
 
-/** Class that is applied when a tab indicator is active. */
 const ACTIVE_CLASS = 'mdc-tab-indicator--active';
-
-/** Class that is applied when the tab indicator should not transition. */
 const NO_TRANSITION_CLASS = 'mdc-tab-indicator--no-transition';
 
-/**
- * Abstraction around the MDC tab indicator that acts as the tab header's ink bar.
- * @docs-private
- */
 export class IccInkBar {
-  /** Item to which the ink bar is aligned currently. */
   private _currentItem: IccInkBarItem | undefined;
 
   constructor(private _items: QueryList<IccInkBarItem>) {}
 
-  /** Hides the ink bar. */
   hide() {
     this._items.forEach((item) => item.deactivateInkBar());
     this._currentItem = undefined;
   }
 
-  /** Aligns the ink bar to a DOM node. */
   alignToElement(element: HTMLElement) {
     const correspondingItem = this._items.find((item) => item.elementRef.nativeElement === element);
     const currentItem = this._currentItem;
@@ -64,8 +42,6 @@ export class IccInkBar {
 
     if (correspondingItem) {
       const domRect = currentItem?.elementRef.nativeElement.getBoundingClientRect?.();
-
-      // The ink bar won't animate unless we give it the `DOMRect` of the previous item.
       correspondingItem.activateInkBar(domRect);
       this._currentItem = correspondingItem;
     }
@@ -79,7 +55,6 @@ export abstract class InkBarItem implements OnInit, OnDestroy {
   private _inkBarContentElement!: HTMLElement | null;
   private _fitToContent = false;
 
-  /** Whether the ink bar should fit to the entire tab or just its content. */
   @Input({ transform: booleanAttribute })
   get fitInkBarToContent(): boolean {
     return this._fitToContent;
@@ -94,52 +69,38 @@ export abstract class InkBarItem implements OnInit, OnDestroy {
     }
   }
 
-  /** Aligns the ink bar to the current item. */
   activateInkBar(previousIndicatorClientRect?: DOMRect) {
     const element = this._elementRef.nativeElement;
-
-    // Early exit if no indicator is present to handle cases where an indicator
-    // may be activated without a prior indicator state
     if (!previousIndicatorClientRect || !element.getBoundingClientRect || !this._inkBarContentElement) {
       element.classList.add(ACTIVE_CLASS);
       return;
     }
 
-    // This animation uses the FLIP approach. You can read more about it at the link below:
-    // https://aerotwist.com/blog/flip-your-animations/
-
-    // Calculate the dimensions based on the dimensions of the previous indicator
     const currentClientRect = element.getBoundingClientRect();
     const widthDelta = previousIndicatorClientRect.width / currentClientRect.width;
     const xPosition = previousIndicatorClientRect.left - currentClientRect.left;
     element.classList.add(NO_TRANSITION_CLASS);
     this._inkBarContentElement.style.setProperty('transform', `translateX(${xPosition}px) scaleX(${widthDelta})`);
 
-    // Force repaint before updating classes and transform to ensure the transform properly takes effect
     element.getBoundingClientRect();
-
     element.classList.remove(NO_TRANSITION_CLASS);
     element.classList.add(ACTIVE_CLASS);
     this._inkBarContentElement.style.setProperty('transform', '');
   }
 
-  /** Removes the ink bar from the current item. */
   deactivateInkBar() {
     this._elementRef.nativeElement.classList.remove(ACTIVE_CLASS);
   }
 
-  /** Initializes the foundation. */
   ngOnInit() {
     this._createInkBarElement();
   }
 
-  /** Destroys the foundation. */
   ngOnDestroy() {
     this._inkBarElement?.remove();
     this._inkBarElement = this._inkBarContentElement = null!;
   }
 
-  /** Creates and appends the ink bar element. */
   private _createInkBarElement() {
     const documentNode = this._elementRef.nativeElement.ownerDocument || document;
     const inkBarElement = (this._inkBarElement = documentNode.createElement('span'));
@@ -152,10 +113,6 @@ export abstract class InkBarItem implements OnInit, OnDestroy {
     this._appendInkBarElement();
   }
 
-  /**
-   * Appends the ink bar to the tab host element or content, depending on whether
-   * the ink bar should fit to content.
-   */
   private _appendInkBarElement() {
     // @ts-ignore
     if (!this._inkBarElement && (typeof ngDevMode === 'undefined' || ngDevMode)) {
@@ -175,18 +132,10 @@ export abstract class InkBarItem implements OnInit, OnDestroy {
   }
 }
 
-/**
- * Interface for a MatInkBar positioner method, defining the positioning and width of the ink
- * bar in a set of tabs.
- */
 export interface _IccInkBarPositioner {
   (element: HTMLElement): { left: string; width: string };
 }
 
-/**
- * The default positioner function for the MatInkBar.
- * @docs-private
- */
 export function _ICC_INK_BAR_POSITIONER_FACTORY(): _IccInkBarPositioner {
   const method = (element: HTMLElement) => ({
     left: element ? (element.offsetLeft || 0) + 'px' : '0',
@@ -196,7 +145,6 @@ export function _ICC_INK_BAR_POSITIONER_FACTORY(): _IccInkBarPositioner {
   return method;
 }
 
-/** Injection token for the IccInkBar's Positioner. */
 export const _ICC_INK_BAR_POSITIONER = new InjectionToken<_IccInkBarPositioner>('IccInkBarPositioner', {
   providedIn: 'root',
   factory: _ICC_INK_BAR_POSITIONER_FACTORY,

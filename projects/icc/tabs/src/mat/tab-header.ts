@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.dev/license
- */
-
 import {
   AfterContentChecked,
   AfterContentInit,
@@ -18,21 +10,12 @@ import {
   OnDestroy,
   QueryList,
   ViewChild,
-  ViewEncapsulation,
-  booleanAttribute,
 } from '@angular/core';
 import { IccTabLabelWrapper } from './tab-label-wrapper';
 import { IccInkBar } from './ink-bar';
 import { IccPaginatedTabHeader } from './paginated-tab-header';
 import { CdkObserveContent } from '@angular/cdk/observers';
 
-/**
- * The header of the tab group which displays a list of all the tabs in the tab group. Includes
- * an ink bar that follows the currently selected tab. When the tabs list's width exceeds the
- * width of the header container, then arrows will be displayed to allow the user to scroll
- * left and right across the header.
- * @docs-private
- */
 @Component({
   selector: 'icc-tab-header',
   templateUrl: 'tab-header.html',
@@ -57,10 +40,7 @@ export class IccTabHeader
   @ViewChild('previousPaginator') _previousPaginator!: ElementRef<HTMLElement>;
   _inkBar!: IccInkBar;
 
-  /** Aria label of the header. */
   @Input('aria-label') ariaLabel!: string;
-
-  /** Sets the `aria-labelledby` of the header. */
   @Input('aria-labelledby') ariaLabelledby!: string;
 
   override ngAfterContentInit() {
