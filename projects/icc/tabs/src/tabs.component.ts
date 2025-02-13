@@ -4,6 +4,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, I
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
+import { IccTabConfig } from './models/tabs.model';
 
 @Component({
   selector: 'icc-tabs',
@@ -23,13 +24,17 @@ import { IccTabLabelDirective } from './directives/tab-label.directive';
 export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   protected selectedTabIndex = 0;
 
-  @Input() tabs!: T[];
+  @Input() tabs!: IccTabConfig<T>[];
+
+  getTabLabel(tab: IccTabConfig<T>): string {
+    return tab.title || tab.name;
+  }
 
   onSelectedIndexChange(index: number): void {
     this.selectedTabIndex = index;
   }
 
-  drop(event: CdkDragDrop<T[]>): void {
+  drop(event: CdkDragDrop<IccTabConfig<T>>): void {
     const prevActive = this.tabs[this.selectedTabIndex];
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
     this.selectedTabIndex = this.tabs.indexOf(prevActive);

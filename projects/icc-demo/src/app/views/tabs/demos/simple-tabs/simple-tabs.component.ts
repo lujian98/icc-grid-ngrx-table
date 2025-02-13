@@ -10,5 +10,25 @@ import { IccTabComponent, IccTabGroupComponent, IccTabsComponent } from '@icc/ui
   imports: [CommonModule, IccTabComponent, IccTabGroupComponent, IccTabsComponent],
 })
 export class AppSimpleTabsComponent {
-  tabs = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+  tabs = [
+    {
+      name: 'one',
+    },
+    {
+      name: 'two',
+      title: 'Two',
+    },
+    {
+      name: 'three',
+    },
+    {
+      name: 'four',
+    },
+    {
+      name: 'five',
+    },
+    {
+      name: 'six',
+    },
+  ];
 }

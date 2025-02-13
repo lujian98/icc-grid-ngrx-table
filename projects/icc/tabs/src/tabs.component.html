@@ -11,10 +11,12 @@
   @for (tab of tabs; track $index) {
     <icc-tab>
       <ng-template icc-tab-label>
-        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab">{{ tab }}</span>
+        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab">{{
+          getTabLabel(tab)
+        }}</span>
       </ng-template>
 
-      <h3>Content for {{ tab }}</h3>
+      <span>Content for {{ tab.name }}</span>
     </icc-tab>
   }
 </icc-tab-group>
