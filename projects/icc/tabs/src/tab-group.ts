@@ -31,7 +31,6 @@ import {
 } from '@angular/core';
 import { MAT_TAB_GROUP, MatTab } from './tab';
 import { MatTabHeader } from './tab-header';
-import { ThemePalette, MatRipple } from '@angular/material/core';
 import { merge, Subscription } from 'rxjs';
 import { MAT_TABS_CONFIG, MatTabsConfig } from './tab-config';
 import { startWith } from 'rxjs/operators';
@@ -51,9 +50,6 @@ export interface MatTabGroupBaseHeader {
 /** Possible positions for the tab header. */
 export type MatTabHeaderPosition = 'above' | 'below';
 
-/** Boolean constant that determines whether the tab group supports the `backgroundColor` input */
-const ENABLE_BACKGROUND_INPUT = true;
-
 /**
  * Material design tab-group component. Supports basic tab pairs (label + content) and includes
  * animated ink-bar, keyboard navigation, and screen reader.
@@ -63,10 +59,7 @@ const ENABLE_BACKGROUND_INPUT = true;
   selector: 'mat-tab-group',
   exportAs: 'matTabGroup',
   templateUrl: 'tab-group.html',
-  //styleUrl: 'tab-group.css',
-  //encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:validate-decorators
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: MAT_TAB_GROUP,
@@ -82,7 +75,7 @@ const ENABLE_BACKGROUND_INPUT = true;
     '[attr.mat-align-tabs]': 'alignTabs',
     '[style.--mat-tab-animation-duration]': 'animationDuration',
   },
-  imports: [MatTabHeader, MatTabLabelWrapper, CdkMonitorFocus, MatRipple, CdkPortalOutlet, MatTabBody],
+  imports: [MatTabHeader, MatTabLabelWrapper, CdkMonitorFocus, CdkPortalOutlet, MatTabBody],
 })
 export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy {
   readonly _elementRef = inject(ElementRef);
@@ -114,16 +107,6 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
 
   /** Snapshot of the height of the tab body wrapper before another tab is activated. */
   private _tabBodyWrapperHeight: number = 0;
-
-  /**
-   * Theme color of the tab group. This API is supported in M2 themes only, it
-   * has no effect in M3 themes. For color customization in M3, see https://material.angular.io/components/tabs/styling.
-   *
-   * For information on applying color variants in M3, see
-   * https://material.angular.io/guide/material-2-theming#optional-add-backwards-compatibility-styles-for-color-variants
-   */
-  @Input()
-  color: ThemePalette;
 
   /** Whether the ink bar should fit its width to the size of the tab label content. */
   @Input({ transform: booleanAttribute })
@@ -196,10 +179,6 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
   @Input({ transform: booleanAttribute })
   disablePagination: boolean = false;
 
-  /** Whether ripples in the tab group are disabled. */
-  @Input({ transform: booleanAttribute })
-  disableRipple: boolean = false;
-
   /**
    * By default tabs remove their content from the DOM while it's off-screen.
    * Setting this to `true` will keep it in the DOM which will prevent elements
@@ -207,39 +186,6 @@ export class MatTabGroup implements AfterViewInit, AfterContentInit, AfterConten
    */
   @Input({ transform: booleanAttribute })
   preserveContent: boolean = false;
-
-  /**
-   * Theme color of the background of the tab group. This API is supported in M2 themes only, it
-   * has no effect in M3 themes. For color customization in M3, see https://material.angular.io/components/tabs/styling.
-   *
-   * For information on applying color variants in M3, see
-   * https://material.angular.io/guide/material-2-theming#optional-add-backwards-compatibility-styles-for-color-variants
-   *
-   * @deprecated The background color should be customized through Sass theming APIs.
-   * @breaking-change 20.0.0 Remove this input
-   */
-  @Input()
-  get backgroundColor(): ThemePalette {
-    return this._backgroundColor;
-  }
-
-  set backgroundColor(value: ThemePalette) {
-    if (!ENABLE_BACKGROUND_INPUT) {
-      throw new Error(`mat-tab-group background color must be set through the Sass theming API`);
-    }
-
-    const classList: DOMTokenList = this._elementRef.nativeElement.classList;
-
-    classList.remove('mat-tabs-with-background', `mat-background-${this.backgroundColor}`);
-
-    if (value) {
-      classList.add('mat-tabs-with-background', `mat-background-${value}`);
-    }
-
-    this._backgroundColor = value;
-  }
-
-  private _backgroundColor: ThemePalette;
 
   /** Aria label of the inner `tablist` of the group. */
   @Input('aria-label') ariaLabel!: string;

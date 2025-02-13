@@ -25,7 +25,6 @@ import { MatTabLabelWrapper } from './tab-label-wrapper';
 import { MatInkBar } from './ink-bar';
 import { MatPaginatedTabHeader } from './paginated-tab-header';
 import { CdkObserveContent } from '@angular/cdk/observers';
-import { MatRipple } from '@angular/material/core';
 
 /**
  * The header of the tab group which displays a list of all the tabs in the tab group. Includes
@@ -37,17 +36,14 @@ import { MatRipple } from '@angular/material/core';
 @Component({
   selector: 'mat-tab-header',
   templateUrl: 'tab-header.html',
-  //styleUrl: 'tab-header.scss',
   styleUrls: ['./tab-header.scss'],
-  //encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:validate-decorators
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'mat-mdc-tab-header',
     '[class.mat-mdc-tab-header-pagination-controls-enabled]': '_showPaginationControls',
     '[class.mat-mdc-tab-header-rtl]': "_getLayoutDirection() == 'rtl'",
   },
-  imports: [MatRipple, CdkObserveContent],
+  imports: [CdkObserveContent],
 })
 export class MatTabHeader
   extends MatPaginatedTabHeader
@@ -66,10 +62,6 @@ export class MatTabHeader
 
   /** Sets the `aria-labelledby` of the header. */
   @Input('aria-labelledby') ariaLabelledby!: string;
-
-  /** Whether the ripple effect is disabled or not. */
-  @Input({ transform: booleanAttribute })
-  disableRipple: boolean = false;
 
   override ngAfterContentInit() {
     this._inkBar = new MatInkBar(this._items);

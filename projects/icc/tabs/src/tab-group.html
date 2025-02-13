@@ -1,7 +1,6 @@
 <mat-tab-header
   #tabHeader
   [selectedIndex]="selectedIndex || 0"
-  [disableRipple]="disableRipple"
   [disablePagination]="disablePagination"
   [aria-label]="ariaLabel"
   [aria-labelledby]="ariaLabelledby"
@@ -30,17 +29,6 @@
     (click)="_handleClick(tab, tabHeader, i)"
     (cdkFocusChange)="_tabFocusChanged($event, i)"
   >
-    <span class="mdc-tab__ripple"></span>
-
-    <!-- Needs to be a separate element, because we can't put
-          `overflow: hidden` on tab due to the ink bar. -->
-    <div
-      class="mat-mdc-tab-ripple"
-      mat-ripple
-      [matRippleTrigger]="tabNode"
-      [matRippleDisabled]="tab.disabled || disableRipple"
-    ></div>
-
     <span class="mdc-tab__content">
       <span class="mdc-tab__text-label">
         <!--

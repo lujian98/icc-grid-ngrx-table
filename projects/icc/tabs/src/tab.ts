@@ -27,8 +27,6 @@ import { MatTabContent } from './tab-content';
 import { MAT_TAB, MatTabLabel } from './tab-label';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Subject } from 'rxjs';
-import { _CdkPrivateStyleLoader } from '@angular/cdk/private';
-import { _StructuralStylesLoader } from '@angular/material/core';
 
 /**
  * Used to provide a tab group to a tab without causing a circular dependency.
@@ -43,7 +41,7 @@ export const MAT_TAB_GROUP = new InjectionToken<any>('MAT_TAB_GROUP');
   // that creating the extra class will generate more code than just duplicating the template.
   templateUrl: 'tab.html',
   // tslint:disable-next-line:validate-decorators
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   //encapsulation: ViewEncapsulation.None,
   exportAs: 'matTab',
   providers: [{ provide: MAT_TAB, useExisting: MatTab }],
@@ -130,7 +128,7 @@ export class MatTab implements OnInit, OnChanges, OnDestroy {
 
   constructor(...args: unknown[]);
   constructor() {
-    inject(_CdkPrivateStyleLoader).load(_StructuralStylesLoader);
+    //inject(_CdkPrivateStyleLoader).load(_StructuralStylesLoader);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

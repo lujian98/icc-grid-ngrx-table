@@ -5,8 +5,6 @@
 <div
   class="mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-before"
   #previousPaginator
-  mat-ripple
-  [matRippleDisabled]="_disableScrollBefore || disableRipple"
   [class.mat-mdc-tab-header-pagination-disabled]="_disableScrollBefore"
   (click)="_handlePaginatorClick('before')"
   (mousedown)="_handlePaginatorPress('before', $event)"
@@ -38,8 +36,6 @@
 <div
   class="mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-after"
   #nextPaginator
-  mat-ripple
-  [matRippleDisabled]="_disableScrollAfter || disableRipple"
   [class.mat-mdc-tab-header-pagination-disabled]="_disableScrollAfter"
   (mousedown)="_handlePaginatorPress('after', $event)"
   (click)="_handlePaginatorClick('after')"
