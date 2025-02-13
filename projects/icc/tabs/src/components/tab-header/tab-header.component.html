@@ -1,23 +1,23 @@
 <div
-  class="mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-before"
+  class="icc-mdc-tab-header-pagination icc-mdc-tab-header-pagination-before"
   #previousPaginator
-  [class.mat-mdc-tab-header-pagination-disabled]="_disableScrollBefore"
+  [class.icc-mdc-tab-header-pagination-disabled]="_disableScrollBefore"
   (click)="_handlePaginatorClick('before')"
   (mousedown)="_handlePaginatorPress('before', $event)"
   (touchend)="_stopInterval()"
 >
-  <div class="mat-mdc-tab-header-pagination-chevron"></div>
+  <div class="icc-mdc-tab-header-pagination-chevron"></div>
 </div>
 
 <div
-  class="mat-mdc-tab-label-container"
+  class="icc-mdc-tab-label-container"
   #tabListContainer
   (keydown)="_handleKeydown($event)"
-  [class._mat-animation-noopable]="_animationMode === 'NoopAnimations'"
+  [class._icc-animation-noopable]="_animationMode === 'NoopAnimations'"
 >
   <div
     #tabList
-    class="mat-mdc-tab-list"
+    class="icc-mdc-tab-list"
     role="tablist"
     [attr.aria-label]="ariaLabel || null"
     [attr.aria-labelledby]="ariaLabelledby || null"
@@ -30,12 +30,12 @@
 </div>
 
 <div
-  class="mat-mdc-tab-header-pagination mat-mdc-tab-header-pagination-after"
+  class="icc-mdc-tab-header-pagination icc-mdc-tab-header-pagination-after"
   #nextPaginator
-  [class.mat-mdc-tab-header-pagination-disabled]="_disableScrollAfter"
+  [class.icc-mdc-tab-header-pagination-disabled]="_disableScrollAfter"
   (mousedown)="_handlePaginatorPress('after', $event)"
   (click)="_handlePaginatorClick('after')"
   (touchend)="_stopInterval()"
 >
-  <div class="mat-mdc-tab-header-pagination-chevron"></div>
+  <div class="icc-mdc-tab-header-pagination-chevron"></div>
 </div>

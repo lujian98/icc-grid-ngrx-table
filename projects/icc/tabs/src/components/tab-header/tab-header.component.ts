@@ -22,9 +22,9 @@ import { CdkObserveContent } from '@angular/cdk/observers';
   styleUrls: ['./tab-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'mat-mdc-tab-header',
-    '[class.mat-mdc-tab-header-pagination-controls-enabled]': '_showPaginationControls',
-    '[class.mat-mdc-tab-header-rtl]': "_getLayoutDirection() == 'rtl'",
+    class: 'icc-mdc-tab-header',
+    '[class.icc-mdc-tab-header-pagination-controls-enabled]': '_showPaginationControls',
+    '[class.icc-mdc-tab-header-rtl]': "_getLayoutDirection() == 'rtl'",
   },
   imports: [CdkObserveContent],
 })

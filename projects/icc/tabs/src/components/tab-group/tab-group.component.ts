@@ -52,13 +52,13 @@ export type IccTabHeaderPosition = 'above' | 'below';
     },
   ],
   host: {
-    class: 'mat-mdc-tab-group',
-    '[class]': '"mat-" + (color || "primary")',
-    '[class.mat-mdc-tab-group-dynamic-height]': 'dynamicHeight',
-    '[class.mat-mdc-tab-group-inverted-header]': 'headerPosition === "below"',
-    '[class.mat-mdc-tab-group-stretch-tabs]': 'stretchTabs',
-    '[attr.mat-align-tabs]': 'alignTabs',
-    '[style.--mat-tab-animation-duration]': 'animationDuration',
+    class: 'icc-mdc-tab-group',
+    '[class]': '"icc-" + (color || "primary")',
+    '[class.icc-mdc-tab-group-dynamic-height]': 'dynamicHeight',
+    '[class.icc-mdc-tab-group-inverted-header]': 'headerPosition === "below"',
+    '[class.icc-mdc-tab-group-stretch-tabs]': 'stretchTabs',
+    '[attr.icc-align-tabs]': 'alignTabs',
+    '[style.--icc-tab-animation-duration]': 'animationDuration',
   },
   imports: [IccTabHeaderComponent, IccTabLabelWrapperDirective, CdkMonitorFocus, CdkPortalOutlet, IccTabBodyComponent],
 })
@@ -92,10 +92,10 @@ export class IccTabGroupComponent implements AfterViewInit, AfterContentInit, Af
   }
   private _fitInkBarToContent = false;
 
-  @Input({ alias: 'mat-stretch-tabs', transform: booleanAttribute })
+  @Input({ alias: 'icc-stretch-tabs', transform: booleanAttribute })
   stretchTabs: boolean = true;
 
-  @Input({ alias: 'mat-align-tabs' })
+  @Input({ alias: 'icc-align-tabs' })
   alignTabs: string | null = null;
 
   @Input({ transform: booleanAttribute })
@@ -149,7 +149,7 @@ export class IccTabGroupComponent implements AfterViewInit, AfterContentInit, Af
   constructor() {
     const defaultConfig = inject<IccTabGroupConfig>(ICC_TAB_GROUP_CONFIG, { optional: true });
 
-    this._groupId = inject(_IdGenerator).getId('mat-tab-group-');
+    this._groupId = inject(_IdGenerator).getId('icc-tab-group-');
     this.animationDuration =
       defaultConfig && defaultConfig.animationDuration ? defaultConfig.animationDuration : '500ms';
     this.disablePagination =

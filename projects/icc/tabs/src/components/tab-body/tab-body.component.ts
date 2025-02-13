@@ -162,7 +162,7 @@ export class IccTabBodyComponent implements OnInit, OnDestroy {
       const element = this._elementRef.nativeElement;
       const transitionDone = (event: TransitionEvent) => {
         if (event.target === this._contentElement?.nativeElement) {
-          this._elementRef.nativeElement.classList.remove('mat-tab-body-animating');
+          this._elementRef.nativeElement.classList.remove('icc-tab-body-animating');
           if (event.type === 'transitionend') {
             this._transitionDone();
           }
@@ -172,7 +172,7 @@ export class IccTabBodyComponent implements OnInit, OnDestroy {
       this._eventCleanups = [
         this._renderer.listen(element, 'transitionstart', (event: TransitionEvent) => {
           if (event.target === this._contentElement?.nativeElement) {
-            this._elementRef.nativeElement.classList.add('mat-tab-body-animating');
+            this._elementRef.nativeElement.classList.add('icc-tab-body-animating');
             this._transitionStarted();
           }
         }),
@@ -200,7 +200,7 @@ export class IccTabBodyComponent implements OnInit, OnDestroy {
   }
 
   _setActiveClass(isActive: boolean) {
-    this._elementRef.nativeElement.classList.toggle('mat-mdc-tab-body-active', isActive);
+    this._elementRef.nativeElement.classList.toggle('icc-mdc-tab-body-active', isActive);
   }
 
   _getLayoutDirection(): Direction {
