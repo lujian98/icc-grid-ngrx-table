@@ -282,7 +282,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
   }
 
-  @Output() selectionChange = new EventEmitter<T | T[]>(true);
+  @Output() valueChange = new EventEmitter<T | T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
 
@@ -382,11 +382,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   onChange(options: { [key: string]: string } | null): void {
     if (this.fieldConfig.multiSelection) {
-      this.selectionChange.emit(this.fieldValue);
+      this.valueChange.emit(this.fieldValue);
       this.delaySetSelected();
     } else {
       const value = options ? options : '';
-      this.selectionChange.emit(value as T);
+      this.valueChange.emit(value as T);
       this.value = value;
     }
   }
@@ -399,10 +399,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     event.stopPropagation();
     if (this.fieldConfig.multiSelection) {
       this.field.setValue([]);
-      this.selectionChange.emit([]);
+      this.valueChange.emit([]);
     } else {
       this.field.setValue('');
-      this.selectionChange.emit('' as T);
+      this.valueChange.emit('' as T);
     }
     this.changeDetectorRef.markForCheck();
     this.delaySetSelected();
@@ -411,7 +411,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   checkAll(selectOptions: { [key: string]: T }[] | string[]): void {
     this.value = selectOptions;
     this.delaySetSelected();
-    this.selectionChange.emit(this.value as T[]);
+    this.valueChange.emit(this.value as T[]);
   }
 
   hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
@@ -433,14 +433,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
             (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey],
         ) as object[];
       }
-      this.selectionChange.emit(this.value as T[]);
+      this.valueChange.emit(this.value as T[]);
     } else {
       this.autocompleteClose = true;
       if (option.selected) {
-        this.selectionChange.emit(option.value as T);
+        this.valueChange.emit(option.value as T);
         this.value = option.value as object;
       } else {
-        this.selectionChange.emit('' as T);
+        this.valueChange.emit('' as T);
         this.value = '';
       }
     }
