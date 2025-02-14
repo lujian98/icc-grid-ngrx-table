@@ -1,18 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  HostListener,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
-import { take, timer } from 'rxjs';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
@@ -34,8 +23,7 @@ import { IccTabConfig } from './models/tabs.model';
     IccPortalComponent,
   ],
 })
-export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
+export class IccTabsComponent<T> {
   protected selectedTabIndex = 0;
 
   @Input() tabs!: IccTabConfig[];
@@ -46,13 +34,6 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectedIndexChange(index: number): void {
     this.selectedTabIndex = index;
-    window.dispatchEvent(new Event('resize'));
-  }
-
-  private setWindow(): void {
-    timer(100)
-      .pipe(take(1))
-      .subscribe(() => window.dispatchEvent(new Event('resize')));
   }
 
   drop(event: CdkDragDrop<IccTabConfig>): void {
@@ -60,17 +41,4 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
   }
-
-  ngOnInit(): void {
-    //this.setWindow();
-  }
-
-  ngAfterViewInit(): void {}
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: MouseEvent): void {
-    //this.changeDetectorRef.detectChanges();
-  }
-
-  ngOnDestroy(): void {}
 }
