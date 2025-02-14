@@ -46,7 +46,7 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectedIndexChange(index: number): void {
     this.selectedTabIndex = index;
-    //window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
   }
 
   private setWindow(): void {

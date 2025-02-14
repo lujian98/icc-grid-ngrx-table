@@ -35,7 +35,7 @@ export class AppSimpleTabsComponent {
     },
     {
       name: 'three',
-      //content: AppGridRemoteVirtualScrollComponent,
+      content: AppGridRemoteVirtualScrollComponent,
     },
     {
       name: 'four',
