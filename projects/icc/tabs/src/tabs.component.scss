@@ -2,6 +2,10 @@
   width: 100%;
   height: 100%;
 
+  icc-portal {
+    display: flex;
+  }
+
   .icc-drag-tabs.cdk-drop-list-dragging {
     pointer-events: none;
   }

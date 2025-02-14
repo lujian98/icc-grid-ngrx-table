@@ -10,4 +10,14 @@
   .icc-mdc-tab {
     padding: 0 10px;
   }
+
+  ::ng-deep .icc-mdc-tab-body-active {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .icc-mdc-tab-body-content {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

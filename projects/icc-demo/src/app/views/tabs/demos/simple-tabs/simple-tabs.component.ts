@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccTabComponent, IccTabGroupComponent, IccTabsComponent } from '@icc/ui/tabs';
+import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
+import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
+import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
+import { PortalDemoComponent } from '../../../dashboard/demos/portal-demo/portal-demo.component';
+import { PortalDemo2Component } from '../../../dashboard/demos/portal-demo2/portal-demo2.component';
 
 @Component({
   selector: 'app-simple-tabs',
@@ -10,31 +15,44 @@ import { IccTabComponent, IccTabGroupComponent, IccTabsComponent } from '@icc/ui
   imports: [CommonModule, IccTabComponent, IccTabGroupComponent, IccTabsComponent],
 })
 export class AppSimpleTabsComponent {
+  portalData = {
+    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+  };
+
+  portalData2 = {
+    skills: [12, 13, 14, 15, 16],
+  };
+
   tabs = [
     {
       name: 'one',
-      content: 'test1',
+      content: AppGridMultiRowSelectionComponent,
     },
     {
       name: 'two',
       title: 'Two',
-      content: 'test2',
+      content: AppStockChartComponent,
     },
     {
       name: 'three',
-      content: 'test3',
+      content: AppGridRemoteVirtualScrollComponent,
     },
     {
       name: 'four',
-      content: 'test4',
+      content: PortalDemoComponent,
+      context: this.portalData,
     },
     {
       name: 'five',
-      content: 'test5',
+      content: PortalDemo2Component,
+      context: this.portalData2,
     },
     {
       name: 'six',
-      //content: 'test6',
+      content: 'test6',
+    },
+    {
+      name: 'seven',
     },
   ];
 }
