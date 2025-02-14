@@ -9,6 +9,7 @@
   }
   .icc-mdc-tab {
     padding: 0 10px;
+    margin: 0 2px;
   }
 
   ::ng-deep .icc-mdc-tab-body-active {
@@ -19,5 +20,10 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  ::ng-deep .mdc-tab--active {
+    color: orange;
+    border: 1px solid green;
   }
 }

@@ -7,6 +7,14 @@
     overflow: hidden;
   }
 
+  ::ng-deep .mdc-tab__text-label span {
+    padding-right: 10px;
+  }
+
+  .icc-tab-remove-icon {
+    position: fixed;
+  }
+
   .icc-drag-tabs.cdk-drop-list-dragging {
     pointer-events: none;
   }
