@@ -60,11 +60,11 @@ export class AppDoubleTabsComponent {
   tabs2 = [
     {
       name: 'one',
-      content: AppGridGroupHeaderComponent,
+      content: AppGridMultiRowSelectionComponent,
     },
     {
       name: 'two',
-      title: 'Two',
+      content: AppGridGroupHeaderComponent,
     },
     {
       name: 'three',
