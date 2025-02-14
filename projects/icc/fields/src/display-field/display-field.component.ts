@@ -22,7 +22,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { take, timer } from 'rxjs';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
 @Component({
@@ -57,6 +57,7 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
   ],
 })
 export class IccDisplayFieldComponent implements ControlValueAccessor, Validator {
+  private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDisplayFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
@@ -106,24 +107,22 @@ export class IccDisplayFieldComponent implements ControlValueAccessor, Validator
   }
 
   registerOnChange(fn: (value: string) => void): void {
-    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   registerOnTouched(fn: (value: string) => void): void {
-    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {
-    //isDisabled ? this.form.disable() : this.form.enable();
+    isDisabled ? this.form.disable() : this.form.enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    //this.form.patchValue(value, { emitEvent: false });
-    //this.changeDetectorRef.markForCheck();
+    this.form.patchValue(value, { emitEvent: false });
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return null;
-    //return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 }

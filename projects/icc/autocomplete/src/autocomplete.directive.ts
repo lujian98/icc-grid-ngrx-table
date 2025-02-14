@@ -170,22 +170,10 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   private setOverlayHeight(): void {
     const overlay = this.document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLDivElement;
     overlay.style.height = 'unset';
-
     const overlayHeight = this.getOverlayHeight();
-    /*
-    const el = overlay.querySelector('.cdk-overlay-pane') as HTMLDivElement;
-    console.log( ' el=', el)
-    const pos = el.getBoundingClientRect();
-    console.log( ' el.clientHeight=', el.clientHeight)
-    console.log( ' pos.bottom=', pos.bottom)
-    const height = el.clientHeight - pos.bottom;
-    console.log( ' height=', height)
-    */
-
     const virtualScrollWrapper = overlay.querySelector('.cdk-virtual-scroll-content-wrapper') as HTMLDivElement;
     if (virtualScrollWrapper) {
       const styles = window.getComputedStyle(virtualScrollWrapper);
-      // const height = overlayHeight < parseFloat(styles.height) ? overlayHeight : parseFloat(styles.height);
       const height = parseFloat(styles.height);
       if (height < 320) {
         const viewport = overlay.querySelector('cdk-virtual-scroll-viewport') as HTMLDivElement;

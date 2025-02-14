@@ -81,8 +81,6 @@ export class IccDynamicOverlayService<T> implements OnDestroy {
     this.overlayRef = this.overlayService.create({
       scrollStrategy: this.overlayService.scrollStrategies.close(),
       positionStrategy,
-      //hasBackdrop: true,
-      //backdropClass: '',
     });
     this.overlayService.add(this.overlayRef, this.overlayServiceConfig.popoverLevel!);
   }

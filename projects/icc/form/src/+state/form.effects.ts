@@ -1,12 +1,10 @@
 import { Injectable, inject } from '@angular/core';
+import { IccUploadFileService } from '@icc/ui/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
-import { isEqual, IccUploadFileService } from '@icc/ui/core';
+import { concatMap, delay, map, mergeMap, of } from 'rxjs';
 import { IccFormService } from '../services/form.service';
 import * as formActions from './form.actions';
-import { IccFormFacade } from './form.facade';
 
 @Injectable()
 export class IccFormEffects {

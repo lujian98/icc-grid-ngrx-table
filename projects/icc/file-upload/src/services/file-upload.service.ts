@@ -22,8 +22,6 @@ export class IccFileUploadService {
         formData.append(file.fieldName, file.file);
       }
     });
-    console.log(' send upload file=', fileUploadConfig.urlKey, ' file=', files);
-    //TODO response ???
     return this.http.post(url, formData).pipe(
       map((res) => {
         return {

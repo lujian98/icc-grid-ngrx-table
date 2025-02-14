@@ -1,8 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { TreeState, IccTreeConfig } from '../models/tree-grid.model';
 
-//onst featureSelector = createFeatureSelector('iccTree');
-
 export interface AppTreeState {
   iccTree: TreeState;
 }

@@ -177,7 +177,6 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
     });
   }
 
-  // TODO add options.calendarOverlayConfig
   openCalendar(): void {
     this.dialogService.open(IccDateRangePickerComponent, {
       context: {

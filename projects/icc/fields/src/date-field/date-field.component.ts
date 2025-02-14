@@ -184,7 +184,6 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
       });
   }
 
-  // TODO   add options.calendarOverlayConfig
   openCalendar(): void {
     this.dialogService.open(IccDatePickerComponent, {
       context: {

@@ -17,7 +17,6 @@ export class IccFormService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccFormConfig>(url, { params }).pipe(
       map((res) => {
-        //console.log(' formConfig res=', res);
         return {
           ...formConfig,
           ...res,
@@ -31,7 +30,6 @@ export class IccFormService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccFormField[]>(url, { params }).pipe(
       map((res) => {
-        //console.log(' formFields res=', res);
         return [...res];
       }),
     );
@@ -42,7 +40,6 @@ export class IccFormService {
     const url = this.backendService.apiUrl;
     return this.http.get<{ formConfig: IccFormConfig; formData: object }>(url, { params }).pipe(
       map((res) => {
-        //console.log(' formData res=', res);
         return {
           formConfig: { ...formConfig, ...res.formConfig },
           formData: { ...res.formData },
@@ -59,7 +56,6 @@ export class IccFormService {
     const url = this.backendService.apiUrl;
     return this.http.put<{ formConfig: IccFormConfig; formData: object }>(url, { params }).pipe(
       map((res) => {
-        //console.log(' formData res=', res);
         return {
           formConfig: { ...formConfig, ...res.formConfig },
           formData: { ...res.formData },

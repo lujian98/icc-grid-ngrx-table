@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import {
   Directive,
   ElementRef,
@@ -18,7 +18,7 @@ import { IccResizeInfo, IccResizeType } from './model';
   standalone: true,
 })
 export class IccResizeDirective implements OnInit, OnDestroy {
-  private document = inject(DOCUMENT);
+  private document = inject(ICC_DOCUMENT);
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
 

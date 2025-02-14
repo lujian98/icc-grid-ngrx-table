@@ -109,7 +109,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _fieldConfig!: IccSelectFieldConfig; // = defaultSelectFieldConfig;
+  private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
@@ -460,7 +460,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   writeValue(value: { [key: string]: string[] | object[] }): void {
-    //TODO value formant use setFormvalue ??
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }

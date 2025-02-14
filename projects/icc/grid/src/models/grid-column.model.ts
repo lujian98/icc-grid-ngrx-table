@@ -103,38 +103,6 @@ export interface IccColumnFilter {
 
 export type IccFilterField = boolean | string;
 export type IccFilterFieldConfig = Partial<IccFormField>;
-
-/*
-
-export interface IccFieldType {
-  type: fieldType;
-  allowBlank?: boolean;
-}
-
-export interface IccTextFieldType extends IccFieldType {
-  minLength?: number;
-  maxLength?: number;
-}
-
-export interface IccNumberFieldType extends IccFieldType {
-  minValue?: number;
-  maxValue?: number;
-}
-
-
-export interface IccSelectFieldType extends IccFieldType {
-  key?: string;
-  value?: string;
-  options?: string[] | object[];
-  multiSelect?: boolean;
-  filterMultiSelect?: boolean;
-
-  //showCheckAll?: boolean;
-  //showUncheckAll?: boolean;
-  //showIsEmpty?: boolean;
-}
-  */
-
 export type IccGroupField = boolean | string;
 
 export interface IccColumnConfig {
@@ -172,8 +140,6 @@ export interface IccColumnConfig {
   cellReadonly?: boolean | Function;
   priority?: number;
   menu?: boolean | IccMenuItem;
-
-  copyToClipboard?: boolean;
   */
 }
 

@@ -13,20 +13,13 @@
     .grid-header-cell-title {
       display: inline-block;
       cursor: default;
-      font-size: 13px; //TODO move to theme?
-      font-weight: 600; //TODO move to theme?
+      font-size: 13px;
+      font-weight: 600;
       padding-right: 6px;
-      //margin: 0 $size-xs 0 0;
 
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      /*
-      &.ellipsis {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }*/
     }
 
     .grid-header-cell-sort {

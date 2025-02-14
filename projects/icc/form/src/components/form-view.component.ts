@@ -69,7 +69,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     if (this.formConfig.validators) {
       this.form.addValidators(this.formConfig.validators);
     }
-    //console.log(' formConfig=', this.formConfig);
   }
   get formFields(): IccFormField[] {
     return this._formFields;
@@ -200,7 +199,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   buttonClick(button: IccButtonConfg): void {
     this.formFacade.setFormEditable(this.formConfig.formId, button);
-    //console.log( ' 222222resset kkkkkkkkkkkkkk')
     switch (button.name) {
       case IccButtonType.Edit:
         this.editForm(button);
@@ -209,7 +207,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
         this.refreshForm();
         break;
       case IccButtonType.Reset:
-        // console.log( ' resset kkkkkkkkkkkkkk')
         this.resetForm();
         break;
       case IccButtonType.Save:
@@ -240,17 +237,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   private resetForm(): void {
     this.form.patchValue({ ...this.values });
     this.uploadFileService.uploadFiles = [];
-    console.log('this.values=', this.values);
     this.changeDetectorRef.markForCheck();
   }
 
   private saveForm(): void {
     if (this.form.valid) {
-      //console.log(' form=', this.form);
-      console.log(' values =', this.form.value);
-      console.log(' raw values =', this.form.getRawValue());
-      //console.log('is form dirty = ', this.form.dirty);
-      //console.log('is form invalid = ', this.form.invalid);
       this.formFacade.saveFormData(this.formConfig, this.form.getRawValue());
     }
   }

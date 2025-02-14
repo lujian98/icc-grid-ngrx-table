@@ -1,10 +1,4 @@
 <icc-layout-header [title]="formConfig.title">
-  <!--
-  [buttons]="buttons"
-  (iccButtonClick)="buttonClick($event)"
-  >
--->
-
   <ng-container *ngFor="let button of formConfig.buttons">
     <button icc-button *ngIf="!buttonHidden(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
       <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>

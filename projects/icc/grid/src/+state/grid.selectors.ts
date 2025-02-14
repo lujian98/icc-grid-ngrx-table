@@ -4,7 +4,6 @@ import { IccRowGroup } from '../services/row-group/row-group';
 import { GridState, IccGridConfig } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 
-//const featureSelector = createFeatureSelector('iccGrid');
 export interface AppGridState {
   iccGrid: GridState;
 }

@@ -174,7 +174,6 @@ export class IccFocusTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
     filter((event) => {
       const clickTarget = event.target as HTMLElement;
       const notOrigin = clickTarget !== this.host;
-      //console.log(' this.container()=', this.container());
       const notOverlay = !(this.container() && this.container().location.nativeElement.contains(clickTarget));
       const formField = this.formField ? this.formField.elementRef.nativeElement : null;
       const notFormfield = !formField?.contains(clickTarget);

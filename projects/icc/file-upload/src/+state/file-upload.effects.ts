@@ -21,7 +21,6 @@ export class IccFileUploadEffects {
       concatMap(([action, uploadFiles]) => {
         return this.fileUploadService.sendUploadFiles(action.fileUploadConfig, uploadFiles).pipe(
           map(() => {
-            console.log(' send file suceesss');
             return fileUploadActions.uploadFilesSuccess();
           }),
         );

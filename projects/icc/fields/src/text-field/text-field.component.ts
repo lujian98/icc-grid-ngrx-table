@@ -84,14 +84,12 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   set fieldConfig(fieldConfig: Partial<IccTextFieldConfig>) {
     this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
     this.initForm(this.fieldConfig);
-    //console.log('this.fieldConfig=', this.fieldConfig);
   }
   get fieldConfig(): IccTextFieldConfig {
     return this._fieldConfig;
   }
 
   private initForm(fieldConfig: IccTextFieldConfig): void {
-    //console.log(' fieldConfig=', fieldConfig);
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({
@@ -138,7 +136,6 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   onChange(): void {
-    //console.log(' this.field=', this.field);
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
   }

@@ -6,33 +6,32 @@
   div.icc-file-drop__drop-zone--disabled {
     height: 60px;
     border-radius: 30px;
-    //color: #001428; // $colors-text-primary;
     font-size: 18px;
     font-weight: 400;
-    font-family: "Inter", sans-serif; //$font-family-standard;
+    font-family: "Inter", sans-serif;
     flex-direction: column;
     transition: all 0.2s ease-in-out;
 
     a {
-      color: #007bfd; //$colors-blue-primary;
+      color: #007bfd;
     }
   }
 
   div.icc-file-drop__drop-zone--enabled,
   div.icc-file-drop__drop-zone--disabled {
-    border: 3px dashed #dfe2e5; // $colors-border
+    border: 3px dashed #dfe2e5;
   }
 
   div.icc-file-drop__drop-zone--enabled {
-    border-color: blue; //$colors-text-primary;
+    border-color: blue;
   }
 
   div.icc-file-drop__drop-zone--enabled:hover {
-    border-color: orange; //$colors-text-primary;
+    border-color: orange;
   }
 
   div.icc-file-drop__drop-zone--disabled:hover {
-    border: 3px dashed #dfe2e5; //$colors-border;
+    border: 3px dashed #dfe2e5;
   }
 }
 
@@ -52,7 +51,6 @@
   align-items: center;
   justify-content: center;
   height: 100px;
-  //color: #0782d0;
 }
 
 .icc-file-drop__drop-zone-label {

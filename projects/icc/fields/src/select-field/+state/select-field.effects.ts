@@ -1,11 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concatLatestFrom } from '@ngrx/operators';
-import { debounceTime, exhaustMap, map, of, delay, switchMap, mergeMap, concatMap } from 'rxjs';
+import { concatMap, delay, map, mergeMap, of } from 'rxjs';
 import { IccSelectFieldService } from '../services/select-field.service';
 import * as selectFieldActions from './select-field.actions';
-import { IccSelectFieldFacade } from './select-field.facade';
 
 @Injectable()
 export class IccSelectFieldEffects {

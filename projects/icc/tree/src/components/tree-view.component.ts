@@ -1,5 +1,5 @@
 import { DragDropModule, CdkDragDrop, CdkDragMove } from '@angular/cdk/drag-drop';
-import { DOCUMENT } from '@angular/common';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -31,7 +31,7 @@ import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
-  private document = inject(DOCUMENT);
+  private document = inject(ICC_DOCUMENT);
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
@@ -61,7 +61,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   getRecord(record: IccTreeNode<T>): IccTreeNode<T> {
-    return { ...record }; // TODO not sure this
+    return record; // { ...record }; // TODO not sure this
   }
 
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {

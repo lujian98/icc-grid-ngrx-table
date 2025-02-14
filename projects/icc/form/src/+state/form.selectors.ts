@@ -2,8 +2,6 @@ import { createSelector } from '@ngrx/store';
 import { FormState } from '../models/form.model';
 import { defaultFormState } from '../models/default-form';
 
-//const featureSelector = createFeatureSelector('iccForm');
-
 export interface AppFormState {
   iccForm: FormState;
 }

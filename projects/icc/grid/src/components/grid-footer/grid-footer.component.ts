@@ -42,7 +42,6 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   get displaying(): string {
-    // TODO display with vertical scroll
     const start = (this.gridConfig.page - 1) * this.gridConfig.pageSize + 1;
     let end = start + this.gridConfig.pageSize - 1;
     if (end > this.gridConfig.totalCounts) {

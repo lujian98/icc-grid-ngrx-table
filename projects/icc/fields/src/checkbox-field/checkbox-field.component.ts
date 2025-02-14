@@ -133,7 +133,6 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   @Output() valueChange = new EventEmitter<boolean>(true);
-  //@Output() checkboxClick = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;

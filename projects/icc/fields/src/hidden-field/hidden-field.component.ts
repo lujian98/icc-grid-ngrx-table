@@ -12,8 +12,8 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
+import { Subject, takeUntil } from 'rxjs';
 import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-field.model';
 
 @Component({
@@ -36,6 +36,7 @@ import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFormFieldComponent, IccInputDirective],
 })
 export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+  private destroy$ = new Subject<void>();
   private _fieldConfig!: IccHiddenFieldConfig;
   private _value!: string;
   @Input() form!: FormGroup;
@@ -74,29 +75,27 @@ export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   registerOnChange(fn: (value: string) => void): void {
-    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   registerOnTouched(fn: (value: string) => void): void {
-    //this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {
-    //isDisabled ? this.form.disable() : this.form.enable();
+    isDisabled ? this.form.disable() : this.form.enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    //this.form.patchValue(value, { emitEvent: false });
-    //this.changeDetectorRef.markForCheck();
+    this.form.patchValue(value, { emitEvent: false });
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return null;
-    //return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 
   ngOnDestroy(): void {
-    //this.destroy$.next();
-    //this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

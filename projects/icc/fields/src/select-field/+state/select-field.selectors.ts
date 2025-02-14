@@ -1,8 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { SelectFieldState } from '../models/select-field.model';
 
-//const featureSelector = createFeatureSelector('iccSelectField');
-
 export interface AppSelectState {
   iccSelectField: SelectFieldState;
 }
