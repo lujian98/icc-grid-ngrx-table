@@ -5,8 +5,8 @@
 
   .icc-mdc-tab-body-wrapper {
     height: 100%;
-    border: 1px solid orangered;
   }
+
   .icc-mdc-tab {
     padding: 0 10px;
     margin: 0 2px;
@@ -25,5 +25,9 @@
   ::ng-deep .mdc-tab--active {
     color: orange;
     border: 1px solid green;
+  }
+
+  ::ng-deep .icc-mdc-tab:hover {
+    color: orange;
   }
 }
