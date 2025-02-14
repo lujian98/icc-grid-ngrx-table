@@ -46,7 +46,7 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectedIndexChange(index: number): void {
     this.selectedTabIndex = index;
-    window.dispatchEvent(new Event('resize'));
+    //window.dispatchEvent(new Event('resize'));
   }
 
   private setWindow(): void {
@@ -62,14 +62,14 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setWindow();
+    //this.setWindow();
   }
 
   ngAfterViewInit(): void {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
-    this.changeDetectorRef.detectChanges();
+    //this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {}
