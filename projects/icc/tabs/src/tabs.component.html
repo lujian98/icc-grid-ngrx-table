@@ -11,9 +11,10 @@
   @for (tab of tabs; track $index; let idx = $index) {
     <icc-tab>
       <ng-template icc-tab-label>
-        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab">{{
-          getTabLabel(tab)
-        }}</span>
+        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab"
+          >{{ getTabLabel(tab) }}
+        </span>
+        <icc-icon icon="remove" (click)="removeTab(tab, idx)"></icc-icon>
       </ng-template>
       <icc-portal *ngIf="idx === selectedTabIndex" [content]="tab.content!" [context]="tab.context!"></icc-portal>
     </icc-tab>
