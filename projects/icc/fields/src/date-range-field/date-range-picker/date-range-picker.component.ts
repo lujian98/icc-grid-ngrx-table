@@ -185,9 +185,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
 
   private setSelectedRangeDates(): void {
     this.selectedRangeDates = [];
-    if (!this.fromDate && !this.toDate) {
-      this.toDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
-    }
+
     if (this.fromDate && this.toDate) {
       let mdate = new Date(this.fromDate.getTime());
       mdate = new Date(mdate.setDate(mdate.getDate() - 1));
@@ -195,7 +193,10 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
         this.selectedRangeDates.push(mdate);
         mdate = new Date(mdate.setDate(mdate.getDate() + 1));
       }
+    } else if (!this.fromDate && !this.toDate) {
+      this.toDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
     }
+
     this.changeDetectorRef.markForCheck();
   }
 
