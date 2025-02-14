@@ -28,7 +28,11 @@ export class AppTabsComponent {
   items: IccAccordion[] = [
     {
       name: 'Tabs Demos',
-      items: [{ name: 'Simple Tabs', link: 'simple-tabs' }],
+      items: [
+        { name: 'Simple Tabs', link: 'simple-tabs' },
+        { name: 'Tab Group', link: 'tab-group' },
+        { name: 'Double Tab Panels', link: 'double-tabs' },
+      ],
     },
   ];
 }

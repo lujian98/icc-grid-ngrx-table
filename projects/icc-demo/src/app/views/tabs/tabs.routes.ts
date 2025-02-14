@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { AppSimpleTabsComponent } from './demos/simple-tabs/simple-tabs.component';
-
 import { AppTabsComponent } from './tabs.component';
+import { AppSimpleTabsComponent } from './demos/simple-tabs.component';
+import { AppTabGroupComponent } from './demos/tab-group.component';
+import { AppDoubleTabsComponent } from './demos/double-tabs.component';
 
 export const AppTabsRoutes: Routes = [
   {
@@ -10,6 +11,8 @@ export const AppTabsRoutes: Routes = [
     providers: [],
     children: [
       { path: 'simple-tabs', component: AppSimpleTabsComponent },
+      { path: 'tab-group', component: AppTabGroupComponent },
+      { path: 'double-tabs', component: AppDoubleTabsComponent },
       {
         path: '**',
         redirectTo: 'simple-tabs',

@@ -24,7 +24,7 @@ import { IccTabConfig } from './models/tabs.model';
     IccTabComponent,
     IccTabGroupComponent,
     IccPortalComponent,
-    IccButtonComponent,
+    //IccButtonComponent,
     IccIconModule,
   ],
 })
