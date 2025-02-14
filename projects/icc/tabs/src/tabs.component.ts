@@ -9,6 +9,7 @@ import {
   OnDestroy,
   OnInit,
   HostListener,
+  inject,
 } from '@angular/core';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { take, timer } from 'rxjs';
@@ -34,6 +35,7 @@ import { IccTabConfig } from './models/tabs.model';
   ],
 })
 export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   protected selectedTabIndex = 0;
 
   @Input() tabs!: IccTabConfig[];
@@ -70,6 +72,7 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
+    this.changeDetectorRef.detectChanges();
     //this.setWindow();
     // window.dispatchEvent(new Event('resize'));
   }
