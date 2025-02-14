@@ -7,7 +7,7 @@ import { take, timer } from 'rxjs';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
-import { IccTabConfig, IccTabsConfig, defaultTabsConfig } from './models/tabs.model';
+import { defaultTabsConfig, IccTabConfig, IccTabsConfig } from './models/tabs.model';
 
 @Component({
   selector: 'icc-tabs',
