@@ -1,7 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, HostBinding } from '@angular/core';
-import { IccButtonComponent } from '@icc/ui/button';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { take, timer } from 'rxjs';
@@ -24,22 +23,14 @@ import { IccTabConfig } from './models/tabs.model';
     IccTabComponent,
     IccTabGroupComponent,
     IccPortalComponent,
-    //IccButtonComponent,
     IccIconModule,
   ],
 })
-export class IccTabsComponent<T> {
+export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  protected selectedTabIndex = 0;
 
+  @Input() selectedTabIndex = 0;
   @Input() tabs!: IccTabConfig[];
-
-  /*
-  @HostBinding('class.active')
-  get active(): boolean {
-    return true;
-    //return this.selected;
-  }*/
 
   getTabLabel(tab: IccTabConfig): string {
     return tab.title || tab.name;

@@ -10,7 +10,7 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
 
 @Component({
   selector: 'app-double-tabs',
-  template: `<icc-tabs [tabs]="tabs"></icc-tabs> <icc-tabs [tabs]="tabs2"> </icc-tabs>`,
+  template: `<icc-tabs [tabs]="tabs"></icc-tabs> <icc-tabs [tabs]="tabs2" [selectedTabIndex]="2"> </icc-tabs>`,
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTabsComponent],
@@ -65,7 +65,6 @@ export class AppDoubleTabsComponent {
     {
       name: 'two',
       title: 'Two',
-      //content: AppStockChartComponent,
     },
     {
       name: 'three',
