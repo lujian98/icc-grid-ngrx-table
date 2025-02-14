@@ -2,7 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { debounceTime, concatMap, delay, map, of, mergeMap, switchMap } from 'rxjs';
+import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
@@ -69,7 +70,23 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      //debounceTime(10), // debounce with switchMap may lose data if two or more grid pull, but will cancel previous call
+      debounceTime(10), // debounce with switchMap may lose data if two or more grid pull, but will cancel previous call
+      concatLatestFrom((action) => {
+        return [
+          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
+          this.gridFacade.selectColumnsConfig(action.gridConfig.gridId),
+          this.gridFacade.selectGridInMemoryData(action.gridConfig),
+        ];
+      }),
+      switchMap(([action, gridConfig, columns, inMemoryData]) => {
+        return this.getGridData(gridConfig, columns, inMemoryData);
+      }),
+    ),
+  );
+
+  getConcatGridData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.getConcatGridData),
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridConfig.gridId),
@@ -78,22 +95,26 @@ export class IccGridEffects {
         ];
       }),
       concatMap(([action, gridConfig, columns, inMemoryData]) => {
-        if (gridConfig.remoteGridData) {
-          return this.gridService.getGridData(gridConfig, columns).pipe(
-            map((gridData) => {
-              return gridActions.getGridDataSuccess({ gridConfig, gridData });
-            }),
-          );
-        } else {
-          return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
-            map((gridData) => {
-              return gridActions.getGridDataSuccess({ gridConfig, gridData });
-            }),
-          );
-        }
+        return this.getGridData(gridConfig, columns, inMemoryData);
       }),
     ),
   );
+
+  private getGridData = (gridConfig: IccGridConfig, columns: IccColumnConfig[], inMemoryData: unknown[]) => {
+    if (gridConfig.remoteGridData) {
+      return this.gridService.getGridData(gridConfig, columns).pipe(
+        map((gridData) => {
+          return gridActions.getGridDataSuccess({ gridConfig, gridData });
+        }),
+      );
+    } else {
+      return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
+        map((gridData) => {
+          return gridActions.getGridDataSuccess({ gridConfig, gridData });
+        }),
+      );
+    }
+  };
 
   clearGridDataStore$ = createEffect(() =>
     this.actions$.pipe(

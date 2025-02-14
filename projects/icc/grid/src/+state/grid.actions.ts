@@ -55,6 +55,8 @@ export const setGridColumnsConfig = createAction(
 
 export const getGridData = createAction('[Grid] Get Grid Data', props<{ gridConfig: IccGridConfig }>());
 
+export const getConcatGridData = createAction('[Grid] Get Concat Grid Data', props<{ gridConfig: IccGridConfig }>());
+
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
   props<{ gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
