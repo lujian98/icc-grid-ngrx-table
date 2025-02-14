@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { IccGridFacade } from '@icc/ui/grid';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
-import { debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
 import { IccTreeinMemoryService } from '../services/tree-in-memory.service';
 import { IccTreeRemoteService } from '../services/tree-remote.service';
 import * as treeActions from './tree.actions';
@@ -34,6 +34,34 @@ export class IccTreeEffects {
             return treeActions.getTreeRemoteDataSuccess({ treeConfig, treeData });
           }),
         );
+      }),
+    ),
+  );
+
+  getConcatTreeData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(treeActions.getConcatTreeData),
+      concatLatestFrom((action) => {
+        return [
+          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
+          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
+          this.treeFacade.selectTreeInMemoryData(action.treeConfig),
+        ];
+      }),
+      concatMap(([action, treeConfig, columns, inMemoryData]) => {
+        if (treeConfig.remoteGridData) {
+          return this.treeRemoteService.getTreeRemoteData(treeConfig, columns).pipe(
+            map((treeData) => {
+              return treeActions.getTreeRemoteDataSuccess({ treeConfig, treeData });
+            }),
+          );
+        } else {
+          return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
+            map((treeData) => {
+              return treeActions.getInMemoryTreeDataSuccess({ treeConfig, treeData });
+            }),
+          );
+        }
       }),
     ),
   );

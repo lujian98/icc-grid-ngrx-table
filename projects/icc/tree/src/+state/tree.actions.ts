@@ -5,6 +5,8 @@ export const initTreeConfig = createAction('[Tree] Init Tree Config', props<{ tr
 
 export const getTreeRemoteData = createAction('[Tree] Get Tree Data', props<{ treeConfig: IccTreeConfig }>());
 
+export const getConcatTreeData = createAction('[Tree] Get Concat Tree Data', props<{ treeConfig: IccTreeConfig }>());
+
 export const getTreeRemoteDataSuccess = createAction(
   '[Tree] Get Tree Remote Data Success',
   props<{ treeConfig: IccTreeConfig; treeData: IccTreeData[] }>(),
