@@ -4,6 +4,7 @@
 
   icc-portal {
     display: flex;
+    overflow: hidden;
   }
 
   .icc-drag-tabs.cdk-drop-list-dragging {

@@ -6,6 +6,7 @@ import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/g
 import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
 import { PortalDemoComponent } from '../../../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../../../dashboard/demos/portal-demo2/portal-demo2.component';
+import { AppGridGroupHeaderComponent } from '../../../grid/remote-data/grid-group-header.component';
 
 @Component({
   selector: 'app-simple-tabs',
@@ -36,6 +37,39 @@ export class AppSimpleTabsComponent {
     {
       name: 'three',
       content: AppGridRemoteVirtualScrollComponent,
+    },
+    {
+      name: 'four',
+      content: PortalDemoComponent,
+      context: this.portalData,
+    },
+    {
+      name: 'five',
+      content: PortalDemo2Component,
+      context: this.portalData2,
+    },
+    {
+      name: 'six',
+      content: 'test6',
+    },
+    {
+      name: 'seven',
+    },
+  ];
+
+  tabs2 = [
+    {
+      name: 'one',
+      content: AppGridGroupHeaderComponent,
+    },
+    {
+      name: 'two',
+      title: 'Two',
+      //content: AppStockChartComponent,
+    },
+    {
+      name: 'three',
+      content: AppStockChartComponent,
     },
     {
       name: 'four',

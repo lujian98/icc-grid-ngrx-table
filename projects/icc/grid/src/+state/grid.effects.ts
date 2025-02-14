@@ -69,8 +69,7 @@ export class IccGridEffects {
   getGridData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.getGridData),
-      debounceTime(10), // debounce with switchMap may lose data if two or more grid pull, but will cancel previous call
-      //delay(10),
+      //debounceTime(10), // debounce with switchMap may lose data if two or more grid pull, but will cancel previous call
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridConfig.gridId),
@@ -78,7 +77,7 @@ export class IccGridEffects {
           this.gridFacade.selectGridInMemoryData(action.gridConfig),
         ];
       }),
-      switchMap(([action, gridConfig, columns, inMemoryData]) => {
+      concatMap(([action, gridConfig, columns, inMemoryData]) => {
         if (gridConfig.remoteGridData) {
           return this.gridService.getGridData(gridConfig, columns).pipe(
             map((gridData) => {
