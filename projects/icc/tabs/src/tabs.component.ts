@@ -26,9 +26,9 @@ import { IccTabConfig } from './models/tabs.model';
 export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   protected selectedTabIndex = 0;
 
-  @Input() tabs!: IccTabConfig<T>[];
+  @Input() tabs!: IccTabConfig[];
 
-  getTabLabel(tab: IccTabConfig<T>): string {
+  getTabLabel(tab: IccTabConfig): string {
     return tab.title || tab.name;
   }
 
@@ -36,7 +36,7 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     this.selectedTabIndex = index;
   }
 
-  drop(event: CdkDragDrop<IccTabConfig<T>>): void {
+  drop(event: CdkDragDrop<IccTabConfig>): void {
     const prevActive = this.tabs[this.selectedTabIndex];
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
