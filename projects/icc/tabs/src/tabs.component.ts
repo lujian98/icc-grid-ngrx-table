@@ -44,12 +44,12 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectedIndexChange(index: number): void {
     this.selectedTabIndex = index;
-    //this.setWindow();
-    window.dispatchEvent(new Event('resize'));
+    this.setWindow();
+    //window.dispatchEvent(new Event('resize'));
   }
 
   private setWindow(): void {
-    timer(50)
+    timer(100)
       .pipe(take(1))
       .subscribe(() => window.dispatchEvent(new Event('resize')));
   }
@@ -60,7 +60,9 @@ export class IccTabsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setWindow();
+  }
 
   ngAfterViewInit(): void {
     //this.setWindow();
