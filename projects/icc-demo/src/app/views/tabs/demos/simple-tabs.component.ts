@@ -27,32 +27,39 @@ export class AppSimpleTabsComponent {
     {
       name: 'one',
       content: AppGridMultiRowSelectionComponent,
+      closeable: true,
     },
     {
       name: 'two',
       title: 'Two',
       content: AppStockChartComponent,
+      closeable: true,
     },
     {
       name: 'three',
       content: AppGridRemoteVirtualScrollComponent,
+      closeable: true,
     },
     {
       name: 'four',
       content: PortalDemoComponent,
       context: this.portalData,
+      closeable: true,
     },
     {
       name: 'five',
       content: PortalDemo2Component,
       context: this.portalData2,
+      closeable: true,
     },
     {
       name: 'six',
       content: 'test6',
+      closeable: true,
     },
     {
       name: 'seven',
+      closeable: true,
     },
   ];
 }

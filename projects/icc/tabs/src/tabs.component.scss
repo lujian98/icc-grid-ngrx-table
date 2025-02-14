@@ -13,6 +13,13 @@
 
   .icc-tab-remove-icon {
     position: fixed;
+    opacity: 0.25;
+    color: grey;
+  }
+
+  .icc-tab-remove-icon:hover {
+    color: green;
+    opacity: 1;
   }
 
   .icc-drag-tabs.cdk-drop-list-dragging {

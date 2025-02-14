@@ -5,4 +5,5 @@ export interface IccTabConfig {
   title?: string;
   content?: IccPortalContent<any>;
   context?: {};
+  closeable?: boolean;
 }

@@ -46,7 +46,8 @@ export class IccTabsComponent {
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
   }
 
-  removeTab(tab: IccTabConfig, index: number): void {
+  removeTab(event: MouseEvent, tab: IccTabConfig, index: number): void {
+    event.stopPropagation();
     this.tabs = [...this.tabs].filter((item) => item.name !== tab.name);
     if (index === this.selectedTabIndex) {
       if (this.selectedTabIndex === 0) {
