@@ -7,7 +7,7 @@ import { take, timer } from 'rxjs';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
-import { IccTabConfig } from './models/tabs.model';
+import { IccTabConfig, IccTabsConfig, defaultTabsConfig } from './models/tabs.model';
 
 @Component({
   selector: 'icc-tabs',
@@ -28,9 +28,26 @@ import { IccTabConfig } from './models/tabs.model';
 })
 export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private _tabsConfig: IccTabsConfig = defaultTabsConfig;
+
+  @Input()
+  set tabsConfig(value: Partial<IccTabsConfig>) {
+    this.tabsConfig = { ...defaultTabsConfig, ...value };
+  }
+  get tabsConfig(): IccTabsConfig {
+    return this._tabsConfig;
+  }
 
   @Input() selectedTabIndex = 0;
   @Input() tabs!: IccTabConfig[];
+
+  dragDisabled(tab: IccTabConfig): boolean {
+    return !this.tabsConfig.tabReorder;
+  }
+
+  closeable(tab: IccTabConfig): boolean {
+    return this.tabsConfig.closeable && !!tab.closeable;
+  }
 
   getTabLabel(tab: IccTabConfig): string {
     return tab.title || tab.name;

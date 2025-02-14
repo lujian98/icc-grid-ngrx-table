@@ -11,11 +11,15 @@
   @for (tab of tabs; track $index; let idx = $index) {
     <icc-tab>
       <ng-template icc-tab-label>
-        <span cdkDrag cdkDragPreviewClass="icc-drag-tabs-preview" cdkDragRootElement=".icc-mdc-tab"
+        <span
+          cdkDrag
+          [cdkDragDisabled]="dragDisabled(tab)"
+          cdkDragPreviewClass="icc-drag-tabs-preview"
+          cdkDragRootElement=".icc-mdc-tab"
           >{{ getTabLabel(tab) }}
         </span>
         <icc-icon
-          *ngIf="tab.closeable"
+          *ngIf="closeable(tab)"
           class="icc-tab-remove-icon"
           icon="remove"
           (click)="removeTab($event, tab, idx)"
