@@ -17,6 +17,11 @@
           [cdkDragDisabled]="dragDisabled(tab)"
           cdkDragPreviewClass="icc-drag-tabs-preview"
           cdkDragRootElement=".icc-mdc-tab"
+          [iccPopover]="menu"
+          [iccPopoverContext]="popoverContext"
+          [iccPopoverTrigger]="menuTrigger"
+          [clickToClose]="true"
+          [iccPopoverPosition]="position"
           >{{ getTabLabel(tab) }}
         </span>
         <icc-icon
@@ -30,3 +35,18 @@
     </icc-tab>
   }
 </icc-tab-group>
+
+<ng-template #menu>
+  <icc-menus [items]="menuItem" [level]="1" (iccMenuItemClick)="onMenuItemChanged($event)"> </icc-menus>
+</ng-template>
+
+<!--
+<div
+  [iccPopover]="menu"
+  [iccPopoverTrigger]="menuTrigger"
+  [clickToClose]="clickToClose"
+  [iccPopoverPosition]="position"
+>
+        <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> XX</icc-menus>
+ <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> </icc-menus>
+ -->

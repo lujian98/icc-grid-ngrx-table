@@ -17,6 +17,7 @@ export enum IccTrigger {
 export interface IccTriggerStrategy {
   show$: Observable<Event>;
   hide$: Observable<Event>;
+  clickToClose: boolean;
 
   destroy(): void;
 }
@@ -25,6 +26,7 @@ export abstract class IccTriggerStrategyBase<T> implements IccTriggerStrategy {
   protected alive = true;
   abstract show$: Observable<Event>;
   abstract hide$: Observable<Event>;
+  clickToClose: boolean = false;
 
   destroy() {
     this.alive = false;
@@ -157,7 +159,10 @@ export class IccContextmenuTriggerStrategy<T> extends IccTriggerStrategyBase<T> 
   );
 
   hide$ = this.merged$.pipe(
-    filter((event) => !(this.container() && this.container().location.nativeElement.contains(event.target))),
+    filter(
+      (event) =>
+        this.clickToClose || !(this.container() && this.container().location.nativeElement.contains(event.target)),
+    ),
     map((event) => event),
     takeWhile(() => this.alive),
   );

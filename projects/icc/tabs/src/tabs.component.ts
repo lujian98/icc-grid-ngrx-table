@@ -8,6 +8,9 @@ import { IccTabGroupComponent } from './components/tab-group/tab-group.component
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
 import { defaultTabsConfig, IccTabConfig, IccTabsConfig } from './models/tabs.model';
+import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent, IccMenuPanelComponent } from '@icc/ui/menu';
+import { IccPopoverDirective } from '@icc/ui/popover';
+import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 
 @Component({
   selector: 'icc-tabs',
@@ -24,11 +27,48 @@ import { defaultTabsConfig, IccTabConfig, IccTabsConfig } from './models/tabs.mo
     IccTabGroupComponent,
     IccPortalComponent,
     IccIconModule,
+    IccMenusComponent,
+    IccPopoverDirective,
   ],
 })
 export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
+
+  menuTrigger: IccTrigger = IccTrigger.CONTEXTMENU;
+  position: IccPosition = IccPosition.BOTTOMRIGHT;
+
+  menuItem = [
+    {
+      title: 'Delight your Organization',
+      name: 'star_rate',
+    },
+    {
+      title: "What's up with the Web?",
+      name: 'star_rate',
+    },
+    {
+      title: 'My ally, the CLI',
+      name: 'star_rate',
+    },
+    {
+      title: 'Become an Angular Tailor',
+      name: 'star_rate',
+    },
+  ];
+
+  popoverContext = {
+    gridId: 'test',
+    menuItems: this.menuItem,
+    values: [],
+  };
+
+  onMenuItemChanged(menuItem: IccMenuItem) {
+    console.log(' click menu=', menuItem);
+    if (!menuItem.disabled) {
+      // this.iccItemChangedEvent.emit(menuItem);
+    }
+  }
 
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {

@@ -48,6 +48,7 @@ export class IccDynamicOverlayService<T> implements OnDestroy {
       () => this.container()!,
       this.overlayServiceConfig.trigger,
     );
+    this.triggerStrategy.clickToClose = this.overlayServiceConfig.clickToClose;
     this.triggerStrategy.show$.subscribe((event: Event) => {
       this.show(event);
     });
