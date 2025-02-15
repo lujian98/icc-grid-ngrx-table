@@ -9,7 +9,7 @@
   (selectedIndexChange)="onSelectedIndexChange($event)"
   [icc-align-tabs]="tabsConfig.alignTabs"
 >
-  @for (tab of tabs; track $index; let idx = $index) {
+  @for (tab of tabs; track $index; let index = $index) {
     <icc-tab>
       <ng-template icc-tab-label>
         <span
@@ -18,7 +18,6 @@
           cdkDragPreviewClass="icc-drag-tabs-preview"
           cdkDragRootElement=".icc-mdc-tab"
           [iccPopover]="menu"
-          [iccPopoverContext]="popoverContext"
           [iccPopoverTrigger]="menuTrigger"
           [clickToClose]="true"
           [iccPopoverPosition]="position"
@@ -28,25 +27,19 @@
           *ngIf="closeable(tab)"
           class="icc-tab-remove-icon"
           icon="remove"
-          (click)="removeTab($event, tab, idx)"
+          (click)="closeTab($event, tab, index)"
         ></icc-icon>
       </ng-template>
-      <icc-portal *ngIf="idx === selectedTabIndex" [content]="tab.content!" [context]="tab.context!"></icc-portal>
+      <ng-template #menu>
+        <icc-menus
+          [items]="menuItem"
+          [level]="1"
+          [disabled]="getDisabled(tab, index)"
+          (iccMenuItemClick)="onMenuItemClicked($event, tab, index)"
+        >
+        </icc-menus>
+      </ng-template>
+      <icc-portal *ngIf="index === selectedTabIndex" [content]="tab.content!" [context]="tab.context!"></icc-portal>
     </icc-tab>
   }
 </icc-tab-group>
-
-<ng-template #menu>
-  <icc-menus [items]="menuItem" [level]="1" (iccMenuItemClick)="onMenuItemChanged($event)"> </icc-menus>
-</ng-template>
-
-<!--
-<div
-  [iccPopover]="menu"
-  [iccPopoverTrigger]="menuTrigger"
-  [clickToClose]="clickToClose"
-  [iccPopoverPosition]="position"
->
-        <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> XX</icc-menus>
- <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> </icc-menus>
- -->

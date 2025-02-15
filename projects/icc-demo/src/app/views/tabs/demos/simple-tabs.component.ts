@@ -33,7 +33,7 @@ export class AppSimpleTabsComponent {
       name: 'two',
       title: 'Two',
       content: AppStockChartComponent,
-      closeable: true,
+      closeable: false,
     },
     {
       name: 'three',
@@ -50,7 +50,7 @@ export class AppSimpleTabsComponent {
       name: 'five',
       content: PortalDemo2Component,
       context: this.portalData2,
-      closeable: true,
+      closeable: false,
     },
     {
       name: 'six',
