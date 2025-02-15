@@ -75,6 +75,12 @@ export const ICC = {
     LIST: {
       NO_RESULT: '没有数据',
     },
+    TABS: {
+      CLOSE_OTHER_TABS: 'Close Other Tabs',
+      CLOSE_TABS_TO_THE_RIGHT: 'Close Tabs To The Right',
+      CLOSE_TABS_TO_THE_LEFT: 'Close Tabs To The Left',
+      CLOSE_ALL_TABS: 'Close All Tabs',
+    },
     TITLE: {
       DASHBOARD: '仪表板',
     },

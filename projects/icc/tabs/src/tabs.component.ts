@@ -73,23 +73,6 @@ export class IccTabsComponent {
     }));
   }
 
-  menuItemDisabled(name: IccContextMenuType, tab: IccTabConfig, index: number): boolean {
-    switch (name) {
-      case IccContextMenuType.CLOSE:
-        return !tab.closeable;
-      case IccContextMenuType.CLOSE_OTHER_TABS:
-        return [...this.tabs].filter((item) => item.name === tab.name || !item.closeable).length === this.tabs.length;
-      case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
-        return [...this.tabs].filter((item, idx) => idx < index + 1 || !item.closeable).length === this.tabs.length;
-      case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
-        const right = [...this.tabs].slice(index);
-        const notCloseable = [...this.tabs].slice(0, index).filter((item) => !item.closeable);
-        return [...notCloseable, ...right].length === this.tabs.length;
-      case IccContextMenuType.CLOSE_ALL_TABS:
-        return [...this.tabs].filter((item) => item.closeable).length === 0;
-    }
-  }
-
   getTabLabel(tab: IccTabConfig): string {
     return tab.title || tab.name;
   }
@@ -134,6 +117,23 @@ export class IccTabsComponent {
     const prevActive = this.tabs[this.selectedTabIndex];
     this.tabs = [...this.tabs].filter((item) => item.name !== tab.name);
     this.checkSelectedTab(prevActive, index);
+  }
+
+  private menuItemDisabled(name: IccContextMenuType, tab: IccTabConfig, index: number): boolean {
+    switch (name) {
+      case IccContextMenuType.CLOSE:
+        return !tab.closeable;
+      case IccContextMenuType.CLOSE_OTHER_TABS:
+        return [...this.tabs].filter((item) => item.name === tab.name || !item.closeable).length === this.tabs.length;
+      case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
+        return [...this.tabs].filter((item, idx) => idx < index + 1 || !item.closeable).length === this.tabs.length;
+      case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
+        const right = [...this.tabs].slice(index);
+        const notCloseable = [...this.tabs].slice(0, index).filter((item) => !item.closeable);
+        return [...notCloseable, ...right].length === this.tabs.length;
+      case IccContextMenuType.CLOSE_ALL_TABS:
+        return [...this.tabs].filter((item) => item.closeable).length === 0;
+    }
   }
 
   private checkSelectedTab(prevActive: IccTabConfig, index: number): void {

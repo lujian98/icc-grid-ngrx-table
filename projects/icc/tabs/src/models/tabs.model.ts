@@ -30,24 +30,23 @@ export enum IccContextMenuType {
 
 export const defaultContextMenu = [
   {
-    title: 'Close',
+    title: 'ICC.UI.ACTIONS.CLOSE',
     name: IccContextMenuType.CLOSE,
-    disabled: true,
   },
   {
-    title: 'Close Other Tabs',
+    title: 'ICC.UI.TABS.CLOSE_OTHER_TABS',
     name: IccContextMenuType.CLOSE_OTHER_TABS,
   },
   {
-    title: 'Close Tabs To The Right',
+    title: 'ICC.UI.TABS.CLOSE_TABS_TO_THE_RIGHT',
     name: IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT,
   },
   {
-    title: 'Close Tabs To The Left',
+    title: 'ICC.UI.TABS.CLOSE_TABS_TO_THE_LEFT',
     name: IccContextMenuType.CLOSE_TABS_TO_THE_LEFT,
   },
   {
-    title: 'Close All Tabs',
+    title: 'ICC.UI.TABS.CLOSE_ALL_TABS',
     name: IccContextMenuType.CLOSE_ALL_TABS,
   },
 ];
