@@ -12,11 +12,13 @@ export interface IccTabConfig {
 export interface IccTabsConfig extends IccTabGroupConfig {
   tabReorder: boolean;
   closeable: boolean;
+  enableContextMenu: boolean;
 }
 
 export const defaultTabsConfig: IccTabsConfig = {
   tabReorder: true,
   closeable: true,
+  enableContextMenu: false,
   alignTabs: 'start',
 };
 

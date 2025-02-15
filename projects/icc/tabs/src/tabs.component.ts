@@ -41,8 +41,6 @@ import {
 export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
-
-  menuTrigger: IccTrigger = IccTrigger.CONTEXTMENU;
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
@@ -57,6 +55,10 @@ export class IccTabsComponent {
 
   @Input() selectedTabIndex = 0;
   @Input() tabs!: IccTabConfig[];
+
+  get contextMenuTrigger(): IccTrigger {
+    return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
+  }
 
   dragDisabled(tab: IccTabConfig): boolean {
     return !this.tabsConfig.tabReorder;
