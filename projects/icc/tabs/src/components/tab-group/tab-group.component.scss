@@ -31,3 +31,15 @@
     color: orange;
   }
 }
+
+::ng-deep [icc-align-tabs="start"] > .icc-mdc-tab-header {
+  justify-content: start;
+}
+
+::ng-deep [icc-align-tabs="center"] > .icc-mdc-tab-header {
+  justify-content: center;
+}
+
+::ng-deep [icc-align-tabs="end"] > .icc-mdc-tab-header {
+  justify-content: end;
+}

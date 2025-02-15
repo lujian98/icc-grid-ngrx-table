@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccTabsComponent } from '@icc/ui/tabs';
+import { IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../../d3/demos/stock-charts/stock-chart.component';
 import { AppGridRemoteVirtualScrollComponent } from '../../grid/remote-data/grid-virtual-scroll.component';
 import { AppGridMultiRowSelectionComponent } from '../../grid/remote-data/grid-multi-row-selection.component';
@@ -10,12 +10,23 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
 
 @Component({
   selector: 'app-double-tabs',
-  template: `<icc-tabs [tabs]="tabs"></icc-tabs> <icc-tabs [tabs]="tabs2" [selectedTabIndex]="2"> </icc-tabs>`,
+  template: `
+    <icc-tabs [tabsConfig]="tabsConfig1" [tabs]="tabs"></icc-tabs>
+    <icc-tabs [tabsConfig]="tabsConfig2" [tabs]="tabs2" [selectedTabIndex]="2"> </icc-tabs>
+  `,
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTabsComponent],
 })
 export class AppDoubleTabsComponent {
+  tabsConfig1: Partial<IccTabsConfig> = {
+    alignTabs: 'end',
+  };
+
+  tabsConfig2: Partial<IccTabsConfig> = {
+    alignTabs: 'center',
+  };
+
   portalData = {
     skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
   };

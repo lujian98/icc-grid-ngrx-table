@@ -32,7 +32,8 @@ export class IccTabsComponent {
 
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
-    this.tabsConfig = { ...defaultTabsConfig, ...value };
+    this._tabsConfig = { ...defaultTabsConfig, ...value };
+    this.changeDetectorRef.detectChanges();
   }
   get tabsConfig(): IccTabsConfig {
     return this._tabsConfig;

@@ -1,4 +1,5 @@
 import { IccPortalContent } from '@icc/ui/portal';
+import { IccTabGroupConfig } from './tab-group.model';
 
 export interface IccTabConfig {
   name: string;
@@ -8,7 +9,7 @@ export interface IccTabConfig {
   closeable?: boolean;
 }
 
-export interface IccTabsConfig {
+export interface IccTabsConfig extends IccTabGroupConfig {
   tabReorder: boolean;
   closeable: boolean;
 }
@@ -16,4 +17,5 @@ export interface IccTabsConfig {
 export const defaultTabsConfig: IccTabsConfig = {
   tabReorder: true,
   closeable: true,
+  alignTabs: 'start',
 };

@@ -8,7 +8,7 @@ export interface IccTabGroupConfig {
   contentTabIndex?: number;
   preserveContent?: boolean;
   stretchTabs?: boolean;
-  alignTabs?: 'start' | 'center' | 'end';
+  alignTabs: 'start' | 'center' | 'end';
 }
 
 export const ICC_TAB_GROUP_CONFIG = new InjectionToken<IccTabGroupConfig>('ICC_TAB_GROUP_CONFIG');

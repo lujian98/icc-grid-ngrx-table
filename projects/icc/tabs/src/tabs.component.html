@@ -7,6 +7,7 @@
   [selectedIndex]="selectedTabIndex"
   animationDuration="0"
   (selectedIndexChange)="onSelectedIndexChange($event)"
+  [icc-align-tabs]="tabsConfig.alignTabs"
 >
   @for (tab of tabs; track $index; let idx = $index) {
     <icc-tab>
