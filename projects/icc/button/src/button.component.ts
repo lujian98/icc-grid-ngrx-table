@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -11,6 +11,14 @@ export type IccButtonStatus = 'default' | 'primary' | 'danger';
   selector: 'button[icc-button], a[icc-button]',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  host: {
+    '[class.status-default]': 'status === "default"',
+    '[class.status-primary]': 'status === "primary"',
+    '[class.status-danger]': 'status === "danger"',
+    '[class.size-medium]': 'size === "medium"',
+    '[class.size-standard]': 'size === "standard"',
+    '[class.appearance-ghost]': 'appearance === "ghost"',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
@@ -19,24 +27,18 @@ export class IccButtonComponent {
   @Input() status: IccButtonStatus = 'default';
   @Input() appearance!: string;
 
-  @HostBinding('class.status-default')
   get default() {
     return this.status === 'default';
   }
   /*
-  @HostBinding('class.size-medium')
   get medium() {
     return this.size === 'medium';
   }
 
-  @HostBinding('class.size-standard')
   get standard() {
     return this.size === 'standard';
   }
 
-
-
-  @HostBinding('class.status-primary')
   get primary() {
     return this.status === 'primary';
   }
@@ -47,7 +49,6 @@ export class IccButtonComponent {
   }*/
 
   @Input()
-  @HostBinding('class.appearance-ghost')
   get ghost(): boolean {
     return this.appearance === 'ghost';
   }
@@ -58,7 +59,7 @@ export class IccButtonComponent {
   }
 
   /*
-  @HostBinding('class.icon-start')
+ // @HostBinding('class.icon-start')
   get iconLeft(): boolean {
     const el = this.elementRef.nativeElement;
     const icon = this.firstIconElement;
@@ -66,7 +67,7 @@ export class IccButtonComponent {
     return !!(icon && IccUtils.firstChild(el) === icon && childrenCount > 1);
   }
 
-  @HostBinding('class.icon-end')
+  //@HostBinding('class.icon-end')
   get iconRight(): boolean {
     const el = this.elementRef.nativeElement;
     const icon = this.lastIconElement;

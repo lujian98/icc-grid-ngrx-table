@@ -6,7 +6,6 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  HostBinding,
   inject,
   Input,
   Optional,
@@ -28,6 +27,9 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    //'[class.icc-form-field-invalid]': 'invalid', // TODO set invalid without HostBinding
+  },
   imports: [CommonModule],
 })
 export class IccFormFieldComponent implements AfterViewInit {
@@ -40,8 +42,8 @@ export class IccFormFieldComponent implements AfterViewInit {
   public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
   fieldWidth: string = '100%';
 
-  @HostBinding('class.icc-form-field-invalid')
   get invalid() {
+    //console.log( ' 99999999999999999')
     this.checkFieldIndicator();
     this.changeDetectorRef.markForCheck();
     const control = this.formFieldControl;

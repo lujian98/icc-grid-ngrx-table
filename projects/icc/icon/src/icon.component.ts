@@ -1,13 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-  OnChanges,
-  Renderer2,
-  ElementRef,
-  HostBinding,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, Renderer2, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IccIconLibraries, IccIconDefinition } from './icon-libraries';
 
@@ -25,16 +16,18 @@ export interface IccIconConfig {
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.title]': 'title',
+    '[innerHtml]': 'html',
+  },
   standalone: false,
 })
 export class IccIconComponent implements OnChanges, OnInit {
   protected iconDef!: IccIconDefinition | void;
   protected prevClasses: string[] = [];
 
-  @HostBinding('attr.title')
   title!: string | undefined;
 
-  @HostBinding('innerHtml')
   html: SafeHtml = '';
 
   @Input() icon!: string;

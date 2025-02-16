@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input, TemplateRef, Type, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccDynamicOverlayService, IccOverlayModule } from '@icc/ui/overlay';
 import { IccPortalComponent, IccRenderableContainer, IccPortalContent } from '@icc/ui/portal';
@@ -9,6 +9,9 @@ import { IccPortalComponent, IccRenderableContainer, IccPortalContent } from '@i
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.style]': 'style',
+  },
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent<T> implements IccRenderableContainer {
@@ -17,7 +20,6 @@ export class IccPopoverComponent<T> implements IccRenderableContainer {
   @Input() dynamicOverlayService!: IccDynamicOverlayService<T>;
   @Input() customStyle: string | undefined;
 
-  @HostBinding('style')
   get style(): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
   }

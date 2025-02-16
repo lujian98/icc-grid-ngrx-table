@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
@@ -8,6 +8,10 @@ import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.icc-main-viewport-layout]': 'layout === "viewport"',
+    '[class.icc-normal-layout]': 'layout !== "viewport"',
+  },
   imports: [CommonModule, IccResizeDirective],
 })
 export class IccLayoutComponent {
@@ -41,12 +45,10 @@ export class IccLayoutComponent {
     return this._width;
   }
 
-  @HostBinding('class.icc-main-viewport-layout')
   get viewportLayout(): boolean {
     return this.layout === 'viewport';
   }
 
-  @HostBinding('class.icc-normal-layout')
   get normalLayout(): boolean {
     return this.layout !== 'viewport';
   }

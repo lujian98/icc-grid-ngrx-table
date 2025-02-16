@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccLayoutComponent } from '@icc/ui/layout';
@@ -15,6 +15,9 @@ import { IccFormConfig, IccFormButtonClick } from './models/form.model';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.auto-fit-height]': 'formConfig.autoFitHeight',
+  },
   imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
 })
 export class IccFormComponent {
@@ -71,7 +74,6 @@ export class IccFormComponent {
     this.iccFormButtonClick.emit(buttonClick);
   }
 
-  @HostBinding('class.auto-fit-height')
   get autoFitHeight() {
     return this.formConfig.autoFitHeight;
   }

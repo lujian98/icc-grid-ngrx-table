@@ -22,6 +22,9 @@ import { IccD3ChartConfig } from '../../models';
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.style]': 'style',
+  },
   imports: [CommonModule],
 })
 export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {

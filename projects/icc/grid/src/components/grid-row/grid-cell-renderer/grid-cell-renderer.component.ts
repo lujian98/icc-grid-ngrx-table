@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-cell-renderer',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.grid-cell-align-center]': 'align === "center"',
+    '[class.grid-cell-align-right]': 'align === "right"',
+  },
   imports: [CommonModule],
 })
 export class IccGridCellRendererComponent<T> {
@@ -33,12 +37,10 @@ export class IccGridCellRendererComponent<T> {
     return this.column.align ? this.column.align : 'left';
   }
 
-  @HostBinding('class.grid-cell-align-center')
   get alignCenter() {
     return this.align === 'center';
   }
 
-  @HostBinding('class.grid-cell-align-right')
   get alignRight() {
     return this.align === 'right';
   }

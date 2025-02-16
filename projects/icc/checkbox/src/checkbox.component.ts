@@ -7,7 +7,6 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
-  HostBinding,
   Input,
   Output,
   ViewChild,
@@ -18,9 +17,11 @@ import { IccIconModule } from '@icc/ui/icon';
 @Directive({
   selector: '[ghost]',
   standalone: false,
+  host: {
+    '[class.ghost-checkbox]': 'ghostCheckbox',
+  },
 })
 export class GhostCheckboxDirective {
-  @HostBinding('class.ghost-checkbox')
   private ghostCheckbox: boolean = true;
 }
 
@@ -29,6 +30,9 @@ export class GhostCheckboxDirective {
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
   imports: [CommonModule, IccIconModule],
+  host: {
+    '[class.selected]': 'selected',
+  },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

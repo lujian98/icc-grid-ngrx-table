@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostBinding,
   HostListener,
   Input,
   OnDestroy,
@@ -20,6 +19,7 @@ import { Subject, Observable } from 'rxjs';
   imports: [CommonModule],
   host: {
     role: 'option',
+    '[class.selected]': 'selected',
   },
 })
 export class IccOptionComponent<T> implements OnDestroy {
@@ -32,11 +32,6 @@ export class IccOptionComponent<T> implements OnDestroy {
   }
 
   @Input() value!: T;
-
-  @HostBinding('class.selected')
-  get selectedClass(): boolean {
-    return this.selected;
-  }
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {

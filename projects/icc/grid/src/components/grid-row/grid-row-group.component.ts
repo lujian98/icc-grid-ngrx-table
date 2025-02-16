@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
@@ -11,6 +11,9 @@ import { IccGridFacade } from '../../+state/grid.facade';
   templateUrl: './grid-row-group.component.html',
   styleUrls: ['./grid-row-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.icc-grid-row]': 'iccGridRow',
+  },
   imports: [CommonModule, TranslatePipe, IccIconModule],
 })
 export class IccGridRowGroupComponent<T> {
@@ -44,7 +47,6 @@ export class IccGridRowGroupComponent<T> {
     this.onToggleRowGroup.emit(this.record);
   }
 
-  @HostBinding('class.icc-grid-row')
   get iccGridRow() {
     return true;
   }

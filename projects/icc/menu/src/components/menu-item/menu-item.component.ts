@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
@@ -20,6 +12,11 @@ import { IccMenuItem } from '../../models/menu-item.model';
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.menu-item-separator]': 'menuItem.separator',
+    '[class.selected]': 'menuItem.selected',
+    '[class.disabled]': 'disabled',
+  },
   imports: [
     CommonModule,
     RouterModule,
@@ -55,17 +52,14 @@ export class IccMenuItemComponent {
     return this._menuItem;
   }
 
-  @HostBinding('class.menu-item-separator')
   get separator() {
     return this.menuItem.separator;
   }
 
-  @HostBinding('class.selected')
   get selectedClass(): boolean {
     return !!this.menuItem.selected;
   }
 
-  @HostBinding('class.disabled')
   @Input()
   set disabled(disabled: boolean) {
     this._disabled = disabled;
