@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IccI18nService, IccLanguage, IccButtonConfg } from '@icc/ui/core';
+import { IccI18nService, IccLanguage, IccButtonConfg, IccTasksService } from '@icc/ui/core';
 import { IccSelectFieldComponent } from '@icc/ui/fields';
 import { IccButtonComponent } from '@icc/ui/button';
 
@@ -32,6 +32,7 @@ import { IccThemeService } from '@icc/ui/theme';
 })
 export class AppComponent implements OnInit {
   themeService = inject(IccThemeService);
+  private tasksService = inject(IccTasksService);
   title = 'ICC Demo';
 
   buttons: IccButtonConfg[] = [

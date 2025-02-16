@@ -11,6 +11,7 @@ export * from './src/validators/confirmation.validator';
 export * from './src/i18n/i18n.module';
 export * from './src/i18n/i18n.service';
 export * from './src/i18n/i18n.model';
+export * from './src/services/tasks.service';
 export * from './src/services/upload-file.service';
 export * from './src/models/buttons.model';
 export * from './src/models/common.model';

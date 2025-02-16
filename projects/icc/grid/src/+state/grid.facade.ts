@@ -192,4 +192,10 @@ export class IccGridFacade {
   selectGridInMemoryData<T>(gridConfig: IccGridConfig): Observable<T[]> {
     return this.store.select(selectGridInMemoryData(gridConfig)) as Observable<T[]>;
   }
+
+  //TODO new action use gridId to get Grid Data for the task
+  runTask(gridId: string, gridConfig: IccGridConfig): void {
+    console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
+    this.getGridData(gridConfig);
+  }
 }

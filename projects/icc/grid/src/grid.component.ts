@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
-import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
+import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
@@ -27,8 +27,9 @@ import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent 
     IccLayoutFooterComponent,
   ],
 })
-export class IccGridComponent<T> implements OnDestroy {
+export class IccGridComponent<T> implements OnInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
+  private tasksService = inject(IccTasksService);
   private _gridConfig!: IccGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
@@ -81,6 +82,10 @@ export class IccGridComponent<T> implements OnDestroy {
     return this._gridData;
   }
 
+  ngOnInit(): void {
+    this.tasksService.loadService(this.gridId, IccGridFacade, this.gridConfig);
+  }
+
   buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
     switch (button.name) {
       case IccButtonType.Refresh:
@@ -100,5 +105,6 @@ export class IccGridComponent<T> implements OnDestroy {
 
   ngOnDestroy(): void {
     this.gridFacade.clearGridDataStore(this.gridId);
+    this.tasksService.removeTask(this.gridId);
   }
 }
