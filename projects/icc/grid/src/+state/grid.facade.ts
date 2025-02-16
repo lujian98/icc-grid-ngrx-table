@@ -52,8 +52,8 @@ export class IccGridFacade {
   setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number, loadData: boolean): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
     if (gridConfig.viewportReady && loadData && !gridConfig.isTreeGrid) {
-      this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
-      //this.getGridData(gridConfig);
+      //this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
+      this.getGridData(gridConfig);
     }
   }
 
