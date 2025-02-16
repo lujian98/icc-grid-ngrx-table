@@ -15,6 +15,12 @@ export class IccTreeFacade {
 
   viewportReadyLoadData(treeConfig: IccTreeConfig): void {
     if (treeConfig.viewportReady) {
+      this.getTreeData(treeConfig);
+    }
+  }
+
+  windowResizeLoadData(treeConfig: IccTreeConfig): void {
+    if (treeConfig.viewportReady) {
       this.store.dispatch(treeActions.getConcatTreeData({ treeConfig }));
     }
   }

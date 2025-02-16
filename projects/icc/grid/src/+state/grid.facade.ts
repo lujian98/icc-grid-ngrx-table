@@ -57,6 +57,14 @@ export class IccGridFacade {
     }
   }
 
+  setWindowResize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number, loadData: boolean): void {
+    this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
+    if (gridConfig.viewportReady && loadData && !gridConfig.isTreeGrid) {
+      this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
+      //this.getGridData(gridConfig);
+    }
+  }
+
   setGridSortFields(gridConfig: IccGridConfig, sortFields: IccSortField[], checkSort: boolean = true): void {
     if (checkSort) {
       sortFields = this.checkGroupSortField(gridConfig, sortFields);

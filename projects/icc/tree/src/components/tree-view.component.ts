@@ -83,7 +83,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
       )
-      .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true));
+      .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true, event));
   }
 
   trackByIndex(index: number): number {
@@ -96,7 +96,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnHeaderPosition = -(event.target as HTMLElement).scrollLeft;
   }
 
-  private setViewportPageSize(loadData: boolean = true): void {
+  private setViewportPageSize(loadData: boolean = true, event?: string | MouseEvent | null): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
     const fitPageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
@@ -104,7 +104,11 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
       !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
     this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth, loadData);
     if (loadData) {
-      this.treeFacade.viewportReadyLoadData(this.treeConfig);
+      if (!event || typeof event === 'string') {
+        this.treeFacade.viewportReadyLoadData(this.treeConfig);
+      } else {
+        this.treeFacade.windowResizeLoadData(this.treeConfig);
+      }
     }
   }
 
