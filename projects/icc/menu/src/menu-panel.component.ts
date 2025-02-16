@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject, Output, EventEmitter } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
-import { Observable, combineLatest, map } from 'rxjs';
+import { IccMenusComponent } from './menus.component';
+import { IccMenuItem } from './models/menu-item.model';
 
 @Component({
   selector: 'icc-menu-panel',
@@ -19,12 +19,9 @@ export class IccMenuPanelComponent {
   @Input() disabled: IccDisabled[] = [];
   @Output() iccItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
-  onMenuFormChanges(values: { [key: string]: boolean }): void {
-    //console.log(' pppppp menu form values =', values);
-  }
+  onMenuFormChanges(values: { [key: string]: boolean }): void {}
 
   onMenuItemClick(item: IccMenuItem): void {
-    //console.log(' pppppp menu click =', item);
     this.iccItemChangedEvent.emit(item);
   }
 }
