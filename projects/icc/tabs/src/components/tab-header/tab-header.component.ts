@@ -11,10 +11,13 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IccTabLabelWrapperDirective } from '../../directives/tab-label-wrapper.directive';
 import { IccInkBar } from '../../directives/ink-bar.directive';
 import { IccPaginatedTabHeaderDirective } from '../../directives/paginated-tab-header.directive';
 import { CdkObserveContent } from '@angular/cdk/observers';
+import { IccIconModule } from '@icc/ui/icon';
+import { IccButtonComponent } from '@icc/ui/button';
 
 @Component({
   selector: 'icc-tab-header',
@@ -26,7 +29,7 @@ import { CdkObserveContent } from '@angular/cdk/observers';
     '[class.icc-mdc-tab-header-pagination-controls-enabled]': '_showPaginationControls',
     '[class.icc-mdc-tab-header-rtl]': "_getLayoutDirection() == 'rtl'",
   },
-  imports: [CdkObserveContent],
+  imports: [CommonModule, CdkObserveContent, IccIconModule, IccButtonComponent],
 })
 export class IccTabHeaderComponent
   extends IccPaginatedTabHeaderDirective

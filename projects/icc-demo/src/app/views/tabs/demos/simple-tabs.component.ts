@@ -16,7 +16,7 @@ import { PortalDemo2Component } from '../../dashboard/demos/portal-demo2/portal-
 })
 export class AppSimpleTabsComponent {
   tabsConfig: Partial<IccTabsConfig> = {
-    enableContextMenu: false,
+    enableContextMenu: true,
   };
 
   portalData = {
@@ -68,13 +68,12 @@ export class AppSimpleTabsComponent {
   ];
 
   constructor() {
-    console.log(' tabs=', this.tabs);
-
     const tabs = new Array(30).fill(0).map((_, index) => {
-      const j = 7 + index;
+      const j = 8 + index;
       return {
-        name: `Tab${j}`,
+        name: `Tab ${j}`,
         closeable: true,
+        content: `Tab ${j}`,
       };
     });
 

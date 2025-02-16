@@ -6,7 +6,11 @@
   (mousedown)="_handlePaginatorPress('before', $event)"
   (touchend)="_stopInterval()"
 >
-  <div class="icc-mdc-tab-header-pagination-chevron">X</div>
+  <div *ngIf="_showPaginationControls" class="icc-mdc-tab-header-pagination-chevron">
+    <button icc-button [ghost]="true" [disabled]="_disableScrollBefore">
+      <icc-icon icon="chevron-left"></icc-icon>
+    </button>
+  </div>
 </div>
 
 <div
@@ -37,5 +41,9 @@
   (click)="_handlePaginatorClick('after')"
   (touchend)="_stopInterval()"
 >
-  <div class="icc-mdc-tab-header-pagination-chevron">Y</div>
+  <div *ngIf="_showPaginationControls" class="icc-mdc-tab-header-pagination-chevron">
+    <button icc-button [ghost]="true" [disabled]="_disableScrollAfter">
+      <icc-icon icon="chevron-right"></icc-icon>
+    </button>
+  </div>
 </div>
