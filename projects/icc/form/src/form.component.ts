@@ -70,7 +70,6 @@ export class IccFormComponent {
   @Output() iccFormButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
   formButtonClick(buttonClick: IccFormButtonClick): void {
-    console.log(' buttonClick=', buttonClick);
     this.iccFormButtonClick.emit(buttonClick);
   }
 

@@ -8,11 +8,12 @@ import {
   ElementRef,
   inject,
   Input,
+  OnDestroy,
   Optional,
   ViewChild,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { take, timer } from 'rxjs';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
 import { IccFormFieldControlDirective } from './directive/form-field-control.directive';
@@ -28,27 +29,20 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
   styleUrls: ['./form-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    //'[class.icc-form-field-invalid]': 'invalid', // TODO set invalid without HostBinding
+    '[class.icc-form-field-invalid]': 'invalid',
   },
   imports: [CommonModule],
 })
-export class IccFormFieldComponent implements AfterViewInit {
+export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   private _fieldIndicator: string = '';
+  public elementRef = inject(ElementRef); // autocomplete.directive need this public
+  focused: boolean = false;
+  fieldWidth: string = '100%';
+  invalid: boolean = false;
 
   @Input() showFieldEditIndicator: boolean = true;
-
-  focused: boolean = false;
-  public elementRef = inject(ElementRef); // autocomplete.directive need this public ???
-  fieldWidth: string = '100%';
-
-  get invalid() {
-    //console.log( ' 99999999999999999')
-    this.checkFieldIndicator();
-    this.changeDetectorRef.markForCheck();
-    const control = this.formFieldControl;
-    return (control?.touched || control?.dirty) && control?.invalid;
-  }
 
   get formFieldControl(): FormControl {
     return this.formFieldControlDirective?.fieldControl;
@@ -56,29 +50,6 @@ export class IccFormFieldComponent implements AfterViewInit {
   get required(): boolean {
     const control = this.formFieldControl;
     return control && control.hasValidator(Validators.required) && !control.disabled;
-  }
-
-  onMouseenter(): void {
-    this.focused = true;
-  }
-  onMouseleave(): void {
-    this.focused = false;
-  }
-
-  private checkFieldIndicator(): void {
-    timer(10)
-      .pipe(take(1))
-      .subscribe(() => {
-        let fieldIndicator = '';
-        const control = this.formFieldControl;
-        if (control && !control.disabled) {
-          fieldIndicator = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
-        }
-        if (fieldIndicator !== this.fieldIndicator) {
-          this.fieldIndicator = fieldIndicator;
-          this.changeDetectorRef.markForCheck();
-        }
-      });
   }
 
   private set fieldIndicator(val: string) {
@@ -124,5 +95,40 @@ export class IccFormFieldComponent implements AfterViewInit {
       this.fieldWidth = this.fieldWidthDirective.width;
       this.changeDetectorRef.detectChanges();
     }
+
+    this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.checkFieldIndicator();
+      const control = this.formFieldControl;
+      this.invalid = (control?.touched || control?.dirty) && control?.invalid;
+      this.changeDetectorRef.markForCheck();
+    });
+  }
+
+  private checkFieldIndicator(): void {
+    timer(10)
+      .pipe(take(1))
+      .subscribe(() => {
+        let fieldIndicator = '';
+        const control = this.formFieldControl;
+        if (control && !control.disabled) {
+          fieldIndicator = control.dirty ? `icc-form-field-indicator-red` : `icc-form-field-indicator-green`;
+        }
+        if (fieldIndicator !== this.fieldIndicator) {
+          this.fieldIndicator = fieldIndicator;
+          this.changeDetectorRef.markForCheck();
+        }
+      });
+  }
+
+  onMouseenter(): void {
+    this.focused = true;
+  }
+  onMouseleave(): void {
+    this.focused = false;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
