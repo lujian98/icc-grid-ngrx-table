@@ -95,6 +95,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     if (this.selectedDate) {
       this.matCalendar.activeDate = this.selectedDate;
     }
+    // TODO if is next month range, move the to panel activateDate???
 
     console.log(' this.matCalendar.activeDate=', this.matCalendar.activeDate);
     if (!this.maxDate) {

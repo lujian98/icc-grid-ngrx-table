@@ -1,4 +1,5 @@
 export interface IccCalendarConfig {
+  viewType: string; // calendar | rangeFrom | rangeTo
   selectedLabel?: string;
   dateFormat: string;
   excludeWeekends: boolean;
@@ -7,6 +8,7 @@ export interface IccCalendarConfig {
 }
 
 export const defaultCalendarConfig: IccCalendarConfig = {
+  viewType: 'calendar',
   dateFormat: 'mediumDate',
   excludeWeekends: false,
   minDate: null,
