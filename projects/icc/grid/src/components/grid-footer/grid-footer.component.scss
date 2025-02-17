@@ -1,6 +1,4 @@
 :host {
-  display: flex;
-  justify-content: left;
   align-items: center;
   padding: 1px 10px;
 
@@ -9,10 +7,6 @@
   }
   span {
     margin: 0 5px;
-  }
-
-  .grid-footer-displaying {
-    margin-left: auto;
   }
 
   input {

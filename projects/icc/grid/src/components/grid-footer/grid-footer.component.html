@@ -1,44 +1,46 @@
-<button icc-button (click)="getGridPageData(1)" [disabled]="page === 1">
-  <i class="fa-solid fa-backward-step"></i>
-</button>
+<icc-layout-footer>
+  <button icc-button (click)="getGridPageData(1)" [disabled]="page === 1">
+    <i class="fa-solid fa-backward-step"></i>
+  </button>
 
-<button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
-  <i class="fa-solid fa-caret-left"></i>
-</button>
-<span>
-  {{ "ICC.UI.GRID.PAGE" | translate }}:
-  <input
-    iccInput
-    type="number"
-    min="1"
-    [max]="lastPage"
-    [value]="page"
-    autocomplete="off"
-    (click)="$event.stopPropagation()"
-    (input)="valueChanged($event)"
-  />
-</span>
-<span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
-<button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
-  <i class="fa-solid fa-caret-right"></i>
-</button>
+  <button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
+    <i class="fa-solid fa-caret-left"></i>
+  </button>
+  <span>
+    {{ "ICC.UI.GRID.PAGE" | translate }}:
+    <input
+      iccInput
+      type="number"
+      min="1"
+      [max]="lastPage"
+      [value]="page"
+      autocomplete="off"
+      (click)="$event.stopPropagation()"
+      (input)="valueChanged($event)"
+    />
+  </span>
+  <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
+  <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
+    <i class="fa-solid fa-caret-right"></i>
+  </button>
 
-<button icc-button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
-  <i class="fa-solid fa-forward-step"></i>
-</button>
+  <button icc-button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
+    <i class="fa-solid fa-forward-step"></i>
+  </button>
 
-<button icc-button (click)="refreshData(page)">
-  <i class="fa-solid fa-arrows-rotate"></i>
-</button>
+  <button icc-button (click)="refreshData(page)">
+    <i class="fa-solid fa-arrows-rotate"></i>
+  </button>
 
-<span>
-  {{ "ICC.UI.GRID.PAGE_SIZE" | translate }}:
-  <input iccInput type="number" min="1" max="10" [value]="gridConfig.pageSize" autocomplete="off" readonly />
-</span>
+  <span>
+    {{ "ICC.UI.GRID.PAGE_SIZE" | translate }}:
+    <input iccInput type="number" min="1" max="10" [value]="gridConfig.pageSize" autocomplete="off" readonly />
+  </span>
 
-<span class="grid-footer-displaying">
-  {{ "ICC.UI.GRID.DISPLAYING" | translate }}
-  {{ displaying }}
-  {{ "ICC.UI.GRID.OF" | translate }}
-  {{ gridConfig.totalCounts }}
-</span>
+  <icc-layout-footer-end>
+    {{ "ICC.UI.GRID.DISPLAYING" | translate }}
+    {{ displaying }}
+    {{ "ICC.UI.GRID.OF" | translate }}
+    {{ gridConfig.totalCounts }}
+  </icc-layout-footer-end>
+</icc-layout-footer>

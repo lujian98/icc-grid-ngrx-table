@@ -9,7 +9,7 @@ import { defaultGridConfig } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
 import { IccGridStateModule } from './+state/grid-state.module';
-import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'icc-grid',
@@ -24,7 +24,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent, IccLayoutFooterComponent 
     IccGridFooterComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
-    IccLayoutFooterComponent,
   ],
 })
 export class IccGridComponent<T> implements OnInit, OnDestroy {

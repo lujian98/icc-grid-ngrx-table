@@ -4,6 +4,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccInputDirective } from '@icc/ui/form-field';
+import { IccLayoutFooterEndComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
 import { IccButtonComponent } from '@icc/ui/button';
@@ -13,7 +14,14 @@ import { IccButtonComponent } from '@icc/ui/button';
   templateUrl: './grid-footer.component.html',
   styleUrls: ['./grid-footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslatePipe, IccInputDirective, IccButtonComponent],
+  imports: [
+    CommonModule,
+    TranslatePipe,
+    IccInputDirective,
+    IccButtonComponent,
+    IccLayoutFooterComponent,
+    IccLayoutFooterEndComponent,
+  ],
 })
 export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
