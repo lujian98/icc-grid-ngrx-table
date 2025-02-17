@@ -34,7 +34,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   private _selectedRangeDates: Array<Date> = [];
   private _selectedDate: Date | null = null;
 
-  currentMonth!: Date | null;
+  private currentMonth!: Date | null;
   minDate!: Date | null;
   maxDate!: Date | null;
   weekendFilter = (d: Date) => true;
@@ -95,9 +95,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     if (this.selectedDate) {
       this.matCalendar.activeDate = this.selectedDate;
     }
-    // TODO if is next month range, move the to panel activateDate???
 
-    console.log(' this.matCalendar.activeDate=', this.matCalendar.activeDate);
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
       timer(10)
@@ -113,7 +111,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   onSelectedChange(date: Date | null): void {
-    console.log('select change=', date);
     this.selectedDateChange.emit(date ? date : undefined);
   }
 

@@ -109,7 +109,11 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     if (this.fromDate) {
-      this.fromMonthViewChange(this.fromDate);
+      //this.fromMonthViewChange(this.fromDate);
+      this.toCalendarConfig = {
+        ...this.toCalendarConfig,
+        // minDate: new Date(date.getFullYear(), date.getMonth() + 1, 1),
+      };
     }
     timer(100)
       .pipe(take(1))
