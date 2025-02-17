@@ -53,6 +53,7 @@ export interface IccGridConfig {
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
   refreshRate: number;
+  lastUpdateTime: Date;
 }
 
 export enum IccRendererType {

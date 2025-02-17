@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import {
   IccColumnConfig,
   IccColumnFilter,
@@ -21,6 +21,7 @@ import {
   selectRowGroups,
   selectRowSelection,
   selectRowSelections,
+  selectLastUpdateTime,
 } from './grid.selectors';
 
 @Injectable()
@@ -195,7 +196,11 @@ export class IccGridFacade {
 
   //TODO new action use gridId to get Grid Data for the task with last called run time
   runTask(gridId: string, gridConfig: IccGridConfig): void {
-    console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
+    // console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
     this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
+  }
+
+  lastUpdateTime(gridId: string): Observable<Date> {
+    return this.store.select(selectLastUpdateTime(gridId));
   }
 }

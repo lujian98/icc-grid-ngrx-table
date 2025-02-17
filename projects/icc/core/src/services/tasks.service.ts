@@ -1,5 +1,5 @@
 import { ClassProvider, Injectable, Injector, inject } from '@angular/core';
-import { interval, takeWhile } from 'rxjs';
+import { interval, take, takeWhile } from 'rxjs';
 
 export interface IccTaskSetting {
   refreshRate: number;
@@ -40,7 +40,14 @@ export class IccTasksService<T> {
   }
 
   private runTasks(task: IccTask<T>): void {
-    task.service?.runTask(task.key, task.config);
+    task.service
+      ?.lastUpdateTime(task.key)
+      .pipe(take(1))
+      .subscribe((lastUpdateTime: Date) => {
+        // TODO last check if lastUpdateTime and current time difference is > refreshRate
+        //console.log( ' mmmmm lastUpdateTime =', lastUpdateTime);
+        task.service?.runTask(task.key, task.config);
+      });
   }
 
   private findTask(key: string): IccTask<T> | undefined {

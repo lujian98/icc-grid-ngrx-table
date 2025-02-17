@@ -33,6 +33,7 @@ export const defaultGridConfig: IccGridConfig = {
   rowHeight: 24, //px
   headerHeight: 30, //px
   refreshRate: 10, //seconds
+  lastUpdateTime: new Date(),
 };
 
 export const defaultState: IccGridState = {

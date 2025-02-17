@@ -181,6 +181,7 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...gridConfig,
             totalCounts: totalCounts,
+            lastUpdateTime: new Date(),
           },
           totalCounts: totalCounts,
           data,
