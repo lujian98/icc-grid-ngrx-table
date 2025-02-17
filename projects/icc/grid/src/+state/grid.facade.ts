@@ -21,7 +21,6 @@ import {
   selectRowGroups,
   selectRowSelection,
   selectRowSelections,
-  selectLastUpdateTime,
 } from './grid.selectors';
 
 @Injectable()
@@ -194,13 +193,11 @@ export class IccGridFacade {
     return this.store.select(selectGridInMemoryData(gridConfig)) as Observable<T[]>;
   }
 
-  //TODO new action use gridId to get Grid Data for the task with last called run time
   runTask(gridId: string, gridConfig: IccGridConfig): void {
-    // console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
     this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
   }
 
-  lastUpdateTime(gridId: string): Observable<Date> {
-    return this.store.select(selectLastUpdateTime(gridId));
+  selectConfig(gridId: string): Observable<IccGridConfig> {
+    return this.store.select(selectGridConfig(gridId));
   }
 }

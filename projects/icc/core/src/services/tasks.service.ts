@@ -3,24 +3,25 @@ import { interval, take, takeWhile } from 'rxjs';
 
 export interface IccTaskSetting {
   refreshRate: number;
+  lastUpdateTime: Date;
 }
 
-export interface IccTaskConfig<T> extends IccTaskSetting {}
+export interface IccTaskConfig extends IccTaskSetting {}
 
-export interface IccTask<T> {
+export interface IccTask {
   key: string;
   service?: any;
-  config: IccTaskConfig<T>;
+  config: IccTaskConfig;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class IccTasksService<T> {
+export class IccTasksService {
   private injector = inject(Injector);
-  private tasks: IccTask<T>[] = [];
+  private tasks: IccTask[] = [];
 
-  loadService(key: string, provide: any, config: IccTaskConfig<T>): void {
+  loadService(key: string, provide: any, config: IccTaskConfig): void {
     const injector = Injector.create({
       parent: this.injector,
       providers: [provide],
@@ -39,18 +40,20 @@ export class IccTasksService<T> {
     }
   }
 
-  private runTasks(task: IccTask<T>): void {
+  private runTasks(task: IccTask): void {
     task.service
-      ?.lastUpdateTime(task.key)
+      ?.selectConfig(task.key)
       .pipe(take(1))
-      .subscribe((lastUpdateTime: Date) => {
-        // TODO last check if lastUpdateTime and current time difference is > refreshRate
-        //console.log( ' mmmmm lastUpdateTime =', lastUpdateTime);
-        task.service?.runTask(task.key, task.config);
+      .subscribe((config: IccTaskConfig) => {
+        const dt = Math.ceil((new Date().getTime() - config.lastUpdateTime.getTime()) / 1000) + 3;
+        console.log(' dt=', dt);
+        if (dt > config.refreshRate) {
+          task.service?.runTask(task.key, config);
+        }
       });
   }
 
-  private findTask(key: string): IccTask<T> | undefined {
+  private findTask(key: string): IccTask | undefined {
     return this.tasks.find((task) => task.key === key);
   }
 

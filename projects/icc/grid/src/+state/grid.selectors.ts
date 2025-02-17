@@ -66,7 +66,9 @@ export const selectGridInMemoryData = (gridConfig: IccGridConfig) =>
     return state[gridId] ? state[gridId].inMemoryData : [];
   });
 
+/*
 export const selectLastUpdateTime = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
     return state[gridId] ? state[gridId].gridConfig.lastUpdateTime : defaultState.gridConfig.lastUpdateTime;
   });
+*/
