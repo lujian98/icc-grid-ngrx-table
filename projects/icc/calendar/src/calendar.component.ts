@@ -92,6 +92,11 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   ngOnChanges(changes: SimpleChanges): void {
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
+    if (this.selectedDate) {
+      this.matCalendar.activeDate = this.selectedDate;
+    }
+
+    console.log(' this.matCalendar.activeDate=', this.matCalendar.activeDate);
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
       timer(10)
