@@ -146,7 +146,8 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   get hasValue(): boolean {
-    return !!this.field.value && !this.field.disabled;
+    const value = this.field.value;
+    return !!value && !!value.fromDate && !!value.toDate && !this.field.disabled;
   }
 
   get display(): string {
