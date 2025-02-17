@@ -57,7 +57,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   @Input() set selectedDate(value: Date | null) {
     if (value instanceof Date) {
       this._selectedDate = value;
-      //this.matCalendar.activeDate = this.selectedDate!;
+      this.matCalendar.activeDate = this.selectedDate!;
     } else {
       this._selectedDate = null;
     }
@@ -92,9 +92,9 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   ngOnChanges(changes: SimpleChanges): void {
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
-    if (this.selectedDate) {
-      this.matCalendar.activeDate = this.selectedDate;
-    }
+    //if (this.selectedDate) {
+    //this.matCalendar.activeDate = this.selectedDate;
+    //}
 
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');

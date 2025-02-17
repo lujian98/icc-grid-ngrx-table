@@ -71,7 +71,6 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
 
     this.fromCalendarConfig = {
-      viewType: 'rangeFrom',
       selectedLabel: this.fieldConfig.startDateLabel,
       dateFormat: this.fieldConfig.dateFormat,
       excludeWeekends: this.fieldConfig.excludeWeekends,
@@ -80,7 +79,6 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     };
 
     this.toCalendarConfig = {
-      viewType: 'rangeTo',
       selectedLabel: this.fieldConfig.endDateLabel,
       dateFormat: this.fieldConfig.dateFormat,
       excludeWeekends: this.fieldConfig.excludeWeekends,
@@ -204,7 +202,6 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     this.toCalendarConfig = {
       ...this.toCalendarConfig,
       minDate: new Date(date.getFullYear(), date.getMonth() + 1, 1),
-      //minDate: this.getFromMinDate(),
     };
   }
 
