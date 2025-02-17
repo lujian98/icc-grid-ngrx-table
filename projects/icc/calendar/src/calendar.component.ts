@@ -19,7 +19,7 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.model';
 
-//need ChangeDetectionStrategy.Default for date range click, changeDetectorRef is not enough
+//matCalendar.activeDate need add to input changes except with min/max in the calendarConfig
 @Component({
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
@@ -68,6 +68,11 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
+    if (this.selectedDate) {
+      this.matCalendar.activeDate = this.selectedDate;
+    } else {
+      this.matCalendar.activeDate = new Date();
+    }
     this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
