@@ -119,13 +119,37 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   @Input()
   set values(values: object) {
-    this._values = values;
+    this._values = this.getCheckedValue(values as { [key: string]: object });
     if (this.form) {
       this.form.patchValue({ ...values });
     }
   }
   get values(): object {
     return this._values;
+  }
+
+  private getCheckedValue(values: { [key: string]: object }): object {
+    Object.keys(values).forEach((key) => {
+      const value = values[key];
+      if (this.getFieldType(key, this.formFields) === 'select' && !Array.isArray(value)) {
+        values[key] = [value];
+      }
+    });
+    return values;
+  }
+
+  private getFieldType(key: string, formFields: IccFormField[]): string {
+    let fieldType = '';
+    const find = formFields.find((field) => field.fieldName === key);
+    if (find) {
+      return find.fieldType;
+    }
+    formFields.forEach((field) => {
+      if (field.fieldType === 'fieldset' && fieldType === '') {
+        fieldType = this.getFieldType(key, (field as IccFieldsetConfig).formFields);
+      }
+    });
+    return fieldType;
   }
 
   get buttons(): IccButtonConfg[] {
