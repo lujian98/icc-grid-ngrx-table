@@ -1,10 +1,16 @@
 import { ClassProvider, Injectable, Injector, inject } from '@angular/core';
 import { interval, takeWhile } from 'rxjs';
 
+export interface IccTaskSetting {
+  refreshRate: number;
+}
+
+export interface IccTaskConfig<T> extends IccTaskSetting {}
+
 export interface IccTask<T> {
   key: string;
   service?: any;
-  config?: T;
+  config: IccTaskConfig<T>;
 }
 
 @Injectable({
@@ -14,7 +20,7 @@ export class IccTasksService<T> {
   private injector = inject(Injector);
   private tasks: IccTask<T>[] = [];
 
-  loadService(key: string, provide: any, config: T): void {
+  loadService(key: string, provide: any, config: IccTaskConfig<T>): void {
     const injector = Injector.create({
       parent: this.injector,
       providers: [provide],
@@ -25,7 +31,7 @@ export class IccTasksService<T> {
       config: config,
     };
     this.tasks.push(task);
-    const refreshRate = (config as any).refreshRate * 1000;
+    const refreshRate = config.refreshRate * 1000;
     if (refreshRate > 0) {
       interval(refreshRate)
         .pipe(takeWhile(() => !!this.findTask(key)))
