@@ -1,5 +1,5 @@
-import { ClassProvider, Injectable, Injector, inject, OnDestroy } from '@angular/core';
-import { takeUntil, interval, timer, Subject } from 'rxjs';
+import { ClassProvider, Injectable, Injector, inject } from '@angular/core';
+import { interval, takeWhile } from 'rxjs';
 
 export interface IccTask<T> {
   key: string;
@@ -10,44 +10,38 @@ export interface IccTask<T> {
 @Injectable({
   providedIn: 'root',
 })
-export class IccTasksService<T> implements OnDestroy {
+export class IccTasksService<T> {
   private injector = inject(Injector);
-  private destroy$ = new Subject<void>();
   private tasks: IccTask<T>[] = [];
-
-  constructor() {
-    interval(10000)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((n) => {
-        console.log(' call dispatch tasks n=', n, ' tasks=', this.tasks);
-        this.runTasks();
-      });
-  }
-
-  private runTasks(): void {
-    this.tasks.forEach((task) => {
-      task.service?.runTask(task.key, task.config);
-    });
-  }
 
   loadService(key: string, provide: any, config: T): void {
     const injector = Injector.create({
       parent: this.injector,
       providers: [provide],
     });
-    this.tasks.push({
+    const task = {
       key: key,
       service: injector.get(provide),
       config: config,
-    });
+    };
+    this.tasks.push(task);
+    const refreshRate = (config as any).refreshRate * 1000;
+    if (refreshRate > 0) {
+      interval(refreshRate)
+        .pipe(takeWhile(() => !!this.findTask(key)))
+        .subscribe(() => this.runTasks(task));
+    }
+  }
+
+  private runTasks(task: IccTask<T>): void {
+    task.service?.runTask(task.key, task.config);
+  }
+
+  private findTask(key: string): IccTask<T> | undefined {
+    return this.tasks.find((task) => task.key === key);
   }
 
   removeTask(key: string): void {
     this.tasks = [...this.tasks].filter((item) => item.key !== key);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

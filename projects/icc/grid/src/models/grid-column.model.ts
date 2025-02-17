@@ -52,6 +52,7 @@ export interface IccGridConfig {
   headerHeight: number;
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
+  refreshRate: number;
 }
 
 export enum IccRendererType {

@@ -195,7 +195,7 @@ export class IccGridFacade {
 
   //TODO new action use gridId to get Grid Data for the task with last called run time
   runTask(gridId: string, gridConfig: IccGridConfig): void {
-    console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
+    //console.log('gridId=', gridId, ' runTask gridConfig=', gridConfig);
     this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
   }
 }
