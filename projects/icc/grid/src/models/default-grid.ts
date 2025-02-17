@@ -32,7 +32,7 @@ export const defaultGridConfig: IccGridConfig = {
   hideGridFooter: false,
   rowHeight: 24, //px
   headerHeight: 30, //px
-  refreshRate: 10, //seconds  min 5
+  refreshRate: 0, //seconds  min 5 to have refresh the grid data
   lastUpdateTime: new Date(),
 };
 
