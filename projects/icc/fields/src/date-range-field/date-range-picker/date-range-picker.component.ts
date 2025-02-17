@@ -108,24 +108,39 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.toDate = this.rangeStoreService.toDate;
     if (this.fromDate) {
-      //this.fromMonthViewChange(this.fromDate);
       this.toCalendarConfig = {
         ...this.toCalendarConfig,
-        // minDate: new Date(date.getFullYear(), date.getMonth() + 1, 1),
+        minDate: this.getFromMinDate(),
       };
     }
+
     timer(100)
       .pipe(take(1))
       .subscribe(() => {
-        if (this.rangeStoreService.toDate) {
-          this.toDate = this.rangeStoreService.toDate;
+        if (this.toDate) {
           if (!this.isRangeInCurrentMonth()) {
             this.toMonthViewChange(this.toDate);
           }
           this.setSelectedRangeDates();
         }
       });
+  }
+
+  private getFromMinDate(): Date | null {
+    const current = new Date();
+    const newMonth = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+    if (this.isSameMonth(this.fromDate, this.toDate)) {
+      if (this.isSameMonth(this.fromDate, newMonth)) {
+        return new Date(this.fromDate!.getFullYear(), this.fromDate!.getMonth() + 0, 1);
+      }
+    }
+    return new Date(this.fromDate!.getFullYear(), this.fromDate!.getMonth() + 1, 1);
+  }
+
+  private isSameMonth(date: Date | null, pDate: Date | null): boolean {
+    return date?.getFullYear() === pDate?.getFullYear() && date?.getMonth() === pDate?.getMonth();
   }
 
   private isRangeInCurrentMonth(): boolean {
@@ -189,6 +204,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     this.toCalendarConfig = {
       ...this.toCalendarConfig,
       minDate: new Date(date.getFullYear(), date.getMonth() + 1, 1),
+      //minDate: this.getFromMinDate(),
     };
   }
 
