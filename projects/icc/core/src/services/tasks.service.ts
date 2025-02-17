@@ -45,8 +45,8 @@ export class IccTasksService {
       ?.selectConfig(task.key)
       .pipe(take(1))
       .subscribe((config: IccTaskConfig) => {
-        const dt = Math.ceil((new Date().getTime() - config.lastUpdateTime.getTime()) / 1000) + 3;
-        console.log(' dt=', dt);
+        const dt = Math.ceil((new Date().getTime() - config.lastUpdateTime.getTime()) / 1000) + 2.5;
+        //console.log(' dt=', dt);
         if (dt > config.refreshRate) {
           task.service?.runTask(task.key, config);
         }
