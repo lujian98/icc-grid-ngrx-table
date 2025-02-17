@@ -33,7 +33,7 @@ export class IccTasksService {
     };
     this.tasks.push(task);
     const refreshRate = config.refreshRate * 1000;
-    if (refreshRate > 0) {
+    if (refreshRate >= 5000) {
       interval(refreshRate)
         .pipe(takeWhile(() => !!this.findTask(key)))
         .subscribe(() => this.runTasks(task));
