@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -10,6 +11,7 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { MatCalendar, MatCalendarCellCssClasses, MatCalendarUserEvent } from '@angular/material/datepicker';
 import { IccLocaleDatePipe } from '@icc/ui/core';
@@ -22,10 +24,11 @@ import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.mode
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
   private _selectedRangeDates: Array<Date> = [];
@@ -65,6 +68,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
+    this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
     return this._selectedRangeDates;
