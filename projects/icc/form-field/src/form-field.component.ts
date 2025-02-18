@@ -90,18 +90,18 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
       }
       this.label.nativeElement.style.setProperty('flex', `0 0 ${width}`);
     }
-
     if (this.fieldWidthDirective && this.fieldWidthDirective.width) {
       this.fieldWidth = this.fieldWidthDirective.width;
-      this.changeDetectorRef.detectChanges();
     }
+    this.setFieldIndicator();
+    this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFieldIndicator());
+  }
 
-    this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.checkFieldIndicator();
-      const control = this.formFieldControl;
-      this.invalid = (control?.touched || control?.dirty) && control?.invalid;
-      this.changeDetectorRef.markForCheck();
-    });
+  private setFieldIndicator(): void {
+    this.checkFieldIndicator();
+    const control = this.formFieldControl;
+    this.invalid = (control?.touched || control?.dirty) && control?.invalid;
+    this.changeDetectorRef.markForCheck();
   }
 
   private checkFieldIndicator(): void {
