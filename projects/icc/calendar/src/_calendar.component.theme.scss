@@ -5,7 +5,7 @@
     background-color: icc.icc-theme(calendar-panel-background-color);
 
     .mat-calendar-body-today {
-      background-color: icc.icc-theme(calendar-today-background-color) !important;
+      background-color: icc.icc-theme(calendar-today-background-color);
       border-color: icc.icc-theme(calendar-today-background-color) !important;
       color: icc.icc-theme(calendar-date-range-dates-color);
     }
@@ -27,7 +27,7 @@
     }
 
     .mat-calendar-body-selected {
-      color: icc.icc-theme(calendar-date-range-dates-color);
+      color: icc.icc-theme(calendar-date-range-dates-color) !important;
       background-color: icc.icc-theme(calendar-date-selected-background-color);
     }
 
