@@ -82,7 +82,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tasksService.loadService(this.gridId, IccGridFacade, this.gridConfig);
+    this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
   }
 
   buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {

@@ -21,7 +21,7 @@ export class IccTasksService {
   private injector = inject(Injector);
   private tasks: IccTask[] = [];
 
-  loadService(key: string, provide: any, config: IccTaskConfig): void {
+  loadTaskService(key: string, provide: any, config: IccTaskConfig): void {
     const injector = Injector.create({
       parent: this.injector,
       providers: [provide],
@@ -46,9 +46,8 @@ export class IccTasksService {
       .pipe(take(1))
       .subscribe((config: IccTaskConfig) => {
         const dt = Math.ceil((new Date().getTime() - config.lastUpdateTime.getTime()) / 1000) + 2.5;
-        //console.log(' dt=', dt);
         if (dt > config.refreshRate) {
-          task.service?.runTask(task.key, config);
+          task.service?.runTask(config);
         }
       });
   }
