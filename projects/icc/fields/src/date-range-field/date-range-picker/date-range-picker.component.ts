@@ -117,12 +117,10 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     timer(100)
       .pipe(take(1))
       .subscribe(() => {
-        if (this.toDate) {
-          if (!this.isRangeInCurrentMonth()) {
-            this.toMonthViewChange(this.toDate);
-          }
-          this.setSelectedRangeDates();
+        if (this.toDate && !this.isRangeInCurrentMonth()) {
+          this.toMonthViewChange(this.toDate);
         }
+        this.setSelectedRangeDates();
       });
   }
 
@@ -130,7 +128,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     const current = new Date();
     const newMonth = new Date(current.getFullYear(), current.getMonth() + 1, 1);
     if (this.isSameMonth(this.fromDate, this.toDate)) {
-      if (this.isSameMonth(this.fromDate, newMonth)) {
+      if (this.isSameMonth(this.fromDate, newMonth) || this.fromDate!.getTime() > newMonth.getTime()) {
         return new Date(this.fromDate!.getFullYear(), this.fromDate!.getMonth() + 0, 1);
       }
     }
@@ -187,6 +185,9 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
 
   private setSelectedRangeDates(): void {
     this.selectedRangeDates = [];
+    if (!this.fromDate && !this.toDate) {
+      this.toDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
+    }
     if (this.fromDate && this.toDate) {
       let mdate = new Date(this.fromDate.getTime());
       mdate = new Date(mdate.setDate(mdate.getDate() - 1));
