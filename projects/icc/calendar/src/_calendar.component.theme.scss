@@ -5,7 +5,7 @@
     background-color: icc.icc-theme(calendar-panel-background-color);
 
     .mat-calendar-body-today {
-      background-color: icc.icc-theme(calendar-today-background-color);
+      background-color: icc.icc-theme(calendar-today-background-color) !important;
       border-color: icc.icc-theme(calendar-today-background-color) !important;
       color: icc.icc-theme(calendar-date-range-dates-color);
     }
