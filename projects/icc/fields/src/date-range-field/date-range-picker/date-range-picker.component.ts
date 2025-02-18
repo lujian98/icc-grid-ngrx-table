@@ -112,7 +112,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     if (this.fromDate) {
       this.toCalendarConfig = {
         ...this.toCalendarConfig,
-        minDate: this.getFromMinDate(),
+        minDate: this.getRangeToMinDate(),
       };
     }
 
@@ -126,7 +126,7 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
       });
   }
 
-  private getFromMinDate(): Date | null {
+  private getRangeToMinDate(): Date | null {
     const current = new Date();
     const newMonth = new Date(current.getFullYear(), current.getMonth() + 1, 1);
     if (this.isSameMonth(this.fromDate, this.toDate)) {
