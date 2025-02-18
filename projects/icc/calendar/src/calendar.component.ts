@@ -54,10 +54,14 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedDate(value: Date | null) {
     if (value instanceof Date) {
+      this.matCalendar.activeDate = value;
       this._selectedDate = value;
-      this.matCalendar.activeDate = this.selectedDate!;
     } else {
       this._selectedDate = null;
+      if (this.calendarConfig.viewType === 'rangeTo') {
+        const current = new Date();
+        this.matCalendar.activeDate = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+      }
     }
   }
   get selectedDate(): Date | null {
@@ -66,12 +70,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
-    /*
-    if (this.selectedDate) {
-      this.matCalendar.activeDate = this.selectedDate;
-    } else {
-      this.matCalendar.activeDate = new Date();
-    }*/
     this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
