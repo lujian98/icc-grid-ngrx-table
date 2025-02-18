@@ -184,8 +184,8 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
     }
 
     if (date && type === 'to' && !this.toDate) {
-      //this.toDate = date;
-      //this.fromDate = null;
+      this.toDate = date;
+      this.fromDate = null;
     }
     this.setSelectedRangeDates();
   }
