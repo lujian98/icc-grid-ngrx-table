@@ -93,7 +93,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   private dateStoreService = inject(IccDateStoreService);
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccDateFieldConfig;
-  private _value!: Date | string;
+  private _value!: Date | null;
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -123,13 +123,13 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   @Input()
-  set value(val: Date | string) {
+  set value(val: Date | null) {
     this._value = val;
     this.initForm({ ...defaultDateFieldConfig });
     this.field.setValue(val);
-    this.dateStoreService.updateSelected(val as Date);
+    this.dateStoreService.updateSelected(val);
   }
-  get value(): Date | string {
+  get value(): Date | null {
     return this._value;
   }
 
@@ -160,7 +160,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output() valueChange = new EventEmitter<Date | string>(undefined);
+  @Output() valueChange = new EventEmitter<Date | null>();
 
   ngOnInit(): void {
     this.translateService.onLangChange
@@ -169,7 +169,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
 
     this.dateStoreService.updateSelected$.pipe(takeUntil(this.destroy$)).subscribe((selectedDate) => {
       this.field.setValue(selectedDate);
-      this.valueChange.emit(selectedDate!);
+      this.valueChange.emit(selectedDate);
       this.changeDetectorRef.markForCheck();
     });
   }
@@ -202,14 +202,8 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this.resetSelectedDate(null);
   }
 
-  onChange(val: Date): void {
-    this.field.markAsTouched();
-    this.valueChange.emit(val);
-  }
-
   clearValue(): void {
-    this.value = '';
-    this.valueChange.emit('');
+    this.value = null;
   }
 
   registerOnChange(fn: (value: Date) => void): void {

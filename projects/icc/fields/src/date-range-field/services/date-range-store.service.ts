@@ -7,7 +7,7 @@ export class IccDateRangeStoreService {
   private _fromDate: Date | null = null;
   private _toDate: Date | null = null;
 
-  rangeUpdate$: Subject<IccDateRange> = new Subject<IccDateRange>();
+  rangeUpdate$ = new Subject<IccDateRange | null>();
 
   get fromDate(): Date | null {
     return this._fromDate;
@@ -20,10 +20,14 @@ export class IccDateRangeStoreService {
   updateRange(fromDate: Date | null, toDate: Date | null) {
     this._fromDate = fromDate;
     this._toDate = toDate;
-    const range: IccDateRange = {
-      fromDate: this._fromDate,
-      toDate: this._toDate,
-    };
-    this.rangeUpdate$.next(range);
+
+    if (!this.fromDate && !this.toDate) {
+      this.rangeUpdate$.next(null);
+    } else {
+      this.rangeUpdate$.next({
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      });
+    }
   }
 }

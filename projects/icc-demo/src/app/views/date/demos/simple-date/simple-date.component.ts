@@ -41,11 +41,11 @@ export class AppSimpleDateComponent implements OnInit {
   ngOnInit(): void {}
 
   updateRange(range: IccDateRange | null) {
-    console.log(range);
+    console.log(' range =', range);
   }
 
-  valueChange(date: Date | string) {
-    console.log(date);
+  valueChange(date: Date | null) {
+    console.log(' date=', date);
   }
 
   get1stDayOfWeek(date: Date) {

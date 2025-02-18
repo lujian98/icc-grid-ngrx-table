@@ -146,21 +146,15 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   get hasValue(): boolean {
-    const value = this.field.value;
-    return !!value && !!value.fromDate && !!value.toDate && !this.field.disabled;
+    return !!this.field.value && !this.field.disabled;
   }
 
   get display(): string {
     const range = this.field.value;
-    if (range.fromDate && !range.toDate) {
-      range.toDate = range.fromDate;
-    } else if (!range.fromDate && range.toDate) {
-      range.fromDate = range.toDate;
-    }
-    const locale = this.translateService.currentLang || 'en-US';
-    const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig.dateFormat);
-    const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig.dateFormat);
-    if (range.fromDate && range.toDate) {
+    if (range && range.fromDate && range.toDate) {
+      const locale = this.translateService.currentLang || 'en-US';
+      const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig.dateFormat);
+      const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig.dateFormat);
       return `${from} - ${to}`;
     } else {
       return '';
@@ -168,7 +162,7 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output() valueChange = new EventEmitter<IccDateRange | null>(undefined);
+  @Output() valueChange = new EventEmitter<IccDateRange | null>();
 
   ngOnInit(): void {
     this.rangeStoreService.rangeUpdate$.pipe(takeUntil(this.destroy$)).subscribe((range) => {
@@ -196,14 +190,8 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
     this.rangeStoreService.updateRange(null, null);
   }
 
-  onChange(val: IccDateRange): void {
-    this.field.markAsTouched();
-    this.valueChange.emit(val);
-  }
-
   clearValue(): void {
     this.value = null;
-    this.valueChange.emit(null);
   }
 
   registerOnChange(fn: (value: IccDateRange) => void): void {
