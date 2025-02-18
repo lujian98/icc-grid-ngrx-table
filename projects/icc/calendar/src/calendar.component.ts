@@ -66,11 +66,12 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   @Input() set selectedRangeDates(value: Array<Date>) {
     this._selectedRangeDates = value;
+    /*
     if (this.selectedDate) {
       this.matCalendar.activeDate = this.selectedDate;
     } else {
       this.matCalendar.activeDate = new Date();
-    }
+    }*/
     this.changeDetectorRef.detectChanges();
   }
   get selectedRangeDates(): Array<Date> {
