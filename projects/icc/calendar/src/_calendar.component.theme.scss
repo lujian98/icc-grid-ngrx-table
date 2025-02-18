@@ -4,9 +4,14 @@
   icc-calendar {
     background-color: icc.icc-theme(calendar-panel-background-color);
 
+    .mat-calendar-body-cell {
+      .mat-calendar-body-today {
+        border-color: icc.icc-theme(calendar-today-background-color);
+      }
+    }
+
     .mat-calendar-body-today {
       background-color: icc.icc-theme(calendar-today-background-color);
-      border-color: icc.icc-theme(calendar-today-background-color) !important;
       color: icc.icc-theme(calendar-date-range-dates-color);
     }
 
@@ -73,8 +78,10 @@
     display: none;
   }
 
-  .icc-date-range-dates::before {
-    background-color: icc.icc-theme(calendar-date-range-dates-background-color) !important;
+  .mat-calendar-body-cell-container {
+    .icc-date-range-dates::before {
+      background-color: icc.icc-theme(calendar-date-range-dates-background-color);
+    }
   }
 
   .icc-date-range-dates {

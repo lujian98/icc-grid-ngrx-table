@@ -31,7 +31,6 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
   private _selectedRangeDates: Array<Date> = [];
   private _selectedDate: Date | null = null;
-
   private currentMonth!: Date | null;
   minDate!: Date | null;
   maxDate!: Date | null;
