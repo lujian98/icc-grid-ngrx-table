@@ -1,3 +1,9 @@
+<span class="icc-calendar-selected-text">
+  <label class="icc-calendar-selected-label" translate>{{ calendarConfig.selectedLabel }}</label
+  ><span>:</span>
+  <label class="icc-calendar-selected-date">{{ selectedDate! | localeDate: calendarConfig.dateFormat }}</label>
+</span>
+
 <mat-calendar
   [startAt]="selectedDate"
   [selected]="selectedDate"
@@ -11,9 +17,3 @@
   [dateFilter]="weekendFilter"
 >
 </mat-calendar>
-
-<span class="icc-calendar-selected-label">
-  <label translate>{{ calendarConfig.selectedLabel }}</label
-  ><span>:</span>
-  <label class="icc-calendar-selected-date">{{ selectedDate! | localeDate: calendarConfig.dateFormat }}</label>
-</span>
