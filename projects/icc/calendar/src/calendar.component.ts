@@ -9,7 +9,6 @@ import {
   OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -19,7 +18,6 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.model';
 
-//matCalendar.activeDate need add to input changes except with min/max in the calendarConfig
 @Component({
   selector: 'icc-calendar',
   templateUrl: './calendar.component.html',
@@ -95,12 +93,9 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     // Material calendar bug - sometime not able refresh view when set maxDate/minDate
-    //if (this.selectedDate) {
-    //this.matCalendar.activeDate = this.selectedDate;
-    //}
-
+    // matCalendar.activeDate need add to input changes (not here) except with min/max in the calendarConfig
     if (!this.maxDate) {
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
       timer(10)
