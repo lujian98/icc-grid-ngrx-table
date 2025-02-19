@@ -45,7 +45,6 @@ export class IccNoopTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   hide$ = EMPTY;
 }
 
-// ONLY USED
 export class IccPointTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = EMPTY;
   private firstTime: boolean = false; // seems not needed
