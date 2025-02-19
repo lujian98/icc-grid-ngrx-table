@@ -177,31 +177,33 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     selection: SelectionModel<object>,
     data: object[],
   ): void {
-    if (this.prevRowIndex < 0) {
-      this.prevRowIndex = rowIndex;
-    }
-    const selected = selection.isSelected(record as object);
-    if (this.gridConfig.multiRowSelection) {
-      if (event.ctrlKey || event.metaKey) {
-        this.selectRecord([record], !selected);
-      } else if (event.shiftKey) {
-        if (rowIndex === this.prevRowIndex) {
+    if (this.gridConfig.rowSelection) {
+      if (this.prevRowIndex < 0) {
+        this.prevRowIndex = rowIndex;
+      }
+      const selected = selection.isSelected(record as object);
+      if (this.gridConfig.multiRowSelection) {
+        if (event.ctrlKey || event.metaKey) {
           this.selectRecord([record], !selected);
+        } else if (event.shiftKey) {
+          if (rowIndex === this.prevRowIndex) {
+            this.selectRecord([record], !selected);
+          } else {
+            const records = this.getSelectionRange(this.prevRowIndex, rowIndex, data);
+            this.selectRecord(records, true);
+          }
         } else {
-          const records = this.getSelectionRange(this.prevRowIndex, rowIndex, data);
-          this.selectRecord(records, true);
+          if (selected) {
+            this.gridFacade.setSelectAllRows(this.gridConfig, false);
+          } else {
+            this.gridFacade.setSelectRow(this.gridConfig, record as object);
+          }
         }
       } else {
-        if (selected) {
-          this.gridFacade.setSelectAllRows(this.gridConfig, false);
-        } else {
-          this.gridFacade.setSelectRow(this.gridConfig, record as object);
-        }
+        this.selectRecord([record], !selected);
       }
-    } else {
-      this.selectRecord([record], !selected);
+      this.prevRowIndex = rowIndex;
     }
-    this.prevRowIndex = rowIndex;
   }
 
   private getSelectionRange(prevRowIndex: number, rowIndex: number, data: object[]): object[] {

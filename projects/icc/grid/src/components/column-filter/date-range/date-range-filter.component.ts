@@ -11,7 +11,8 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   imports: [CommonModule, IccDateRangeFieldComponent],
 })
 export class IccDateRangeFilterComponent extends IccFieldFilterComponent {
-  override fieldConfig!: Partial<IccDateRangeFieldConfig>;
+  // @ts-ignore
+  fieldConfig!: Partial<IccDateRangeFieldConfig>;
 
   override checkField(): void {
     this.fieldConfig = {
