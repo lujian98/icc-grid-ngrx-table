@@ -28,7 +28,10 @@ export class AppMenuComponent {
   items: IccAccordion[] = [
     {
       name: 'Menu Demo',
-      items: [{ name: 'Simple Menu', link: 'simple-menu' }],
+      items: [
+        { name: 'Simple Menu', link: 'simple-menu' },
+        { name: 'Menu Panel', link: 'menu-panel' },
+      ],
     },
   ];
 }

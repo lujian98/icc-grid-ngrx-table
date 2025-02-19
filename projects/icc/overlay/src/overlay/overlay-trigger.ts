@@ -47,7 +47,7 @@ export class IccNoopTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
 
 export class IccPointTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
   show$ = EMPTY;
-  private firstTime: boolean = false; // seems not needed
+  private firstTime: boolean = true;
   protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.container(), event] as [boolean, Event]),
     share(),
@@ -66,7 +66,7 @@ export class IccPointTriggerStrategy<T> extends IccTriggerStrategyBase<T> {
         const { x, y } = event as MouseEvent;
         show = box.top < y && y < box.bottom && box.left < x && x < box.right;
       }
-      return !shouldShow && !show;
+      return this.clickToClose || (!shouldShow && !show);
     }),
     map(([, event]) => event),
     takeWhile(() => this.alive),

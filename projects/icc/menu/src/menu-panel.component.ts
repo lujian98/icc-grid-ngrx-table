@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
-import { Observable, combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'icc-menu-panel',
@@ -12,19 +11,17 @@ import { Observable, combineLatest, map } from 'rxjs';
   imports: [CommonModule, IccMenusComponent],
 })
 export class IccMenuPanelComponent {
-  level = 0;
-
+  @Input() level: number = 0;
   @Input() menuItems: IccMenuItem[] = [];
   @Input() values: { [key: string]: boolean }[] = [];
   @Input() disabled: IccDisabled[] = [];
+
+  //TODO output may not working when use with IccPopoverComponent may need a service to do this?
   @Output() iccItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
-  onMenuFormChanges(values: { [key: string]: boolean }): void {
-    //console.log(' pppppp menu form values =', values);
-  }
+  onMenuFormChanges(values: { [key: string]: boolean }): void {}
 
   onMenuItemClick(item: IccMenuItem): void {
-    //console.log(' pppppp menu click =', item);
     this.iccItemChangedEvent.emit(item);
   }
 }

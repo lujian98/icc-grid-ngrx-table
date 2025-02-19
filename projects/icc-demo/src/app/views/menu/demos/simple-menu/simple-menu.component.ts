@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
-import { IccDynamicOverlayService, IccTrigger } from '@icc/ui/overlay';
+import { IccTrigger } from '@icc/ui/overlay';
 
 @Component({
   selector: 'app-simple-menu',
@@ -9,7 +9,6 @@ import { IccDynamicOverlayService, IccTrigger } from '@icc/ui/overlay';
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent],
-  providers: [IccDynamicOverlayService],
 })
 export class AppSimpleMenuComponent implements OnInit {
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
