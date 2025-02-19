@@ -11,7 +11,8 @@
       position: relative;
       z-index: 1;
       min-height: 20px;
-      height: 150px;
+      flex: 0 0 150px;
+      //height: 150px;
     }
 
     icc-layout-middle {
@@ -24,7 +25,8 @@
       position: relative;
       z-index: 1;
       min-height: 20px;
-      height: 150px;
+      flex: 0 0 150px;
+      //height: 150px;
     }
   }
 }
