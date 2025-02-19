@@ -11,8 +11,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   imports: [CommonModule, IccTextFieldComponent],
 })
 export class IccTextFilterComponent extends IccFieldFilterComponent {
-  // @ts-ignore
-  fieldConfig!: Partial<IccTextFieldConfig>;
+  override fieldConfig!: Partial<IccTextFieldConfig>;
 
   override checkField(): void {
     this.fieldConfig = {
