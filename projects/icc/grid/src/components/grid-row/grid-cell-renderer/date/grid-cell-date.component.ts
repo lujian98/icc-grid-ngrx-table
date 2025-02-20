@@ -14,6 +14,7 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
 export class IccGridCellDateComponent extends IccGridCellRendererComponent<Date> implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
+
   get display(): string {
     if (this.data) {
       const locale = this.translateService.currentLang || 'en-US';
@@ -25,9 +26,9 @@ export class IccGridCellDateComponent extends IccGridCellRendererComponent<Date>
   }
 
   ngOnInit(): void {
-    this.translateService.onLangChange.pipe(delay(50), takeUntil(this.destroy$)).subscribe((lang) => {
-      this.changeDetectorRef.markForCheck();
-    });
+    this.translateService.onLangChange
+      .pipe(delay(50), takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   ngOnDestroy(): void {
