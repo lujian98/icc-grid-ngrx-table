@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccInputDirective } from '@icc/ui/form-field';
@@ -27,6 +27,7 @@ export class IccGridFooterComponent implements OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _page: number = 1;
+  protected destroy$ = new Subject<void>();
   valueChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   @Input()
@@ -67,6 +68,7 @@ export class IccGridFooterComponent implements OnDestroy {
         switchMap((page) => {
           return of(page).pipe(takeUntil(this.valueChanged$.pipe(skip(1))));
         }),
+        takeUntil(this.destroy$),
       )
       .subscribe((page) => {
         this.getGridPageData(this.page);
@@ -98,6 +100,9 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.valueChanged$.next(0);
     this.valueChanged$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
