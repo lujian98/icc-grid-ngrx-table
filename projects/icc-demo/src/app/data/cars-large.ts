@@ -5,6 +5,7 @@ import {
   IccSortField,
   IccColumnFilter,
   IccFilterField,
+  IccFieldType,
 } from '@icc/ui/grid';
 
 export const DCRBrands = [
@@ -83,6 +84,8 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'MakeDate',
     title: 'Make Date',
     width: 100,
+    rendererType: IccFieldType.Date,
+    align: 'center',
   },
   {
     name: 'year',

@@ -129,6 +129,7 @@ export interface IccColumnConfig {
   rendererType?: IccRendererType;
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
+  dateFormat?: string;
   groupField?: IccGroupField;
   groupHeader?: IccGroupHeader;
 

@@ -9,8 +9,8 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class IccGridCellFunctionComponent<T> extends IccGridCellRendererComponent<T> {
-  get displayValue(): string {
+export class IccGridCellFunctionComponent extends IccGridCellRendererComponent<string> {
+  get display(): string {
     return this.column.renderer!(this.data, this.column.name, this.column, this.record, this.rowIndex);
   }
 }

@@ -13,6 +13,7 @@ import { IccColumnConfig, IccGridConfig, IccFieldType } from '../../../models/gr
 import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
+import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 
 export interface IccDynamicGridCell<T> {
   gridConfig: IccGridConfig;
@@ -83,6 +84,8 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
       return IccGridCellFunctionComponent;
     } else if (this.column.rendererType === IccFieldType.Image) {
       return IccGridCellImageComponent;
+    } else if (this.column.rendererType === IccFieldType.Date) {
+      return IccGridCellDateComponent;
     }
     return IccGridCellTextComponent;
   }
