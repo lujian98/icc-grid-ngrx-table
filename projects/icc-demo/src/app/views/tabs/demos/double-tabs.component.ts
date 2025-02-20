@@ -20,10 +20,12 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
 })
 export class AppDoubleTabsComponent {
   tabsConfig1: Partial<IccTabsConfig> = {
+    enableContextMenu: true,
     alignTabs: 'end',
   };
 
   tabsConfig2: Partial<IccTabsConfig> = {
+    enableContextMenu: true,
     alignTabs: 'center',
   };
 
