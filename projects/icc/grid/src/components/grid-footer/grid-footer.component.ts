@@ -42,7 +42,7 @@ export class IccGridFooterComponent implements OnDestroy {
       editable: true,
       minValue: 1,
       maxValue: this.lastPage,
-      labelWidth: 50,
+      labelWidth: 25,
       fieldWidth: 50,
     };
   }

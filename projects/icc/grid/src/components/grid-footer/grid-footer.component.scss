@@ -11,7 +11,14 @@
 
   icc-number-field {
     width: unset;
-    input {
+
+    ::ng-deep .icc-form-field-label {
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+    }
+
+    ::ng-deep input {
       text-align: center;
     }
   }
