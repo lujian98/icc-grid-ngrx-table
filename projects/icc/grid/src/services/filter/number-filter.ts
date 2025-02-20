@@ -67,7 +67,7 @@ export class IccNumberFilter extends IccFilter {
             this._action = NumericFilterActions.EQ;
           } else {
             this._value = filter;
-            this._action = NumericFilterActions.EQ; // Default to EQ
+            this._action = NumericFilterActions.INCLUDES; // Default to INCLUDES
           }
         }
         return;
