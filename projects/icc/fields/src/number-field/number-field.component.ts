@@ -76,6 +76,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   private destroy$ = new Subject<void>();
   private _fieldConfig!: IccNumberFieldConfig;
   private _value!: number | null;
+
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
   @Input()
@@ -91,7 +92,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
       this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
+        [this.fieldConfig.fieldName!]: new FormControl<number | null>(null),
       });
     }
 
@@ -115,7 +116,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     return this._value;
   }
 
-  @Output() valueChange = new EventEmitter<number | null>(true);
+  @Output() valueChange = new EventEmitter<number | null>();
 
   get field(): FormControl {
     return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
