@@ -1,10 +1,17 @@
 <icc-layout-footer>
   <button icc-button (click)="getGridPageData(1)" [disabled]="page === 1">
-    <i class="fa-solid fa-backward-step"></i>
+    <icc-icon config="backward-step"></icc-icon>
   </button>
-
-  <button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
+  <!--
+  <i class="fa-solid fa-backward-step">
     <i class="fa-solid fa-caret-left"></i>
+    <i class="fa-solid fa-caret-right"></i>
+        <i class="fa-solid fa-forward-step"></i>
+            <i class="fa-solid fa-arrows-rotate"></i>
+  </i>
+  -->
+  <button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
+    <icc-icon config="caret-left"></icc-icon>
   </button>
 
   <icc-number-field
@@ -17,15 +24,15 @@
 
   <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
   <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
-    <i class="fa-solid fa-caret-right"></i>
+    <icc-icon config="caret-right"></icc-icon>
   </button>
 
   <button icc-button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
-    <i class="fa-solid fa-forward-step"></i>
+    <icc-icon config="forward-step"></icc-icon>
   </button>
 
   <button icc-button (click)="refreshData(page)">
-    <i class="fa-solid fa-arrows-rotate"></i>
+    <icc-icon config="arrows-rotate"></icc-icon>
   </button>
 
   <span>

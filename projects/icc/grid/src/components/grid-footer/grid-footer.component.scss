@@ -3,8 +3,11 @@
   padding: 1px 10px;
 
   button {
-    margin-right: 5px;
+    icc-icon {
+      padding-right: 0px;
+    }
   }
+
   span {
     margin: 0 5px;
   }
@@ -12,14 +15,16 @@
   icc-number-field {
     width: unset;
 
-    ::ng-deep .icc-form-field-label {
-      display: flex;
-      flex-direction: row;
-      justify-content: end;
-    }
+    ::ng-deep {
+      .icc-form-field-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+      }
 
-    ::ng-deep input {
-      text-align: center;
+      input {
+        text-align: center;
+      }
     }
   }
 }

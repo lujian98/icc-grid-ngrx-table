@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
-import { TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import { IccButtonComponent } from '@icc/ui/button';
 import { IccNumberFieldComponent, IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
-import { IccLayoutFooterEndComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
+import { IccIconModule } from '@icc/ui/icon';
+import { IccLayoutFooterComponent, IccLayoutFooterEndComponent } from '@icc/ui/layout';
+import { TranslatePipe } from '@ngx-translate/core';
+import { BehaviorSubject, Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
-import { IccButtonComponent } from '@icc/ui/button';
 
 @Component({
   selector: 'icc-grid-footer',
@@ -16,6 +17,7 @@ import { IccButtonComponent } from '@icc/ui/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    IccIconModule,
     TranslatePipe,
     IccNumberFieldComponent,
     IccButtonComponent,
