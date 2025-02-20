@@ -82,9 +82,10 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   },
   {
     name: 'MakeDate',
-    title: 'Make Date',
+    title: 'Manufacture Date',
     width: 100,
     rendererType: IccFieldType.Date,
+    dateFormat: 'longDate',
     align: 'center',
   },
   {
@@ -1323,10 +1324,13 @@ export const CARSDATA3 = {
   data: CARSDATA0.data.map((item: any, index) => {
     const ndate = new Date();
     item['ID'] = index + 1;
-    item['MakeDate'] = new Date(item.year, ndate.getMonth() - index, index);
+    if (index < 0) {
+      item['MakeDate'] = '';
+    } else {
+      item['MakeDate'] = new Date(item.year, ndate.getMonth() - index, index);
+    }
     item['image'] = 'assets/test-image.jpg';
     return item;
   }),
   totalCounts: 200,
 };
-//console.log( 'CARSDATA= ', CARSDATA)

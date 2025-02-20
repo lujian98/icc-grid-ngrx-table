@@ -13,7 +13,7 @@ import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.mode
   imports: [CommonModule],
 })
 export class IccGridCellRendererComponent<T> {
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  protected changeDetectorRef = inject(ChangeDetectorRef);
   private _record!: T;
 
   @Input() gridConfig!: IccGridConfig;

@@ -4,7 +4,6 @@ import { DatePipe } from '@angular/common';
 
 @Pipe({
   name: 'localeDate',
-  standalone: true,
 })
 export class IccLocaleDatePipe implements PipeTransform {
   private translateService = inject(TranslateService);

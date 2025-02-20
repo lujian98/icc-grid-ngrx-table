@@ -16,7 +16,7 @@ export class IccGridCellDateComponent extends IccGridCellRendererComponent<Date>
   get display(): string {
     if (this.data) {
       const locale = this.translateService.currentLang || 'en-US';
-      const dateFormat = this.column.dateFormat || 'mediumDate';
+      const dateFormat = this.column.dateFormat || 'longDate';
       return new DatePipe(locale).transform(this.data, dateFormat)!;
     } else {
       return '';
