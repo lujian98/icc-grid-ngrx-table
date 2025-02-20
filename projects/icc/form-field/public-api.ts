@@ -11,3 +11,4 @@ export * from './src/directive/suffix.directive';
 export * from './src/directive/form-field-errors.directive';
 export * from './src/directive/form-field-control.directive';
 export * from './src/directive/input.directive';
+export * from './src/directive/numeric.directive';
