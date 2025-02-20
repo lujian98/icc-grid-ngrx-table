@@ -78,7 +78,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
       fieldType: 'select',
       multiSelection: true,
     },
-    width: 50,
+    width: 80,
   },
   {
     name: 'MakeDate',
