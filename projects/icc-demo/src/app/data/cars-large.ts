@@ -80,6 +80,11 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 50,
   },
   {
+    name: 'MakeDate',
+    title: 'Make Date',
+    width: 100,
+  },
+  {
     name: 'year',
     width: 50,
     align: 'right',
@@ -1304,14 +1309,18 @@ export const CARSDATA0 = {
 
 export const CARSDATA = {
   data: CARSDATA0.data.map((item: any, index) => {
+    const ndate = new Date();
     item['ID'] = index + 1;
+    item['MakeDate'] = new Date(item.year, ndate.getMonth() - index, index);
     return item;
   }),
 };
 
 export const CARSDATA3 = {
   data: CARSDATA0.data.map((item: any, index) => {
+    const ndate = new Date();
     item['ID'] = index + 1;
+    item['MakeDate'] = new Date(item.year, ndate.getMonth() - index, index);
     item['image'] = 'assets/test-image.jpg';
     return item;
   }),

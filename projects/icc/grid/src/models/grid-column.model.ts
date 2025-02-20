@@ -61,11 +61,6 @@ export interface IccGridConfig {
   lastUpdateTime: Date;
 }
 
-export enum IccRendererType {
-  Text = 'Text',
-  Image = 'Image',
-}
-
 export interface GridState {
   [key: string]: IccGridState;
 }
@@ -107,6 +102,13 @@ export interface IccColumnFilter {
   value: IccFilterValueType;
 }
 
+export enum IccFieldType {
+  Date = 'Date',
+  Image = 'Image',
+  Text = 'Text',
+}
+
+export type IccRendererType = IccFieldType.Text | IccFieldType.Image | IccFieldType.Date;
 export type IccFilterField = boolean | 'text' | 'number' | 'select' | 'dateRange';
 export type IccFilterFieldConfig = Partial<IccFormField>;
 export type IccGroupField = boolean | string;
@@ -114,7 +116,7 @@ export type IccGroupField = boolean | string;
 export interface IccColumnConfig {
   name: string;
   title?: string;
-  fieldType?: string; // | IccFieldType | IccTextFieldType | IccNumberFieldType | IccSelectFieldType;
+
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
@@ -123,9 +125,10 @@ export interface IccColumnConfig {
   sortField?: boolean;
   filterField?: IccFilterField;
   filterFieldConfig?: IccFilterFieldConfig;
+
   rendererType?: IccRendererType;
-  component?: Type<unknown>;
-  renderer?: Function;
+  component?: Type<unknown>; // renderer component
+  renderer?: Function; // renderer function
   groupField?: IccGroupField;
   groupHeader?: IccGroupHeader;
 

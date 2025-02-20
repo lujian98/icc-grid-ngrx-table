@@ -6,7 +6,7 @@ import {
   IccGridComponent,
   defaultGridConfig,
   IccGridData,
-  IccRendererType,
+  IccFieldType,
 } from '@icc/ui/grid';
 import { CARSDATA3 } from '../../../data/cars-large';
 
@@ -56,7 +56,7 @@ export class AppGridRendererFunctionComponent {
       name: 'image',
       width: 80,
       align: 'center',
-      rendererType: IccRendererType.Image,
+      rendererType: IccFieldType.Image,
     },
   ];
   gridData: IccGridData<any> = CARSDATA3;

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccNumberFieldComponent, IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
+import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 import { TranslateService } from '@ngx-translate/core';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
@@ -9,7 +9,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   templateUrl: './number-filter.component.html',
   styleUrls: ['number-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccNumberFieldComponent, IccTextFieldComponent],
+  imports: [CommonModule, IccTextFieldComponent],
 })
 export class IccNumberFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccTextFieldConfig>;

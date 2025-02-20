@@ -2,7 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 import { SelectionModel } from '@angular/cdk/collections';
 import { defaultState } from '../models/default-grid';
-import { GridState } from '../models/grid-column.model';
+import { GridState, IccFieldType } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import * as gridActions from './grid.actions';
@@ -66,7 +66,7 @@ export const iccGridFeature = createFeature({
           columnsConfig: action.columnsConfig.map((column) => {
             return {
               ...column,
-              fieldType: column.fieldType || 'text',
+              rendererType: column.rendererType || IccFieldType.Text,
               width: column.width || MIN_GRID_COLUMN_WIDTH,
             };
           }),
