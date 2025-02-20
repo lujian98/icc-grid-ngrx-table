@@ -20,6 +20,11 @@ export interface IccGroupHeader {
   isGroupHeader?: boolean;
 }
 
+export interface ColumnMenuClick {
+  column: IccColumnConfig;
+  event: MouseEvent;
+}
+
 export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use
   isTreeGrid: boolean;
@@ -99,7 +104,6 @@ export type IccFilterValueType =
 
 export interface IccColumnFilter {
   name: string;
-  //type: string;
   value: IccFilterValueType;
 }
 
@@ -127,25 +131,13 @@ export interface IccColumnConfig {
 
   //field: string;
   //index?: number;
-  //validations?: IccValidation[];
-
   //draggable?: boolean;
+
+  //editField?: IccEditField;
+  //validations?: IccValidation[];
+  //cellReadonly?: boolean | Function;
   //dateFormat?: string;
   //dateRangePreset?: boolean;
-  /*
-  header?: string;
-  headerClass?: string;
-
-  renderer?: IccRendererType;
-  groupField?: IccGroupField;
-  editField?: IccEditField;
-  cellReadonly?: boolean | Function;
-  priority?: number;
-  menu?: boolean | IccMenuItem;
-  */
-}
-
-export interface ColumnMenuClick {
-  column: IccColumnConfig;
-  event: MouseEvent;
+  //priority?: number;
+  //menu?: boolean | IccMenuItem;
 }
