@@ -63,7 +63,7 @@ export class IccGridFooterComponent implements OnDestroy {
     this.valueChanged$
       .pipe(
         skip(1),
-        debounceTime(500),
+        debounceTime(300),
         distinctUntilChanged(),
         switchMap((page) => {
           return of(page).pipe(takeUntil(this.valueChanged$.pipe(skip(1))));
