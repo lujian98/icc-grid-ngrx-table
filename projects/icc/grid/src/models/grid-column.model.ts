@@ -106,6 +106,7 @@ export enum IccFieldType {
   Date = 'Date',
   Image = 'Image',
   Text = 'Text',
+  // TODO number (decimals/negative), select (display value/translation), etc.
 }
 
 export type IccRendererType = IccFieldType.Text | IccFieldType.Image | IccFieldType.Date;

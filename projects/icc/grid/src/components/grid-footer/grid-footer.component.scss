@@ -22,6 +22,11 @@
         justify-content: end;
       }
 
+      .icc-form-field-container {
+        background-color: unset;
+        border-bottom: 0px;
+      }
+
       input {
         text-align: center;
       }
