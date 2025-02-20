@@ -9,7 +9,7 @@ import {
   inject,
 } from '@angular/core';
 import { IccFormField } from '@icc/ui/fields';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, of, skip, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
 
@@ -19,13 +19,14 @@ import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models
   imports: [CommonModule],
 })
 export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
+  private gridFacade = inject(IccGridFacade);
+  protected destroy$ = new Subject<void>();
+  protected _value: IccFilterValueType = '';
+
   changeDetectorRef = inject(ChangeDetectorRef);
   filterChanged$ = new BehaviorSubject<IccFilterValueType>(null);
-  private gridFacade = inject(IccGridFacade);
-  protected _value: IccFilterValueType = '';
   _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
-
   fieldConfig!: Partial<IccFormField>;
 
   @Input()
@@ -60,6 +61,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
         debounceTime(250),
         distinctUntilChanged(),
         switchMap((filterValue) => of(filterValue).pipe(takeUntil(this.filterChanged$.pipe(skip(1))))),
+        takeUntil(this.destroy$),
       )
       .subscribe((filterValue) => this.applyFilter(filterValue));
   }
@@ -84,6 +86,9 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.filterChanged$.next(null);
     this.filterChanged$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

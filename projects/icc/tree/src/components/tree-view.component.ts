@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent, IccColumnWidth } from '@icc/ui/grid';
-import { BehaviorSubject, Observable, interval, of, map } from 'rxjs';
+import { BehaviorSubject, Observable, interval, of, map, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
 import { IccTreeConfig, IccTreeNode, IccTreeDropInfo } from '../models/tree-grid.model';
@@ -35,6 +35,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
   private _treeConfig!: IccTreeConfig;
+  private destroy$ = new Subject<void>();
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
   treeData$!: Observable<IccTreeNode<T>[]>;
   columnHeaderPosition = 0;
@@ -82,6 +83,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
         debounceTime(250),
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
+        takeUntil(this.destroy$),
       )
       .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true, event));
   }
@@ -255,6 +257,9 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.sizeChanged$.next(null);
     this.sizeChanged$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

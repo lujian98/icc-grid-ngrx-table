@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
-import { delay, Subject, takeUntil } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { delay, takeUntil } from 'rxjs';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -12,10 +12,9 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTextFieldComponent],
 })
-export class IccNumberFilterComponent extends IccFieldFilterComponent implements OnInit, OnDestroy {
+export class IccNumberFilterComponent extends IccFieldFilterComponent implements OnInit {
   override fieldConfig!: Partial<IccTextFieldConfig>;
   private translateService = inject(TranslateService);
-  private destroy$ = new Subject<void>();
 
   override checkField(): void {
     const filterI18n = this.translateService.instant('ICC.UI.GRID.FILTER');
@@ -44,11 +43,5 @@ export class IccNumberFilterComponent extends IccFieldFilterComponent implements
 
   onValueChange(value: string): void {
     this.filterChanged$.next(value);
-  }
-
-  override ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
