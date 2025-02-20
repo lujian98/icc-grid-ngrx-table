@@ -54,6 +54,7 @@ export class IccGridService {
     const limit = gridConfig.pageSize;
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
+    console.log('grid get data params=', params);
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridData<object>>(url, { params }).pipe(
       map((res) => {

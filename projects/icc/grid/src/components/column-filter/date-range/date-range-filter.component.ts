@@ -31,6 +31,8 @@ export class IccDateRangeFilterComponent extends IccFieldFilterComponent {
   }
 
   onValueChange(value: IccDateRange | null): void {
-    this.filterChanged$.next(value);
+    if (this.value?.fromDate !== value?.fromDate || this.value?.toDate !== value?.toDate) {
+      this.filterChanged$.next(value);
+    }
   }
 }

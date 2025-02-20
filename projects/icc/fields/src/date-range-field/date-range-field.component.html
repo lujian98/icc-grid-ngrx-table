@@ -4,6 +4,7 @@
     [iccLabelWidth]="fieldConfig.labelWidth"
     [iccFieldWidth]="fieldConfig.fieldWidth"
     [iccFormFieldControl]="field"
+    [showFieldEditIndicator]="showFieldEditIndicator"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel | translate }}
@@ -16,7 +17,7 @@
       iccInput
       [value]="display"
       (click)="openCalendar()"
-      placeholder="{{ fieldConfig.placeholder! | translate }}..."
+      placeholder="{{ fieldConfig.placeholder! | translate }}"
       [disabled]="field.disabled"
       [required]="required"
       readonly

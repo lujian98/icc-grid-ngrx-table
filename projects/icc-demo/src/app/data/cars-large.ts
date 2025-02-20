@@ -86,6 +86,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 100,
     rendererType: IccFieldType.Date,
     dateFormat: 'longDate',
+    filterField: 'dateRange',
     align: 'center',
   },
   {
