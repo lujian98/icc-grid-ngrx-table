@@ -7,7 +7,7 @@
     [showFieldEditIndicator]="showFieldEditIndicator"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel }}
+      {{ fieldConfig.fieldLabel | translate }}
     </icc-label>
     <input
       iccInput

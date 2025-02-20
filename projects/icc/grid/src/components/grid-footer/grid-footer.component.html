@@ -6,19 +6,15 @@
   <button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
     <i class="fa-solid fa-caret-left"></i>
   </button>
-  <span>
-    {{ "ICC.UI.GRID.PAGE" | translate }}:
-    <input
-      iccInput
-      type="number"
-      min="1"
-      [max]="lastPage"
-      [value]="page"
-      autocomplete="off"
-      (click)="$event.stopPropagation()"
-      (input)="valueChanged($event)"
-    />
-  </span>
+
+  <icc-number-field
+    [fieldConfig]="fieldConfig"
+    [value]="page"
+    [showFieldEditIndicator]="false"
+    (valueChange)="onValueChange($event)"
+  >
+  </icc-number-field>
+
   <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
   <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
     <i class="fa-solid fa-caret-right"></i>

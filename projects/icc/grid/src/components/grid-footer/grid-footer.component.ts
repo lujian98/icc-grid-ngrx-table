@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { IccNumberFieldComponent, IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
 import { IccLayoutFooterEndComponent, IccLayoutFooterComponent } from '@icc/ui/layout';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccGridConfig } from '../../models/grid-column.model';
@@ -17,7 +17,7 @@ import { IccButtonComponent } from '@icc/ui/button';
   imports: [
     CommonModule,
     TranslatePipe,
-    IccInputDirective,
+    IccNumberFieldComponent,
     IccButtonComponent,
     IccLayoutFooterComponent,
     IccLayoutFooterEndComponent,
@@ -29,11 +29,22 @@ export class IccGridFooterComponent implements OnDestroy {
   private _page: number = 1;
   protected destroy$ = new Subject<void>();
   valueChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
+  fieldConfig!: IccNumberFieldConfig;
 
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
     this.page = val.page;
+
+    this.fieldConfig = {
+      ...defaultNumberFieldConfig,
+      fieldLabel: 'ICC.UI.GRID.PAGE',
+      editable: true,
+      minValue: 1,
+      maxValue: this.lastPage,
+      labelWidth: 50,
+      fieldWidth: 50,
+    };
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
@@ -70,9 +81,7 @@ export class IccGridFooterComponent implements OnDestroy {
         }),
         takeUntil(this.destroy$),
       )
-      .subscribe((page) => {
-        this.getGridPageData(this.page);
-      });
+      .subscribe(() => this.getGridPageData(this.page));
   }
 
   refreshData(page: number): void {
@@ -87,9 +96,8 @@ export class IccGridFooterComponent implements OnDestroy {
     this.gridFacade.getGridPageData(this.gridConfig, page);
   }
 
-  valueChanged(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    let page: number = parseInt(target.value) | 1;
+  onValueChange(value: number | null): void {
+    let page: number = (value as number) || 1;
     if (page < 1) {
       page = 1;
     } else if (page > this.lastPage) {

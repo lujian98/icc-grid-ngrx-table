@@ -9,7 +9,10 @@
     margin: 0 5px;
   }
 
-  input {
-    text-align: center;
+  icc-number-field {
+    width: unset;
+    input {
+      text-align: center;
+    }
   }
 }
