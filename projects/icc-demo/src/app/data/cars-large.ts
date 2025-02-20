@@ -64,6 +64,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 50,
     align: 'center',
     groupField: false,
+    filterField: 'number',
   },
   {
     name: 'vin',

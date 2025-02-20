@@ -4,6 +4,7 @@
     [iccLabelWidth]="fieldConfig.labelWidth"
     [iccFieldWidth]="fieldConfig.fieldWidth"
     [iccFormFieldControl]="field"
+    [showFieldEditIndicator]="showFieldEditIndicator"
   >
     <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
       {{ fieldConfig.fieldLabel }}
@@ -16,7 +17,7 @@
       (keyup)="onChange()"
       (wheel)="onChange()"
       [required]="required"
-      placeholder="{{ fieldConfig.placeholder }}"
+      placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
     <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
 

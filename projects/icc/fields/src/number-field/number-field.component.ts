@@ -32,6 +32,7 @@ import {
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
 import { Subject, takeUntil, timer, take } from 'rxjs';
@@ -66,6 +67,7 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccFieldWidthDirective,
     IccInputDirective,
     IccIconModule,
+    TranslatePipe,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFormFieldControlDirective,
