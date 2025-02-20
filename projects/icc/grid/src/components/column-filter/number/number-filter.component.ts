@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccNumberFieldComponent, IccNumberFieldConfig } from '@icc/ui/fields';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { IccNumberFieldComponent, IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
+import { TranslateService } from '@ngx-translate/core';
 import { IccFieldFilterComponent } from '../field-filter.component';
-import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 
 @Component({
   selector: 'icc-number-filter',
@@ -13,12 +13,14 @@ import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 })
 export class IccNumberFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccTextFieldConfig>;
+  private translateService = inject(TranslateService);
 
   override checkField(): void {
+    const filterI18n = this.translateService.instant('ICC.UI.GRID.FILTER');
     this.fieldConfig = {
       fieldName: this.column.name,
       clearValue: true,
-      placeholder: `Filter... > < <= >= = null !null`,
+      placeholder: `${filterI18n} > < <= >= = null !null`,
       editable: true,
     };
   }
