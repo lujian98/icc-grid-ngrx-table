@@ -2,14 +2,7 @@
   <button icc-button (click)="getGridPageData(1)" [disabled]="page === 1">
     <icc-icon config="backward-step"></icc-icon>
   </button>
-  <!--
-  <i class="fa-solid fa-backward-step">
-    <i class="fa-solid fa-caret-left"></i>
-    <i class="fa-solid fa-caret-right"></i>
-        <i class="fa-solid fa-forward-step"></i>
-            <i class="fa-solid fa-arrows-rotate"></i>
-  </i>
-  -->
+
   <button icc-button (click)="getGridPageData(page - 1)" [disabled]="page === 1">
     <icc-icon config="caret-left"></icc-icon>
   </button>
