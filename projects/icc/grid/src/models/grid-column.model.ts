@@ -73,7 +73,7 @@ export interface IccGridState<T extends object = object> {
   inMemoryData: T[];
   selection: SelectionModel<T>;
   queryData: T[]; // for row group temporary data
-  rowGroups?: IccRowGroups; // row group will handle at client side data only and wwith one level
+  rowGroups?: IccRowGroups; // row group will handle at client side data only and only with one level
 }
 
 export interface IccGridData<T> {
@@ -114,33 +114,29 @@ export type IccFilterField = IccFieldType.DateRange | IccFieldType.Number | IccF
 export interface IccColumnConfig {
   name: string;
   title?: string;
-
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
+  //index?: number;
+  //draggable?: boolean;
   sortField?: boolean;
   filterField?: boolean | IccFilterField;
   filterFieldConfig?: IccFieldConfig;
+  groupField?: boolean; //IccGroupField;
+  groupHeader?: IccGroupHeader;
 
   rendererType?: IccRendererType;
   rendererFieldConfig?: IccFieldConfig;
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
-  dateFormat?: string;
-  groupField?: boolean; //IccGroupField;
-  groupHeader?: IccGroupHeader;
-
-  //field: string;
-  //index?: number;
-  //draggable?: boolean;
+  dateFormat?: string; // TODO move to rendererFieldConfig ???
 
   //editField?: IccEditField;
   //validations?: IccValidation[];
   //cellReadonly?: boolean | Function;
-  //dateFormat?: string;
-  //dateRangePreset?: boolean;
+
   //priority?: number;
   //menu?: boolean | IccMenuItem;
 }
