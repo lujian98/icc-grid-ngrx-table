@@ -1,8 +1,8 @@
 import { getStatusText, InMemoryDbService, RequestInfo, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
-import { IccGridConfig, IccGridComponent, defaultGridConfig, IccColumnConfig } from '@icc/ui/grid';
+import { IccGridConfig, IccColumnConfig } from '@icc/ui/grid';
 import { CARSDATA, DCRBrands, DCRColors, DCRColumnConfig, DCRGridConfig } from '../data/cars-large';
-import { IccTreeNode, IccTreeConfig } from '@icc/ui/tree';
+import { IccTreeConfig } from '@icc/ui/tree';
 import {
   TREE_NESTED_DATA,
   NestedFoodNode,
@@ -319,6 +319,9 @@ export class InMemoryService extends InMemoryDbService {
   private getFilterCondition(filters: any, item: any): boolean {
     let ret: boolean | undefined = undefined;
 
+    let lastType = '';
+    let lastKey = '';
+
     filters.forEach((query: any) => {
       const filterKey = query.filterKey;
       const compareKey = query.compareKey;
@@ -369,13 +372,20 @@ export class InMemoryService extends InMemoryDbService {
           newRet = value && value.toString().endsWith(filter.toString());
           break;
       }
+      const currentType = filter instanceof Date ? 'date' : 'other';
       if (newRet !== undefined) {
         if (ret !== undefined) {
-          ret = ret || newRet;
+          if (lastKey === filterKey && currentType === lastType) {
+            ret = ret && newRet;
+          } else {
+            ret = ret || newRet;
+          }
         } else {
           ret = newRet;
         }
       }
+      lastKey = filterKey;
+      lastType = currentType;
     });
     return !!ret;
   }
