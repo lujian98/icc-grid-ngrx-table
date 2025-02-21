@@ -1,11 +1,4 @@
-import {
-  IccColumnConfig,
-  IccGridConfig,
-  IccSortField,
-  IccColumnFilter,
-  IccFilterField,
-  IccFieldType,
-} from '@icc/ui/grid';
+import { IccColumnConfig, IccGridConfig, IccColumnFilter, IccFilterField, IccFieldType } from '@icc/ui/grid';
 
 export const DCRBrands = [
   { title: 'Audi', name: 'Audi' },
@@ -64,7 +57,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 50,
     align: 'center',
     groupField: false,
-    filterField: 'number',
+    filterField: IccFieldType.Number,
   },
   {
     name: 'vin',
@@ -85,7 +78,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 100,
     rendererType: IccFieldType.Date,
     dateFormat: 'longDate',
-    filterField: 'dateRange',
+    filterField: IccFieldType.DateRange,
     align: 'center',
   },
   {

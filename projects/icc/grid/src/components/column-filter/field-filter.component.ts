@@ -11,7 +11,7 @@ import {
 import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccFilterValueType, IccFieldType } from '../../models/grid-column.model';
 
 @Component({
   template: '',
@@ -38,7 +38,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
     if (find) {
       this.value = find.value as string;
     } else {
-      this.value = this.column.filterField === 'select' ? [] : '';
+      this.value = this.column.filterField === IccFieldType.Select ? [] : '';
     }
     this.changeDetectorRef.markForCheck();
   }

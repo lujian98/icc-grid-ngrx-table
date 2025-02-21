@@ -103,11 +103,12 @@ export interface IccColumnFilter {
 }
 
 export enum IccFieldType {
-  Date = 'Date',
-  Image = 'Image',
-  Number = 'Number',
-  Select = 'Select',
-  Text = 'Text',
+  Date = 'date',
+  DateRange = 'dateRange',
+  Image = 'image',
+  Number = 'number',
+  Select = 'select',
+  Text = 'text',
   // TODO number (decimals/negative), select (display value/translation), etc.
 }
 
@@ -118,7 +119,7 @@ export type IccRendererType =
   | IccFieldType.Select
   | IccFieldType.Text;
 
-export type IccFilterField = boolean | 'text' | 'number' | 'select' | 'dateRange';
+export type IccFilterField = IccFieldType.DateRange | IccFieldType.Number | IccFieldType.Select | IccFieldType.Text;
 export type IccFieldConfig = Partial<IccFormField>;
 export type IccGroupField = boolean | string;
 
@@ -132,7 +133,7 @@ export interface IccColumnConfig {
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
   sortField?: boolean;
-  filterField?: IccFilterField;
+  filterField?: boolean | IccFilterField;
   filterFieldConfig?: IccFieldConfig;
 
   rendererType?: IccRendererType;
