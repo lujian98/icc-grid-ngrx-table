@@ -4,6 +4,13 @@ import { IccObjectType } from '@icc/ui/core';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import { IccFieldConfig, IccDateRange } from '@icc/ui/fields';
 
+export interface IccGridCell<T> {
+  gridConfig: IccGridConfig;
+  rowIndex: number;
+  column: IccColumnConfig;
+  record: T;
+}
+
 export interface IccSortField {
   field: string;
   dir: string;
@@ -37,6 +44,7 @@ export interface IccGridConfig {
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
+  cellEdit: boolean;
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;

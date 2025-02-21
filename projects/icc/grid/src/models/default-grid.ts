@@ -11,6 +11,7 @@ export const defaultGridConfig: IccGridConfig = {
   columnResize: false,
   columnReorder: false,
   columnMenu: false,
+  cellEdit: false,
   columnHidden: false,
   remoteGridConfig: false,
   remoteColumnsConfig: false,

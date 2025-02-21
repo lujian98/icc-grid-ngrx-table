@@ -8,7 +8,7 @@ export * from './src/utils/viewport-width-ratio';
 export * from './src/components/grid-header/grid-header.component';
 export * from './src/components/grid-header-view/grid-header-view.component';
 export * from './src/components/grid-row/grid-row.component';
-export * from './src/components/grid-row/grid-cell/dynamic-grid-cell.component';
+export * from './src/components/grid-row/grid-cell/grid-cell-view.component';
 export * from './src/components/grid-row/grid-cell/grid-cell.component';
 export * from './src/components/grid-row/grid-cell-renderer/grid-cell-renderer.component';
 export * from './src/components/grid-row/grid-cell-renderer/text/grid-cell-text.component';

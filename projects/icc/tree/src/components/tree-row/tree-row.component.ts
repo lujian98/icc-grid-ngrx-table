@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import {
   IccColumnConfig,
   IccColumnWidth,
-  IccDynamicGridCellComponent,
+  IccGridCellViewComponent,
   IccGridCellComponent,
   ROW_SELECTION_CELL_WIDTH,
 } from '@icc/ui/grid';
@@ -15,7 +15,7 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
   templateUrl: './tree-row.component.html',
   styleUrls: ['./tree-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTreeNodeComponent, IccGridCellComponent, IccDynamicGridCellComponent],
+  imports: [CommonModule, IccTreeNodeComponent, IccGridCellComponent, IccGridCellViewComponent],
 })
 export class IccTreeRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];

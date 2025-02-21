@@ -10,7 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
 import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
@@ -18,23 +18,16 @@ import { IccGridCellNumberComponent } from '../grid-cell-renderer/number/grid-ce
 import { IccGridCellSelectComponent } from '../grid-cell-renderer/select/grid-cell-select.component';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
 
-export interface IccDynamicGridCell<T> {
-  gridConfig: IccGridConfig;
-  rowIndex: number;
-  column: IccColumnConfig;
-  record: T;
-}
-
 @Component({
-  selector: 'icc-dynamic-grid-cell',
-  templateUrl: 'dynamic-grid-cell.component.html',
-  styleUrls: ['dynamic-grid-cell.component.scss'],
+  selector: 'icc-grid-cell-edit',
+  templateUrl: 'grid-cell-edit.component.html',
+  styleUrls: ['grid-cell-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class IccDynamicGridCellComponent<T> implements OnInit {
+export class IccGridCellEditComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private instance!: IccDynamicGridCell<T>;
+  private instance!: IccGridCell<T>;
   private _componentRef!: ComponentRef<unknown>;
   private _column!: IccColumnConfig;
 
@@ -73,7 +66,7 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
     this.viewContainerRef.clear();
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
-    this.instance = this._componentRef.instance as IccDynamicGridCell<T>;
+    this.instance = this._componentRef.instance as IccGridCell<T>;
     this.instance.gridConfig = this.gridConfig;
     this.instance.rowIndex = this.rowIndex;
     this.instance.column = this.column;

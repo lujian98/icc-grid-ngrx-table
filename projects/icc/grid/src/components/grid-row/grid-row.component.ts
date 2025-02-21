@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
-import { IccDynamicGridCellComponent } from './grid-cell/dynamic-grid-cell.component';
+import { IccGridCellViewComponent } from './grid-cell/grid-cell-view.component';
 import { IccGridCellComponent } from './grid-cell/grid-cell.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { IccGridCellComponent } from './grid-cell/grid-cell.component';
   templateUrl: './grid-row.component.html',
   styleUrls: ['./grid-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridCellComponent, IccDynamicGridCellComponent, IccRowSelectComponent],
+  imports: [CommonModule, IccGridCellComponent, IccGridCellViewComponent, IccRowSelectComponent],
 })
 export class IccGridRowComponent<T> {
   private _record!: T;
