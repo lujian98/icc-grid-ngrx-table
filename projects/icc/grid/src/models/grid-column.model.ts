@@ -111,7 +111,7 @@ export type IccRendererType =
 
 export type IccFilterField = IccFieldType.DateRange | IccFieldType.Number | IccFieldType.Select | IccFieldType.Text;
 export type IccFieldConfig = Partial<IccFormField>;
-export type IccGroupField = boolean | string;
+//export type IccGroupField = boolean; // | string;
 
 export interface IccColumnConfig {
   name: string;
@@ -131,7 +131,7 @@ export interface IccColumnConfig {
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
   dateFormat?: string;
-  groupField?: IccGroupField;
+  groupField?: boolean; //IccGroupField;
   groupHeader?: IccGroupHeader;
 
   //field: string;
