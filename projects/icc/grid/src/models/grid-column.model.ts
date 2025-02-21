@@ -124,7 +124,7 @@ export interface IccColumnConfig {
   sortField?: boolean;
   filterField?: boolean | IccFilterField;
   filterFieldConfig?: IccFieldConfig;
-  groupField?: boolean; //IccGroupField;
+  groupField?: boolean;
   groupHeader?: IccGroupHeader;
 
   rendererType?: IccRendererType;
