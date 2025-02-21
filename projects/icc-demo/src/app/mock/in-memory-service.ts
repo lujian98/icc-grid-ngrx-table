@@ -328,7 +328,7 @@ export class InMemoryService extends InMemoryDbService {
       const searches = query.searches;
       const search = query.search;
 
-      const val = item[filterKey];
+      const val = this.getFilterDataValue(item[filterKey]);
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
       let newRet: boolean | undefined = undefined;
@@ -388,6 +388,19 @@ export class InMemoryService extends InMemoryDbService {
       lastType = currentType;
     });
     return !!ret;
+  }
+
+  private getFilterDataValue(v: any): any {
+    if (!v || typeof v === 'number' || typeof v === 'string' || this.isDate(v) || Array.isArray(v)) {
+      return v;
+    }
+    if (typeof v === 'object') {
+      const nv = v['name'];
+      if (nv) {
+        return nv;
+      }
+    }
+    return v;
   }
 
   private isNumeric(num: any): boolean {

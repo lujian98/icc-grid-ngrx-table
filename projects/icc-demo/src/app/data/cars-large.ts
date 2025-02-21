@@ -1371,6 +1371,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     },
     filterFieldConfig: {
       fieldType: 'select',
+      multiSelection: true,
       remoteOptions: false,
       options: MakerColorList,
       optionKey: 'name',
