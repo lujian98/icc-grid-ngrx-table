@@ -8,10 +8,10 @@ import {
   OnDestroy,
   inject,
 } from '@angular/core';
-import { IccFormField } from '@icc/ui/fields';
+import { IccFormField, IccFieldType } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccFilterValueType, IccFieldType } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
 
 @Component({
   template: '',

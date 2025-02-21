@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IccRowGroups } from '../services/row-group/row-groups';
-import { IccFormField, IccDateRange } from '@icc/ui/fields';
+import { IccFormField, IccDateRange, IccFieldType } from '@icc/ui/fields';
 
 export interface IccSortField {
   field: string;
@@ -100,16 +100,6 @@ export type IccFilterValueType =
 export interface IccColumnFilter {
   name: string;
   value: IccFilterValueType;
-}
-
-export enum IccFieldType {
-  Date = 'date',
-  DateRange = 'dateRange',
-  Image = 'image',
-  Number = 'number',
-  Select = 'select',
-  Text = 'text',
-  // TODO number (decimals/negative), select (display value/translation), etc.
 }
 
 export type IccRendererType =

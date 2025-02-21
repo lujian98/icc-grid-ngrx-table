@@ -1,4 +1,5 @@
-import { IccColumnConfig, IccGridConfig, IccColumnFilter, IccFilterField, IccFieldType } from '@icc/ui/grid';
+import { IccFieldType } from '@icc/ui/fields';
+import { IccColumnConfig, IccGridConfig } from '@icc/ui/grid';
 
 export const DCRBrands = [
   { title: 'Audi', name: 'Audi' },

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccFieldType } from '@icc/ui/fields';
 import {
   IccColumnConfig,
   IccGridConfig,
   IccGridComponent,
   defaultGridConfig,
   IccGridData,
-  IccFieldType,
   IccGridCellRendererComponent,
 } from '@icc/ui/grid';
 import { CARSDATA3 } from '../../../data/cars-large';

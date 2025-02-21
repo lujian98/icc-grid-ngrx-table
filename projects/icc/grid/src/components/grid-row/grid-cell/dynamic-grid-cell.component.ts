@@ -9,7 +9,8 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import { IccColumnConfig, IccFieldType, IccGridConfig } from '../../../models/grid-column.model';
+import { IccFieldType } from '@icc/ui/fields';
+import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
