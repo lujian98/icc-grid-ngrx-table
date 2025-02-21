@@ -28,3 +28,5 @@ export type IccFormField =
   | IccTextFieldConfig
   | IccTextareaFieldConfig
   | IccUploadFileFieldConfig;
+
+export type IccFieldConfig = Partial<IccFormField>;

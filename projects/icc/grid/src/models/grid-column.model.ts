@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IccRowGroups } from '../services/row-group/row-groups';
-import { IccFormField, IccDateRange, IccFieldType } from '@icc/ui/fields';
+import { IccFieldConfig, IccDateRange, IccFieldType } from '@icc/ui/fields';
 
 export interface IccSortField {
   field: string;
@@ -110,8 +110,6 @@ export type IccRendererType =
   | IccFieldType.Text;
 
 export type IccFilterField = IccFieldType.DateRange | IccFieldType.Number | IccFieldType.Select | IccFieldType.Text;
-export type IccFieldConfig = Partial<IccFormField>;
-//export type IccGroupField = boolean; // | string;
 
 export interface IccColumnConfig {
   name: string;
