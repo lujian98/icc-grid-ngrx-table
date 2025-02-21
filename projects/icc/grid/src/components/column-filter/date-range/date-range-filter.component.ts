@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccDateRangeFieldComponent, IccDateRangeFieldConfig, IccDateRange } from '@icc/ui/fields';
+import {
+  IccDateRange,
+  IccDateRangeFieldComponent,
+  IccDateRangeFieldConfig,
+  defaultDateRangeFieldConfig,
+} from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
 
 @Component({
@@ -14,11 +19,15 @@ export class IccDateRangeFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccDateRangeFieldConfig>;
 
   override checkField(): void {
+    const today = new Date();
     this.fieldConfig = {
+      ...defaultDateRangeFieldConfig,
       fieldName: this.column.name,
       clearValue: true,
       placeholder: `ICC.UI.GRID.FILTER`,
       editable: true,
+      fromMinMax: { fromDate: null, toDate: new Date(today.getFullYear(), today.getMonth() + 1, 0) },
+      toMinMax: { fromDate: new Date(today.getFullYear(), today.getMonth() + 1, 1), toDate: null },
     };
   }
 
