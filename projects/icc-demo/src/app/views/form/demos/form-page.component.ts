@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
 import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
-import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig, IccFieldType } from '@icc/ui/fields';
 import { State, STATES } from '../../../data/states';
 
 @Component({
@@ -120,7 +120,7 @@ export class AppFromPageDemoComponent {
       placeholder: 'Select One or More...',
     },
     {
-      fieldType: 'radiogroup',
+      fieldType: IccFieldType.RadioGroup,
       fieldName: 'group1',
       fieldLabel: 'Radio Group',
       required: true,
@@ -140,7 +140,7 @@ export class AppFromPageDemoComponent {
       ],
     },
     {
-      fieldType: 'uploadfile',
+      fieldType: IccFieldType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       required: true,
@@ -260,13 +260,13 @@ export class AppFromPageDemoComponent {
       //required: true,
     },
     {
-      fieldType: 'uploadfile',
+      fieldType: IccFieldType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       //required: true,
     },
     {
-      fieldType: 'radiogroup',
+      fieldType: IccFieldType.RadioGroup,
       fieldName: 'group88',
       fieldLabel: 'Radio Group',
       //required: true,

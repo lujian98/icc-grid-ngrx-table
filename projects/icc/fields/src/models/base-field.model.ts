@@ -10,11 +10,11 @@ export enum IccFieldType {
   Image = 'image',
   Number = 'number',
   Password = 'password',
-  RadioGroup = 'radiogroup',
+  RadioGroup = 'radioGroup',
   Select = 'select',
   Text = 'text',
   Textarea = 'textarea',
-  UploadFile = 'uploadfile',
+  UploadFile = 'uploadFile',
   // TODO number (decimals/negative), select (display value/translation), etc.
 }
 
