@@ -143,6 +143,8 @@ export interface IccColumnConfig {
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
 
+  cellEditable?: boolean;
+
   //editField?: IccEditField;
   //validations?: IccValidation[];
   //cellReadonly?: boolean | Function;

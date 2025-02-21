@@ -15,7 +15,12 @@
       'max-width': getColumnWidth(column),
     }"
   >
-    <icc-grid-cell-view [gridConfig]="gridConfig" [rowIndex]="rowIndex" [column]="column" [record]="record">
-    </icc-grid-cell-view>
+    @if (!isCellEditable(column)) {
+      <icc-grid-cell-view [gridConfig]="gridConfig" [rowIndex]="rowIndex" [column]="column" [record]="record">
+      </icc-grid-cell-view>
+    } @else {
+      <icc-grid-cell-edit [gridConfig]="gridConfig" [rowIndex]="rowIndex" [column]="column" [record]="record">
+      </icc-grid-cell-edit>
+    }
   </icc-grid-cell>
 </ng-container>
