@@ -112,11 +112,12 @@ export enum IccFieldType {
 }
 
 export type IccRendererType =
-  | IccFieldType.Text
-  | IccFieldType.Image
   | IccFieldType.Date
+  | IccFieldType.Image
   | IccFieldType.Number
-  | IccFieldType.Select;
+  | IccFieldType.Select
+  | IccFieldType.Text;
+
 export type IccFilterField = boolean | 'text' | 'number' | 'select' | 'dateRange';
 export type IccFieldConfig = Partial<IccFormField>;
 export type IccGroupField = boolean | string;
