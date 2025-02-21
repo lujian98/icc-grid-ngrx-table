@@ -39,6 +39,7 @@ export class AppGridRendererFunctionComponent {
       name: 'year',
       title: 'Make and Year',
       filterField: false,
+      rendererType: IccObjectType.Function,
       renderer: this.rendererDisplay.bind(this),
     },
     {

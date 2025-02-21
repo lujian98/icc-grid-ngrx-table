@@ -81,18 +81,29 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
   }
 
   private getRenderer(): Type<unknown> {
-    if (this.column.component) {
-      return this.column.component;
-    } else if (this.column.renderer) {
-      return IccGridCellFunctionComponent;
-    } else if (this.column.rendererType === IccObjectType.Image) {
-      return IccGridCellImageComponent;
-    } else if (this.column.rendererType === IccObjectType.Date) {
-      return IccGridCellDateComponent;
-    } else if (this.column.rendererType === IccObjectType.Number) {
-      return IccGridCellNumberComponent;
-    } else if (this.column.rendererType === IccObjectType.Select) {
-      return IccGridCellSelectComponent;
+    switch (this.column.rendererType) {
+      case IccObjectType.Text:
+        return IccGridCellTextComponent;
+      case IccObjectType.Select:
+        return IccGridCellSelectComponent;
+      case IccObjectType.Date:
+        return IccGridCellDateComponent;
+      case IccObjectType.Number:
+        return IccGridCellNumberComponent;
+      case IccObjectType.Image:
+        return IccGridCellImageComponent;
+      case IccObjectType.Function:
+        if (this.column.renderer) {
+          return IccGridCellFunctionComponent;
+        }
+        break;
+      case IccObjectType.Component:
+        if (this.column.component) {
+          return this.column.component;
+        }
+        break;
+      default:
+        break;
     }
     return IccGridCellTextComponent;
   }

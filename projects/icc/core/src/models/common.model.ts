@@ -1,11 +1,13 @@
 export enum IccObjectType {
+  Component = 'component',
   Checkbox = 'checkbox',
   Date = 'date',
   Display = 'display',
   DateRange = 'dateRange',
   Fieldset = 'fieldset',
+  Function = 'function',
   Hidden = 'hidden',
-  Image = 'image', // type hold for grid image renderer
+  Image = 'image',
   Number = 'number',
   Password = 'password',
   RadioGroup = 'radioGroup',

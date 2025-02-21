@@ -104,7 +104,9 @@ export interface IccColumnFilter {
 }
 
 export type IccRendererType =
+  | IccObjectType.Component
   | IccObjectType.Date
+  | IccObjectType.Function
   | IccObjectType.Image
   | IccObjectType.Number
   | IccObjectType.Select

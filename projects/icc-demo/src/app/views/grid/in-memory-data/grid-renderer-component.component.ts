@@ -64,6 +64,7 @@ export class AppGridRendererComponent {
       name: 'year',
       title: 'Make and Year',
       filterField: false,
+      rendererType: IccObjectType.Component,
       component: AppGridCellTextComponent,
     },
     {
