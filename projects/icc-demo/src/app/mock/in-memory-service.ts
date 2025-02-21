@@ -413,8 +413,10 @@ export class InMemoryService extends InMemoryDbService {
   private dataSortByField(data: any[], field: string, direction: string) {
     const order = direction === 'asc' ? 1 : -1;
     data.sort((d1: any, d2: any) => {
-      const v1 = (d1 as any)[field];
-      const v2 = (d2 as any)[field];
+      //const v1 = (d1 as any)[field];
+      //const v2 = (d2 as any)[field];
+      const v1 = this.getSortDataValue(d1, field);
+      const v2 = this.getSortDataValue(d2, field);
       let res = null;
       if (v1 == null && v2 != null) {
         res = -1;
@@ -432,6 +434,20 @@ export class InMemoryService extends InMemoryDbService {
       return order * res;
     });
     return data;
+  }
+
+  private getSortDataValue(data: any, field: string): any {
+    const v = data[field];
+    if (!v || typeof v === 'number' || typeof v === 'string' || this.isDate(v) || Array.isArray(v)) {
+      return v;
+    }
+    if (typeof v === 'object') {
+      const nv = v['title'];
+      if (nv) {
+        return nv;
+      }
+    }
+    return v;
   }
 
   private getOffsetData(data: any[], query: any) {

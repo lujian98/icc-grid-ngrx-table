@@ -98,8 +98,8 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'MakerYear',
     rendererType: IccFieldType.Select,
     rendererFieldConfig: {
-      optionLabel: 'display',
-      optionKey: 'makeid',
+      optionKey: 'name',
+      optionLabel: 'title',
     },
     filterField: false,
     width: 80,
@@ -1353,8 +1353,8 @@ export const CARSDATA3 = {
 
     const makeryear = `${item['brand']}-${item['year']}`;
     item['MakerYear'] = {
-      makeid: makeryear.toLowerCase(),
-      display: `${item['brand']}: ${item['year']}`,
+      name: makeryear.toLowerCase(),
+      title: `${item['brand']}: ${item['year']}`,
     };
     return item;
   }),
