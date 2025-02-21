@@ -11,12 +11,12 @@ import {
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
-import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
-import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
-import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
-import { IccGridCellNumberComponent } from '../grid-cell-renderer/number/grid-cell-number.component';
-import { IccGridCellSelectComponent } from '../grid-cell-renderer/select/grid-cell-select.component';
-import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
+import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
+import { IccGridCellFunctionComponent } from '../grid-cell-view/renderer/function/grid-cell-function.component';
+import { IccGridCellImageComponent } from '../grid-cell-view/renderer/image/grid-cell-image.component';
+import { IccGridCellNumberComponent } from '../grid-cell-view/renderer/number/grid-cell-number.component';
+import { IccGridCellSelectComponent } from '../grid-cell-view/renderer/select/grid-cell-select.component';
+import { IccGridCellTextComponent } from '../grid-cell-view/renderer/text/grid-cell-text.component';
 
 @Component({
   selector: 'icc-grid-cell-edit',
