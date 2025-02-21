@@ -1,13 +1,13 @@
 export enum IccObjectType {
-  Component = 'component',
+  Component = 'component', // not field config
   Checkbox = 'checkbox',
   Date = 'date',
   Display = 'display',
   DateRange = 'dateRange',
   Fieldset = 'fieldset',
-  Function = 'function',
+  Function = 'function', // not field config
   Hidden = 'hidden',
-  Image = 'image',
+  Image = 'image', // not field config
   Number = 'number',
   Password = 'password',
   RadioGroup = 'radioGroup',
