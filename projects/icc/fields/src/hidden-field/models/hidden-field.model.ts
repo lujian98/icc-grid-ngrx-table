@@ -1,9 +1,9 @@
-import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
+import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
 
 export interface IccHiddenFieldConfig extends IccBaseField {}
 
 export const defaultHiddenFieldConfig: IccHiddenFieldConfig = {
-  fieldType: 'hidden',
+  fieldType: IccFieldType.Hidden,
   fieldName: 'hiddenfield',
   ...defaultBaseField,
   editButtons: [],

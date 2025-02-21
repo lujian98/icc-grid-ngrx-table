@@ -1,9 +1,9 @@
 import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model';
-import { defaultBaseField } from '../../models/base-field.model';
+import { defaultBaseField, IccFieldType } from '../../models/base-field.model';
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   fieldId: '191cf2bb6b5', // auto generated unique id
-  fieldType: 'select',
+  fieldType: IccFieldType.Select,
   fieldName: 'selectfield', // form field name need set
   urlKey: 'select', // Only for remote field config and options
   viewportReady: false,

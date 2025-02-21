@@ -1,4 +1,4 @@
-import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
+import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
 
 export interface IccNumberFieldConfig extends IccBaseField {
   minValue?: number;
@@ -6,7 +6,7 @@ export interface IccNumberFieldConfig extends IccBaseField {
 }
 
 export const defaultNumberFieldConfig: IccNumberFieldConfig = {
-  fieldType: 'number',
+  fieldType: IccFieldType.Number,
   fieldName: 'numberfield',
   ...defaultBaseField,
 };

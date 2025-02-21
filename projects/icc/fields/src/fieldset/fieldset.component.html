@@ -6,8 +6,8 @@
   <legend *ngIf="fieldConfig.legend !== undefined">{{ fieldConfig.legend | translate }}</legend>
 
   <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
-    <icc-fields *ngIf="config.fieldType !== 'fieldset'" [fieldConfig]="config" [form]="form"> </icc-fields>
+    <icc-fields *ngIf="config.fieldType !== FieldType.Fieldset" [fieldConfig]="config" [form]="form"> </icc-fields>
 
-    <icc-fieldset *ngIf="config.fieldType === 'fieldset'" [fieldConfig]="config" [form]="form"> </icc-fieldset>
+    <icc-fieldset *ngIf="config.fieldType === FieldType.Fieldset" [fieldConfig]="config" [form]="form"> </icc-fieldset>
   </ng-container>
 </fieldset>

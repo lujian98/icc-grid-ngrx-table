@@ -1,4 +1,4 @@
-import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
+import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
 
 export interface IccTextareaFieldConfig extends IccBaseField {
   minLength?: number;
@@ -6,7 +6,7 @@ export interface IccTextareaFieldConfig extends IccBaseField {
 }
 
 export const defaultTextareaFieldConfig: IccTextareaFieldConfig = {
-  fieldType: 'textarea',
+  fieldType: IccFieldType.Textarea,
   fieldName: 'textareafield',
   ...defaultBaseField,
 };

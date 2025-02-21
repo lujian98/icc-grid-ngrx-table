@@ -6,6 +6,7 @@ import { IccFieldsetLabelWidthDirective, IccFieldWidthDirective } from '@icc/ui/
 import { IccFieldsComponent } from '../fields.component';
 import { IccFormField } from '../models/fields.model';
 import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.model';
+import { IccFieldType } from '../models/base-field.model';
 
 @Component({
   selector: 'icc-fieldset',
@@ -24,6 +25,7 @@ import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.mode
 })
 export class IccFieldsetComponent {
   private _fieldConfig!: IccFieldsetConfig;
+  FieldType = IccFieldType;
   @Input() form!: FormGroup;
 
   @Input()

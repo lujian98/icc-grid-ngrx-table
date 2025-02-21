@@ -1,9 +1,9 @@
-import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
+import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
 
 export interface IccDisplayFieldConfig extends IccBaseField {}
 
 export const defaultDisplayFieldConfig: IccDisplayFieldConfig = {
-  fieldType: 'display',
+  fieldType: IccFieldType.Display,
   fieldName: 'displayfield',
   ...defaultBaseField,
   editButtons: [],

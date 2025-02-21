@@ -1,32 +1,34 @@
-<icc-text-field *ngIf="fieldConfig.fieldType === 'text'" [fieldConfig]="fieldConfig" [form]="form"> </icc-text-field>
-<icc-number-field *ngIf="fieldConfig.fieldType === 'number'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-text-field *ngIf="fieldConfig.fieldType === FieldType.Text" [fieldConfig]="fieldConfig" [form]="form">
+</icc-text-field>
+<icc-number-field *ngIf="fieldConfig.fieldType === FieldType.Number" [fieldConfig]="fieldConfig" [form]="form">
 </icc-number-field>
 
-<icc-checkbox-field *ngIf="fieldConfig.fieldType === 'checkbox'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-checkbox-field *ngIf="fieldConfig.fieldType === FieldType.Checkbox" [fieldConfig]="fieldConfig" [form]="form">
 </icc-checkbox-field>
 
-<icc-date-field *ngIf="fieldConfig.fieldType === 'date'" [fieldConfig]="fieldConfig" [form]="form"> </icc-date-field>
+<icc-date-field *ngIf="fieldConfig.fieldType === FieldType.Date" [fieldConfig]="fieldConfig" [form]="form">
+</icc-date-field>
 
-<icc-date-range-field *ngIf="fieldConfig.fieldType === 'dateRange'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-date-range-field *ngIf="fieldConfig.fieldType === FieldType.DateRange" [fieldConfig]="fieldConfig" [form]="form">
 </icc-date-range-field>
 
-<icc-display-field *ngIf="fieldConfig.fieldType === 'display'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-display-field *ngIf="fieldConfig.fieldType === FieldType.Display" [fieldConfig]="fieldConfig" [form]="form">
 </icc-display-field>
 
-<icc-hidden-field *ngIf="fieldConfig.fieldType === 'hidden'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-hidden-field *ngIf="fieldConfig.fieldType === FieldType.Hidden" [fieldConfig]="fieldConfig" [form]="form">
 </icc-hidden-field>
 
-<icc-password-field *ngIf="fieldConfig.fieldType === 'password'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-password-field *ngIf="fieldConfig.fieldType === FieldType.Password" [fieldConfig]="fieldConfig" [form]="form">
 </icc-password-field>
 
-<icc-radio-group-field *ngIf="fieldConfig.fieldType === 'radiogroup'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-radio-group-field *ngIf="fieldConfig.fieldType === FieldType.RadioGroup" [fieldConfig]="fieldConfig" [form]="form">
 </icc-radio-group-field>
 
-<icc-select-field *ngIf="fieldConfig.fieldType === 'select'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-select-field *ngIf="fieldConfig.fieldType === FieldType.Select" [fieldConfig]="fieldConfig" [form]="form">
 </icc-select-field>
 
-<icc-textarea-field *ngIf="fieldConfig.fieldType === 'textarea'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-textarea-field *ngIf="fieldConfig.fieldType === FieldType.Textarea" [fieldConfig]="fieldConfig" [form]="form">
 </icc-textarea-field>
 
-<icc-upload-file-field *ngIf="fieldConfig.fieldType === 'uploadfile'" [fieldConfig]="fieldConfig" [form]="form">
+<icc-upload-file-field *ngIf="fieldConfig.fieldType === FieldType.UploadFile" [fieldConfig]="fieldConfig" [form]="form">
 </icc-upload-file-field>

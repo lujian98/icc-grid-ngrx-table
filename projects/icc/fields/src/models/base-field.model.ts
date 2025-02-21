@@ -1,12 +1,20 @@
 import { ValidatorFn } from '@angular/forms';
 
 export enum IccFieldType {
+  Checkbox = 'checkbox',
   Date = 'date',
+  Display = 'display',
   DateRange = 'dateRange',
+  Fieldset = 'fieldset',
+  Hidden = 'hidden',
   Image = 'image',
   Number = 'number',
+  Password = 'password',
+  RadioGroup = 'radiogroup',
   Select = 'select',
   Text = 'text',
+  Textarea = 'textarea',
+  UploadFile = 'uploadfile',
   // TODO number (decimals/negative), select (display value/translation), etc.
 }
 

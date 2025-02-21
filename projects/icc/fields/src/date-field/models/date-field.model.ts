@@ -1,4 +1,4 @@
-import { IccBaseField } from '../../models/base-field.model';
+import { IccBaseField, IccFieldType } from '../../models/base-field.model';
 
 export interface IccDateFieldConfig extends IccBaseField {
   selectedLabel?: string;
@@ -9,7 +9,7 @@ export interface IccDateFieldConfig extends IccBaseField {
 }
 
 export const defaultDateFieldConfig: IccDateFieldConfig = {
-  fieldType: 'date',
+  fieldType: IccFieldType.Date,
   fieldName: 'datefield',
   placeholder: 'ICC.UI.DATE.PICKER.SELECT_DATE',
   clearValue: true,
