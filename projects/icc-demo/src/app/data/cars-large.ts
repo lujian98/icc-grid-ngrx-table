@@ -85,6 +85,15 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     align: 'center',
   },
   {
+    name: 'Price',
+    width: 50,
+    rendererType: IccFieldType.Number,
+    rendererFieldConfig: {
+      decimals: 2,
+    },
+    align: 'right',
+  },
+  {
     name: 'year',
     width: 50,
     align: 'right',
@@ -1316,6 +1325,10 @@ export const CARSDATA = {
   }),
 };
 
+function getRandomFloat(min: number, max: number): number {
+  return Math.random() * (max - min) + min;
+}
+
 export const CARSDATA3 = {
   data: CARSDATA0.data.map((item: any, index) => {
     const ndate = new Date();
@@ -1326,7 +1339,10 @@ export const CARSDATA3 = {
       item['MakeDate'] = new Date(item.year, ndate.getMonth() - index, index);
     }
     item['image'] = 'assets/test-image.jpg';
+    item['Price'] = getRandomFloat(100, 20000);
     return item;
   }),
   totalCounts: 200,
 };
+
+console.log(' CARSDATA3=', CARSDATA3);
