@@ -7,7 +7,7 @@ export enum IccFieldType {
   DateRange = 'dateRange',
   Fieldset = 'fieldset',
   Hidden = 'hidden',
-  Image = 'image',
+  Image = 'image', // type hold for grid image renderer
   Number = 'number',
   Password = 'password',
   RadioGroup = 'radioGroup',
