@@ -94,6 +94,16 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     align: 'right',
   },
   {
+    name: 'MakerYear',
+    rendererType: IccFieldType.Select,
+    rendererFieldConfig: {
+      optionLabel: 'display',
+      optionKey: 'makeid',
+    },
+    filterField: false,
+    width: 80,
+  },
+  {
     name: 'year',
     width: 50,
     align: 'right',
@@ -111,7 +121,6 @@ export const DCRColumnConfig: IccColumnConfig[] = [
 ];
 
 export const CARSDATA0 = {
-  //"TotalCounts": 200,
   data: [
     {
       vin: 'ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8 ee8a89d8',
@@ -1340,9 +1349,15 @@ export const CARSDATA3 = {
     }
     item['image'] = 'assets/test-image.jpg';
     item['Price'] = getRandomFloat(100, 20000);
+
+    const makeryear = `${item['brand']}-${item['year']}`;
+    item['MakerYear'] = {
+      makeid: makeryear.toLowerCase(),
+      display: `${item['brand']}: ${item['year']}`,
+    };
     return item;
   }),
   totalCounts: 200,
 };
 
-console.log(' CARSDATA3=', CARSDATA3);
+//console.log(' CARSDATA3=', CARSDATA3);
