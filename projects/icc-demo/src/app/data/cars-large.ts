@@ -1,7 +1,6 @@
 import {
   IccColumnConfig,
   IccGridConfig,
-  IccFilterFieldConfig,
   IccSortField,
   IccColumnFilter,
   IccFilterField,

@@ -111,7 +111,7 @@ export enum IccFieldType {
 
 export type IccRendererType = IccFieldType.Text | IccFieldType.Image | IccFieldType.Date;
 export type IccFilterField = boolean | 'text' | 'number' | 'select' | 'dateRange';
-export type IccFilterFieldConfig = Partial<IccFormField>;
+export type IccFieldConfig = Partial<IccFormField>;
 export type IccGroupField = boolean | string;
 
 export interface IccColumnConfig {
@@ -125,9 +125,10 @@ export interface IccColumnConfig {
   //minWidth?: number;
   sortField?: boolean;
   filterField?: IccFilterField;
-  filterFieldConfig?: IccFilterFieldConfig;
+  filterFieldConfig?: IccFieldConfig;
 
   rendererType?: IccRendererType;
+  rendererFieldConfig?: IccFieldConfig;
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
   dateFormat?: string;
