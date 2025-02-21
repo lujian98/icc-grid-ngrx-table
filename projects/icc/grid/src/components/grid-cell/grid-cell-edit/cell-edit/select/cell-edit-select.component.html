@@ -1,0 +1,20 @@
+<sun-form-field *ngIf="field" [ngClass]="'sun-grid-form-field-edit'">
+  <sun-select
+    #select
+    [selected]="value"
+    panelClass="sun-select-panel"
+    [multiSelection]="column.multiSelect"
+    (isOverlayOpen)="overlayOpen($event)"
+    (change)="selectionChange($event)"
+    [placeholder]="message"
+  >
+    <sun-option class="sun-select-cell-edit-option" *ngFor="let item of column.options" [value]="item.value" #ref>
+      <sun-checkbox class="sun-select-cell-edit-checkbox" *ngIf="column.multiSelect" [checked]="ref.selected" ghost>
+      </sun-checkbox>
+      {{ item.label }}
+    </sun-option>
+  </sun-select>
+  <span sunPrefix [ngClass]="'sun-menu edit'"></span>
+  <span *ngIf="message" [ngClass]="'sun-menu warning'" sunSuffix (click)="resetValue($event)"></span>
+  <span *ngIf="isValueChanged()" [ngClass]="'sun-menu check'" sunSuffix (click)="resetValue($event)"></span>
+</sun-form-field>

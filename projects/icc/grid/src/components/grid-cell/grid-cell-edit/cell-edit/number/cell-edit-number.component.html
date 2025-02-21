@@ -1,0 +1,28 @@
+<sun-form-field *ngIf="field" [ngClass]="'sun-grid-form-field-edit'">
+  <input
+    #cellInput
+    sunInput
+    type="number"
+    [value]="value"
+    autocomplete="off"
+    [min]="column.minValue"
+    [max]="column.maxValue"
+    [step]="step"
+    (click)="click($event)"
+    (blur)="onBlur()"
+    (focus)="focus($event)"
+    (wheel)="wheel($event)"
+    (keydown)="keydown($event)"
+    (keyup)="valueChanged($event)"
+    (input)="valueChanged($event)"
+    [placeholder]="message"
+  />
+  <span sunPrefix [ngClass]="'sun-menu edit'"></span>
+  <span *ngIf="message" [ngClass]="'sun-menu warning'" sunSuffix (click)="resetValue($event)"></span>
+  <span
+    [ngClass]="isValueChanged() ? 'sun-menu check' : 'sun-menu invisibleCheck'"
+    sunSuffix
+    (click)="resetValue($event)"
+  >
+  </span>
+</sun-form-field>
