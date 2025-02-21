@@ -158,6 +158,10 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
     isDisabled ? this.form.disable() : this.form.enable();
   }
 
+  patchValue(value: number): void {
+    this.field.patchValue(value, { emitEvent: false, onlySelf: true });
+  }
+
   writeValue(value: { [key: string]: number }): void {
     this.form.patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();

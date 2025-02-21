@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, ViewChild, inject } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccNumberFieldComponent, IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
@@ -72,6 +72,8 @@ export class IccGridFooterComponent implements OnDestroy {
     return `${start} - ${end}`;
   }
 
+  @ViewChild(IccNumberFieldComponent, { static: true }) pageField!: IccNumberFieldComponent;
+
   constructor() {
     this.valueChanged$
       .pipe(
@@ -99,11 +101,13 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   onValueChange(value: number | null): void {
-    let page: number = (value as number) || 1;
+    let page: number = (value as number) || 0;
     if (page < 1) {
       page = 1;
+      this.pageField.patchValue(page);
     } else if (page > this.lastPage) {
       page = this.lastPage;
+      this.pageField.patchValue(page);
     }
     this.page = page;
     this.valueChanged$.next(page);
