@@ -12,6 +12,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
 })
 export class IccSelectFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccSelectFieldConfig>;
+  options: string[] | object[] = [];
 
   override checkField(): void {
     const fieldConfig = {
@@ -24,6 +25,11 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       placeholder: `ICC.UI.GRID.FILTER`,
     };
     this.fieldConfig = this.fieldConfig ? { ...fieldConfig, ...this.fieldConfig } : { ...fieldConfig };
+
+    if (this.fieldConfig.options) {
+      this.options = this.fieldConfig.options;
+      delete this.fieldConfig.options;
+    }
     this.column.filterFieldConfig = { ...this.fieldConfig };
   }
 

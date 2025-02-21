@@ -1,5 +1,6 @@
 import { IccFieldType } from '@icc/ui/fields';
 import { IccColumnConfig, IccGridConfig } from '@icc/ui/grid';
+import { sortByField } from '@icc/ui/core';
 
 export const DCRBrands = [
   { title: 'Audi', name: 'Audi' },
@@ -51,75 +52,6 @@ export const DCRGridConfig: Partial<IccGridConfig> = {
   ],
   rowSelection: true,
 };
-
-export const DCRColumnConfig: IccColumnConfig[] = [
-  {
-    name: 'ID',
-    width: 50,
-    align: 'center',
-    groupField: false,
-    filterField: IccFieldType.Number,
-  },
-  {
-    name: 'vin',
-    groupField: false,
-  },
-  {
-    name: 'brand',
-    title: 'this s s     sssssssssssssssssss sssssssssssssss',
-    filterFieldConfig: {
-      fieldType: 'select',
-      multiSelection: true,
-    },
-    width: 80,
-  },
-  {
-    name: 'MakeDate',
-    title: 'Manufacture Date',
-    width: 100,
-    rendererType: IccFieldType.Date,
-    rendererFieldConfig: {
-      dateFormat: 'longDate',
-    },
-    filterField: IccFieldType.DateRange,
-    align: 'center',
-  },
-  {
-    name: 'Price',
-    width: 50,
-    rendererType: IccFieldType.Number,
-    rendererFieldConfig: {
-      decimals: 2,
-    },
-    filterField: IccFieldType.Number,
-    align: 'right',
-  },
-  {
-    name: 'MakerYear',
-    rendererType: IccFieldType.Select,
-    rendererFieldConfig: {
-      optionKey: 'name',
-      optionLabel: 'title',
-    },
-    filterField: false,
-    width: 80,
-  },
-  {
-    name: 'year',
-    width: 50,
-    align: 'right',
-  },
-  {
-    name: 'color',
-    width: 80,
-    filterFieldConfig: {
-      fieldType: 'select',
-      isEmpty: true,
-      notEmpty: true,
-    },
-    align: 'center',
-  },
-];
 
 export const CARSDATA0 = {
   data: [
@@ -1351,14 +1283,114 @@ export const CARSDATA3 = {
     item['image'] = 'assets/test-image.jpg';
     item['Price'] = getRandomFloat(100, 20000);
 
-    const makeryear = `${item['brand']}-${item['year']}`;
-    item['MakerYear'] = {
-      name: makeryear.toLowerCase(),
-      title: `${item['brand']}: ${item['year']}`,
+    const makecolor = `${item['brand']}-${item['color']}`;
+    item['MakerColor'] = {
+      name: makecolor.toLowerCase(),
+      title: `${item['brand']}: ${item['color']}`,
     };
     return item;
   }),
   totalCounts: 200,
 };
 
+interface optionSelect {
+  name: number;
+  title: string;
+}
+
+function getUniqueObjects(arr: optionSelect[], key: keyof optionSelect): optionSelect[] {
+  const seen = new Set();
+  return arr.filter((obj) => {
+    const value = obj[key];
+    if (seen.has(value)) {
+      return false;
+    } else {
+      seen.add(value);
+      return true;
+    }
+  });
+}
+
+const items = [...CARSDATA3.data].map((item: any) => {
+  return item['MakerColor'];
+});
+
+const MakerColorList = sortByField(getUniqueObjects(items, 'name'), 'name', 'asc');
+
+//console.log(' MakerColorList=', MakerColorList);
 //console.log(' CARSDATA3=', CARSDATA3);
+
+export const DCRColumnConfig: IccColumnConfig[] = [
+  {
+    name: 'ID',
+    width: 50,
+    align: 'center',
+    groupField: false,
+    filterField: IccFieldType.Number,
+  },
+  {
+    name: 'vin',
+    groupField: false,
+  },
+  {
+    name: 'brand',
+    title: 'this s s     sssssssssssssssssss sssssssssssssss',
+    filterFieldConfig: {
+      fieldType: 'select',
+      multiSelection: true,
+    },
+    width: 80,
+  },
+  {
+    name: 'MakeDate',
+    title: 'Manufacture Date',
+    width: 100,
+    rendererType: IccFieldType.Date,
+    rendererFieldConfig: {
+      dateFormat: 'longDate',
+    },
+    filterField: IccFieldType.DateRange,
+    align: 'center',
+  },
+  {
+    name: 'Price',
+    width: 50,
+    rendererType: IccFieldType.Number,
+    rendererFieldConfig: {
+      decimals: 2,
+    },
+    filterField: IccFieldType.Number,
+    align: 'right',
+  },
+  {
+    name: 'MakerColor',
+    rendererType: IccFieldType.Select,
+    rendererFieldConfig: {
+      optionKey: 'name',
+      optionLabel: 'title',
+    },
+    filterFieldConfig: {
+      fieldType: 'select',
+      remoteOptions: false,
+      options: MakerColorList,
+      optionKey: 'name',
+      optionLabel: 'title',
+    },
+    width: 80,
+  },
+  {
+    name: 'year',
+    width: 50,
+    align: 'right',
+  },
+  {
+    name: 'color',
+    width: 80,
+    filterFieldConfig: {
+      fieldType: 'select',
+      isEmpty: true,
+      notEmpty: true,
+    },
+    align: 'center',
+  },
+];
