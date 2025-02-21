@@ -131,7 +131,6 @@ export interface IccColumnConfig {
   rendererFieldConfig?: IccFieldConfig;
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
-  dateFormat?: string; // TODO move to rendererFieldConfig ???
 
   //editField?: IccEditField;
   //validations?: IccValidation[];

@@ -78,7 +78,9 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     title: 'Manufacture Date',
     width: 100,
     rendererType: IccFieldType.Date,
-    dateFormat: 'longDate',
+    rendererFieldConfig: {
+      dateFormat: 'longDate',
+    },
     filterField: IccFieldType.DateRange,
     align: 'center',
   },
