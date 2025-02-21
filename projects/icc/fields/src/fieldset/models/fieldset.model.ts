@@ -1,4 +1,5 @@
-import { IccBaseField, IccFieldType } from '../../models/base-field.model';
+import { IccObjectType } from '@icc/ui/core';
+import { IccBaseField } from '../../models/base-field.model';
 import { IccFormField } from '../../models/fields.model';
 
 export interface IccFieldsetConfig extends IccBaseField {
@@ -9,7 +10,7 @@ export interface IccFieldsetConfig extends IccBaseField {
 }
 
 export const defaultFieldsetConfig: IccFieldsetConfig = {
-  fieldType: IccFieldType.Fieldset,
+  fieldType: IccObjectType.Fieldset,
   flexDirection: 'column',
   formFields: [],
 };

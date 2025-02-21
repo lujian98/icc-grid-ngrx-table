@@ -14,7 +14,7 @@ import { IccSelectFieldComponent } from './select-field/select-field.component';
 import { IccTextFieldComponent } from './text-field/text-field.component';
 import { IccTextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { IccUploadFileFieldComponent } from './upload-file-field/upload-file-field.component';
-import { IccFieldType } from './models/base-field.model';
+import { IccObjectType } from '@icc/ui/core';
 
 @Component({
   selector: 'icc-fields',
@@ -41,7 +41,7 @@ import { IccFieldType } from './models/base-field.model';
 })
 export class IccFieldsComponent {
   private _fieldConfig!: Partial<IccFormField>;
-  FieldType = IccFieldType;
+  FieldType = IccObjectType;
 
   @Input() form!: FormGroup;
 

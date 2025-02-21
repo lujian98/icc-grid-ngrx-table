@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { isEqual, confirmationValidator } from '@icc/ui/core';
-import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
-import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
-import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig, IccFieldType } from '@icc/ui/fields';
-import { State, STATES } from '../../../data/states';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { confirmationValidator, IccObjectType } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
+import { IccFormComponent } from '@icc/ui/form';
+import { STATES } from '../../../data/states';
 
 @Component({
   selector: 'app-password-page',
@@ -137,13 +136,13 @@ export class AppPasswordPageDemoComponent {
       readonly: true,
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       readonly: true,
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group83',
       fieldLabel: 'Radio Group',
       //readonly: true,
@@ -269,13 +268,13 @@ export class AppPasswordPageDemoComponent {
       //required: true,
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       //required: true,
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group82',
       fieldLabel: 'Radio Group',
       //required: true,
@@ -396,7 +395,7 @@ export class AppPasswordPageDemoComponent {
       //required: true,
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       hidden: true,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
@@ -409,7 +408,7 @@ export class AppPasswordPageDemoComponent {
       hidden: true,
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       hidden: true,
       fieldName: 'group81',
       fieldLabel: 'Radio Group',
@@ -551,7 +550,7 @@ export class AppPasswordPageDemoComponent {
       //required: true,
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       readonlyHidden: true,
@@ -564,7 +563,7 @@ export class AppPasswordPageDemoComponent {
       readonlyHidden: true,
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group86',
       fieldLabel: 'Radio Group',
       readonlyHidden: true,

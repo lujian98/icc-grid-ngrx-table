@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccFieldType } from '@icc/ui/fields';
+import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig, IccGridData } from '@icc/ui/grid';
 import { CARSDATA3 } from '../../../data/cars-large';
 
@@ -49,7 +49,7 @@ export class AppGridImageComponent {
       name: 'image',
       width: 80,
       align: 'center',
-      rendererType: IccFieldType.Image,
+      rendererType: IccObjectType.Image,
     },
   ];
   gridData: IccGridData<any> = CARSDATA3;

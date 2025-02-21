@@ -8,7 +8,8 @@ import {
   OnDestroy,
   inject,
 } from '@angular/core';
-import { IccFormField, IccFieldType } from '@icc/ui/fields';
+import { IccObjectType } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
@@ -38,7 +39,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
     if (find) {
       this.value = find.value as string;
     } else {
-      this.value = this.column.filterField === IccFieldType.Select ? [] : '';
+      this.value = this.column.filterField === IccObjectType.Select ? [] : '';
     }
     this.changeDetectorRef.markForCheck();
   }

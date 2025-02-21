@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IccFormField, IccFieldType } from '@icc/ui/fields';
+import { IccFormField } from '@icc/ui/fields';
 import { IccFormComponent } from '@icc/ui/form';
 import { STATES } from '../../../data/states';
 
@@ -55,7 +55,7 @@ export class AppThemeFormDemoComponent {
       placeholder: 'Select One or More...',
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group1',
       fieldLabel: 'Radio Group',
       required: true,
@@ -75,7 +75,7 @@ export class AppThemeFormDemoComponent {
       ],
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       required: true,

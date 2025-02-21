@@ -9,7 +9,8 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import { defaultSelectFieldConfig, defaultTextFieldConfig, IccFieldType, IccFormField } from '@icc/ui/fields';
+import { IccObjectType } from '@icc/ui/core';
+import { defaultSelectFieldConfig, defaultTextFieldConfig, IccFormField } from '@icc/ui/fields';
 import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
 import { IccDateRangeFilterComponent } from './date-range/date-range-filter.component';
 import { IccNumberFilterComponent } from './number/number-filter.component';
@@ -83,15 +84,15 @@ export class IccColumnFilterComponent implements OnInit {
     } else if (column.filterFieldConfig?.fieldType) {
       return column.filterFieldConfig?.fieldType;
     }
-    return IccFieldType.Text;
+    return IccObjectType.Text;
   }
 
   private getFilterTypeComponent(filterType: string): Type<unknown> {
-    if (filterType === IccFieldType.Select) {
+    if (filterType === IccObjectType.Select) {
       return IccSelectFilterComponent;
-    } else if (filterType === IccFieldType.Number) {
+    } else if (filterType === IccObjectType.Number) {
       return IccNumberFilterComponent;
-    } else if (filterType === IccFieldType.DateRange) {
+    } else if (filterType === IccObjectType.DateRange) {
       return IccDateRangeFilterComponent;
     }
     return IccTextFilterComponent;

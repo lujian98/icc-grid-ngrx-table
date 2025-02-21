@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccFormComponent, defaultFormConfig } from '@icc/ui/form';
-import { IccFormField, IccFieldsetConfig } from '@icc/ui/fields';
-import { IccSelectFieldConfig, IccSelectFieldComponent, defaultSelectFieldConfig, IccFieldType } from '@icc/ui/fields';
-import { State, STATES } from '../../../data/states';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccObjectType } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
+import { IccFormComponent } from '@icc/ui/form';
+import { STATES } from '../../../data/states';
 
 @Component({
   selector: 'app-form-page',
@@ -120,7 +120,7 @@ export class AppFromPageDemoComponent {
       placeholder: 'Select One or More...',
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group1',
       fieldLabel: 'Radio Group',
       required: true,
@@ -140,7 +140,7 @@ export class AppFromPageDemoComponent {
       ],
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       required: true,
@@ -260,13 +260,13 @@ export class AppFromPageDemoComponent {
       //required: true,
     },
     {
-      fieldType: IccFieldType.UploadFile,
+      fieldType: IccObjectType.UploadFile,
       fieldName: 'uploadfile',
       fieldLabel: 'Upload File',
       //required: true,
     },
     {
-      fieldType: IccFieldType.RadioGroup,
+      fieldType: IccObjectType.RadioGroup,
       fieldName: 'group88',
       fieldLabel: 'Radio Group',
       //required: true,

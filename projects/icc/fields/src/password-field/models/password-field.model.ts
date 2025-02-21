@@ -1,4 +1,5 @@
-import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
+import { IccObjectType } from '@icc/ui/core';
+import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
 
 export interface IccPasswordFieldConfig extends IccBaseField {
   minLength?: number;
@@ -6,7 +7,7 @@ export interface IccPasswordFieldConfig extends IccBaseField {
 }
 
 export const defaultPasswordFieldConfig: IccPasswordFieldConfig = {
-  fieldType: IccFieldType.Password,
+  fieldType: IccObjectType.Password,
   fieldName: 'passwordfield',
   ...defaultBaseField,
 };

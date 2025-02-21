@@ -1,4 +1,4 @@
-import { IccFieldType } from '../../models/base-field.model';
+import { IccObjectType } from '@icc/ui/core';
 import { IccDateFieldConfig } from '../../date-field/models/date-field.model';
 
 export interface IccDateRange {
@@ -14,7 +14,7 @@ export interface IccDateRangeFieldConfig extends IccDateFieldConfig {
 }
 
 export const defaultDateRangeFieldConfig: IccDateRangeFieldConfig = {
-  fieldType: IccFieldType.DateRange,
+  fieldType: IccObjectType.DateRange,
   fieldName: 'daterangefield',
   placeholder: 'ICC.UI.DATE.PICKER.SELECT_DATE_RANGE',
   clearValue: true,

@@ -1,4 +1,5 @@
-import { IccBaseField, defaultBaseField, IccFieldType } from '../../models/base-field.model';
+import { IccObjectType } from '@icc/ui/core';
+import { IccBaseField, defaultBaseField } from '../../models/base-field.model';
 
 export interface IccTextFieldConfig extends IccBaseField {
   minLength?: number;
@@ -6,7 +7,7 @@ export interface IccTextFieldConfig extends IccBaseField {
 }
 
 export const defaultTextFieldConfig: IccTextFieldConfig = {
-  fieldType: IccFieldType.Text,
+  fieldType: IccObjectType.Text,
   fieldName: 'textfield',
   ...defaultBaseField,
 };

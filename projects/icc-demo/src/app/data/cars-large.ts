@@ -1,6 +1,5 @@
-import { IccFieldType } from '@icc/ui/fields';
+import { sortByField, IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig } from '@icc/ui/grid';
-import { sortByField } from '@icc/ui/core';
 
 export const DCRBrands = [
   { title: 'Audi', name: 'Audi' },
@@ -1326,7 +1325,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 50,
     align: 'center',
     groupField: false,
-    filterField: IccFieldType.Number,
+    filterField: IccObjectType.Number,
   },
   {
     name: 'vin',
@@ -1345,26 +1344,26 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'MakeDate',
     title: 'Manufacture Date',
     width: 100,
-    rendererType: IccFieldType.Date,
+    rendererType: IccObjectType.Date,
     rendererFieldConfig: {
       dateFormat: 'longDate',
     },
-    filterField: IccFieldType.DateRange,
+    filterField: IccObjectType.DateRange,
     align: 'center',
   },
   {
     name: 'Price',
     width: 50,
-    rendererType: IccFieldType.Number,
+    rendererType: IccObjectType.Number,
     rendererFieldConfig: {
       decimals: 2,
     },
-    filterField: IccFieldType.Number,
+    filterField: IccObjectType.Number,
     align: 'right',
   },
   {
     name: 'MakerColor',
-    rendererType: IccFieldType.Select,
+    rendererType: IccObjectType.Select,
     rendererFieldConfig: {
       optionKey: 'name',
       optionLabel: 'title',

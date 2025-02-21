@@ -9,7 +9,7 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import { IccFieldType } from '@icc/ui/fields';
+import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig } from '../../../models/grid-column.model';
 import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
@@ -85,13 +85,13 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
       return this.column.component;
     } else if (this.column.renderer) {
       return IccGridCellFunctionComponent;
-    } else if (this.column.rendererType === IccFieldType.Image) {
+    } else if (this.column.rendererType === IccObjectType.Image) {
       return IccGridCellImageComponent;
-    } else if (this.column.rendererType === IccFieldType.Date) {
+    } else if (this.column.rendererType === IccObjectType.Date) {
       return IccGridCellDateComponent;
-    } else if (this.column.rendererType === IccFieldType.Number) {
+    } else if (this.column.rendererType === IccObjectType.Number) {
       return IccGridCellNumberComponent;
-    } else if (this.column.rendererType === IccFieldType.Select) {
+    } else if (this.column.rendererType === IccObjectType.Select) {
       return IccGridCellSelectComponent;
     }
     return IccGridCellTextComponent;

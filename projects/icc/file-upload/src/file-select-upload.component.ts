@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
-import { IccUploadFileFieldComponent, IccUploadFileFieldConfig, IccFieldType } from '@icc/ui/fields';
+import { IccButtonConfg, IccBUTTONS, IccButtonType, IccObjectType } from '@icc/ui/core';
+import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -56,7 +56,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
       this.fieldConfigs = [];
       for (let i = 0; i < this._fileUploadConfig.maxSelectUploads; i++) {
         this.fieldConfigs.push({
-          fieldType: IccFieldType.UploadFile,
+          fieldType: IccObjectType.UploadFile,
           labelWidth: 60,
           fieldName: `file_select_upload_${i + 1}`,
           fieldLabel: `${fileI18n} ${i + 1}`,
