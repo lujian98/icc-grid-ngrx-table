@@ -91,6 +91,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     rendererFieldConfig: {
       decimals: 2,
     },
+    filterField: IccFieldType.Number,
     align: 'right',
   },
   {
