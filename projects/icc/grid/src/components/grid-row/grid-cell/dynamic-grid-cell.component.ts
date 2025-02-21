@@ -9,11 +9,13 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import { IccColumnConfig, IccGridConfig, IccFieldType } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccFieldType, IccGridConfig } from '../../../models/grid-column.model';
+import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 import { IccGridCellFunctionComponent } from '../grid-cell-renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from '../grid-cell-renderer/image/grid-cell-image.component';
+import { IccGridCellNumberComponent } from '../grid-cell-renderer/number/grid-cell-number.component';
+import { IccGridCellSelectComponent } from '../grid-cell-renderer/select/grid-cell-select.component';
 import { IccGridCellTextComponent } from '../grid-cell-renderer/text/grid-cell-text.component';
-import { IccGridCellDateComponent } from '../grid-cell-renderer/date/grid-cell-date.component';
 
 export interface IccDynamicGridCell<T> {
   gridConfig: IccGridConfig;
@@ -86,6 +88,10 @@ export class IccDynamicGridCellComponent<T> implements OnInit {
       return IccGridCellImageComponent;
     } else if (this.column.rendererType === IccFieldType.Date) {
       return IccGridCellDateComponent;
+    } else if (this.column.rendererType === IccFieldType.Number) {
+      return IccGridCellNumberComponent;
+    } else if (this.column.rendererType === IccFieldType.Select) {
+      return IccGridCellSelectComponent;
     }
     return IccGridCellTextComponent;
   }

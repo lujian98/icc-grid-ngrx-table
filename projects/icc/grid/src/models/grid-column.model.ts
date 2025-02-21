@@ -105,11 +105,18 @@ export interface IccColumnFilter {
 export enum IccFieldType {
   Date = 'Date',
   Image = 'Image',
+  Number = 'Number',
+  Select = 'Select',
   Text = 'Text',
   // TODO number (decimals/negative), select (display value/translation), etc.
 }
 
-export type IccRendererType = IccFieldType.Text | IccFieldType.Image | IccFieldType.Date;
+export type IccRendererType =
+  | IccFieldType.Text
+  | IccFieldType.Image
+  | IccFieldType.Date
+  | IccFieldType.Number
+  | IccFieldType.Select;
 export type IccFilterField = boolean | 'text' | 'number' | 'select' | 'dateRange';
 export type IccFieldConfig = Partial<IccFormField>;
 export type IccGroupField = boolean | string;
