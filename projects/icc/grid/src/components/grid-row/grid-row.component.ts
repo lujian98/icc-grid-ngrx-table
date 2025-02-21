@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
-import { IccGridCellEditComponent } from './grid-cell-edit/grid-cell-edit.component';
-import { IccGridCellViewComponent } from './grid-cell-view/grid-cell-view.component';
-import { IccGridCellComponent } from './grid-cell/grid-cell.component';
+import { IccGridCellEditComponent } from '../grid-cell/grid-cell-edit/grid-cell-edit.component';
+import { IccGridCellViewComponent } from '../grid-cell/grid-cell-view/grid-cell-view.component';
+import { IccGridCellComponent } from '../grid-cell/grid-cell.component';
 
 @Component({
   selector: 'icc-grid-row',
