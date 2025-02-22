@@ -15,7 +15,6 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
 
   override checkField(): void {
     const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
-
     this.fieldConfig = {
       ...defaultSelectFieldConfig,
       ...config,

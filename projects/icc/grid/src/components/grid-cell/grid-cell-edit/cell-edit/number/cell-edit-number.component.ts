@@ -16,7 +16,6 @@ export class IccCellEditNumberComponent extends IccCellEditBaseComponent<number>
 
   override checkField(): void {
     const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
-
     this.fieldConfig = {
       ...defaultNumberFieldConfig,
       ...config,

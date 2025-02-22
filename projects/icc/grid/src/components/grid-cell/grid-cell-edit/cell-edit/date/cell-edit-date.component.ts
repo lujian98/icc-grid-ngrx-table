@@ -15,7 +15,6 @@ export class IccCellEditDateComponent extends IccCellEditBaseComponent<Date> {
 
   override checkField(): void {
     const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
-
     this.fieldConfig = {
       ...defaultDateFieldConfig,
       ...config,
