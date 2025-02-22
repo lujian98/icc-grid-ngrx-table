@@ -13,7 +13,7 @@ import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
 //import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
 import { IccCellEditNumberComponent } from './cell-edit/number/cell-edit-number.component';
-import { IccGridCellSelectComponent } from '../grid-cell-view/renderer/select/grid-cell-select.component';
+import { IccCellEditSelectComponent } from './cell-edit/select/cell-edit-select.component';
 import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.component';
 
 @Component({
@@ -75,7 +75,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
       case IccObjectType.Text:
         return IccCellEditTextComponent;
       case IccObjectType.Select:
-        return IccGridCellSelectComponent;
+        return IccCellEditSelectComponent;
       //case IccObjectType.Date:
       //  return IccGridCellDateComponent;
       case IccObjectType.Number:

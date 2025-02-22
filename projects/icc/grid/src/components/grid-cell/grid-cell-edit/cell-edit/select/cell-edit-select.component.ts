@@ -1,60 +1,36 @@
-import { Component } from '@angular/core';
-import { SunCellEditComponent } from '../cell-edit-base.component';
-import { SunSelectField } from '../../../../fields/select_field';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccSelectFieldComponent, IccSelectFieldConfig, defaultSelectFieldConfig } from '@icc/ui/fields';
+import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
 @Component({
-  selector: 'sun-cell-edit-select',
+  selector: 'icc-cell-edit-select',
   templateUrl: './cell-edit-select.component.html',
-  styleUrls: ['./cell-edit-select.component.scss'],
-  standalone: false,
+  styleUrls: ['cell-edit-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, IccSelectFieldComponent],
 })
-export class SunCellEditSelectComponent<T> extends SunCellEditComponent<T> {
-  set column(val: SunSelectField<T>) {
-    this._column = val;
-    this.setValidations(val);
+export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
+  override fieldConfig!: Partial<IccSelectFieldConfig>;
+
+  override checkField(): void {
+    const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
+
+    this.fieldConfig = {
+      ...defaultSelectFieldConfig,
+      ...config,
+      fieldName: this.column.name,
+      clearValue: false,
+      editable: true,
+    };
   }
 
-  get column(): SunSelectField<T> {
-    return this._column as SunSelectField<T>;
+  get value(): string | object | string[] | object[] {
+    return this.data as string | object | string[] | object[];
   }
 
-  constructor() {
-    super();
-  }
-
-  selectionChange(value: any) {
-    if (this.column.multiSelect && value.length > 0 && !value[0]) {
-      value = [];
-    }
-    this.isChangeSaved = false;
-    this.value = value;
-    this.isValidChange(value);
-    if (!this.column.multiSelect) {
-      this.saveCellValue();
-    }
-  }
-
-  overlayOpen(isOverlayOpen: boolean): void {
-    if (!isOverlayOpen && this.column.multiSelect) {
-      this.saveCellValue();
-    }
-  }
-
-  isValueChanged(): boolean {
-    if (!this.message) {
-      if (this.column.multiSelect) {
-        const recordValue = this.column.getCheckedValue(this.record[this.column.field]);
-        return JSON.stringify(this.value) !== JSON.stringify(recordValue);
-      } else {
-        return this.value !== this.record[this.column.field];
-      }
-    } else {
-      return false;
-    }
-  }
-
-  resetValue(event: MouseEvent) {
-    super.resetValue(event);
-    this.value = this.column.getCheckedValue(this.value);
+  onValueChange(value: T | T[]): void {
+    console.log(' sssss ss v=', value);
+    //this.filterChanged$.next(value);
   }
 }
