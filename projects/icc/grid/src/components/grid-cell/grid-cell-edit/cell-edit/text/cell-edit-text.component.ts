@@ -13,24 +13,33 @@ import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 })
 export class IccCellEditTextComponent<T> extends IccCellEditBaseComponent<T> {
   //IccKeyboard = IccKeyboard;
-  fieldConfig: Partial<IccTextFieldConfig> = {
-    fieldName: 'vin', // this.column.name,
-    clearValue: true,
-    //placeholder: `ICC.UI.GRID.FILTER`,
-    editable: true,
-  };
+  override fieldConfig!: Partial<IccTextFieldConfig>;
 
-  //@ViewChild('cellInput', { static: true }) cellInput!: ElementRef<HTMLInputElement>;
+  override checkField(): void {
+    this.fieldConfig = {
+      fieldName: this.column.name,
+      clearValue: false,
+      editable: true,
+    };
+  }
 
-  /*
-  constructor() {
-    super();
-  }*/
+  get value(): string {
+    return this.data as string;
+  }
 
   onValueChange(value: string): void {
     console.log(' mmmm ss v=', value);
     //this.filterChanged$.next(value);
   }
+
+  /*
+  //@ViewChild('cellInput', { static: true }) cellInput!: ElementRef<HTMLInputElement>;
+
+
+  constructor() {
+    super();
+  }
+
 
   override isValueChanged(): boolean {
     if (this.value !== this.record[this.column.name]) {
@@ -80,4 +89,5 @@ export class IccCellEditTextComponent<T> extends IccCellEditBaseComponent<T> {
       return true;
     }
   }
+    */
 }

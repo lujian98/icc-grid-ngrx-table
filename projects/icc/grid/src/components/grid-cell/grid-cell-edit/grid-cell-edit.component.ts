@@ -12,8 +12,6 @@ import {
 import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
 import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
-import { IccGridCellFunctionComponent } from '../grid-cell-view/renderer/function/grid-cell-function.component';
-import { IccGridCellImageComponent } from '../grid-cell-view/renderer/image/grid-cell-image.component';
 import { IccGridCellNumberComponent } from '../grid-cell-view/renderer/number/grid-cell-number.component';
 import { IccGridCellSelectComponent } from '../grid-cell-view/renderer/select/grid-cell-select.component';
 import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.component';
@@ -66,10 +64,10 @@ export class IccGridCellEditComponent<T> implements OnInit {
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccGridCell<T>;
-    this.instance.gridConfig = this.gridConfig;
-    this.instance.rowIndex = this.rowIndex;
     this.instance.column = this.column;
+    this.instance.rowIndex = this.rowIndex;
     this.instance.record = this.record;
+    this.instance.gridConfig = this.gridConfig;
   }
 
   private getRenderer(): Type<unknown> {
@@ -82,18 +80,6 @@ export class IccGridCellEditComponent<T> implements OnInit {
         return IccGridCellDateComponent;
       case IccObjectType.Number:
         return IccGridCellNumberComponent;
-      case IccObjectType.Image:
-        return IccGridCellImageComponent;
-      case IccObjectType.Function:
-        if (this.column.renderer) {
-          return IccGridCellFunctionComponent;
-        }
-        break;
-      case IccObjectType.Component:
-        if (this.column.component) {
-          return this.column.component;
-        }
-        break;
       default:
         break;
     }

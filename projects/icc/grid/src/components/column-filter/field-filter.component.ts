@@ -26,7 +26,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
 
   changeDetectorRef = inject(ChangeDetectorRef);
   filterChanged$ = new BehaviorSubject<IccFilterValueType>(null);
-  _gridConfig!: IccGridConfig;
+  private _gridConfig!: IccGridConfig;
   column!: IccColumnConfig;
   fieldConfig!: Partial<IccFormField>;
 

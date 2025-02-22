@@ -1,18 +1,67 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { IccFormField } from '@icc/ui/fields';
 import { Subject } from 'rxjs';
-//import { IccUtils } from '../../../utils/utils';
-//import { IccField } from '../../../fields/field';
-//import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
-import { IccCellEditData, IccCellEditKey, IccKeyboard, IccDirection } from '../../../../models/cell-edit.model';
-import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../../models/grid-column.model';
+import { IccCellEditData, IccCellEditKey, IccDirection, IccKeyboard } from '../../../../models/cell-edit.model';
+import { IccColumnConfig, IccGridCell, IccGridConfig } from '../../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-cell-edit-base',
   template: '',
-  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.grid-cell-align-center]': 'align === "center"',
+    '[class.grid-cell-align-right]': 'align === "right"',
+  },
+  imports: [CommonModule],
 })
 export class IccCellEditBaseComponent<T> {
+  protected changeDetectorRef = inject(ChangeDetectorRef);
+  private _record!: T;
+  private _gridConfig!: IccGridConfig;
+  fieldConfig!: Partial<IccFormField>;
+
+  @Input() rowIndex!: number;
+  @Input() column!: IccColumnConfig;
+
+  @Input()
+  set gridConfig(value: IccGridConfig) {
+    this._gridConfig = { ...value };
+    this.checkField();
+    //this.changeDetectorRef.markForCheck();
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
+
+  @Input()
+  set record(data: T) {
+    this._record = { ...data };
+    this.changeDetectorRef.markForCheck();
+  }
+  get record(): T {
+    return this._record;
+  }
+
+  get data(): T {
+    return (this.record as { [index: string]: T })[this.column.name];
+  }
+
+  get align(): string {
+    return this.column.align ? this.column.align : 'left';
+  }
+
+  get alignCenter() {
+    return this.align === 'center';
+  }
+
+  get alignRight() {
+    return this.align === 'right';
+  }
+
+  checkField(): void {}
+  /*
   dataKeyId!: string;
   field!: string;
   rowIndex!: number;
@@ -133,11 +182,11 @@ export class IccCellEditBaseComponent<T> {
     this.message = '';
     if (control.errors) {
       Object.keys(control.errors).forEach((name) => {
-        /*
-        const validation = IccUtils.findExactByKey(this.column.validations, 'name', name);
-        if (validation) {
-          this.message = validation.message;
-        }*/
+
+        //const validation = IccUtils.findExactByKey(this.column.validations, 'name', name);
+       // if (validation) {
+       //   this.message = validation.message;
+       // }
       });
       return false;
     } else {
@@ -167,4 +216,5 @@ export class IccCellEditBaseComponent<T> {
     this.value = this.record[this.column.name];
     this.message = '';
   }
+    */
 }
