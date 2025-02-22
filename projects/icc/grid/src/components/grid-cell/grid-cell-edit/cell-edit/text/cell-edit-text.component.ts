@@ -25,6 +25,7 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
   }
 
   get value(): string {
+    //console.log( ' val=', this.data)
     return this.data as string;
   }
 
