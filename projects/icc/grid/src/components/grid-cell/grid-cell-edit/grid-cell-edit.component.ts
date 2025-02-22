@@ -10,8 +10,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
-//import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
+import { IccColumnConfig, IccGridCell, IccGridConfig } from '../../../models/grid-column.model';
+import { IccCellEditDateComponent } from './cell-edit/date/cell-edit-date.component';
 import { IccCellEditNumberComponent } from './cell-edit/number/cell-edit-number.component';
 import { IccCellEditSelectComponent } from './cell-edit/select/cell-edit-select.component';
 import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.component';
@@ -76,8 +76,8 @@ export class IccGridCellEditComponent<T> implements OnInit {
         return IccCellEditTextComponent;
       case IccObjectType.Select:
         return IccCellEditSelectComponent;
-      //case IccObjectType.Date:
-      //  return IccGridCellDateComponent;
+      case IccObjectType.Date:
+        return IccCellEditDateComponent;
       case IccObjectType.Number:
         return IccCellEditNumberComponent;
       default:
