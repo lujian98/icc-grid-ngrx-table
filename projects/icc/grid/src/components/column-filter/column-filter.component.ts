@@ -17,7 +17,7 @@ import { IccNumberFilterComponent } from './number/number-filter.component';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
 
-export interface IccDynamicColumnFilter {
+export interface IccColumnFilterInstance {
   gridConfig: IccGridConfig;
   fieldConfig: Partial<IccFormField>;
   column: IccColumnConfig;
@@ -31,7 +31,7 @@ export interface IccDynamicColumnFilter {
 })
 export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
-  private instance!: IccDynamicColumnFilter;
+  private instance!: IccColumnFilterInstance;
   private _componentRef: ComponentRef<unknown> | undefined;
   private _gridConfig!: IccGridConfig;
   private _column!: IccColumnConfig;
@@ -70,7 +70,7 @@ export class IccColumnFilterComponent implements OnInit {
 
     const cellComponent = this.getFilterTypeComponent(filterType);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
-    this.instance = this._componentRef.instance as IccDynamicColumnFilter;
+    this.instance = this._componentRef.instance as IccColumnFilterInstance;
     if (this.column.filterFieldConfig) {
       this.instance.fieldConfig = this.column.filterFieldConfig;
     }

@@ -5,14 +5,16 @@
 
   icc-select-field {
     width: 100%;
-    ::ng-deep .icc-form-field {
-      padding-bottom: 0px;
-    }
-    ::ng-deep .icc-form-field-container {
-      border-bottom: none;
-    }
-    ::ng-deep input {
-      width: 100%;
+    ::ng-deep {
+      .icc-form-field {
+        padding-bottom: 0px;
+      }
+      .icc-form-field-container {
+        border-bottom: none;
+      }
+      input {
+        width: 100%;
+      }
     }
   }
 }
