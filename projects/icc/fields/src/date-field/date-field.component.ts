@@ -193,6 +193,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     this.dialogService.open(IccDatePickerComponent, {
       context: {
         fieldConfig: this.fieldConfig,
+        field: this.field,
       },
       hostElemRef: this.calendarInput,
       injector: this.injector,

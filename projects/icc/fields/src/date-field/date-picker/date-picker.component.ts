@@ -3,6 +3,19 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+  Validators,
+} from '@angular/forms';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
 import {
   IccLayoutComponent,
@@ -66,12 +79,14 @@ export class IccDatePickerComponent implements OnInit {
     return this._fieldConfig;
   }
 
+  @Input() field: FormControl | null = null;
+
   presetSelectionConfig = presetDateSelectionConfig;
   presets: IccDatePresetItem[] = [];
 
   ngOnInit(): void {
     this.adapter.setLocale(this.translateService.currentLang);
-    this.selectedDate = this.dateStoreService.selectedDate;
+    this.selectedDate = this.field ? this.field.value : this.dateStoreService.selectedDate;
 
     this.presets = [...iccDefaultDatePresets].map((item) => {
       return {

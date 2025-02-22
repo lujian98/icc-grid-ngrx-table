@@ -24,10 +24,6 @@ export class IccCellEditDateComponent extends IccCellEditBaseComponent<Date> {
     };
   }
 
-  get value(): Date {
-    return this.data as Date;
-  }
-
   onValueChange(value: Date | null): void {
     console.log(' Date change v=', value);
     //this.filterChanged$.next(value);

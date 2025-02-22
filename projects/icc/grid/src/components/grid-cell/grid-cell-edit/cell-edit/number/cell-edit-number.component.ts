@@ -25,9 +25,10 @@ export class IccCellEditNumberComponent extends IccCellEditBaseComponent<number>
     };
   }
 
+  /*
   get value(): number {
     return parseFloat((this.data as number).toFixed(this.fieldConfig.decimals));
-  }
+  }*/
 
   onValueChange(value: number | null): void {
     console.log(' number change v=', value);

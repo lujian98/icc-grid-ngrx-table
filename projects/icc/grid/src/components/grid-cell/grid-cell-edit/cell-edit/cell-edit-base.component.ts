@@ -62,8 +62,7 @@ export class IccCellEditBaseComponent<T> {
 
   @Input()
   set record(data: T) {
-    console.log(' 444444444 data=', data);
-    this._record = data; // { ...data };
+    this._record = data;
     this.field.setValue(this.data);
     this.field.markAsPristine();
     this.changeDetectorRef.markForCheck();

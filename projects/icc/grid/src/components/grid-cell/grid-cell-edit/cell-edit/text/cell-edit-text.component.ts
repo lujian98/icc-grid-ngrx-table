@@ -7,7 +7,7 @@ import { IccCellEditBaseComponent } from '../cell-edit-base.component';
   selector: 'icc-cell-edit-text',
   templateUrl: './cell-edit-text.component.html',
   styleUrls: ['cell-edit-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTextFieldComponent],
 })
 export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
@@ -24,11 +24,12 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
     };
   }
 
+  /*
   get value(): string {
     console.log(' name=', this.column.name, ' 5555555 data=', this.data);
     //console.log( ' val=', this.data)
     return this.data as string;
-  }
+  }*/
 
   onValueChange(value: string): void {
     console.log(' text change v=', value);
