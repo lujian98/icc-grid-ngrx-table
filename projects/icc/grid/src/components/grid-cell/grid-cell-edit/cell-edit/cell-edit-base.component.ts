@@ -2,6 +2,19 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.model';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'icc-grid-cell-edit-base',
@@ -11,13 +24,14 @@ import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.m
 })
 export class IccCellEditBaseComponent<T> {
   protected changeDetectorRef = inject(ChangeDetectorRef);
-  private _record!: T;
   private _gridConfig!: IccGridConfig;
+  private _column!: IccColumnConfig;
+  private _record!: T;
+  form!: FormGroup;
 
   fieldConfig!: Partial<IccFormField>;
 
   @Input() rowIndex!: number;
-  @Input() column!: IccColumnConfig;
 
   @Input()
   set gridConfig(value: IccGridConfig) {
@@ -30,8 +44,27 @@ export class IccCellEditBaseComponent<T> {
   }
 
   @Input()
+  set column(val: IccColumnConfig) {
+    this._column = val;
+    if (!this.form) {
+      this.form = new FormGroup({
+        [this.column.name]: new FormControl<T | null>(null),
+      });
+    }
+  }
+  get column(): IccColumnConfig {
+    return this._column;
+  }
+
+  get field(): FormControl {
+    return this.form!.get(this.column.name) as FormControl;
+  }
+
+  @Input()
   set record(data: T) {
-    this._record = { ...data };
+    console.log(' 444444444 data=', data);
+    this._record = data; // { ...data };
+    this.field.setValue(this.data);
     this.changeDetectorRef.markForCheck();
   }
   get record(): T {

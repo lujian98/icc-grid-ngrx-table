@@ -46,6 +46,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
 
   @Input()
   set record(data: T) {
+    console.log(' 3333333 data=', data);
     this._record = data; //{ ...data };
     if (this._componentRef) {
       this.instance.record = this.record;

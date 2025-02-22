@@ -22,7 +22,7 @@ export class IccGridCellRendererComponent<T> {
 
   @Input()
   set record(data: T) {
-    this._record = { ...data };
+    this._record = data;
     this.changeDetectorRef.markForCheck();
   }
   get record(): T {
