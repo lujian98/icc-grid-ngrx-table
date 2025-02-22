@@ -1,87 +1,37 @@
-import { Component } from '@angular/core';
-import { SunNumberField } from '../../../../fields/number_field';
-import { SunCellEditComponent } from '../cell-edit-base.component';
-import { SunKeyboard } from '../../../../fields/fieldConfig.model';
-import { SunUtils } from '../../../../utils/utils';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { isNumeric } from '@icc/ui/core';
+import { IccNumberFieldComponent, IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
+import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
 @Component({
-  selector: 'sun-cell-edit-number',
+  selector: 'icc-cell-edit-number',
   templateUrl: './cell-edit-number.component.html',
-  standalone: false,
+  styleUrls: ['cell-edit-number.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, IccNumberFieldComponent],
 })
-export class SunCellEditNumberComponent<T> extends SunCellEditComponent<T> {
-  set column(val: SunNumberField) {
-    this._column = val;
-    this.setValidations(val);
+export class IccCellEditNumberComponent extends IccCellEditBaseComponent<number> {
+  override fieldConfig!: Partial<IccNumberFieldConfig>;
+
+  override checkField(): void {
+    const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
+
+    this.fieldConfig = {
+      ...defaultNumberFieldConfig,
+      ...config,
+      fieldName: this.column.name,
+      clearValue: false,
+      editable: true,
+    };
   }
 
-  get column(): SunNumberField {
-    return this._column as SunNumberField;
+  get value(): number {
+    return parseFloat((this.data as number).toFixed(this.fieldConfig.decimals));
   }
 
-  SunKeyboard = SunKeyboard;
-
-  constructor() {
-    super();
-  }
-
-  isValueChanged(): boolean {
-    if (
-      Number(this.value) !== Number(this.record[this.column.field]) ||
-      !(this.value === null && this.record[this.column.field] === null)
-    ) {
-      return super.isValueChanged();
-    } else {
-      return false;
-    }
-  }
-
-  click(event: MouseEvent) {
-    event.stopPropagation();
-  }
-
-  focus(event: FocusEvent) {
-    setTimeout(() => {
-      // @ts-ignore
-      event.target.select();
-    }, 1);
-  }
-
-  wheel(event: MouseEvent) {
-    event.stopPropagation();
-  }
-
-  keydown(event: KeyboardEvent) {
-    const keyCode = event.keyCode;
-    if (
-      keyCode === SunKeyboard.HOME ||
-      keyCode === SunKeyboard.LEFT_ARROW ||
-      keyCode === SunKeyboard.END ||
-      keyCode === SunKeyboard.RIGHT_ARROW
-    ) {
-      this.cellEditSpecialKeyEvent(event.keyCode);
-    }
-  }
-
-  isFieldSelected(): boolean {
-    if (typeof this.value === 'number' || typeof this.value === 'string') {
-      return Number(document.getSelection()) === Number(this.value);
-    } else {
-      return false;
-    }
-  }
-
-  isValidKeyEvent(keyCode: number): boolean {
-    if (this.isFieldSelected()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  saveCellValue() {
-    super.saveCellValue();
-    const decimals = SunUtils.countDecimals(this.value);
-    this.step = 1 / Math.pow(10, decimals);
+  onValueChange(value: number | null): void {
+    console.log(' nnnnnn ss v=', value);
+    //this.filterChanged$.next(value);
   }
 }

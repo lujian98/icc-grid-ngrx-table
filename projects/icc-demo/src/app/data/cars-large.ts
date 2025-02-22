@@ -1355,7 +1355,8 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   },
   {
     name: 'Price',
-    width: 50,
+    width: 70,
+    cellEditable: true,
     rendererType: IccObjectType.Number,
     rendererFieldConfig: {
       decimals: 2,

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
+import { IccTextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
 @Component({
@@ -14,7 +14,11 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
   override fieldConfig!: Partial<IccTextFieldConfig>;
 
   override checkField(): void {
+    const config = this.column.rendererFieldConfig ? this.column.rendererFieldConfig : {};
+
     this.fieldConfig = {
+      ...defaultTextFieldConfig,
+      ...config,
       fieldName: this.column.name,
       clearValue: false,
       editable: true,

@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
-import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
-import { IccGridCellNumberComponent } from '../grid-cell-view/renderer/number/grid-cell-number.component';
+//import { IccGridCellDateComponent } from '../grid-cell-view/renderer/date/grid-cell-date.component';
+import { IccCellEditNumberComponent } from './cell-edit/number/cell-edit-number.component';
 import { IccGridCellSelectComponent } from '../grid-cell-view/renderer/select/grid-cell-select.component';
 import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.component';
 
@@ -76,10 +76,10 @@ export class IccGridCellEditComponent<T> implements OnInit {
         return IccCellEditTextComponent;
       case IccObjectType.Select:
         return IccGridCellSelectComponent;
-      case IccObjectType.Date:
-        return IccGridCellDateComponent;
+      //case IccObjectType.Date:
+      //  return IccGridCellDateComponent;
       case IccObjectType.Number:
-        return IccGridCellNumberComponent;
+        return IccCellEditNumberComponent;
       default:
         break;
     }
