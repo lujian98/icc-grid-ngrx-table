@@ -1346,6 +1346,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'MakeDate',
     title: 'Manufacture Date',
     width: 100,
+    cellEditable: true,
     rendererType: IccObjectType.Date,
     rendererFieldConfig: {
       dateFormat: 'longDate',
@@ -1366,6 +1367,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   },
   {
     name: 'MakerColor',
+    cellEditable: true,
     rendererType: IccObjectType.Select,
     rendererFieldConfig: {
       optionKey: 'name',
@@ -1389,6 +1391,13 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'color',
     width: 80,
+    cellEditable: true,
+    rendererType: IccObjectType.Select,
+    rendererFieldConfig: {
+      //optionKey: 'name',
+      //optionLabel: 'title',
+      options: DCRColors,
+    },
     filterFieldConfig: {
       fieldType: 'select',
       isEmpty: true,
