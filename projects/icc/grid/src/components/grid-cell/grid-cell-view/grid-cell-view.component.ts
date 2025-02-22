@@ -20,8 +20,7 @@ import { IccGridCellTextComponent } from './renderer/text/grid-cell-text.compone
 
 @Component({
   selector: 'icc-grid-cell-view',
-  templateUrl: 'grid-cell-view.component.html',
-  styleUrls: ['grid-cell-view.component.scss'],
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })

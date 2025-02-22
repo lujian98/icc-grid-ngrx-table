@@ -25,7 +25,7 @@ export interface IccColumnFilterInstance {
 
 @Component({
   selector: 'icc-column-filter',
-  templateUrl: 'column-filter.component.html',
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })

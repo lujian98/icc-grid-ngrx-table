@@ -20,8 +20,7 @@ import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.compon
 
 @Component({
   selector: 'icc-grid-cell-edit',
-  templateUrl: 'grid-cell-edit.component.html',
-  styleUrls: ['grid-cell-edit.component.scss'],
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
