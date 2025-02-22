@@ -29,7 +29,7 @@ export class IccCellEditDateComponent extends IccCellEditBaseComponent<Date> {
   }
 
   onValueChange(value: Date | null): void {
-    console.log(' Date ss v=', value);
+    console.log(' Date change v=', value);
     //this.filterChanged$.next(value);
   }
 }

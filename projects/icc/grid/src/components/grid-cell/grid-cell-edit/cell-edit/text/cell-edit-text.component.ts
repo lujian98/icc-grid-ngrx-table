@@ -29,7 +29,7 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
   }
 
   onValueChange(value: string): void {
-    console.log(' mmmm ss v=', value);
+    console.log(' text change v=', value);
     //this.filterChanged$.next(value);
   }
 }

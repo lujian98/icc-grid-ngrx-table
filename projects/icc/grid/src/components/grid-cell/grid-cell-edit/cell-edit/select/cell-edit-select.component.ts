@@ -29,7 +29,7 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
   }
 
   onValueChange(value: T | T[]): void {
-    console.log(' sssss ss v=', value);
+    console.log(' select change v=', value);
     //this.filterChanged$.next(value);
   }
 }

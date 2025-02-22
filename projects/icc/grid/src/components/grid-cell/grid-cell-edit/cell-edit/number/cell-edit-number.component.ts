@@ -30,7 +30,7 @@ export class IccCellEditNumberComponent extends IccCellEditBaseComponent<number>
   }
 
   onValueChange(value: number | null): void {
-    console.log(' nnnnnn ss v=', value);
+    console.log(' number change v=', value);
     //this.filterChanged$.next(value);
   }
 }
