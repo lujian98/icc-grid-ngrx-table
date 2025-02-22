@@ -32,7 +32,6 @@ export class IccCellEditBaseComponent<T> {
   @Input()
   set record(data: T) {
     this._record = { ...data };
-    console.log(' 3333 record change=', data);
     this.changeDetectorRef.markForCheck();
   }
   get record(): T {
