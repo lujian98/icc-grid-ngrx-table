@@ -16,7 +16,7 @@ import { IccGridCellFunctionComponent } from '../grid-cell-view/renderer/functio
 import { IccGridCellImageComponent } from '../grid-cell-view/renderer/image/grid-cell-image.component';
 import { IccGridCellNumberComponent } from '../grid-cell-view/renderer/number/grid-cell-number.component';
 import { IccGridCellSelectComponent } from '../grid-cell-view/renderer/select/grid-cell-select.component';
-import { IccGridCellTextComponent } from '../grid-cell-view/renderer/text/grid-cell-text.component';
+import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.component';
 
 @Component({
   selector: 'icc-grid-cell-edit',
@@ -76,7 +76,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
   private getRenderer(): Type<unknown> {
     switch (this.column.rendererType) {
       case IccObjectType.Text:
-        return IccGridCellTextComponent;
+        return IccCellEditTextComponent;
       case IccObjectType.Select:
         return IccGridCellSelectComponent;
       case IccObjectType.Date:
@@ -98,6 +98,6 @@ export class IccGridCellEditComponent<T> implements OnInit {
       default:
         break;
     }
-    return IccGridCellTextComponent;
+    return IccCellEditTextComponent;
   }
 }

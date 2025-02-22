@@ -1,21 +1,36 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IccKeyboard } from '../../../../../models/cell-edit.model';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
+import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 
 @Component({
   selector: 'icc-cell-edit-text',
   templateUrl: './cell-edit-text.component.html',
-  standalone: false,
+  styleUrls: ['cell-edit-text.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, IccTextFieldComponent],
 })
 export class IccCellEditTextComponent<T> extends IccCellEditBaseComponent<T> {
   //IccKeyboard = IccKeyboard;
+  fieldConfig: Partial<IccTextFieldConfig> = {
+    fieldName: 'vin', // this.column.name,
+    clearValue: true,
+    //placeholder: `ICC.UI.GRID.FILTER`,
+    editable: true,
+  };
 
-  @ViewChild('cellInput', { static: true }) cellInput!: ElementRef<HTMLInputElement>;
+  //@ViewChild('cellInput', { static: true }) cellInput!: ElementRef<HTMLInputElement>;
 
   /*
   constructor() {
     super();
   }*/
+
+  onValueChange(value: string): void {
+    console.log(' mmmm ss v=', value);
+    //this.filterChanged$.next(value);
+  }
 
   override isValueChanged(): boolean {
     if (this.value !== this.record[this.column.name]) {
