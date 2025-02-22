@@ -1365,9 +1365,10 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     filterField: IccObjectType.Number,
     align: 'right',
   },
+
   {
     name: 'MakerColor',
-    cellEditable: true,
+    //cellEditable: true,
     rendererType: IccObjectType.Select,
     rendererFieldConfig: {
       optionKey: 'name',
