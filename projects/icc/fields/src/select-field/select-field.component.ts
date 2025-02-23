@@ -329,7 +329,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
+    if (this.fieldConfig.singleListOption) {
+      return s1 && s2 && s1 === s2;
+    } else {
+      return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
+    }
   }
 
   private delaySetSelected(overlayOpen?: boolean): void {
