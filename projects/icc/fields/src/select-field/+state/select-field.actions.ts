@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccSelectFieldConfig } from '../models/select-field.model';
+import { IccSelectFieldConfig, IccOptionType } from '../models/select-field.model';
 
 export const initFieldConfig = createAction(
   '[SelectField] Init Field Config',
@@ -23,7 +23,7 @@ export const loadSelectFieldOptions = createAction(
 
 export const loadSelectFieldOptionsSuccess = createAction(
   '[SelectField] Load Select Field Options Success',
-  props<{ fieldId: string; options: string[] | object[] }>(),
+  props<{ fieldId: string; options: IccOptionType[] }>(),
 );
 
 export const clearSelectFieldStore = createAction(

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccSelectFieldConfig } from '../models/select-field.model';
+import { IccSelectFieldConfig, IccOptionType } from '../models/select-field.model';
 import * as selectFieldActions from './select-field.actions';
 import { selectFieldConfig, selectOptions } from './select-field.selectors';
 
@@ -20,7 +20,7 @@ export class IccSelectFieldFacade {
     }
   }
 
-  setSelectFieldOptions(fieldId: string, options: string[] | object[]): void {
+  setSelectFieldOptions(fieldId: string, options: IccOptionType[]): void {
     this.store.dispatch(selectFieldActions.loadSelectFieldOptionsSuccess({ fieldId, options }));
   }
 
@@ -32,7 +32,7 @@ export class IccSelectFieldFacade {
     return this.store.select(selectFieldConfig(fieldId));
   }
 
-  selectOptions(fieldId: string): Observable<string[] | object[]> {
+  selectOptions(fieldId: string): Observable<IccOptionType[]> {
     return this.store.select(selectOptions(fieldId));
   }
 }

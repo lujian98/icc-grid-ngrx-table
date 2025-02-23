@@ -1,5 +1,7 @@
 import { IccBaseField } from '../../models/base-field.model';
 
+export type IccOptionType = string | object;
+
 export interface IccSelectFieldConfig extends IccBaseField {
   fieldId: string; // auto generated unique id
   urlKey: string; // Only for remote field config and options
@@ -15,7 +17,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
-  options?: string[] | object[]; // only used for local initial input
+  options?: IccOptionType[]; // only used for local initial input
   //virtualScroll: boolean; // only support virtualScroll
 }
 
@@ -25,5 +27,5 @@ export interface SelectFieldState {
 
 export interface IccSelectFieldState {
   fieldConfig: IccSelectFieldConfig;
-  options: string[] | object[];
+  options: IccOptionType[];
 }

@@ -1,4 +1,3 @@
-export * from './src/pipes/filter.pipe';
 export * from './src/pipes/locale-date.pipe';
 export * from './src/utils/unique-id';
 export * from './src/utils/is-numeric';

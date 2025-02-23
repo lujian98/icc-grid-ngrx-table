@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IccBackendService } from '@icc/ui/core';
-import { IccSelectFieldConfig } from '../models/select-field.model';
+import { IccSelectFieldConfig, IccOptionType } from '../models/select-field.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +26,10 @@ export class IccSelectFieldService {
     );
   }
 
-  getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<string[] | object[]> {
+  getSelectFieldOptions(fieldConfig: IccSelectFieldConfig): Observable<IccOptionType[]> {
     const params = this.backendService.getParams(fieldConfig.urlKey, 'select', fieldConfig.fieldName);
     const url = this.backendService.apiUrl;
-    return this.http.get<string[] | object[]>(url, { params }).pipe(
+    return this.http.get<IccOptionType[]>(url, { params }).pipe(
       map((options) => {
         return options;
       }),

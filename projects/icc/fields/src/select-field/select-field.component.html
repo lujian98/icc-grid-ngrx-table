@@ -80,7 +80,8 @@
 
           <ng-container
             *ngIf="
-              selectOptions | filter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result
+              selectOptions
+                | selectFilter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result
             "
           >
             <cdk-virtual-scroll-viewport

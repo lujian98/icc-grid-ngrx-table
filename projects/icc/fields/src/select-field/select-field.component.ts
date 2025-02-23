@@ -34,7 +34,8 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccFilterPipe, isEqual, uniqueId, sortByField } from '@icc/ui/core';
+import { isEqual, uniqueId, sortByField } from '@icc/ui/core';
+import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -53,7 +54,7 @@ import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
-import { IccSelectFieldConfig } from './models/select-field.model';
+import { IccSelectFieldConfig, IccOptionType } from './models/select-field.model';
 
 export interface IccHeaderOption {
   name: string;
@@ -98,7 +99,7 @@ export interface IccHeaderOption {
     IccOptionComponent,
     IccIconModule,
     IccCheckboxComponent,
-    IccFilterPipe,
+    IccSelectFilterPipe,
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFormFieldControlDirective,
@@ -116,8 +117,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldName: string = '';
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
-  selectOptions$!: Observable<any[]>; //{ [key: string]: T }[] | string[]
-  private selectOptions: { [key: string]: T }[] = [];
+  selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
+  private selectOptions: IccOptionType[] = [];
   isEmptyValue: IccHeaderOption = {
     name: 'isEmpty', // TODO singleListOption
     title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
@@ -187,7 +188,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
-            this.selectOptions = selectOptions as { [key: string]: T }[];
+            this.selectOptions = selectOptions;
             return this.selectOptions;
           }),
         );
@@ -205,7 +206,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   @Input()
-  set options(val: string[] | object[]) {
+  set options(val: IccOptionType[]) {
     //local set option only, not used here
     if (!this.fieldConfig) {
       const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
@@ -393,7 +394,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.delaySetSelected();
   }
 
-  checkAll(selectOptions: { [key: string]: T }[] | string[]): void {
+  checkAll(selectOptions: IccOptionType[]): void {
     this.value = [...selectOptions];
     this.delaySetSelected();
     this.valueChange.emit(this.value as T[]);
