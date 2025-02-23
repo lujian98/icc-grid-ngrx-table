@@ -208,7 +208,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   set options(val: string[] | object[]) {
     //local set option only, not used here
     if (!this.fieldConfig) {
-      this.initFieldConfig({ ...defaultSelectFieldConfig });
+      const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
+      this.initFieldConfig({ ...defaultSelectFieldConfig, singleListOption });
     }
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
