@@ -138,11 +138,15 @@
                       [filterValue]="filterValue"
                     >
                     </icc-filter-highlight>
-                    <!--
-                      <icc-filter-highlight *ngIf="fieldConfig.singleListOption" [value]="option" [filterValue]="filterValue">
-                      </icc-filter-highlight>
-                    -->
-                    <span *ngIf="fieldConfig.singleListOption">{{ option }}</span>
+
+                    <icc-filter-highlight
+                      *ngIf="fieldConfig.singleListOption"
+                      [singleListOption]="fieldConfig.singleListOption"
+                      [options]="result"
+                      [value]="option"
+                      [filterValue]="filterValue"
+                    >
+                    </icc-filter-highlight>
                   </ng-container>
                 </icc-option>
               </cdk-virtual-scroll-viewport>
