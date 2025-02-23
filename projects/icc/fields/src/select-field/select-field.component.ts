@@ -348,7 +348,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       if (value.length > 0) {
         return (
           value
-            .map((item) => item[this.fieldConfig.optionLabel])
+            .map((item) => {
+              return this.fieldConfig.singleListOption ? item : item[this.fieldConfig.optionLabel];
+            })
             .sort()
             //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
             .join(', ')

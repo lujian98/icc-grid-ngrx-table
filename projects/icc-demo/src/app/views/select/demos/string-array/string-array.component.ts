@@ -22,6 +22,15 @@ export class AppStringArrayComponent {
     placeholder: 'Select One...',
   };
 
+  multiSelectionList: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    singleListOption: true,
+    multiSelection: true,
+    fieldLabel: 'Multi Selection (list)',
+    placeholder: 'Select One or More...',
+  };
+  multiListStates = ['Louisiana', 'Nevada'];
+
   constructor() {
     //  console.log( ' listStates=', this.listStates)
   }

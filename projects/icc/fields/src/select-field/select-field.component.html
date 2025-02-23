@@ -122,6 +122,7 @@
                       [filterValue]="filterValue"
                     >
                     </icc-filter-highlight>
+
                     <icc-filter-highlight
                       *ngIf="fieldConfig.singleListOption"
                       [value]="option"
@@ -138,7 +139,7 @@
                     >
                     </icc-filter-highlight>
                     <!--
-                      <icc-filter-highlight *ngIf="fieldConfig.singleListOption" [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                      <icc-filter-highlight *ngIf="fieldConfig.singleListOption" [value]="option" [filterValue]="filterValue">
                       </icc-filter-highlight>
                     -->
                     <span *ngIf="fieldConfig.singleListOption">{{ option }}</span>
