@@ -127,6 +127,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
       option.select();
       this.selection.select(option);
       this.value = option.value;
+      console.log(' 3333333 this.value =', this.value);
     }
     this.changeDetectorRef.markForCheck();
   }

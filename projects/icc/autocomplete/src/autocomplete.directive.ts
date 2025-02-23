@@ -64,6 +64,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   @Input('iccAutocompleteClickOption')
   set autocompleteClickOption(clicked: number | undefined) {
     if (clicked) {
+      console.log(' 44444 this.value =', this.autocomplete.value);
       this.setTriggerValue();
       this.change.emit(this.autocomplete.value);
       this._onChange(this.autocomplete.value);

@@ -96,7 +96,7 @@
                 (click)="clickOption(ref)"
               >
                 @if (fieldConfig.multiSelection) {
-                  <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected">
+                  <icc-checkbox [checked]="ref.selected">
                     @if (fieldConfig.singleListOption) {
                       <icc-filter-highlight
                         [singleListOption]="fieldConfig.singleListOption"
