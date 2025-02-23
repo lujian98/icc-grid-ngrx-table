@@ -37,9 +37,6 @@ export class IccFilterHighlightComponent<T> {
 
   private setValues(): void {
     if (this.filterValue && this.value) {
-      //console.log(' this.filterValue=', this.filterValue);
-      //console.log(' this.value=', this.value);
-
       const pattern = this.filterValue
         .replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
         .split(' ')
@@ -55,6 +52,7 @@ export class IccFilterHighlightComponent<T> {
   }
 
   isMarkedValue(value: string): boolean {
+    /*
     if (this.singleListOption) {
       //TODO
       const find = this.options.find((item) => item === value);
@@ -64,7 +62,7 @@ export class IccFilterHighlightComponent<T> {
       }
 
       //return true;
-    }
+    }*/
     return !!value && !!this.filterValue && value.toLowerCase() === this.filterValue.toLowerCase();
   }
 }

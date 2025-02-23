@@ -264,7 +264,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   clickedOption: number | undefined;
   private clickedOptions = 1;
   clickOption(option: IccOptionComponent<{ [key: string]: T }>): void {
-    console.log(' clickOption=', option);
     this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
     this.clickedOption = this.clickedOptions++;
   }
@@ -370,11 +369,16 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.fieldValue);
       this.delaySetSelected();
-    } else {
-      const value = options ? options : '';
-      this.valueChange.emit(value as T);
-      this.value = value;
     }
+    /*
+    else {
+      console.log( ' 555555 onChange=', options)
+      console.log( ' 555555 this.fieldValue=', this.fieldValue)
+      const value = options ? options : '';
+      //this.valueChange.emit(value as T);
+      //this.value = value;
+      console.log( ' 555555 this.value=', this.value)
+    }*/
   }
 
   closeOverlay(): void {
