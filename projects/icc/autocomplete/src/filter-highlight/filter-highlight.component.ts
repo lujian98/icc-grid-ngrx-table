@@ -4,7 +4,6 @@ import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } 
 @Component({
   selector: 'icc-filter-highlight',
   templateUrl: './filter-highlight.component.html',
-  //styleUrls: ['./filter-highlight.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })

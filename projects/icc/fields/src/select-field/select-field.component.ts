@@ -111,7 +111,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig;
-  private _value!: string[] | object[];
+  private _value!: string | string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
   fieldName: string = '';
@@ -199,7 +199,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
             [this.fieldName!]: new FormControl<{ [key: string]: T }>({}),
           });
         }
-        this.value = this.getInitValue(this.value);
+        //this.value = this.getInitValue(this.value);
         this.setFormvalue();
       }
     }
@@ -218,14 +218,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set value(val: string | object | string[] | object[]) {
     if (this.form && val !== undefined) {
-      this._value = this.getInitValue(val);
+      this._value = val as string | string[] | object[]; //this.getInitValue(val);
       this.setFormvalue();
     } else if (!this.form) {
-      this._value = val as string[] | object[];
+      this._value = val as string | string[] | object[];
     }
   }
 
-  get value(): string[] | object[] {
+  get value(): string | string[] | object[] {
     return this._value;
   }
 
@@ -233,13 +233,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.field?.setValue(this.value);
   }
 
+  /*
   private getInitValue(val: string | object | string[] | object[]): any {
     if (this.fieldConfig.singleListOption) {
       return val;
     } else {
       return !Array.isArray(val) ? [val] : val;
     }
-  }
+  }*/
 
   get field(): FormControl {
     return this.form?.get(this.fieldName!)! as FormControl;
@@ -370,15 +371,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.valueChange.emit(this.fieldValue);
       this.delaySetSelected();
     }
-    /*
-    else {
-      console.log( ' 555555 onChange=', options)
-      console.log( ' 555555 this.fieldValue=', this.fieldValue)
-      const value = options ? options : '';
-      //this.valueChange.emit(value as T);
-      //this.value = value;
-      console.log( ' 555555 this.value=', this.value)
-    }*/
   }
 
   closeOverlay(): void {
