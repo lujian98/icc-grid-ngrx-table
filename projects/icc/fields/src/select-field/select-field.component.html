@@ -77,6 +77,13 @@
               </icc-checkbox>
             </icc-option>
           </div>
+
+          <ng-container
+            *ngIf="
+              selectOptions | filter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result
+            "
+          >
+            <!--
           <ng-container *ngIf="selectOptions | filter: field.value : fieldConfig.optionLabel as result">
             <ng-container *ngIf="!fieldConfig.virtualScroll">
               <icc-option *ngFor="let option of result" [value]="option" #ref>
@@ -93,6 +100,7 @@
                 "ICC.UI.LIST.NO_RESULT" | translate
               }}</icc-option>
             </ng-container>
+                        -->
 
             <ng-container *ngIf="fieldConfig.virtualScroll">
               <cdk-virtual-scroll-viewport
@@ -108,12 +116,32 @@
                   (click)="clickOption(ref)"
                 >
                   <icc-checkbox *ngIf="fieldConfig.multiSelection" [checked]="ref.selected">
-                    <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                    <icc-filter-highlight
+                      *ngIf="!fieldConfig.singleListOption"
+                      [value]="option[fieldConfig.optionLabel]"
+                      [filterValue]="filterValue"
+                    >
+                    </icc-filter-highlight>
+                    <icc-filter-highlight
+                      *ngIf="fieldConfig.singleListOption"
+                      [value]="option"
+                      [filterValue]="filterValue"
+                    >
                     </icc-filter-highlight>
                   </icc-checkbox>
+
                   <ng-container *ngIf="!fieldConfig.multiSelection">
-                    <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                    <icc-filter-highlight
+                      *ngIf="!fieldConfig.singleListOption"
+                      [value]="option[fieldConfig.optionLabel]"
+                      [filterValue]="filterValue"
+                    >
                     </icc-filter-highlight>
+                    <!--
+                      <icc-filter-highlight *ngIf="fieldConfig.singleListOption" [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
+                      </icc-filter-highlight>
+                    -->
+                    <span *ngIf="fieldConfig.singleListOption">{{ option }}</span>
                   </ng-container>
                 </icc-option>
               </cdk-virtual-scroll-viewport>

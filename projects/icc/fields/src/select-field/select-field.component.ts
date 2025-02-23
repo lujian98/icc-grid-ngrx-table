@@ -206,11 +206,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set options(val: string[] | object[]) {
     //local set option only, not used here
-    const isStringsArray = val.every((item) => typeof item === 'string');
+    //const isStringsArray = val.every((item) => typeof item === 'string');
     if (!this.fieldConfig) {
       this.initFieldConfig({ ...defaultSelectFieldConfig });
     }
-
+    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
+    /*
     if (this.fieldConfig.singleListOption || isStringsArray) {
       const options = (val as string[]).map((item: string) => {
         return {
@@ -221,7 +222,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
     } else {
       this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-    }
+    }*/
   }
 
   @Input()
@@ -242,10 +243,17 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.field.setValue(this.value);
   }
 
-  private getInitValue(val: string | object | string[] | object[]): string[] | object[] {
+  private getInitValue(val: string | object | string[] | object[]): any {
+    if (this.fieldConfig.singleListOption) {
+      return val;
+    } else {
+      return !Array.isArray(val) ? [val] : val;
+    }
+
+    /*
     let value: string | object | string[] | object[] = val;
     if (typeof val === 'string' && val) {
-      value = [val];
+      value = val;
     } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
       return Array.isArray(val) ? val : [val];
     }
@@ -268,6 +276,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       return (value ? [value] : []) as string[] | object[];
     }
     return value as string[] | object[];
+    */
   }
 
   get field(): FormControl {
@@ -333,7 +342,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<T>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
-  displayFn(value: { [key: string]: string } | { [key: string]: string }[]): string {
+  displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
     if (Array.isArray(value)) {
       if (value.length > 0) {
@@ -348,7 +357,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return '';
       }
     } else {
-      return value ? value[this.fieldConfig.optionLabel] : '';
+      if (this.fieldConfig.singleListOption) {
+        return value as string;
+      } else {
+        return value ? (value as { [key: string]: string })[this.fieldConfig.optionLabel] : '';
+      }
     }
   }
 
@@ -448,6 +461,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.value = '';
       }
     }
+    //console.log( ' this.value=', this.value)
     this.field.setValue(this.value);
   }
 

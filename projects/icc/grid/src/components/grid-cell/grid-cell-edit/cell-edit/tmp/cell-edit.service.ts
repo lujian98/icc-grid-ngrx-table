@@ -1,8 +1,8 @@
 import { Component, Injectable } from '@angular/core';
 import { SunColumnConfig } from '../../../fields/fieldConfig.model';
-import { SunCellEditNumberComponent } from './number/cell-edit-number.component';
-import { SunCellEditSelectComponent } from './select/cell-edit-select.component';
-import { SunCellEditTextComponent } from './text/cell-edit-text.component';
+import { SunCellEditNumberComponent } from '../number/cell-edit-number.component';
+import { SunCellEditSelectComponent } from '../select/cell-edit-select.component';
+import { SunCellEditTextComponent } from '../text/cell-edit-text.component';
 
 export interface SunCellEditData<T> {
   dataKeyId: string;

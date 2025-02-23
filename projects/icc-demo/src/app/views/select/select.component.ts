@@ -28,7 +28,10 @@ export class AppSelectComponent {
   items: IccAccordion[] = [
     {
       name: 'Select Demo',
-      items: [{ name: 'Simple Select', link: 'simple-select' }],
+      items: [
+        { name: 'Simple Select', link: 'simple-select' },
+        { name: 'String Array Select', link: 'string-array' },
+      ],
     },
   ];
 }
