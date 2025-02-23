@@ -36,8 +36,8 @@ export class IccFilterHighlightComponent<T> {
 
   private setValues(): void {
     if (this.filterValue && this.value) {
-      console.log(' this.filterValue=', this.filterValue);
-      console.log(' this.value=', this.value);
+      //console.log(' this.filterValue=', this.filterValue);
+      //console.log(' this.value=', this.value);
 
       const pattern = this.filterValue
         .replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')

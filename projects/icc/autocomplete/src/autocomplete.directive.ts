@@ -155,6 +155,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent<T>) => {
         this.autocomplete.setSelectionOption(option);
+        console.log(' xxxxxxxxxxxxxxxxxxxx ');
         this.setTriggerValue();
         this.change.emit(this.autocomplete.value);
         this._onChange(this.autocomplete.value);
