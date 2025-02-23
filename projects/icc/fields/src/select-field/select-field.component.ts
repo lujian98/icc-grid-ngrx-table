@@ -131,13 +131,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    this.fieldName = fieldConfig.fieldName ? fieldConfig.fieldName : '';
-    if (fieldConfig.options) {
-      this.options = [...fieldConfig.options] as string[] | object[];
-      delete fieldConfig.options;
-    }
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
-
+    this.fieldName = config.fieldName ? config.fieldName : '';
+    if (config.options) {
+      this.options = [...config.options] as string[] | object[];
+      delete config.options;
+    }
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);
     } else {
@@ -155,6 +154,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       ...fieldConfig,
       fieldId: this.fieldId,
     };
+    if (!this.fieldName) {
+      this.fieldName = this.fieldConfig.fieldName!;
+    }
     this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
     this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
       map((fieldConfig) => {
