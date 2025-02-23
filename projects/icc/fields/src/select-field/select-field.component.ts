@@ -199,7 +199,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
             [this.fieldName!]: new FormControl<{ [key: string]: T }>({}),
           });
         }
-        //this.value = this.getInitValue(this.value);
         this.setFormvalue();
       }
     }
@@ -218,7 +217,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set value(val: string | object | string[] | object[]) {
     if (this.form && val !== undefined) {
-      this._value = val as string | string[] | object[]; //this.getInitValue(val);
+      this._value = val as string | string[] | object[];
       this.setFormvalue();
     } else if (!this.form) {
       this._value = val as string | string[] | object[];
@@ -232,15 +231,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private setFormvalue(): void {
     this.field?.setValue(this.value);
   }
-
-  /*
-  private getInitValue(val: string | object | string[] | object[]): any {
-    if (this.fieldConfig.singleListOption) {
-      return val;
-    } else {
-      return !Array.isArray(val) ? [val] : val;
-    }
-  }*/
 
   get field(): FormControl {
     return this.form?.get(this.fieldName!)! as FormControl;
@@ -405,8 +395,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
+    console.log(' option=', option.value);
     option.selected = !option.selected;
     if (this.fieldConfig.multiSelection) {
+      console.log(' header optioion');
       if (option.selected) {
         this.value = [...this.value, option.value] as object[];
       } else {

@@ -230,10 +230,8 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   }
 
   writeValue(value: T): void {
-    if (!(value instanceof Event)) {
-      this.autocomplete.value = value;
-      Promise.resolve(null).then(() => this.setTriggerValue());
-    }
+    this.autocomplete.value = value;
+    Promise.resolve(null).then(() => this.setTriggerValue());
   }
 
   registerOnChange(fn: (value: T | null) => {}): void {
