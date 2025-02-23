@@ -64,7 +64,6 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   @Input('iccAutocompleteClickOption')
   set autocompleteClickOption(clicked: number | undefined) {
     if (clicked) {
-      console.log(' 44444 this.value =', this.autocomplete.value);
       this.setTriggerValue();
       this.change.emit(this.autocomplete.value);
       this._onChange(this.autocomplete.value);
@@ -155,7 +154,6 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent<T>) => {
         this.autocomplete.setSelectionOption(option);
-        console.log(' xxxxxxxxxxxxxxxxxxxx ');
         this.setTriggerValue();
         this.change.emit(this.autocomplete.value);
         this._onChange(this.autocomplete.value);
@@ -232,8 +230,10 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   }
 
   writeValue(value: T): void {
-    this.autocomplete.value = value;
-    Promise.resolve(null).then(() => this.setTriggerValue());
+    if (!(value instanceof Event)) {
+      this.autocomplete.value = value;
+      Promise.resolve(null).then(() => this.setTriggerValue());
+    }
   }
 
   registerOnChange(fn: (value: T | null) => {}): void {

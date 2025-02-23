@@ -36,7 +36,6 @@ export class IccOptionComponent<T> implements OnDestroy {
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
     this.click$.next(this);
-
     event.preventDefault();
   }
 

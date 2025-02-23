@@ -4,6 +4,7 @@ import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input, inject } 
 @Component({
   selector: 'icc-filter-highlight',
   templateUrl: './filter-highlight.component.html',
+  styleUrls: ['./filter-highlight.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
@@ -61,6 +62,8 @@ export class IccFilterHighlightComponent<T> {
       if (find) {
         // return find;
       }
+
+      //return true;
     }
     return !!value && !!this.filterValue && value.toLowerCase() === this.filterValue.toLowerCase();
   }
