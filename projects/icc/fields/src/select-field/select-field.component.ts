@@ -337,7 +337,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private delaySetSelected(overlayOpen?: boolean): void {
-    timer(10)
+    timer(20)
       .pipe(take(1))
       .subscribe(() => {
         this.setSelectChecked();
@@ -393,7 +393,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   checkAll(selectOptions: { [key: string]: T }[] | string[]): void {
-    this.value = selectOptions;
+    this.value = [...selectOptions];
     this.delaySetSelected();
     this.valueChange.emit(this.value as T[]);
   }
