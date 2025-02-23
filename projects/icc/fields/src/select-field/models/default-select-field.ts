@@ -20,7 +20,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
-  virtualScroll: true,
+  //virtualScroll: true,
   ...defaultBaseField,
 };
 

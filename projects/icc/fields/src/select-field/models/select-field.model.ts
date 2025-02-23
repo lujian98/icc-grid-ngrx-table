@@ -16,7 +16,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   optionLabel: string;
   optionKey: string;
   options?: string[] | object[]; // only used for local initial input
-  virtualScroll: boolean;
+  //virtualScroll: boolean; // only support virtualScroll
 }
 
 export interface SelectFieldState {

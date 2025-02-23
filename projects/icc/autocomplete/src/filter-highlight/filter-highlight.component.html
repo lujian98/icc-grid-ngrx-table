@@ -1,6 +1,7 @@
 <ng-container *ngFor="let val of values">
-  <span *ngIf="isMarkedValue(val)">
+  @if (isMarkedValue(val)) {
     <mark>{{ val }}</mark>
-  </span>
-  <span *ngIf="!isMarkedValue(val)">{{ val }}</span>
+  } @else {
+    <span>{{ val }}</span>
+  }
 </ng-container>
