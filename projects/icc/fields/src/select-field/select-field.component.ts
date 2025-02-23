@@ -119,7 +119,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   selectOptions$!: Observable<{ [key: string]: T }[]>;
   private selectOptions: { [key: string]: T }[] = [];
   isEmptyValue: IccHeaderOption = {
-    name: 'isEmpty',
+    name: 'isEmpty', // TODO singleListOption
     title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
   };
   notEmptyValue: IccHeaderOption = {
@@ -137,7 +137,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       delete fieldConfig.options;
     }
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
-    //this._fieldConfig = config;
 
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);
@@ -206,23 +205,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set options(val: string[] | object[]) {
     //local set option only, not used here
-    //const isStringsArray = val.every((item) => typeof item === 'string');
     if (!this.fieldConfig) {
       this.initFieldConfig({ ...defaultSelectFieldConfig });
     }
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-    /*
-    if (this.fieldConfig.singleListOption || isStringsArray) {
-      const options = (val as string[]).map((item: string) => {
-        return {
-          name: item,
-          title: item,
-        };
-      });
-      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
-    } else {
-      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-    }*/
   }
 
   @Input()
@@ -240,7 +226,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private setFormvalue(): void {
-    this.field.setValue(this.value);
+    this.field?.setValue(this.value);
   }
 
   private getInitValue(val: string | object | string[] | object[]): any {
@@ -249,38 +235,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     } else {
       return !Array.isArray(val) ? [val] : val;
     }
-
-    /*
-    let value: string | object | string[] | object[] = val;
-    if (typeof val === 'string' && val) {
-      value = val;
-    } else if (typeof val === 'object' && !this.fieldConfig.multiSelection) {
-      return Array.isArray(val) ? val : [val];
-    }
-    const isStringsArray =
-      Array.isArray(value) && (value as string[]).every((item: string) => typeof item === 'string');
-    if ((this.fieldConfig.singleListOption || isStringsArray) && Array.isArray(value)) {
-      value = [...value].map((item) => {
-        if (typeof item === 'string' && item) {
-          return {
-            name: item,
-            title: item,
-          };
-        } else {
-          return item;
-        }
-      });
-    } else if (Array.isArray(value)) {
-      return value;
-    } else {
-      return (value ? [value] : []) as string[] | object[];
-    }
-    return value as string[] | object[];
-    */
   }
 
   get field(): FormControl {
-    return this.form!.get(this.fieldName!)! as FormControl;
+    return this.form?.get(this.fieldName!)! as FormControl;
   }
 
   get fieldValue(): T[] {
@@ -463,7 +421,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.value = '';
       }
     }
-    //console.log( ' this.value=', this.value)
     this.field.setValue(this.value);
   }
 

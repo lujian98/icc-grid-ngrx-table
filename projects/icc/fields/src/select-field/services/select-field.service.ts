@@ -31,14 +31,7 @@ export class IccSelectFieldService {
     const url = this.backendService.apiUrl;
     return this.http.get<string[] | object[]>(url, { params }).pipe(
       map((options) => {
-        if (fieldConfig.singleListOption) {
-          return options.map((item) => ({
-            name: item,
-            title: item,
-          }));
-        } else {
-          return options;
-        }
+        return options;
       }),
     );
   }
