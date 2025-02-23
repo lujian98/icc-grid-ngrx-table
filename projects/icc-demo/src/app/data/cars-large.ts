@@ -1331,7 +1331,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'vin',
     groupField: false,
     cellEditable: true,
-    align: 'center',
+    //align: 'center',
   },
   {
     name: 'brand',
