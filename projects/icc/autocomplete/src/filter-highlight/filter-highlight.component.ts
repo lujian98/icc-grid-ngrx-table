@@ -13,9 +13,6 @@ export class IccFilterHighlightComponent<T> {
   private _filterValue: string = '';
   values: string[] = [];
 
-  @Input() options: any[] = [];
-  @Input() singleListOption: boolean = false;
-
   @Input()
   set value(val: T) {
     this._value = val as string;
@@ -51,17 +48,6 @@ export class IccFilterHighlightComponent<T> {
   }
 
   isMarkedValue(value: string): boolean {
-    /*
-    if (this.singleListOption) {
-      //TODO
-      const find = this.options.find((item) => item === value);
-      //return !find;
-      if (find) {
-        // return find;
-      }
-
-      //return true;
-    }*/
     return !!value && !!this.filterValue && value.toLowerCase() === this.filterValue.toLowerCase();
   }
 }

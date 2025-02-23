@@ -120,7 +120,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
   private selectOptions: IccOptionType[] = [];
   isEmptyValue: IccHeaderOption = {
-    name: 'isEmpty', // TODO singleListOption
+    name: 'isEmpty',
     title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
   };
   notEmptyValue: IccHeaderOption = {
