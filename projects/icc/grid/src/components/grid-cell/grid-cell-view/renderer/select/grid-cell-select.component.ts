@@ -21,11 +21,11 @@ export class IccGridCellSelectComponent<T> extends IccGridCellRendererComponent<
   }
 
   get display(): string {
-    if (this.data) {
+    if (typeof this.data === 'object') {
       const labelKey = this.fieldConfig.optionLabel;
       return (this.data as { [key: string]: string })[labelKey];
     } else {
-      return '';
+      return this.data as string;
     }
   }
 }

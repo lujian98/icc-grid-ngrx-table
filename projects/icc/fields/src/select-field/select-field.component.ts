@@ -113,6 +113,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private _value!: string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
+  fieldName: string = '';
 
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<{ [key: string]: T }[]>;
@@ -130,11 +131,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input() showFieldEditIndicator: boolean = true;
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
+    this.fieldName = fieldConfig.fieldName ? fieldConfig.fieldName : '';
     if (fieldConfig.options) {
       this.options = [...fieldConfig.options] as string[] | object[];
       delete fieldConfig.options;
     }
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
+    //this._fieldConfig = config;
+
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);
     } else {
@@ -188,9 +192,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         );
       }
       if (!this.form) {
-        if (!this.form) {
+        if (!this.form && this.fieldName) {
           this.form = new FormGroup({
-            [this.fieldConfig.fieldName!]: new FormControl<{ [key: string]: T }>({}),
+            [this.fieldName!]: new FormControl<{ [key: string]: T }>({}),
           });
         }
         this.value = this.getInitValue(this.value);
@@ -267,7 +271,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form!.get(this.fieldName!)! as FormControl;
   }
 
   get fieldValue(): T[] {
@@ -465,7 +469,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form.valid ? null : { [this.fieldName!]: true };
   }
 
   ngOnDestroy(): void {

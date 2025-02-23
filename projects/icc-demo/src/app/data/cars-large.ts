@@ -1336,6 +1336,8 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'brand',
     title: 'this s s     sssssssssssssssssss sssssssssssssss',
+    cellEditable: true,
+    //rendererType: IccObjectType.Select,
     filterFieldConfig: {
       fieldType: 'select',
       multiSelection: true,
@@ -1365,10 +1367,9 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     filterField: IccObjectType.Number,
     align: 'right',
   },
-
   {
     name: 'MakerColor',
-    //cellEditable: true,
+    cellEditable: true,
     rendererType: IccObjectType.Select,
     rendererFieldConfig: {
       optionKey: 'name',
@@ -1394,11 +1395,12 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 80,
     cellEditable: true,
     rendererType: IccObjectType.Select,
+    /*
     rendererFieldConfig: {
       //optionKey: 'name',
       //optionLabel: 'title',
       options: DCRColors,
-    },
+    },*/
     filterFieldConfig: {
       fieldType: 'select',
       isEmpty: true,

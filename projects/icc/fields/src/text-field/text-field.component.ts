@@ -163,6 +163,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
+    //return null;
     return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 

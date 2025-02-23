@@ -20,7 +20,7 @@ export class AppGridMultiRowSelectionComponent {
     columnHidden: true,
     columnResize: true,
     columnReorder: true,
-    cellEdit: true,
+    //cellEdit: true,
     multiRowSelection: true,
     remoteColumnsConfig: true,
     remoteGridData: true,

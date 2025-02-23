@@ -1,1 +1,8 @@
-<icc-select-field [fieldConfig]="fieldConfig" [value]="value" (valueChange)="onValueChange($event)"> </icc-select-field>
+<icc-select-field
+  *ngIf="form && fieldConfig"
+  [form]="form"
+  [fieldConfig]="fieldConfig"
+  [value]="value"
+  (valueChange)="onValueChange($event)"
+>
+</icc-select-field>

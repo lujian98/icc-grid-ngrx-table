@@ -54,7 +54,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       this.gridData$ = this.gridFacade.selectGridData(this.gridConfig).pipe(
         map((data) => {
           this.checkViewport(data);
-          console.log(' 000 data=', data);
           return data;
         }),
       );
