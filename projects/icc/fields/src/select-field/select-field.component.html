@@ -98,20 +98,12 @@
               >
                 @if (fieldConfig.multiSelection) {
                   <icc-checkbox [checked]="ref.selected">
-                    @if (fieldConfig.singleListOption) {
-                      <icc-filter-highlight [value]="option" [filterValue]="filterValue"> </icc-filter-highlight>
-                    } @else {
-                      <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
-                      </icc-filter-highlight>
-                    }
+                    <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
+                    </icc-filter-highlight>
                   </icc-checkbox>
                 } @else {
-                  @if (fieldConfig.singleListOption) {
-                    <icc-filter-highlight [value]="option" [filterValue]="filterValue"> </icc-filter-highlight>
-                  } @else {
-                    <icc-filter-highlight [value]="option[fieldConfig.optionLabel]" [filterValue]="filterValue">
-                    </icc-filter-highlight>
-                  }
+                  <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
+                  </icc-filter-highlight>
                 }
               </icc-option>
             </cdk-virtual-scroll-viewport>

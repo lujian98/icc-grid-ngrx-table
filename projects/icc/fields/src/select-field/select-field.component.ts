@@ -34,8 +34,7 @@ import {
   IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { isEqual, uniqueId, sortByField } from '@icc/ui/core';
-import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
+import { isEqual, sortByField, uniqueId } from '@icc/ui/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -54,7 +53,8 @@ import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
-import { IccSelectFieldConfig, IccOptionType } from './models/select-field.model';
+import { IccOptionType, IccSelectFieldConfig } from './models/select-field.model';
+import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
 
 export interface IccHeaderOption {
   name: string;
@@ -260,6 +260,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
   onScrolledIndexChange(index: number): void {
     this.setSelectChecked();
+  }
+  getOptionLabel(option: IccOptionType): string {
+    return (
+      this.fieldConfig.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
+    ) as string;
   }
 
   private setSelectChecked(): void {
