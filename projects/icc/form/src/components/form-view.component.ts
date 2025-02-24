@@ -119,7 +119,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   @Input()
   set values(values: object) {
-    this._values = this.getCheckedValue(values as { [key: string]: object });
+    this._values = values; //this.getCheckedValue(values as { [key: string]: object });
     if (this.form) {
       this.form.patchValue({ ...values });
     }
@@ -128,6 +128,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     return this._values;
   }
 
+  /*
   private getCheckedValue(values: { [key: string]: object }): object {
     Object.keys(values).forEach((key) => {
       const value = values[key];
@@ -136,7 +137,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       }
     });
     return values;
-  }
+  }*/
 
   private getFieldType(key: string, formFields: IccFormField[]): string {
     let fieldType = '';
