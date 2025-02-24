@@ -169,7 +169,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
           this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
           this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
         }
-        //this.changeDetectorRef.detectChanges();
         return fieldConfig;
       }),
     );
@@ -257,17 +256,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
   }
 
-  /*
-  get multiSelection(): boolean {
-    return this.fieldConfig.multiSelection;
-  }
-  get singleListSelect(): boolean {
-    return this.fieldConfig.singleListOption && this.fieldConfig.selectOnly
-  }
-  get otherSelection(): boolean {
-    return !(this.multiSelection || this.singleListSelect);
-  }
-    */
   @Output() valueChange = new EventEmitter<T | T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
