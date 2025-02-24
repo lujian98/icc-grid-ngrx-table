@@ -16,7 +16,7 @@ export const DCRBrands = [
   { title: 'VW', name: 'VW' },
 ];
 
-export const DCRBrandsList = DCRBrands.map((item) => item.name);
+export const DCRBrandsList = [...DCRBrands].map((item) => item.name);
 
 export const DCRColors = [
   { title: 'Black', name: 'Black' },
@@ -31,7 +31,7 @@ export const DCRColors = [
   { title: 'White', name: 'White' },
 ];
 
-export const DCRColorsList = DCRColors.map((item) => item.name);
+export const DCRColorsList = [...DCRColors].map((item) => item.name);
 
 console.log(' DCRColorsList=', DCRColorsList);
 
@@ -1342,8 +1342,8 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'brand',
     title: 'this s s     sssssssssssssssssss sssssssssssssss',
-    cellEditable: true,
-    //rendererType: IccObjectType.Select,
+    //cellEditable: true,
+    rendererType: IccObjectType.Select,
     filterFieldConfig: {
       fieldType: 'select',
       multiSelection: true,
@@ -1399,7 +1399,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   {
     name: 'color',
     width: 80,
-    cellEditable: true,
+    //cellEditable: true,
     //rendererType: IccObjectType.Select,
     /*
     rendererFieldConfig: {

@@ -31,6 +31,7 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       delete this.fieldConfig.options;
     }
     this.column.filterFieldConfig = { ...this.fieldConfig };
+    console.log('fffff this.fieldConfig= ', this.fieldConfig);
   }
 
   override set value(val: string | string[] | object[]) {

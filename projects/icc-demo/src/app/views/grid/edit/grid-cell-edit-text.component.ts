@@ -48,21 +48,19 @@ export class AppGridCellEditTextComponent {
       cellEditable: true,
       rendererType: IccObjectType.Select,
       rendererFieldConfig: {
-        //fieldType: 'select',
         options: DCRBrandsList,
         singleListOption: true,
         remoteOptions: false,
         //editable: true,
       },
-      /*
       filterFieldConfig: {
-        fieldType: 'select',
+        fieldType: IccObjectType.Select,
         multiSelection: true,
         remoteOptions: false,
         options: DCRBrands,
-        optionKey: 'name',
-        optionLabel: 'title',
-      },*/
+        //optionKey: 'name',
+        //optionLabel: 'title',
+      },
     },
     {
       name: 'MakeDate',

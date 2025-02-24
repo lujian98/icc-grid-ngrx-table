@@ -72,6 +72,7 @@ export class IccGridinMemoryService {
       }
     });
 
+    console.log('xxxx filters=', filters);
     Object.keys(filters).forEach((key) => {
       data = data.filter((item) => {
         return this.getFilterCondition(filters[key], item);
@@ -79,17 +80,26 @@ export class IccGridinMemoryService {
     });
     return data;
   }
-
+  /*
+    Object.keys(filters).forEach((key) => {
+      data = data.filter((item) => {
+        return this.getFilterCondition(filters[key], item);
+      });
+    });
+    */
   private getFilterCondition(filters: IccInMemoryFilters[], item: object): boolean {
     let ret: boolean | undefined = undefined;
-
+    let lastType = '';
+    let lastKey = '';
+    //console.log('xxxx  filters=', filters)
     filters.forEach((query: IccInMemoryFilters) => {
       const filterKey = query.filterKey;
       const compareKey = query.compareKey;
       const searches = query.searches;
       const search = query.search;
 
-      const val = (item as { [index: string]: string })[filterKey];
+      //const val = (item as { [index: string]: string })[filterKey];
+      const val = this.getFilterDataValue((item as { [index: string]: string })[filterKey]);
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
       let newRet: boolean | undefined = undefined;
@@ -133,15 +143,36 @@ export class IccGridinMemoryService {
           newRet = !!(value && value.toString().endsWith(filter.toString()));
           break;
       }
+      const currentType = filter instanceof Date ? 'date' : 'other';
       if (newRet !== undefined) {
         if (ret !== undefined) {
-          ret = ret || newRet;
+          if (lastKey === filterKey && currentType === lastType) {
+            ret = ret && newRet;
+          } else {
+            ret = ret || newRet;
+          }
         } else {
           ret = newRet;
         }
       }
+      lastKey = filterKey;
+      lastType = currentType;
     });
+    //console.log(' ret =', ret)
     return !!ret;
+  }
+
+  private getFilterDataValue(v: any): any {
+    if (!v || typeof v === 'number' || typeof v === 'string' || this.isDate(v) || Array.isArray(v)) {
+      return v;
+    }
+    if (typeof v === 'object') {
+      const nv = v['name'];
+      if (nv) {
+        return nv;
+      }
+    }
+    return v;
   }
 
   private getCompareKey(key: string): string {
