@@ -24,15 +24,11 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
     };
   }
 
-  /*
-  get value(): string {
-    console.log(' name=', this.column.name, ' 5555555 data=', this.data);
-    //console.log( ' val=', this.data)
-    return this.data as string;
-  }*/
-
   onValueChange(value: string): void {
     console.log(' text change v=', value);
+    if (value === this.data) {
+      this.resetField();
+    }
     //this.filterChanged$.next(value);
   }
 }

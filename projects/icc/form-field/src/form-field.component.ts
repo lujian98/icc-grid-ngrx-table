@@ -105,7 +105,7 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
   }
 
   private checkFieldIndicator(): void {
-    timer(10)
+    timer(100)
       .pipe(take(1))
       .subscribe(() => {
         let fieldIndicator = '';

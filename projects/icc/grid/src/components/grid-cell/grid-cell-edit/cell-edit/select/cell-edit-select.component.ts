@@ -30,6 +30,9 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
 
   onValueChange(value: T | T[]): void {
     console.log(' select change v=', value);
+    if (value === this.data) {
+      this.resetField();
+    }
     //this.filterChanged$.next(value);
   }
 }

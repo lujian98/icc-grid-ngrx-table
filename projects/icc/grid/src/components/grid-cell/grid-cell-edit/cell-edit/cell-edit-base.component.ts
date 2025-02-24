@@ -63,9 +63,7 @@ export class IccCellEditBaseComponent<T> {
   @Input()
   set record(data: T) {
     this._record = data;
-    this.field.setValue(this.data);
-    this.field.markAsPristine();
-    this.changeDetectorRef.markForCheck();
+    this.resetField();
   }
   get record(): T {
     return this._record;
@@ -76,4 +74,9 @@ export class IccCellEditBaseComponent<T> {
   }
 
   checkField(): void {}
+
+  resetField(): void {
+    this.field.setValue(this.data);
+    this.field.markAsPristine();
+  }
 }
