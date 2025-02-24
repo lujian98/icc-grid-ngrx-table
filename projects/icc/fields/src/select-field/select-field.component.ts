@@ -254,14 +254,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   clickedOption: number | undefined;
   private clickedOptions = 1;
-  clickOption(option: IccOptionComponent<{ [key: string]: T }>): void {
+  clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
     this.clickedOption = this.clickedOptions++;
   }
   onScrolledIndexChange(index: number): void {
     this.setSelectChecked();
   }
-  getOptionLabel(option: IccOptionType): string {
+  getOptionLabel(option: unknown): string {
     return (
       this.fieldConfig.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
     ) as string;
