@@ -6,6 +6,7 @@ import {
   IccSortField,
   IccColumnFilter,
   IccRowGroupField,
+  IccCellEdit,
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 
@@ -100,6 +101,16 @@ export const setGridUnGroupBy = createAction(
 export const setGridEditable = createAction(
   '[Grid] Setup Grid Set Grid Editable',
   props<{ gridConfig: IccGridConfig; gridEditable: boolean }>(),
+);
+
+export const setGridRecordModified = createAction(
+  '[Grid] Setup Grid Set Grid Record Modified',
+  props<{ gridConfig: IccGridConfig; modified: IccCellEdit<unknown> }>(),
+);
+
+export const setGridRestEdit = createAction(
+  '[Grid] Setup Grid Set Rest Edit',
+  props<{ gridConfig: IccGridConfig; restEdit: boolean }>(),
 );
 
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());

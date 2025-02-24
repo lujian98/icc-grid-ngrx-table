@@ -12,6 +12,8 @@ export const defaultGridConfig: IccGridConfig = {
   columnReorder: false,
   columnMenu: false,
   gridEditable: false,
+  recordId: 'id',
+  restEdit: false,
   columnHidden: false,
   remoteGridConfig: false,
   remoteColumnsConfig: false,
@@ -46,4 +48,5 @@ export const defaultState: IccGridState = {
   queryData: [],
   rowGroups: undefined,
   selection: new SelectionModel<object>(false, []),
+  modified: [],
 };

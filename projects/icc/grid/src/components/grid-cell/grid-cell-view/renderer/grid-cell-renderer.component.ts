@@ -22,7 +22,7 @@ export class IccGridCellRendererComponent<T> {
 
   @Input()
   set record(data: T) {
-    console.log(' view set cell record=', data);
+    //console.log(' view set cell record=', data);
     this._record = data;
     this.changeDetectorRef.markForCheck();
   }

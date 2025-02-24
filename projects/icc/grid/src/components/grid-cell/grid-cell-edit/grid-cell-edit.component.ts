@@ -26,10 +26,21 @@ export class IccGridCellEditComponent<T> implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
   private instance!: IccGridCell<T>;
   private _componentRef!: ComponentRef<unknown>;
+  private _gridConfig!: IccGridConfig;
   private _column!: IccColumnConfig;
 
-  @Input() gridConfig!: IccGridConfig;
   @Input() rowIndex!: number;
+
+  @Input()
+  set gridConfig(val: IccGridConfig) {
+    this._gridConfig = { ...val };
+    if (this._componentRef) {
+      this.instance.gridConfig = this.gridConfig;
+    }
+  }
+  get gridConfig(): IccGridConfig {
+    return this._gridConfig;
+  }
 
   @Input()
   set column(val: IccColumnConfig) {
@@ -47,6 +58,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
   @Input()
   set record(data: T) {
     this._record = data;
+    //console.log(' new record =', data)
     if (this._componentRef) {
       this.instance.record = this.record;
     }

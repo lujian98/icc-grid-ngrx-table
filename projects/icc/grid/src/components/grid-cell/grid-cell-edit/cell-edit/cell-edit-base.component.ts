@@ -23,9 +23,11 @@ export class IccCellEditBaseComponent<T> {
 
   @Input()
   set gridConfig(value: IccGridConfig) {
-    console.log(' cell edit grid config change value =', value);
     this._gridConfig = { ...value };
     this.checkField();
+    if (this.gridConfig.restEdit) {
+      this.resetField();
+    }
     this.changeDetectorRef.markForCheck();
   }
   get gridConfig(): IccGridConfig {
@@ -51,7 +53,7 @@ export class IccCellEditBaseComponent<T> {
 
   @Input()
   set record(data: T) {
-    console.log(' edit set cell record=', data);
+    //console.log(' edit set cell record=', data);
     this._record = data;
     this.resetField();
   }

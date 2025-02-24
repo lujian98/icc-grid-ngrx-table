@@ -4,6 +4,13 @@ import { IccObjectType } from '@icc/ui/core';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import { IccFieldConfig, IccDateRange } from '@icc/ui/fields';
 
+export interface IccCellEdit<T> {
+  recordKey: string;
+  recordId: string;
+  field: string;
+  value: T;
+}
+
 export interface IccGridCell<T> {
   gridConfig: IccGridConfig;
   rowIndex: number;
@@ -45,6 +52,8 @@ export interface IccGridConfig {
   columnMenu: boolean;
   columnHidden: boolean;
   gridEditable: boolean;
+  recordId: string;
+  restEdit: boolean;
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
@@ -83,6 +92,7 @@ export interface IccGridState<T extends object = object> {
   selection: SelectionModel<T>;
   queryData: T[]; // for row group temporary data
   rowGroups?: IccRowGroups; // row group will handle at client side data only and only with one level
+  modified: T[];
 }
 
 export interface IccGridData<T> {

@@ -9,6 +9,7 @@ import {
   IccGridData,
   IccRowGroupField,
   IccSortField,
+  IccCellEdit,
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
@@ -139,6 +140,14 @@ export class IccGridFacade {
 
   setGridEditable(gridConfig: IccGridConfig, gridEditable: boolean): void {
     this.store.dispatch(gridActions.setGridEditable({ gridConfig, gridEditable }));
+  }
+
+  setGridRestEdit(gridConfig: IccGridConfig, restEdit: boolean): void {
+    this.store.dispatch(gridActions.setGridRestEdit({ gridConfig, restEdit }));
+  }
+
+  setGridRecordModified(gridConfig: IccGridConfig, modified: IccCellEdit<unknown>): void {
+    this.store.dispatch(gridActions.setGridRecordModified({ gridConfig, modified }));
   }
 
   getGridPageData(gridConfig: IccGridConfig, page: number): void {

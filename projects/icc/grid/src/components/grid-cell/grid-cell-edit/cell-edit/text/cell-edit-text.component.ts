@@ -30,9 +30,9 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
     console.log(' text change this.data=', this.data);
     if (isEqual(value, this.data)) {
       // TODO check text numeric
-      console.log(' text change v=', value);
       this.resetField();
     }
+    console.log('this.gridConfig=', this.gridConfig);
     //this.filterChanged$.next(value);
   }
 }

@@ -1,10 +1,3 @@
-export interface IccCellEditData<T> {
-  dataKeyId: string;
-  dataKeyValue: string;
-  field: string;
-  value: T;
-}
-
 export interface IccCellEditKey {
   rowIndex: number;
   colIndex: number;

@@ -183,6 +183,7 @@ export const iccGridFeature = createFeature({
             ...gridConfig,
             totalCounts: totalCounts,
             lastUpdateTime: new Date(),
+            restEdit: false,
           },
           totalCounts: totalCounts,
           data,
@@ -333,15 +334,32 @@ export const iccGridFeature = createFeature({
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-
         newState[key] = {
           ...oldState,
           gridConfig: {
             ...oldState.gridConfig,
             gridEditable: action.gridEditable,
+            restEdit: false,
           },
         };
       }
+      return { ...newState };
+    }),
+
+    on(gridActions.setGridRestEdit, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        newState[key] = {
+          ...oldState,
+          gridConfig: {
+            ...oldState.gridConfig,
+            restEdit: action.restEdit,
+          },
+        };
+      }
+      console.log(' reset new state=', newState);
       return { ...newState };
     }),
 

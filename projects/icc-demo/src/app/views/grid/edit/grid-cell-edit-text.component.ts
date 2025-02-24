@@ -29,6 +29,7 @@ export class AppGridCellEditTextComponent {
     columnHidden: true,
     rowSelection: true,
     gridEditable: false,
+    recordId: 'ID',
     sortFields: [
       {
         field: 'brand',

@@ -93,8 +93,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
 
   buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
     switch (button.name) {
-      case IccButtonType.Refresh:
-      case IccButtonType.Reset: // in-memory api not able to refresh since the data are same
+      case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
         if (gridConfig.virtualScroll) {
           this.gridFacade.getGridPageData(gridConfig, 1);
         } else {
@@ -109,6 +108,9 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         break;
       case IccButtonType.View:
         this.gridFacade.setGridEditable(this.gridConfig, false);
+        break;
+      case IccButtonType.Reset:
+        this.gridFacade.setGridRestEdit(this.gridConfig, true);
         break;
       default:
         break;
