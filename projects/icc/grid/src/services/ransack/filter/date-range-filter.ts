@@ -19,7 +19,7 @@ export class IccRansackDateRangeFilter<T> extends IccRansackFilter<T> {
       const begin = range.fromDate instanceof Date ? range.fromDate : new Date(range.fromDate);
       const end = range.toDate instanceof Date ? range.toDate : new Date(range.toDate);
       const field = this.filter.field;
-      let p1: { [index: string]: any } = {};
+      let p1: { [index: string]: string } = {};
       p1[field + '_gteq'] = this.encodeISODate(begin);
       params.push(p1);
       p1 = {};
