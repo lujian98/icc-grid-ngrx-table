@@ -100,6 +100,7 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'year',
+      rendererType: IccObjectType.Number,
       cellEditable: true,
       width: 50,
       align: 'right',

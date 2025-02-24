@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { isEqual } from '@icc/ui/core';
 import { IccDateFieldComponent, IccDateFieldConfig, defaultDateFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
@@ -25,9 +26,10 @@ export class IccCellEditDateComponent extends IccCellEditBaseComponent<Date> {
   }
 
   onValueChange(value: Date | null): void {
-    console.log(' Date change v=', value);
-    if (value === this.data) {
+    if (isEqual(value, this.data)) {
       this.resetField();
+    } else {
+      this.field.markAsDirty();
     }
     //this.filterChanged$.next(value);
   }
