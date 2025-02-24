@@ -2,7 +2,14 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { sortByField, IccObjectType } from '@icc/ui/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
-import { CARSDATA3, DCRBrands, DCRColors, DCRColorsList, DCRBrandsList } from '../../../data/cars-large';
+import {
+  CARSDATA3,
+  DCRBrands,
+  DCRColors,
+  DCRColorsList,
+  DCRBrandsList,
+  MakerColorList,
+} from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-cell-edit-text',
@@ -87,13 +94,14 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'MakerColor',
-      //cellEditable: true,
-      //rendererType: IccObjectType.Select,
+      cellEditable: true,
+      rendererType: IccObjectType.Select,
       rendererFieldConfig: {
         optionKey: 'name',
         optionLabel: 'title',
+        options: MakerColorList,
+        remoteOptions: false,
       },
-      /*
       filterFieldConfig: {
         fieldType: 'select',
         multiSelection: true,
@@ -101,8 +109,8 @@ export class AppGridCellEditTextComponent {
         options: MakerColorList,
         optionKey: 'name',
         optionLabel: 'title',
-      },*/
-      width: 80,
+      },
+      width: 100,
     },
     {
       name: 'year',
@@ -114,8 +122,8 @@ export class AppGridCellEditTextComponent {
     {
       name: 'color',
       width: 80,
-      //rendererType: IccObjectType.Select,
-      //cellEditable: true,
+      rendererType: IccObjectType.Select,
+      cellEditable: true,
       rendererFieldConfig: {
         fieldType: IccObjectType.Select,
         options: DCRColorsList,
@@ -123,14 +131,13 @@ export class AppGridCellEditTextComponent {
         remoteOptions: false,
         //editable: true,
       },
-      /*
       filterFieldConfig: {
         fieldType: IccObjectType.Select,
-        multiSelection: true,
+        //multiSelection: true,
         singleListOption: true,
         options: DCRColorsList,
         remoteOptions: false,
-      },*/
+      },
       align: 'center',
     },
   ];

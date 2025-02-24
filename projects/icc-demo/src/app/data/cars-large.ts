@@ -1320,7 +1320,7 @@ const items = [...CARSDATA3.data].map((item: any) => {
   return item['MakerColor'];
 });
 
-const MakerColorList = sortByField(getUniqueObjects(items, 'name'), 'name', 'asc');
+export const MakerColorList = sortByField(getUniqueObjects(items, 'name'), 'name', 'asc');
 
 //console.log(' MakerColorList=', MakerColorList);
 //console.log(' CARSDATA3=', CARSDATA3);

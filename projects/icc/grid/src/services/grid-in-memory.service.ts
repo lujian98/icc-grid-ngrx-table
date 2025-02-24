@@ -44,6 +44,14 @@ export class IccGridinMemoryService {
     });
   }
 
+  private getSearches(filterKey: string, compareKey: string, filterParams: IccInMemoryFilterValue[]): any[] {
+    return [...filterParams]
+      .filter((params) => params.key === `${filterKey}_${compareKey}`)
+      .map((params) => {
+        return params.value;
+      });
+  }
+
   protected getFilteredData(data: object[], filterParams: IccInMemoryFilterValue[]) {
     const filters: { [index: string]: IccInMemoryFilters[] } = {};
     [...filterParams].forEach((params) => {
@@ -51,7 +59,7 @@ export class IccGridinMemoryService {
       if (key.indexOf('_') > 1) {
         const compareKey = this.getCompareKey(key);
         const filterKey = key.substring(0, key.length - compareKey.length - 1);
-        const searches = params.value;
+        const searches = this.getSearches(filterKey, compareKey, filterParams);
         const search =
           ['in[]', 'in', 'null', 'not_null'].indexOf(compareKey) === -1 ? searches[0].toLowerCase() : searches;
 
@@ -71,8 +79,6 @@ export class IccGridinMemoryService {
         }
       }
     });
-
-    console.log('xxxx filters=', filters);
     Object.keys(filters).forEach((key) => {
       data = data.filter((item) => {
         return this.getFilterCondition(filters[key], item);
@@ -80,25 +86,17 @@ export class IccGridinMemoryService {
     });
     return data;
   }
-  /*
-    Object.keys(filters).forEach((key) => {
-      data = data.filter((item) => {
-        return this.getFilterCondition(filters[key], item);
-      });
-    });
-    */
+
   private getFilterCondition(filters: IccInMemoryFilters[], item: object): boolean {
     let ret: boolean | undefined = undefined;
     let lastType = '';
     let lastKey = '';
-    //console.log('xxxx  filters=', filters)
     filters.forEach((query: IccInMemoryFilters) => {
       const filterKey = query.filterKey;
       const compareKey = query.compareKey;
       const searches = query.searches;
       const search = query.search;
 
-      //const val = (item as { [index: string]: string })[filterKey];
       const val = this.getFilterDataValue((item as { [index: string]: string })[filterKey]);
       const value = this.getTypedValue(search, val, val);
       const filter = this.getTypedValue(search, val, search);
@@ -158,7 +156,6 @@ export class IccGridinMemoryService {
       lastKey = filterKey;
       lastType = currentType;
     });
-    //console.log(' ret =', ret)
     return !!ret;
   }
 
