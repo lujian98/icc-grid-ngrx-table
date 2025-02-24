@@ -1394,7 +1394,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     name: 'color',
     width: 80,
     cellEditable: true,
-    rendererType: IccObjectType.Select,
+    //rendererType: IccObjectType.Select,
     /*
     rendererFieldConfig: {
       //optionKey: 'name',
