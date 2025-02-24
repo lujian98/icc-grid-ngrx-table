@@ -15,12 +15,12 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   multiSelection: false,
   checkAll: true,
   uncheckAll: true,
-  isEmpty: true,
-  notEmpty: true,
+  isEmpty: false,
+  notEmpty: false,
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
-  //virtualScroll: true,
+  //virtualScroll: true, // only support virtualScroll
   ...defaultBaseField,
 };
 
