@@ -394,25 +394,33 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     );
   }
 
+  //support only header isEmpty and notEmpty
   headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
-    console.log(' option=', option.value);
     option.selected = !option.selected;
+    const optionKey = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
+    const optionValue = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
     if (this.fieldConfig.multiSelection) {
-      console.log(' header optioion');
       if (option.selected) {
-        this.value = [...this.value, option.value] as object[];
+        this.value = [...this.value, optionValue];
+        const emitValue = [...this.value, optionKey];
+        this.valueChange.emit(emitValue as T[]);
       } else {
-        this.value = [...this.value].filter(
-          (item) =>
-            (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey],
-        ) as object[];
+        this.value = [...this.value].filter((item) => {
+          if (this.fieldConfig.singleListOption) {
+            return item !== optionValue;
+          } else {
+            return (
+              (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey]
+            );
+          }
+        });
+        this.valueChange.emit(this.value as T[]);
       }
-      this.valueChange.emit(this.value as T[]);
     } else {
       this.autocompleteClose = true;
       if (option.selected) {
-        this.valueChange.emit(option.value as T);
-        this.value = option.value as object;
+        this.valueChange.emit(optionKey as T);
+        this.value = optionValue;
       } else {
         this.valueChange.emit('' as T);
         this.value = '';
