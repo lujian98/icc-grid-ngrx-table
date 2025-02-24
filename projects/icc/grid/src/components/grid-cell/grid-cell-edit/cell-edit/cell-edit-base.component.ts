@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } 
 import { FormControl, FormGroup } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
-import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.model';
+import { IccGridFacade } from '../../../../+state/grid.facade';
+import { IccColumnConfig, IccGridConfig, IccCellEdit } from '../../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-cell-edit-base',
@@ -12,7 +13,8 @@ import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.m
   imports: [CommonModule],
 })
 export class IccCellEditBaseComponent<T> {
-  protected changeDetectorRef = inject(ChangeDetectorRef);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _column!: IccColumnConfig;
   private _record!: T;
@@ -66,6 +68,9 @@ export class IccCellEditBaseComponent<T> {
     return (this.record as { [index: string]: T })[this.column.name];
   }
 
+  get recordId(): string {
+    return (this.record as { [index: string]: string })[this.gridConfig.recordKey];
+  }
   checkField(): void {}
 
   resetField(): void {
@@ -74,12 +79,22 @@ export class IccCellEditBaseComponent<T> {
   }
 
   onValueChange(value: T | null): void {
-    if (isEqual(value, this.data)) {
-      this.resetField();
-    } else {
+    const changed = !isEqual(value, this.data);
+    if (changed) {
       this.field.markAsDirty();
+    } else {
+      this.resetField();
     }
-    console.log(' on value change value=', value);
-    //this.filterChanged$.next(value);
+    const modified: IccCellEdit<unknown> = {
+      recordKey: this.gridConfig.recordKey,
+      recordId: this.recordId,
+      field: this.column.name,
+      value: value,
+      originalValue: this.data,
+      changed: changed,
+    };
+    //this.filterChanged$.next(value); // TODO debounce change
+
+    this.gridFacade.setGridRecordModified(this.gridConfig, modified);
   }
 }

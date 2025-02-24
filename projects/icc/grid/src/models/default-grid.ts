@@ -12,7 +12,7 @@ export const defaultGridConfig: IccGridConfig = {
   columnReorder: false,
   columnMenu: false,
   gridEditable: false,
-  recordId: 'id',
+  recordKey: 'id',
   restEdit: false,
   columnHidden: false,
   remoteGridConfig: false,

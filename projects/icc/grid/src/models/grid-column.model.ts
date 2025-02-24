@@ -9,6 +9,8 @@ export interface IccCellEdit<T> {
   recordId: string;
   field: string;
   value: T;
+  originalValue: T;
+  changed: boolean;
 }
 
 export interface IccGridCell<T> {
@@ -52,7 +54,7 @@ export interface IccGridConfig {
   columnMenu: boolean;
   columnHidden: boolean;
   gridEditable: boolean;
-  recordId: string;
+  recordKey: string;
   restEdit: boolean;
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
