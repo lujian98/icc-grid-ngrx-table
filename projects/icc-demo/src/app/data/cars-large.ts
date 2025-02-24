@@ -16,6 +16,8 @@ export const DCRBrands = [
   { title: 'VW', name: 'VW' },
 ];
 
+export const DCRBrandsList = DCRBrands.map((item) => item.name);
+
 export const DCRColors = [
   { title: 'Black', name: 'Black' },
   { title: 'Blue', name: 'Blue' },

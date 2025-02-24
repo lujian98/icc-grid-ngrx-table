@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { sortByField, IccObjectType } from '@icc/ui/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
-import { CARSDATA3, DCRBrands, DCRColors, DCRColorsList } from '../../../data/cars-large';
+import { CARSDATA3, DCRBrands, DCRColors, DCRColorsList, DCRBrandsList } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-cell-edit-text',
@@ -45,8 +45,16 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'brand',
-      //cellEditable: true,
+      cellEditable: true,
       rendererType: IccObjectType.Select,
+      rendererFieldConfig: {
+        //fieldType: 'select',
+        options: DCRBrandsList,
+        singleListOption: true,
+        remoteOptions: false,
+        //editable: true,
+      },
+      /*
       filterFieldConfig: {
         fieldType: 'select',
         multiSelection: true,
@@ -54,7 +62,7 @@ export class AppGridCellEditTextComponent {
         options: DCRBrands,
         optionKey: 'name',
         optionLabel: 'title',
-      },
+      },*/
     },
     {
       name: 'MakeDate',
@@ -71,7 +79,7 @@ export class AppGridCellEditTextComponent {
     {
       name: 'Price',
       width: 70,
-      //cellEditable: true,
+      cellEditable: true,
       rendererType: IccObjectType.Number,
       rendererFieldConfig: {
         decimals: 2,
@@ -81,8 +89,8 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'MakerColor',
-      cellEditable: true,
-      rendererType: IccObjectType.Select,
+      //cellEditable: true,
+      //rendererType: IccObjectType.Select,
       rendererFieldConfig: {
         optionKey: 'name',
         optionLabel: 'title',
@@ -108,26 +116,24 @@ export class AppGridCellEditTextComponent {
     {
       name: 'color',
       width: 80,
-      rendererType: IccObjectType.Select,
-      cellEditable: true,
+      //rendererType: IccObjectType.Select,
+      //cellEditable: true,
       rendererFieldConfig: {
-        //optionKey: 'name',
-        //optionLabel: 'title',
+        fieldType: IccObjectType.Select,
         options: DCRColorsList,
         singleListOption: true,
+        remoteOptions: false,
+        //editable: true,
       },
+      /*
       filterFieldConfig: {
-        fieldType: 'select',
+        fieldType: IccObjectType.Select,
         multiSelection: true,
         singleListOption: true,
         options: DCRColorsList,
         remoteOptions: false,
-        //options: DCRColors,
-        //optionKey: 'name',
-        //optionLabel: 'title',
-      },
+      },*/
       align: 'center',
-      //filterField: 'select',
     },
   ];
   gridData: IccGridData<any> = CARSDATA3;

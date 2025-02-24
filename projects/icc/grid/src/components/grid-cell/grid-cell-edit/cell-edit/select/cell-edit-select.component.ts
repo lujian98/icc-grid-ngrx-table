@@ -21,7 +21,7 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
       ...config,
       fieldName: this.column.name,
       clearValue: false,
-      editable: true,
+      editable: true, // TODO from column config ???
     };
   }
 

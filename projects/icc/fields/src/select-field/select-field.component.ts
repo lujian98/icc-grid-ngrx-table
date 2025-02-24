@@ -179,7 +179,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       // filter not working and need check this form
       timer(5)
         .pipe(take(1))
-        .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
+        .subscribe(() => {
+          return this.fieldConfig.editable ? this.field.enable() : this.field.disable();
+        });
     }
   }
 
@@ -189,7 +191,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
             this.selectOptions = selectOptions;
-            //console.log(' option this.selectOptions=', this.selectOptions)
             return this.selectOptions;
           }),
         );
@@ -207,13 +208,16 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   @Input()
   set options(val: IccOptionType[]) {
-    //local set option only, not used here
-    if (!this.fieldConfig) {
-      const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
-      this.initFieldConfig({ ...defaultSelectFieldConfig, singleListOption });
-    }
-    //console.log(' option mmmm val=', val)
-    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
+    //WARNING local set option only, only add field config if no initial input fieldconfig
+    timer(5)
+      .pipe(take(1))
+      .subscribe(() => {
+        if (!this.fieldConfig) {
+          const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
+          this.initFieldConfig({ ...defaultSelectFieldConfig, singleListOption });
+        }
+        this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
+      });
   }
 
   @Input()
