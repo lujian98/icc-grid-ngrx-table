@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { sortByField, IccObjectType } from '@icc/ui/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
-import { CARSDATA3 } from '../../../data/cars-large';
+import { CARSDATA3, DCRBrands, DCRColors } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-cell-edit-text',
@@ -25,10 +25,10 @@ export class AppGridCellEditTextComponent {
     sortFields: [
       {
         field: 'brand',
-        dir: 'desc',
+        dir: 'asc',
       },
     ],
-    columnFilters: [{ name: 'vin', value: '9' }],
+    //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,
     remoteGridData: false,
   };
@@ -45,13 +45,16 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'brand',
-      cellEditable: true,
-      /*
-      filterField: 'select',
+      //cellEditable: true,
+      rendererType: IccObjectType.Select,
       filterFieldConfig: {
         fieldType: 'select',
-        multiSelection: true,
-      },*/
+        //multiSelection: true,
+        remoteOptions: false,
+        options: DCRBrands,
+        optionKey: 'name',
+        optionLabel: 'title',
+      },
     },
     {
       name: 'MakeDate',
@@ -104,7 +107,17 @@ export class AppGridCellEditTextComponent {
     {
       name: 'color',
       width: 80,
-      cellEditable: true,
+      rendererType: IccObjectType.Select,
+      //cellEditable: true,
+      filterFieldConfig: {
+        // TODO edit and filter should use string array??
+        fieldType: 'select',
+        //multiSelection: true,
+        remoteOptions: false,
+        options: DCRColors,
+        optionKey: 'name',
+        optionLabel: 'title',
+      },
       align: 'center',
       //filterField: 'select',
     },

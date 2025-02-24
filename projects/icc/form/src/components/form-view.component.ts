@@ -187,9 +187,12 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   private setFieldDirty<T>(values: object, orgValues: object): void {
     Object.keys(values).forEach((key) => {
       const formField = this.form.get(key)!;
-      isEqual((values as { [key: string]: T })[key], (orgValues as { [key: string]: T })[key])
-        ? formField.markAsPristine()
-        : formField.markAsDirty();
+      const isequal = isEqual((values as { [key: string]: T })[key], (orgValues as { [key: string]: T })[key]);
+      if (isequal) {
+        formField.markAsPristine();
+      } else {
+        formField.markAsDirty();
+      }
     });
   }
 
