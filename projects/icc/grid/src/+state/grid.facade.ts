@@ -137,6 +137,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
   }
 
+  setGridEditable(gridConfig: IccGridConfig, gridEditable: boolean): void {
+    this.store.dispatch(gridActions.setGridEditable({ gridConfig, gridEditable }));
+  }
+
   getGridPageData(gridConfig: IccGridConfig, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
     this.getGridData(gridConfig);

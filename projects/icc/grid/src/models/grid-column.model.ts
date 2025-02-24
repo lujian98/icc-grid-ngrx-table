@@ -44,7 +44,7 @@ export interface IccGridConfig {
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
-  cellEdit: boolean;
+  gridEditable: boolean;
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;

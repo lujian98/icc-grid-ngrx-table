@@ -38,6 +38,7 @@ export class IccGridinMemoryService {
     const offset = (gridConfig.page - 1) * gridConfig.pageSize;
     const limit = gridConfig.pageSize;
     const offsetData = this.getOffsetData(sortedData, offset, limit);
+    console.log(' get inmemory data=', offsetData);
     return of({
       data: offsetData,
       totalCounts: filteredData.length,

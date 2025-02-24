@@ -36,7 +36,13 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridConfig$!: Observable<IccGridConfig>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
-  buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
+  buttons: IccButtonConfg[] = [
+    IccBUTTONS.Edit,
+    IccBUTTONS.View,
+    IccBUTTONS.Reset,
+    IccBUTTONS.Refresh,
+    IccBUTTONS.ClearAllFilters,
+  ];
 
   @Input()
   set gridConfig(value: Partial<IccGridConfig>) {
@@ -96,6 +102,15 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         break;
       case IccButtonType.ClearAllFilters:
         this.gridFacade.setGridColumnFilters(this.gridConfig, []);
+        break;
+      case IccButtonType.Edit:
+        this.gridFacade.setGridEditable(this.gridConfig, true);
+        break;
+      case IccButtonType.View:
+        this.gridFacade.setGridEditable(this.gridConfig, false);
+        break;
+      case IccButtonType.Reset:
+        //this.gridFacade.setGridEditable(this.gridConfig, false);
         break;
       default:
         break;

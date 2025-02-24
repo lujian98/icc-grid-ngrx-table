@@ -328,6 +328,23 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
 
+    on(gridActions.setGridEditable, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+
+        newState[key] = {
+          ...oldState,
+          gridConfig: {
+            ...oldState.gridConfig,
+            gridEditable: action.gridEditable,
+          },
+        };
+      }
+      return { ...newState };
+    }),
+
     on(gridActions.removeGridDataStore, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };

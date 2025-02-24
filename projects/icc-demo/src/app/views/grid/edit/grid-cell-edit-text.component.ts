@@ -28,7 +28,7 @@ export class AppGridCellEditTextComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
-    cellEdit: true,
+    gridEditable: false,
     sortFields: [
       {
         field: 'brand',

@@ -46,7 +46,7 @@ export class IccGridRowComponent<T> {
   }
 
   isCellEditable(column: IccColumnConfig): boolean {
-    return !!(this.gridConfig.cellEdit && column.cellEditable);
+    return !!(this.gridConfig.gridEditable && column.cellEditable);
   }
 
   trackByIndex(index: number): number {

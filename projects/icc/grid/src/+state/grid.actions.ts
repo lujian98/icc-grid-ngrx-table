@@ -97,5 +97,10 @@ export const setGridUnGroupBy = createAction(
   props<{ gridConfig: IccGridConfig }>(),
 );
 
+export const setGridEditable = createAction(
+  '[Grid] Setup Grid Set Grid Editable',
+  props<{ gridConfig: IccGridConfig; gridEditable: boolean }>(),
+);
+
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());
 export const removeGridDataStore = createAction('[Grid] Remove Grid Data Store', props<{ gridId: string }>());
