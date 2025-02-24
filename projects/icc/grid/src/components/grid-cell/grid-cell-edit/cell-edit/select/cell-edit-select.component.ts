@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { isEqual } from '@icc/ui/core';
 import { IccSelectFieldComponent, IccSelectFieldConfig, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
@@ -25,15 +24,8 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
     };
   }
 
+  /*
   get value(): string | object | string[] | object[] {
     return this.data as string | object | string[] | object[];
-  }
-
-  onValueChange(value: T | T[]): void {
-    console.log(' select change v=', value);
-    if (isEqual(value, this.data)) {
-      this.resetField();
-    }
-    //this.filterChanged$.next(value);
-  }
+  }*/
 }

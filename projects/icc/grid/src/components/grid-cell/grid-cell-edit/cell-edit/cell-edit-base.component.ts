@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { isEqual } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.model';
 
@@ -70,5 +71,15 @@ export class IccCellEditBaseComponent<T> {
   resetField(): void {
     this.field.setValue(this.data);
     this.field.markAsPristine();
+  }
+
+  onValueChange(value: T | null): void {
+    if (isEqual(value, this.data)) {
+      this.resetField();
+    } else {
+      this.field.markAsDirty();
+    }
+    console.log(' on value change value=', value);
+    //this.filterChanged$.next(value);
   }
 }

@@ -23,11 +23,4 @@ export class IccCellEditNumberComponent extends IccCellEditBaseComponent<number>
       editable: true,
     };
   }
-
-  onValueChange(value: number | null): void {
-    if (value === this.data) {
-      this.resetField();
-    }
-    //this.filterChanged$.next(value);
-  }
 }

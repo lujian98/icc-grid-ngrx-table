@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { isEqual } from '@icc/ui/core';
 import { IccTextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
 
@@ -23,16 +22,5 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
       clearValue: false,
       editable: true,
     };
-  }
-
-  onValueChange(value: string): void {
-    console.log(' text change v=', value);
-    console.log(' text change this.data=', this.data);
-    if (isEqual(value, this.data)) {
-      // TODO check text numeric
-      this.resetField();
-    }
-    console.log('this.gridConfig=', this.gridConfig);
-    //this.filterChanged$.next(value);
   }
 }
