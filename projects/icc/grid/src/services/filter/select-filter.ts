@@ -20,7 +20,7 @@ export class IccSelectFilter<T> extends IccFilter {
 
   get choices(): T[] {
     if (this.search instanceof Array) {
-      this._choices = this.search.map((item) => item.name);
+      this._choices = this.search.map((item) => item.name || item);
     } else {
       this._choices = [];
     }

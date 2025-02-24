@@ -29,6 +29,10 @@ export const DCRColors = [
   { title: 'White', name: 'White' },
 ];
 
+export const DCRColorsList = DCRColors.map((item) => item.name);
+
+console.log(' DCRColorsList=', DCRColorsList);
+
 export const DCRGridConfig: Partial<IccGridConfig> = {
   columnSort: true,
   columnFilter: true,

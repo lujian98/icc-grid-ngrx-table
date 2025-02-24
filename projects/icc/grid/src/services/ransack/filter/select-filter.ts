@@ -14,6 +14,7 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
 
   getParams(): T[] {
     const choices = this.filter.choices;
+    console.log(' choices=', choices);
     const params: T[] = [];
     if (choices.length > 0) {
       choices.forEach((value) => {
@@ -29,6 +30,7 @@ export class IccRansackSelectFilter<T> extends IccRansackFilter<T> {
         params.push(p as T);
       });
     }
+    console.log('yyyy params=', params);
     return params as T[];
   }
 }

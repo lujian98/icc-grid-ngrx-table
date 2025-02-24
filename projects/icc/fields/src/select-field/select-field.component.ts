@@ -189,6 +189,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
             this.selectOptions = selectOptions;
+            //console.log(' option this.selectOptions=', this.selectOptions)
             return this.selectOptions;
           }),
         );
@@ -211,6 +212,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
       this.initFieldConfig({ ...defaultSelectFieldConfig, singleListOption });
     }
+    //console.log(' option mmmm val=', val)
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
 

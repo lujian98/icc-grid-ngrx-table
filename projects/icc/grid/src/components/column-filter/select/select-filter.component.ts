@@ -45,6 +45,7 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
   }
 
   onValueChange(value: string | object | string[] | object[]): void {
+    console.log(' filter value =', value);
     if (Array.isArray(value)) {
       this.applyFilter(value);
     } else {
