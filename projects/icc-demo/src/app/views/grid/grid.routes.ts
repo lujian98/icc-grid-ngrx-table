@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AppGridComponent } from './grid.component';
+
 import { AppDefaultGridComponent } from './in-memory-data/default-grid.component';
 import { AppSimpleGridComponent } from './remote-data/simple-grid.component';
 import { AppGridFilterComponent } from './remote-data/grid-filter.component';
@@ -30,7 +32,7 @@ import { AppGridMultiRowSelectionComponent } from './remote-data/grid-multi-row-
 
 import { AppTestVirtualScrollComponent } from './in-memory-data/test-virtual-scroll.component';
 
-import { AppGridComponent } from './grid.component';
+import { AppGridCellEditTextComponent } from './edit/grid-cell-edit-text.component';
 
 export const AppGridRoutes: Routes = [
   {
@@ -91,6 +93,8 @@ export const AppGridRoutes: Routes = [
       { path: 'grid-in-memory-row-group', component: AppGridRowGroupComponent },
       { path: 'grid-group-header', component: AppGridGroupHeaderComponent },
       { path: 'grid-multi-row-selection', component: AppGridMultiRowSelectionComponent },
+
+      { path: 'grid-cell-edit-text', component: AppGridCellEditTextComponent },
 
       { path: 'test-virtual-scroll', component: AppTestVirtualScrollComponent },
 

@@ -85,6 +85,10 @@ export class AppGridComponent {
       ],
     },
     {
+      name: 'Grid Cell Edit',
+      items: [{ name: 'Grid Cell Edit Text', link: 'grid-cell-edit-text' }],
+    },
+    {
       name: 'Test',
       items: [{ name: 'Test Virtual Scroll', link: 'test-virtual-scroll' }],
     },

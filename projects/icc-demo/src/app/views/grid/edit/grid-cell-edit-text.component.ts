@@ -1,0 +1,52 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
+
+@Component({
+  selector: 'app-grid-cell-edit-text',
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
+  styles: [':host {  display: flex; width: 100%; padding: 0 0px }'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, IccGridComponent],
+})
+export class AppGridCellEditTextComponent {
+  gridConfig: IccGridConfig = {
+    ...defaultGridConfig,
+    urlKey: 'DCR',
+    rowSelection: true,
+    columnMenu: true,
+    columnSort: true,
+    columnFilter: true,
+    columnHidden: true,
+    columnResize: true,
+    columnReorder: true,
+    cellEdit: true,
+    multiRowSelection: true,
+    remoteColumnsConfig: true,
+    remoteGridData: true,
+  };
+
+  columnsConfig: IccColumnConfig[] = [
+    {
+      name: 'ID',
+      width: 50,
+      align: 'center',
+    },
+    {
+      name: 'vin',
+    },
+    {
+      name: 'brand',
+    },
+    {
+      name: 'year',
+      width: 50,
+      align: 'right',
+    },
+    {
+      name: 'color',
+      width: 80,
+      align: 'center',
+    },
+  ];
+}
