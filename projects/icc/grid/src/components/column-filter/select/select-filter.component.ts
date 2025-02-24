@@ -33,12 +33,15 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
     this.column.filterFieldConfig = { ...this.fieldConfig };
   }
 
-  override set value(val: string[] | object[]) {
+  override set value(val: string | string[] | object[]) {
+    if (!val) {
+      val = this.fieldConfig.multiSelection ? [] : '';
+    }
     this._value = val;
   }
 
-  override get value(): string[] | object[] {
-    return this._value as string[] | object[];
+  override get value(): string | string[] | object[] {
+    return this._value as string | string[] | object[];
   }
 
   onValueChange(value: string | object | string[] | object[]): void {

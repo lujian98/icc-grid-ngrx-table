@@ -349,7 +349,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
       this.delaySetSelected(true);
-    } else {
+    } else if (!this.fieldConfig.multiSelection) {
+      this.valueChange.emit(this.field.value);
     }
   }
 
