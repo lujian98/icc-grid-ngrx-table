@@ -101,6 +101,8 @@
                     <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
                     </icc-filter-highlight>
                   </icc-checkbox>
+                } @else if (fieldConfig.singleListOption && fieldConfig.selectOnly) {
+                  <ng-container>{{ option }}</ng-container>
                 } @else {
                   <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
                   </icc-filter-highlight>
