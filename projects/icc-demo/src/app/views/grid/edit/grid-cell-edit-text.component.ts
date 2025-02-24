@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } from '@icc/ui/grid';
+import { sortByField, IccObjectType } from '@icc/ui/core';
+import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
+import { CARSDATA3 } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-cell-edit-text',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig"></icc-grid>`,
+  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
   styles: [':host {  display: flex; width: 100%; padding: 0 0px }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
@@ -12,18 +14,23 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 export class AppGridCellEditTextComponent {
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
-    urlKey: 'DCR',
-    rowSelection: true,
-    columnMenu: true,
     columnSort: true,
     columnFilter: true,
-    columnHidden: true,
     columnResize: true,
     columnReorder: true,
+    columnMenu: true,
+    columnHidden: true,
+    rowSelection: true,
     cellEdit: true,
-    multiRowSelection: true,
-    remoteColumnsConfig: true,
-    remoteGridData: true,
+    sortFields: [
+      {
+        field: 'brand',
+        dir: 'desc',
+      },
+    ],
+    columnFilters: [{ name: 'vin', value: '9' }],
+    remoteColumnsConfig: false,
+    remoteGridData: false,
   };
 
   columnsConfig: IccColumnConfig[] = [
@@ -34,19 +41,73 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'vin',
+      cellEditable: true,
     },
     {
       name: 'brand',
+      cellEditable: true,
+      /*
+      filterField: 'select',
+      filterFieldConfig: {
+        fieldType: 'select',
+        multiSelection: true,
+      },*/
+    },
+    {
+      name: 'MakeDate',
+      title: 'Manufacture Date',
+      width: 100,
+      cellEditable: true,
+      rendererType: IccObjectType.Date,
+      rendererFieldConfig: {
+        dateFormat: 'longDate',
+      },
+      filterField: IccObjectType.DateRange,
+      align: 'center',
+    },
+    {
+      name: 'Price',
+      width: 70,
+      //cellEditable: true,
+      rendererType: IccObjectType.Number,
+      rendererFieldConfig: {
+        decimals: 2,
+      },
+      filterField: IccObjectType.Number,
+      align: 'right',
+    },
+    {
+      name: 'MakerColor',
+      cellEditable: true,
+      rendererType: IccObjectType.Select,
+      rendererFieldConfig: {
+        optionKey: 'name',
+        optionLabel: 'title',
+      },
+      /*
+      filterFieldConfig: {
+        fieldType: 'select',
+        multiSelection: true,
+        remoteOptions: false,
+        options: MakerColorList,
+        optionKey: 'name',
+        optionLabel: 'title',
+      },*/
+      width: 80,
     },
     {
       name: 'year',
+      cellEditable: true,
       width: 50,
       align: 'right',
     },
     {
       name: 'color',
       width: 80,
+      cellEditable: true,
       align: 'center',
+      //filterField: 'select',
     },
   ];
+  gridData: IccGridData<any> = CARSDATA3;
 }
