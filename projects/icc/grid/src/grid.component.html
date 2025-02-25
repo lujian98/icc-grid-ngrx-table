@@ -2,7 +2,7 @@
   <ng-container *ngIf="columnsConfig$ | async as columns">
     <icc-layout-header
       *ngIf="!gridConfig.hideTopbar"
-      [buttons]="buttons"
+      [buttons]="getButtons(gridConfig)"
       (iccButtonClick)="buttonClick($event, gridConfig)"
     >
     </icc-layout-header>

@@ -38,8 +38,9 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
 
   buttons: IccButtonConfg[] = [
     IccBUTTONS.Edit,
-    IccBUTTONS.View,
+    IccBUTTONS.Save,
     IccBUTTONS.Reset,
+    IccBUTTONS.View,
     IccBUTTONS.Refresh,
     IccBUTTONS.ClearAllFilters,
   ];
@@ -91,7 +92,34 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
   }
 
+  getButtons(gridConfig: IccGridConfig): IccButtonConfg[] {
+    return [...this.buttons].map((button) => {
+      const hidden = this.getHidden(button, gridConfig);
+      return {
+        ...button,
+        hidden,
+      };
+    });
+  }
+
+  private getHidden(button: IccButtonConfg, gridConfig: IccGridConfig): boolean {
+    switch (button.name) {
+      case IccButtonType.Edit:
+      case IccButtonType.Refresh:
+      case IccButtonType.ClearAllFilters:
+        return gridConfig.gridEditable;
+
+      case IccButtonType.Save:
+      case IccButtonType.Reset:
+      case IccButtonType.View:
+        return !gridConfig.gridEditable;
+      default:
+        return false;
+    }
+  }
+
   buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
+    console.log(' click button');
     switch (button.name) {
       case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
         if (gridConfig.virtualScroll) {
