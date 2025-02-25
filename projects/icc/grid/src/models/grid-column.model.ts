@@ -92,8 +92,8 @@ export interface IccGridSetting {
 }
 
 export interface IccGridState<T extends object = object> {
-  gridConfig: IccGridConfig;
-  gridSetting: IccGridSetting;
+  gridConfig: IccGridConfig; // for external grid config
+  gridSetting: IccGridSetting; // for internal use only settings
   columnsConfig: IccColumnConfig[];
   data: T[];
   totalCounts: number;
