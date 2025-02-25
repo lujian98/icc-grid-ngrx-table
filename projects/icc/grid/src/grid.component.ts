@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
 import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccColumnConfig, IccGridConfig, IccGridData } from './models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridData, IccCurrentGridState } from './models/grid-column.model';
 import { defaultGridConfig } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
@@ -34,6 +34,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   private _gridData!: IccGridData<T>;
   private gridId = uniqueId(16);
   gridConfig$!: Observable<IccGridConfig>;
+  currentState$!: Observable<IccCurrentGridState>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   buttons: IccButtonConfg[] = [
@@ -59,6 +60,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       gridId: this.gridId,
     };
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
+    this.currentState$ = this.gridFacade.selectCurrentState(this.gridId);
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
     this.gridFacade.initGridConfig(this.gridConfig);
   }

@@ -1,14 +1,16 @@
 <icc-layout *ngIf="gridConfig$ | async as gridConfig">
-  <ng-container *ngIf="columnsConfig$ | async as columns">
-    <icc-layout-header
-      *ngIf="!gridConfig.hideTopbar"
-      [buttons]="getButtons(gridConfig)"
-      (iccButtonClick)="buttonClick($event, gridConfig)"
-    >
-    </icc-layout-header>
+  <ng-container *ngIf="currentState$ | async as currentState">
+    <ng-container *ngIf="columnsConfig$ | async as columns">
+      <icc-layout-header
+        *ngIf="!gridConfig.hideTopbar"
+        [buttons]="getButtons(gridConfig)"
+        (iccButtonClick)="buttonClick($event, gridConfig)"
+      >
+      </icc-layout-header>
 
-    <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
+      <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
 
-    <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
+      <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
+    </ng-container>
   </ng-container>
 </icc-layout>

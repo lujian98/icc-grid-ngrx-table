@@ -15,6 +15,11 @@ export const selectGridConfig = (gridId: string) =>
     return state[gridId] ? state[gridId].gridConfig : defaultState.gridConfig;
   });
 
+export const selectCurrentState = (gridId: string) =>
+  createSelector(featureSelector, (state: GridState) => {
+    return state[gridId] ? state[gridId].currentState : defaultState.currentState;
+  });
+
 export const selectColumnsConfig = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
     return state[gridId] ? state[gridId].columnsConfig : [];
