@@ -3,12 +3,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   forwardRef,
   inject,
   Input,
   OnDestroy,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -134,6 +136,12 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
 
   get hasValue(): boolean {
     return (!!this.field.value || this.field.value === 0) && !this.field.disabled;
+  }
+
+  @ViewChild('inputEl') inputEl!: ElementRef;
+
+  onMouseleave(): void {
+    this.inputEl.nativeElement.blur();
   }
 
   onChange(): void {

@@ -11,11 +11,13 @@
     </icc-label>
     <input
       iccInput
+      #inputEl
       type="number"
       autocomplete="off"
       [formControlName]="fieldConfig.fieldName!"
       (keyup)="onChange()"
       (wheel)="onChange()"
+      (mouseleave)="onMouseleave()"
       [required]="required"
       placeholder="{{ fieldConfig.placeholder! | translate }}"
     />

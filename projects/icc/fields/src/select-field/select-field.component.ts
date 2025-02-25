@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  ElementRef,
   Input,
   OnDestroy,
   Output,
@@ -254,6 +255,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   get hidden(): boolean {
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+  }
+
+  @ViewChild('inputEl') inputEl!: ElementRef;
+
+  onMouseleave(): void {
+    this.inputEl.nativeElement.blur();
   }
 
   @Output() valueChange = new EventEmitter<T | T[]>(true);

@@ -11,10 +11,12 @@
     </icc-label>
     <input
       iccInput
+      #inputEl
       type="text"
       autocomplete="off"
       [formControlName]="fieldConfig.fieldName!"
       (keyup)="onChange()"
+      (mouseleave)="onMouseleave()"
       [required]="required"
       placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
@@ -25,3 +27,6 @@
     </icc-form-field-errors>
   </icc-form-field>
 </ng-container>
+<!--
+document.getElementById(target_field).blur();
+-->

@@ -3,12 +3,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   forwardRef,
   inject,
   Input,
   OnDestroy,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -135,9 +137,15 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
     return (!!this.field.value || this.field.value === 0) && !this.field.disabled;
   }
 
+  @ViewChild('inputEl') inputEl!: ElementRef;
+
   onChange(): void {
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
+  }
+
+  onMouseleave(): void {
+    this.inputEl.nativeElement.blur();
   }
 
   clearValue(): void {
