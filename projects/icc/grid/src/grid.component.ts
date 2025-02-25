@@ -95,11 +95,23 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   getButtons(gridConfig: IccGridConfig): IccButtonConfg[] {
     return [...this.buttons].map((button) => {
       const hidden = this.getHidden(button, gridConfig);
+      const disabled = this.getDisabled(button, gridConfig);
       return {
         ...button,
         hidden,
+        disabled,
       };
     });
+  }
+
+  private getDisabled(button: IccButtonConfg, gridConfig: IccGridConfig): boolean {
+    switch (button.name) {
+      case IccButtonType.Save:
+      case IccButtonType.Reset:
+        return !gridConfig.recordModified;
+      default:
+        return false;
+    }
   }
 
   private getHidden(button: IccButtonConfg, gridConfig: IccGridConfig): boolean {

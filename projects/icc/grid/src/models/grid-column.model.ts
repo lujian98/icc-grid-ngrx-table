@@ -56,6 +56,7 @@ export interface IccGridConfig {
   gridEditable: boolean;
   recordKey: string;
   restEdit: boolean;
+  recordModified: boolean;
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;

@@ -184,6 +184,7 @@ export const iccGridFeature = createFeature({
             totalCounts: totalCounts,
             lastUpdateTime: new Date(),
             restEdit: false,
+            recordModified: false,
           },
           totalCounts: totalCounts,
           data,
@@ -340,6 +341,7 @@ export const iccGridFeature = createFeature({
             ...oldState.gridConfig,
             gridEditable: action.gridEditable,
             restEdit: false,
+            recordModified: false,
           },
           modified: [],
         };
@@ -356,6 +358,7 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...oldState.gridConfig,
             restEdit: action.restEdit,
+            recordModified: false,
           },
           modified: [],
         };
@@ -394,6 +397,7 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...oldState.gridConfig,
             restEdit: false,
+            recordModified: modified.length > 0,
           },
           modified,
         };

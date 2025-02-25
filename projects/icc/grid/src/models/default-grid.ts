@@ -14,6 +14,7 @@ export const defaultGridConfig: IccGridConfig = {
   gridEditable: false,
   recordKey: 'id',
   restEdit: false,
+  recordModified: false,
   columnHidden: false,
   remoteGridConfig: false,
   remoteColumnsConfig: false,
