@@ -43,20 +43,20 @@ export interface ColumnMenuClick {
 }
 
 export interface IccGridConfig {
-  gridId: string; // auto generated unique id internal use
+  gridId: string; // auto generated unique id internal use //WARNING internal state ???
   isTreeGrid: boolean;
   urlKey: string; // Only for remote grid config and data
-  viewportReady: boolean; // internal use
+  viewportReady: boolean; //WARNING internal state
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
-  gridEditable: boolean;
+  gridEditable: boolean; //WARNING internal state ??
   recordKey: string;
-  restEdit: boolean;
-  recordModified: boolean;
+  restEdit: boolean; //WARNING internal state
+  recordModified: boolean; //WARNING internal state
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
@@ -65,12 +65,12 @@ export interface IccGridConfig {
   horizontalScroll: boolean;
   verticalScroll: boolean;
   virtualScroll: boolean;
-  viewportWidth: number; // internal use
+  viewportWidth: number; //WARNING internal state
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
-  page: number;
-  pageSize: number;
-  totalCounts: number;
+  page: number; //WARNING internal state or input ??
+  pageSize: number; //WARNING internal state
+  totalCounts: number; //WARNING internal state not sure it is used
   remoteGridData: boolean;
   hideTopbar: boolean;
   hideGridFooter: boolean;
@@ -79,15 +79,28 @@ export interface IccGridConfig {
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
   refreshRate: number;
-  lastUpdateTime: Date;
+  lastUpdateTime: Date; //WARNING internal state
 }
 
 export interface GridState {
   [key: string]: IccGridState;
 }
 
+export interface IccCurrentGridState {
+  viewportReady: boolean;
+  viewportWidth: number; //WARNING internal state
+  lastUpdateTime: Date;
+
+  gridEditable: boolean; //WARNING internal state ??
+  restEdit: boolean; //WARNING internal state
+  recordModified: boolean; //WARNING internal state
+  pageSize: number; //WARNING internal state
+  totalCounts: number; //WARNING internal state not sure it is used
+}
+
 export interface IccGridState<T extends object = object> {
   gridConfig: IccGridConfig;
+  currentState: IccCurrentGridState;
   columnsConfig: IccColumnConfig[];
   data: T[];
   totalCounts: number;
