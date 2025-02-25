@@ -165,11 +165,14 @@ export class InMemoryService extends InMemoryDbService {
   }
 
   patch(reqInfo: RequestInfo): Observable<ResponseOptions> {
-    const body = reqInfo.collection;
-    body.data.attributes = reqInfo.utils.getJsonBody(reqInfo.req)[body.data.type];
+    const records = (reqInfo.req as any).body as [];
+    const body = [...records].map((item: any) => {
+      const find = [...CARSDATA.data].find((data) => data['ID'] === item['ID']);
+      return find ? { ...find, ...item } : item;
+    });
     return reqInfo.utils.createResponse$(() => {
       const options: ResponseOptions = {
-        body: {},
+        body: body,
         status: STATUS.OK,
       };
       return this.finishOptions(options, reqInfo);

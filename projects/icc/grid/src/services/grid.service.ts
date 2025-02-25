@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, catchError, map, throwError } from 'rxjs';
 import { IccBackendService } from '@icc/ui/core';
@@ -46,11 +46,11 @@ export class IccGridService {
     return of();
   }
 
-  saveModifiedRecords<T>(
+  saveModifiedRecords(
     gridConfig: IccGridConfig,
     modifiedRecords: { [key: string]: unknown }[],
   ): Observable<{ [key: string]: unknown }[]> {
-    // TODO use http to save record and return update record
+    /*
     const mockRecord = {
       vin: 'af3b744b',
       brand: 'Renault',
@@ -71,7 +71,25 @@ export class IccGridService {
         ID: item['ID'],
       };
     });
-    return of(records as { [key: string]: unknown }[]);
+
+    console.log('grid get data params=', gridConfig);
+    */
+    const params = this.backendService.getParams(gridConfig.urlKey, 'update');
+    const headers = new HttpHeaders({ Accept: 'application/vnd.api+json' });
+    const url = this.backendService.apiUrl;
+    return this.http
+      .patch<any>(url, modifiedRecords, {
+        params: params,
+        headers: headers,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        }),
+        catchError((error) => throwError(() => error)),
+      );
+
+    //return of(records as { [key: string]: unknown }[]);
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<object>> {
@@ -86,7 +104,7 @@ export class IccGridService {
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridData<object>>(url, { params }).pipe(
       map((res) => {
-        console.log(' service get grid data=', res); // TODO check initial load
+        //console.log(' service get grid data=', res); // TODO check initial load
         return res;
       }),
       catchError((error) =>
