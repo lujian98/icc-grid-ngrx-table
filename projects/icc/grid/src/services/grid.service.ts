@@ -46,6 +46,10 @@ export class IccGridService {
     return of();
   }
 
+  saveModifiedRecords<T>(gridConfig: IccGridConfig, modifiedRecords: { [key: string]: unknown }[]): Observable<any> {
+    return of(modifiedRecords);
+  }
+
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<object>> {
     let params = this.backendService.getParams(gridConfig.urlKey, 'gridData');
     params = this.appendFilterHttpParams(gridConfig.columnFilters, columns, params);

@@ -26,6 +26,12 @@ export const selectGridData = (gridConfig: IccGridConfig) =>
     return state[gridId] ? state[gridId].data : [];
   });
 
+export const selectGridModifiedRecords = (gridConfig: IccGridConfig) =>
+  createSelector(featureSelector, (state: GridState) => {
+    const gridId = gridConfig.gridId;
+    return state[gridId] ? state[gridId].modified : [];
+  });
+
 export const selectRowSelection = (gridConfig: IccGridConfig) =>
   createSelector(featureSelector, (state: GridState) => {
     const gridId = gridConfig.gridId;

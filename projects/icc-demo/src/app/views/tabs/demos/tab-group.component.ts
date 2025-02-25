@@ -13,8 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    IccTabComponent,
-    IccTabGroupComponent,
+    //IccTabComponent,
+    //IccTabGroupComponent,
     MatTabsModule,
     MatInputModule,
     ReactiveFormsModule,

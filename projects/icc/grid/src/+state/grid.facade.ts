@@ -22,6 +22,7 @@ import {
   selectRowGroups,
   selectRowSelection,
   selectRowSelections,
+  selectGridModifiedRecords,
 } from './grid.selectors';
 
 @Injectable()
@@ -150,6 +151,10 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridRecordModified({ gridConfig, modified }));
   }
 
+  saveGridModifiedRecords(gridConfig: IccGridConfig): void {
+    this.store.dispatch(gridActions.saveGridModifiedRecords({ gridConfig }));
+  }
+
   getGridPageData(gridConfig: IccGridConfig, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
     this.getGridData(gridConfig);
@@ -184,6 +189,10 @@ export class IccGridFacade {
 
   selectGridData(gridConfig: IccGridConfig): Observable<object[]> {
     return this.store.select(selectGridData(gridConfig)) as Observable<object[]>;
+  }
+
+  selectGridModifiedRecords(gridConfig: IccGridConfig): Observable<{ [key: string]: unknown }[]> {
+    return this.store.select(selectGridModifiedRecords(gridConfig)) as Observable<{ [key: string]: unknown }[]>;
   }
 
   selectRowSelection<T>(gridConfig: IccGridConfig): Observable<SelectionModel<object>> {

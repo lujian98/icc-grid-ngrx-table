@@ -108,6 +108,17 @@ export const setGridRecordModified = createAction(
   props<{ gridConfig: IccGridConfig; modified: IccCellEdit<unknown> }>(),
 );
 
+export const saveGridModifiedRecords = createAction(
+  '[Grid] Save Grid Modified Record',
+  props<{ gridConfig: IccGridConfig }>(),
+);
+
+//TODO save return data or refresh data???
+export const saveModifiedRecordsSuccess = createAction(
+  '[Grid] Save Grid Modified Record Success',
+  props<{ gridConfig: IccGridConfig; newRecords: { [key: string]: unknown }[] }>(),
+);
+
 export const setGridRestEdit = createAction(
   '[Grid] Setup Grid Set Rest Edit',
   props<{ gridConfig: IccGridConfig; restEdit: boolean }>(),

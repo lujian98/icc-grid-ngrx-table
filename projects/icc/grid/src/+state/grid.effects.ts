@@ -116,6 +116,25 @@ export class IccGridEffects {
     }
   };
 
+  saveGridModifiedRecords$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.saveGridModifiedRecords),
+      concatLatestFrom((action) => {
+        return [
+          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
+          this.gridFacade.selectGridModifiedRecords(action.gridConfig),
+        ];
+      }),
+      concatMap(([action, gridConfig, modifiedRecords]) => {
+        return this.gridService.saveModifiedRecords(gridConfig, modifiedRecords).pipe(
+          map((newRecords) => {
+            return gridActions.saveModifiedRecordsSuccess({ gridConfig, newRecords });
+          }),
+        );
+      }),
+    ),
+  );
+
   clearGridDataStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.clearGridDataStore),

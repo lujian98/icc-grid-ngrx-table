@@ -131,7 +131,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   }
 
   buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
-    console.log(' click button');
     switch (button.name) {
       case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
         if (gridConfig.virtualScroll) {
@@ -151,6 +150,9 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         break;
       case IccButtonType.Reset:
         this.gridFacade.setGridRestEdit(this.gridConfig, true);
+        break;
+      case IccButtonType.Save:
+        this.gridFacade.saveGridModifiedRecords(this.gridConfig);
         break;
       default:
         break;
