@@ -1,0 +1,31 @@
+<!--
+
+    <icc-tab-group icc-stretch-tabs="true" icc-align-tabs="start">
+      <icc-tab label="First">Content 1</icc-tab>
+      <icc-tab label="Second">Content 2A</icc-tab>
+      <icc-tab label="Third">Content 3</icc-tab>
+    </icc-tab-group>
+-->
+<div>
+  Material Tab group with form
+  <button (click)="checkForm()">Check Form</button>
+</div>
+<form [formGroup]="formGroup">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="First"
+      >Content 1
+      <fieldset [formGroup]="formGroup">
+        <legend>field Set 1</legend>
+        <input type="text" matInput formControlName="field1" />
+      </fieldset>
+    </mat-tab>
+    <mat-tab label="Second"
+      >Content 2
+      <fieldset [formGroup]="formGroup">
+        <legend>field Set 2</legend>
+        <input type="text" matInput formControlName="field2" />
+      </fieldset>
+    </mat-tab>
+    <mat-tab label="Third">Content 3</mat-tab>
+  </mat-tab-group>
+</form>

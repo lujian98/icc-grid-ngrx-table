@@ -1,18 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccTabComponent, IccTabGroupComponent } from '@icc/ui/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-tab-group',
-  template: `
-    <icc-tab-group icc-stretch-tabs="true" icc-align-tabs="start">
-      <icc-tab label="First">Content 1</icc-tab>
-      <icc-tab label="Second">Content 2</icc-tab>
-      <icc-tab label="Third">Content 3</icc-tab>
-    </icc-tab-group>
-  `,
+  templateUrl: './tab-group.component.html',
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTabComponent, IccTabGroupComponent],
+  imports: [
+    CommonModule,
+    IccTabComponent,
+    IccTabGroupComponent,
+    MatTabsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+  ],
 })
-export class AppTabGroupComponent {}
+export class AppTabGroupComponent {
+  formGroup: FormGroup = new FormGroup({
+    field1: new FormControl('field1'),
+    field2: new FormControl('field2'),
+  });
+
+  checkForm(): void {
+    const values = this.formGroup.value;
+    console.log(' check form values =', values);
+  }
+}
