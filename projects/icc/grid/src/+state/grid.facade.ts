@@ -147,7 +147,6 @@ export class IccGridFacade {
   }
 
   setGridRecordModified(gridConfig: IccGridConfig, modified: IccCellEdit<unknown>): void {
-    console.log('facade modified=', modified);
     this.store.dispatch(gridActions.setGridRecordModified({ gridConfig, modified }));
   }
 

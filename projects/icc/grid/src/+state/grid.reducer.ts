@@ -3,7 +3,7 @@ import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/const
 import { SelectionModel } from '@angular/cdk/collections';
 import { defaultState } from '../models/default-grid';
 import { IccObjectType } from '@icc/ui/core';
-import { GridState } from '../models/grid-column.model';
+import { GridState, IccCellEdit } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import * as gridActions from './grid.actions';
@@ -188,6 +188,7 @@ export const iccGridFeature = createFeature({
           totalCounts: totalCounts,
           data,
           queryData,
+          modified: [],
         };
       }
       return { ...newState };
@@ -328,7 +329,6 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
-
     on(gridActions.setGridEditable, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
@@ -341,11 +341,11 @@ export const iccGridFeature = createFeature({
             gridEditable: action.gridEditable,
             restEdit: false,
           },
+          modified: [],
         };
       }
       return { ...newState };
     }),
-
     on(gridActions.setGridRestEdit, (state, action) => {
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
@@ -357,9 +357,47 @@ export const iccGridFeature = createFeature({
             ...oldState.gridConfig,
             restEdit: action.restEdit,
           },
+          modified: [],
         };
       }
-      console.log(' reset new state=', newState);
+      return { ...newState };
+    }),
+    on(gridActions.setGridRecordModified, (state, action) => {
+      const key = action.gridConfig.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const value = action.modified;
+        let modified = [...oldState.modified];
+        const find = modified.find((record: { [key: string]: unknown }) => record[value.recordKey] === value.recordId);
+        if (find) {
+          modified = [...modified].filter(
+            (record: { [key: string]: unknown }) => record[value.recordKey] !== value.recordId,
+          );
+          if (value.changed) {
+            (find as { [key: string]: unknown })[value.field] = value.value;
+          } else {
+            delete (find as { [key: string]: unknown })[value.field];
+          }
+          if (Object.keys(find).length > 1) {
+            modified.push(find);
+          }
+        } else {
+          const record: { [index: string]: unknown } = {};
+          record[value.recordKey] = value.recordId;
+          record[value.field] = value.value;
+          modified.push(record);
+        }
+        //console.log( ' new modified=', modified)
+        newState[key] = {
+          ...oldState,
+          gridConfig: {
+            ...oldState.gridConfig,
+            restEdit: false,
+          },
+          modified,
+        };
+      }
       return { ...newState };
     }),
 

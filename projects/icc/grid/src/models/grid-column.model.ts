@@ -94,7 +94,7 @@ export interface IccGridState<T extends object = object> {
   selection: SelectionModel<T>;
   queryData: T[]; // for row group temporary data
   rowGroups?: IccRowGroups; // row group will handle at client side data only and only with one level
-  modified: T[];
+  modified: { [key: string]: unknown }[];
 }
 
 export interface IccGridData<T> {
