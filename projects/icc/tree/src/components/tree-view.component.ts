@@ -69,15 +69,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
-    /*
-    if (!this.treeData$) {
-      this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig).pipe(
-        map((data) => {
-          this.checkViewport(data);
-          return data;
-        }),
-      );
-    }*/
   }
   get treeConfig(): IccTreeConfig {
     return this._treeConfig;

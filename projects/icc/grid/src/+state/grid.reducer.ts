@@ -100,7 +100,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridSortFields, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -115,7 +115,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridColumnFilters, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {

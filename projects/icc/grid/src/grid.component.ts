@@ -57,7 +57,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   private initGridConfig(value: IccGridConfig): void {
     this._gridConfig = {
       ...value,
-      gridId: this.gridId,
+      //gridId: this.gridId,
     };
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
     this.gridSetting$ = this.gridFacade.selectSetting(this.gridId);

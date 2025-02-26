@@ -77,7 +77,7 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
-      this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
+      this.store.dispatch(gridActions.getConcatGridData({ gridId }));
     }
   }
 
@@ -91,7 +91,7 @@ export class IccGridFacade {
       sortFields = this.checkGroupSortField(gridConfig, sortFields);
     }
     this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
-    this.getGridData(gridConfig.gridId, gridConfig);
+    this.getGridData(gridId, gridConfig);
   }
 
   setGridColumnFilters(gridId: string, gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
@@ -235,8 +235,8 @@ export class IccGridFacade {
     return this.store.select(selectGridInMemoryData(gridId)) as Observable<T[]>;
   }
 
-  runTask(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
+  runTask(setting: IccGridSetting): void {
+    this.store.dispatch(gridActions.getConcatGridData({ gridId: setting.gridId }));
   }
 
   selectSetting(gridId: string): Observable<IccGridSetting> {

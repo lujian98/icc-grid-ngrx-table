@@ -44,7 +44,6 @@ export interface ColumnMenuClick {
 }
 
 export interface IccGridConfig {
-  gridId: string; // auto generated unique id internal use //WARNING internal state ???
   isTreeGrid: boolean;
   urlKey: string; // Only for remote grid config and data
   columnSort: boolean;
@@ -81,7 +80,8 @@ export interface GridState {
 }
 
 export interface IccGridSetting {
-  gridId: string; // TODO
+  // for external grid config
+  gridId: string;
   viewportWidth: number;
   lastUpdateTime: Date;
   gridEditable: boolean;

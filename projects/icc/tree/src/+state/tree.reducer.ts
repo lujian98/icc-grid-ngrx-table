@@ -73,7 +73,7 @@ export const iccTreeFeature = createFeature({
     }),
 
     on(treeActions.nodeToggleInMemoryData, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -86,7 +86,7 @@ export const iccTreeFeature = createFeature({
     }),
 
     on(treeActions.dropNode, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -101,7 +101,7 @@ export const iccTreeFeature = createFeature({
     }),
 
     on(treeActions.expandAllNodesInMemoryData, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];

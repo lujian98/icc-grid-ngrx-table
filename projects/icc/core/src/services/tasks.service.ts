@@ -48,7 +48,7 @@ export class IccTasksService {
       .subscribe((setting: IccTaskSetting) => {
         const dt = Math.ceil((new Date().getTime() - setting.lastUpdateTime.getTime()) / 1000) + 2.5;
         if (dt > task.config.refreshRate) {
-          task.service?.runTask(task.config);
+          task.service?.runTask(setting);
         }
       });
   }
