@@ -30,6 +30,7 @@ export const iccGridFeature = createFeature({
         gridSetting: {
           ...defaultState.gridSetting,
           gridId: gridConfig.gridId,
+          //viewportReady: true,
           viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
         },
       };
@@ -48,6 +49,7 @@ export const iccGridFeature = createFeature({
           gridConfig,
           gridSetting: {
             ...state[key].gridSetting,
+            //viewportReady: true,
             viewportReady: !action.gridConfig.remoteColumnsConfig,
           },
         };
@@ -62,13 +64,13 @@ export const iccGridFeature = createFeature({
       const key = action.gridConfig.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
-        const gridConfig = {
-          ...state[key].gridConfig,
-          viewportReady: true,
-        };
+        const gridConfig = state[key].gridConfig;
         newState[key] = {
           ...state[key],
-          gridConfig,
+          gridSetting: {
+            ...state[key].gridSetting,
+            viewportReady: true,
+          },
           columnsConfig: action.columnsConfig.map((column) => {
             return {
               ...column,
