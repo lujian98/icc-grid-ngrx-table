@@ -61,7 +61,7 @@ export class IccGridHeaderComponent<T> {
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
     if (!this.rowSelections$) {
-      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridConfig);
+      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridConfig.gridId);
     }
   }
   get gridConfig(): IccGridConfig {

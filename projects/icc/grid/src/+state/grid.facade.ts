@@ -205,22 +205,22 @@ export class IccGridFacade {
     return this.store.select(selectGridData(gridId)) as Observable<object[]>;
   }
 
-  selectGridModifiedRecords(gridConfig: IccGridConfig): Observable<{ [key: string]: unknown }[]> {
-    return this.store.select(selectGridModifiedRecords(gridConfig)) as Observable<{ [key: string]: unknown }[]>;
+  selectGridModifiedRecords(gridId: string): Observable<{ [key: string]: unknown }[]> {
+    return this.store.select(selectGridModifiedRecords(gridId)) as Observable<{ [key: string]: unknown }[]>;
   }
 
-  selectRowSelection<T>(gridConfig: IccGridConfig): Observable<SelectionModel<object>> {
-    return this.store.select(selectRowSelection(gridConfig));
+  selectRowSelection<T>(gridId: string): Observable<SelectionModel<object>> {
+    return this.store.select(selectRowSelection(gridId));
   }
 
   selectRowSelections(
-    gridConfig: IccGridConfig,
+    gridId: string,
   ): Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }> {
-    return this.store.select(selectRowSelections(gridConfig));
+    return this.store.select(selectRowSelections(gridId));
   }
 
-  selectRowGroups(gridConfig: IccGridConfig): Observable<IccRowGroups | boolean> {
-    return this.store.select(selectRowGroups(gridConfig));
+  selectRowGroups(gridId: string): Observable<IccRowGroups | boolean> {
+    return this.store.select(selectRowGroups(gridId));
   }
 
   selectGridInMemoryData<T>(gridId: string): Observable<T[]> {

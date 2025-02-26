@@ -122,7 +122,7 @@ export class IccGridEffects {
       concatLatestFrom((action) => {
         return [
           this.gridFacade.selectGridConfig(action.gridConfig.gridId),
-          this.gridFacade.selectGridModifiedRecords(action.gridConfig),
+          this.gridFacade.selectGridModifiedRecords(action.gridConfig.gridId),
         ];
       }),
       concatMap(([action, gridConfig, modifiedRecords]) => {

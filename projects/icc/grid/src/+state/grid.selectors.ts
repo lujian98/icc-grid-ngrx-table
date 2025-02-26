@@ -30,21 +30,18 @@ export const selectGridData = (gridId: string) =>
     return state[gridId] ? state[gridId].data : [];
   });
 
-export const selectGridModifiedRecords = (gridConfig: IccGridConfig) =>
+export const selectGridModifiedRecords = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     return state[gridId] ? state[gridId].modified : [];
   });
 
-export const selectRowSelection = (gridConfig: IccGridConfig) =>
+export const selectRowSelection = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     return state[gridId] ? state[gridId].selection : new SelectionModel<object>(false, []);
   });
 
-export const selectRowSelections = (gridConfig: IccGridConfig) =>
+export const selectRowSelections = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     if (state[gridId]) {
       const oldState = state[gridId];
       const selection = oldState.selection;
@@ -64,9 +61,8 @@ export const selectRowSelections = (gridConfig: IccGridConfig) =>
     }
   });
 
-export const selectRowGroups = (gridConfig: IccGridConfig) =>
+export const selectRowGroups = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     return state[gridId].rowGroups ? state[gridId].rowGroups : true;
   });
 

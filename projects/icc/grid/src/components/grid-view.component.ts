@@ -34,7 +34,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
-  private _gridConfig!: IccGridConfig;
+  //private _gridConfig!: IccGridConfig;
   private _gridSetting!: IccGridSetting;
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
@@ -57,27 +57,19 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         }),
       );
     }
+    if (!this.rowSelection$) {
+      this.rowSelection$ = this.gridFacade.selectRowSelection(this.gridSetting.gridId);
+    }
+    if (!this.rowGroups$) {
+      this.rowGroups$ = this.gridFacade.selectRowGroups(this.gridSetting.gridId);
+    }
   }
   get gridSetting(): IccGridSetting {
     return this._gridSetting;
   }
 
   @Input() columns: IccColumnConfig[] = [];
-
-  @Input()
-  set gridConfig(val: IccGridConfig) {
-    this._gridConfig = { ...val };
-
-    if (!this.rowSelection$) {
-      this.rowSelection$ = this.gridFacade.selectRowSelection(this.gridConfig);
-    }
-    if (!this.rowGroups$) {
-      this.rowGroups$ = this.gridFacade.selectRowGroups(this.gridConfig);
-    }
-  }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
-  }
+  @Input() gridConfig!: IccGridConfig;
 
   get tableWidth(): number {
     return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;
