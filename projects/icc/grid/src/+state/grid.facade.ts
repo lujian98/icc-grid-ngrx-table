@@ -85,11 +85,11 @@ export class IccGridFacade {
     gridId: string,
     gridConfig: IccGridConfig,
     sortFields: IccSortField[],
-    checkSort: boolean = true,
+    //checkSort: boolean = true,
   ): void {
-    if (checkSort) {
-      sortFields = this.checkGroupSortField(gridConfig, sortFields);
-    }
+    //if (checkSort) {
+    sortFields = this.checkGroupSortField(gridConfig, sortFields);
+    //}
     this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
     this.getGridData(gridId, gridConfig);
   }
@@ -119,7 +119,9 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridUnGroupBy({ gridId, gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
     this.store.dispatch(gridActions.setGridGroupBy({ gridId, gridConfig, rowGroupField }));
-    this.setGridSortFields(gridId, gridConfig, sortFields, false);
+    //this.setGridSortFields(gridId, gridConfig, sortFields, false);
+    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
+    this.dispatchGridData(gridId);
   }
 
   private checkGroupSortField(gridConfig: IccGridConfig, sortFields: IccSortField[]): IccSortField[] {
@@ -178,13 +180,17 @@ export class IccGridFacade {
 
   getGridPageData(gridId: string, gridConfig: IccGridConfig, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
-    this.getGridData(gridId, gridConfig);
+    this.dispatchGridData(gridId);
   }
 
   getGridData(gridId: string, gridConfig: IccGridConfig): void {
     if (!gridConfig.isTreeGrid) {
-      this.store.dispatch(gridActions.getGridData({ gridId }));
+      this.dispatchGridData(gridId);
     }
+  }
+
+  private dispatchGridData(gridId: string): void {
+    this.store.dispatch(gridActions.getGridData({ gridId }));
   }
 
   // TODO not used???
