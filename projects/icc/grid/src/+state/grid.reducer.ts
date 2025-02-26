@@ -130,7 +130,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setViewportPage, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {

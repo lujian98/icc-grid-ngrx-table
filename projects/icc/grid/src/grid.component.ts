@@ -136,7 +136,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     switch (button.name) {
       case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
         if (gridConfig.virtualScroll) {
-          this.gridFacade.getGridPageData(gridConfig, 1);
+          this.gridFacade.getGridPageData(this.gridId, gridConfig, 1);
         } else {
           this.gridFacade.getGridData(this.gridId, gridConfig);
         }

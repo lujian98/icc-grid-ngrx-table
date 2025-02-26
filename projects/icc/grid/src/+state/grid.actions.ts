@@ -39,7 +39,7 @@ export const setViewportPageSize = createAction(
 
 export const setViewportPage = createAction(
   '[Grid] Setup Grid Viewport Page',
-  props<{ gridConfig: IccGridConfig; page: number }>(),
+  props<{ gridId: string; page: number }>(),
 );
 
 export const setGridSortFields = createAction(

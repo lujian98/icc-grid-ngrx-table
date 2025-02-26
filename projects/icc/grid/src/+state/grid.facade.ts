@@ -171,9 +171,9 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.saveGridModifiedRecords({ gridConfig }));
   }
 
-  getGridPageData(gridConfig: IccGridConfig, page: number): void {
-    this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
-    this.getGridData(gridConfig.gridId, gridConfig);
+  getGridPageData(gridId: string, gridConfig: IccGridConfig, page: number): void {
+    this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
+    this.getGridData(gridId, gridConfig);
   }
 
   getGridData(gridId: string, gridConfig: IccGridConfig): void {
