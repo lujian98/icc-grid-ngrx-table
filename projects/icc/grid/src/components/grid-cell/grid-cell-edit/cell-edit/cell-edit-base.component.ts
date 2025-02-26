@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccGridFacade } from '../../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccCellEdit } from '../../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccCellEdit, IccGridSetting } from '../../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-cell-edit-base',
@@ -24,11 +24,12 @@ export class IccCellEditBaseComponent<T> {
 
   @Input() rowIndex!: number;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
     this.checkField();
-    if (this.gridConfig.restEdit) {
+    if (this.gridSetting.restEdit) {
       this.resetField();
     }
     this.changeDetectorRef.markForCheck();

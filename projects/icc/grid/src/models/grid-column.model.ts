@@ -15,6 +15,7 @@ export interface IccCellEdit<T> {
 
 export interface IccGridCell<T> {
   gridConfig: IccGridConfig;
+  gridSetting: IccGridSetting;
   rowIndex: number;
   column: IccColumnConfig;
   record: T;
@@ -53,10 +54,7 @@ export interface IccGridConfig {
   columnReorder: boolean;
   columnMenu: boolean;
   columnHidden: boolean;
-  gridEditable: boolean; //WARNING internal state ??
-  recordKey: string;
-  restEdit: boolean; //WARNING internal state
-  recordModified: boolean; //WARNING internal state
+  recordKey: string; // used for cell edit
   remoteGridConfig: boolean;
   remoteColumnsConfig: boolean;
   rowSelection: boolean;
@@ -86,13 +84,14 @@ export interface GridState {
 }
 
 export interface IccGridSetting {
+  // gridId: string; // TODO
   lastUpdateTime: Date;
+  gridEditable: boolean;
+  restEdit: boolean;
+  recordModified: boolean;
 
   viewportReady: boolean; //WARNING internal state
   viewportWidth: number; //WARNING internal state
-  gridEditable: boolean; //WARNING internal state ??
-  restEdit: boolean; //WARNING internal state
-  recordModified: boolean; //WARNING internal state
   pageSize: number; //WARNING internal state
   totalCounts: number; //WARNING internal state not sure it is used
 }

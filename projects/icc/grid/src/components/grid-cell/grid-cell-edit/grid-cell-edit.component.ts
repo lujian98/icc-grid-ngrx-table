@@ -10,7 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridCell, IccGridConfig } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridCell, IccGridConfig, IccGridSetting } from '../../../models/grid-column.model';
 import { IccCellEditDateComponent } from './cell-edit/date/cell-edit-date.component';
 import { IccCellEditNumberComponent } from './cell-edit/number/cell-edit-number.component';
 import { IccCellEditSelectComponent } from './cell-edit/select/cell-edit-select.component';
@@ -27,6 +27,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
   private instance!: IccGridCell<T>;
   private _componentRef!: ComponentRef<unknown>;
   private _gridConfig!: IccGridConfig;
+  private _gridSetting!: IccGridSetting;
   private _column!: IccColumnConfig;
 
   @Input() rowIndex!: number;
@@ -40,6 +41,17 @@ export class IccGridCellEditComponent<T> implements OnInit {
   }
   get gridConfig(): IccGridConfig {
     return this._gridConfig;
+  }
+
+  @Input()
+  set gridSetting(val: IccGridSetting) {
+    this._gridSetting = { ...val };
+    if (this._componentRef) {
+      this.instance.gridSetting = this.gridSetting;
+    }
+  }
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
   }
 
   @Input()
@@ -79,6 +91,7 @@ export class IccGridCellEditComponent<T> implements OnInit {
     this.instance.column = this.column;
     this.instance.rowIndex = this.rowIndex;
     this.instance.record = this.record;
+    this.instance.gridSetting = this.gridSetting;
     this.instance.gridConfig = this.gridConfig;
   }
 

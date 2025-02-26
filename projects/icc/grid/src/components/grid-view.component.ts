@@ -16,7 +16,7 @@ import { uniqueId } from '@icc/ui/core';
 import { BehaviorSubject, Observable, Subject, interval, map, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridSetting } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import { getTableWidth } from '../utils/viewport-width-ratio';
@@ -45,6 +45,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
+  @Input() gridSetting!: IccGridSetting;
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()

@@ -94,10 +94,10 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
   }
 
-  getButtons(gridConfig: IccGridConfig): IccButtonConfg[] {
+  getButtons(gridSetting: IccGridSetting): IccButtonConfg[] {
     return [...this.buttons].map((button) => {
-      const hidden = this.getHidden(button, gridConfig);
-      const disabled = this.getDisabled(button, gridConfig);
+      const hidden = this.getHidden(button, gridSetting);
+      const disabled = this.getDisabled(button, gridSetting);
       return {
         ...button,
         hidden,
@@ -106,27 +106,27 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     });
   }
 
-  private getDisabled(button: IccButtonConfg, gridConfig: IccGridConfig): boolean {
+  private getDisabled(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
     switch (button.name) {
       case IccButtonType.Save:
       case IccButtonType.Reset:
-        return !gridConfig.recordModified;
+        return !gridSetting.recordModified;
       default:
         return false;
     }
   }
 
-  private getHidden(button: IccButtonConfg, gridConfig: IccGridConfig): boolean {
+  private getHidden(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
     switch (button.name) {
       case IccButtonType.Edit:
       case IccButtonType.Refresh:
       case IccButtonType.ClearAllFilters:
-        return gridConfig.gridEditable;
+        return gridSetting.gridEditable;
 
       case IccButtonType.Save:
       case IccButtonType.Reset:
       case IccButtonType.View:
-        return !gridConfig.gridEditable;
+        return !gridSetting.gridEditable;
       default:
         return false;
     }

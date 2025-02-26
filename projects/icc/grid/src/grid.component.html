@@ -3,12 +3,12 @@
     <ng-container *ngIf="columnsConfig$ | async as columns">
       <icc-layout-header
         *ngIf="!gridConfig.hideTopbar"
-        [buttons]="getButtons(gridConfig)"
+        [buttons]="getButtons(gridSetting)"
         (iccButtonClick)="buttonClick($event, gridConfig)"
       >
       </icc-layout-header>
 
-      <icc-grid-view [gridConfig]="gridConfig" [columns]="columns"> </icc-grid-view>
+      <icc-grid-view [gridConfig]="gridConfig" [gridSetting]="gridSetting" [columns]="columns"> </icc-grid-view>
 
       <icc-grid-footer [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter"> </icc-grid-footer>
     </ng-container>

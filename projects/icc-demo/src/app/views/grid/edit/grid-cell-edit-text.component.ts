@@ -28,7 +28,7 @@ export class AppGridCellEditTextComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
-    gridEditable: false,
+    // gridEditable: false, // TODO initial grid editable
     recordKey: 'ID',
     sortFields: [
       {

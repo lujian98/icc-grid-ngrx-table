@@ -3,7 +3,7 @@ import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/const
 import { SelectionModel } from '@angular/cdk/collections';
 import { defaultState } from '../models/default-grid';
 import { IccObjectType } from '@icc/ui/core';
-import { GridState, IccCellEdit } from '../models/grid-column.model';
+import { GridState } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
 import * as gridActions from './grid.actions';
@@ -182,12 +182,12 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...gridConfig,
             totalCounts: totalCounts,
-            restEdit: false,
-            recordModified: false,
           },
           gridSetting: {
             ...oldState.gridSetting,
             lastUpdateTime: new Date(),
+            restEdit: false,
+            recordModified: false,
           },
           totalCounts: totalCounts,
           data,
@@ -340,8 +340,8 @@ export const iccGridFeature = createFeature({
         const oldState = state[key];
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...oldState.gridConfig,
+          gridSetting: {
+            ...oldState.gridSetting,
             gridEditable: action.gridEditable,
             restEdit: false,
             recordModified: false,
@@ -358,8 +358,8 @@ export const iccGridFeature = createFeature({
         const oldState = state[key];
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...oldState.gridConfig,
+          gridSetting: {
+            ...oldState.gridSetting,
             restEdit: action.restEdit,
             recordModified: false,
           },
@@ -397,8 +397,8 @@ export const iccGridFeature = createFeature({
         //console.log( ' new modified=', modified)
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...oldState.gridConfig,
+          gridSetting: {
+            ...oldState.gridSetting,
             restEdit: false,
             recordModified: modified.length > 0,
           },
@@ -421,8 +421,8 @@ export const iccGridFeature = createFeature({
         });
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...oldState.gridConfig,
+          gridSetting: {
+            ...oldState.gridSetting,
             recordModified: false,
           },
           data,
