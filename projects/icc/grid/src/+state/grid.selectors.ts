@@ -25,9 +25,8 @@ export const selectColumnsConfig = (gridId: string) =>
     return state[gridId] ? state[gridId].columnsConfig : [];
   });
 
-export const selectGridData = (gridConfig: IccGridConfig) =>
+export const selectGridData = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     return state[gridId] ? state[gridId].data : [];
   });
 

@@ -81,7 +81,7 @@ export interface GridState {
 }
 
 export interface IccGridSetting {
-  // gridId: string; // TODO
+  gridId: string; // TODO
   viewportWidth: number;
   lastUpdateTime: Date;
   gridEditable: boolean;

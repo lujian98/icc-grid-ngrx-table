@@ -201,8 +201,8 @@ export class IccGridFacade {
     return this.store.select(selectColumnsConfig(gridId));
   }
 
-  selectGridData(gridConfig: IccGridConfig): Observable<object[]> {
-    return this.store.select(selectGridData(gridConfig)) as Observable<object[]>;
+  selectGridData(gridId: string): Observable<object[]> {
+    return this.store.select(selectGridData(gridId)) as Observable<object[]>;
   }
 
   selectGridModifiedRecords(gridConfig: IccGridConfig): Observable<{ [key: string]: unknown }[]> {

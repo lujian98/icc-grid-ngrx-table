@@ -35,6 +35,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
+  private _gridSetting!: IccGridSetting;
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
   private destroy$ = new Subject<void>();
@@ -45,20 +46,28 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
-  @Input() gridSetting!: IccGridSetting;
+  @Input() set gridSetting(val: IccGridSetting) {
+    this._gridSetting = { ...val };
+    if (!this.gridData$) {
+      this.gridData$ = this.gridFacade.selectGridData(this.gridSetting.gridId).pipe(
+        map((data) => {
+          this.checkViewport(data);
+          console.log(' 33333 data=', data);
+          return data;
+        }),
+      );
+    }
+  }
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
+  }
+
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-    if (!this.gridData$) {
-      this.gridData$ = this.gridFacade.selectGridData(this.gridConfig).pipe(
-        map((data) => {
-          this.checkViewport(data);
-          return data;
-        }),
-      );
-    }
+
     if (!this.rowSelection$) {
       this.rowSelection$ = this.gridFacade.selectRowSelection(this.gridConfig);
     }
