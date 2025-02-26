@@ -44,12 +44,12 @@ export const setViewportPage = createAction(
 
 export const setGridSortFields = createAction(
   '[Grid] Set Grid Sort Fields',
-  props<{ gridConfig: IccGridConfig; sortFields: IccSortField[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; sortFields: IccSortField[] }>(),
 );
 
 export const setGridColumnFilters = createAction(
   '[Grid] Set Grid Column Filters',
-  props<{ gridConfig: IccGridConfig; columnFilters: IccColumnFilter[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; columnFilters: IccColumnFilter[] }>(),
 );
 
 export const setGridColumnsConfig = createAction(

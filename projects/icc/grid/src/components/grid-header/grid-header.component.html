@@ -37,6 +37,7 @@
     <icc-grid-header-cell
       [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
       [column]="column"
+      [gridSetting]="gridSetting"
       [gridConfig]="gridConfig"
       (columnMenuClick)="onColumnMenuClick($event)"
     >
@@ -44,6 +45,7 @@
 
     <icc-column-filter
       *ngIf="gridConfig.columnFilter && column.filterField !== false"
+      [gridSetting]="gridSetting"
       [gridConfig]="gridConfig"
       [column]="column"
     >

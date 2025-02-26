@@ -142,7 +142,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         }
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(this.gridConfig, []);
+        this.gridFacade.setGridColumnFilters(this.gridId, this.gridConfig, []);
         break;
       case IccButtonType.Edit:
         this.gridFacade.setGridEditable(this.gridConfig, true);

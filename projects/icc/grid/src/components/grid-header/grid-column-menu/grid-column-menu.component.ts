@@ -131,7 +131,7 @@ export class IccGridColumnMenuComponent {
         field: this.column.name,
         dir: 'asc',
       };
-      this.gridFacade.setGridGroupBy(this.gridConfig, rowGroupField);
+      this.gridFacade.setGridGroupBy(this.gridId, this.gridConfig, rowGroupField);
     } else if (item.name === 'unGroupBy') {
       this.gridFacade.setGridUnGroupBy(this.gridConfig);
     }
@@ -160,7 +160,7 @@ export class IccGridColumnMenuComponent {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
+    this.gridFacade.setGridSortFields(this.gridId, this.gridConfig, [sort]);
   }
 
   private columnHideShow(values: { [key: string]: boolean }, columns: IccColumnConfig[]): void {

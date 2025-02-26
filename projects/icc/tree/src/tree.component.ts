@@ -94,7 +94,7 @@ export class IccTreeComponent<T> implements OnDestroy {
         this.treeFacade.getTreeData(treeConfig);
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(this.treeConfig, []);
+        this.gridFacade.setGridColumnFilters(this.treeId, this.treeConfig, []);
         break;
 
       case IccButtonType.ExpandAll:

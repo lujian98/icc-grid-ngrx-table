@@ -11,13 +11,14 @@ import {
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { defaultSelectFieldConfig, defaultTextFieldConfig, IccFormField } from '@icc/ui/fields';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
 import { IccDateRangeFilterComponent } from './date-range/date-range-filter.component';
 import { IccNumberFilterComponent } from './number/number-filter.component';
 import { IccSelectFilterComponent } from './select/select-filter.component';
 import { IccTextFilterComponent } from './text/text-filter.component';
 
 export interface IccColumnFilterInstance {
+  gridSetting: IccGridSetting;
   gridConfig: IccGridConfig;
   fieldConfig: Partial<IccFormField>;
   column: IccColumnConfig;
@@ -33,8 +34,20 @@ export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);
   private instance!: IccColumnFilterInstance;
   private _componentRef: ComponentRef<unknown> | undefined;
+  private _gridSetting!: IccGridSetting;
   private _gridConfig!: IccGridConfig;
   private _column!: IccColumnConfig;
+
+  @Input()
+  set gridSetting(val: IccGridSetting) {
+    this._gridSetting = { ...val };
+    if (this._componentRef) {
+      this.instance.gridSetting = this.gridSetting;
+    }
+  }
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
+  }
 
   @Input()
   set column(val: IccColumnConfig) {
@@ -75,6 +88,7 @@ export class IccColumnFilterComponent implements OnInit {
       this.instance.fieldConfig = this.column.filterFieldConfig;
     }
     this.instance.column = this.column;
+    this.instance.gridSetting = this.gridSetting;
     this.instance.gridConfig = this.gridConfig;
   }
 

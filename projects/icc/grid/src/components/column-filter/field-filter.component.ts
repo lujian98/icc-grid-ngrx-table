@@ -12,7 +12,7 @@ import { IccObjectType } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccFilterValueType } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccFilterValueType, IccGridSetting } from '../../models/grid-column.model';
 
 @Component({
   template: '',
@@ -30,6 +30,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   column!: IccColumnConfig;
   fieldConfig!: Partial<IccFormField>;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
@@ -84,7 +85,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
       });
     }
     //console.log(' filter columnFilters =', columnFilters);
-    this.gridFacade.setGridColumnFilters(this.gridConfig, columnFilters);
+    this.gridFacade.setGridColumnFilters(this.gridSetting.gridId, this.gridConfig, columnFilters);
   }
 
   ngOnDestroy(): void {

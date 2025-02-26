@@ -44,7 +44,7 @@ export class IccGridFacade {
 
   initRowGroup(gridId: string, gridConfig: IccGridConfig): void {
     if (gridConfig.rowGroupField) {
-      this.setGridGroupBy(gridConfig, gridConfig.rowGroupField);
+      this.setGridGroupBy(gridId, gridConfig, gridConfig.rowGroupField);
     }
   }
 
@@ -81,17 +81,22 @@ export class IccGridFacade {
     }
   }
 
-  setGridSortFields(gridConfig: IccGridConfig, sortFields: IccSortField[], checkSort: boolean = true): void {
+  setGridSortFields(
+    gridId: string,
+    gridConfig: IccGridConfig,
+    sortFields: IccSortField[],
+    checkSort: boolean = true,
+  ): void {
     if (checkSort) {
       sortFields = this.checkGroupSortField(gridConfig, sortFields);
     }
-    this.store.dispatch(gridActions.setGridSortFields({ gridConfig, sortFields }));
+    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
     this.getGridData(gridConfig.gridId, gridConfig);
   }
 
-  setGridColumnFilters(gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridConfig, columnFilters }));
-    this.getGridData(gridConfig.gridId, gridConfig);
+  setGridColumnFilters(gridId: string, gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, gridConfig, columnFilters }));
+    this.getGridData(gridId, gridConfig);
   }
 
   setGridColumnConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
@@ -110,11 +115,11 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setSelectRow({ gridConfig, record }));
   }
 
-  setGridGroupBy(gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
+  setGridGroupBy(gridId: string, gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
     this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
     this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, rowGroupField }));
-    this.setGridSortFields(gridConfig, sortFields, false);
+    this.setGridSortFields(gridId, gridConfig, sortFields, false);
   }
 
   private checkGroupSortField(gridConfig: IccGridConfig, sortFields: IccSortField[]): IccSortField[] {

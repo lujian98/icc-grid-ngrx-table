@@ -3,7 +3,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '../../../models/grid-column.model';
+import {
+  ColumnMenuClick,
+  IccColumnConfig,
+  IccGridConfig,
+  IccSortField,
+  IccGridSetting,
+} from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-header-cell',
@@ -16,6 +22,7 @@ import { ColumnMenuClick, IccColumnConfig, IccGridConfig, IccSortField } from '.
 export class IccGridHeaderCellComponent {
   private gridFacade = inject(IccGridFacade);
   @Input() column!: IccColumnConfig;
+  @Input() gridSetting!: IccGridSetting;
   @Input() gridConfig!: IccGridConfig;
 
   get title(): string {
@@ -49,7 +56,7 @@ export class IccGridHeaderCellComponent {
           dir: 'asc',
         };
       }
-      this.gridFacade.setGridSortFields(this.gridConfig, [sort]);
+      this.gridFacade.setGridSortFields(this.gridSetting.gridId, this.gridConfig, [sort]);
     }
   }
 
