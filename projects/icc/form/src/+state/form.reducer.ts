@@ -102,12 +102,14 @@ export const iccFormFeature = createFeature({
       const key = action.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
-        const editable = getFormEditable(action.button);
-        const formConfig = { ...state[key].formConfig, editable };
+        const editing = getFormEditable(action.button);
         const formFields = setFormFieldsEditable(state[key].formFields, action.button);
         newState[key] = {
           ...state[key],
-          formConfig,
+          formSetting: {
+            ...state[key].formSetting,
+            editing,
+          },
           formFields,
         };
       }

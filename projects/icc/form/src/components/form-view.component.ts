@@ -203,10 +203,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       case IccButtonType.Reset:
       case IccButtonType.Save:
         //case IccButtonType.UploadFile:
-        return !this.formConfig.editable;
+        return !this.formSetting.editing;
       case IccButtonType.Edit:
       default:
-        return this.formConfig.editable;
+        return this.formSetting.editing;
     }
   }
 

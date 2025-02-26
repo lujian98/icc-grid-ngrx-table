@@ -8,7 +8,7 @@ export interface IccFormConfig {
   remoteFormConfig: boolean;
   remoteFieldsConfig: boolean;
   remoteFormData: boolean;
-  editable: boolean;
+  //editable: boolean;
   //readonly: boolean;
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];

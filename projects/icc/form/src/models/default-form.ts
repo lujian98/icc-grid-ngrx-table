@@ -14,8 +14,6 @@ export const defaultFormConfig: IccFormConfig = {
   remoteFormConfig: false,
   remoteFieldsConfig: false,
   remoteFormData: false,
-  editable: false,
-  //readonly: false,
   autoFitHeight: true,
   buttons: buttons,
 };
