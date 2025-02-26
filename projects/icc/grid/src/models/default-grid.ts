@@ -34,6 +34,7 @@ export const defaultGridConfig: IccGridConfig = {
 
 export const defaultGridSetting: IccGridSetting = {
   gridId: '191cf2bb6b8',
+  isTreeGrid: false,
   viewportReady: false,
   viewportWidth: 1000,
   lastUpdateTime: new Date(),
