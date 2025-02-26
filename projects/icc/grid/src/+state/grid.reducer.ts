@@ -182,9 +182,12 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...gridConfig,
             totalCounts: totalCounts,
-            lastUpdateTime: new Date(),
             restEdit: false,
             recordModified: false,
+          },
+          gridSetting: {
+            ...oldState.gridSetting,
+            lastUpdateTime: new Date(),
           },
           totalCounts: totalCounts,
           data,

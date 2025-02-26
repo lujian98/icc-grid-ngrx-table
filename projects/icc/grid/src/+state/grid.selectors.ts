@@ -71,8 +71,7 @@ export const selectRowGroups = (gridConfig: IccGridConfig) =>
     return state[gridId].rowGroups ? state[gridId].rowGroups : true;
   });
 
-export const selectGridInMemoryData = (gridConfig: IccGridConfig) =>
+export const selectGridInMemoryData = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    const gridId = gridConfig.gridId;
     return state[gridId] ? state[gridId].inMemoryData : [];
   });

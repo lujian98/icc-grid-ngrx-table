@@ -79,7 +79,6 @@ export interface IccGridConfig {
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
   refreshRate: number;
-  lastUpdateTime: Date; //WARNING internal state
 }
 
 export interface GridState {
@@ -87,10 +86,10 @@ export interface GridState {
 }
 
 export interface IccGridSetting {
-  viewportReady: boolean;
-  viewportWidth: number; //WARNING internal state
   lastUpdateTime: Date;
 
+  viewportReady: boolean; //WARNING internal state
+  viewportWidth: number; //WARNING internal state
   gridEditable: boolean; //WARNING internal state ??
   restEdit: boolean; //WARNING internal state
   recordModified: boolean; //WARNING internal state

@@ -1,12 +1,13 @@
 import { ClassProvider, Injectable, Injector, inject } from '@angular/core';
 import { interval, take, takeWhile } from 'rxjs';
 
-export interface IccTaskSetting {
+export interface IccTaskConfig {
   refreshRate: number;
-  lastUpdateTime: Date;
 }
 
-export interface IccTaskConfig extends IccTaskSetting {}
+export interface IccTaskSetting {
+  lastUpdateTime: Date;
+}
 
 export interface IccTask {
   key: string;
@@ -42,12 +43,12 @@ export class IccTasksService {
 
   private runTasks(task: IccTask): void {
     task.service
-      ?.selectConfig(task.key)
+      ?.selectSetting(task.key)
       .pipe(take(1))
-      .subscribe((config: IccTaskConfig) => {
-        const dt = Math.ceil((new Date().getTime() - config.lastUpdateTime.getTime()) / 1000) + 2.5;
-        if (dt > config.refreshRate) {
-          task.service?.runTask(config);
+      .subscribe((setting: IccTaskSetting) => {
+        const dt = Math.ceil((new Date().getTime() - setting.lastUpdateTime.getTime()) / 1000) + 2.5;
+        if (dt > task.config.refreshRate) {
+          task.service?.runTask(task.config);
         }
       });
   }

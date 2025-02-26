@@ -75,7 +75,7 @@ export class IccGridEffects {
         return [
           this.gridFacade.selectGridConfig(action.gridConfig.gridId),
           this.gridFacade.selectColumnsConfig(action.gridConfig.gridId),
-          this.gridFacade.selectGridInMemoryData(action.gridConfig),
+          this.gridFacade.selectGridInMemoryData(action.gridConfig.gridId),
         ];
       }),
       switchMap(([action, gridConfig, columns, inMemoryData]) => {
@@ -89,9 +89,9 @@ export class IccGridEffects {
       ofType(gridActions.getConcatGridData),
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
-          this.gridFacade.selectColumnsConfig(action.gridConfig.gridId),
-          this.gridFacade.selectGridInMemoryData(action.gridConfig),
+          this.gridFacade.selectGridConfig(action.gridId),
+          this.gridFacade.selectColumnsConfig(action.gridId),
+          this.gridFacade.selectGridInMemoryData(action.gridId),
         ];
       }),
       concatMap(([action, gridConfig, columns, inMemoryData]) => {

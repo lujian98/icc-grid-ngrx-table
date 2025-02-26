@@ -63,7 +63,7 @@ export class IccGridFacade {
   setWindowResize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number, loadData: boolean): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
     if (gridConfig.viewportReady && loadData && !gridConfig.isTreeGrid) {
-      this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
+      this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
     }
   }
 
@@ -211,16 +211,12 @@ export class IccGridFacade {
     return this.store.select(selectRowGroups(gridConfig));
   }
 
-  selectGridInMemoryData<T>(gridConfig: IccGridConfig): Observable<T[]> {
-    return this.store.select(selectGridInMemoryData(gridConfig)) as Observable<T[]>;
+  selectGridInMemoryData<T>(gridId: string): Observable<T[]> {
+    return this.store.select(selectGridInMemoryData(gridId)) as Observable<T[]>;
   }
 
   runTask(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.getConcatGridData({ gridConfig }));
-  }
-
-  selectConfig(gridId: string): Observable<IccGridConfig> {
-    return this.store.select(selectGridConfig(gridId));
+    this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
   }
 
   selectSetting(gridId: string): Observable<IccGridSetting> {
