@@ -85,6 +85,10 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...state[key].gridConfig,
             pageSize: action.pageSize,
+            //viewportWidth: action.viewportWidth,
+          },
+          gridSetting: {
+            ...state[key].gridSetting,
             viewportWidth: action.viewportWidth,
           },
         };

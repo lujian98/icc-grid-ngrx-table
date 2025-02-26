@@ -63,7 +63,6 @@ export interface IccGridConfig {
   horizontalScroll: boolean;
   verticalScroll: boolean;
   virtualScroll: boolean;
-  viewportWidth: number; //WARNING internal state
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
   page: number; //WARNING internal state or input ??
@@ -85,13 +84,13 @@ export interface GridState {
 
 export interface IccGridSetting {
   // gridId: string; // TODO
+  viewportWidth: number;
   lastUpdateTime: Date;
   gridEditable: boolean;
   restEdit: boolean;
   recordModified: boolean;
 
   viewportReady: boolean; //WARNING internal state
-  viewportWidth: number; //WARNING internal state
   pageSize: number; //WARNING internal state
   totalCounts: number; //WARNING internal state not sure it is used
 }

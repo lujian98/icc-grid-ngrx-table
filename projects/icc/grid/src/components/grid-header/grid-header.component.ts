@@ -15,7 +15,13 @@ import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
-import { ColumnMenuClick, IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
+import {
+  ColumnMenuClick,
+  IccColumnConfig,
+  IccColumnWidth,
+  IccGridConfig,
+  IccGridSetting,
+} from '../../models/grid-column.model';
 import { IccColumnFilterComponent } from '../column-filter/column-filter.component';
 import { IccRowSelectComponent } from '../row-select/row-select.component';
 import { IccGridColumnMenuComponent } from './grid-column-menu/grid-column-menu.component';
@@ -48,6 +54,7 @@ export class IccGridHeaderComponent<T> {
     | Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }>
     | undefined;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()

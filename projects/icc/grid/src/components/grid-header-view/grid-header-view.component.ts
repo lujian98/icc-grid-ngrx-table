@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output
 import { IccGridFacade } from '../../+state/grid.facade';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { DragDropEvent } from '../../models/drag-drop-event';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
 import { getTableWidth, viewportWidthRatio } from '../../utils/viewport-width-ratio';
 import { IccGridHeaderComponent } from '../grid-header/grid-header.component';
 import { IccGridGroupHeaderComponent } from '../grid-header/grid-group-header/grid-group-header.component';
@@ -24,12 +24,13 @@ export class IccGridHeaderViewComponent {
   private _columnWidths: IccColumnWidth[] = [];
   tableWidth: number = 1000;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input() columnHeaderPosition: number = 0;
 
   @Input()
   set columns(val: IccColumnConfig[]) {
     this._columns = [...val];
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.gridSetting, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
   get columns(): IccColumnConfig[] {
@@ -39,7 +40,7 @@ export class IccGridHeaderViewComponent {
   @Input()
   set gridConfig(val: IccGridConfig) {
     this._gridConfig = { ...val };
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.gridSetting, this.columns);
     this.setColumWidths(this.columns, widthRatio);
   }
   get gridConfig(): IccGridConfig {
@@ -65,7 +66,7 @@ export class IccGridHeaderViewComponent {
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
-    const widthRatio = viewportWidthRatio(this.gridConfig, this.columns);
+    const widthRatio = viewportWidthRatio(this.gridConfig, this.gridSetting, this.columns);
     const columns: IccColumnConfig[] = [...this.columns].map((column, index) => ({
       ...column,
       width: columnWidths[index].width / widthRatio,
@@ -150,7 +151,7 @@ export class IccGridHeaderViewComponent {
   }
 
   private setColumWidths(columns: IccColumnConfig[], widthRatio: number): void {
-    this.tableWidth = this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
+    this.tableWidth = this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;
     const displayColumns = [...columns].filter((column) => column.hidden !== true);
     let tot = this.gridConfig.rowSelection ? ROW_SELECTION_CELL_WIDTH : 0;
     this.columnWidths = displayColumns.map((column, index) => {

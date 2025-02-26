@@ -1,7 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, inject } from '@angular/core';
 import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
-import { IccColumnConfig, IccColumnWidth, IccGridConfig } from '../models/grid-column.model';
+import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridSetting } from '../models/grid-column.model';
 import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
@@ -15,6 +15,7 @@ export class IccColumnResizeDirective {
   @Input() column!: IccColumnConfig;
   @Input() columns!: IccColumnConfig[];
   @Input() gridConfig!: IccGridConfig;
+  @Input() gridSetting!: IccGridSetting;
   @Input() groupHeader: boolean = false;
 
   @Output() readonly columnResizing = new EventEmitter<IccColumnWidth[]>();
@@ -49,7 +50,7 @@ export class IccColumnResizeDirective {
     this.currentIndex = this.displayedColumns.findIndex((item) => item.name === this.column.name);
     this.columnWidths = [...this.displayedColumns].map((column) => ({
       name: column.name,
-      width: viewportWidthRatio(this.gridConfig, this.displayedColumns) * column.width!,
+      width: viewportWidthRatio(this.gridConfig, this.gridSetting, this.displayedColumns) * column.width!,
     }));
     event.stopPropagation();
     this.columnInResizeMode = true;

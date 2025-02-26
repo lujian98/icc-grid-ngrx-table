@@ -71,7 +71,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   get tableWidth(): number {
-    return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridConfig.viewportWidth;
+    return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;
   }
 
   getRecord(record: object): object {

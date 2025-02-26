@@ -6,6 +6,7 @@
       height: gridConfig.headerHeight + 'px',
     }"
     [gridConfig]="gridConfig"
+    [gridSetting]="gridSetting"
     [columns]="columns"
     [columnWidths]="columnWidths"
     (columnResizing)="onColumnResizing($event)"
@@ -18,6 +19,7 @@
       left: columnHeaderPosition + 'px',
     }"
     [gridConfig]="gridConfig"
+    [gridSetting]="gridSetting"
     [columns]="columns"
     [columnWidths]="columnWidths"
     (columnResizing)="onColumnResizing($event)"
