@@ -60,7 +60,7 @@ export class IccGridEffects {
               return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
             } else if (!gridConfig.isTreeGrid) {
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
-              return gridActions.getGridData({ gridConfig });
+              return gridActions.getGridData({ gridId });
             } else {
               // TODO tree need load local data?
               return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
@@ -77,13 +77,13 @@ export class IccGridEffects {
       debounceTime(10), // debounce with switchMap may lose data if two or more grid pull, but will cancel previous call
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
-          this.gridFacade.selectColumnsConfig(action.gridConfig.gridId),
-          this.gridFacade.selectGridInMemoryData(action.gridConfig.gridId),
+          this.gridFacade.selectGridConfig(action.gridId),
+          this.gridFacade.selectColumnsConfig(action.gridId),
+          this.gridFacade.selectGridInMemoryData(action.gridId),
         ];
       }),
       switchMap(([action, gridConfig, columns, inMemoryData]) => {
-        return this.getGridData(gridConfig, columns, inMemoryData);
+        return this.getGridData(action.gridId, gridConfig, columns, inMemoryData);
       }),
     ),
   );
@@ -99,12 +99,17 @@ export class IccGridEffects {
         ];
       }),
       concatMap(([action, gridConfig, columns, inMemoryData]) => {
-        return this.getGridData(gridConfig, columns, inMemoryData);
+        return this.getGridData(action.gridId, gridConfig, columns, inMemoryData);
       }),
     ),
   );
 
-  private getGridData = (gridConfig: IccGridConfig, columns: IccColumnConfig[], inMemoryData: unknown[]) => {
+  private getGridData = (
+    gridId: string,
+    gridConfig: IccGridConfig,
+    columns: IccColumnConfig[],
+    inMemoryData: unknown[],
+  ) => {
     if (gridConfig.remoteGridData) {
       return this.gridService.getGridData(gridConfig, columns).pipe(
         map((gridData) => {

@@ -50,7 +50,7 @@ export class IccGridFacade {
 
   setGridColumnsConfig(gridId: string, gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
-    this.getGridData(gridConfig);
+    this.getGridData(gridId, gridConfig);
   }
 
   setViewportPageSize(
@@ -63,7 +63,7 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
-      this.getGridData(gridConfig);
+      this.getGridData(gridId, gridConfig);
     }
   }
 
@@ -86,12 +86,12 @@ export class IccGridFacade {
       sortFields = this.checkGroupSortField(gridConfig, sortFields);
     }
     this.store.dispatch(gridActions.setGridSortFields({ gridConfig, sortFields }));
-    this.getGridData(gridConfig);
+    this.getGridData(gridConfig.gridId, gridConfig);
   }
 
   setGridColumnFilters(gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
     this.store.dispatch(gridActions.setGridColumnFilters({ gridConfig, columnFilters }));
-    this.getGridData(gridConfig);
+    this.getGridData(gridConfig.gridId, gridConfig);
   }
 
   setGridColumnConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
@@ -173,12 +173,12 @@ export class IccGridFacade {
 
   getGridPageData(gridConfig: IccGridConfig, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridConfig, page }));
-    this.getGridData(gridConfig);
+    this.getGridData(gridConfig.gridId, gridConfig);
   }
 
-  getGridData(gridConfig: IccGridConfig): void {
+  getGridData(gridId: string, gridConfig: IccGridConfig): void {
     if (!gridConfig.isTreeGrid) {
-      this.store.dispatch(gridActions.getGridData({ gridConfig }));
+      this.store.dispatch(gridActions.getGridData({ gridId }));
     }
   }
 
@@ -188,7 +188,7 @@ export class IccGridFacade {
 
   setGridInMemoryData(gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
     this.store.dispatch(gridActions.setGridInMemoryData({ gridConfig, gridData }));
-    this.getGridData(gridConfig);
+    this.getGridData(gridConfig.gridId, gridConfig);
   }
 
   clearGridDataStore(gridId: string): void {

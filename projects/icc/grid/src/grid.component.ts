@@ -138,7 +138,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         if (gridConfig.virtualScroll) {
           this.gridFacade.getGridPageData(gridConfig, 1);
         } else {
-          this.gridFacade.getGridData(gridConfig);
+          this.gridFacade.getGridData(this.gridId, gridConfig);
         }
         break;
       case IccButtonType.ClearAllFilters:
