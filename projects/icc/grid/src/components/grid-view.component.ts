@@ -34,7 +34,6 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
-  //private _gridConfig!: IccGridConfig;
   private _gridSetting!: IccGridSetting;
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
@@ -67,9 +66,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   get gridSetting(): IccGridSetting {
     return this._gridSetting;
   }
-
-  @Input() columns: IccColumnConfig[] = [];
   @Input() gridConfig!: IccGridConfig;
+  @Input() columns: IccColumnConfig[] = [];
 
   get tableWidth(): number {
     return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;

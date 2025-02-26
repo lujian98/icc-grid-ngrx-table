@@ -49,24 +49,22 @@ export class IccGridHeaderComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
-  private _gridConfig!: IccGridConfig;
+  private _gridSetting!: IccGridSetting;
   rowSelections$:
     | Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }>
     | undefined;
 
-  @Input() gridSetting!: IccGridSetting;
-  @Input() columns: IccColumnConfig[] = [];
-
-  @Input()
-  set gridConfig(val: IccGridConfig) {
-    this._gridConfig = { ...val };
+  @Input() set gridSetting(val: IccGridSetting) {
+    this._gridSetting = { ...val };
     if (!this.rowSelections$) {
-      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridConfig.gridId);
+      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridSetting.gridId);
     }
   }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
   }
+  @Input() gridConfig!: IccGridConfig;
+  @Input() columns: IccColumnConfig[] = [];
 
   @Input() columnWidths: IccColumnWidth[] = [];
 
@@ -101,7 +99,7 @@ export class IccGridHeaderComponent<T> {
       values[column.name] = !column.hidden;
     });
     const popoverContext = {
-      gridId: this.gridConfig.gridId,
+      gridId: this.gridSetting.gridId,
       column: menuClick.column,
       values: values,
     };
