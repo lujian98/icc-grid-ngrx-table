@@ -4,7 +4,7 @@
       <icc-layout-header
         *ngIf="!gridConfig.hideTopbar"
         [buttons]="getButtons(gridSetting)"
-        (iccButtonClick)="buttonClick($event, gridConfig)"
+        (iccButtonClick)="buttonClick($event, gridConfig, gridSetting)"
       >
       </icc-layout-header>
 

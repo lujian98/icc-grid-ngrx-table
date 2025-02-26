@@ -5,7 +5,7 @@ import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccRowGroupField } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccRowGroupField, IccGridSetting } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
@@ -18,6 +18,7 @@ export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
   private _gridId!: string;
   private gridConfig!: IccGridConfig;
+  private gridSetting!: IccGridSetting;
   private columns!: IccColumnConfig[];
 
   columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
@@ -28,10 +29,12 @@ export class IccGridColumnMenuComponent {
     this._gridId = val;
     this.columnMenus$ = combineLatest([
       this.gridFacade.selectGridConfig(this.gridId),
+      this.gridFacade.selectSetting(this.gridId),
       this.gridFacade.selectColumnsConfig(this.gridId),
     ]).pipe(
-      map(([gridConfig, columns]) => {
+      map(([gridConfig, gridSetting, columns]) => {
         this.gridConfig = gridConfig;
+        this.gridSetting = gridSetting;
         this.columns = columns;
         if (this.menuItems.length === 0) {
           this.setMenuItems();
@@ -160,7 +163,7 @@ export class IccGridColumnMenuComponent {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortFields(this.gridId, this.gridConfig, [sort]);
+    this.gridFacade.setGridSortFields(this.gridConfig, this.gridSetting, [sort]);
   }
 
   private columnHideShow(values: { [key: string]: boolean }, columns: IccColumnConfig[]): void {

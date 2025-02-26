@@ -48,9 +48,10 @@ export class IccGridFacade {
     }
   }
 
-  setGridColumnsConfig(gridId: string, gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
+  setGridColumnsConfig(gridConfig: IccGridConfig, gridSetting: IccGridSetting, columnsConfig: IccColumnConfig[]): void {
+    const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
-    this.getGridData(gridId, gridConfig);
+    this.getGridData(gridId, gridSetting);
   }
 
   setViewportPageSize(
@@ -62,8 +63,8 @@ export class IccGridFacade {
   ): void {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
-    if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
-      this.getGridData(gridId, gridConfig);
+    if (gridSetting.viewportReady && loadData && !gridSetting.isTreeGrid) {
+      this.getGridData(gridId, gridSetting);
     }
   }
 
@@ -76,27 +77,29 @@ export class IccGridFacade {
   ): void {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
-    if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
+    if (gridSetting.viewportReady && loadData && !gridSetting.isTreeGrid) {
       this.store.dispatch(gridActions.getConcatGridData({ gridId }));
     }
   }
 
   setGridSortFields(
-    gridId: string,
     gridConfig: IccGridConfig,
+    gridSetting: IccGridSetting,
     sortFields: IccSortField[],
     //checkSort: boolean = true,
   ): void {
+    const gridId = gridSetting.gridId;
     //if (checkSort) {
     sortFields = this.checkGroupSortField(gridConfig, sortFields);
     //}
     this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
-    this.getGridData(gridId, gridConfig);
+    this.getGridData(gridId, gridSetting);
   }
 
-  setGridColumnFilters(gridId: string, gridConfig: IccGridConfig, columnFilters: IccColumnFilter[]): void {
+  setGridColumnFilters(gridConfig: IccGridConfig, gridSetting: IccGridSetting, columnFilters: IccColumnFilter[]): void {
+    const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setGridColumnFilters({ gridId, gridConfig, columnFilters }));
-    this.getGridData(gridId, gridConfig);
+    this.getGridData(gridId, gridSetting);
   }
 
   setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
@@ -178,13 +181,13 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.saveGridModifiedRecords({ gridId }));
   }
 
-  getGridPageData(gridId: string, gridConfig: IccGridConfig, page: number): void {
+  getGridPageData(gridId: string, page: number): void {
     this.store.dispatch(gridActions.setViewportPage({ gridId, page }));
     this.dispatchGridData(gridId);
   }
 
-  getGridData(gridId: string, gridConfig: IccGridConfig): void {
-    if (!gridConfig.isTreeGrid) {
+  getGridData(gridId: string, gridSetting: IccGridSetting): void {
+    if (!gridSetting.isTreeGrid) {
       this.dispatchGridData(gridId);
     }
   }
@@ -200,7 +203,7 @@ export class IccGridFacade {
 
   setGridInMemoryData(gridId: string, gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
     this.store.dispatch(gridActions.setGridInMemoryData({ gridId, gridConfig, gridData }));
-    this.getGridData(gridId, gridConfig);
+    this.dispatchGridData(gridId);
   }
 
   clearGridDataStore(gridId: string): void {

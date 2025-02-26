@@ -8,11 +8,12 @@ export interface IccTreeConfig extends IccGridConfig {
 export interface IccTreeSetting extends IccGridSetting {}
 export const defaultTreeSetting: IccGridSetting = {
   ...defaultGridSetting,
+  isTreeGrid: true,
 };
 
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
-  isTreeGrid: true,
+  //isTreeGrid: true,
   virtualScroll: true,
   pageSize: 10000,
   remoteLoadAll: false,

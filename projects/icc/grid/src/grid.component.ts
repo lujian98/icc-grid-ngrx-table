@@ -5,7 +5,7 @@ import { IccGridFacade } from './+state/grid.facade';
 import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
-import { defaultGridConfig } from './models/default-grid';
+import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
 import { IccGridStateModule } from './+state/grid-state.module';
@@ -72,7 +72,8 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       this.initGridConfig({ ...defaultGridConfig });
     }
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.gridId, this.gridConfig, this.columnsConfig);
+      const gridSetting = { ...defaultGridSetting, gridId: this.gridId };
+      this.gridFacade.setGridColumnsConfig(this.gridConfig, gridSetting, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {
@@ -132,17 +133,17 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     }
   }
 
-  buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig): void {
+  buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig, gridSetting: IccGridSetting): void {
     switch (button.name) {
       case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
         if (gridConfig.virtualScroll) {
-          this.gridFacade.getGridPageData(this.gridId, gridConfig, 1);
+          this.gridFacade.getGridPageData(this.gridId, 1);
         } else {
-          this.gridFacade.getGridData(this.gridId, gridConfig);
+          this.gridFacade.getGridData(this.gridId, gridSetting);
         }
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(this.gridId, this.gridConfig, []);
+        this.gridFacade.setGridColumnFilters(gridConfig, gridSetting, []);
         break;
       case IccButtonType.Edit:
         this.gridFacade.setGridEditable(this.gridId, true);

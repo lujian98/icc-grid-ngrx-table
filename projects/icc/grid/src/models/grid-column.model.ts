@@ -44,7 +44,7 @@ export interface ColumnMenuClick {
 }
 
 export interface IccGridConfig {
-  isTreeGrid: boolean;
+  //isTreeGrid: boolean;
   urlKey: string; // Only for remote grid config and data
   columnSort: boolean;
   columnFilter: boolean;

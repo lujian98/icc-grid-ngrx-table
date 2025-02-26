@@ -8,7 +8,13 @@ import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
 import { IccTreeViewComponent } from './components/tree-view.component';
-import { defaultTreeConfig, IccTreeConfig, IccTreeNode, IccTreeSetting } from './models/tree-grid.model';
+import {
+  defaultTreeConfig,
+  IccTreeConfig,
+  IccTreeNode,
+  IccTreeSetting,
+  defaultTreeSetting,
+} from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -71,7 +77,8 @@ export class IccTreeComponent<T> implements OnDestroy {
       this.initGridConfig({ ...defaultTreeConfig });
     }
     if (!this.treeConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.treeId, this.treeConfig, this.columnsConfig);
+      const treeSetting = { ...defaultTreeSetting, gridId: this.treeId };
+      this.gridFacade.setGridColumnsConfig(this.treeConfig, treeSetting, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {
@@ -89,13 +96,14 @@ export class IccTreeComponent<T> implements OnDestroy {
     return this._treeData;
   }
 
-  buttonClick(button: IccButtonConfg, treeConfig: IccTreeConfig): void {
+  buttonClick(button: IccButtonConfg, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
     switch (button.name) {
       case IccButtonType.Refresh:
         this.treeFacade.getTreeData(this.treeId, treeConfig);
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(this.treeId, this.treeConfig, []);
+        console.log(' 2222 treeSetting=', gridSetting);
+        this.gridFacade.setGridColumnFilters(this.treeConfig, gridSetting, []);
         break;
 
       case IccButtonType.ExpandAll:

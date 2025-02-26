@@ -2,7 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { IccGridConfig, IccGridState, IccGridSetting } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
-  isTreeGrid: false,
+  //isTreeGrid: false,
   urlKey: 'grid', // Only for remote grid config and data
   columnSort: false,
   columnFilter: false,

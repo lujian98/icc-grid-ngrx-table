@@ -45,20 +45,20 @@ export class IccGridEffects {
     this.actions$.pipe(
       ofType(gridActions.loadGridColumnsConfig),
       concatLatestFrom((action) => {
-        return [this.gridFacade.selectGridConfig(action.gridId)];
+        return [this.gridFacade.selectSetting(action.gridId), this.gridFacade.selectGridConfig(action.gridId)];
       }),
-      concatMap(([action, gridConfig]) => {
+      concatMap(([action, gridSetting, gridConfig]) => {
         const gridId = action.gridId;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
             if (gridConfig.rowGroupField) {
               this.gridFacade.initRowGroup(gridId, gridConfig);
               return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
-            } else if (gridConfig.remoteGridConfig || gridConfig.isTreeGrid) {
+            } else if (gridConfig.remoteGridConfig || gridSetting.isTreeGrid) {
               // remote config will need trigger window resize to load data
               window.dispatchEvent(new Event('resize'));
               return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
-            } else if (!gridConfig.isTreeGrid) {
+            } else if (!gridSetting.isTreeGrid) {
               this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
               return gridActions.getGridData({ gridId });
             } else {
