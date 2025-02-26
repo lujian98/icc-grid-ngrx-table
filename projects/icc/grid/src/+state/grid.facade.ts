@@ -116,9 +116,9 @@ export class IccGridFacade {
   }
 
   setGridGroupBy(gridId: string, gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
-    this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
+    this.store.dispatch(gridActions.setGridUnGroupBy({ gridId, gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
-    this.store.dispatch(gridActions.setGridGroupBy({ gridConfig, rowGroupField }));
+    this.store.dispatch(gridActions.setGridGroupBy({ gridId, gridConfig, rowGroupField }));
     this.setGridSortFields(gridId, gridConfig, sortFields, false);
   }
 
@@ -152,28 +152,28 @@ export class IccGridFacade {
     }
   }
 
-  setToggleRowGroup(gridConfig: IccGridConfig, rowGroup: IccRowGroup): void {
-    this.store.dispatch(gridActions.setToggleRowGroup({ gridConfig, rowGroup }));
+  setToggleRowGroup(gridId: string, rowGroup: IccRowGroup): void {
+    this.store.dispatch(gridActions.setToggleRowGroup({ gridId, rowGroup }));
   }
 
-  setGridUnGroupBy(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.setGridUnGroupBy({ gridConfig }));
+  setGridUnGroupBy(gridId: string, gridConfig: IccGridConfig): void {
+    this.store.dispatch(gridActions.setGridUnGroupBy({ gridId, gridConfig }));
   }
 
-  setGridEditable(gridConfig: IccGridConfig, gridEditable: boolean): void {
-    this.store.dispatch(gridActions.setGridEditable({ gridConfig, gridEditable }));
+  setGridEditable(gridId: string, gridEditable: boolean): void {
+    this.store.dispatch(gridActions.setGridEditable({ gridId, gridEditable }));
   }
 
-  setGridRestEdit(gridConfig: IccGridConfig, restEdit: boolean): void {
-    this.store.dispatch(gridActions.setGridRestEdit({ gridConfig, restEdit }));
+  setGridRestEdit(gridId: string, restEdit: boolean): void {
+    this.store.dispatch(gridActions.setGridRestEdit({ gridId, restEdit }));
   }
 
-  setGridRecordModified(gridConfig: IccGridConfig, modified: IccCellEdit<unknown>): void {
-    this.store.dispatch(gridActions.setGridRecordModified({ gridConfig, modified }));
+  setGridRecordModified(gridId: string, modified: IccCellEdit<unknown>): void {
+    this.store.dispatch(gridActions.setGridRecordModified({ gridId, modified }));
   }
 
-  saveGridModifiedRecords(gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.saveGridModifiedRecords({ gridConfig }));
+  saveGridModifiedRecords(gridId: string): void {
+    this.store.dispatch(gridActions.saveGridModifiedRecords({ gridId }));
   }
 
   getGridPageData(gridId: string, gridConfig: IccGridConfig, page: number): void {

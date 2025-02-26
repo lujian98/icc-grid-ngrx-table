@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IccColumnConfig, IccGridConfig } from '../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
 import { IccRowGroup } from '../../services/row-group/row-group';
 import { IccGridFacade } from '../../+state/grid.facade';
 
@@ -20,6 +20,7 @@ export class IccGridRowGroupComponent<T> {
   private gridFacade = inject(IccGridFacade);
   private _record!: IccRowGroup;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input() gridConfig!: IccGridConfig;
   @Input() columns: IccColumnConfig[] = [];
   @Input() rowIndex!: number;
@@ -43,7 +44,7 @@ export class IccGridRowGroupComponent<T> {
 
   toggleRowGroup(): void {
     this.record.expanded = !this.record.expanded;
-    this.gridFacade.setToggleRowGroup(this.gridConfig, this.record);
+    this.gridFacade.setToggleRowGroup(this.gridSetting.gridId, this.record);
     this.onToggleRowGroup.emit(this.record);
   }
 

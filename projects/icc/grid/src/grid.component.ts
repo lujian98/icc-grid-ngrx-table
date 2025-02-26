@@ -145,16 +145,16 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         this.gridFacade.setGridColumnFilters(this.gridId, this.gridConfig, []);
         break;
       case IccButtonType.Edit:
-        this.gridFacade.setGridEditable(this.gridConfig, true);
+        this.gridFacade.setGridEditable(this.gridId, true);
         break;
       case IccButtonType.View:
-        this.gridFacade.setGridEditable(this.gridConfig, false);
+        this.gridFacade.setGridEditable(this.gridId, false);
         break;
       case IccButtonType.Reset:
-        this.gridFacade.setGridRestEdit(this.gridConfig, true);
+        this.gridFacade.setGridRestEdit(this.gridId, true);
         break;
       case IccButtonType.Save:
-        this.gridFacade.saveGridModifiedRecords(this.gridConfig);
+        this.gridFacade.saveGridModifiedRecords(this.gridId);
         break;
       default:
         break;

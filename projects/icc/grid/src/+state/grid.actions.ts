@@ -88,43 +88,40 @@ export const setSelectRow = createAction(
 
 export const setGridGroupBy = createAction(
   '[Grid] Setup Grid Group By a Column',
-  props<{ gridConfig: IccGridConfig; rowGroupField: IccRowGroupField }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; rowGroupField: IccRowGroupField }>(),
 );
 
 export const setToggleRowGroup = createAction(
   '[Grid] Setup Grid Toggle Row Group',
-  props<{ gridConfig: IccGridConfig; rowGroup: IccRowGroup }>(),
+  props<{ gridId: string; rowGroup: IccRowGroup }>(),
 );
 
 export const setGridUnGroupBy = createAction(
   '[Grid] Setup Grid UnGroup By a Column',
-  props<{ gridConfig: IccGridConfig }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig }>(),
 );
 
 export const setGridEditable = createAction(
   '[Grid] Setup Grid Set Grid Editable',
-  props<{ gridConfig: IccGridConfig; gridEditable: boolean }>(),
+  props<{ gridId: string; gridEditable: boolean }>(),
 );
 
 export const setGridRecordModified = createAction(
   '[Grid] Setup Grid Set Grid Record Modified',
-  props<{ gridConfig: IccGridConfig; modified: IccCellEdit<unknown> }>(),
+  props<{ gridId: string; modified: IccCellEdit<unknown> }>(),
 );
 
-export const saveGridModifiedRecords = createAction(
-  '[Grid] Save Grid Modified Record',
-  props<{ gridConfig: IccGridConfig }>(),
-);
+export const saveGridModifiedRecords = createAction('[Grid] Save Grid Modified Record', props<{ gridId: string }>());
 
 //TODO save return data or refresh data???
 export const saveModifiedRecordsSuccess = createAction(
   '[Grid] Save Grid Modified Record Success',
-  props<{ gridConfig: IccGridConfig; newRecords: { [key: string]: unknown }[] }>(),
+  props<{ gridId: string; newRecords: { [key: string]: unknown }[] }>(),
 );
 
 export const setGridRestEdit = createAction(
   '[Grid] Setup Grid Set Rest Edit',
-  props<{ gridConfig: IccGridConfig; restEdit: boolean }>(),
+  props<{ gridId: string; restEdit: boolean }>(),
 );
 
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());

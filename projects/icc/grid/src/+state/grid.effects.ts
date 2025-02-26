@@ -130,14 +130,15 @@ export class IccGridEffects {
       ofType(gridActions.saveGridModifiedRecords),
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.gridConfig.gridId),
-          this.gridFacade.selectGridModifiedRecords(action.gridConfig.gridId),
+          this.gridFacade.selectGridConfig(action.gridId),
+          this.gridFacade.selectGridModifiedRecords(action.gridId),
         ];
       }),
       concatMap(([action, gridConfig, modifiedRecords]) => {
         return this.gridService.saveModifiedRecords(gridConfig, modifiedRecords).pipe(
           map((newRecords) => {
-            return gridActions.saveModifiedRecordsSuccess({ gridConfig, newRecords });
+            const gridId = action.gridId;
+            return gridActions.saveModifiedRecordsSuccess({ gridId, newRecords });
           }),
         );
       }),

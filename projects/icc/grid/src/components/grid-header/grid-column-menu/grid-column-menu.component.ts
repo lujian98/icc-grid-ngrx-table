@@ -133,7 +133,7 @@ export class IccGridColumnMenuComponent {
       };
       this.gridFacade.setGridGroupBy(this.gridId, this.gridConfig, rowGroupField);
     } else if (item.name === 'unGroupBy') {
-      this.gridFacade.setGridUnGroupBy(this.gridConfig);
+      this.gridFacade.setGridUnGroupBy(this.gridId, this.gridConfig);
     }
   }
 

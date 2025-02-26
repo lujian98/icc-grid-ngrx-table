@@ -16,6 +16,7 @@ export class IccCellEditBaseComponent<T> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
+  private _gridSetting!: IccGridSetting;
   private _column!: IccColumnConfig;
   private _record!: T;
   form!: FormGroup;
@@ -24,14 +25,22 @@ export class IccCellEditBaseComponent<T> {
 
   @Input() rowIndex!: number;
 
-  @Input() gridSetting!: IccGridSetting;
+  @Input()
+  set gridSetting(value: IccGridSetting) {
+    this._gridSetting = { ...value };
+    if (this.gridSetting.restEdit) {
+      this.resetField();
+    }
+    this.changeDetectorRef.markForCheck();
+  }
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
+  }
+
   @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
     this.checkField();
-    if (this.gridSetting.restEdit) {
-      this.resetField();
-    }
     this.changeDetectorRef.markForCheck();
   }
   get gridConfig(): IccGridConfig {
@@ -96,6 +105,6 @@ export class IccCellEditBaseComponent<T> {
     };
     //this.filterChanged$.next(value); // TODO debounce change
 
-    this.gridFacade.setGridRecordModified(this.gridConfig, modified);
+    this.gridFacade.setGridRecordModified(this.gridSetting.gridId, modified);
   }
 }

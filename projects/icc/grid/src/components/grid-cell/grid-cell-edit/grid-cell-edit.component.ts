@@ -91,8 +91,8 @@ export class IccGridCellEditComponent<T> implements OnInit {
     this.instance.column = this.column;
     this.instance.rowIndex = this.rowIndex;
     this.instance.record = this.record;
-    this.instance.gridSetting = this.gridSetting;
     this.instance.gridConfig = this.gridConfig;
+    this.instance.gridSetting = this.gridSetting;
   }
 
   private getRenderer(): Type<unknown> {

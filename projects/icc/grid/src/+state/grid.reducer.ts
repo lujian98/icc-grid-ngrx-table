@@ -276,7 +276,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.setGridGroupBy, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -295,7 +295,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setToggleRowGroup, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -317,7 +317,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridUnGroupBy, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -343,7 +343,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridEditable, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -361,7 +361,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridRestEdit, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -378,7 +378,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridRecordModified, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -418,7 +418,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.saveModifiedRecordsSuccess, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
