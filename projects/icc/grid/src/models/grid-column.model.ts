@@ -65,8 +65,8 @@ export interface IccGridConfig {
   virtualScroll: boolean;
   sortFields: IccSortField[];
   columnFilters: IccColumnFilter[];
-  page: number; //WARNING internal state or input ??
-  pageSize: number; //WARNING internal state
+  page: number; // used initial load for saved page
+  pageSize: number; //used for vertical scroll
   totalCounts: number; //WARNING internal state not sure it is used
   remoteGridData: boolean;
   hideTopbar: boolean;
@@ -91,7 +91,6 @@ export interface IccGridSetting {
   recordModified: boolean;
 
   viewportReady: boolean; //WARNING internal state
-  pageSize: number; //WARNING internal state
   totalCounts: number; //WARNING internal state not sure it is used
 }
 

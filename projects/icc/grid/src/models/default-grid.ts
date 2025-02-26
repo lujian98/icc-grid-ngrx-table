@@ -42,7 +42,7 @@ export const defaultGridSetting: IccGridSetting = {
   gridEditable: false,
   restEdit: false,
   recordModified: false,
-  pageSize: 10,
+  //pageSize: 10,
   totalCounts: 0,
 };
 
