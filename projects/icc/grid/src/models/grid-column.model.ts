@@ -86,7 +86,7 @@ export interface GridState {
   [key: string]: IccGridState;
 }
 
-export interface IccCurrentGridState {
+export interface IccGridSetting {
   viewportReady: boolean;
   viewportWidth: number; //WARNING internal state
   lastUpdateTime: Date;
@@ -100,7 +100,7 @@ export interface IccCurrentGridState {
 
 export interface IccGridState<T extends object = object> {
   gridConfig: IccGridConfig;
-  currentState: IccCurrentGridState;
+  gridSetting: IccGridSetting;
   columnsConfig: IccColumnConfig[];
   data: T[];
   totalCounts: number;

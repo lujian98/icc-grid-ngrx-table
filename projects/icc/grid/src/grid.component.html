@@ -1,5 +1,5 @@
 <icc-layout *ngIf="gridConfig$ | async as gridConfig">
-  <ng-container *ngIf="currentState$ | async as currentState">
+  <ng-container *ngIf="gridSetting$ | async as gridSetting">
     <ng-container *ngIf="columnsConfig$ | async as columns">
       <icc-layout-header
         *ngIf="!gridConfig.hideTopbar"

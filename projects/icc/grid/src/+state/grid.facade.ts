@@ -6,7 +6,7 @@ import {
   IccColumnConfig,
   IccColumnFilter,
   IccGridConfig,
-  IccCurrentGridState,
+  IccGridSetting,
   IccGridData,
   IccRowGroupField,
   IccSortField,
@@ -18,7 +18,7 @@ import * as gridActions from './grid.actions';
 import {
   selectColumnsConfig,
   selectGridConfig,
-  selectCurrentState,
+  selectGridSetting,
   selectGridData,
   selectGridInMemoryData,
   selectRowGroups,
@@ -223,7 +223,7 @@ export class IccGridFacade {
     return this.store.select(selectGridConfig(gridId));
   }
 
-  selectCurrentState(gridId: string): Observable<IccCurrentGridState> {
-    return this.store.select(selectCurrentState(gridId));
+  selectSetting(gridId: string): Observable<IccGridSetting> {
+    return this.store.select(selectGridSetting(gridId));
   }
 }

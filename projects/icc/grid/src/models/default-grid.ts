@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { IccGridConfig, IccGridState, IccCurrentGridState } from './grid-column.model';
+import { IccGridConfig, IccGridState, IccGridSetting } from './grid-column.model';
 
 export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
@@ -40,7 +40,7 @@ export const defaultGridConfig: IccGridConfig = {
   lastUpdateTime: new Date(),
 };
 
-export const defaultCurrentGridState: IccCurrentGridState = {
+export const defaultGridSetting: IccGridSetting = {
   viewportReady: false,
   viewportWidth: 1000,
   lastUpdateTime: new Date(),
@@ -53,7 +53,7 @@ export const defaultCurrentGridState: IccCurrentGridState = {
 
 export const defaultState: IccGridState = {
   gridConfig: defaultGridConfig,
-  currentState: defaultCurrentGridState,
+  gridSetting: defaultGridSetting,
   columnsConfig: [],
   data: [],
   totalCounts: 0,
