@@ -8,7 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BehaviorSubject, Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccGridConfig } from '../../models/grid-column.model';
+import { IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-footer',
@@ -32,6 +32,8 @@ export class IccGridFooterComponent implements OnDestroy {
   protected destroy$ = new Subject<void>();
   valueChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
   fieldConfig!: IccNumberFieldConfig;
+
+  @Input() gridSetting!: IccGridSetting;
 
   @Input()
   set gridConfig(val: IccGridConfig) {
@@ -60,14 +62,14 @@ export class IccGridFooterComponent implements OnDestroy {
   }
 
   get lastPage(): number {
-    return Math.ceil(this.gridConfig.totalCounts / this.gridConfig.pageSize) - 0;
+    return Math.ceil(this.gridSetting.totalCounts / this.gridConfig.pageSize) - 0;
   }
 
   get displaying(): string {
     const start = (this.gridConfig.page - 1) * this.gridConfig.pageSize + 1;
     let end = start + this.gridConfig.pageSize - 1;
-    if (end > this.gridConfig.totalCounts) {
-      end = this.gridConfig.totalCounts;
+    if (end > this.gridSetting.totalCounts) {
+      end = this.gridSetting.totalCounts;
     }
     return `${start} - ${end}`;
   }

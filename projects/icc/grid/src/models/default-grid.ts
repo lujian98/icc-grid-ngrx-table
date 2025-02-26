@@ -5,7 +5,6 @@ export const defaultGridConfig: IccGridConfig = {
   gridId: '191cf2bb6b8', // auto generated unique id internal use
   isTreeGrid: false,
   urlKey: 'grid', // Only for remote grid config and data
-  //viewportReady: false, // internal use
   columnSort: false,
   columnFilter: false,
   columnResize: false,
@@ -26,7 +25,6 @@ export const defaultGridConfig: IccGridConfig = {
   columnFilters: [],
   page: 1,
   pageSize: 10,
-  totalCounts: 0,
   remoteGridData: false,
   hideTopbar: false,
   hideGridFooter: false,

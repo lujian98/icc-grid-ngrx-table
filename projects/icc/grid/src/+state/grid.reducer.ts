@@ -186,12 +186,10 @@ export const iccGridFeature = createFeature({
 
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...gridConfig,
-            totalCounts: totalCounts,
-          },
+          gridConfig,
           gridSetting: {
             ...oldState.gridSetting,
+            totalCounts: totalCounts,
             lastUpdateTime: new Date(),
             restEdit: false,
             recordModified: false,
@@ -210,8 +208,8 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         newState[key] = {
           ...state[key],
-          gridConfig: {
-            ...state[key].gridConfig,
+          gridSetting: {
+            ...state[key].gridSetting,
             totalCounts: action.gridData.totalCounts,
           },
           totalCounts: action.gridData.totalCounts,
@@ -307,8 +305,8 @@ export const iccGridFeature = createFeature({
 
         newState[key] = {
           ...oldState,
-          gridConfig: {
-            ...oldState.gridConfig,
+          gridSetting: {
+            ...oldState.gridSetting,
             totalCounts: totalCounts,
           },
           totalCounts: totalCounts,
@@ -331,6 +329,9 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...oldState.gridConfig,
             rowGroupField: undefined,
+          },
+          gridSetting: {
+            ...oldState.gridSetting,
             totalCounts: total,
           },
           totalCounts: total,

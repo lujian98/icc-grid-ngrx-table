@@ -115,7 +115,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const nextPage = this.gridConfig.page + 1;
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
-      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridSetting.totalCounts) {
         this.gridFacade.getGridPageData(this.gridConfig, nextPage);
       }
     }
@@ -127,7 +127,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const pageSize = this.gridConfig.pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       const actualDisplay = displayTotal - rowGroups.totalHiddenCounts;
-      if (actualDisplay - this.scrollIndex < pageSize - 10 && displayTotal < this.gridConfig.totalCounts) {
+      if (actualDisplay - this.scrollIndex < pageSize - 10 && displayTotal < this.gridSetting.totalCounts) {
         this.gridFacade.getGridPageData(this.gridConfig, nextPage);
       }
     }

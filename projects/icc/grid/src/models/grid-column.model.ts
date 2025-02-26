@@ -47,7 +47,6 @@ export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use //WARNING internal state ???
   isTreeGrid: boolean;
   urlKey: string; // Only for remote grid config and data
-  //viewportReady: boolean; //WARNING internal state
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;
@@ -67,7 +66,6 @@ export interface IccGridConfig {
   columnFilters: IccColumnFilter[];
   page: number; // used initial load for saved page
   pageSize: number; //used for vertical scroll
-  totalCounts: number; //WARNING internal state not sure it is used
   remoteGridData: boolean;
   hideTopbar: boolean;
   hideGridFooter: boolean;
@@ -89,9 +87,8 @@ export interface IccGridSetting {
   gridEditable: boolean;
   restEdit: boolean;
   recordModified: boolean;
-
-  viewportReady: boolean; //WARNING internal state
-  totalCounts: number; //WARNING internal state not sure it is used
+  viewportReady: boolean;
+  totalCounts: number;
 }
 
 export interface IccGridState<T extends object = object> {
