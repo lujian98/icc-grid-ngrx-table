@@ -14,14 +14,14 @@ export class IccD3Effects {
   loadRemoteD3Config$ = createEffect(() =>
     this.actions$.pipe(
       ofType(d3Actions.loadRemoteD3Config),
-      concatMap(({ d3Config }) => {
+      concatMap(({ d3Id, d3Config }) => {
         return this.d3Service.getRemoteD3Config(d3Config).pipe(
           map((d3Config) => {
             if (d3Config.remoteChartConfigs) {
-              this.store.dispatch(d3Actions.loadRemoteD3ConfigSuccess({ d3Config }));
-              return d3Actions.loadD3ChartConfigs({ d3Config });
+              this.store.dispatch(d3Actions.loadRemoteD3ConfigSuccess({ d3Id, d3Config }));
+              return d3Actions.loadD3ChartConfigs({ d3Id, d3Config });
             } else {
-              return d3Actions.loadRemoteD3ConfigSuccess({ d3Config });
+              return d3Actions.loadRemoteD3ConfigSuccess({ d3Id, d3Config });
             }
           }),
         );
@@ -32,15 +32,14 @@ export class IccD3Effects {
   loadD3ChartConfigs$ = createEffect(() =>
     this.actions$.pipe(
       ofType(d3Actions.loadD3ChartConfigs),
-      concatMap((action) => {
-        const d3Config = action.d3Config;
+      concatMap(({ d3Id, d3Config }) => {
         return this.d3Service.getD3ChartConfigs(d3Config).pipe(
           map((chartConfigs) => {
             if (d3Config.remoteD3Data) {
-              this.store.dispatch(d3Actions.loadD3ChartConfigsSuccess({ d3Config, chartConfigs }));
-              return d3Actions.getD3Data({ d3Config });
+              this.store.dispatch(d3Actions.loadD3ChartConfigsSuccess({ d3Id, d3Config, chartConfigs }));
+              return d3Actions.getD3Data({ d3Id, d3Config });
             } else {
-              return d3Actions.loadD3ChartConfigsSuccess({ d3Config, chartConfigs });
+              return d3Actions.loadD3ChartConfigsSuccess({ d3Id, d3Config, chartConfigs });
             }
           }),
         );
@@ -52,10 +51,10 @@ export class IccD3Effects {
     this.actions$.pipe(
       // debounceTime(10) and switchMap here???
       ofType(d3Actions.getD3Data),
-      concatMap(({ d3Config }) => {
+      concatMap(({ d3Id, d3Config }) => {
         return this.d3Service.getD3Data(d3Config).pipe(
           map((data) => {
-            return d3Actions.getD3DataSuccess({ d3Config, data });
+            return d3Actions.getD3DataSuccess({ d3Id, d3Config, data });
           }),
         );
       }),

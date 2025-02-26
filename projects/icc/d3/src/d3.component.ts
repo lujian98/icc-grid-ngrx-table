@@ -17,7 +17,7 @@ import {
   DEFAULT_RADIAL_GAUGE_CONFIGS,
 } from './models';
 import { IccD3ViewComponent } from './components/d3-view.component';
-import { IccD3Config, defaultD3Config } from './models/d3.model';
+import { IccD3Config, defaultD3Config, IccD3Setting } from './models/d3.model';
 
 @Component({
   selector: 'icc-d3',
@@ -32,6 +32,7 @@ export class IccD3Component<T> implements OnDestroy {
   private _chartConfigs: IccD3ChartConfig[] = [];
   private _data!: any[];
   private d3Id = uniqueId(16);
+  d3Setting$!: Observable<IccD3Setting>;
   d3Config$!: Observable<IccD3Config>;
   chartConfigs$!: Observable<IccD3ChartConfig[] | undefined>;
   data$!: Observable<T[]>;
@@ -45,14 +46,12 @@ export class IccD3Component<T> implements OnDestroy {
   }
 
   private initChartConfigs(value: IccD3Config): void {
-    this._d3Config = {
-      ...value,
-      d3Id: this.d3Id,
-    };
+    this._d3Config = { ...value };
     this.d3Config$ = this.d3Facade.selectD3Config(this.d3Id);
+    this.d3Setting$ = this.d3Facade.selectSetting(this.d3Id);
     this.chartConfigs$ = this.d3Facade.selectD3ChartConfigs(this.d3Id);
     this.data$ = this.d3Facade.selectD3Data(this.d3Id);
-    this.d3Facade.initD3Config(this.d3Config);
+    this.d3Facade.initD3Config(this.d3Id, this.d3Config);
   }
 
   @Input()
@@ -62,7 +61,7 @@ export class IccD3Component<T> implements OnDestroy {
       this.initChartConfigs({ ...defaultD3Config });
     }
     if (!this.d3Config.remoteChartConfigs && this.chartConfigs.length > 0) {
-      this.d3Facade.setD3ChartConfigs(this.d3Config, [...this.chartConfigs]);
+      this.d3Facade.setD3ChartConfigs(this.d3Id, this.d3Config, [...this.chartConfigs]);
     }
   }
   get chartConfigs(): IccD3ChartConfig[] {
@@ -73,7 +72,7 @@ export class IccD3Component<T> implements OnDestroy {
   set data(val: T[]) {
     this._data = val;
     if (!this.d3Config.remoteD3Data && this.data) {
-      this.d3Facade.setD3Data(this.d3Config, this.data);
+      this.d3Facade.setD3Data(this.d3Id, this.d3Config, this.data);
     }
   }
   get data(): T[] {

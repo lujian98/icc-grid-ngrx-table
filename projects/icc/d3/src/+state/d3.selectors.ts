@@ -9,6 +9,11 @@ export interface AppD3State {
 
 export const featureSelector = (state: AppD3State) => state.iccD3;
 
+export const selectD3Setting = (d3Id: string) =>
+  createSelector(featureSelector, (state: D3State) => {
+    return state[d3Id] ? state[d3Id].d3Setting : defaultD3State.d3Setting;
+  });
+
 export const selectD3Config = (d3Id: string) =>
   createSelector(featureSelector, (state: D3State) => {
     return state[d3Id] ? state[d3Id].d3Config : defaultD3State.d3Config;

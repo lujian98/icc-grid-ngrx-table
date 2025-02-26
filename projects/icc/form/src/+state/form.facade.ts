@@ -67,7 +67,7 @@ export class IccFormFacade {
     return this.store.select(selectFormFieldsConfig(formId));
   }
 
-  selectSetting(fieldId: string): Observable<IccFormSetting | undefined> {
+  selectSetting(fieldId: string): Observable<IccFormSetting> {
     return this.store.select(selectFormSetting(fieldId));
   }
 

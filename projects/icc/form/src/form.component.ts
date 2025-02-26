@@ -25,7 +25,7 @@ export class IccFormComponent {
   private _formConfig!: IccFormConfig;
   private _formFields: IccFormField[] = [];
   private formId = uniqueId(16);
-  formSetting$!: Observable<IccFormSetting | undefined>;
+  formSetting$!: Observable<IccFormSetting>;
   formConfig$!: Observable<IccFormConfig>;
   formFieldsConfig$!: Observable<IccFormField[]>;
   formData$!: Observable<object | undefined>;

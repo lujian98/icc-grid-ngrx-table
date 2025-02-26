@@ -1,7 +1,6 @@
 import { IccD3ChartConfig, IccD3Options } from './options.model';
 
 export interface IccD3Config {
-  d3Id: string; // auto generated unique id
   urlKey: string; // Only for remote config // options!: IccD3Options
   chartName: string; // require if remote or use default
   options?: IccD3Options;
@@ -10,18 +9,27 @@ export interface IccD3Config {
   remoteD3Data: boolean;
 }
 
+// for internal grid setting
+export interface IccD3Setting {
+  d3Id: string; // auto generated unique id
+}
+
+export const defaultD3Setting: IccD3Setting = {
+  d3Id: '191cf2bb6b5', // auto generated unique id
+};
+
 export interface D3State {
   [key: string]: IccD3State;
 }
 
 export interface IccD3State<T extends object = object> {
   d3Config: IccD3Config;
+  d3Setting: IccD3Setting;
   chartConfigs: IccD3ChartConfig[];
   data: T[] | undefined;
 }
 
 export const defaultD3Config: IccD3Config = {
-  d3Id: '191cf2bb6b5', // auto generated unique id
   urlKey: 'formfields', // Only for remote config
   chartName: 'chartName',
   options: undefined,
@@ -32,6 +40,7 @@ export const defaultD3Config: IccD3Config = {
 
 export const defaultD3State: IccD3State = {
   d3Config: defaultD3Config,
+  d3Setting: defaultD3Setting,
   chartConfigs: [],
   data: undefined,
 };
