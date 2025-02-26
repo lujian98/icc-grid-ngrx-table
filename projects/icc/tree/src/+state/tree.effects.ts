@@ -89,7 +89,7 @@ export class IccTreeEffects {
 
   setGridColumnFilters$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setGridColumnFilters, loadGridColumnsConfigSuccess), // gridActions
+      ofType(setGridColumnFilters, loadGridColumnsConfigSuccess), // gridActions need filter out grid action???
       switchMap(({ gridId, gridConfig }) =>
         of({ gridId, gridConfig }).pipe(
           map(({ gridId, gridConfig }) => {
