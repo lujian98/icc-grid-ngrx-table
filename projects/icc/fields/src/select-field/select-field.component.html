@@ -1,125 +1,129 @@
 <ng-container *ngIf="fieldConfig$ | async as fieldConfig">
-  <ng-container *ngIf="form" [formGroup]="form">
-    <icc-form-field
-      *ngIf="selectOptions$ | async as selectOptions"
-      [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
-      [iccLabelWidth]="fieldConfig.labelWidth"
-      [iccFieldWidth]="fieldConfig.fieldWidth"
-      [iccFormFieldControl]="field"
-      [showFieldEditIndicator]="showFieldEditIndicator"
-    >
-      <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-        {{ fieldConfig.fieldLabel | translate }}
-      </icc-label>
-      <input
-        iccInput
-        #inputEl
-        type="text"
-        autocomplete="off"
-        (mouseleave)="onMouseleave()"
-        [readonly]="!!fieldConfig.selectOnly"
-        [formControlName]="fieldName!"
-        (isOverlayOpen)="overlayOpen($event)"
-        (change)="onChange($event)"
-        [iccAutocomplete]="autocomplete"
-        [iccAutocompleteClose]="autocompleteClose"
-        [iccAutocompleteClickOption]="clickedOption"
-        [required]="required"
-        placeholder="{{ fieldConfig.placeholder! | translate }}"
-      />
-      <icc-icon
-        *ngIf="fieldConfig.clearValue && hasValue"
-        icon="remove"
-        iccSuffix
-        (click)="clearSelected($event)"
-      ></icc-icon>
-      <icc-icon
-        *ngIf="!field.disabled"
-        icon="angle-down"
-        iccSuffix
-        [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"
-      ></icc-icon>
-      <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
-      <icc-autocomplete
-        #autocomplete="iccAutocomplete"
-        [multiSelection]="fieldConfig.multiSelection"
-        [displayWith]="displayFn.bind(this)"
-        [compareWith]="compareFn.bind(this)"
+  <ng-container *ngIf="fieldSetting$ | async as fieldSetting">
+    <ng-container *ngIf="form" [formGroup]="form">
+      <icc-form-field
+        *ngIf="selectOptions$ | async as selectOptions"
+        [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
+        [iccLabelWidth]="fieldConfig.labelWidth"
+        [iccFieldWidth]="fieldConfig.fieldWidth"
+        [iccFormFieldControl]="field"
+        [showFieldEditIndicator]="showFieldEditIndicator"
       >
-        <ng-template iccAutocompleteContent>
-          <div *ngIf="hasHeader(fieldConfig)" class="icc-select-field-sticky-header">
-            <icc-option *ngIf="fieldConfig.multiSelection && fieldConfig.checkAll" (click)="checkAll(selectOptions)">
-              <icc-checkbox [checked]="isAllChecked">
-                {{ "ICC.UI.ACTIONS.CHECK_ALL" | translate }}
-              </icc-checkbox>
-            </icc-option>
-            <icc-option *ngIf="fieldConfig.multiSelection && fieldConfig.uncheckAll" (click)="checkAll([])">
-              <icc-checkbox [checked]="!hasValue">
-                {{ "ICC.UI.ACTIONS.UNCHECK_ALL" | translate }}
-              </icc-checkbox>
-            </icc-option>
-            <icc-option
-              *ngIf="fieldConfig.isEmpty"
-              [value]="isEmptyValue"
-              #refIsEmpty
-              (click)="headerOptionClick(refIsEmpty)"
-            >
-              <icc-checkbox [checked]="refIsEmpty.selected">
-                {{ "ICC.UI.ACTIONS.IS_EMPTY" | translate }}
-              </icc-checkbox>
-            </icc-option>
-            <icc-option
-              *ngIf="fieldConfig.notEmpty"
-              [value]="notEmptyValue"
-              #refIsNotEmpty
-              (click)="headerOptionClick(refIsNotEmpty)"
-            >
-              <icc-checkbox [checked]="refIsNotEmpty.selected">
-                {{ "ICC.UI.ACTIONS.NOT_EMPTY" | translate }}
-              </icc-checkbox>
-            </icc-option>
-          </div>
-
-          <ng-container
-            *ngIf="
-              selectOptions
-                | selectFilter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result
-            "
-          >
-            <cdk-virtual-scroll-viewport
-              class="icc-select-virtual-scroll"
-              [itemSize]="28"
-              (scrolledIndexChange)="onScrolledIndexChange($event)"
-            >
+        <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
+          {{ fieldConfig.fieldLabel | translate }}
+        </icc-label>
+        <input
+          iccInput
+          #inputEl
+          type="text"
+          autocomplete="off"
+          (mouseleave)="onMouseleave()"
+          [readonly]="!!fieldConfig.selectOnly"
+          [formControlName]="fieldName!"
+          (isOverlayOpen)="overlayOpen($event)"
+          (change)="onChange($event)"
+          [iccAutocomplete]="autocomplete"
+          [iccAutocompleteClose]="autocompleteClose"
+          [iccAutocompleteClickOption]="clickedOption"
+          [required]="required"
+          placeholder="{{ fieldConfig.placeholder! | translate }}"
+        />
+        <icc-icon
+          *ngIf="fieldConfig.clearValue && hasValue"
+          icon="remove"
+          iccSuffix
+          (click)="clearSelected($event)"
+        ></icc-icon>
+        <icc-icon
+          *ngIf="!field.disabled"
+          icon="angle-down"
+          iccSuffix
+          [ngStyle]="{ display: isOverlayOpen ? 'none' : '' }"
+        ></icc-icon>
+        <icc-icon *ngIf="isOverlayOpen" icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
+        <icc-autocomplete
+          #autocomplete="iccAutocomplete"
+          [multiSelection]="fieldConfig.multiSelection"
+          [displayWith]="displayFn.bind(this)"
+          [compareWith]="compareFn.bind(this)"
+        >
+          <ng-template iccAutocompleteContent>
+            <div *ngIf="hasHeader(fieldConfig)" class="icc-select-field-sticky-header">
+              <icc-option *ngIf="fieldConfig.multiSelection && fieldConfig.checkAll" (click)="checkAll(selectOptions)">
+                <icc-checkbox [checked]="isAllChecked">
+                  {{ "ICC.UI.ACTIONS.CHECK_ALL" | translate }}
+                </icc-checkbox>
+              </icc-option>
+              <icc-option *ngIf="fieldConfig.multiSelection && fieldConfig.uncheckAll" (click)="checkAll([])">
+                <icc-checkbox [checked]="!hasValue">
+                  {{ "ICC.UI.ACTIONS.UNCHECK_ALL" | translate }}
+                </icc-checkbox>
+              </icc-option>
               <icc-option
-                class="icc-select-field-option"
-                *cdkVirtualFor="let option of result"
-                [value]="option"
-                #ref
-                (click)="clickOption(ref)"
+                *ngIf="fieldConfig.isEmpty"
+                [value]="isEmptyValue"
+                #refIsEmpty
+                (click)="headerOptionClick(refIsEmpty)"
               >
-                @if (fieldConfig.multiSelection) {
-                  <icc-checkbox [checked]="ref.selected">
+                <icc-checkbox [checked]="refIsEmpty.selected">
+                  {{ "ICC.UI.ACTIONS.IS_EMPTY" | translate }}
+                </icc-checkbox>
+              </icc-option>
+              <icc-option
+                *ngIf="fieldConfig.notEmpty"
+                [value]="notEmptyValue"
+                #refIsNotEmpty
+                (click)="headerOptionClick(refIsNotEmpty)"
+              >
+                <icc-checkbox [checked]="refIsNotEmpty.selected">
+                  {{ "ICC.UI.ACTIONS.NOT_EMPTY" | translate }}
+                </icc-checkbox>
+              </icc-option>
+            </div>
+
+            <ng-container
+              *ngIf="
+                selectOptions
+                  | selectFilter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result
+              "
+            >
+              <cdk-virtual-scroll-viewport
+                class="icc-select-virtual-scroll"
+                [itemSize]="28"
+                (scrolledIndexChange)="onScrolledIndexChange($event)"
+              >
+                <icc-option
+                  class="icc-select-field-option"
+                  *cdkVirtualFor="let option of result"
+                  [value]="option"
+                  #ref
+                  (click)="clickOption(ref)"
+                >
+                  @if (fieldConfig.multiSelection) {
+                    <icc-checkbox [checked]="ref.selected">
+                      <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
+                      </icc-filter-highlight>
+                    </icc-checkbox>
+                  } @else if (fieldConfig.singleListOption && fieldConfig.selectOnly) {
+                    <ng-container>{{ option }}</ng-container>
+                  } @else {
                     <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
                     </icc-filter-highlight>
-                  </icc-checkbox>
-                } @else if (fieldConfig.singleListOption && fieldConfig.selectOnly) {
-                  <ng-container>{{ option }}</ng-container>
-                } @else {
-                  <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue">
-                  </icc-filter-highlight>
-                }
-              </icc-option>
-            </cdk-virtual-scroll-viewport>
+                  }
+                </icc-option>
+              </cdk-virtual-scroll-viewport>
 
-            <icc-option class="no-result" *ngIf="!result.length">{{ "ICC.UI.LIST.NO_RESULT" | translate }}</icc-option>
-          </ng-container>
-        </ng-template>
-      </icc-autocomplete>
+              <icc-option class="no-result" *ngIf="!result.length">{{
+                "ICC.UI.LIST.NO_RESULT" | translate
+              }}</icc-option>
+            </ng-container>
+          </ng-template>
+        </icc-autocomplete>
 
-      <icc-form-field-errors *ngIf="(field?.touched || field?.dirty) && field?.errors">
-        <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
-      </icc-form-field-errors>
-    </icc-form-field>
+        <icc-form-field-errors *ngIf="(field?.touched || field?.dirty) && field?.errors">
+          <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
+        </icc-form-field-errors>
+      </icc-form-field>
+    </ng-container>
   </ng-container>
 </ng-container>

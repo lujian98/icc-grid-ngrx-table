@@ -3,9 +3,9 @@ import { IccBaseField } from '../../models/base-field.model';
 export type IccOptionType = string | object;
 
 export interface IccSelectFieldConfig extends IccBaseField {
-  fieldId: string; // auto generated unique id
+  //fieldId: string; // auto generated unique id
   urlKey: string; // Only for remote field config and options
-  viewportReady: boolean;
+  //viewportReady: boolean;
   remoteConfig: boolean; // remote config requires remote options
   remoteOptions: boolean;
   selectOnly: boolean; // false select, true autocomplete
@@ -21,11 +21,18 @@ export interface IccSelectFieldConfig extends IccBaseField {
   //virtualScroll: boolean; // only support virtualScroll
 }
 
+export interface IccSelectFieldSetting {
+  // for internal grid setting
+  fieldId: string;
+  viewportReady: boolean;
+}
+
 export interface SelectFieldState {
   [key: string]: IccSelectFieldState;
 }
 
 export interface IccSelectFieldState {
   fieldConfig: IccSelectFieldConfig;
+  fieldSetting: IccSelectFieldSetting;
   options: IccOptionType[];
 }

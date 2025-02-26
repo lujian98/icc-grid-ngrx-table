@@ -54,7 +54,7 @@ import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
-import { IccOptionType, IccSelectFieldConfig } from './models/select-field.model';
+import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
 import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
 
 export interface IccHeaderOption {
@@ -117,6 +117,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private firstTimeLoad = true;
   fieldName: string = '';
 
+  fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
+  fieldSetting!: IccSelectFieldSetting;
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
   private selectOptions: IccOptionType[] = [];
@@ -152,10 +154,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
-    this._fieldConfig = {
-      ...fieldConfig,
-      fieldId: this.fieldId,
-    };
+    this._fieldConfig = { ...fieldConfig };
     if (!this.fieldName) {
       this.fieldName = this.fieldConfig.fieldName!;
     }
@@ -163,6 +162,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
       map((fieldConfig) => {
         this._fieldConfig = fieldConfig!;
+        return fieldConfig;
+      }),
+    );
+
+    this.fieldSetting$ = this.selectFieldFacade.selectFieldSetting(this.fieldId).pipe(
+      map((fieldSetting) => {
+        this.fieldSetting = fieldSetting!;
         this.initSelectField();
         if (this.fieldConfig) {
           this.isEmptyValue[this.fieldConfig.optionKey] = this.isEmptyValue.name;
@@ -170,7 +176,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
           this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
           this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
         }
-        return fieldConfig;
+        return fieldSetting;
       }),
     );
   }
@@ -187,12 +193,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private initSelectField(): void {
-    if (this.fieldConfig?.viewportReady) {
+    if (this.fieldSetting?.viewportReady) {
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
           map((selectOptions) => {
             this.selectOptions = selectOptions;
-            //console.log( ' this.selectOptions=', this.selectOptions)
             return this.selectOptions;
           }),
         );

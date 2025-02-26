@@ -14,11 +14,11 @@ export class IccSelectFieldEffects {
   getRemoteFieldConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectFieldActions.loadRemoteFieldConfig),
-      concatMap(({ fieldConfig }) => {
+      concatMap(({ fieldId, fieldConfig }) => {
         return this.selectfieldService.getRemoteFieldConfig(fieldConfig).pipe(
           map((fieldConfig) => {
-            this.store.dispatch(selectFieldActions.loadFieldConfigSuccess({ fieldConfig }));
-            return selectFieldActions.loadSelectFieldOptions({ fieldConfig });
+            this.store.dispatch(selectFieldActions.loadFieldConfigSuccess({ fieldId, fieldConfig }));
+            return selectFieldActions.loadSelectFieldOptions({ fieldId, fieldConfig });
           }),
         );
       }),
@@ -28,10 +28,9 @@ export class IccSelectFieldEffects {
   loadSelectFieldOptions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectFieldActions.loadSelectFieldOptions),
-      concatMap(({ fieldConfig }) => {
+      concatMap(({ fieldId, fieldConfig }) => {
         return this.selectfieldService.getSelectFieldOptions(fieldConfig).pipe(
           map((options) => {
-            const fieldId = fieldConfig.fieldId;
             return selectFieldActions.loadSelectFieldOptionsSuccess({ fieldId, options });
           }),
         );

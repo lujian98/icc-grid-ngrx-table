@@ -11,12 +11,14 @@ export const iccSelectFieldFeature = createFeature({
     initialState,
     on(selectFieldActions.initFieldConfig, (state, action) => {
       const fieldConfig = { ...action.fieldConfig };
-      const key = fieldConfig.fieldId;
+      const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       newState[key] = {
         ...defaultSelectFieldState,
-        fieldConfig: {
-          ...fieldConfig,
+        fieldConfig,
+        fieldSetting: {
+          ...defaultSelectFieldState.fieldSetting,
+          fieldId: action.fieldId,
           viewportReady: !fieldConfig.remoteConfig && !fieldConfig.remoteOptions,
         },
       };
@@ -24,13 +26,16 @@ export const iccSelectFieldFeature = createFeature({
     }),
     on(selectFieldActions.loadFieldConfigSuccess, (state, action) => {
       const fieldConfig = { ...action.fieldConfig };
-      const key = fieldConfig.fieldId;
+      const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       if (state[key]) {
         newState[key] = {
           ...state[key],
           fieldConfig: {
             ...fieldConfig,
+          },
+          fieldSetting: {
+            ...state[key].fieldSetting,
             viewportReady: !fieldConfig.remoteOptions,
           },
         };
@@ -43,8 +48,8 @@ export const iccSelectFieldFeature = createFeature({
       if (state[key]) {
         newState[key] = {
           ...state[key],
-          fieldConfig: {
-            ...state[key].fieldConfig,
+          fieldSetting: {
+            ...state[key].fieldSetting,
             viewportReady: true,
           },
           options: [...action.options] as string[] | object[],

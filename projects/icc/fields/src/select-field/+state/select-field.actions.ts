@@ -3,22 +3,22 @@ import { IccSelectFieldConfig, IccOptionType } from '../models/select-field.mode
 
 export const initFieldConfig = createAction(
   '[SelectField] Init Field Config',
-  props<{ fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const loadRemoteFieldConfig = createAction(
   '[SelectField] Load Remote Field Config',
-  props<{ fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const loadFieldConfigSuccess = createAction(
   '[SelectField] Load Field Config Success',
-  props<{ fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const loadSelectFieldOptions = createAction(
   '[SelectField] Load Select Field Options',
-  props<{ fieldConfig: IccSelectFieldConfig }>(),
+  props<{ fieldId: string; fieldConfig: IccSelectFieldConfig }>(),
 );
 
 export const loadSelectFieldOptionsSuccess = createAction(

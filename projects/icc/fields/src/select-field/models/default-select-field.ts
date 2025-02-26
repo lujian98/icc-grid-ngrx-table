@@ -1,13 +1,11 @@
 import { IccObjectType } from '@icc/ui/core';
-import { IccSelectFieldConfig, IccSelectFieldState } from './select-field.model';
+import { IccSelectFieldConfig, IccSelectFieldState, IccSelectFieldSetting } from './select-field.model';
 import { defaultBaseField } from '../../models/base-field.model';
 
 export const defaultSelectFieldConfig: IccSelectFieldConfig = {
-  fieldId: '191cf2bb6b5', // auto generated unique id
   fieldType: IccObjectType.Select,
   fieldName: 'selectfield', // form field name need set
   urlKey: 'select', // Only for remote field config and options
-  viewportReady: false,
   fieldLabel: undefined,
   remoteConfig: false, // remote config requires remote options
   remoteOptions: false,
@@ -24,7 +22,13 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   ...defaultBaseField,
 };
 
+export const defaultSelectFieldSetting: IccSelectFieldSetting = {
+  fieldId: '191cf2bb6b5',
+  viewportReady: false,
+};
+
 export const defaultSelectFieldState: IccSelectFieldState = {
   fieldConfig: defaultSelectFieldConfig,
+  fieldSetting: defaultSelectFieldSetting,
   options: [],
 };
