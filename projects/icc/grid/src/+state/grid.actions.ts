@@ -15,26 +15,26 @@ export const initGridConfig = createAction(
   props<{ gridId: string; gridConfig: IccGridConfig }>(),
 );
 
-export const loadGridConfig = createAction('[Grid] Load Grid Config', props<{ gridConfig: IccGridConfig }>());
+export const loadGridConfig = createAction(
+  '[Grid] Load Grid Config',
+  props<{ gridId: string; gridConfig: IccGridConfig }>(),
+);
 
 export const loadGridConfigSuccess = createAction(
   '[Grid] Load Grid Config Success',
-  props<{ gridConfig: IccGridConfig }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig }>(),
 );
 
-export const loadGridColumnsConfig = createAction(
-  '[Grid] Load Grid Columns Config',
-  props<{ gridConfig: IccGridConfig }>(),
-);
+export const loadGridColumnsConfig = createAction('[Grid] Load Grid Columns Config', props<{ gridId: string }>());
 
 export const loadGridColumnsConfigSuccess = createAction(
   '[Grid] Load Grid Columns Config Success',
-  props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
 );
 
 export const setViewportPageSize = createAction(
   '[Grid] Setup Grid Viewport Page Size',
-  props<{ gridConfig: IccGridConfig; pageSize: number; viewportWidth: number }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; pageSize: number; viewportWidth: number }>(),
 );
 
 export const setViewportPage = createAction(

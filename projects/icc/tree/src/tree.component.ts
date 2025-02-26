@@ -70,7 +70,7 @@ export class IccTreeComponent<T> implements OnDestroy {
       this.initGridConfig({ ...defaultTreeConfig });
     }
     if (!this.treeConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.treeConfig, this.columnsConfig);
+      this.gridFacade.setGridColumnsConfig(this.treeId, this.treeConfig, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {

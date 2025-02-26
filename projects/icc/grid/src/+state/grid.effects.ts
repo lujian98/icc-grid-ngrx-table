@@ -23,16 +23,17 @@ export class IccGridEffects {
       concatMap((action) => {
         return this.gridService.getGridConfig(action.gridConfig).pipe(
           map((gridConfig) => {
+            const gridId = action.gridId;
             if (gridConfig.remoteColumnsConfig) {
-              this.store.dispatch(gridActions.loadGridConfigSuccess({ gridConfig }));
-              return gridActions.loadGridColumnsConfig({ gridConfig });
+              this.store.dispatch(gridActions.loadGridConfigSuccess({ gridId, gridConfig }));
+              return gridActions.loadGridColumnsConfig({ gridId });
             } else {
               if (gridConfig.rowGroupField) {
-                this.gridFacade.initRowGroup(gridConfig);
+                this.gridFacade.initRowGroup(gridId, gridConfig);
               } else {
                 window.dispatchEvent(new Event('resize'));
               }
-              return gridActions.loadGridConfigSuccess({ gridConfig });
+              return gridActions.loadGridConfigSuccess({ gridId, gridConfig });
             }
           }),
         );
@@ -43,23 +44,26 @@ export class IccGridEffects {
   loadGridColumnsConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(gridActions.loadGridColumnsConfig),
-      concatMap((action) => {
-        const gridConfig = action.gridConfig;
+      concatLatestFrom((action) => {
+        return [this.gridFacade.selectGridConfig(action.gridId)];
+      }),
+      concatMap(([action, gridConfig]) => {
+        const gridId = action.gridId;
         return this.gridService.getGridColumnsConfig(gridConfig).pipe(
           map((columnsConfig) => {
             if (gridConfig.rowGroupField) {
-              this.gridFacade.initRowGroup(gridConfig);
-              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
+              this.gridFacade.initRowGroup(gridId, gridConfig);
+              return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
             } else if (gridConfig.remoteGridConfig || gridConfig.isTreeGrid) {
               // remote config will need trigger window resize to load data
               window.dispatchEvent(new Event('resize'));
-              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
+              return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
             } else if (!gridConfig.isTreeGrid) {
-              this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+              this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
               return gridActions.getGridData({ gridConfig });
             } else {
               // TODO tree need load local data?
-              return gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig });
+              return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig });
             }
           }),
         );

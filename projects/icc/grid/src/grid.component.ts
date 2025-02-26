@@ -72,7 +72,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       this.initGridConfig({ ...defaultGridConfig });
     }
     if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      this.gridFacade.setGridColumnsConfig(this.gridConfig, this.columnsConfig);
+      this.gridFacade.setGridColumnsConfig(this.gridId, this.gridConfig, this.columnsConfig);
     }
   }
   get columnsConfig(): IccColumnConfig[] {

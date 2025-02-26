@@ -34,22 +34,22 @@ export class IccGridFacade {
   initGridConfig(gridId: string, gridConfig: IccGridConfig): void {
     this.store.dispatch(gridActions.initGridConfig({ gridId, gridConfig }));
     if (gridConfig.remoteGridConfig) {
-      this.store.dispatch(gridActions.loadGridConfig({ gridConfig }));
+      this.store.dispatch(gridActions.loadGridConfig({ gridId, gridConfig }));
     } else if (gridConfig.remoteColumnsConfig) {
-      this.store.dispatch(gridActions.loadGridColumnsConfig({ gridConfig }));
+      this.store.dispatch(gridActions.loadGridColumnsConfig({ gridId }));
     } else if (gridConfig.rowGroupField) {
-      this.initRowGroup(gridConfig);
+      this.initRowGroup(gridId, gridConfig);
     }
   }
 
-  initRowGroup(gridConfig: IccGridConfig): void {
+  initRowGroup(gridId: string, gridConfig: IccGridConfig): void {
     if (gridConfig.rowGroupField) {
       this.setGridGroupBy(gridConfig, gridConfig.rowGroupField);
     }
   }
 
-  setGridColumnsConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
-    this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridConfig, columnsConfig }));
+  setGridColumnsConfig(gridId: string, gridConfig: IccGridConfig, columnsConfig: IccColumnConfig[]): void {
+    this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
     this.getGridData(gridConfig);
   }
 
@@ -60,7 +60,8 @@ export class IccGridFacade {
     viewportWidth: number,
     loadData: boolean,
   ): void {
-    this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
+    const gridId = gridSetting.gridId;
+    this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
       this.getGridData(gridConfig);
     }
@@ -73,7 +74,8 @@ export class IccGridFacade {
     viewportWidth: number,
     loadData: boolean,
   ): void {
-    this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
+    const gridId = gridSetting.gridId;
+    this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
       this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
     }

@@ -40,7 +40,7 @@ export const iccGridFeature = createFeature({
         ...action.gridConfig,
         //virtualScroll: action.gridConfig.virtualScroll || action.gridConfig.rowGroup,
       };
-      const key = gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -59,7 +59,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.loadGridColumnsConfigSuccess, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const gridConfig = state[key].gridConfig;
@@ -82,7 +82,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setViewportPageSize, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {

@@ -72,7 +72,7 @@ export class IccGridHeaderViewComponent {
       width: columnWidths[index].width / widthRatio,
     }));
     this.setColumWidths(columnWidths, widthRatio);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridSetting.gridId, this.gridConfig, columns);
   }
 
   onColumnDragDrop(events: DragDropEvent): void {
@@ -127,7 +127,7 @@ export class IccGridHeaderViewComponent {
           }
         });
       }
-      this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+      this.gridFacade.setGridColumnsConfig(this.gridSetting.gridId, this.gridConfig, columns);
       this.columns = [...columns];
     }
   }
@@ -147,7 +147,7 @@ export class IccGridHeaderViewComponent {
   private moveColumn(previousIndex: number, currentIndex: number): void {
     const columns = [...this.columns];
     moveItemInArray(columns, previousIndex, currentIndex);
-    this.gridFacade.setGridColumnsConfig(this.gridConfig, columns);
+    this.gridFacade.setGridColumnsConfig(this.gridSetting.gridId, this.gridConfig, columns);
   }
 
   private setColumWidths(columns: IccColumnConfig[], widthRatio: number): void {
