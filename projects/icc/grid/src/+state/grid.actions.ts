@@ -7,6 +7,7 @@ import {
   IccColumnFilter,
   IccRowGroupField,
   IccCellEdit,
+  IccGridSetting,
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 
@@ -29,7 +30,7 @@ export const loadGridColumnsConfig = createAction('[Grid] Load Grid Columns Conf
 
 export const loadGridColumnsConfigSuccess = createAction(
   '[Grid] Load Grid Columns Config Success',
-  props<{ gridId: string; gridConfig: IccGridConfig; columnsConfig: IccColumnConfig[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; isTreeGrid: boolean; columnsConfig: IccColumnConfig[] }>(),
 );
 
 export const setViewportPageSize = createAction(
@@ -44,12 +45,12 @@ export const setViewportPage = createAction(
 
 export const setGridSortFields = createAction(
   '[Grid] Set Grid Sort Fields',
-  props<{ gridId: string; gridConfig: IccGridConfig; sortFields: IccSortField[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; isTreeGrid: boolean; sortFields: IccSortField[] }>(),
 );
 
 export const setGridColumnFilters = createAction(
   '[Grid] Set Grid Column Filters',
-  props<{ gridId: string; gridConfig: IccGridConfig; columnFilters: IccColumnFilter[] }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; isTreeGrid: boolean; columnFilters: IccColumnFilter[] }>(),
 );
 
 export const setGridColumnsConfig = createAction(

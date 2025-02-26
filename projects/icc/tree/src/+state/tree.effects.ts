@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { IccGridFacade, loadGridColumnsConfigSuccess, setGridColumnFilters, setGridSortFields } from '@icc/ui/grid';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
-import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { concatMap, debounceTime, delay, filter, map, mergeMap, of, switchMap } from 'rxjs';
 import { IccTreeConfig } from '../models/tree-grid.model';
 import { IccTreeinMemoryService } from '../services/tree-in-memory.service';
 import { IccTreeRemoteService } from '../services/tree-remote.service';
@@ -89,9 +89,10 @@ export class IccTreeEffects {
 
   setGridColumnFilters$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setGridColumnFilters, loadGridColumnsConfigSuccess), // gridActions need filter out grid action???
-      switchMap(({ gridId, gridConfig }) =>
-        of({ gridId, gridConfig }).pipe(
+      ofType(setGridColumnFilters, loadGridColumnsConfigSuccess), // gridActions
+      switchMap(({ gridId, gridConfig, isTreeGrid }) =>
+        of({ gridId, gridConfig, isTreeGrid }).pipe(
+          filter(({ isTreeGrid }) => isTreeGrid),
           map(({ gridId, gridConfig }) => {
             const treeId = gridId;
             const treeConfig = gridConfig as IccTreeConfig;
@@ -108,9 +109,10 @@ export class IccTreeEffects {
 
   setGridSortFields$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setGridSortFields),
-      switchMap(({ gridId, gridConfig }) =>
-        of({ gridId, gridConfig }).pipe(
+      ofType(setGridSortFields), // gridActions
+      switchMap(({ gridId, gridConfig, isTreeGrid }) =>
+        of({ gridId, gridConfig, isTreeGrid }).pipe(
+          filter(({ isTreeGrid }) => isTreeGrid),
           map(({ gridId, gridConfig }) => {
             const treeId = gridId;
             const treeConfig = gridConfig as IccTreeConfig;

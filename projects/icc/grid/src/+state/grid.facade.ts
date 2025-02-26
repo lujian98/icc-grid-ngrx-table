@@ -50,7 +50,8 @@ export class IccGridFacade {
 
   setGridColumnsConfig(gridConfig: IccGridConfig, gridSetting: IccGridSetting, columnsConfig: IccColumnConfig[]): void {
     const gridId = gridSetting.gridId;
-    this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, columnsConfig }));
+    const isTreeGrid = gridSetting.isTreeGrid;
+    this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, isTreeGrid, columnsConfig }));
     this.getGridData(gridId, gridSetting);
   }
 
@@ -89,16 +90,18 @@ export class IccGridFacade {
     //checkSort: boolean = true,
   ): void {
     const gridId = gridSetting.gridId;
+    const isTreeGrid = gridSetting.isTreeGrid;
     //if (checkSort) {
     sortFields = this.checkGroupSortField(gridConfig, sortFields);
     //}
-    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
+    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, isTreeGrid, sortFields }));
     this.getGridData(gridId, gridSetting);
   }
 
   setGridColumnFilters(gridConfig: IccGridConfig, gridSetting: IccGridSetting, columnFilters: IccColumnFilter[]): void {
     const gridId = gridSetting.gridId;
-    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, gridConfig, columnFilters }));
+    const isTreeGrid = gridSetting.isTreeGrid;
+    this.store.dispatch(gridActions.setGridColumnFilters({ gridId, gridConfig, isTreeGrid, columnFilters }));
     this.getGridData(gridId, gridSetting);
   }
 
@@ -123,7 +126,8 @@ export class IccGridFacade {
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
     this.store.dispatch(gridActions.setGridGroupBy({ gridId, gridConfig, rowGroupField }));
     //this.setGridSortFields(gridId, gridConfig, sortFields, false);
-    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, sortFields }));
+    const isTreeGrid = false;
+    this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, isTreeGrid, sortFields }));
     this.dispatchGridData(gridId);
   }
 

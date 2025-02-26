@@ -79,7 +79,7 @@ export interface GridState {
 }
 
 export interface IccGridSetting {
-  // for external grid config
+  // for internal grid setting
   gridId: string;
   isTreeGrid: boolean;
   viewportWidth: number;
