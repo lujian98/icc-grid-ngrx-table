@@ -166,7 +166,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       }),
     );
 
-    this.fieldSetting$ = this.selectFieldFacade.selectFieldSetting(this.fieldId).pipe(
+    this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
         this.initSelectField();

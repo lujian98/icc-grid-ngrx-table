@@ -27,7 +27,7 @@ import { IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig, IccFormButtonClick } from '../models/form.model';
+import { IccFormConfig, IccFormButtonClick, IccFormSetting } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -56,6 +56,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   private _formFields: IccFormField[] = [];
   private _values!: object;
 
+  @Input() formSetting!: IccFormSetting;
   @Input() formConfig!: IccFormConfig;
   @Input()
   set formFields(val: IccFormField[]) {
@@ -259,7 +260,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private refreshForm(): void {
-    this.formFacade.getFormData(this.formConfig);
+    this.formFacade.getFormData(this.formSetting.formId, this.formConfig);
   }
 
   private resetForm(): void {
@@ -270,7 +271,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
 
   private saveForm(): void {
     if (this.form.valid) {
-      this.formFacade.saveFormData(this.formConfig, this.form.getRawValue());
+      this.formFacade.saveFormData(this.formSetting.formId, this.formConfig, this.form.getRawValue());
     }
   }
 

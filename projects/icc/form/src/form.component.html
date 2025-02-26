@@ -1,13 +1,16 @@
 <icc-layout *ngIf="formConfig$ | async as formConfig">
-  <ng-container *ngIf="formFieldsConfig$ | async as formFields">
-    <ng-container *ngIf="formData$ | async as formData">
-      <icc-form-view
-        [formConfig]="formConfig"
-        [formFields]="formFields"
-        [values]="formData"
-        (formButtonClick)="formButtonClick($event)"
-      >
-      </icc-form-view>
+  <ng-container *ngIf="formSetting$ | async as formSetting">
+    <ng-container *ngIf="formFieldsConfig$ | async as formFields">
+      <ng-container *ngIf="formData$ | async as formData">
+        <icc-form-view
+          [formSetting]="formSetting"
+          [formConfig]="formConfig"
+          [formFields]="formFields"
+          [values]="formData"
+          (formButtonClick)="formButtonClick($event)"
+        >
+        </icc-form-view>
+      </ng-container>
     </ng-container>
   </ng-container>
 </icc-layout>

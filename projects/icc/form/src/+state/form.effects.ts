@@ -16,14 +16,14 @@ export class IccFormEffects {
   loadRemoteFormConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.loadRemoteFormConfig),
-      concatMap(({ formConfig }) => {
+      concatMap(({ formId, formConfig }) => {
         return this.formService.getRemoteFormConfig(formConfig).pipe(
           map((formConfig) => {
             if (formConfig.remoteFieldsConfig) {
-              this.store.dispatch(formActions.loadRemoteFormConfigSuccess({ formConfig }));
-              return formActions.loadFormFieldsConfig({ formConfig });
+              this.store.dispatch(formActions.loadRemoteFormConfigSuccess({ formId, formConfig }));
+              return formActions.loadFormFieldsConfig({ formId, formConfig });
             } else {
-              return formActions.loadRemoteFormConfigSuccess({ formConfig });
+              return formActions.loadRemoteFormConfigSuccess({ formId, formConfig });
             }
           }),
         );
@@ -34,15 +34,14 @@ export class IccFormEffects {
   loadFormFieldsConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.loadFormFieldsConfig),
-      concatMap((action) => {
-        const formConfig = action.formConfig;
+      concatMap(({ formId, formConfig }) => {
         return this.formService.getFormFieldsConfig(formConfig).pipe(
           map((formFields) => {
             if (formConfig.remoteFormData) {
-              this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
-              return formActions.getFormData({ formConfig });
+              this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formId, formConfig, formFields }));
+              return formActions.getFormData({ formId, formConfig });
             } else {
-              return formActions.loadFormFieldsConfigSuccess({ formConfig, formFields });
+              return formActions.loadFormFieldsConfigSuccess({ formId, formConfig, formFields });
             }
           }),
         );
@@ -53,10 +52,10 @@ export class IccFormEffects {
   getFormData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.getFormData),
-      concatMap(({ formConfig }) => {
+      concatMap(({ formId, formConfig }) => {
         return this.formService.getFormData(formConfig).pipe(
           map(({ formConfig, formData }) => {
-            return formActions.getFormDataSuccess({ formConfig, formData });
+            return formActions.getFormDataSuccess({ formId, formConfig, formData });
           }),
         );
       }),
@@ -66,10 +65,10 @@ export class IccFormEffects {
   saveFormData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(formActions.saveFormData),
-      concatMap(({ formConfig, formData }) => {
+      concatMap(({ formId, formConfig, formData }) => {
         return this.formService.saveFormData(formConfig, formData).pipe(
           map(({ formConfig, formData }) => {
-            return formActions.saveFormDataSuccess({ formConfig, formData });
+            return formActions.saveFormDataSuccess({ formId, formConfig, formData });
           }),
         );
       }),

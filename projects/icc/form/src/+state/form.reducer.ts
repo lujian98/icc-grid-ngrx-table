@@ -60,17 +60,20 @@ export const iccFormFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(formActions.initFormConfig, (state, action) => {
-      const formConfig = { ...action.formConfig };
-      const key = formConfig.formId;
+      const key = action.formId;
       const newState: FormState = { ...state };
       newState[key] = {
         ...defaultFormState,
-        formConfig,
+        formConfig: { ...action.formConfig },
+        formSetting: {
+          ...defaultFormState.formSetting,
+          formId: action.formId,
+        },
       };
       return { ...newState };
     }),
     on(formActions.loadRemoteFormConfigSuccess, (state, action) => {
-      const key = action.formConfig.formId;
+      const key = action.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
         const formConfig = { ...state[key].formConfig, ...action.formConfig };
@@ -84,7 +87,7 @@ export const iccFormFeature = createFeature({
       return { ...newState };
     }),
     on(formActions.loadFormFieldsConfigSuccess, (state, action) => {
-      const key = action.formConfig.formId;
+      const key = action.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
         const formFields = setFormFieldsEditable(action.formFields, IccBUTTONS.View);
@@ -111,7 +114,7 @@ export const iccFormFeature = createFeature({
       return { ...newState };
     }),
     on(formActions.getFormDataSuccess, (state, action) => {
-      const key = action.formConfig.formId;
+      const key = action.formId;
       const newState: FormState = { ...state };
       if (state[key]) {
         newState[key] = {

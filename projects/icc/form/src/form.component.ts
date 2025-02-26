@@ -8,7 +8,7 @@ import { IccFormStateModule } from './+state/form-state.module';
 import { IccFormFacade } from './+state/form.facade';
 import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
-import { IccFormConfig, IccFormButtonClick } from './models/form.model';
+import { IccFormConfig, IccFormButtonClick, IccFormSetting } from './models/form.model';
 
 @Component({
   selector: 'icc-form',
@@ -25,6 +25,7 @@ export class IccFormComponent {
   private _formConfig!: IccFormConfig;
   private _formFields: IccFormField[] = [];
   private formId = uniqueId(16);
+  formSetting$!: Observable<IccFormSetting | undefined>;
   formConfig$!: Observable<IccFormConfig>;
   formFieldsConfig$!: Observable<IccFormField[]>;
   formData$!: Observable<object | undefined>;
@@ -42,10 +43,11 @@ export class IccFormComponent {
       ...value,
       formId: this.formId,
     };
-    this.formConfig$ = this.formFacade.selectFormConfig(this.formId); // selectFormFieldConfig
+    this.formConfig$ = this.formFacade.selectFormConfig(this.formId);
+    this.formSetting$ = this.formFacade.selectSetting(this.formId);
     this.formFieldsConfig$ = this.formFacade.selectFormFieldsConfig(this.formId);
     this.formData$ = this.formFacade.selectFormData(this.formConfig.formId);
-    this.formFacade.initFormConfig(this.formConfig);
+    this.formFacade.initFormConfig(this.formId, this.formConfig);
   }
 
   @Input()
@@ -55,7 +57,7 @@ export class IccFormComponent {
       this.initFormConfig({ ...defaultFormConfig });
     }
     if (!this.formConfig.remoteFieldsConfig && this.formFields.length > 0) {
-      this.formFacade.setFormFieldsConfig(this.formConfig, this.formFields);
+      this.formFacade.setFormFieldsConfig(this.formId, this.formConfig, this.formFields);
     }
   }
   get formFields(): IccFormField[] {
@@ -64,7 +66,7 @@ export class IccFormComponent {
 
   @Input()
   set values(val: object) {
-    this.formFacade.setFormData(this.formConfig, val);
+    this.formFacade.setFormData(this.formId, this.formConfig, val);
   }
 
   @Output() iccFormButtonClick = new EventEmitter<IccFormButtonClick>(false);

@@ -8,6 +8,11 @@ export interface AppFormState {
 
 export const featureSelector = (state: AppFormState) => state.iccForm;
 
+export const selectFormSetting = (formId: string) =>
+  createSelector(featureSelector, (state: FormState) => {
+    return state[formId] ? state[formId].formSetting : defaultFormState.formSetting;
+  });
+
 export const selectFormConfig = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
     return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;

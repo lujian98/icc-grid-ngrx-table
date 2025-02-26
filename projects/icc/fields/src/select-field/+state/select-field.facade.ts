@@ -28,7 +28,7 @@ export class IccSelectFieldFacade {
     this.store.dispatch(selectFieldActions.clearSelectFieldStore({ fieldId }));
   }
 
-  selectFieldSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
+  selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
     return this.store.select(selectFieldSetting(fieldId));
   }
 

@@ -17,12 +17,19 @@ export interface IccFormConfig {
   buttons: IccButtonConfg[];
 }
 
+export interface IccFormSetting {
+  // for internal grid setting
+  formId: string; // auto generated unique id
+  editing: boolean;
+}
+
 export interface FormState {
   [key: string]: IccFormState;
 }
 
 export interface IccFormState<T extends object = object> {
   formConfig: IccFormConfig;
+  formSetting: IccFormSetting;
   formFields: IccFormField[];
   formData: object | undefined;
 }

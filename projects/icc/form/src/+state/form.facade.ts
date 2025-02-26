@@ -2,49 +2,49 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccButtonConfg } from '@icc/ui/core';
-import { IccFormConfig } from '../models/form.model';
+import { IccFormConfig, IccFormSetting } from '../models/form.model';
 import { IccFormField } from '@icc/ui/fields';
 import * as formActions from './form.actions';
-import { selectFormConfig, selectFormFieldsConfig, selectFormData } from './form.selectors';
+import { selectFormConfig, selectFormFieldsConfig, selectFormData, selectFormSetting } from './form.selectors';
 
 @Injectable()
 export class IccFormFacade {
   private store = inject(Store);
 
-  initFormConfig(formConfig: IccFormConfig): void {
-    this.store.dispatch(formActions.initFormConfig({ formConfig }));
+  initFormConfig(formId: string, formConfig: IccFormConfig): void {
+    this.store.dispatch(formActions.initFormConfig({ formId, formConfig }));
 
     if (formConfig.remoteFormConfig) {
-      this.store.dispatch(formActions.loadRemoteFormConfig({ formConfig }));
+      this.store.dispatch(formActions.loadRemoteFormConfig({ formId, formConfig }));
     } else if (formConfig.remoteFieldsConfig) {
-      this.store.dispatch(formActions.loadFormFieldsConfig({ formConfig }));
+      this.store.dispatch(formActions.loadFormFieldsConfig({ formId, formConfig }));
     }
   }
 
-  setFormFieldsConfig(formConfig: IccFormConfig, formFields: IccFormField[]): void {
-    this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formConfig, formFields }));
+  setFormFieldsConfig(formId: string, formConfig: IccFormConfig, formFields: IccFormField[]): void {
+    this.store.dispatch(formActions.loadFormFieldsConfigSuccess({ formId, formConfig, formFields }));
     if (formConfig.remoteFormData) {
-      this.store.dispatch(formActions.getFormData({ formConfig }));
+      this.store.dispatch(formActions.getFormData({ formId, formConfig }));
     }
   }
 
-  setFormData(formConfig: IccFormConfig, formData: object): void {
-    this.store.dispatch(formActions.getFormDataSuccess({ formConfig, formData }));
+  setFormData(formId: string, formConfig: IccFormConfig, formData: object): void {
+    this.store.dispatch(formActions.getFormDataSuccess({ formId, formConfig, formData }));
   }
 
   setFormEditable(formId: string, button: IccButtonConfg): void {
     this.store.dispatch(formActions.setFormEditable({ formId, button }));
   }
 
-  getFormData(formConfig: IccFormConfig): void {
+  getFormData(formId: string, formConfig: IccFormConfig): void {
     if (formConfig.remoteFormData) {
-      this.store.dispatch(formActions.getFormData({ formConfig }));
+      this.store.dispatch(formActions.getFormData({ formId, formConfig }));
     }
   }
 
-  saveFormData(formConfig: IccFormConfig, formData: object): void {
+  saveFormData(formId: string, formConfig: IccFormConfig, formData: object): void {
     if (formConfig.remoteFormData) {
-      this.store.dispatch(formActions.saveFormData({ formConfig, formData }));
+      this.store.dispatch(formActions.saveFormData({ formId, formConfig, formData }));
     }
   }
 
@@ -65,6 +65,10 @@ export class IccFormFacade {
 
   selectFormFieldsConfig(formId: string): Observable<IccFormField[]> {
     return this.store.select(selectFormFieldsConfig(formId));
+  }
+
+  selectSetting(fieldId: string): Observable<IccFormSetting | undefined> {
+    return this.store.select(selectFormSetting(fieldId));
   }
 
   selectFormData(formId: string): Observable<object | undefined> {
