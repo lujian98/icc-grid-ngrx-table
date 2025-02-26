@@ -10,7 +10,6 @@ export const buttons: IccButtonConfg[] = [
 ];
 
 export const defaultFormConfig: IccFormConfig = {
-  formId: '191cf2bb6b5', // auto generated unique id
   urlKey: 'formfields', // Only for remote config
   remoteFormConfig: false,
   remoteFieldsConfig: false,

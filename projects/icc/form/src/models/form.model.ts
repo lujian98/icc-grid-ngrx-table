@@ -3,7 +3,6 @@ import { IccButtonConfg } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 
 export interface IccFormConfig {
-  formId: string; // auto generated unique id
   urlKey: string; // Only for remote config
   title?: string;
   remoteFormConfig: boolean;

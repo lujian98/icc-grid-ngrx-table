@@ -227,7 +227,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   buttonClick(button: IccButtonConfg): void {
-    this.formFacade.setFormEditable(this.formConfig.formId, button);
+    this.formFacade.setFormEditable(this.formSetting.formId, button);
     switch (button.name) {
       case IccButtonType.Edit:
         this.editForm(button);
