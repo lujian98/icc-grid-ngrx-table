@@ -47,7 +47,7 @@ export interface IccGridConfig {
   gridId: string; // auto generated unique id internal use //WARNING internal state ???
   isTreeGrid: boolean;
   urlKey: string; // Only for remote grid config and data
-  viewportReady: boolean; //WARNING internal state
+  //viewportReady: boolean; //WARNING internal state
   columnSort: boolean;
   columnFilter: boolean;
   columnResize: boolean;

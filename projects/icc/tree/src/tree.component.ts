@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, uniqueId } from '@icc/ui/core';
-import { IccColumnConfig, IccGridFacade, IccGridStateModule } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridFacade, IccGridStateModule, IccGridSetting } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { Observable } from 'rxjs';
@@ -33,6 +33,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   private _treeData!: IccTreeNode<T>[];
   private treeId = uniqueId(16);
   treeConfig$!: Observable<IccTreeConfig>;
+  gridSetting$!: Observable<IccGridSetting>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   buttons: IccButtonConfg[] = [
@@ -56,6 +57,7 @@ export class IccTreeComponent<T> implements OnDestroy {
       gridId: this.treeId,
     };
     this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
+    this.gridSetting$ = this.gridFacade.selectSetting(this.treeId);
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
     this.gridFacade.initGridConfig(this.treeConfig);
     this.treeFacade.initTreeConfig(this.treeConfig);

@@ -53,16 +53,28 @@ export class IccGridFacade {
     this.getGridData(gridConfig);
   }
 
-  setViewportPageSize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number, loadData: boolean): void {
+  setViewportPageSize(
+    gridConfig: IccGridConfig,
+    gridSetting: IccGridSetting,
+    pageSize: number,
+    viewportWidth: number,
+    loadData: boolean,
+  ): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
-    if (gridConfig.viewportReady && loadData && !gridConfig.isTreeGrid) {
+    if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
       this.getGridData(gridConfig);
     }
   }
 
-  setWindowResize(gridConfig: IccGridConfig, pageSize: number, viewportWidth: number, loadData: boolean): void {
+  setWindowResize(
+    gridConfig: IccGridConfig,
+    gridSetting: IccGridSetting,
+    pageSize: number,
+    viewportWidth: number,
+    loadData: boolean,
+  ): void {
     this.store.dispatch(gridActions.setViewportPageSize({ gridConfig, pageSize, viewportWidth }));
-    if (gridConfig.viewportReady && loadData && !gridConfig.isTreeGrid) {
+    if (gridSetting.viewportReady && loadData && !gridConfig.isTreeGrid) {
       this.store.dispatch(gridActions.getConcatGridData({ gridId: gridConfig.gridId }));
     }
   }

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { IccColumnConfig, IccGridFacade, IccGridStateModule, IccGridSetting } from '@icc/ui/grid';
 import * as treeActions from './tree.actions';
 import { selectTreeData, selectTreeInMemoryData } from './tree.selectors';
 import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
@@ -13,14 +14,14 @@ export class IccTreeFacade {
     this.store.dispatch(treeActions.initTreeConfig({ treeConfig }));
   }
 
-  viewportReadyLoadData(treeConfig: IccTreeConfig): void {
-    if (treeConfig.viewportReady) {
+  viewportReadyLoadData(treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
+    if (gridSetting.viewportReady) {
       this.getTreeData(treeConfig);
     }
   }
 
-  windowResizeLoadData(treeConfig: IccTreeConfig): void {
-    if (treeConfig.viewportReady) {
+  windowResizeLoadData(treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
+    if (gridSetting.viewportReady) {
       this.store.dispatch(treeActions.getConcatTreeData({ treeConfig }));
     }
   }

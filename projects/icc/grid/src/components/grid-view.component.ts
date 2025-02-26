@@ -145,9 +145,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
 
     if (!event || typeof event === 'string') {
-      this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, loadData);
+      this.gridFacade.setViewportPageSize(this.gridConfig, this.gridSetting, pageSize, clientWidth, loadData);
     } else {
-      this.gridFacade.setWindowResize(this.gridConfig, pageSize, clientWidth, loadData);
+      this.gridFacade.setWindowResize(this.gridConfig, this.gridSetting, pageSize, clientWidth, loadData);
     }
   }
 
@@ -165,7 +165,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         this.sizeChanged$.next(uniqueId(16));
       }
     } else if (pageSize !== this.gridConfig.pageSize) {
-      this.gridFacade.setViewportPageSize(this.gridConfig, pageSize, clientWidth, true);
+      this.gridFacade.setViewportPageSize(this.gridConfig, this.gridSetting, pageSize, clientWidth, true);
     }
   }
 

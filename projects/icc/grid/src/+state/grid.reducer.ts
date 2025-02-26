@@ -25,8 +25,11 @@ export const iccGridFeature = createFeature({
         ...defaultState,
         gridConfig: {
           ...gridConfig,
-          viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
           pageSize: !gridConfig.virtualScroll ? gridConfig.pageSize : VIRTUAL_SCROLL_PAGE_SIZE,
+        },
+        gridSetting: {
+          ...defaultState.gridSetting,
+          viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
         },
       };
       return { ...newState };
@@ -41,8 +44,9 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         newState[key] = {
           ...state[key],
-          gridConfig: {
-            ...gridConfig,
+          gridConfig,
+          gridSetting: {
+            ...state[key].gridSetting,
             viewportReady: !action.gridConfig.remoteColumnsConfig,
           },
         };
@@ -85,7 +89,6 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...state[key].gridConfig,
             pageSize: action.pageSize,
-            //viewportWidth: action.viewportWidth,
           },
           gridSetting: {
             ...state[key].gridSetting,

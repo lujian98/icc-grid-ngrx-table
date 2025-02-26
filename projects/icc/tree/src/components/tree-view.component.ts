@@ -14,7 +14,13 @@ import {
   inject,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { IccColumnConfig, IccGridFacade, IccGridHeaderViewComponent, IccColumnWidth } from '@icc/ui/grid';
+import {
+  IccColumnConfig,
+  IccGridFacade,
+  IccGridHeaderViewComponent,
+  IccColumnWidth,
+  IccGridSetting,
+} from '@icc/ui/grid';
 import { BehaviorSubject, Observable, interval, of, map, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
@@ -43,6 +49,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private dragNode: IccTreeNode<T> | null = null;
   private dropInfo: IccTreeDropInfo<T> | null = null;
 
+  @Input() gridSetting!: IccGridSetting;
   @Input() columns: IccColumnConfig[] = [];
 
   @Input()
@@ -104,12 +111,12 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     const fitPageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
     const pageSize =
       !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.treeConfig, pageSize, clientWidth, loadData);
+    this.gridFacade.setViewportPageSize(this.treeConfig, this.gridSetting, pageSize, clientWidth, loadData);
     if (loadData) {
       if (!event || typeof event === 'string') {
-        this.treeFacade.viewportReadyLoadData(this.treeConfig);
+        this.treeFacade.viewportReadyLoadData(this.treeConfig, this.gridSetting);
       } else {
-        this.treeFacade.windowResizeLoadData(this.treeConfig);
+        this.treeFacade.windowResizeLoadData(this.treeConfig, this.gridSetting);
       }
     }
   }
