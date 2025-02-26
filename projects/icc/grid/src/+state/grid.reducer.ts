@@ -30,6 +30,7 @@ export const iccGridFeature = createFeature({
         gridSetting: {
           ...defaultState.gridSetting,
           gridId: action.gridId,
+          isTreeGrid: action.gridType === 'treeGrid',
           viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
         },
       };

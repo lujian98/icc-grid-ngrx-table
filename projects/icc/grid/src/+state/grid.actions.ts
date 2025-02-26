@@ -12,7 +12,7 @@ import { IccRowGroup } from '../services/row-group/row-group';
 
 export const initGridConfig = createAction(
   '[Grid] Init Grid Config',
-  props<{ gridId: string; gridConfig: IccGridConfig }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; gridType: string }>(),
 );
 
 export const loadGridConfig = createAction(

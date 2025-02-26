@@ -66,7 +66,7 @@ export class IccTreeComponent<T> implements OnDestroy {
     this.gridSetting$ = this.gridFacade.selectSetting(this.treeId);
 
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
-    this.gridFacade.initGridConfig(this.treeId, this.treeConfig);
+    this.gridFacade.initGridConfig(this.treeId, this.treeConfig, 'treeGrid');
     this.treeFacade.initTreeConfig(this.treeId, this.treeConfig);
   }
 

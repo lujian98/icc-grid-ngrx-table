@@ -31,8 +31,8 @@ import {
 export class IccGridFacade {
   private store = inject(Store);
 
-  initGridConfig(gridId: string, gridConfig: IccGridConfig): void {
-    this.store.dispatch(gridActions.initGridConfig({ gridId, gridConfig }));
+  initGridConfig(gridId: string, gridConfig: IccGridConfig, gridType: string): void {
+    this.store.dispatch(gridActions.initGridConfig({ gridId, gridConfig, gridType }));
     if (gridConfig.remoteGridConfig) {
       this.store.dispatch(gridActions.loadGridConfig({ gridId, gridConfig }));
     } else if (gridConfig.remoteColumnsConfig) {
