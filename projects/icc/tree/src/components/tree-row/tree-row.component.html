@@ -17,7 +17,8 @@
     'max-width': getColumnWidth(treeColumn),
   }"
 >
-  <icc-tree-node [treeConfig]="treeConfig" [node]="record" [column]="treeColumn"> </icc-tree-node>
+  <icc-tree-node [gridSetting]="gridSetting" [treeConfig]="treeConfig" [node]="record" [column]="treeColumn">
+  </icc-tree-node>
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">

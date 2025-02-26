@@ -1,9 +1,14 @@
-import { IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
+import { IccGridConfig, defaultGridConfig, IccGridSetting, defaultGridSetting } from '@icc/ui/grid';
 
 export interface IccTreeConfig extends IccGridConfig {
   remoteLoadAll?: boolean;
   dragDisabled?: boolean;
 }
+
+export interface IccTreeSetting extends IccGridSetting {}
+export const defaultTreeSetting: IccGridSetting = {
+  ...defaultGridSetting,
+};
 
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
@@ -33,12 +38,14 @@ export interface TreeState {
 
 export interface IccTreeState<T extends object = object> {
   treeConfig: IccTreeConfig;
+  treeSetting: IccTreeSetting;
   treeData: IccTreeNode<T>[];
   inMemoryData: IccTreeNode<T>[];
 }
 
 export const defaultTreeState: IccTreeState = {
   treeConfig: defaultTreeConfig,
+  treeSetting: defaultTreeSetting,
   treeData: [],
   inMemoryData: [],
 };

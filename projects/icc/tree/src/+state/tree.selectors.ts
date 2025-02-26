@@ -7,14 +7,12 @@ export interface AppTreeState {
 
 export const featureSelector = (state: AppTreeState) => state.iccTree;
 
-export const selectTreeData = (treeConfig: IccTreeConfig) =>
+export const selectTreeData = (treeId: string) =>
   createSelector(featureSelector, (state: TreeState) => {
-    const treeId = treeConfig.gridId;
     return state[treeId] ? state[treeId].treeData : [];
   });
 
-export const selectTreeInMemoryData = (treeConfig: IccTreeConfig) =>
+export const selectTreeInMemoryData = (treeId: string) =>
   createSelector(featureSelector, (state: TreeState) => {
-    const treeId = treeConfig.gridId;
     return state[treeId] ? state[treeId].inMemoryData : [];
   });

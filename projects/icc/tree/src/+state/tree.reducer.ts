@@ -18,17 +18,22 @@ export const iccTreeFeature = createFeature({
     initialState,
     on(treeActions.initTreeConfig, (state, action) => {
       const treeConfig = { ...action.treeConfig };
-      const key = treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       newState[key] = {
         ...defaultTreeState,
         treeConfig,
+        treeSetting: {
+          // not used in the tree panel yet, just hold for the gridId
+          ...defaultTreeState.treeSetting,
+          gridId: action.treeId,
+        },
       };
       return { ...newState };
     }),
 
     on(treeActions.getTreeRemoteDataSuccess, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -43,7 +48,7 @@ export const iccTreeFeature = createFeature({
     }),
 
     on(treeActions.setTreeInMemoryData, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -55,7 +60,7 @@ export const iccTreeFeature = createFeature({
     }),
 
     on(treeActions.getInMemoryTreeDataSuccess, (state, action) => {
-      const key = action.treeConfig.gridId;
+      const key = action.treeId;
       const newState: TreeState = { ...state }; // treeData is faltten and filter
       if (state[key]) {
         const oldState = state[key];

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
 import { IccTreeViewComponent } from './components/tree-view.component';
-import { defaultTreeConfig, IccTreeConfig, IccTreeNode } from './models/tree-grid.model';
+import { defaultTreeConfig, IccTreeConfig, IccTreeNode, IccTreeSetting } from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -33,7 +33,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   private _treeData!: IccTreeNode<T>[];
   private treeId = uniqueId(16);
   treeConfig$!: Observable<IccTreeConfig>;
-  gridSetting$!: Observable<IccGridSetting>;
+  gridSetting$!: Observable<IccTreeSetting>; // Only support gridSetting for now
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   buttons: IccButtonConfg[] = [
@@ -58,9 +58,10 @@ export class IccTreeComponent<T> implements OnDestroy {
     };
     this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
     this.gridSetting$ = this.gridFacade.selectSetting(this.treeId);
+
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
     this.gridFacade.initGridConfig(this.treeId, this.treeConfig);
-    this.treeFacade.initTreeConfig(this.treeConfig);
+    this.treeFacade.initTreeConfig(this.treeId, this.treeConfig);
   }
 
   @Input()
@@ -81,7 +82,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   set treeData(val: IccTreeNode<T>[]) {
     this._treeData = [...val];
     if (!this.treeConfig.remoteGridData && this.treeData) {
-      this.treeFacade.setTreeInMemoryData(this.treeConfig, this._treeData);
+      this.treeFacade.setTreeInMemoryData(this.treeId, this.treeConfig, this._treeData);
     }
   }
   get treeData(): IccTreeNode<T>[] {
@@ -91,17 +92,17 @@ export class IccTreeComponent<T> implements OnDestroy {
   buttonClick(button: IccButtonConfg, treeConfig: IccTreeConfig): void {
     switch (button.name) {
       case IccButtonType.Refresh:
-        this.treeFacade.getTreeData(treeConfig);
+        this.treeFacade.getTreeData(this.treeId, treeConfig);
         break;
       case IccButtonType.ClearAllFilters:
         this.gridFacade.setGridColumnFilters(this.treeId, this.treeConfig, []);
         break;
 
       case IccButtonType.ExpandAll:
-        this.treeFacade.expandAllNodes(treeConfig, true);
+        this.treeFacade.expandAllNodes(this.treeId, treeConfig, true);
         break;
       case IccButtonType.CollapseAll:
-        this.treeFacade.expandAllNodes(treeConfig, false);
+        this.treeFacade.expandAllNodes(this.treeId, treeConfig, false);
         break;
       default:
         break;

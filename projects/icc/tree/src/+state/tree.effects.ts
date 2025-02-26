@@ -22,15 +22,13 @@ export class IccTreeEffects {
       ofType(treeActions.getTreeRemoteData),
       debounceTime(10), // debounce with switchMap may lose data if two or more tree pull, but will cancel previous call
       concatLatestFrom((action) => {
-        return [
-          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
-          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
-        ];
+        return [this.gridFacade.selectGridConfig(action.treeId), this.gridFacade.selectColumnsConfig(action.treeId)];
       }),
       switchMap(([action, treeConfig, columns]) => {
+        const treeId = action.treeId;
         return this.treeRemoteService.getTreeRemoteData(treeConfig, columns).pipe(
           map((treeData) => {
-            return treeActions.getTreeRemoteDataSuccess({ treeConfig, treeData });
+            return treeActions.getTreeRemoteDataSuccess({ treeId, treeConfig, treeData });
           }),
         );
       }),
@@ -42,22 +40,23 @@ export class IccTreeEffects {
       ofType(treeActions.getConcatTreeData),
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
-          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
-          this.treeFacade.selectTreeInMemoryData(action.treeConfig),
+          this.gridFacade.selectGridConfig(action.treeId),
+          this.gridFacade.selectColumnsConfig(action.treeId),
+          this.treeFacade.selectTreeInMemoryData(action.treeId),
         ];
       }),
       concatMap(([action, treeConfig, columns, inMemoryData]) => {
+        const treeId = action.treeId;
         if (treeConfig.remoteGridData) {
           return this.treeRemoteService.getTreeRemoteData(treeConfig, columns).pipe(
             map((treeData) => {
-              return treeActions.getTreeRemoteDataSuccess({ treeConfig, treeData });
+              return treeActions.getTreeRemoteDataSuccess({ treeId, treeConfig, treeData });
             }),
           );
         } else {
           return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
             map((treeData) => {
-              return treeActions.getInMemoryTreeDataSuccess({ treeConfig, treeData });
+              return treeActions.getInMemoryTreeDataSuccess({ treeId, treeConfig, treeData });
             }),
           );
         }
@@ -72,15 +71,16 @@ export class IccTreeEffects {
       debounceTime(10), // debounce with switchMap may lose data if two or more tree pull, but will cancel previous call
       concatLatestFrom((action) => {
         return [
-          this.gridFacade.selectGridConfig(action.treeConfig.gridId),
-          this.gridFacade.selectColumnsConfig(action.treeConfig.gridId),
-          this.treeFacade.selectTreeInMemoryData(action.treeConfig),
+          this.gridFacade.selectGridConfig(action.treeId),
+          this.gridFacade.selectColumnsConfig(action.treeId),
+          this.treeFacade.selectTreeInMemoryData(action.treeId),
         ];
       }),
       switchMap(([action, treeConfig, columns, inMemoryData]) => {
+        const treeId = action.treeId;
         return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
           map((treeData) => {
-            return treeActions.getInMemoryTreeDataSuccess({ treeConfig, treeData });
+            return treeActions.getInMemoryTreeDataSuccess({ treeId, treeConfig, treeData });
           }),
         );
       }),
@@ -90,13 +90,15 @@ export class IccTreeEffects {
   setGridColumnFilters$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setGridColumnFilters, loadGridColumnsConfigSuccess), // gridActions
-      switchMap(({ gridConfig }) =>
-        of(gridConfig).pipe(
-          map((treeConfig: IccTreeConfig) => {
-            if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
-              return treeActions.getTreeRemoteData({ treeConfig });
+      switchMap(({ gridId, gridConfig }) =>
+        of({ gridId, gridConfig }).pipe(
+          map(({ gridId, gridConfig }) => {
+            const treeId = gridId;
+            const treeConfig = gridConfig as IccTreeConfig;
+            if (gridConfig.remoteGridData && !treeConfig.remoteLoadAll) {
+              return treeActions.getTreeRemoteData({ treeId, treeConfig });
             } else {
-              return treeActions.getTreeInMemoryData({ treeConfig });
+              return treeActions.getTreeInMemoryData({ treeId, treeConfig });
             }
           }),
         ),
@@ -107,13 +109,15 @@ export class IccTreeEffects {
   setGridSortFields$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setGridSortFields),
-      switchMap(({ gridConfig }) =>
-        of(gridConfig).pipe(
-          map((treeConfig: IccTreeConfig) => {
+      switchMap(({ gridId, gridConfig }) =>
+        of({ gridId, gridConfig }).pipe(
+          map(({ gridId, gridConfig }) => {
+            const treeId = gridId;
+            const treeConfig = gridConfig as IccTreeConfig;
             if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
-              return treeActions.getTreeRemoteData({ treeConfig });
+              return treeActions.getTreeRemoteData({ treeId, treeConfig });
             } else {
-              return treeActions.getTreeInMemoryData({ treeConfig });
+              return treeActions.getTreeInMemoryData({ treeId, treeConfig });
             }
           }),
         ),

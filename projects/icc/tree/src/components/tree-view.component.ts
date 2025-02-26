@@ -40,6 +40,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private document = inject(ICC_DOCUMENT);
   private treeFacade = inject(IccTreeFacade);
   private gridFacade = inject(IccGridFacade);
+  private _gridSetting!: IccGridSetting;
   private _treeConfig!: IccTreeConfig;
   private destroy$ = new Subject<void>();
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
@@ -49,12 +50,26 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private dragNode: IccTreeNode<T> | null = null;
   private dropInfo: IccTreeDropInfo<T> | null = null;
 
-  @Input() gridSetting!: IccGridSetting;
+  @Input()
+  set gridSetting(val: IccGridSetting) {
+    this._gridSetting = { ...val };
+    if (!this.treeData$) {
+      this.treeData$ = this.treeFacade.selectTreeData(this.gridSetting.gridId).pipe(
+        map((data) => {
+          this.checkViewport(data);
+          return data;
+        }),
+      );
+    }
+  }
+  get gridSetting(): IccGridSetting {
+    return this._gridSetting;
+  }
   @Input() columns: IccColumnConfig[] = [];
-
   @Input()
   set treeConfig(val: IccTreeConfig) {
     this._treeConfig = { ...val };
+    /*
     if (!this.treeData$) {
       this.treeData$ = this.treeFacade.selectTreeData(this.treeConfig).pipe(
         map((data) => {
@@ -62,7 +77,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
           return data;
         }),
       );
-    }
+    }*/
   }
   get treeConfig(): IccTreeConfig {
     return this._treeConfig;
@@ -114,9 +129,9 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.gridFacade.setViewportPageSize(this.treeConfig, this.gridSetting, pageSize, clientWidth, loadData);
     if (loadData) {
       if (!event || typeof event === 'string') {
-        this.treeFacade.viewportReadyLoadData(this.treeConfig, this.gridSetting);
+        this.treeFacade.viewportReadyLoadData(this.gridSetting.gridId, this.treeConfig, this.gridSetting);
       } else {
-        this.treeFacade.windowResizeLoadData(this.treeConfig, this.gridSetting);
+        this.treeFacade.windowResizeLoadData(this.gridSetting.gridId, this.treeConfig, this.gridSetting);
       }
     }
   }
@@ -253,7 +268,13 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
 
   drop(event: CdkDragDrop<string[]>): void {
     if (this.dropInfo && this.dragNode) {
-      this.treeFacade.dropNode(this.treeConfig, this.dragNode, this.dropInfo.targetParent!, this.dropInfo.targetIndex!);
+      this.treeFacade.dropNode(
+        this.gridSetting.gridId,
+        this.treeConfig,
+        this.dragNode,
+        this.dropInfo.targetParent!,
+        this.dropInfo.targetIndex!,
+      );
     }
     this.clearDragInfo(true);
   }

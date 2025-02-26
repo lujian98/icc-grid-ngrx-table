@@ -6,6 +6,7 @@ import {
   IccGridCellViewComponent,
   IccGridCellComponent,
   ROW_SELECTION_CELL_WIDTH,
+  IccGridSetting,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
 import { IccTreeNodeComponent } from './tree-node/tree-node.component';
@@ -19,6 +20,7 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
 })
 export class IccTreeRowComponent<T> {
   @Input() columns: IccColumnConfig[] = [];
+  @Input() gridSetting!: IccGridSetting;
   @Input() treeConfig!: IccTreeConfig;
   @Input() record!: IccTreeNode<T>;
   @Input() selected = false;

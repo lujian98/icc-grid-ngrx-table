@@ -10,72 +10,73 @@ import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 export class IccTreeFacade {
   private store = inject(Store);
 
-  initTreeConfig(treeConfig: IccTreeConfig): void {
-    this.store.dispatch(treeActions.initTreeConfig({ treeConfig }));
+  initTreeConfig(treeId: string, treeConfig: IccTreeConfig): void {
+    this.store.dispatch(treeActions.initTreeConfig({ treeId, treeConfig }));
   }
 
-  viewportReadyLoadData(treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
+  viewportReadyLoadData(treeId: string, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
     if (gridSetting.viewportReady) {
-      this.getTreeData(treeConfig);
+      this.getTreeData(treeId, treeConfig);
     }
   }
 
-  windowResizeLoadData(treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
+  windowResizeLoadData(treeId: string, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
     if (gridSetting.viewportReady) {
-      this.store.dispatch(treeActions.getConcatTreeData({ treeConfig }));
+      this.store.dispatch(treeActions.getConcatTreeData({ treeId, treeConfig }));
     }
   }
 
-  getTreeData(treeConfig: IccTreeConfig): void {
+  getTreeData(treeId: string, treeConfig: IccTreeConfig): void {
     if (treeConfig.remoteGridData) {
-      this.store.dispatch(treeActions.getTreeRemoteData({ treeConfig }));
+      this.store.dispatch(treeActions.getTreeRemoteData({ treeId, treeConfig }));
     } else {
-      this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+      this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     }
   }
 
-  nodeToggle<T>(treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
+  nodeToggle<T>(treeId: string, treeConfig: IccTreeConfig, node: IccTreeNode<T>): void {
     if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
       // TODO remove data need call a service to add/remove child
     } else {
-      this.store.dispatch(treeActions.nodeToggleInMemoryData({ treeConfig, node }));
-      this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+      this.store.dispatch(treeActions.nodeToggleInMemoryData({ treeId, treeConfig, node }));
+      this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     }
   }
 
-  expandAllNodes<T>(treeConfig: IccTreeConfig, expanded: boolean): void {
+  expandAllNodes<T>(treeId: string, treeConfig: IccTreeConfig, expanded: boolean): void {
     if (treeConfig.remoteGridData && !treeConfig.remoteLoadAll) {
       // TODO remove data need call a service to add/remove child
     } else {
-      this.store.dispatch(treeActions.expandAllNodesInMemoryData({ treeConfig, expanded }));
-      this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+      this.store.dispatch(treeActions.expandAllNodesInMemoryData({ treeId, treeConfig, expanded }));
+      this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     }
   }
 
   dropNode<T>(
+    treeId: string,
     treeConfig: IccTreeConfig,
     node: IccTreeNode<T>,
     targetParent: IccTreeNode<T>,
     targetIndex: number,
   ): void {
-    this.store.dispatch(treeActions.dropNode({ treeConfig, node, targetParent, targetIndex }));
-    this.store.dispatch(treeActions.getTreeInMemoryData({ treeConfig }));
+    this.store.dispatch(treeActions.dropNode({ treeId, treeConfig, node, targetParent, targetIndex }));
+    this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     //TODO remote update node
   }
 
-  setTreeInMemoryData<T>(treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
-    this.store.dispatch(treeActions.setTreeInMemoryData({ treeConfig, treeData }));
+  setTreeInMemoryData<T>(treeId: string, treeConfig: IccTreeConfig, treeData: IccTreeNode<T>[]): void {
+    this.store.dispatch(treeActions.setTreeInMemoryData({ treeId, treeConfig, treeData }));
   }
 
   clearTreeDataStore(treeId: string): void {
     this.store.dispatch(treeActions.clearTreeDataStore({ treeId }));
   }
 
-  selectTreeData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
-    return this.store.select(selectTreeData(treeConfig));
+  selectTreeData<T>(treeId: string): Observable<IccTreeNode<T>[]> {
+    return this.store.select(selectTreeData(treeId));
   }
 
-  selectTreeInMemoryData<T>(treeConfig: IccTreeConfig): Observable<IccTreeNode<T>[]> {
-    return this.store.select(selectTreeInMemoryData(treeConfig));
+  selectTreeInMemoryData<T>(treeId: string): Observable<IccTreeNode<T>[]> {
+    return this.store.select(selectTreeInMemoryData(treeId));
   }
 }
