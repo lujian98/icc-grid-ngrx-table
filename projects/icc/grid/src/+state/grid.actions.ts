@@ -10,7 +10,10 @@ import {
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 
-export const initGridConfig = createAction('[Grid] Init Grid Config', props<{ gridConfig: IccGridConfig }>());
+export const initGridConfig = createAction(
+  '[Grid] Init Grid Config',
+  props<{ gridId: string; gridConfig: IccGridConfig }>(),
+);
 
 export const loadGridConfig = createAction('[Grid] Load Grid Config', props<{ gridConfig: IccGridConfig }>());
 

@@ -19,7 +19,7 @@ export const iccGridFeature = createFeature({
         ...action.gridConfig,
         //virtualScroll: action.gridConfig.virtualScroll || action.gridConfig.rowGroup,
       };
-      const key = gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       newState[key] = {
         ...defaultState,
@@ -29,7 +29,7 @@ export const iccGridFeature = createFeature({
         },
         gridSetting: {
           ...defaultState.gridSetting,
-          gridId: gridConfig.gridId,
+          gridId: action.gridId,
           viewportReady: !gridConfig.remoteGridConfig && !gridConfig.remoteColumnsConfig,
         },
       };
