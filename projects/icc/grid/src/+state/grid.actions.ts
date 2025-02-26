@@ -54,7 +54,7 @@ export const setGridColumnFilters = createAction(
 
 export const setGridColumnsConfig = createAction(
   '[Grid] Setup Grid Column Config',
-  props<{ gridConfig: IccGridConfig; columnsConfig: IccColumnConfig }>(),
+  props<{ gridId: string; columnsConfig: IccColumnConfig }>(),
 );
 
 export const getGridData = createAction('[Grid] Get Grid Data', props<{ gridId: string }>());
@@ -63,27 +63,27 @@ export const getConcatGridData = createAction('[Grid] Get Concat Grid Data', pro
 
 export const getGridDataSuccess = createAction(
   '[Grid] Get Grid Data Success',
-  props<{ gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
+  props<{ gridId: string; gridData: IccGridData<object> }>(),
 );
 
 export const setGridInMemoryData = createAction(
   '[Grid] Get Grid In Memory Data',
-  props<{ gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
+  props<{ gridId: string; gridConfig: IccGridConfig; gridData: IccGridData<object> }>(),
 );
 
 export const setSelectAllRows = createAction(
   '[Grid] Setup Grid Set Select or Unselect All Rows',
-  props<{ gridConfig: IccGridConfig; selectAll: boolean }>(),
+  props<{ gridId: string; selectAll: boolean }>(),
 );
 
 export const setSelectRows = createAction(
   '[Grid] Setup Grid Set Select or Unselect Rows',
-  props<{ gridConfig: IccGridConfig; records: object[]; select: boolean }>(),
+  props<{ gridId: string; records: object[]; select: boolean }>(),
 );
 
 export const setSelectRow = createAction(
   '[Grid] Setup Grid Set Select a Row and clear all other rows',
-  props<{ gridConfig: IccGridConfig; record: object }>(),
+  props<{ gridId: string; record: object }>(),
 );
 
 export const setGridGroupBy = createAction(

@@ -90,7 +90,7 @@ export class IccGridHeaderComponent<T> {
   }
 
   onToggleSelectAll(allSelected: boolean): void {
-    this.gridFacade.setSelectAllRows(this.gridConfig, !allSelected);
+    this.gridFacade.setSelectAllRows(this.gridSetting.gridId, !allSelected);
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {

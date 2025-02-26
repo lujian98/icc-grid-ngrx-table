@@ -99,20 +99,20 @@ export class IccGridFacade {
     this.getGridData(gridId, gridConfig);
   }
 
-  setGridColumnConfig(gridConfig: IccGridConfig, columnsConfig: IccColumnConfig): void {
-    this.store.dispatch(gridActions.setGridColumnsConfig({ gridConfig, columnsConfig }));
+  setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
+    this.store.dispatch(gridActions.setGridColumnsConfig({ gridId, columnsConfig }));
   }
 
-  setSelectAllRows(gridConfig: IccGridConfig, selectAll: boolean): void {
-    this.store.dispatch(gridActions.setSelectAllRows({ gridConfig, selectAll }));
+  setSelectAllRows(gridId: string, selectAll: boolean): void {
+    this.store.dispatch(gridActions.setSelectAllRows({ gridId, selectAll }));
   }
 
-  setSelectRows(gridConfig: IccGridConfig, records: object[], select: boolean): void {
-    this.store.dispatch(gridActions.setSelectRows({ gridConfig, records, select }));
+  setSelectRows(gridId: string, records: object[], select: boolean): void {
+    this.store.dispatch(gridActions.setSelectRows({ gridId, records, select }));
   }
 
-  setSelectRow(gridConfig: IccGridConfig, record: object): void {
-    this.store.dispatch(gridActions.setSelectRow({ gridConfig, record }));
+  setSelectRow(gridId: string, record: object): void {
+    this.store.dispatch(gridActions.setSelectRow({ gridId, record }));
   }
 
   setGridGroupBy(gridId: string, gridConfig: IccGridConfig, rowGroupField: IccRowGroupField): void {
@@ -187,13 +187,14 @@ export class IccGridFacade {
     }
   }
 
-  setGridData(gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
-    this.store.dispatch(gridActions.getGridDataSuccess({ gridConfig, gridData }));
+  // TODO not used???
+  private setGridData(gridId: string, gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
+    this.store.dispatch(gridActions.getGridDataSuccess({ gridId, gridData }));
   }
 
-  setGridInMemoryData(gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
-    this.store.dispatch(gridActions.setGridInMemoryData({ gridConfig, gridData }));
-    this.getGridData(gridConfig.gridId, gridConfig);
+  setGridInMemoryData(gridId: string, gridConfig: IccGridConfig, gridData: IccGridData<object>): void {
+    this.store.dispatch(gridActions.setGridInMemoryData({ gridId, gridConfig, gridData }));
+    this.getGridData(gridId, gridConfig);
   }
 
   clearGridDataStore(gridId: string): void {

@@ -113,13 +113,13 @@ export class IccGridEffects {
     if (gridConfig.remoteGridData) {
       return this.gridService.getGridData(gridConfig, columns).pipe(
         map((gridData) => {
-          return gridActions.getGridDataSuccess({ gridConfig, gridData });
+          return gridActions.getGridDataSuccess({ gridId, gridData });
         }),
       );
     } else {
       return this.gridinMemoryService.getGridData(gridConfig, columns, inMemoryData).pipe(
         map((gridData) => {
-          return gridActions.getGridDataSuccess({ gridConfig, gridData });
+          return gridActions.getGridDataSuccess({ gridId, gridData });
         }),
       );
     }

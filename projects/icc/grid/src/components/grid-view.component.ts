@@ -196,9 +196,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           }
         } else {
           if (selected) {
-            this.gridFacade.setSelectAllRows(this.gridConfig, false);
+            this.gridFacade.setSelectAllRows(this.gridSetting.gridId, false);
           } else {
-            this.gridFacade.setSelectRow(this.gridConfig, record as object);
+            this.gridFacade.setSelectRow(this.gridSetting.gridId, record as object);
           }
         }
       } else {
@@ -217,7 +217,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private selectRecord(record: object[], selected: boolean): void {
-    this.gridFacade.setSelectRows(this.gridConfig, record as object[], selected);
+    this.gridFacade.setSelectRows(this.gridSetting.gridId, record as object[], selected);
   }
 
   @HostListener('window:resize', ['$event'])

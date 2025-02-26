@@ -144,7 +144,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridColumnsConfig, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -161,7 +161,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.getGridDataSuccess, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -187,7 +187,7 @@ export const iccGridFeature = createFeature({
 
         newState[key] = {
           ...oldState,
-          gridConfig,
+          //gridConfig,
           gridSetting: {
             ...oldState.gridSetting,
             totalCounts: totalCounts,
@@ -204,7 +204,7 @@ export const iccGridFeature = createFeature({
       return { ...newState };
     }),
     on(gridActions.setGridInMemoryData, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         newState[key] = {
@@ -221,7 +221,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.setSelectAllRows, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -241,7 +241,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.setSelectRows, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
@@ -261,7 +261,7 @@ export const iccGridFeature = createFeature({
     }),
 
     on(gridActions.setSelectRow, (state, action) => {
-      const key = action.gridConfig.gridId;
+      const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];

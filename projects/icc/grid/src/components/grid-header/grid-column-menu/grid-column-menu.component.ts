@@ -174,7 +174,7 @@ export class IccGridColumnMenuComponent {
         ...column,
         hidden: !values[column.name],
       };
-      this.gridFacade.setGridColumnConfig(this.gridConfig, col);
+      this.gridFacade.setGridColumnConfig(this.gridId, col);
     }
   }
 }
