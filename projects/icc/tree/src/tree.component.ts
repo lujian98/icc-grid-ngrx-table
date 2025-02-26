@@ -58,10 +58,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   }
 
   private initGridConfig(value: IccTreeConfig): void {
-    this._treeConfig = {
-      ...value,
-      //gridId: this.treeId,
-    };
+    this._treeConfig = { ...value };
     this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
     this.gridSetting$ = this.gridFacade.selectSetting(this.treeId);
 
