@@ -2,16 +2,19 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { IccDialogService } from '@icc/ui/overlay';
+import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap, exhaustMap } from 'rxjs';
 import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
 import { IccGridFacade } from './grid.facade';
+import { IccGridFormViewComponent } from '../components/form-view/form-view.component';
 
 @Injectable()
 export class IccGridEffects {
   private store = inject(Store);
+  private dialogService = inject(IccDialogService);
   private actions$ = inject(Actions);
   private gridFacade = inject(IccGridFacade);
   private gridService = inject(IccGridService);
@@ -144,6 +147,32 @@ export class IccGridEffects {
             return gridActions.saveModifiedRecordsSuccess({ gridId, newRecords });
           }),
         );
+      }),
+    ),
+  );
+
+  openGridFormView$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gridActions.openGridFormView), // TODO filter open condition
+      concatLatestFrom((action) => {
+        return [
+          this.gridFacade.selectGridConfig(action.gridId),
+          this.gridFacade.selectSetting(action.gridId),
+          this.gridFacade.selectRowSelection(action.gridId),
+        ];
+      }),
+      exhaustMap(([action, gridConfig, gridSetting, selection]) => {
+        const dialogRef = this.dialogService.open(IccGridFormViewComponent, {
+          //context: {  },
+          closeOnBackdropClick: false,
+        });
+        return dialogRef.onClose;
+      }),
+      map((res) => {
+        if (res === undefined) {
+          return gridActions.closeGridFormViewg();
+        }
+        return gridActions.closeGridFormViewg();
       }),
     ),
   );

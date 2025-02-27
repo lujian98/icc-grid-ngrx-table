@@ -21,7 +21,7 @@ export class IccGridFormViewComponent {
   windowConfig: IccWindowConfig = {
     ...defaultWindowConfig,
     title: 'Window',
-    height: '600px',
+    height: '480px',
     //resizeable: false,
     //dragDisabled: true,
   };

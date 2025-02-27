@@ -10,20 +10,20 @@ export const featureSelector = (state: AppFormState) => state.iccForm;
 
 export const selectFormSetting = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
-    return state[formId] ? state[formId].formSetting : defaultFormState.formSetting;
+    return state && state[formId] ? state[formId].formSetting : defaultFormState.formSetting;
   });
 
 export const selectFormConfig = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
-    return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
+    return state && state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
   });
 
 export const selectFormFieldsConfig = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
-    return state[formId] ? state[formId].formFields : [];
+    return state && state[formId] ? state[formId].formFields : [];
   });
 
 export const selectFormData = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
-    return state[formId] ? state[formId].formData : [];
+    return state && state[formId] ? state[formId].formData : [];
   });

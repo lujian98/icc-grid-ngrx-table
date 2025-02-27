@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { IccGridFacade } from './+state/grid.facade';
-import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccDialogService } from '@icc/ui/overlay';
-import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
-import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
-import { IccGridViewComponent } from './components/grid-view.component';
-import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
-import { IccGridStateModule } from './+state/grid-state.module';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccGridFormViewComponent } from './components/form-view/form-view.component';
+import { Observable } from 'rxjs';
+import { IccGridStateModule } from './+state/grid-state.module';
+import { IccGridFacade } from './+state/grid.facade';
+import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
+import { IccGridViewComponent } from './components/grid-view.component';
+import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
+import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
 
 @Component({
   selector: 'icc-grid',
@@ -26,13 +24,11 @@ import { IccGridFormViewComponent } from './components/form-view/form-view.compo
     IccGridFooterComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
-    //IccGridFormViewComponent,
   ],
 })
 export class IccGridComponent<T> implements OnInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private tasksService = inject(IccTasksService);
-  private dialogService = inject(IccDialogService);
   private _gridConfig!: IccGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
@@ -164,22 +160,11 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         this.gridFacade.saveGridModifiedRecords(this.gridId);
         break;
       case IccButtonType.Open:
-        this.openGridFormView();
+        this.gridFacade.openButtonClick(this.gridId);
         break;
       default:
         break;
     }
-  }
-
-  private openGridFormView(): void {
-    // TODO move to ngrx effect
-    this.dialogService
-      .open(IccGridFormViewComponent, {
-        closeOnBackdropClick: false,
-      })
-      .onClose.subscribe((res) => {
-        console.log(' on close res=', res);
-      });
   }
 
   ngOnDestroy(): void {

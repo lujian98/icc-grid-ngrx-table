@@ -125,5 +125,9 @@ export const setGridRestEdit = createAction(
   props<{ gridId: string; restEdit: boolean }>(),
 );
 
+export const openGridFormView = createAction('[Grid] Open Grid Form View', props<{ gridId: string }>());
+
+export const closeGridFormViewg = createAction('[User] Closed Grid Form View');
+
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());
 export const removeGridDataStore = createAction('[Grid] Remove Grid Data Store', props<{ gridId: string }>());

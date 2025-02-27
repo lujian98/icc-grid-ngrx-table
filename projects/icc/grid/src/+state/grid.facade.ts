@@ -248,6 +248,15 @@ export class IccGridFacade {
     return this.store.select(selectGridInMemoryData(gridId)) as Observable<T[]>;
   }
 
+  openButtonClick(gridId: string): void {
+    this.store.dispatch(gridActions.openGridFormView({ gridId }));
+  }
+
+  rowDblClick(gridId: string, record: object): void {
+    this.store.dispatch(gridActions.setSelectRow({ gridId, record }));
+    this.store.dispatch(gridActions.openGridFormView({ gridId }));
+  }
+
   runTask(setting: IccGridSetting): void {
     this.store.dispatch(gridActions.getConcatGridData({ gridId: setting.gridId }));
   }
