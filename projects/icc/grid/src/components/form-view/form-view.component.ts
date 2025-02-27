@@ -1,20 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-  IccLayoutCenterComponent,
-  IccLayoutComponent,
-  IccLayoutFooterComponent,
-  IccLayoutHeaderComponent,
-  IccLayoutHorizontalComponent,
-  IccLayoutLeftComponent,
-  IccLayoutRightComponent,
-} from '@icc/ui/layout';
-import { IccButtonComponent } from '@icc/ui/button';
-import { IccDialogRef } from '@icc/ui/overlay';
-import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/ui/window';
-import { confirmationValidator, IccObjectType } from '@icc/ui/core';
+import { IccObjectType } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccFormComponent } from '@icc/ui/form';
+import { IccLayoutComponent } from '@icc/ui/layout';
+import { IccDialogRef } from '@icc/ui/overlay';
+import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/ui/window';
 import { STATES } from '../../../../../icc-demo/src/app/data/states';
 
 @Component({
