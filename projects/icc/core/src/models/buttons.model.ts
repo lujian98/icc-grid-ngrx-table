@@ -4,6 +4,7 @@ export enum IccButtonType {
   CollapseAll = 'CollapseAll',
   Edit = 'Edit',
   ExpandAll = 'ExpandAll',
+  Open = 'Open',
   Refresh = 'Refresh',
   Remove = 'Remove',
   Reset = 'Reset',
@@ -46,6 +47,11 @@ export const IccBUTTONS = {
     name: IccButtonType.ExpandAll,
     title: 'Expand All',
     icon: 'plus',
+  },
+  Open: {
+    name: IccButtonType.Open,
+    title: 'Open',
+    icon: 'folder',
   },
   Remove: {
     name: IccButtonType.Remove,

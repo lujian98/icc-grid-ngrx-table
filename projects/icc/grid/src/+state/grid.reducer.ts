@@ -247,6 +247,7 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const selection = oldState.selection;
+        let selected = oldState.gridSetting.selected;
         action.records.forEach((record) => {
           if (action.select) {
             selection.select(record);
@@ -254,8 +255,16 @@ export const iccGridFeature = createFeature({
             selection.deselect(record);
           }
         });
+        if (!oldState.gridConfig.multiRowSelection) {
+          selected = action.select ? 1 : 0;
+        } // TODO other selection
+        console.log('selected= ', selected);
         newState[key] = {
           ...oldState,
+          gridSetting: {
+            ...state[key].gridSetting,
+            selected,
+          },
         };
       }
       return { ...newState };

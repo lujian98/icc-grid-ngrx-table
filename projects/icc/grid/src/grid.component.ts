@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { IccGridFacade } from './+state/grid.facade';
 import { uniqueId, IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccDialogService } from '@icc/ui/overlay';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
 import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
 import { IccGridViewComponent } from './components/grid-view.component';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
 import { IccGridStateModule } from './+state/grid-state.module';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccGridFormViewComponent } from './components/form-view/form-view.component';
 
 @Component({
   selector: 'icc-grid',
@@ -24,11 +26,13 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
     IccGridFooterComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
+    //IccGridFormViewComponent,
   ],
 })
 export class IccGridComponent<T> implements OnInit, OnDestroy {
   private gridFacade = inject(IccGridFacade);
   private tasksService = inject(IccTasksService);
+  private dialogService = inject(IccDialogService);
   private _gridConfig!: IccGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
@@ -38,6 +42,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
   buttons: IccButtonConfg[] = [
+    IccBUTTONS.Open,
     IccBUTTONS.Edit,
     IccBUTTONS.Save,
     IccBUTTONS.Reset,
@@ -105,10 +110,13 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   }
 
   private getDisabled(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
+    //console.log( ' gridSetting=', gridSetting)
     switch (button.name) {
       case IccButtonType.Save:
       case IccButtonType.Reset:
         return !gridSetting.recordModified;
+      case IccButtonType.Open:
+        return gridSetting.selected !== 1;
       default:
         return false;
     }
@@ -117,6 +125,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   private getHidden(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
     switch (button.name) {
       case IccButtonType.Edit:
+      case IccButtonType.Open:
       case IccButtonType.Refresh:
       case IccButtonType.ClearAllFilters:
         return gridSetting.gridEditable;
@@ -154,9 +163,28 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       case IccButtonType.Save:
         this.gridFacade.saveGridModifiedRecords(this.gridId);
         break;
+      case IccButtonType.Open:
+        this.openGridFormView();
+        break;
       default:
         break;
     }
+  }
+
+  private openGridFormView(): void {
+    let dialogRef = this.dialogService
+      .open(IccGridFormViewComponent, {
+        context: {
+          dialog: {
+            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
+            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+          },
+        },
+        closeOnBackdropClick: false,
+      })
+      .onClose.subscribe((res) => {
+        console.log(' on close res=', res);
+      });
   }
 
   ngOnDestroy(): void {

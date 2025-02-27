@@ -89,6 +89,7 @@ export interface IccGridSetting {
   recordModified: boolean;
   viewportReady: boolean;
   totalCounts: number;
+  selected: number;
 }
 
 export interface IccGridState<T extends object = object> {

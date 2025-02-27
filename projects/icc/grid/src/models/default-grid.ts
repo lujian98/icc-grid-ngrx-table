@@ -41,6 +41,7 @@ export const defaultGridSetting: IccGridSetting = {
   restEdit: false,
   recordModified: false,
   totalCounts: 0,
+  selected: 0,
 };
 
 export const defaultState: IccGridState = {
