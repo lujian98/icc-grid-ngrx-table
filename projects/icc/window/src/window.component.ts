@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragEnd, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
@@ -16,7 +16,15 @@ import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/wi
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccIconModule, CdkDrag, IccResizeDirective, IccButtonComponent, IccLayoutHeaderComponent],
+  imports: [
+    CommonModule,
+    IccIconModule,
+    CdkDrag,
+    CdkDragHandle,
+    IccResizeDirective,
+    IccButtonComponent,
+    IccLayoutHeaderComponent,
+  ],
 })
 export class IccWindowComponent<T> implements AfterViewInit {
   private dialogRef = inject(IccDialogRef<T>);
@@ -90,12 +98,34 @@ export class IccWindowComponent<T> implements AfterViewInit {
       .map(Number);
     const translateX = matrix[4];
     const translateY = matrix[5];
-    const top = parseFloat(element.style.top) + translateY;
-    const left = parseFloat(element.style.left) + translateX;
+    const top = this.getTop(translateY);
+    const left = this.getLeft(translateX);
 
     this.setWindowTop(top);
     this.setWindowLeft(left);
     childEl.style.transform = 'none';
+  }
+
+  private getTop(translateY: number): number {
+    const element = this.elementRef.nativeElement;
+    const top = parseFloat(element.style.top) + translateY;
+    if (top < 0) {
+      return 0;
+    } else if (top > this.overlay.clientHeight) {
+      return top - 20;
+    }
+    return top;
+  }
+
+  private getLeft(translateX: number): number {
+    const element = this.elementRef.nativeElement;
+    const left = parseFloat(element.style.left) + translateX;
+    if (left < 0) {
+      return 0;
+    } else if (left > this.overlay.clientWidth) {
+      return left - 20;
+    }
+    return left;
   }
 
   maximize(): void {

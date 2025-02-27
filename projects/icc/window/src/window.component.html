@@ -5,7 +5,7 @@
   [cdkDragDisabled]="windowConfig.dragDisabled"
   (cdkDragEnded)="dragEnded($event)"
 >
-  <icc-layout-header *ngIf="windowConfig.showHeader" [title]="windowConfig.title">
+  <icc-layout-header *ngIf="windowConfig.showHeader" [title]="windowConfig.title" cdkDragHandle>
     <button icc-button [ghost]="true" *ngIf="windowConfig.maximizable && isMaxWindowSize" (click)="restore()">
       <icc-icon icon="window-restore"></icc-icon>&nbsp;
     </button>
