@@ -12,24 +12,17 @@ import {
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/ui/window';
+import { confirmationValidator, IccObjectType } from '@icc/ui/core';
+import { IccFormField } from '@icc/ui/fields';
+import { IccFormComponent } from '@icc/ui/form';
+import { STATES } from '../../../../../icc-demo/src/app/data/states';
 
 @Component({
   selector: 'icc-grid-form-view',
   templateUrl: './form-view.component.html',
   styleUrls: ['./form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccLayoutComponent,
-    IccLayoutHeaderComponent,
-    IccLayoutFooterComponent,
-    IccLayoutCenterComponent,
-    IccLayoutHorizontalComponent,
-    IccLayoutLeftComponent,
-    IccLayoutRightComponent,
-    IccButtonComponent,
-    IccWindowComponent,
-  ],
+  imports: [CommonModule, IccLayoutComponent, IccWindowComponent, IccFormComponent],
 })
 export class IccGridFormViewComponent {
   private dialogRef = inject(IccDialogRef<IccGridFormViewComponent>);
@@ -47,4 +40,131 @@ export class IccGridFormViewComponent {
   close(): void {
     this.dialogRef.close('test uujj make');
   }
+
+  formConfig = {
+    labelWidth: 100,
+  };
+
+  formFields: IccFormField[] = [
+    {
+      fieldType: 'checkbox',
+      fieldName: 'enabled',
+      fieldLabel: 'Enabled',
+      readonly: true,
+      required: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'userName',
+      fieldLabel: 'User Name',
+      readonly: true,
+      required: true,
+      minLength: 4,
+      maxLength: 20,
+      clearValue: true,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'loginName',
+      fieldLabel: 'Login Name',
+      readonly: true,
+    },
+    {
+      fieldType: 'number',
+      fieldName: 'age',
+      fieldLabel: 'Age',
+      readonly: true,
+      minValue: 0,
+      maxValue: 100,
+      clearValue: true,
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      fieldLabel: 'User Password',
+      readonly: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    {
+      fieldType: 'text',
+      fieldName: 'email',
+      fieldLabel: 'Email Address',
+      readonly: true,
+    },
+    {
+      fieldType: 'select',
+      remoteOptions: true,
+      urlKey: 'usa',
+      fieldName: 'state',
+      multiSelection: false,
+      fieldLabel: 'State',
+      optionLabel: 'state',
+      optionKey: 'abbr',
+      required: true,
+      readonly: true,
+      placeholder: 'Select One or More...',
+    },
+    {
+      fieldType: 'textarea',
+      fieldName: 'notes',
+      fieldLabel: 'Notes',
+      readonly: true,
+      clearValue: true,
+    },
+    {
+      fieldType: 'date',
+      fieldName: 'createdate',
+      fieldLabel: 'Create Date',
+      readonly: true,
+    },
+    {
+      fieldType: IccObjectType.UploadFile,
+      fieldName: 'uploadfile',
+      fieldLabel: 'Upload File',
+      readonly: true,
+    },
+    {
+      fieldType: IccObjectType.RadioGroup,
+      fieldName: 'group83',
+      fieldLabel: 'Radio Group',
+      //readonly: true,
+      groups: [
+        {
+          title: 'Group A',
+          name: 'A',
+        },
+        {
+          title: 'Group B',
+          name: 'B',
+        },
+        {
+          title: 'Group C',
+          name: 'C',
+        },
+      ],
+    },
+  ];
+
+  fieldSet: IccFormField[] = [
+    {
+      fieldType: 'fieldset',
+      legend: 'Readonly field Demo',
+      formFields: this.formFields,
+    },
+  ];
+
+  values = {
+    enabled: true,
+    userName: 'user 77 2222',
+    loginName: 'test login88',
+    email: 'test@email.com',
+    password: '',
+    age: 18,
+    state: STATES[32],
+    createdate: new Date(new Date().setHours(0, 0, 0, 0)),
+    notes: 'This is a notes. ',
+    group83: 'B',
+    uploadfile: '',
+  };
 }
