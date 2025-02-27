@@ -172,14 +172,9 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   }
 
   private openGridFormView(): void {
-    let dialogRef = this.dialogService
+    // TODO move to ngrx effect
+    this.dialogService
       .open(IccGridFormViewComponent, {
-        context: {
-          dialog: {
-            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
-            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
-          },
-        },
         closeOnBackdropClick: false,
       })
       .onClose.subscribe((res) => {

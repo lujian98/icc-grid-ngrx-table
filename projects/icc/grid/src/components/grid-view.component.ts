@@ -47,7 +47,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @Input() set gridSetting(val: IccGridSetting) {
     this._gridSetting = { ...val };
-    //console.log(' vvvvvvvvvvvvvv gridSetting=', this.gridSetting);
     if (!this.gridData$) {
       this.gridData$ = this.gridFacade.selectGridData(this.gridSetting.gridId).pipe(
         map((data) => {
