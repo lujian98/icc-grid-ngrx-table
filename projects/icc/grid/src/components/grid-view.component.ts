@@ -186,13 +186,13 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const selected = selection.isSelected(record as object);
       if (this.gridConfig.multiRowSelection) {
         if (event.ctrlKey || event.metaKey) {
-          this.selectRecord([record], !selected);
+          this.selectRecord([record], !selected, selection);
         } else if (event.shiftKey) {
           if (rowIndex === this.prevRowIndex) {
-            this.selectRecord([record], !selected);
+            this.selectRecord([record], !selected, selection);
           } else {
             const records = this.getSelectionRange(this.prevRowIndex, rowIndex, data);
-            this.selectRecord(records, true);
+            this.selectRecord(records, true, selection);
           }
         } else {
           if (selected) {
@@ -202,7 +202,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           }
         }
       } else {
-        this.selectRecord([record], !selected);
+        this.selectRecord([record], !selected, selection);
       }
       this.prevRowIndex = rowIndex;
     }
@@ -216,8 +216,23 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  private selectRecord(record: object[], selected: boolean): void {
-    this.gridFacade.setSelectRows(this.gridSetting.gridId, record as object[], selected);
+  private selectRecord(record: object[], isSelected: boolean, selection: SelectionModel<object>): void {
+    const selected = this.getSelectedTotal(record, isSelected, selection);
+    this.gridFacade.setSelectRows(this.gridSetting.gridId, record as object[], isSelected, selected);
+  }
+
+  private getSelectedTotal(record: object[], isSelected: boolean, selection: SelectionModel<object>): number {
+    if (this.gridConfig.multiRowSelection) {
+      const prevSelectedLength = selection.selected.length;
+      if (isSelected) {
+        const preSelected = record.filter((item) => selection.isSelected(item));
+        return prevSelectedLength - preSelected.length + record.length;
+      } else {
+        return prevSelectedLength - record.length;
+      }
+    } else {
+      return isSelected ? 1 : 0;
+    }
   }
 
   @HostListener('window:resize', ['$event'])

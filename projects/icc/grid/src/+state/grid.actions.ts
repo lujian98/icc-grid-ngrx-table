@@ -79,7 +79,7 @@ export const setSelectAllRows = createAction(
 
 export const setSelectRows = createAction(
   '[Grid] Setup Grid Set Select or Unselect Rows',
-  props<{ gridId: string; records: object[]; select: boolean }>(),
+  props<{ gridId: string; records: object[]; isSelected: boolean; selected: number }>(),
 );
 
 export const setSelectRow = createAction(

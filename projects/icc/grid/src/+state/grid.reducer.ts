@@ -220,45 +220,20 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
-
     on(gridActions.setSelectAllRows, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
         const oldState = state[key];
         const selection = oldState.selection;
+        let selected = 0;
         if (action.selectAll) {
-          oldState.data
-            .filter((item) => item && !(item instanceof IccRowGroup))
-            .forEach((record) => selection.select(record));
+          const selectedRecords = oldState.data.filter((item) => item && !(item instanceof IccRowGroup));
+          selectedRecords.forEach((record) => selection.select(record));
+          selected = selectedRecords.length;
         } else {
           selection.clear();
         }
-        newState[key] = {
-          ...oldState,
-        };
-      }
-      return { ...newState };
-    }),
-
-    on(gridActions.setSelectRows, (state, action) => {
-      const key = action.gridId;
-      const newState: GridState = { ...state };
-      if (state[key]) {
-        const oldState = state[key];
-        const selection = oldState.selection;
-        let selected = oldState.gridSetting.selected;
-        action.records.forEach((record) => {
-          if (action.select) {
-            selection.select(record);
-          } else {
-            selection.deselect(record);
-          }
-        });
-        if (!oldState.gridConfig.multiRowSelection) {
-          selected = action.select ? 1 : 0;
-        } // TODO other selection
-        console.log('selected= ', selected);
         newState[key] = {
           ...oldState,
           gridSetting: {
@@ -269,7 +244,29 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
-
+    on(gridActions.setSelectRows, (state, action) => {
+      const key = action.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const selection = oldState.selection;
+        action.records.forEach((record) => {
+          if (action.isSelected) {
+            selection.select(record);
+          } else {
+            selection.deselect(record);
+          }
+        });
+        newState[key] = {
+          ...oldState,
+          gridSetting: {
+            ...state[key].gridSetting,
+            selected: action.selected,
+          },
+        };
+      }
+      return { ...newState };
+    }),
     on(gridActions.setSelectRow, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };
@@ -280,11 +277,14 @@ export const iccGridFeature = createFeature({
         selection.select(action.record);
         newState[key] = {
           ...oldState,
+          gridSetting: {
+            ...state[key].gridSetting,
+            selected: 1,
+          },
         };
-      }
+      } // selected = 1
       return { ...newState };
     }),
-
     on(gridActions.setGridGroupBy, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };

@@ -113,8 +113,8 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setSelectAllRows({ gridId, selectAll }));
   }
 
-  setSelectRows(gridId: string, records: object[], select: boolean): void {
-    this.store.dispatch(gridActions.setSelectRows({ gridId, records, select }));
+  setSelectRows(gridId: string, records: object[], isSelected: boolean, selected: number): void {
+    this.store.dispatch(gridActions.setSelectRows({ gridId, records, isSelected, selected }));
   }
 
   setSelectRow(gridId: string, record: object): void {
