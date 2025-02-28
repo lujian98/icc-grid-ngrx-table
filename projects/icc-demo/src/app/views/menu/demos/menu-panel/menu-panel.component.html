@@ -13,9 +13,7 @@
 
 <ng-template #file>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" cdkMenuItem (cdkMenuItemTriggered)="onMenuItemTriggered({ keepOpen: true })">
-      Share
-    </button>
+    <button #ref class="example-menu-item" cdkMenuItem>Share</button>
     <hr />
     <button class="example-menu-item" cdkMenuItem [cdkMenuTriggerFor]="new_doc">New <span>&#10148;</span></button>
     <button class="example-menu-item" cdkMenuItem>Open</button>
@@ -39,8 +37,8 @@
 <ng-template #format>
   <div class="example-menu" cdkMenu>
     <div class="example-menu-group" cdkMenuGroup>
-      <button cdkMenuItemCheckbox class="example-menu-item" cdkMenuItemChecked>Bold</button>
-      <button cdkMenuItemCheckbox class="example-menu-item">Italic</button>
+      <button cdkMenuItemCheckbox [keepOpen]="true" class="example-menu-item" cdkMenuItemChecked>Bold</button>
+      <button cdkMenuItemCheckbox [keepOpen]="true" class="example-menu-item">Italic</button>
     </div>
     <hr />
     <div class="example-menu-group" cdkMenuGroup>
@@ -53,7 +51,7 @@
 
 <ng-template #new_doc>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" cdkMenuItem>
+    <button class="example-menu-item" cdkMenuItem [keepOpen]="true">
       <icc-checkbox>Document</icc-checkbox>
     </button>
     <button class="example-menu-item" cdkMenuItem>From template</button>

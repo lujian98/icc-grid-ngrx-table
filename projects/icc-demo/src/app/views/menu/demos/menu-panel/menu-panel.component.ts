@@ -17,11 +17,23 @@ import {
   CdkMenuItemRadio,
   CdkMenuItemCheckbox,
   CdkMenuGroup,
+  CdkMenuTrigger,
+  CdkMenuItem,
+  CdkMenu,
+  CdkMenuBar,
+} from './menu';
+
+/*
+import {
+  CdkMenuItemRadio,
+  CdkMenuItemCheckbox,
+  CdkMenuGroup,
   CdkMenu,
   CdkMenuTrigger,
   CdkMenuItem,
   CdkMenuBar,
-} from '@angular/cdk/menu';
+}  from '@angular/cdk/menu';
+*/
 
 @Component({
   selector: 'app-menu-panel',
@@ -53,8 +65,8 @@ export class AppMenuPanelComponent {
     this.isChecked = !this.isChecked;
   }
 
-  onMenuItemTriggered(options: { keepOpen: boolean }) {
-    console.log(' kkkkkkkkkkkkkkkk options=', options);
+  onMenuItemTriggered(event: any) {
+    console.log(' kkkkkkkkkkkkkkkk options=', event);
     // Handle menu item logic here
     // The menu will stay open because keepOpen is true
   }
