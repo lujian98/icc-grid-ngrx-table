@@ -39,12 +39,14 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridSetting$!: Observable<IccGridSetting>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
-  buttons: IccButtonConfg[] = [
+  @Input() buttons: IccButtonConfg[] = [
+    /*
     IccBUTTONS.Open,
     IccBUTTONS.Edit,
     IccBUTTONS.Save,
     IccBUTTONS.Reset,
     IccBUTTONS.View,
+    */
     IccBUTTONS.Refresh,
     IccBUTTONS.ClearAllFilters,
   ];

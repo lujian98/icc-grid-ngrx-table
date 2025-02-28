@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { sortByField, IccObjectType } from '@icc/ui/core';
+import { sortByField, IccObjectType, IccBUTTONS, IccButtonConfg } from '@icc/ui/core';
 import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
 import {
   CARSDATA3,
@@ -13,7 +13,12 @@ import {
 
 @Component({
   selector: 'app-grid-cell-edit-text',
-  template: `<icc-grid [gridConfig]="gridConfig" [columnsConfig]="columnsConfig" [gridData]="gridData"></icc-grid>`,
+  template: `<icc-grid
+    [gridConfig]="gridConfig"
+    [columnsConfig]="columnsConfig"
+    [buttons]="buttons"
+    [gridData]="gridData"
+  ></icc-grid>`,
   styles: [':host {  display: flex; width: 100%; padding: 0 0px }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
@@ -40,6 +45,16 @@ export class AppGridCellEditTextComponent {
     remoteColumnsConfig: false,
     remoteGridData: false,
   };
+
+  buttons: IccButtonConfg[] = [
+    IccBUTTONS.Open,
+    IccBUTTONS.Edit,
+    IccBUTTONS.Save,
+    IccBUTTONS.Reset,
+    IccBUTTONS.View,
+    IccBUTTONS.Refresh,
+    IccBUTTONS.ClearAllFilters,
+  ];
 
   columnsConfig: IccColumnConfig[] = [
     {
