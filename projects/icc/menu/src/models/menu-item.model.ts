@@ -1,7 +1,7 @@
 import { IsActiveMatchOptions, Params } from '@angular/router';
 import { IccIconConfig } from '@icc/ui/icon';
 
-export interface IccMenuItem {
+export interface IccMenuConfig {
   name: string;
   title?: string;
   selected?: boolean;
@@ -15,5 +15,5 @@ export interface IccMenuItem {
   checked?: boolean;
   separator?: boolean;
 
-  children?: IccMenuItem[];
+  children?: IccMenuConfig[];
 }

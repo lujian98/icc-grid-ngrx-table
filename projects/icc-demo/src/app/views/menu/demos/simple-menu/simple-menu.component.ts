@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccMenuItem, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
+import { IccMenuConfig, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
 import { IccTrigger } from '@icc/ui/overlay';
 
 @Component({
@@ -14,7 +14,7 @@ export class AppSimpleMenuComponent implements OnInit {
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;
 
   menuItems: any;
-  testMenuItems: IccMenuItem = {
+  testMenuItems: IccMenuConfig = {
     icon: 'ellipsis-v',
     name: 'group0',
     children: [
@@ -96,7 +96,7 @@ export class AppSimpleMenuComponent implements OnInit {
     this.menuItems = [this.testMenuItems];
   }
 
-  menuItemClick(item: IccMenuItem): void {
+  menuItemClick(item: IccMenuConfig): void {
     console.log(' 999999 end  iccMenuItemClick=', item);
   }
 }

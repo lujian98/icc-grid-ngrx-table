@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccMenusComponent } from './menus.component';
-import { IccMenuItem } from './models/menu-item.model';
+import { IccMenuConfig } from './models/menu-item.model';
 import { IccIconModule } from '@icc/ui/icon';
 
 @Component({
@@ -14,16 +14,16 @@ import { IccIconModule } from '@icc/ui/icon';
   imports: [CommonModule, IccIconModule, IccMenusComponent, IccPopoverDirective],
 })
 export class IccPopoverMenuComponent {
-  @Input() menuItem!: IccMenuItem;
+  @Input() menuItem!: IccMenuConfig;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
   @Input() position: IccPosition = IccPosition.BOTTOM;
   @Input() clickToClose = false;
 
   level = 0;
 
-  @Output() iccItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccItemChangedEvent: EventEmitter<IccMenuConfig> = new EventEmitter();
 
-  onMenuItemChanged(menuItem: IccMenuItem) {
+  onMenuItemChanged(menuItem: IccMenuConfig) {
     if (!menuItem.disabled) {
       this.iccItemChangedEvent.emit(menuItem);
     }

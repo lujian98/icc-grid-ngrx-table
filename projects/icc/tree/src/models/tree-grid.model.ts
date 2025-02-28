@@ -28,7 +28,7 @@ export interface IccTreeData {
   expanded?: boolean;
   icon?: string;
   children?: IccTreeData[];
-  //contextMenu?: IccMenuItem[];
+  //contextMenu?: IccMenuConfig[];
 }
 
 export interface IccTreeNode<T> extends IccTreeData {}

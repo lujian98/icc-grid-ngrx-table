@@ -8,7 +8,7 @@ import { IccPopoverDirective } from '@icc/ui/popover';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
-import { IccMenuItem } from './models/menu-item.model';
+import { IccMenuConfig } from './models/menu-item.model';
 
 @Component({
   selector: 'icc-menus',
@@ -18,8 +18,8 @@ import { IccMenuItem } from './models/menu-item.model';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
 export class IccMenusComponent<T> implements OnDestroy {
-  private _items: IccMenuItem[] = [];
-  private selected: IccMenuItem | undefined;
+  private _items: IccMenuConfig[] = [];
+  private selected: IccMenuConfig | undefined;
   private destroy$ = new Subject<void>();
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
@@ -29,17 +29,17 @@ export class IccMenusComponent<T> implements OnDestroy {
   @Input() form: FormGroup | undefined;
   @Input() disabled: IccDisabled[] = [];
 
-  getDisabled(menu: IccMenuItem): boolean {
+  getDisabled(menu: IccMenuConfig): boolean {
     const find = this.disabled.find((item) => item.name === menu.name);
     return find ? find.disabled : false;
   }
 
   @Input()
-  set items(val: IccMenuItem[]) {
+  set items(val: IccMenuConfig[]) {
     this._items = val;
     this.setItems();
   }
-  get items(): IccMenuItem[] {
+  get items(): IccMenuConfig[] {
     return this._items;
   }
 
@@ -58,21 +58,21 @@ export class IccMenusComponent<T> implements OnDestroy {
   @Input() clickToClose = false;
   @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
   @Output() iccMenuFormChanges = new EventEmitter<T>(false);
 
-  menuItemClick(item: IccMenuItem): void {
+  menuItemClick(item: IccMenuConfig): void {
     if (!item.checkbox) {
       this.iccMenuItemClick.emit(item);
     }
     this.setSelected(item);
   }
 
-  isLeafMenu(item: IccMenuItem): boolean {
+  isLeafMenu(item: IccMenuConfig): boolean {
     return !item.hidden && (!item.children || item.children.length === 0);
   }
 
-  hasChildItem(item: IccMenuItem): boolean {
+  hasChildItem(item: IccMenuConfig): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
@@ -98,7 +98,7 @@ export class IccMenusComponent<T> implements OnDestroy {
     });
   }
 
-  private setSelected(selectedItem: IccMenuItem): void {
+  private setSelected(selectedItem: IccMenuConfig): void {
     this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
     this.selected = selectedItem;
   }

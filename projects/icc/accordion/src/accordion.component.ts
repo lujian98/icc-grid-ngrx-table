@@ -16,7 +16,7 @@ import {
   IccLayoutHeaderComponent,
   IccLayoutHorizontalComponent,
 } from '@icc/ui/layout';
-import { IccMenusComponent, IccMenuItem } from '@icc/ui/menu';
+import { IccMenusComponent, IccMenuConfig } from '@icc/ui/menu';
 import { take, timer } from 'rxjs';
 import { IccAccordion } from './models/accordion.model';
 
@@ -58,9 +58,9 @@ export class IccAccordionComponent {
     return this._items;
   }
 
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
 
-  onMenuItemClick(item: IccMenuItem): void {
+  onMenuItemClick(item: IccMenuConfig): void {
     this.iccMenuItemClick.emit(item);
   }
 

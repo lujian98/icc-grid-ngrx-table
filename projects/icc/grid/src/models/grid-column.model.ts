@@ -171,5 +171,5 @@ export interface IccColumnConfig {
   //cellReadonly?: boolean | Function;
 
   //priority?: number;
-  //menu?: boolean | IccMenuItem;
+  //menu?: boolean | IccMenuConfig;
 }

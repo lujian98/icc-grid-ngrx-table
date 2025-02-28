@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IccMenuItem } from '../../models/menu-item.model';
+import { IccMenuConfig } from '../../models/menu-item.model';
 
 @Component({
   selector: 'icc-menu-item',
@@ -28,7 +28,7 @@ import { IccMenuItem } from '../../models/menu-item.model';
   ],
 })
 export class IccMenuItemComponent {
-  private _menuItem!: IccMenuItem;
+  private _menuItem!: IccMenuConfig;
   @Input() menuType!: string;
   @Input() form!: FormGroup;
   private _disabled: boolean = false;
@@ -38,7 +38,7 @@ export class IccMenuItemComponent {
   };
 
   @Input()
-  set menuItem(val: IccMenuItem) {
+  set menuItem(val: IccMenuConfig) {
     this._menuItem = val;
     this.fieldConfig = {
       ...defaultCheckboxFieldConfig,
@@ -48,7 +48,7 @@ export class IccMenuItemComponent {
       editable: true,
     };
   }
-  get menuItem(): IccMenuItem {
+  get menuItem(): IccMenuConfig {
     return this._menuItem;
   }
 
@@ -72,9 +72,9 @@ export class IccMenuItemComponent {
     return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
   }
 
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuItem>(false);
+  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
 
-  hasChildItem(item: IccMenuItem): boolean {
+  hasChildItem(item: IccMenuConfig): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 

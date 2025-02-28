@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
+import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -49,7 +49,7 @@ export class IccGridColumnMenuComponent {
   }
 
   @Input() column!: IccColumnConfig;
-  @Input() menuItems: IccMenuItem[] = [];
+  @Input() menuItems: IccMenuConfig[] = [];
   @Input() values: { [key: string]: boolean }[] = [];
   @Input() disabled: IccDisabled[] = [];
 
@@ -126,7 +126,7 @@ export class IccGridColumnMenuComponent {
     this.columnHideShow(values, this.columns);
   }
 
-  onMenuItemClick(item: IccMenuItem): void {
+  onMenuItemClick(item: IccMenuConfig): void {
     if (item.name === 'asc' || item.name === 'desc') {
       this.columnSort(item.name);
     } else if (item.name === 'groupBy') {

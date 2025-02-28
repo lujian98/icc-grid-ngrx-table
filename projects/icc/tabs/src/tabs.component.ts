@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuItem, IccMenusComponent } from '@icc/ui/menu';
+import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccPortalComponent } from '@icc/ui/portal';
@@ -89,7 +89,7 @@ export class IccTabsComponent {
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
   }
 
-  onMenuItemClicked(menuItem: IccMenuItem, tab: IccTabConfig, index: number): void {
+  onMenuItemClicked(menuItem: IccMenuConfig, tab: IccTabConfig, index: number): void {
     const prevActive = this.tabs[this.selectedTabIndex];
     switch (menuItem.name) {
       case IccContextMenuType.CLOSE:

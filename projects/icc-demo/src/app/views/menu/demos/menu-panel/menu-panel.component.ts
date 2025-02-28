@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccMenuPanelComponent } from '@icc/ui/menu';
+import { IccMenuPanelComponent, IccMenuItem } from '@icc/ui/menu';
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
@@ -15,8 +15,6 @@ import { IccPopoverComponent } from '@icc/ui/popover';
 import { defaultContextMenu } from '@icc/ui/tabs';
 
 import { CdkMenuItemRadio, CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuItem, CdkMenuBar } from '@angular/cdk/menu';
-
-import { IccMenuItem } from './menu-item';
 
 @Component({
   selector: 'app-menu-panel',

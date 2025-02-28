@@ -1,8 +1,8 @@
-import { IccMenuItem } from '@icc/ui/menu';
+import { IccMenuConfig } from '@icc/ui/menu';
 
 export interface IccAccordion {
   name: string;
   title?: string;
-  items?: IccMenuItem[];
+  items?: IccMenuConfig[];
   expanded?: boolean;
 }
