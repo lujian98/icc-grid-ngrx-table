@@ -1,20 +1,13 @@
+import { CdkMenu, CdkMenuBar, CdkMenuGroup, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccMenuPanelComponent, IccMenuItem, CdkMenusComponent } from '@icc/ui/menu';
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-} from '@icc/ui/overlay';
-import { IccPopoverComponent } from '@icc/ui/popover';
+import { IccIconModule } from '@icc/ui/icon';
+import { CdkMenusComponent, IccMenuItem, IccMenuConfig } from '@icc/ui/menu';
+import { IccDynamicOverlayService } from '@icc/ui/overlay';
 import { defaultContextMenu } from '@icc/ui/tabs';
 import { MockMenuItems } from '../mock-menu';
-import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/menu';
 
 @Component({
   selector: 'app-menu-panel',
@@ -36,40 +29,11 @@ import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/
   providers: [IccDynamicOverlayService],
 })
 export class AppMenuPanelComponent {
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
-  private elementRef = inject(ElementRef);
+  defaultContextMenu = defaultContextMenu;
   level = 0;
   menuItems = MockMenuItems.children!;
 
-  openMenuPanel(event: MouseEvent): void {
-    const overlayServiceConfig: IccOverlayServiceConfig = {
-      ...DEFAULT_OVERLAY_SERVICE_CONFIG,
-      trigger: IccTrigger.POINT,
-      position: IccPosition.BOTTOM_END,
-      clickToClose: true,
-      event,
-    };
-
-    const popoverContext = {
-      menuItems: defaultContextMenu,
-    };
-
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      this.elementRef,
-      overlayServiceConfig,
-      IccMenuPanelComponent,
-      popoverContext,
-    );
-    this.showMenu();
-  }
-
-  private showMenu(): void {
-    this.hideMenu();
-    this.dynamicOverlayService.show();
-  }
-
-  private hideMenu(): void {
-    this.dynamicOverlayService.hide();
+  onMenuItemClick(item: IccMenuConfig): void {
+    console.log(' menu item click=', item);
   }
 }

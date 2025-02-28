@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenusComponent } from './menus.component';
-import { IccMenuConfig } from './models/menu-item.model';
+import { IccMenusComponent } from '../menus.component';
+import { IccMenuConfig } from '../models/menu-item.model';
 
 @Component({
   selector: 'icc-menu-panel',
