@@ -1,9 +1,10 @@
 <!-- Use form due to the use checkbox in the menu item -->
-<form *ngIf="form" [formGroup]="form">
+<form *ngIf="form" cdkMenu [formGroup]="form">
   <div class="icc-menu-row" *ngFor="let item of items">
     <icc-menu-item
       *ngIf="isLeafMenu(item)"
       iccMenuItem
+      [keepOpen]="!!item.keepOpen"
       [disabled]="getDisabled(item)"
       [form]="form"
       [menuItem]="item"
@@ -24,20 +25,6 @@
       <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
       <span class="icc-menu-item-title"> {{ item.title }}</span>
     </span>
-
-    <icc-menu-item
-      *ngIf="hasChildItem(item) && level > 0"
-      [disabled]="getDisabled(item)"
-      [form]="form"
-      [menuItem]="item"
-      [iccPopover]="menu"
-      [iccPopoverTrigger]="hoverTrigger"
-      [popoverLevel]="level"
-      [clickToClose]="clickToClose"
-      [iccPopoverPosition]="rightBottom"
-      (iccMenuItemClick)="menuItemClick($event)"
-    >
-    </icc-menu-item>
 
     -->
 

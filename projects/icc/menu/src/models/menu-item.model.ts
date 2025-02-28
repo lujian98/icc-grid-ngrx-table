@@ -15,5 +15,6 @@ export interface IccMenuConfig {
   checked?: boolean;
   separator?: boolean;
 
+  keepOpen?: boolean;
   children?: IccMenuConfig[];
 }

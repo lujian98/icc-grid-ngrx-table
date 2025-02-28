@@ -26,6 +26,7 @@ export const MockMenuItems: IccMenuConfig = {
             {
               title: "What's up with the Web?",
               name: 'star_rate',
+              keepOpen: true,
             },
           ],
         },

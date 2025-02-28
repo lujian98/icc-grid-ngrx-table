@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccMenuPanelComponent, IccMenuItem } from '@icc/ui/menu';
+import { IccMenuPanelComponent, IccMenuItem, CdkMenusComponent } from '@icc/ui/menu';
 import {
   DEFAULT_OVERLAY_SERVICE_CONFIG,
   IccDynamicOverlayService,
@@ -13,7 +13,7 @@ import {
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { defaultContextMenu } from '@icc/ui/tabs';
-
+import { MockMenuItems } from '../mock-menu';
 import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/menu';
 
 @Component({
@@ -31,24 +31,15 @@ import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/
     CdkMenu,
     CdkMenuTrigger,
     CdkMenuBar,
+    CdkMenusComponent,
   ],
   providers: [IccDynamicOverlayService],
 })
 export class AppMenuPanelComponent {
   private dynamicOverlayService = inject(IccDynamicOverlayService);
   private elementRef = inject(ElementRef);
-
-  isChecked = false;
-
-  toggleCheck() {
-    this.isChecked = !this.isChecked;
-  }
-
-  onMenuItemTriggered(event: any) {
-    console.log(' kkkkkkkkkkkkkkkk options=', event);
-    // Handle menu item logic here
-    // The menu will stay open because keepOpen is true
-  }
+  level = 0;
+  menuItems = MockMenuItems.children!;
 
   openMenuPanel(event: MouseEvent): void {
     const overlayServiceConfig: IccOverlayServiceConfig = {

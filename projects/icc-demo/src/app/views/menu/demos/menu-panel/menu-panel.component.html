@@ -9,7 +9,12 @@
   <button class="example-menu-bar-item" iccMenuItem [cdkMenuTriggerFor]="file">File</button>
   <button class="example-menu-bar-item" iccMenuItem [cdkMenuTriggerFor]="edit">Edit</button>
   <button class="example-menu-bar-item" iccMenuItem [cdkMenuTriggerFor]="format">Format</button>
+  <button class="example-menu-bar-item" iccMenuItem [cdkMenuTriggerFor]="menustest">Menus Test</button>
 </div>
+
+<ng-template #menustest>
+  <cdk-menus [items]="menuItems" [level]="level + 1"> </cdk-menus>
+</ng-template>
 
 <ng-template #file>
   <div class="example-menu" cdkMenu>

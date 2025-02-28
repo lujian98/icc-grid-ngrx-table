@@ -1,16 +1,15 @@
+import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
-import { IccPopoverDirective } from '@icc/ui/popover';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
-import { IccMenuConfig } from './models/menu-item.model';
 import { IccMenuItem } from './directive/menu-item';
-import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/menu';
+import { IccMenuConfig } from './models/menu-item.model';
 
 @Component({
   selector: 'cdk-menus',
@@ -21,6 +20,7 @@ import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    CdkMenu,
     IccIconModule,
     CdkMenuTrigger,
     IccMenuItem,
