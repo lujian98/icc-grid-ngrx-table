@@ -1,15 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { sortByField, IccObjectType, IccBUTTONS, IccButtonConfg } from '@icc/ui/core';
-import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig, IccGridData } from '@icc/ui/grid';
-import {
-  CARSDATA3,
-  DCRBrands,
-  DCRColors,
-  DCRColorsList,
-  DCRBrandsList,
-  MakerColorList,
-} from '../../../data/cars-large';
+import { IccBUTTONS, IccButtonConfg, IccObjectType } from '@icc/ui/core';
+import { IccColumnConfig, IccGridComponent, IccGridConfig, IccGridData, defaultGridConfig } from '@icc/ui/grid';
+import { CARSDATA3, DCRBrands, DCRBrandsList, DCRColorsList, MakerColorList } from '../../../data/cars-large';
 
 @Component({
   selector: 'app-grid-cell-edit-text',
@@ -33,7 +26,6 @@ export class AppGridCellEditTextComponent {
     columnMenu: true,
     columnHidden: true,
     rowSelection: true,
-    // gridEditable: false, // TODO initial grid editable
     recordKey: 'ID',
     sortFields: [
       {
@@ -41,7 +33,6 @@ export class AppGridCellEditTextComponent {
         dir: 'asc',
       },
     ],
-    //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,
     remoteGridData: false,
   };
@@ -74,15 +65,12 @@ export class AppGridCellEditTextComponent {
         options: DCRBrandsList,
         singleListOption: true,
         remoteOptions: false,
-        //editable: true,
       },
       filterFieldConfig: {
         fieldType: IccObjectType.Select,
         multiSelection: true,
         remoteOptions: false,
         options: DCRBrands,
-        //optionKey: 'name',
-        //optionLabel: 'title',
       },
     },
     {
@@ -145,11 +133,9 @@ export class AppGridCellEditTextComponent {
         options: DCRColorsList,
         singleListOption: true,
         remoteOptions: false,
-        //editable: true,
       },
       filterFieldConfig: {
         fieldType: IccObjectType.Select,
-        //multiSelection: true,
         singleListOption: true,
         options: DCRColorsList,
         remoteOptions: false,
