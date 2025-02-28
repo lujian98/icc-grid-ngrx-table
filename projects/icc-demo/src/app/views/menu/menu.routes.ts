@@ -14,7 +14,7 @@ export const AppMenuRoutes: Routes = [
       { path: 'menu-panel', component: AppMenuPanelComponent },
       {
         path: '**',
-        redirectTo: 'simple-menu',
+        redirectTo: 'menu-panel',
       },
     ],
   },
