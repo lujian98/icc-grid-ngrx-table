@@ -1,0 +1,53 @@
+<!-- Use form due to the use checkbox in the menu item -->
+<form *ngIf="form" [formGroup]="form">
+  <div class="icc-menu-row" *ngFor="let item of items">
+    <icc-menu-item
+      *ngIf="isLeafMenu(item)"
+      [disabled]="getDisabled(item)"
+      [form]="form"
+      [menuItem]="item"
+      (iccMenuItemClick)="menuItemClick($event)"
+    >
+    </icc-menu-item>
+
+    <span
+      *ngIf="hasChildItem(item) && level === 0"
+      [iccPopover]="menu"
+      [iccPopoverTrigger]="menuTrigger"
+      [popoverLevel]="level"
+      [clickToClose]="clickToClose"
+      [iccPopoverPosition]="bottom"
+    >
+      <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
+      <span class="icc-menu-item-title"> {{ item.title }}</span>
+    </span>
+
+    <icc-menu-item
+      *ngIf="hasChildItem(item) && level > 0"
+      [disabled]="getDisabled(item)"
+      [form]="form"
+      [menuItem]="item"
+      [iccPopover]="menu"
+      [iccPopoverTrigger]="hoverTrigger"
+      [popoverLevel]="level"
+      [clickToClose]="clickToClose"
+      [iccPopoverPosition]="rightBottom"
+      (iccMenuItemClick)="menuItemClick($event)"
+    >
+    </icc-menu-item>
+
+    <ng-template #menu>
+      <cdk-menus
+        [form]="form"
+        class="icc-menus-sub-level"
+        [items]="item.children!"
+        [values]="values"
+        [disabled]="disabled"
+        [level]="level + 1"
+        [clickToClose]="clickToClose"
+        (iccMenuItemClick)="menuItemClick($event)"
+      >
+      </cdk-menus>
+    </ng-template>
+  </div>
+</form>
