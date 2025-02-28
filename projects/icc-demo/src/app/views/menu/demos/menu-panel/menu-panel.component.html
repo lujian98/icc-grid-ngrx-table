@@ -13,24 +13,24 @@
 
 <ng-template #file>
   <div class="example-menu" cdkMenu>
-    <button #ref class="example-menu-item" iccMenuItem>Share</button>
+    <div #ref class="example-menu-item" iccMenuItem>Share</div>
     <hr />
-    <button class="example-menu-item" iccMenuItem [cdkMenuTriggerFor]="new_doc">New <span>&#10148;</span></button>
-    <button class="example-menu-item" iccMenuItem>Open</button>
-    <button class="example-menu-item" iccMenuItem>Make a Copy</button>
+    <div class="example-menu-item" iccMenuItem [cdkMenuTriggerFor]="new_doc">New <span>&#10148;</span></div>
+    <div class="example-menu-item" iccMenuItem>Open</div>
+    <div class="example-menu-item" iccMenuItem>Make a Copy</div>
     <hr />
-    <button class="example-menu-item" iccMenuItem [cdkMenuTriggerFor]="download">Download <span>&#10148;</span></button>
+    <div class="example-menu-item" iccMenuItem [cdkMenuTriggerFor]="download">Download <span>&#10148;</span></div>
   </div>
 </ng-template>
 
 <ng-template #edit>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" iccMenuItem>Undo</button>
-    <button class="example-menu-item" iccMenuItem>Redo</button>
+    <div class="example-menu-item" iccMenuItem>Undo</div>
+    <div class="example-menu-item" iccMenuItem>Redo</div>
     <hr />
-    <button class="example-menu-item" iccMenuItem>Cut</button>
-    <button class="example-menu-item" iccMenuItem>Copy</button>
-    <button class="example-menu-item" iccMenuItem>Paste</button>
+    <div class="example-menu-item" iccMenuItem>Cut</div>
+    <div class="example-menu-item" iccMenuItem>Copy</div>
+    <div class="example-menu-item" iccMenuItem>Paste</div>
   </div>
 </ng-template>
 
@@ -38,43 +38,35 @@
   <div class="example-menu" cdkMenu>
     <div class="example-menu-group" cdkMenuGroup>
       <div iccMenuItem [keepOpen]="true" class="example-menu-item" cdkMenuItemChecked>Bold</div>
-      <button iccMenuItem [keepOpen]="true" class="example-menu-item">Italic</button>
+      <div iccMenuItem [keepOpen]="true" class="example-menu-item">Italic</div>
     </div>
     <hr />
     <div class="example-menu-group" cdkMenuGroup>
-      <button iccMenuItem class="example-menu-item">Small</button>
-      <button iccMenuItem class="example-menu-item" cdkMenuItemChecked>Normal</button>
-      <button iccMenuItem class="example-menu-item">Big</button>
+      <div iccMenuItem class="example-menu-item">Small</div>
+      <div iccMenuItem class="example-menu-item" cdkMenuItemChecked>Normal</div>
+      <div iccMenuItem class="example-menu-item">Big</div>
     </div>
   </div>
 </ng-template>
 
 <ng-template #new_doc>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" iccMenuItem [keepOpen]="true">
+    <div class="example-menu-item" iccMenuItem [keepOpen]="true">
       <icc-checkbox>Document</icc-checkbox>
-    </button>
-    <button class="example-menu-item" iccMenuItem>From template</button>
+    </div>
+    <div class="example-menu-item" iccMenuItem>From template</div>
     <hr />
-    <button class="example-menu-item" iccMenuItem>Spreadsheet</button>
-    <button class="example-menu-item" iccMenuItem>Presentation</button>
-    <button class="example-menu-item" iccMenuItem>Form</button>
+    <div class="example-menu-item" iccMenuItem>Spreadsheet</div>
+    <div class="example-menu-item" iccMenuItem>Presentation</div>
+    <div class="example-menu-item" iccMenuItem>Form</div>
   </div>
 </ng-template>
 
 <ng-template #download>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" iccMenuItem>Microsoft Word</button>
-    <button class="example-menu-item" iccMenuItem>PDF</button>
-    <button class="example-menu-item" iccMenuItem>Plain text</button>
+    <div class="example-menu-item" iccMenuItem>Microsoft Word</div>
+    <div class="example-menu-item" iccMenuItem>PDF</div>
+    <div class="example-menu-item" iccMenuItem>Plain text</div>
+    <div class="example-menu-item" iccMenuItem [cdkMenuTriggerFor]="new_doc">New <span>&#10148;</span></div>
   </div>
 </ng-template>
-
-<!--
-
-<button iccMenuItem role="menuitemcheckbox" 
-cdkMenuItemChecked 
-        (CdkMenuItemTriggered)="toggleCheck()">
-  Item with Checkbox
-</button>
--->
