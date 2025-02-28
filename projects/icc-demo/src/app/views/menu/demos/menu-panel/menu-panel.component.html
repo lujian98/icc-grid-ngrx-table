@@ -37,8 +37,8 @@
 <ng-template #format>
   <div class="example-menu" cdkMenu>
     <div class="example-menu-group" cdkMenuGroup>
-      <button cdkMenuItemCheckbox [keepOpen]="true" class="example-menu-item" cdkMenuItemChecked>Bold</button>
-      <button cdkMenuItemCheckbox [keepOpen]="true" class="example-menu-item">Italic</button>
+      <button iccMenuItem [keepOpen]="true" class="example-menu-item" cdkMenuItemChecked>Bold</button>
+      <button iccMenuItem [keepOpen]="true" class="example-menu-item">Italic</button>
     </div>
     <hr />
     <div class="example-menu-group" cdkMenuGroup>
@@ -51,7 +51,7 @@
 
 <ng-template #new_doc>
   <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" cdkMenuItem [keepOpen]="true">
+    <button class="example-menu-item" cdkMenuItem>
       <icc-checkbox>Document</icc-checkbox>
     </button>
     <button class="example-menu-item" cdkMenuItem>From template</button>

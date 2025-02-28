@@ -13,27 +13,10 @@ import {
 } from '@icc/ui/overlay';
 import { IccPopoverComponent } from '@icc/ui/popover';
 import { defaultContextMenu } from '@icc/ui/tabs';
-import {
-  CdkMenuItemRadio,
-  CdkMenuItemCheckbox,
-  CdkMenuGroup,
-  CdkMenuTrigger,
-  CdkMenuItem,
-  CdkMenu,
-  CdkMenuBar,
-} from './menu';
 
-/*
-import {
-  CdkMenuItemRadio,
-  CdkMenuItemCheckbox,
-  CdkMenuGroup,
-  CdkMenu,
-  CdkMenuTrigger,
-  CdkMenuItem,
-  CdkMenuBar,
-}  from '@angular/cdk/menu';
-*/
+import { CdkMenuItemRadio, CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuItem, CdkMenuBar } from '@angular/cdk/menu';
+
+import { IccMenuItem } from './menu-item';
 
 @Component({
   selector: 'app-menu-panel',
@@ -46,7 +29,7 @@ import {
     IccIconModule,
     IccCheckboxComponent,
     CdkMenuItemRadio,
-    CdkMenuItemCheckbox,
+    IccMenuItem,
     CdkMenuGroup,
     CdkMenu,
     CdkMenuTrigger,
