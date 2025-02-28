@@ -1,4 +1,4 @@
-import { CdkMenu, CdkMenuBar, CdkMenuGroup, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenu, CdkMenuBar, CdkMenuGroup, CdkMenuTrigger, CdkContextMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
@@ -22,6 +22,7 @@ import { MockMenuItems } from '../mock-menu';
     IccMenuItem,
     CdkMenuGroup,
     CdkMenu,
+    CdkContextMenuTrigger,
     CdkMenuTrigger,
     CdkMenuBar,
     CdkMenusComponent,
@@ -30,7 +31,6 @@ import { MockMenuItems } from '../mock-menu';
 })
 export class AppMenuPanelComponent {
   defaultContextMenu = defaultContextMenu;
-  level = 0;
   menuItems = MockMenuItems.children!;
 
   onMenuItemClick(item: IccMenuConfig): void {

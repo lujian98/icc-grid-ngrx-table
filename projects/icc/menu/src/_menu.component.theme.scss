@@ -1,7 +1,8 @@
 @use "../../theme/src/icc";
 
 @mixin icc-menu-theme() {
-  icc-menus {
+  icc-menus,
+  cdk-menus {
     .icc-menu-row:nth-child(odd) {
       background-color: icc.icc-theme(icc-grid-row-odd-background-color);
     }

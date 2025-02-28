@@ -1,11 +1,10 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkContextMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-import { IccIconModule } from '@icc/ui/icon';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
-import { IccPosition, IccTrigger } from '@icc/ui/overlay';
-import { IccPopoverDirective } from '@icc/ui/popover';
+import { IccIconModule } from '@icc/ui/icon';
+import { CdkMenusComponent, IccMenuConfig } from '@icc/ui/menu';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { take, timer } from 'rxjs';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
@@ -29,19 +28,18 @@ import {
     DragDropModule,
     CdkDrag,
     CdkDropList,
+    CdkContextMenuTrigger,
+    CdkMenusComponent,
     IccTabLabelDirective,
     IccTabComponent,
     IccTabGroupComponent,
     IccPortalComponent,
     IccIconModule,
-    IccMenusComponent,
-    IccPopoverDirective,
   ],
 })
 export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
-  position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
   @Input()
@@ -55,10 +53,6 @@ export class IccTabsComponent {
 
   @Input() selectedTabIndex = 0;
   @Input() tabs!: IccTabConfig[];
-
-  get contextMenuTrigger(): IccTrigger {
-    return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
-  }
 
   dragDisabled(tab: IccTabConfig): boolean {
     return !this.tabsConfig.tabReorder;

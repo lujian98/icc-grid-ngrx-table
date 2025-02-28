@@ -17,10 +17,7 @@
           [cdkDragDisabled]="dragDisabled(tab)"
           cdkDragPreviewClass="icc-drag-tabs-preview"
           cdkDragRootElement=".icc-mdc-tab"
-          [iccPopover]="menu"
-          [iccPopoverTrigger]="contextMenuTrigger"
-          [clickToClose]="true"
-          [iccPopoverPosition]="position"
+          [cdkContextMenuTriggerFor]="menu"
           >{{ getTabLabel(tab) }}
         </span>
         <icc-icon
@@ -31,13 +28,13 @@
         ></icc-icon>
       </ng-template>
       <ng-template #menu>
-        <icc-menus
+        <cdk-menus
           [items]="menuItem"
           [level]="1"
           [disabled]="getDisabled(tab, index)"
           (iccMenuItemClick)="onMenuItemClicked($event, tab, index)"
         >
-        </icc-menus>
+        </cdk-menus>
       </ng-template>
       <icc-portal *ngIf="index === selectedTabIndex" [content]="tab.content!" [context]="tab.context!"></icc-portal>
     </icc-tab>
