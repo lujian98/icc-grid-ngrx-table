@@ -9,13 +9,23 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuConfig } from './models/menu-item.model';
+import { IccMenuItem } from './directive/menu-item';
+import { CdkMenuGroup, CdkMenu, CdkMenuTrigger, CdkMenuBar } from '@angular/cdk/menu';
 
 @Component({
   selector: 'cdk-menus',
   templateUrl: './cdk-menus.component.html',
   styleUrls: ['./cdk-menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    IccIconModule,
+    CdkMenuTrigger,
+    IccMenuItem,
+    IccMenuItemComponent,
+  ],
 })
 export class CdkMenusComponent<T> implements OnDestroy {
   private _items: IccMenuConfig[] = [];
