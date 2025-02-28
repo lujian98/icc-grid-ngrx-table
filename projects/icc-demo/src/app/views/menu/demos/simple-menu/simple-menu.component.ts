@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IccMenuConfig, IccMenusComponent, IccPopoverMenuComponent } from '@icc/ui/menu';
+import { IccMenuConfig, CdkMenusComponent } from '@icc/ui/menu';
 import { IccTrigger } from '@icc/ui/overlay';
 import { MockMenuItems } from '../mock-menu';
 
@@ -9,7 +9,7 @@ import { MockMenuItems } from '../mock-menu';
   templateUrl: './simple-menu.component.html',
   styleUrls: ['./simple-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccMenusComponent, IccPopoverMenuComponent],
+  imports: [CommonModule, CdkMenusComponent],
 })
 export class AppSimpleMenuComponent implements OnInit {
   contextmenu: IccTrigger = IccTrigger.CONTEXTMENU;

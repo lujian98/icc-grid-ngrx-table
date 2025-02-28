@@ -7,18 +7,15 @@
   <div><br /></div>
   <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
     <div>Click Menu</div>
-    <icc-menus [items]="menuItems" (iccMenuItemClick)="menuItemClick($event)"> </icc-menus>
+    <cdk-menus [items]="menuItems" (iccMenuItemClick)="menuItemClick($event)"> </cdk-menus>
   </div>
   <div><br /></div>
   <div><br /></div>
 
-  <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row', width: '200px' }">
-    <div>Context Menu</div>
-    <icc-menus [items]="menuItems" [clickToClose]="true" [menuTrigger]="contextmenu"> </icc-menus>
-  </div>
+  <div><br /></div>
+  <div><br /></div>
 
-  <div><br /></div>
-  <div><br /></div>
+  <!--
 
   <div [ngStyle]="{ display: 'flex', 'flex-direction': 'row' }">
     Click Popover Menu
@@ -26,6 +23,7 @@
       <icc-popover-menu [menuItem]="testMenuItems" [clickToClose]="true"> </icc-popover-menu>
     </div>
   </div>
+    -->
 
   <div><br /></div>
   <div><br /></div>

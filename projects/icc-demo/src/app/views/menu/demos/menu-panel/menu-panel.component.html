@@ -1,4 +1,5 @@
 <button icc-button [cdkMenuTriggerFor]="menu1">Open Menu Panel</button>
+
 <ng-template #menu1>
   <cdk-menus [items]="defaultContextMenu" (iccMenuItemClick)="onMenuItemClick($event)"> </cdk-menus>
 </ng-template>

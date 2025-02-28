@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Out
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
@@ -31,9 +30,6 @@ export class CdkMenusComponent<T> implements OnDestroy {
   private _items: IccMenuConfig[] = [];
   private selected: IccMenuConfig | undefined;
   private destroy$ = new Subject<void>();
-  bottom = IccPosition.BOTTOM;
-  rightBottom = IccPosition.RIGHTBOTTOM;
-  hoverTrigger = IccTrigger.HOVER;
   private _values: T[] = [];
 
   @Input() form: FormGroup | undefined;
@@ -65,8 +61,6 @@ export class CdkMenusComponent<T> implements OnDestroy {
   }
 
   @Input() level = 0;
-  @Input() clickToClose = false;
-  @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
   @Output() iccMenuFormChanges = new EventEmitter<T>(false);

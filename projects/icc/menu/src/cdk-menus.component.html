@@ -12,21 +12,10 @@
     >
     </icc-menu-item>
 
-    <!--
-
-    <span
-      *ngIf="hasChildItem(item) && level === 0"
-      [iccPopover]="menu"
-      [iccPopoverTrigger]="menuTrigger"
-      [popoverLevel]="level"
-      [clickToClose]="clickToClose"
-      [iccPopoverPosition]="bottom"
-    >
+    <span *ngIf="hasChildItem(item) && level === 0" iccMenuItem [cdkMenuTriggerFor]="menu">
       <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
       <span class="icc-menu-item-title"> {{ item.title }}</span>
     </span>
-
-    -->
 
     <icc-menu-item
       *ngIf="hasChildItem(item) && level > 0"
@@ -47,7 +36,6 @@
         [values]="values"
         [disabled]="disabled"
         [level]="level + 1"
-        [clickToClose]="clickToClose"
         (iccMenuItemClick)="menuItemClick($event)"
       >
       </cdk-menus>
