@@ -83,6 +83,7 @@ export class IccGridColumnMenuComponent {
       return {
         name: column.name,
         title: column.title,
+        keepOpen: true,
         checkbox: true,
         checked: !column.hidden,
         disabled: !this.gridConfig.columnHidden || this.column.sortField === false,
