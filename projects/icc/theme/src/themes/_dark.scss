@@ -67,6 +67,9 @@ $theme: (
   radio-checked-border-color: #d0c6bc,
   radio-inner-circle-color: #f18a20,
   radio-text-color: #adadad,
+
+  spinner-filled-color: #f18a20,
+  spinner-empty-color: transparent,
 );
 
 $icc-themes: icc.icc-register-theme($theme, dark);

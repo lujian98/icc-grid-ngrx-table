@@ -82,6 +82,7 @@ export interface IccGridSetting {
   // for internal grid setting
   gridId: string;
   isTreeGrid: boolean;
+  loading: boolean;
   viewportWidth: number;
   lastUpdateTime: Date;
   gridEditable: boolean;

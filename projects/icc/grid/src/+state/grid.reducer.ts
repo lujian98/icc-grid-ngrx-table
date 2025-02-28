@@ -161,6 +161,20 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
+    on(gridActions.getGridData, (state, action) => {
+      const key = action.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          gridSetting: {
+            ...state[key].gridSetting,
+            loading: true,
+          },
+        };
+      }
+      return { ...newState };
+    }),
     on(gridActions.getGridDataSuccess, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };
@@ -191,6 +205,7 @@ export const iccGridFeature = createFeature({
           //gridConfig,
           gridSetting: {
             ...oldState.gridSetting,
+            loading: false,
             totalCounts: totalCounts,
             lastUpdateTime: new Date(),
             restEdit: false,

@@ -6,7 +6,6 @@ import { IccFormComponent } from '@icc/ui/form';
 import { IccLayoutComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/ui/window';
-import { STATES } from '../../../../../icc-demo/src/app/data/states';
 
 @Component({
   selector: 'icc-grid-form-view',
@@ -152,7 +151,7 @@ export class IccGridFormViewComponent {
     email: 'test@email.com',
     password: '',
     age: 18,
-    state: STATES[32],
+    state: { abbr: 'NY', country: 'USA', state: 'New York', description: 'Empire State' },
     createdate: new Date(new Date().setHours(0, 0, 0, 0)),
     notes: 'This is a notes. ',
     group83: 'B',

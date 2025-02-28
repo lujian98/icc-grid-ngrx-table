@@ -10,6 +10,7 @@ import { IccGridFooterComponent } from './components/grid-footer/grid-footer.com
 import { IccGridViewComponent } from './components/grid-view.component';
 import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
+import { IccSpinnerDirective } from '@icc/ui/spinner';
 
 @Component({
   selector: 'icc-grid',
@@ -24,6 +25,7 @@ import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './m
     IccGridFooterComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
+    IccSpinnerDirective,
   ],
 })
 export class IccGridComponent<T> implements OnInit, OnDestroy {
