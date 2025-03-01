@@ -20,6 +20,7 @@
     <icc-menu-item
       *ngIf="hasChildItem(item) && level > 0"
       iccMenuItem
+      [keepOpen]="!!item.keepOpen"
       [cdkMenuTriggerFor]="menu"
       [disabled]="getDisabled(item)"
       [form]="form"
