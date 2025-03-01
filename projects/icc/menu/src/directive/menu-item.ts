@@ -17,6 +17,7 @@ export class IccMenuItem extends CdkMenuItemSelectable {
   @Input() keepOpen: boolean = false;
 
   override trigger(options: { keepOpen: boolean } = { keepOpen: false }) {
+    console.log(' this.keepOpen=', this.keepOpen);
     super.trigger({
       ...options,
       keepOpen: this.keepOpen,

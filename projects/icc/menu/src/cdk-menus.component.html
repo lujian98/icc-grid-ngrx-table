@@ -19,7 +19,7 @@
 
     <icc-menu-item
       *ngIf="hasChildItem(item) && level > 0"
-      iccMenuItem
+      CdkMenuItemCheckbox
       [cdkMenuTriggerFor]="menu"
       [disabled]="getDisabled(item)"
       [form]="form"

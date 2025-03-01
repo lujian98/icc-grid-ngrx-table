@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { IccMenuItemComponent } from './components/menu-item/menu-item.component';
 import { IccMenuItem } from './directive/menu-item';
+import { CdkMenuItemCheckbox } from './directive/menu-item-checkbox';
 import { IccMenuConfig } from './models/menu-item.model';
 
 //WARNING: cdk menus not works with grid column hide/show due to the point menu without element reference
@@ -24,6 +25,7 @@ import { IccMenuConfig } from './models/menu-item.model';
     IccIconModule,
     CdkMenuTrigger,
     IccMenuItem,
+    CdkMenuItemCheckbox,
     IccMenuItemComponent,
   ],
 })
