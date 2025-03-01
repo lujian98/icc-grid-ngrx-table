@@ -108,7 +108,6 @@ export class IccGridHeaderComponent<T> {
       position: IccPosition.BOTTOM_END,
       event,
     };
-    console.log(' overlayServiceConfig=', overlayServiceConfig);
     this.popoverService.build(
       IccPopoverComponent,
       this.elementRef,

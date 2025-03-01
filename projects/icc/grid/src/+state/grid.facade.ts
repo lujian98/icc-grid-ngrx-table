@@ -52,7 +52,7 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     const isTreeGrid = gridSetting.isTreeGrid;
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, isTreeGrid, columnsConfig }));
-    this.getGridData(gridId, gridSetting);
+    //this.getGridData(gridId, gridSetting);
   }
 
   setViewportPageSize(
