@@ -19,10 +19,9 @@ icc-layout,
   font-size: 0.75rem;
   line-height: 1.25rem;
 
-  //.cdk-overlay-connected-position-bounding-box {
-  //width: unset !important;
-  //height: unset !important;
-  //}
+  .cdk-overlay-connected-position-bounding-box {
+    height: unset !important;
+  }
 
   .cdk-global-overlay-wrapper {
     display: block;
