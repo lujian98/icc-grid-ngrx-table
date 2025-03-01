@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuConfig, IccMenusComponent, CdkMenusComponent } from '@icc/ui/menu';
+import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -12,7 +12,7 @@ import { IccColumnConfig, IccGridConfig, IccRowGroupField, IccGridSetting } from
   templateUrl: './grid-column-menu.component.html',
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridStateModule, IccMenusComponent, CdkMenusComponent],
+  imports: [CommonModule, IccGridStateModule, IccMenusComponent],
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);

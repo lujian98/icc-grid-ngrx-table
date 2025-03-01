@@ -10,7 +10,7 @@
     </icc-layout-header>
 
     <icc-layout-horizontal *ngIf="item?.expanded && item.items">
-      <cdk-menus [items]="item.items" (iccMenuItemClick)="onMenuItemClick($event)"></cdk-menus>
+      <icc-menus [items]="item.items" (iccMenuItemClick)="onMenuItemClick($event)"></icc-menus>
     </icc-layout-horizontal>
   </icc-layout>
 }

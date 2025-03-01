@@ -16,7 +16,7 @@ import {
   IccLayoutHeaderComponent,
   IccLayoutHorizontalComponent,
 } from '@icc/ui/layout';
-import { IccMenuConfig, CdkMenusComponent } from '@icc/ui/menu';
+import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { take, timer } from 'rxjs';
 import { IccAccordion } from './models/accordion.model';
 
@@ -28,7 +28,7 @@ import { IccAccordion } from './models/accordion.model';
   imports: [
     CommonModule,
     IccIconModule,
-    CdkMenusComponent,
+    IccMenusComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
     IccLayoutHorizontalComponent,

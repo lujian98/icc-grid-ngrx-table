@@ -17,7 +17,6 @@ import { IccMenuConfig } from './models/menu-item.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
-// TODO only used in grid column menu for now can be removed if possible??
 export class IccMenusComponent<T> implements OnDestroy {
   private _items: IccMenuConfig[] = [];
   private selected: IccMenuConfig | undefined;
