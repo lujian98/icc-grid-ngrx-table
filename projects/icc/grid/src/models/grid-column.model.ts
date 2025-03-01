@@ -83,6 +83,7 @@ export interface IccGridSetting {
   gridId: string;
   isTreeGrid: boolean;
   loading: boolean;
+  columnUpdating: boolean; // prevent filter fetch data when column changes
   viewportWidth: number;
   lastUpdateTime: Date;
   gridEditable: boolean;

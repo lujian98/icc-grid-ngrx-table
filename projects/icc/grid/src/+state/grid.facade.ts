@@ -52,7 +52,6 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     const isTreeGrid = gridSetting.isTreeGrid;
     this.store.dispatch(gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, isTreeGrid, columnsConfig }));
-    //this.getGridData(gridId, gridSetting);
   }
 
   setViewportPageSize(
@@ -79,21 +78,15 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridSetting.isTreeGrid) {
+      //console.log( ' resize load data')
       this.store.dispatch(gridActions.getConcatGridData({ gridId }));
     }
   }
 
-  setGridSortFields(
-    gridConfig: IccGridConfig,
-    gridSetting: IccGridSetting,
-    sortFields: IccSortField[],
-    //checkSort: boolean = true,
-  ): void {
+  setGridSortFields(gridConfig: IccGridConfig, gridSetting: IccGridSetting, sortFields: IccSortField[]): void {
     const gridId = gridSetting.gridId;
     const isTreeGrid = gridSetting.isTreeGrid;
-    //if (checkSort) {
     sortFields = this.checkGroupSortField(gridConfig, sortFields);
-    //}
     this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, isTreeGrid, sortFields }));
     this.getGridData(gridId, gridSetting);
   }
@@ -102,7 +95,9 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     const isTreeGrid = gridSetting.isTreeGrid;
     this.store.dispatch(gridActions.setGridColumnFilters({ gridId, gridConfig, isTreeGrid, columnFilters }));
-    this.getGridData(gridId, gridSetting);
+    if (!gridSetting.columnUpdating) {
+      this.getGridData(gridId, gridSetting);
+    }
   }
 
   setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
@@ -125,7 +120,6 @@ export class IccGridFacade {
     this.store.dispatch(gridActions.setGridUnGroupBy({ gridId, gridConfig }));
     const sortFields = this.getGroupSortField(gridConfig, rowGroupField);
     this.store.dispatch(gridActions.setGridGroupBy({ gridId, gridConfig, rowGroupField }));
-    //this.setGridSortFields(gridId, gridConfig, sortFields, false);
     const isTreeGrid = false;
     this.store.dispatch(gridActions.setGridSortFields({ gridId, gridConfig, isTreeGrid, sortFields }));
     this.dispatchGridData(gridId);

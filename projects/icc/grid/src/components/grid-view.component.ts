@@ -92,6 +92,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       .pipe(take(1))
       .subscribe(() => this.setViewportPageSize());
 
+    //TODO need find a way to debounce the window resize event
     this.sizeChanged$
       .pipe(
         skip(1),
@@ -240,6 +241,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
+    //console.log( ' resize 000000000000000')
     this.sizeChanged$.next(event);
   }
 

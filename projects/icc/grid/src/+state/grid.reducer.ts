@@ -69,6 +69,7 @@ export const iccGridFeature = createFeature({
           gridSetting: {
             ...state[key].gridSetting,
             viewportReady: true,
+            columnUpdating: true,
           },
           columnsConfig: action.columnsConfig.map((column) => {
             return {
@@ -125,6 +126,10 @@ export const iccGridFeature = createFeature({
             ...state[key].gridConfig,
             columnFilters: action.columnFilters,
             page: 1,
+          },
+          gridSetting: {
+            ...state[key].gridSetting,
+            columnUpdating: false,
           },
         };
       }
