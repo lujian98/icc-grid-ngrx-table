@@ -1,5 +1,5 @@
 <ng-container *ngIf="columnMenus$ | async as vm">
-  <icc-menus
+  <cdk-menus
     [items]="menuItems"
     [level]="level + 1"
     [values]="values"
@@ -7,5 +7,5 @@
     (iccMenuFormChanges)="onMenuFormChanges($event)"
     (iccMenuItemClick)="onMenuItemClick($event)"
   >
-  </icc-menus>
+  </cdk-menus>
 </ng-container>

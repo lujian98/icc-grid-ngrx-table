@@ -1,22 +1,18 @@
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import {
-  ColumnMenuClick,
-  IccColumnConfig,
-  IccGridConfig,
-  IccSortField,
-  IccGridSetting,
-} from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridSetting, IccSortField } from '../../../models/grid-column.model';
+import { IccGridColumnMenuComponent } from '../grid-column-menu/grid-column-menu.component';
 
 @Component({
   selector: 'icc-grid-header-cell',
   templateUrl: './grid-header-cell.component.html',
   styleUrls: ['./grid-header-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslatePipe, IccIconModule],
+  imports: [CommonModule, TranslatePipe, IccIconModule, IccGridColumnMenuComponent, CdkMenuTrigger],
   providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {
@@ -24,6 +20,7 @@ export class IccGridHeaderCellComponent {
   @Input() column!: IccColumnConfig;
   @Input() gridSetting!: IccGridSetting;
   @Input() gridConfig!: IccGridConfig;
+  @Input() values: { [key: string]: boolean } = {};
 
   get title(): string {
     return this.column.title === undefined ? this.column.name : this.column.title;
@@ -41,8 +38,6 @@ export class IccGridHeaderCellComponent {
     return this.findSortField!.dir;
   }
 
-  @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
-
   headCellClick(event: MouseEvent): void {
     if (this.gridConfig.columnSort && this.column.sortField !== false) {
       let find = this.findSortField;
@@ -58,10 +53,5 @@ export class IccGridHeaderCellComponent {
       }
       this.gridFacade.setGridSortFields(this.gridConfig, this.gridSetting, [sort]);
     }
-  }
-
-  onClickColumnMenu(event: MouseEvent): void {
-    event.stopPropagation();
-    this.columnMenuClick.emit({ column: this.column, event: event });
   }
 }

@@ -11,8 +11,11 @@
   </ng-container>
 
   <ng-container *ngIf="gridConfig.columnMenu">
-    <div class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
+    <div class="grid-header-cell-menu" [cdkMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
       <icc-icon config="ellipsis-v"></icc-icon>
     </div>
+    <ng-template #menu>
+      <icc-grid-column-menu [gridId]="gridSetting.gridId" [column]="column" [values]="values"></icc-grid-column-menu>
+    </ng-template>
   </ng-container>
 </div>

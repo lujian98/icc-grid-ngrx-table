@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
-import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
+import { IccMenuConfig, CdkMenusComponent } from '@icc/ui/menu';
 import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -12,7 +12,7 @@ import { IccColumnConfig, IccGridConfig, IccRowGroupField, IccGridSetting } from
   templateUrl: './grid-column-menu.component.html',
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridStateModule, IccMenusComponent],
+  imports: [CommonModule, IccGridStateModule, CdkMenusComponent],
 })
 export class IccGridColumnMenuComponent {
   private gridFacade = inject(IccGridFacade);
@@ -20,10 +20,13 @@ export class IccGridColumnMenuComponent {
   private gridConfig!: IccGridConfig;
   private gridSetting!: IccGridSetting;
   private columns!: IccColumnConfig[];
-
+  menuItems: IccMenuConfig[] = [];
+  disabled: IccDisabled[] = [];
   columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   level = 0;
 
+  @Input() column!: IccColumnConfig;
+  @Input() values: { [key: string]: boolean } = {};
   @Input()
   set gridId(val: string) {
     this._gridId = val;
@@ -47,11 +50,6 @@ export class IccGridColumnMenuComponent {
   get gridId(): string {
     return this._gridId;
   }
-
-  @Input() column!: IccColumnConfig;
-  @Input() menuItems: IccMenuConfig[] = [];
-  @Input() values: { [key: string]: boolean } = {};
-  @Input() disabled: IccDisabled[] = [];
 
   private setDisabledMenu(): void {
     this.disabled = [
@@ -93,30 +91,35 @@ export class IccGridColumnMenuComponent {
       {
         name: 'asc',
         title: 'ICC.UI.GRID.SORT_ASCENDING',
+        keepOpen: true,
         icon: 'arrow-up-short-wide',
         disabled: this.sortDisabled('asc'),
       },
       {
         name: 'desc',
         title: 'ICC.UI.GRID.SORT_DESCENDING',
+        keepOpen: true,
         icon: 'arrow-down-wide-short',
         disabled: this.sortDisabled('desc'),
       },
       {
         name: 'groupBy',
         title: 'ICC.UI.GRID.GROUP_BY_THIS_FIELD',
+        keepOpen: true,
         icon: 'arrow-down-wide-short',
         disabled: this.groupByDisabled(),
       },
       {
         name: 'unGroupBy',
         title: 'ICC.UI.GRID.UNGROUP',
+        keepOpen: true,
         icon: 'arrow-down-wide-short',
         disabled: this.unGroupByDisabled(),
       },
       {
         name: 'columns',
         title: 'ICC.UI.GRID.COLUMNS',
+        keepOpen: true,
         children: columnItems,
       },
     ];
