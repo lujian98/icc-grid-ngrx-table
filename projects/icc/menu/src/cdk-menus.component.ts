@@ -10,6 +10,7 @@ import { IccMenuItemComponent } from './components/menu-item/menu-item.component
 import { IccMenuItem } from './directive/menu-item';
 import { IccMenuConfig } from './models/menu-item.model';
 
+//WARNING: cdk menus not works with grid column hide/show due to the point menu without element reference
 @Component({
   selector: 'cdk-menus',
   templateUrl: './cdk-menus.component.html',
