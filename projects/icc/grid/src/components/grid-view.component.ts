@@ -92,16 +92,17 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       .pipe(take(1))
       .subscribe(() => this.setViewportPageSize());
 
-    //TODO need find a way to debounce the window resize event
     this.sizeChanged$
       .pipe(
         skip(1),
-        debounceTime(250),
+        debounceTime(300),
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
         takeUntil(this.destroy$),
       )
-      .subscribe((event) => this.setViewportPageSize(typeof event === 'string' ? false : true, event));
+      .subscribe((event) => {
+        this.setViewportPageSize(typeof event === 'string' ? false : true, event);
+      });
   }
 
   trackByIndex(index: number): number {
@@ -241,7 +242,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
-    //console.log( ' resize 000000000000000')
     this.sizeChanged$.next(event);
   }
 

@@ -166,7 +166,7 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
-    on(gridActions.getGridData, (state, action) => {
+    on(gridActions.getGridData, gridActions.getConcatGridData, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
@@ -207,7 +207,6 @@ export const iccGridFeature = createFeature({
 
         newState[key] = {
           ...oldState,
-          //gridConfig,
           gridSetting: {
             ...oldState.gridSetting,
             loading: false,
@@ -215,6 +214,7 @@ export const iccGridFeature = createFeature({
             lastUpdateTime: new Date(),
             restEdit: false,
             recordModified: false,
+            columnUpdating: false,
           },
           totalCounts: totalCounts,
           data,
@@ -302,7 +302,7 @@ export const iccGridFeature = createFeature({
             selected: 1,
           },
         };
-      } // selected = 1
+      }
       return { ...newState };
     }),
     on(gridActions.setGridGroupBy, (state, action) => {
