@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { IccDynamicOverlayService, IccOverlayModule } from '@icc/ui/overlay';
-import { IccPortalComponent, IccRenderableContainer, IccPortalContent } from '@icc/ui/portal';
+import { IccOverlayModule } from '@icc/ui/overlay';
+import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
+import { IccPopoverService } from './popover-service';
+import { IccPopoverContainer } from './popover.model';
 
 @Component({
   selector: 'icc-popover',
@@ -14,10 +16,10 @@ import { IccPortalComponent, IccRenderableContainer, IccPortalContent } from '@i
   },
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
-export class IccPopoverComponent<T> implements IccRenderableContainer {
+export class IccPopoverComponent<T> implements IccPopoverContainer {
   @Input() content!: IccPortalContent<T>;
   @Input() context!: Object;
-  @Input() dynamicOverlayService!: IccDynamicOverlayService<T>;
+  @Input() popoverService!: IccPopoverService<T>;
   @Input() customStyle: string | undefined;
 
   get style(): SafeStyle {
@@ -30,7 +32,7 @@ export class IccPopoverComponent<T> implements IccRenderableContainer {
   constructor(private sanitizer: DomSanitizer) {}
 
   close(): void {
-    this.dynamicOverlayService.hide();
+    this.popoverService.hide();
   }
 
   renderContent(): void {

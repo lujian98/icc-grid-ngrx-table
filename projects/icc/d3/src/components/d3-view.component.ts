@@ -39,14 +39,8 @@ import {
 
 import { IccD3PopoverComponent2 } from './popover/popover.component';
 import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverDirective, IccPopoverComponent } from '@icc/ui/popover';
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-} from '@icc/ui/overlay';
+import { IccPopoverService, IccPopoverComponent } from '@icc/ui/popover';
+import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccD3Config } from '../models/d3.model';
 
 @Component({
@@ -56,10 +50,10 @@ import { IccD3Config } from '../models/d3.model';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccD3LegendComponent],
-  providers: [IccDrawServie, IccDynamicOverlayService],
+  providers: [IccDrawServie, IccPopoverService],
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private popoverService = inject(IccPopoverService);
   private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private _data!: any[];
@@ -369,7 +363,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       position: IccPosition.BOTTOMRIGHT,
       event,
     };
-    this.dynamicOverlayService.build(
+    this.popoverService.build(
       IccPopoverComponent,
       this.elementRef,
       overlayServiceConfig,
@@ -381,11 +375,11 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
 
   private showPopover(): void {
     this.hidePopover();
-    this.dynamicOverlayService.show();
+    this.popoverService.show();
   }
 
   private hidePopover() {
-    this.dynamicOverlayService.hide();
+    this.popoverService.hide();
   }
 
   legendMouseover(data: T[], mouseover: boolean): void {

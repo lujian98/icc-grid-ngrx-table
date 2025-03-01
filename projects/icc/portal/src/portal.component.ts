@@ -6,6 +6,8 @@ import {
   Component,
   ComponentRef,
   EmbeddedViewRef,
+  inject,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
@@ -13,8 +15,6 @@ import {
   Type,
   ViewChild,
   ViewContainerRef,
-  inject,
-  Injector,
 } from '@angular/core';
 import { IccPortalContent } from './portal.model';
 

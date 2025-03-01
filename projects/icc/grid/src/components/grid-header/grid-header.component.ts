@@ -2,14 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-} from '@icc/ui/overlay';
-import { IccPopoverComponent } from '@icc/ui/popover';
+import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverComponent, IccPopoverService } from '@icc/ui/popover';
 import { Observable } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
@@ -43,11 +37,11 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
     IccColumnFilterComponent,
     IccRowSelectComponent,
   ],
-  providers: [IccDynamicOverlayService],
+  providers: [IccPopoverService],
 })
 export class IccGridHeaderComponent<T> {
   private gridFacade = inject(IccGridFacade);
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private popoverService = inject(IccPopoverService);
   private elementRef = inject(ElementRef);
   private _gridSetting!: IccGridSetting;
   rowSelections$:
@@ -115,7 +109,7 @@ export class IccGridHeaderComponent<T> {
       event,
     };
     console.log(' overlayServiceConfig=', overlayServiceConfig);
-    this.dynamicOverlayService.build(
+    this.popoverService.build(
       IccPopoverComponent,
       this.elementRef,
       overlayServiceConfig,
@@ -127,10 +121,10 @@ export class IccGridHeaderComponent<T> {
 
   private showMenu(): void {
     this.hideMenu();
-    this.dynamicOverlayService.show();
+    this.popoverService.show();
   }
 
   private hideMenu() {
-    this.dynamicOverlayService.hide();
+    this.popoverService.hide();
   }
 }

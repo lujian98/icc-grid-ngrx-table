@@ -1,29 +1,35 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, OnDestroy, TemplateRef, Type } from '@angular/core';
-import { IccOverlayRef, IccOverlayServiceConfig } from './overlay/overlay.models';
-import { IccPosition } from './overlay/overlay-position';
-import { IccPositionBuilderService, Point } from './overlay/overlay-position-builder.service';
-import { IccTrigger, IccTriggerStrategy, IccTriggerStrategyBuilderService } from './overlay/overlay-trigger';
-import { IccOverlayService } from './overlay/overlay.service';
-import { IccRenderableContainer } from '@icc/ui/portal';
+import {
+  IccOverlayRef,
+  IccOverlayService,
+  IccOverlayServiceConfig,
+  IccPosition,
+  IccPositionBuilderService,
+  IccTrigger,
+  IccTriggerStrategy,
+  IccTriggerStrategyBuilderService,
+  Point,
+} from '@icc/ui/overlay';
+import { IccPopoverContainer } from './popover.model';
 
 @Injectable()
-export class IccDynamicOverlayService<T> implements OnDestroy {
+export class IccPopoverService<T> implements OnDestroy {
   private overlayPositionBuilder = inject(IccPositionBuilderService);
   private overlayService = inject(IccOverlayService);
   private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
 
-  private componentType!: Type<IccRenderableContainer>;
+  private componentType!: Type<IccPopoverContainer>;
   private context: Object = {};
   private content!: Type<T> | TemplateRef<T> | string;
   private hostElement!: ElementRef;
   private overlayRef!: IccOverlayRef | null;
-  private containerRef!: ComponentRef<IccRenderableContainer> | null | undefined;
+  private containerRef!: ComponentRef<IccPopoverContainer> | null | undefined;
   private triggerStrategy!: IccTriggerStrategy;
   private overlayServiceConfig!: IccOverlayServiceConfig;
 
   build(
-    componentType: Type<IccRenderableContainer>,
+    componentType: Type<IccPopoverContainer>,
     hostElement: ElementRef,
     overlayServiceConfig: IccOverlayServiceConfig,
     content: Type<T> | TemplateRef<T> | string,
@@ -111,7 +117,7 @@ export class IccDynamicOverlayService<T> implements OnDestroy {
     return this.overlayPositionBuilder.flexibleConnectedTo(origin, this.overlayServiceConfig.position);
   }
 
-  private container(): ComponentRef<IccRenderableContainer> {
+  private container(): ComponentRef<IccPopoverContainer> {
     return this.containerRef!;
   }
 

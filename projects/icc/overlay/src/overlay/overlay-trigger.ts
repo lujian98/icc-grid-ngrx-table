@@ -1,8 +1,8 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
-import { EMPTY, Observable, fromEvent, merge } from 'rxjs';
-import { debounceTime, delay, filter, map, repeat, share, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { IccFormFieldComponent } from '@icc/ui/form-field';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
+import { EMPTY, Observable, fromEvent, merge } from 'rxjs';
+import { debounceTime, delay, filter, map, repeat, share, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 
 export enum IccTrigger {
   CLICK = 'click',

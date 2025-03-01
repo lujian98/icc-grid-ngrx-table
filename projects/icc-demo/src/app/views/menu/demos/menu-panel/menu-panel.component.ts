@@ -5,7 +5,6 @@ import { IccButtonComponent } from '@icc/ui/button';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccIconModule } from '@icc/ui/icon';
 import { CdkMenusComponent, IccMenuItem, IccMenuConfig } from '@icc/ui/menu';
-import { IccDynamicOverlayService } from '@icc/ui/overlay';
 import { defaultContextMenu } from '@icc/ui/tabs';
 import { MockMenuItems } from '../mock-menu';
 
@@ -27,7 +26,6 @@ import { MockMenuItems } from '../mock-menu';
     CdkMenuBar,
     CdkMenusComponent,
   ],
-  providers: [IccDynamicOverlayService],
 })
 export class AppMenuPanelComponent {
   defaultContextMenu = defaultContextMenu;

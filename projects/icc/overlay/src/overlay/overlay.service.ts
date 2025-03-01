@@ -1,6 +1,6 @@
+import { GlobalPositionStrategy, PositionStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { ElementRef, Injectable, inject } from '@angular/core';
-import { GlobalPositionStrategy, ScrollStrategyOptions, PositionStrategy } from '@angular/cdk/overlay';
-import { IccOverlay, IccOverlayConfig, IccOverlayRef, IccOverlayItem } from './overlay.models';
+import { IccOverlay, IccOverlayConfig, IccOverlayItem, IccOverlayRef } from './overlay.models';
 
 @Injectable()
 export class IccOverlayService {

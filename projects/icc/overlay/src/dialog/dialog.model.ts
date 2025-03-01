@@ -1,4 +1,5 @@
 import { InjectionToken, ElementRef, Injector } from '@angular/core';
+
 export const ICC_DIALOG_CONFIG = new InjectionToken<IccDialogConfig>('Default dialog options');
 
 export class IccDialogConfig<D = {}> {

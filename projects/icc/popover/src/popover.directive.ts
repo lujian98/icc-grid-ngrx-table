@@ -1,22 +1,17 @@
 import { AfterViewInit, Directive, ElementRef, Input, TemplateRef, Type, inject } from '@angular/core';
-import {
-  DEFAULT_OVERLAY_SERVICE_CONFIG,
-  IccDynamicOverlayService,
-  IccOverlayServiceConfig,
-  IccPosition,
-  IccTrigger,
-} from '@icc/ui/overlay';
+import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverService } from './popover-service';
 import { IccPopoverComponent } from './popover.component';
 
 @Directive({
   selector: '[iccPopover]',
   exportAs: 'iccPopover',
   standalone: true,
-  providers: [IccDynamicOverlayService],
+  providers: [IccPopoverService],
 })
 export class IccPopoverDirective<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
-  private dynamicOverlayService = inject(IccDynamicOverlayService);
+  private popoverService = inject(IccPopoverService);
   private _context: Object = {};
 
   @Input('iccPopover')
@@ -25,7 +20,7 @@ export class IccPopoverDirective<T> implements AfterViewInit {
   @Input('iccPopoverContext')
   set context(value: {}) {
     this._context = { ...value };
-    this.dynamicOverlayService.rebuild(this.context, this.content);
+    this.popoverService.rebuild(this.context, this.content);
   }
   get context(): {} {
     return this._context;
@@ -51,12 +46,6 @@ export class IccPopoverDirective<T> implements AfterViewInit {
       popoverLevel: this.popoverLevel,
       clickToClose: this.clickToClose,
     };
-    this.dynamicOverlayService.build(
-      IccPopoverComponent,
-      this.elementRef,
-      overlayServiceConfig,
-      this.content,
-      this.context,
-    );
+    this.popoverService.build(IccPopoverComponent, this.elementRef, overlayServiceConfig, this.content, this.context);
   }
 }

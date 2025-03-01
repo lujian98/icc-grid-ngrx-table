@@ -1,13 +1,12 @@
-import { Injectable, Inject, ElementRef } from '@angular/core';
 import {
-  OverlayPositionBuilder,
-  GlobalPositionStrategy,
-  FlexibleConnectedPositionStrategy,
   ConnectionPositionPair,
+  FlexibleConnectedPositionStrategy,
+  GlobalPositionStrategy,
+  OverlayPositionBuilder,
 } from '@angular/cdk/overlay';
-
-import { IccPosition } from './overlay-position';
+import { ElementRef, Inject, Injectable } from '@angular/core';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
+import { IccPosition } from './overlay-position';
 
 export interface Point {
   x: number;
