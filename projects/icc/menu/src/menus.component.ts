@@ -25,7 +25,7 @@ export class IccMenusComponent<T> implements OnDestroy {
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVER;
-  private _values: T[] = [];
+  private _values: { [key: string]: boolean } = {};
 
   @Input() form: FormGroup | undefined;
   @Input() disabled: IccDisabled[] = [];
@@ -45,13 +45,13 @@ export class IccMenusComponent<T> implements OnDestroy {
   }
 
   @Input()
-  set values(values: T[]) {
+  set values(values: { [key: string]: boolean }) {
     if (this.form && values) {
       this.form.patchValue({ ...values }, { emitEvent: false });
     }
     this._values = values;
   }
-  get values(): T[] {
+  get values(): { [key: string]: boolean } {
     return this._values;
   }
 

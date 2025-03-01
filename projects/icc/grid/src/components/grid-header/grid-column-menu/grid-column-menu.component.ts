@@ -50,7 +50,7 @@ export class IccGridColumnMenuComponent {
 
   @Input() column!: IccColumnConfig;
   @Input() menuItems: IccMenuConfig[] = [];
-  @Input() values: { [key: string]: boolean }[] = [];
+  @Input() values: { [key: string]: boolean } = {};
   @Input() disabled: IccDisabled[] = [];
 
   private setDisabledMenu(): void {
