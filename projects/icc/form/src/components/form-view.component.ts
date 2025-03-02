@@ -28,6 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
 import { IccFormConfig, IccFormButtonClick, IccFormSetting } from '../models/form.model';
+import { IccObjectType } from '@icc/ui/core';
 
 @Component({
   selector: 'icc-form-view',
@@ -55,6 +56,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({});
   private _formFields: IccFormField[] = [];
   private _values!: object;
+  FieldType = IccObjectType;
 
   @Input() formSetting!: IccFormSetting;
   @Input() formConfig!: IccFormConfig;
