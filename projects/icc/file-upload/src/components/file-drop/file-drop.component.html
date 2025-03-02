@@ -22,15 +22,17 @@
     />
 
     <ng-template #defaultContentTemplate>
-      <div *ngIf="dropZoneLabel" class="icc-file-drop__drop-zone-label">{{ dropZoneLabel }}</div>
-      <div *ngIf="showBrowseBtn">
+      @if (dropZoneLabel) {
+        <div class="icc-file-drop__drop-zone-label">{{ dropZoneLabel }}</div>
+      }
+      @if (showBrowseBtn) {
         <input
           type="button"
           [className]="browseBtnClassName"
           value="{{ browseBtnLabel }}"
           (click)="openFileSelector($event)"
         />
-      </div>
+      }
     </ng-template>
 
     <ng-template
