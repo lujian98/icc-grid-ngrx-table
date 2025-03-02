@@ -40,8 +40,8 @@
           [rowIndex]="index"
           [columns]="columns"
           [columnWidths]="columnWidths"
-          [record]="getRecord(record)"
-          [selected]="selected(record, selection)"
+          [record]="record"
+          [selected]="selection.isSelected(record)"
           (click)="rowClick($event, index, record, selection, gridData)"
           (dblclick)="rowDblClick(record)"
         >

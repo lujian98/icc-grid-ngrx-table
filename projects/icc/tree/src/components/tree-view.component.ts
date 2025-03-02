@@ -74,10 +74,6 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     return this._treeConfig;
   }
 
-  getRecord(record: IccTreeNode<T>): IccTreeNode<T> {
-    return record; // { ...record }; // TODO not sure this
-  }
-
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }

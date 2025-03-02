@@ -9,8 +9,10 @@
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
   <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
-    <icc-fields *ngIf="fieldConfig.fieldType !== 'fieldset'" [form]="form" [fieldConfig]="fieldConfig"> </icc-fields>
-    <icc-fieldset *ngIf="fieldConfig.fieldType === 'fieldset'" [form]="form" [fieldConfig]="fieldConfig">
-    </icc-fieldset>
+    @if (fieldConfig.fieldType === "fieldset") {
+      <icc-fieldset [form]="form" [fieldConfig]="fieldConfig"></icc-fieldset>
+    } @else {
+      <icc-fields [form]="form" [fieldConfig]="fieldConfig"></icc-fields>
+    }
   </ng-container>
 </form>

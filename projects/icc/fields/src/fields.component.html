@@ -1,34 +1,25 @@
-<icc-text-field *ngIf="fieldConfig.fieldType === FieldType.Text" [fieldConfig]="fieldConfig" [form]="form">
-</icc-text-field>
-<icc-number-field *ngIf="fieldConfig.fieldType === FieldType.Number" [fieldConfig]="fieldConfig" [form]="form">
-</icc-number-field>
-
-<icc-checkbox-field *ngIf="fieldConfig.fieldType === FieldType.Checkbox" [fieldConfig]="fieldConfig" [form]="form">
-</icc-checkbox-field>
-
-<icc-date-field *ngIf="fieldConfig.fieldType === FieldType.Date" [fieldConfig]="fieldConfig" [form]="form">
-</icc-date-field>
-
-<icc-date-range-field *ngIf="fieldConfig.fieldType === FieldType.DateRange" [fieldConfig]="fieldConfig" [form]="form">
-</icc-date-range-field>
-
-<icc-display-field *ngIf="fieldConfig.fieldType === FieldType.Display" [fieldConfig]="fieldConfig" [form]="form">
-</icc-display-field>
-
-<icc-hidden-field *ngIf="fieldConfig.fieldType === FieldType.Hidden" [fieldConfig]="fieldConfig" [form]="form">
-</icc-hidden-field>
-
-<icc-password-field *ngIf="fieldConfig.fieldType === FieldType.Password" [fieldConfig]="fieldConfig" [form]="form">
-</icc-password-field>
-
-<icc-radio-group-field *ngIf="fieldConfig.fieldType === FieldType.RadioGroup" [fieldConfig]="fieldConfig" [form]="form">
-</icc-radio-group-field>
-
-<icc-select-field *ngIf="fieldConfig.fieldType === FieldType.Select" [fieldConfig]="fieldConfig" [form]="form">
-</icc-select-field>
-
-<icc-textarea-field *ngIf="fieldConfig.fieldType === FieldType.Textarea" [fieldConfig]="fieldConfig" [form]="form">
-</icc-textarea-field>
-
-<icc-upload-file-field *ngIf="fieldConfig.fieldType === FieldType.UploadFile" [fieldConfig]="fieldConfig" [form]="form">
-</icc-upload-file-field>
+@if (fieldConfig.fieldType === FieldType.Text) {
+  <icc-text-field [fieldConfig]="fieldConfig" [form]="form"></icc-text-field>
+} @else if (fieldConfig.fieldType === FieldType.Number) {
+  <icc-number-field [fieldConfig]="fieldConfig" [form]="form"></icc-number-field>
+} @else if (fieldConfig.fieldType === FieldType.Checkbox) {
+  <icc-checkbox-field [fieldConfig]="fieldConfig" [form]="form"></icc-checkbox-field>
+} @else if (fieldConfig.fieldType === FieldType.Date) {
+  <icc-date-field [fieldConfig]="fieldConfig" [form]="form"></icc-date-field>
+} @else if (fieldConfig.fieldType === FieldType.DateRange) {
+  <icc-date-range-field [fieldConfig]="fieldConfig" [form]="form"></icc-date-range-field>
+} @else if (fieldConfig.fieldType === FieldType.Display) {
+  <icc-display-field [fieldConfig]="fieldConfig" [form]="form"></icc-display-field>
+} @else if (fieldConfig.fieldType === FieldType.Hidden) {
+  <icc-hidden-field [fieldConfig]="fieldConfig" [form]="form"></icc-hidden-field>
+} @else if (fieldConfig.fieldType === FieldType.Password) {
+  <icc-password-field [fieldConfig]="fieldConfig" [form]="form"></icc-password-field>
+} @else if (fieldConfig.fieldType === FieldType.RadioGroup) {
+  <icc-radio-group-field [fieldConfig]="fieldConfig" [form]="form"></icc-radio-group-field>
+} @else if (fieldConfig.fieldType === FieldType.Select) {
+  <icc-select-field [fieldConfig]="fieldConfig" [form]="form"></icc-select-field>
+} @else if (fieldConfig.fieldType === FieldType.Textarea) {
+  <icc-textarea-field [fieldConfig]="fieldConfig" [form]="form"></icc-textarea-field>
+} @else if (fieldConfig.fieldType === FieldType.UploadFile) {
+  <icc-upload-file-field [fieldConfig]="fieldConfig" [form]="form"></icc-upload-file-field>
+}

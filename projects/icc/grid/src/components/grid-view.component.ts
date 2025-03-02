@@ -72,14 +72,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;
   }
 
-  getRecord(record: object): object {
-    return record; //{ ...record }; // TODO some issue need this but will disable the select record???
-  }
-
-  selected(record: object, selection: SelectionModel<object>): boolean {
-    return selection.isSelected(record as object);
-  }
-
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
     this.columnWidths = values;
   }
