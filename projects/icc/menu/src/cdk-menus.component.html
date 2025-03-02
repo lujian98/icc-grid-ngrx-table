@@ -1,34 +1,33 @@
 <!-- Use form due to the use checkbox in the menu item -->
 <form *ngIf="form" cdkMenu [formGroup]="form">
   <div class="icc-menu-row" *ngFor="let item of items">
-    <icc-menu-item
-      *ngIf="isLeafMenu(item)"
-      iccMenuItem
-      [keepOpen]="!!item.keepOpen"
-      [disabled]="getDisabled(item)"
-      [form]="form"
-      [menuItem]="item"
-      (iccMenuItemClick)="menuItemClick($event)"
-    >
-    </icc-menu-item>
-
-    <span *ngIf="hasChildItem(item) && level === 0" iccMenuItem [cdkMenuTriggerFor]="menu">
-      <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
-      <span class="icc-menu-item-title"> {{ item.title }}</span>
-    </span>
-
-    <icc-menu-item
-      *ngIf="hasChildItem(item) && level > 0"
-      iccMenuItem
-      [keepOpen]="!!item.keepOpen"
-      [cdkMenuTriggerFor]="menu"
-      [disabled]="getDisabled(item)"
-      [form]="form"
-      [menuItem]="item"
-      (iccMenuItemClick)="menuItemClick($event)"
-    >
-    </icc-menu-item>
-
+    @if (isLeafMenu(item)) {
+      <icc-menu-item
+        iccMenuItem
+        [keepOpen]="!!item.keepOpen"
+        [disabled]="getDisabled(item)"
+        [form]="form"
+        [menuItem]="item"
+        (iccMenuItemClick)="menuItemClick($event)"
+      >
+      </icc-menu-item>
+    } @else if (hasChildItem(item) && level === 0) {
+      <span iccMenuItem [cdkMenuTriggerFor]="menu">
+        <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
+        <span class="icc-menu-item-title"> {{ item.title }}</span>
+      </span>
+    } @else if (hasChildItem(item) && level > 0) {
+      <icc-menu-item
+        iccMenuItem
+        [keepOpen]="!!item.keepOpen"
+        [cdkMenuTriggerFor]="menu"
+        [disabled]="getDisabled(item)"
+        [form]="form"
+        [menuItem]="item"
+        (iccMenuItemClick)="menuItemClick($event)"
+      >
+      </icc-menu-item>
+    }
     <ng-template #menu>
       <cdk-menus
         [form]="form"
