@@ -453,7 +453,6 @@ export const iccGridFeature = createFeature({
           record[value.field] = value.value;
           modified.push(record);
         }
-        //console.log( ' new modified=', modified)
         newState[key] = {
           ...oldState,
           gridSetting: {
