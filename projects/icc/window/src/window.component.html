@@ -5,18 +5,19 @@
   [cdkDragDisabled]="windowConfig.dragDisabled"
   (cdkDragEnded)="dragEnded($event)"
 >
-  <icc-layout-header *ngIf="windowConfig.showHeader" [title]="windowConfig.title" cdkDragHandle>
-    <button icc-button [ghost]="true" *ngIf="windowConfig.maximizable && isMaxWindowSize" (click)="restore()">
-      <icc-icon icon="window-restore"></icc-icon>&nbsp;
-    </button>
-    <button icc-button [ghost]="true" *ngIf="windowConfig.maximizable && !isMaxWindowSize" (click)="maximize()">
-      <icc-icon icon="expand"></icc-icon>&nbsp;
-    </button>
-    <button icc-button [ghost]="true" *ngIf="windowConfig.closable" (click)="close()">
-      <icc-icon icon="close"></icc-icon>&nbsp;
-    </button>
-  </icc-layout-header>
-
+  @if (windowConfig.showHeader) {
+    <icc-layout-header [title]="windowConfig.title" cdkDragHandle>
+      @if (windowConfig.maximizable && isMaxWindowSize) {
+        <button icc-button [ghost]="true" (click)="restore()"><icc-icon icon="window-restore"></icc-icon>&nbsp;</button>
+      }
+      @if (windowConfig.maximizable && !isMaxWindowSize) {
+        <button icc-button [ghost]="true" (click)="maximize()"><icc-icon icon="expand"></icc-icon>&nbsp;</button>
+      }
+      @if (windowConfig.closable) {
+        <button icc-button [ghost]="true" (click)="close()"><icc-icon icon="close"></icc-icon>&nbsp;</button>
+      }
+    </icc-layout-header>
+  }
   <ng-content></ng-content>
 
   @if (windowConfig.resizeable) {
