@@ -265,7 +265,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @ViewChild('inputEl') inputEl!: ElementRef;
 
   onMouseleave(): void {
-    this.inputEl.nativeElement.blur();
+    //this.inputEl.nativeElement.blur();
   }
 
   @Output() valueChange = new EventEmitter<T | T[]>(true);

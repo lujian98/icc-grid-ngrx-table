@@ -18,6 +18,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   optionLabel: string;
   optionKey: string;
   options?: IccOptionType[]; // only used for local initial input
+  mouseLeaveBlur?: boolean;
   //virtualScroll: boolean; // only support virtualScroll
 }
 

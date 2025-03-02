@@ -21,6 +21,7 @@ export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
       fieldName: this.column.name,
       clearValue: false,
       editable: true,
+      mouseLeaveBlur: true,
     };
   }
 }
