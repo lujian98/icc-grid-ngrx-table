@@ -32,7 +32,6 @@ export class IccWindowComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
   private _windowConfig: IccWindowConfig = defaultWindowConfig;
   private windowInfo!: IccWindowInfo;
-
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
 

@@ -29,13 +29,13 @@ import { IccMenuConfig } from '../../models/menu-item.model';
 })
 export class IccMenuItemComponent {
   private _menuItem!: IccMenuConfig;
-  @Input() menuType!: string;
-  @Input() form!: FormGroup;
   private _disabled: boolean = false;
-
   fieldConfig: IccCheckboxFieldConfig = {
     ...defaultCheckboxFieldConfig,
   };
+
+  @Input() menuType!: string;
+  @Input() form!: FormGroup;
 
   @Input()
   set menuItem(val: IccMenuConfig) {

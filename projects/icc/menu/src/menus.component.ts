@@ -21,18 +21,16 @@ export class IccMenusComponent<T> implements OnDestroy {
   private _items: IccMenuConfig[] = [];
   private selected: IccMenuConfig | undefined;
   private destroy$ = new Subject<void>();
+  private _values: { [key: string]: boolean } = {};
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVER;
-  private _values: { [key: string]: boolean } = {};
 
   @Input() form: FormGroup | undefined;
   @Input() disabled: IccDisabled[] = [];
-
-  getDisabled(menu: IccMenuConfig): boolean {
-    const find = this.disabled.find((item) => item.name === menu.name);
-    return find ? find.disabled : false;
-  }
+  @Input() level = 0;
+  @Input() clickToClose = false;
+  @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   @Input()
   set items(val: IccMenuConfig[]) {
@@ -54,12 +52,13 @@ export class IccMenusComponent<T> implements OnDestroy {
     return this._values;
   }
 
-  @Input() level = 0;
-  @Input() clickToClose = false;
-  @Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
-
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
   @Output() iccMenuFormChanges = new EventEmitter<T>(false);
+
+  getDisabled(menu: IccMenuConfig): boolean {
+    const find = this.disabled.find((item) => item.name === menu.name);
+    return find ? find.disabled : false;
+  }
 
   menuItemClick(item: IccMenuConfig): void {
     if (!item.checkbox) {

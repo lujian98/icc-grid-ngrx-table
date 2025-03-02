@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { IccSpinnerSize } from './spinner.model';
 
 @Component({

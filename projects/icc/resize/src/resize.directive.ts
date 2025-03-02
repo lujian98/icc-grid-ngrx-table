@@ -1,4 +1,3 @@
-import { ICC_DOCUMENT } from '@icc/ui/theme';
 import {
   Directive,
   ElementRef,
@@ -10,6 +9,7 @@ import {
   Renderer2,
   inject,
 } from '@angular/core';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { IccResizeInfo, IccResizeType } from './model';
 
 @Directive({
@@ -20,16 +20,14 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   private document = inject(ICC_DOCUMENT);
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
-
-  @Input() direction!: IccResizeType;
-  @Input() elementKey!: string;
-
   private resizableMousedown!: () => void;
   private resizableMousemove!: () => void;
   private resizableMouseup!: () => void;
-
   private isResizing = false;
   private resizeInfo!: IccResizeInfo;
+
+  @Input() direction!: IccResizeType;
+  @Input() elementKey!: string;
 
   @Output() iccResizeEvent: EventEmitter<IccResizeInfo> = new EventEmitter<IccResizeInfo>();
 

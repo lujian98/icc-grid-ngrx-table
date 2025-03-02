@@ -1,14 +1,27 @@
-import { Directive, Input, ComponentRef, ViewContainerRef, Renderer2, ElementRef, HostBinding } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { IccSpinnerSize } from './spinner.model';
+import {
+  ComponentRef,
+  Directive,
+  ElementRef,
+  HostBinding,
+  Input,
+  Renderer2,
+  ViewContainerRef,
+  inject,
+} from '@angular/core';
 import { IccSpinnerComponent } from './spinner.component';
+import { IccSpinnerSize } from './spinner.model';
 
 @Directive({
   selector: '[iccSpinner]',
 })
 export class IccSpinnerDirective {
-  spinner!: ComponentRef<IccSpinnerComponent>;
+  private viewContainerRef = inject(ViewContainerRef);
+  private renderer = inject(Renderer2);
+  private elementRef = inject(ElementRef);
   private _message!: string;
+  spinner!: ComponentRef<IccSpinnerComponent>;
+
   @HostBinding('class.icc-spinner-container') isSpinnerPresent = false;
 
   @Input('iccSpinnerSize') spinnerSize: IccSpinnerSize = 'medium';
@@ -33,18 +46,12 @@ export class IccSpinnerDirective {
     }
   }
 
-  constructor(
-    private viewContainerRef: ViewContainerRef,
-    private render: Renderer2,
-    private elementRef: ElementRef,
-  ) {}
-
   show() {
     if (!this.isSpinnerPresent) {
       this.spinner = this.viewContainerRef.createComponent<IccSpinnerComponent>(IccSpinnerComponent);
       this.spinner.instance.size = this.spinnerSize;
       this.spinner.instance.message = this.message;
-      this.render.appendChild(this.elementRef.nativeElement, this.spinner.location.nativeElement);
+      this.renderer.appendChild(this.elementRef.nativeElement, this.spinner.location.nativeElement);
       this.isSpinnerPresent = true;
     }
   }
