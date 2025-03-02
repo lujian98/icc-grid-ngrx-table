@@ -7,11 +7,11 @@
     <legend>{{ fieldConfig.legend | translate }}</legend>
   }
 
-  @for (config of formFields; track config; let index = $index) {
+  <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
     @if (config.fieldType === FieldType.Fieldset) {
       <icc-fieldset [fieldConfig]="config" [form]="form"> </icc-fieldset>
     } @else {
       <icc-fields [fieldConfig]="config" [form]="form"> </icc-fields>
     }
-  }
+  </ng-container>
 </fieldset>

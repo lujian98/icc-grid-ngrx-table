@@ -1,4 +1,4 @@
-@for (error of errors; track error; let index = $index) {
+<ng-container *ngFor="let error of errors; trackBy: trackByIndex; let index = index">
   @switch (error.type) {
     @case ("required") {
       <icc-error>
@@ -43,4 +43,4 @@
       </icc-error>
     }
   }
-}
+</ng-container>
