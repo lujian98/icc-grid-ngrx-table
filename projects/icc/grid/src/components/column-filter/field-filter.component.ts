@@ -61,7 +61,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
       .pipe(
         skip(1),
         debounceTime(500),
-        distinctUntilChanged(),
+        //distinctUntilChanged(), //WARNING not need distinct change here
         switchMap((filterValue) => of(filterValue).pipe(takeUntil(this.filterChanged$.pipe(skip(1))))),
         takeUntil(this.destroy$),
       )
