@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccSpinnerDirective } from '@icc/ui/spinner';
-import { TranslatePipe } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
 import { IccGridStateModule } from './+state/grid-state.module';
 import { IccGridFacade } from './+state/grid.facade';
@@ -21,10 +19,8 @@ import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './m
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslatePipe,
     IccIconModule,
     IccGridStateModule,
-    IccButtonComponent,
     IccGridViewComponent,
     IccGridFooterComponent,
     IccLayoutComponent,
