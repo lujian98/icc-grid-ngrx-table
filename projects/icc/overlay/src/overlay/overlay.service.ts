@@ -18,7 +18,7 @@ export class IccOverlayService {
       return this.overlay
         .position()
         .flexibleConnectedTo(hostElemRef)
-        .withFlexibleDimensions(false)
+        .withFlexibleDimensions(true)
         .withViewportMargin(8)
         .withDefaultOffsetY(2)
         .withPositions([
@@ -27,24 +27,6 @@ export class IccOverlayService {
             originY: 'bottom',
             overlayX: 'start',
             overlayY: 'top',
-          },
-          {
-            originX: 'start',
-            originY: 'top',
-            overlayX: 'start',
-            overlayY: 'bottom',
-          },
-          {
-            originX: 'end',
-            originY: 'bottom',
-            overlayX: 'end',
-            overlayY: 'top',
-          },
-          {
-            originX: 'end',
-            originY: 'top',
-            overlayX: 'end',
-            overlayY: 'bottom',
           },
         ]);
     }
