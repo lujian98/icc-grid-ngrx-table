@@ -26,8 +26,7 @@ export class IccPopoverComponent<T> implements IccPopoverContainer {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
   }
 
-  @ViewChild(IccPortalComponent, { static: true })
-  overlayContainer!: IccPortalComponent<T>;
+  @ViewChild(IccPortalComponent, { static: true }) overlayContainer!: IccPortalComponent<T>;
 
   constructor(private sanitizer: DomSanitizer) {}
 

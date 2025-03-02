@@ -14,7 +14,6 @@ export class IccPopoverDirective<T> implements AfterViewInit {
   private _context: Object = {};
 
   @Input('iccPopover') content!: Type<T> | TemplateRef<T>;
-
   @Input('iccPopoverContext')
   set context(value: {}) {
     this._context = { ...value };
