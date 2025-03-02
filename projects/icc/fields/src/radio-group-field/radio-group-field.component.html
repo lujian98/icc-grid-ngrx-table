@@ -8,7 +8,7 @@
     @if (fieldConfig.fieldLabel !== undefined) {
       <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
     }
-    <ng-container *ngFor="let group of groups; trackBy: trackByIndex; let index = index">
+    @for (group of groups; track group; let index = $index) {
       <icc-radio
         [value]="group.name"
         [name]="fieldConfig.fieldName!"
@@ -18,7 +18,7 @@
       >
         {{ group.title }}
       </icc-radio>
-    </ng-container>
+    }
     @if (field && (field.touched || field.dirty) && field.errors) {
       <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
     }
