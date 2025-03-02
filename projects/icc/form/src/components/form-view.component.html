@@ -1,9 +1,13 @@
 <icc-layout-header [title]="formConfig.title">
   <ng-container *ngFor="let button of formConfig.buttons">
-    <button icc-button *ngIf="!buttonHidden(button)" [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
-      <icc-icon *ngIf="button.icon" [icon]="button.icon"></icc-icon>
-      {{ getButtonTitle(button) | translate }}
-    </button>
+    @if (!buttonHidden(button)) {
+      <button icc-button [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
+        @if (button.icon) {
+          <icc-icon [icon]="button.icon"></icc-icon>
+        }
+        {{ getButtonTitle(button) | translate }}
+      </button>
+    }
   </ng-container>
 </icc-layout-header>
 
