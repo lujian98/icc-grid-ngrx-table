@@ -5,12 +5,17 @@
       [title]="getTitle(item)"
       (click)="toggle(item, !!item.expanded)"
     >
-      <icc-icon *ngIf="item.expanded" config="chevron-up"></icc-icon>
-      <icc-icon *ngIf="!item.expanded" config="chevron-down"></icc-icon>
+      @if (item.expanded) {
+        <icc-icon config="chevron-up"></icc-icon>
+      } @else {
+        <icc-icon config="chevron-down"></icc-icon>
+      }
     </icc-layout-header>
 
-    <icc-layout-horizontal *ngIf="item?.expanded && item.items">
-      <icc-menus [items]="item.items" (iccMenuItemClick)="onMenuItemClick($event)"></icc-menus>
-    </icc-layout-horizontal>
+    @if (item?.expanded && item.items) {
+      <icc-layout-horizontal>
+        <icc-menus [items]="item.items" (iccMenuItemClick)="onMenuItemClick($event)"></icc-menus>
+      </icc-layout-horizontal>
+    }
   </icc-layout>
 }
