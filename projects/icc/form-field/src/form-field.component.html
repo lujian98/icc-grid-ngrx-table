@@ -1,7 +1,9 @@
 <div class="icc-form-field">
   <div class="icc-form-field-flex">
     <label class="icc-form-field-label" #label>
-      <span class="icc-form-field-required-marker" *ngIf="required"></span>
+      @if (required) {
+        <span class="icc-form-field-required-marker"></span>
+      }
       <ng-content select="icc-label"></ng-content>:
     </label>
     <div class="icc-form-field-wrapper" [ngStyle]="{ width: fieldWidth }">
