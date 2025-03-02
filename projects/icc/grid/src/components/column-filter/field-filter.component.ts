@@ -60,12 +60,14 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
     this.filterChanged$
       .pipe(
         skip(1),
-        debounceTime(250),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap((filterValue) => of(filterValue).pipe(takeUntil(this.filterChanged$.pipe(skip(1))))),
         takeUntil(this.destroy$),
       )
-      .subscribe((filterValue) => this.applyFilter(filterValue));
+      .subscribe((filterValue) => {
+        this.applyFilter(filterValue);
+      });
   }
 
   checkField(): void {}

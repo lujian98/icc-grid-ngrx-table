@@ -144,8 +144,9 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
     this.valueChange.emit(this.field.value);
   }
 
+  // TODO configureable only for grid edit cell???
   onMouseleave(): void {
-    this.inputEl.nativeElement.blur();
+    //this.inputEl.nativeElement.blur();
   }
 
   clearValue(): void {
