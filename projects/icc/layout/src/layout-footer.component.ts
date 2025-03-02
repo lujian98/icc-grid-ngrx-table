@@ -5,7 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'icc-layout-footer-start',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutFooterStartComponent {}
 
@@ -13,7 +12,6 @@ export class IccLayoutFooterStartComponent {}
   selector: 'icc-layout-footer-center',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutFooterCenterComponent {}
 
@@ -21,7 +19,6 @@ export class IccLayoutFooterCenterComponent {}
   selector: 'icc-layout-footer-end',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutFooterEndComponent {}
 

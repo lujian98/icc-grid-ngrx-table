@@ -3,7 +3,6 @@ import { isNumeric } from '@icc/ui/core';
 
 @Directive({
   selector: 'icc-form-field[iccLabelWidth]',
-  standalone: true,
 })
 export class IccLabelWidthDirective {
   private _width!: string;

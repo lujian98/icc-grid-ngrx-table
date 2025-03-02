@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 
 @Directive({
   selector: 'icc-form-field[iccFormFieldControl] ',
-  standalone: true,
 })
 export class IccFormFieldControlDirective {
   @Input('iccFormFieldControl') fieldControl!: FormControl;

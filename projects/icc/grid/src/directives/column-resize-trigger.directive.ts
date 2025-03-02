@@ -3,7 +3,6 @@ import { IccColumnResizeDirective } from './column-resize.directive';
 
 @Directive({
   selector: '[iccColumnResizeTrigger]',
-  standalone: true,
 })
 export class IccColumnResizeTriggerDirective {
   private columnResizeDirective = inject(IccColumnResizeDirective);

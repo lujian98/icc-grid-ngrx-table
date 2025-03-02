@@ -7,7 +7,6 @@ import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
 @Directive({
   selector: '[iccColumnResize]',
-  standalone: true,
 })
 export class IccColumnResizeDirective {
   private elementRef = inject(ElementRef);

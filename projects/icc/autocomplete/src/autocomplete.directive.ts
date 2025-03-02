@@ -33,7 +33,6 @@ import { IccAutocompleteComponent } from './autocomplete.component';
 
 @Directive({
   selector: '[iccAutocomplete]',
-  standalone: true,
   host: {
     '(input)': '_handleInput($event)',
   },

@@ -3,7 +3,6 @@ import { isNumeric } from '@icc/ui/core';
 
 @Directive({
   selector: 'fieldset[iccFieldsetLabelWidth]',
-  standalone: true,
 })
 export class IccFieldsetLabelWidthDirective {
   private _width!: string;

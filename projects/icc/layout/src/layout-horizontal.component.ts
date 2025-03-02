@@ -18,7 +18,6 @@ import { take, timer } from 'rxjs';
   selector: 'icc-layout-left',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutLeftComponent {}
 
@@ -26,7 +25,6 @@ export class IccLayoutLeftComponent {}
   selector: 'icc-layout-center',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutCenterComponent {}
 
@@ -34,7 +32,6 @@ export class IccLayoutCenterComponent {}
   selector: 'icc-layout-right',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutRightComponent {}
 

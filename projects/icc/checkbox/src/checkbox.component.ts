@@ -16,7 +16,6 @@ import { IccIconModule } from '@icc/ui/icon';
 
 @Directive({
   selector: '[ghost]',
-  standalone: false,
   host: {
     '[class.ghost-checkbox]': 'ghostCheckbox',
   },

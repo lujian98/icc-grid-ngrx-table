@@ -6,7 +6,6 @@ import { IccPopoverComponent } from './popover.component';
 @Directive({
   selector: '[iccPopover]',
   exportAs: 'iccPopover',
-  standalone: true,
   providers: [IccPopoverService],
 })
 export class IccPopoverDirective<T> implements AfterViewInit {

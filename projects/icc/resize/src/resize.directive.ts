@@ -15,7 +15,6 @@ import { IccResizeInfo, IccResizeType } from './model';
 @Directive({
   selector: '[iccResize]',
   exportAs: 'iccResize',
-  standalone: true,
 })
 export class IccResizeDirective implements OnInit, OnDestroy {
   private document = inject(ICC_DOCUMENT);

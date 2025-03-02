@@ -2,7 +2,6 @@ import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: 'input[iccInput], textarea[iccInput]',
-  standalone: true,
 })
 export class IccInputDirective {
   private _inputValueAccessor: { value: string };

@@ -6,7 +6,6 @@ import { debounce, filter, takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[iccNumeric]',
-  standalone: false,
 })
 export class IccNumericDirective implements OnDestroy {
   private _allowNegative = false;

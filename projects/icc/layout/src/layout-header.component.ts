@@ -10,7 +10,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'icc-layout-header-end',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class IccLayoutHeaderEndComponent {}
 
