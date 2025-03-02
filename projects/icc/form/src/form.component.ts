@@ -39,10 +39,7 @@ export class IccFormComponent {
   }
 
   private initFormConfig(value: IccFormConfig): void {
-    this._formConfig = {
-      ...value,
-      //formId: this.formId,
-    };
+    this._formConfig = { ...value };
     this.formConfig$ = this.formFacade.selectFormConfig(this.formId);
     this.formSetting$ = this.formFacade.selectSetting(this.formId);
     this.formFieldsConfig$ = this.formFacade.selectFormFieldsConfig(this.formId);

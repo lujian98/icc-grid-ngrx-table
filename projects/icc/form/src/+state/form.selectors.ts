@@ -15,7 +15,7 @@ export const selectFormSetting = (formId: string) =>
 
 export const selectFormConfig = (formId: string) =>
   createSelector(featureSelector, (state: FormState) => {
-    return state && state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
+    return state[formId] ? state[formId].formConfig : defaultFormState.formConfig;
   });
 
 export const selectFormFieldsConfig = (formId: string) =>

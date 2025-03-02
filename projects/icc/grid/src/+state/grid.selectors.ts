@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IccRowGroup } from '../services/row-group/row-group';
-import { GridState, IccGridConfig } from '../models/grid-column.model';
+import { GridState } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 
 export interface AppGridState {
@@ -12,37 +12,37 @@ export const featureSelector = (state: AppGridState) => state.iccGrid;
 
 export const selectGridConfig = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].gridConfig : defaultState.gridConfig;
+    return state && state[gridId] ? state[gridId].gridConfig : defaultState.gridConfig;
   });
 
 export const selectGridSetting = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].gridSetting : defaultState.gridSetting;
+    return state && state[gridId] ? state[gridId].gridSetting : defaultState.gridSetting;
   });
 
 export const selectColumnsConfig = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].columnsConfig : [];
+    return state && state[gridId] ? state[gridId].columnsConfig : [];
   });
 
 export const selectGridData = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].data : [];
+    return state && state[gridId] ? state[gridId].data : [];
   });
 
 export const selectGridModifiedRecords = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].modified : [];
+    return state && state[gridId] ? state[gridId].modified : [];
   });
 
 export const selectRowSelection = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].selection : new SelectionModel<object>(false, []);
+    return state && state[gridId] ? state[gridId].selection : new SelectionModel<object>(false, []);
   });
 
 export const selectRowSelections = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    if (state[gridId]) {
+    if (state && state[gridId]) {
       const oldState = state[gridId];
       const selection = oldState.selection;
       const dataCounts = oldState.data.filter((item) => item && !(item instanceof IccRowGroup)).length;
@@ -63,10 +63,10 @@ export const selectRowSelections = (gridId: string) =>
 
 export const selectRowGroups = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId].rowGroups ? state[gridId].rowGroups : true;
+    return state && state[gridId].rowGroups ? state[gridId].rowGroups : true;
   });
 
 export const selectGridInMemoryData = (gridId: string) =>
   createSelector(featureSelector, (state: GridState) => {
-    return state[gridId] ? state[gridId].inMemoryData : [];
+    return state && state[gridId] ? state[gridId].inMemoryData : [];
   });
