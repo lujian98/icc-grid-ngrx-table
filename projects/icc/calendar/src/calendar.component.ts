@@ -103,13 +103,19 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
       this.maxDate = new Date('2222-06-24T18:30:00.000Z');
       timer(10)
         .pipe(take(1))
-        .subscribe(() => (this.maxDate = null));
+        .subscribe(() => {
+          this.maxDate = null;
+          this.changeDetectorRef.detectChanges();
+        });
     }
     if (!this.minDate) {
       this.minDate = new Date('1900-01-01T18:30:00.000Z');
       timer(10)
         .pipe(take(1))
-        .subscribe(() => (this.minDate = null));
+        .subscribe(() => {
+          this.minDate = null;
+          this.changeDetectorRef.markForCheck();
+        });
     }
   }
 
