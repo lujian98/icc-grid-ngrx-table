@@ -10,7 +10,6 @@ import {
   Injector,
   Input,
   OnDestroy,
-  OnInit,
   TemplateRef,
   Type,
   ViewChild,
@@ -25,23 +24,16 @@ import { IccPortalContent } from './portal.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, PortalModule],
 })
-export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
+export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef);
   @Input() content!: IccPortalContent<T>;
   @Input() context!: {};
-  portalType!: string;
+
+  get isTextContent(): boolean {
+    return !(this.content instanceof Type || this.content instanceof TemplateRef);
+  }
 
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
-
-  ngOnInit(): void {
-    if (this.content instanceof Type) {
-      this.portalType = 'component';
-    } else if (this.content instanceof TemplateRef) {
-      this.portalType = 'template';
-    } else {
-      this.portalType = 'text';
-    }
-  }
 
   ngAfterViewInit(): void {
     this.addPortalContent(this.content, this.context);
