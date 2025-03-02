@@ -13,8 +13,8 @@ export interface IccMenuConfig {
   routerOptions?: { exact: boolean } | IsActiveMatchOptions;
   checkbox?: boolean;
   checked?: boolean;
-  separator?: boolean;
+  separator?: boolean; // TODO need menu-item-separator class
 
-  keepOpen?: boolean;
+  keepOpen?: boolean; // for cdk-menus not fully working
   children?: IccMenuConfig[];
 }
