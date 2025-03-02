@@ -144,12 +144,6 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
     this.valueChange.emit(this.field.value);
   }
 
-  onMouseleave(): void {
-    if (this.fieldConfig.mouseLeaveBlur) {
-      this.inputEl.nativeElement.blur();
-    }
-  }
-
   clearValue(): void {
     this.value = '';
     this.valueChange.emit('');
@@ -173,7 +167,6 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    //return null;
     return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
   }
 

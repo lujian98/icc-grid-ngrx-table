@@ -21,7 +21,6 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
       fieldName: this.column.name,
       clearValue: false,
       editable: true, // TODO from column config ???
-      mouseLeaveBlur: true,
     };
   }
 

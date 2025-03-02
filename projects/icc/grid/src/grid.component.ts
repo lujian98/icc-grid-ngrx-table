@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccSpinnerDirective } from '@icc/ui/spinner';
-import { Observable } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
+import { map, Observable } from 'rxjs';
 import { IccGridStateModule } from './+state/grid-state.module';
 import { IccGridFacade } from './+state/grid.facade';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
@@ -19,8 +21,10 @@ import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './m
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    TranslatePipe,
     IccIconModule,
     IccGridStateModule,
+    IccButtonComponent,
     IccGridViewComponent,
     IccGridFooterComponent,
     IccLayoutComponent,
@@ -52,7 +56,12 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   private initGridConfig(value: IccGridConfig): void {
     this._gridConfig = { ...value };
     this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
-    this.gridSetting$ = this.gridFacade.selectSetting(this.gridId);
+    this.gridSetting$ = this.gridFacade.selectSetting(this.gridId).pipe(
+      map((gridSetting) => {
+        this.setButtons(gridSetting);
+        return gridSetting;
+      }),
+    );
     this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
     this.gridFacade.initGridConfig(this.gridId, this.gridConfig, 'grid');
   }
@@ -87,8 +96,8 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
   }
 
-  getButtons(gridSetting: IccGridSetting): IccButtonConfg[] {
-    return [...this.buttons].map((button) => {
+  private setButtons(gridSetting: IccGridSetting): void {
+    this.buttons = [...this.buttons].map((button) => {
       const hidden = this.getHidden(button, gridSetting);
       const disabled = this.getDisabled(button, gridSetting);
       return {
@@ -118,7 +127,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       case IccButtonType.Refresh:
       case IccButtonType.ClearAllFilters:
         return gridSetting.gridEditable;
-
       case IccButtonType.Save:
       case IccButtonType.Reset:
       case IccButtonType.View:

@@ -140,10 +140,6 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
 
   @ViewChild('inputEl') inputEl!: ElementRef;
 
-  onMouseleave(): void {
-    this.inputEl.nativeElement.blur();
-  }
-
   onChange(): void {
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);

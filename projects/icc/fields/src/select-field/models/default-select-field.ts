@@ -18,7 +18,6 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
-  mouseLeaveBlur: false,
   //virtualScroll: true, // only support virtualScroll
   ...defaultBaseField,
 };

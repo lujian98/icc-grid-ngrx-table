@@ -215,6 +215,7 @@ export const iccGridFeature = createFeature({
             restEdit: false,
             recordModified: false,
             columnUpdating: false,
+            selected: 0,
           },
           totalCounts: totalCounts,
           data,
