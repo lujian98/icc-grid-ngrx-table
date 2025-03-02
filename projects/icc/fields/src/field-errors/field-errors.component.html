@@ -1,8 +1,8 @@
 @for (error of errors; track error; let index = $index) {
   @switch (error.type) {
     @case ("required") {
-      <icc-error
-        ><icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
+      <icc-error>
+        <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
         {{ "ICC.UI.FIELDS.ERRORS.FIELD_IS_REQUIRED" | translate }}
       </icc-error>
     }
