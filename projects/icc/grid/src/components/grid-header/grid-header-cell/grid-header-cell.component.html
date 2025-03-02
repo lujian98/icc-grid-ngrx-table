@@ -1,18 +1,18 @@
 <div class="grid-header-cell" (click)="headCellClick($event)">
   <div class="grid-header-cell-title">{{ title | translate }}</div>
 
-  <ng-container *ngIf="gridConfig.columnSort && isSortField">
-    <div *ngIf="sortDir === 'asc'" class="grid-header-cell-sort">
-      <icc-icon config="caret-up"></icc-icon>
-    </div>
-    <div *ngIf="sortDir === 'desc'" class="grid-header-cell-sort">
-      <icc-icon config="caret-down"></icc-icon>
-    </div>
-  </ng-container>
+  @if (gridConfig.columnSort && isSortField) {
+    @if (sortDir === "asc") {
+      <div class="grid-header-cell-sort"><icc-icon config="caret-up"></icc-icon></div>
+    }
+    @if (sortDir === "desc") {
+      <div class="grid-header-cell-sort"><icc-icon config="caret-down"></icc-icon></div>
+    }
+  }
 
-  <ng-container *ngIf="gridConfig.columnMenu">
+  @if (gridConfig.columnMenu) {
     <div class="grid-header-cell-menu" (click)="onClickColumnMenu($event)">
       <icc-icon config="ellipsis-v"></icc-icon>
     </div>
-  </ng-container>
+  }
 </div>
