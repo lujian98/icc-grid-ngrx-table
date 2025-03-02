@@ -2,29 +2,28 @@
 <ng-content></ng-content>
 <ng-content select="icc-layout-footer"></ng-content>
 
-<div
-  *ngIf="resizeable"
-  class="icc-layout-resize-right"
-  IccResizeRight
-  iccResize
-  [direction]="resizeType.RIGHT"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
-<div
-  *ngIf="resizeable"
-  class="icc-layout-resize-bottom"
-  IccResizeBottom
-  iccResize
-  [direction]="resizeType.BOTTOM"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
-<div
-  *ngIf="resizeable"
-  IccResizeBottomRight
-  iccResize
-  [direction]="resizeType.BOTTOM_RIGHT"
-  [elementKey]="elementKey"
-  (iccResizeEvent)="onResizePanel($event)"
-></div>
+@if (resizeable) {
+  <div
+    class="icc-layout-resize-right"
+    IccResizeRight
+    iccResize
+    [direction]="resizeType.RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+  <div
+    class="icc-layout-resize-bottom"
+    IccResizeBottom
+    iccResize
+    [direction]="resizeType.BOTTOM"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+  <div
+    IccResizeBottomRight
+    iccResize
+    [direction]="resizeType.BOTTOM_RIGHT"
+    [elementKey]="elementKey"
+    (iccResizeEvent)="onResizePanel($event)"
+  ></div>
+}
