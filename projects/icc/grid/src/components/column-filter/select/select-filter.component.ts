@@ -31,7 +31,6 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
       delete this.fieldConfig.options;
     }
     this.column.filterFieldConfig = { ...this.fieldConfig };
-    //console.log('fffff this.fieldConfig= ', this.fieldConfig);
   }
 
   override set value(val: string | string[] | object[]) {
@@ -46,7 +45,6 @@ export class IccSelectFilterComponent extends IccFieldFilterComponent {
   }
 
   onValueChange(value: string | object | string[] | object[]): void {
-    //console.log(' filter value =', value);
     if (Array.isArray(value)) {
       this.applyFilter(value);
     } else {
