@@ -4,16 +4,16 @@
     [buttons]="buttons"
     (iccButtonClick)="buttonClick($event)"
   >
-    <icc-checkbox [checked]="checked" (change)="onChange($event)">{{
-      "ICC.UI.ACTIONS.ENABLED" | translate
-    }}</icc-checkbox>
+    <icc-checkbox [checked]="checked" (change)="onChange($event)">
+      {{ "ICC.UI.ACTIONS.ENABLED" | translate }}
+    </icc-checkbox>
   </icc-layout-header>
 
   <div class="icc-file-select-files">
-    <ng-container *ngFor="let fieldConfig of fieldConfigs">
+    @for (fieldConfig of fieldConfigs; track fieldConfig; let index = $index) {
       <icc-upload-file-field [fieldConfig]="fieldConfig" (selectUploadFile)="selectUploadFile(fieldConfig, $event)">
       </icc-upload-file-field>
-    </ng-container>
+    }
   </div>
 
   <icc-file-upload-grid> </icc-file-upload-grid>
