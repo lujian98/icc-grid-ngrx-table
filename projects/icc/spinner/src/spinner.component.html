@@ -1,2 +1,4 @@
 <span class="spin-circle"></span>
-<span *ngIf="message" class="message">{{ message }}</span>
+@if (message) {
+  <span class="message">{{ message }}</span>
+}
