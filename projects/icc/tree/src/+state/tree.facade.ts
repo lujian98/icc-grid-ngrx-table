@@ -9,6 +9,7 @@ import { IccTreeConfig, IccTreeNode } from '../models/tree-grid.model';
 @Injectable()
 export class IccTreeFacade {
   private store = inject(Store);
+  private gridFacade = inject(IccGridFacade);
 
   initTreeConfig(treeId: string, treeConfig: IccTreeConfig): void {
     this.store.dispatch(treeActions.initTreeConfig({ treeId, treeConfig }));
@@ -16,17 +17,20 @@ export class IccTreeFacade {
 
   viewportReadyLoadData(treeId: string, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
     if (gridSetting.viewportReady) {
+      this.gridFacade.setLoadTreeDataLoading(treeId, true);
       this.getTreeData(treeId, treeConfig);
     }
   }
 
   windowResizeLoadData(treeId: string, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
     if (gridSetting.viewportReady) {
+      this.gridFacade.setLoadTreeDataLoading(treeId, true);
       this.store.dispatch(treeActions.getConcatTreeData({ treeId, treeConfig }));
     }
   }
 
   getTreeData(treeId: string, treeConfig: IccTreeConfig): void {
+    this.gridFacade.setLoadTreeDataLoading(treeId, true);
     if (treeConfig.remoteGridData) {
       this.store.dispatch(treeActions.getTreeRemoteData({ treeId, treeConfig }));
     } else {
@@ -39,6 +43,7 @@ export class IccTreeFacade {
       // TODO remove data need call a service to add/remove child
     } else {
       this.store.dispatch(treeActions.nodeToggleInMemoryData({ treeId, treeConfig, node }));
+      this.gridFacade.setLoadTreeDataLoading(treeId, true);
       this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     }
   }
@@ -48,6 +53,7 @@ export class IccTreeFacade {
       // TODO remove data need call a service to add/remove child
     } else {
       this.store.dispatch(treeActions.expandAllNodesInMemoryData({ treeId, treeConfig, expanded }));
+      this.gridFacade.setLoadTreeDataLoading(treeId, true);
       this.store.dispatch(treeActions.getTreeInMemoryData({ treeId, treeConfig }));
     }
   }

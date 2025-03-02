@@ -28,6 +28,7 @@ export class IccTreeEffects {
         const treeId = action.treeId;
         return this.treeRemoteService.getTreeRemoteData(treeConfig, columns).pipe(
           map((treeData) => {
+            this.gridFacade.setLoadTreeDataLoading(treeId, false);
             return treeActions.getTreeRemoteDataSuccess({ treeId, treeConfig, treeData });
           }),
         );
@@ -50,12 +51,14 @@ export class IccTreeEffects {
         if (treeConfig.remoteGridData) {
           return this.treeRemoteService.getTreeRemoteData(treeConfig, columns).pipe(
             map((treeData) => {
+              this.gridFacade.setLoadTreeDataLoading(treeId, false);
               return treeActions.getTreeRemoteDataSuccess({ treeId, treeConfig, treeData });
             }),
           );
         } else {
           return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
             map((treeData) => {
+              this.gridFacade.setLoadTreeDataLoading(treeId, false);
               return treeActions.getInMemoryTreeDataSuccess({ treeId, treeConfig, treeData });
             }),
           );
@@ -80,6 +83,7 @@ export class IccTreeEffects {
         const treeId = action.treeId;
         return this.treeinMemoryService.getTreeData(treeConfig, columns, inMemoryData).pipe(
           map((treeData) => {
+            this.gridFacade.setLoadTreeDataLoading(treeId, false);
             return treeActions.getInMemoryTreeDataSuccess({ treeId, treeConfig, treeData });
           }),
         );

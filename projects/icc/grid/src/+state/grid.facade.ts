@@ -78,7 +78,6 @@ export class IccGridFacade {
     const gridId = gridSetting.gridId;
     this.store.dispatch(gridActions.setViewportPageSize({ gridId, gridConfig, pageSize, viewportWidth }));
     if (gridSetting.viewportReady && loadData && !gridSetting.isTreeGrid) {
-      //console.log( ' resize load data')
       this.store.dispatch(gridActions.getConcatGridData({ gridId }));
     }
   }
@@ -187,6 +186,8 @@ export class IccGridFacade {
   getGridData(gridId: string, gridSetting: IccGridSetting): void {
     if (!gridSetting.isTreeGrid) {
       this.dispatchGridData(gridId);
+    } else {
+      this.setLoadTreeDataLoading(gridId, true);
     }
   }
 
@@ -249,6 +250,10 @@ export class IccGridFacade {
   rowDblClick(gridId: string, record: object): void {
     this.store.dispatch(gridActions.setSelectRow({ gridId, record }));
     this.store.dispatch(gridActions.openGridFormView({ gridId }));
+  }
+
+  setLoadTreeDataLoading(gridId: string, loading: boolean): void {
+    this.store.dispatch(gridActions.setLoadTreeDataLoading({ gridId, loading }));
   }
 
   runTask(setting: IccGridSetting): void {

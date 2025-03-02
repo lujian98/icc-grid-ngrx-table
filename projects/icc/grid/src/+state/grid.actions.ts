@@ -129,5 +129,10 @@ export const openGridFormView = createAction('[Grid] Open Grid Form View', props
 
 export const closeGridFormViewg = createAction('[User] Closed Grid Form View');
 
+export const setLoadTreeDataLoading = createAction(
+  '[Grid] Set Load Tree Data Loading ',
+  props<{ gridId: string; loading: boolean }>(),
+);
+
 export const clearGridDataStore = createAction('[Grid] Clear Grid Data Store', props<{ gridId: string }>());
 export const removeGridDataStore = createAction('[Grid] Remove Grid Data Store', props<{ gridId: string }>());

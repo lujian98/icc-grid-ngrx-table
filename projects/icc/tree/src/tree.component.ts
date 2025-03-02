@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, uniqueId } from '@icc/ui/core';
-import { IccColumnConfig, IccGridFacade, IccGridStateModule, IccGridSetting } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridFacade, IccGridSetting, IccGridStateModule } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccSpinnerDirective } from '@icc/ui/spinner';
 import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
 import { IccTreeViewComponent } from './components/tree-view.component';
 import {
   defaultTreeConfig,
+  defaultTreeSetting,
   IccTreeConfig,
   IccTreeNode,
   IccTreeSetting,
-  defaultTreeSetting,
 } from './models/tree-grid.model';
 
 @Component({
@@ -29,6 +30,7 @@ import {
     IccTreeViewComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
+    IccSpinnerDirective,
   ],
 })
 export class IccTreeComponent<T> implements OnDestroy {
@@ -99,7 +101,6 @@ export class IccTreeComponent<T> implements OnDestroy {
         this.treeFacade.getTreeData(this.treeId, treeConfig);
         break;
       case IccButtonType.ClearAllFilters:
-        console.log(' 2222 treeSetting=', gridSetting);
         this.gridFacade.setGridColumnFilters(this.treeConfig, gridSetting, []);
         break;
 

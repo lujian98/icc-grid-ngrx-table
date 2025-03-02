@@ -8,7 +8,13 @@
       >
       </icc-layout-header>
 
-      <icc-tree-view [gridSetting]="gridSetting" [treeConfig]="treeConfig" [columns]="columns"> </icc-tree-view>
+      <icc-tree-view
+        [gridSetting]="gridSetting"
+        [treeConfig]="treeConfig"
+        [columns]="columns"
+        [iccSpinner]="gridSetting.loading"
+      >
+      </icc-tree-view>
       <!--
       <icc-grid-footer [treeConfig]="treeConfig" *ngIf="!treeConfig.hideGridFooter"> </icc-grid-footer>
     -->

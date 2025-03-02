@@ -224,6 +224,25 @@ export const iccGridFeature = createFeature({
       }
       return { ...newState };
     }),
+    on(gridActions.setLoadTreeDataLoading, (state, action) => {
+      const key = action.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          gridSetting: {
+            ...state[key].gridSetting,
+            loading: action.loading,
+            lastUpdateTime: new Date(),
+            restEdit: false,
+            recordModified: false,
+            columnUpdating: false,
+          },
+        };
+      }
+      return { ...newState };
+    }),
+
     on(gridActions.setGridInMemoryData, (state, action) => {
       const key = action.gridId;
       const newState: GridState = { ...state };

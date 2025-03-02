@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } 
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccSpinnerDirective } from '@icc/ui/spinner';
 import { Observable } from 'rxjs';
 import { IccGridStateModule } from './+state/grid-state.module';
 import { IccGridFacade } from './+state/grid.facade';
@@ -10,7 +11,6 @@ import { IccGridFooterComponent } from './components/grid-footer/grid-footer.com
 import { IccGridViewComponent } from './components/grid-view.component';
 import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
-import { IccSpinnerDirective } from '@icc/ui/spinner';
 
 @Component({
   selector: 'icc-grid',
@@ -39,17 +39,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridSetting$!: Observable<IccGridSetting>;
   columnsConfig$!: Observable<IccColumnConfig[]>;
 
-  @Input() buttons: IccButtonConfg[] = [
-    /*
-    IccBUTTONS.Open,
-    IccBUTTONS.Edit,
-    IccBUTTONS.Save,
-    IccBUTTONS.Reset,
-    IccBUTTONS.View,
-    */
-    IccBUTTONS.Refresh,
-    IccBUTTONS.ClearAllFilters,
-  ];
+  @Input() buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
 
   @Input()
   set gridConfig(value: Partial<IccGridConfig>) {
@@ -110,7 +100,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   }
 
   private getDisabled(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
-    //console.log( ' gridSetting=', gridSetting)
     switch (button.name) {
       case IccButtonType.Save:
       case IccButtonType.Reset:

@@ -93,7 +93,7 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     this.sizeChanged$
       .pipe(
         skip(1),
-        debounceTime(250),
+        debounceTime(300),
         distinctUntilChanged(),
         switchMap((event) => of(event).pipe(takeUntil(this.sizeChanged$.pipe(skip(1))))),
         takeUntil(this.destroy$),
