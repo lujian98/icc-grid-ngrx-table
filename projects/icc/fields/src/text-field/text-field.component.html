@@ -6,9 +6,9 @@
     [iccFormFieldControl]="field"
     [showFieldEditIndicator]="showFieldEditIndicator"
   >
-    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel | translate }}
-    </icc-label>
+    @if (fieldConfig.fieldLabel !== undefined) {
+      <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
+    }
     <input
       iccInput
       #inputEl
@@ -19,8 +19,9 @@
       [required]="required"
       placeholder="{{ fieldConfig.placeholder! | translate }}"
     />
-    <icc-icon *ngIf="fieldConfig.clearValue && hasValue" icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
-
+    @if (fieldConfig.clearValue && hasValue) {
+      <icc-icon icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+    }
     @if (field && (field.touched || field.dirty) && field.errors) {
       <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
     }

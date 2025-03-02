@@ -5,9 +5,9 @@
     [iccFieldWidth]="fieldConfig.fieldWidth"
     [iccFormFieldControl]="field"
   >
-    <icc-label *ngIf="fieldConfig.fieldLabel !== undefined">
-      {{ fieldConfig.fieldLabel | translate }}
-    </icc-label>
+    @if (fieldConfig.fieldLabel !== undefined) {
+      <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
+    }
     <input iccInput type="text" [formControlName]="fieldConfig.fieldName!" readonly />
   </icc-form-field>
 </ng-container>
