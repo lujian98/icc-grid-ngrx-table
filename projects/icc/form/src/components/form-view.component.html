@@ -1,5 +1,5 @@
 <icc-layout-header [title]="formConfig.title">
-  <ng-container *ngFor="let button of formConfig.buttons">
+  @for (button of formConfig.buttons; track button; let index = $index) {
     @if (!buttonHidden(button)) {
       <button icc-button [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
         @if (button.icon) {
@@ -8,7 +8,7 @@
         {{ getButtonTitle(button) | translate }}
       </button>
     }
-  </ng-container>
+  }
 </icc-layout-header>
 
 <form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
