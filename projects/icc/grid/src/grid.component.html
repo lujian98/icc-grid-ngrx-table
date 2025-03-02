@@ -16,7 +16,7 @@
       >
       </icc-grid-view>
 
-      <icc-grid-footer [gridSetting]="gridSetting" [gridConfig]="gridConfig" *ngIf="!gridConfig.hideGridFooter">
+      <icc-grid-footer *ngIf="!gridConfig.hideGridFooter" [gridSetting]="gridSetting" [gridConfig]="gridConfig">
       </icc-grid-footer>
     </ng-container>
   </ng-container>
