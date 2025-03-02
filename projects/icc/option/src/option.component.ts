@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  inject,
   OnDestroy,
   Output,
 } from '@angular/core';
@@ -23,29 +24,21 @@ import { Subject, Observable } from 'rxjs';
   },
 })
 export class IccOptionComponent<T> implements OnDestroy {
+  elementRef = inject(ElementRef);
   selected: boolean = false;
-  protected alive: boolean = true;
   protected click$: Subject<IccOptionComponent<T>> = new Subject<IccOptionComponent<T>>();
+
+  @Input() value!: T;
 
   get click(): Observable<IccOptionComponent<T>> {
     return this.click$.asObservable();
   }
 
-  @Input() value!: T;
-
-  @HostListener('click', ['$event'])
-  onClick(event: MouseEvent): void {
-    this.click$.next(this);
-    event.preventDefault();
-  }
-
-  @Output() change: EventEmitter<IccOptionComponent<T>> = new EventEmitter();
-
-  constructor(public elementRef: ElementRef) {}
-
   get content() {
     return this.elementRef.nativeElement.textContent;
   }
+
+  @Output() change: EventEmitter<IccOptionComponent<T>> = new EventEmitter();
 
   select(): void {
     this.setSelection(true);
@@ -55,15 +48,20 @@ export class IccOptionComponent<T> implements OnDestroy {
     this.setSelection(false);
   }
 
-  ngOnDestroy(): void {
-    this.alive = false;
-    this.click$.complete();
-  }
-
-  protected setSelection(selected: boolean): void {
-    if (this.alive && this.selected !== selected) {
+  private setSelection(selected: boolean): void {
+    if (this.selected !== selected) {
       this.selected = selected;
       this.change.emit(this);
     }
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(event: MouseEvent): void {
+    this.click$.next(this);
+    event.preventDefault();
+  }
+
+  ngOnDestroy(): void {
+    this.click$.complete();
   }
 }
