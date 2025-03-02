@@ -22,14 +22,15 @@
 </icc-grid-cell>
 
 <ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
-  <icc-grid-cell
-    *ngIf="!column.hidden && column.name !== 'name'"
-    [ngStyle]="{
-      height: treeConfig.rowHeight + 'px',
-      flex: '0 0 ' + getColumnWidth(column),
-      'max-width': getColumnWidth(column),
-    }"
-  >
-    <icc-grid-cell-view [record]="record" [column]="column"> </icc-grid-cell-view>
-  </icc-grid-cell>
+  @if (!column.hidden && column.name !== "name") {
+    <icc-grid-cell
+      [ngStyle]="{
+        height: treeConfig.rowHeight + 'px',
+        flex: '0 0 ' + getColumnWidth(column),
+        'max-width': getColumnWidth(column),
+      }"
+    >
+      <icc-grid-cell-view [record]="record" [column]="column"> </icc-grid-cell-view>
+    </icc-grid-cell>
+  }
 </ng-container>

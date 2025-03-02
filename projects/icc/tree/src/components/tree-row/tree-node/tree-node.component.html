@@ -1,6 +1,13 @@
 <div class="tree-node">
-  <icc-icon *ngIf="!node.leaf && node.expanded" config="caret-down"></icc-icon>
-  <icc-icon *ngIf="!node.leaf && !node.expanded" config="caret-right"></icc-icon>
-  <icc-icon class="tree-node-icon" *ngIf="node.icon" [config]="node.icon"></icc-icon>
+  @if (!node.leaf) {
+    @if (node.expanded) {
+      <icc-icon config="caret-down"></icc-icon>
+    } @else {
+      <icc-icon config="caret-right"></icc-icon>
+    }
+  }
+  @if (node.icon) {
+    <icc-icon class="tree-node-icon" [config]="node.icon"></icc-icon>
+  }
   <div class="tree-node-text">{{ data }}</div>
 </div>
