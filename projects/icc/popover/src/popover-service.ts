@@ -18,7 +18,6 @@ export class IccPopoverService<T> implements OnDestroy {
   private overlayPositionBuilder = inject(IccPositionBuilderService);
   private overlayService = inject(IccOverlayService);
   private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService);
-
   private componentType!: Type<IccPopoverContainer>;
   private context: Object = {};
   private content!: Type<T> | TemplateRef<T> | string;

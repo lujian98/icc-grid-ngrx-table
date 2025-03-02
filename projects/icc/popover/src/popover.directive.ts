@@ -13,8 +13,7 @@ export class IccPopoverDirective<T> implements AfterViewInit {
   private popoverService = inject(IccPopoverService);
   private _context: Object = {};
 
-  @Input('iccPopover')
-  content!: Type<T> | TemplateRef<T>;
+  @Input('iccPopover') content!: Type<T> | TemplateRef<T>;
 
   @Input('iccPopoverContext')
   set context(value: {}) {
@@ -25,15 +24,9 @@ export class IccPopoverDirective<T> implements AfterViewInit {
     return this._context;
   }
 
-  @Input('iccPopoverPosition')
-  position: IccPosition = IccPosition.BOTTOM;
-
-  @Input('iccPopoverTrigger')
-  trigger: IccTrigger = IccTrigger.HOVER;
-
-  @Input('iccPopoverStyle')
-  style: string | undefined;
-
+  @Input('iccPopoverPosition') position: IccPosition = IccPosition.BOTTOM;
+  @Input('iccPopoverTrigger') trigger: IccTrigger = IccTrigger.HOVER;
+  @Input('iccPopoverStyle') style: string | undefined;
   @Input() popoverLevel = 0;
   @Input() clickToClose = false;
 
