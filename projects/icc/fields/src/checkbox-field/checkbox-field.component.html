@@ -15,7 +15,7 @@
       <div class="icc-suffix-content" iccSuffix (click)="iccSuffixClick($event)">{{ fieldConfig.fieldLabel }}</div>
     }
 
-    @if ((field?.touched || field?.dirty) && field?.errors) {
+    @if (field && (field.touched || field.dirty) && field.errors) {
       <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
     }
   </icc-form-field>
