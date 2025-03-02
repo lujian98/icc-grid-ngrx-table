@@ -23,12 +23,9 @@
           [iccPopoverPosition]="position"
           >{{ getTabLabel(tab) }}
         </span>
-        <icc-icon
-          *ngIf="closeable(tab)"
-          class="icc-tab-remove-icon"
-          icon="remove"
-          (click)="closeTab($event, tab, index)"
-        ></icc-icon>
+        @if (closeable(tab)) {
+          <icc-icon class="icc-tab-remove-icon" icon="remove" (click)="closeTab($event, tab, index)"></icc-icon>
+        }
       </ng-template>
       <ng-template #menu>
         <icc-menus
@@ -39,7 +36,9 @@
         >
         </icc-menus>
       </ng-template>
-      <icc-portal *ngIf="index === selectedTabIndex" [content]="tab.content!" [context]="tab.context!"></icc-portal>
+      @if (index === selectedTabIndex) {
+        <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
+      }
     </icc-tab>
   }
 </icc-tab-group>
