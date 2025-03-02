@@ -1,4 +1,4 @@
-<ng-container *ngFor="let error of errors; trackBy: trackByIndex; let index = index">
+@for (error of errors; track error; let index = $index) {
   <ng-container [ngSwitch]="error.type">
     <icc-error *ngSwitchDefault>
       <icc-icon [config]="{ icon: 'exclamation-circle', status: 'primary' }"></icc-icon>
@@ -35,4 +35,4 @@
       {{ "ICC.UI.FIELDS.ERRORS.NOT_MATCH" | translate }}
     </icc-error>
   </ng-container>
-</ng-container>
+}
