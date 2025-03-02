@@ -8,6 +8,7 @@ import {
   ContentChild,
   ContentChildren,
   ElementRef,
+  inject,
   Input,
   OnDestroy,
   QueryList,
@@ -16,8 +17,8 @@ import {
 } from '@angular/core';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccOverlayModule } from '@icc/ui/overlay';
-import { merge, Observable } from 'rxjs';
-import { filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
 
 @Component({
@@ -28,13 +29,14 @@ import { IccAutocompleteContentDirective } from './autocomplete-content.directiv
   imports: [CommonModule, IccOverlayModule],
 })
 export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestroy {
-  @Input() displayWith!: (value: T) => string;
-  @Input() compareWith!: (value: T, option: T) => boolean;
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private _selection = new SelectionModel<IccOptionComponent<T>>(this.multiSelection, []);
   private _multiSelection: boolean = false;
   private _value: T | null = null;
-  private alive = true;
+  private destroy$ = new Subject<void>();
 
+  @Input() displayWith!: (value: T) => string;
+  @Input() compareWith!: (value: T, option: T) => boolean;
   @Input()
   get multiSelection(): boolean {
     return this._multiSelection;
@@ -82,14 +84,12 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   @ContentChild(IccAutocompleteContentDirective, { static: true }) content!: IccAutocompleteContentDirective<G>;
   @ContentChildren(IccOptionComponent) options!: QueryList<IccOptionComponent<T>>;
 
-  constructor(protected changeDetectorRef: ChangeDetectorRef) {}
-
   ngAfterContentInit(): void {
     this.options.changes
       .pipe(
         startWith(this.options),
         filter(() => !!this.value && !!this.options?.length),
-        takeWhile(() => this.alive),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => {
         Promise.resolve().then(() => {
@@ -185,6 +185,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   ngOnDestroy(): void {
-    this.alive = false;
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

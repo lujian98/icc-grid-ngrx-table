@@ -36,20 +36,19 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
+  private gridMap: number[][] = [];
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
-
   resizeType = IccResizeType;
   dragDisabled: boolean = false;
+  gridTemplateColumns!: string;
+  gridTemplateRows!: string;
+
   @Input() tiles: Tile<T>[] = [];
   @Input() gridGap = 2;
   @Input() gridWidth = 100;
   @Input() gridHeight = 100;
   @Input() cols = 10;
   @Input() rows = 6;
-  private gridMap: number[][] = [];
-
-  gridTemplateColumns!: string;
-  gridTemplateRows!: string;
 
   ngOnInit(): void {
     this.setGridTemplate();

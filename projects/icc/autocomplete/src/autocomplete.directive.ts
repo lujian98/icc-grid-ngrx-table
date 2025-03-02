@@ -46,13 +46,18 @@ import { IccAutocompleteComponent } from './autocomplete.component';
 })
 export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnInit, OnDestroy {
   private document = inject(ICC_DOCUMENT);
-  @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T, G>;
+  private host = inject(ElementRef<HTMLInputElement>);
+  private viewContainerRef = inject(ViewContainerRef);
+  private overlay = inject(Overlay);
+  private overlayPositionBuilder = inject(IccPositionBuilderService);
+  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService<T>);
   private overlayRef!: OverlayRef | null;
   private position: IccPosition = IccPosition.BOTTOM;
   private triggerStrategy!: IccTriggerStrategy;
   private trigger: IccTrigger = IccTrigger.FOCUS;
   private isShow: boolean = false;
 
+  @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T, G>;
   @Input('iccAutocompleteClose')
   set autocompleteClose(value: boolean) {
     if (coerceBooleanProperty(value)) {
@@ -96,14 +101,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   _onChange: (value: T | null) => void = () => {};
   _onTouched = () => {};
 
-  constructor(
-    private host: ElementRef<HTMLInputElement>,
-    private vcr: ViewContainerRef,
-    private overlay: Overlay,
-    private overlayPositionBuilder: IccPositionBuilderService,
-    private triggerStrategyBuilder: IccTriggerStrategyBuilderService<T>,
-    @Optional() @Host() private formField: IccFormFieldComponent,
-  ) {}
+  constructor(@Optional() @Host() private formField: IccFormFieldComponent) {}
 
   ngOnInit(): void {
     if (this.triggerStrategy) {
@@ -118,7 +116,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     this.triggerStrategy.show$.subscribe(() => this.show());
   }
 
-  container<G>(): ComponentRef<G> {
+  private container<G>(): ComponentRef<G> {
     return {
       location: {
         nativeElement: this.overlayRef?.overlayElement,
@@ -142,7 +140,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.inputHost, this.position, 0),
     });
-    const template = new TemplatePortal(this.autocomplete.rootTemplate, this.vcr);
+    const template = new TemplatePortal(this.autocomplete.rootTemplate, this.viewContainerRef);
     this.overlayRef.attach(template);
     this.triggerStrategy.hide$
       .pipe(takeUntil(this.overlayRef.detachments().pipe(tap(() => this.hide()))))
@@ -254,16 +252,16 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     this._onChange(value as T);
   }
 
+  @HostListener('blur') onBlur(): void {
+    if (!this.overlayRef) {
+      this._onTouched();
+    }
+  }
+
   ngOnDestroy(): void {
     this.hide();
     if (this.triggerStrategy) {
       this.triggerStrategy.destroy();
-    }
-  }
-
-  @HostListener('blur') onBlur(): void {
-    if (!this.overlayRef) {
-      this._onTouched();
     }
   }
 }
