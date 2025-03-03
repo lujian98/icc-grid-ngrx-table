@@ -53,9 +53,9 @@ export interface IccHeaderOption {
 }
 
 @Component({
-  selector: 'icc-select-view',
-  templateUrl: './select-view.component.html',
-  styleUrls: ['./select-view.component.scss'],
+  selector: 'icc-select-option',
+  templateUrl: './select-option.component.html',
+  styleUrls: ['./select-option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -68,7 +68,7 @@ export interface IccHeaderOption {
     IccSelectFilterPipe,
   ],
 })
-export class IccSelectViewComponent<T, G> {
+export class IccSelectOptionComponent<T, G> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private translateService = inject(TranslateService);
   private elementRef = inject(ElementRef);

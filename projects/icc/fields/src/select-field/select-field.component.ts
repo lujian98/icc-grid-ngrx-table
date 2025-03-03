@@ -56,7 +56,7 @@ import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
 import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
-import { IccSelectViewComponent } from './components/select-view.component';
+import { IccSelectOptionComponent } from './components/select-option.component';
 
 export interface IccHeaderOption {
   name: string;
@@ -101,7 +101,7 @@ export interface IccHeaderOption {
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFormFieldControlDirective,
-    IccSelectViewComponent,
+    IccSelectOptionComponent,
   ],
 })
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
