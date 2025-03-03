@@ -86,6 +86,7 @@ export class IccSelectOptionComponent<T, G> {
   @Input() fieldName!: string;
   @Input() selectOptions: IccOptionType[] = [];
   @Input() value!: string | string[] | object[];
+  @Input() autocomplete!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
 
   isEmptyValue: IccHeaderOption = {
     name: 'isEmpty',
@@ -117,10 +118,6 @@ export class IccSelectOptionComponent<T, G> {
     return typeof this.field.value === 'object' ? '' : this.field.value;
   }
 
-  @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
-    { [key: string]: T } | { [key: string]: T }[],
-    G
-  >;
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<T>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
@@ -154,52 +151,6 @@ export class IccSelectOptionComponent<T, G> {
 
   closeOverlay(): void {
     this.autocompleteClose = true;
-  }
-
-  clearSelected(event: MouseEvent): void {
-    event.stopPropagation();
-    if (this.fieldConfig.multiSelection) {
-      this.field.setValue([]);
-      this.valueChange.emit([]);
-    } else {
-      this.field.setValue('');
-      this.valueChange.emit('' as T);
-    }
-    this.changeDetectorRef.markForCheck();
-    this.delaySetSelected();
-  }
-
-  displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
-    this.changeDetectorRef.markForCheck();
-    if (Array.isArray(value)) {
-      if (value.length > 0) {
-        return (
-          value
-            .map((item) => {
-              return this.fieldConfig.singleListOption ? item : item[this.fieldConfig.optionLabel];
-            })
-            .sort()
-            //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
-            .join(', ')
-        );
-      } else {
-        return '';
-      }
-    } else {
-      if (this.fieldConfig.singleListOption) {
-        return value as string;
-      } else {
-        return value ? (value as { [key: string]: string })[this.fieldConfig.optionLabel] : '';
-      }
-    }
-  }
-
-  compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    if (this.fieldConfig.singleListOption) {
-      return s1 && s2 && s1 === s2;
-    } else {
-      return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
-    }
   }
 
   private delaySetSelected(overlayOpen?: boolean): void {

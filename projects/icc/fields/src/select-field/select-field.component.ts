@@ -1,17 +1,14 @@
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   ElementRef,
+  EventEmitter,
   Input,
   OnDestroy,
   Output,
-  QueryList,
   ViewChild,
-  ViewChildren,
   forwardRef,
   inject,
 } from '@angular/core';
@@ -32,10 +29,8 @@ import {
   IccAutocompleteComponent,
   IccAutocompleteContentDirective,
   IccAutocompleteDirective,
-  IccFilterHighlightComponent,
 } from '@icc/ui/autocomplete';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { isEqual, sortByField, uniqueId } from '@icc/ui/core';
+import { uniqueId } from '@icc/ui/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -47,16 +42,14 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
+import { IccSelectOptionComponent } from './components/select-option.component';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
-import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
-import { IccSelectOptionComponent } from './components/select-option.component';
 
 export interface IccHeaderOption {
   name: string;
@@ -83,7 +76,6 @@ export interface IccHeaderOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    ScrollingModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -265,30 +257,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Output() valueChange = new EventEmitter<T | T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
-
-  clickedOption: number | undefined;
-  private clickedOptions = 1;
-  clickOption(option: IccOptionComponent<unknown>): void {
-    this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
-    this.clickedOption = this.clickedOptions++;
-  }
-  onScrolledIndexChange(index: number): void {
-    this.setSelectChecked();
-  }
-  getOptionLabel(option: unknown): string {
-    return (
-      this.fieldConfig.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
-    ) as string;
-  }
-
-  private setSelectChecked(): void {
-    const values = this.fieldValue;
-    this.optionList.toArray().forEach((option) => {
-      const find = values.find((item) => isEqual(item, option.value));
-      option.selected = !!find;
-    });
-    this.changeDetectorRef.markForCheck();
-  }
+  clickedOption: number | undefined; // TODO output from select-option
 
   get hasValue(): boolean {
     const value = this.field.value;
@@ -299,20 +268,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return this.fieldValue.length === this.selectOptions.length;
   }
 
-  get filterValue(): string {
-    return typeof this.field.value === 'object' ? '' : this.field.value;
-  }
-
   get toDisplay(): string {
-    return this.autocomplete.toDisplay;
+    return this.autocompleteComponent.toDisplay;
   }
 
-  @ViewChild(IccAutocompleteComponent, { static: false }) autocomplete!: IccAutocompleteComponent<
+  @ViewChild(IccAutocompleteComponent, { static: false }) autocompleteComponent!: IccAutocompleteComponent<
     { [key: string]: T } | { [key: string]: T }[],
     G
   >;
-  @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<T>>;
-  @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
@@ -347,39 +310,20 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  private delaySetSelected(overlayOpen?: boolean): void {
-    timer(20)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.setSelectChecked();
-        if (overlayOpen) {
-          this.setVirtualScrollPosition();
-        }
-      });
-  }
-
   overlayOpen(event: boolean): void {
     this.isOverlayOpen = event;
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
-      this.delaySetSelected(true);
+      // this.delaySetSelected(true); // TODO move to select option
     } else if (!this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.field.value);
-    }
-  }
-
-  private setVirtualScrollPosition(): void {
-    if (this.viewport && this.hasValue && !this.isAllChecked) {
-      const values = sortByField([...this.fieldValue], this.fieldConfig.optionLabel, 'asc');
-      const index = this.selectOptions.findIndex((option) => isEqual(option, values[0] as { [key: string]: T }));
-      this.viewport.scrollToIndex(index);
     }
   }
 
   onChange(options: any): void {
     if (this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.fieldValue);
-      this.delaySetSelected();
+      //this.delaySetSelected(); // TODO move to select option
     }
   }
 
@@ -397,56 +341,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.valueChange.emit('' as T);
     }
     this.changeDetectorRef.markForCheck();
-    this.delaySetSelected();
-  }
-
-  checkAll(selectOptions: IccOptionType[]): void {
-    this.value = [...selectOptions];
-    this.delaySetSelected();
-    this.valueChange.emit(this.value as T[]);
-  }
-
-  hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
-    return (
-      (fieldConfig.multiSelection && (fieldConfig.checkAll || fieldConfig.uncheckAll)) ||
-      fieldConfig.isEmpty ||
-      fieldConfig.notEmpty
-    );
-  }
-
-  //support only header isEmpty and notEmpty
-  headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
-    option.selected = !option.selected;
-    const optionKey = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
-    const optionValue = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
-    if (this.fieldConfig.multiSelection) {
-      if (option.selected) {
-        this.value = [...this.value, optionValue];
-        const emitValue = [...this.value, optionKey];
-        this.valueChange.emit(emitValue as T[]);
-      } else {
-        this.value = [...this.value].filter((item) => {
-          if (this.fieldConfig.singleListOption) {
-            return item !== optionValue;
-          } else {
-            return (
-              (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey]
-            );
-          }
-        });
-        this.valueChange.emit(this.value as T[]);
-      }
-    } else {
-      this.autocompleteClose = true;
-      if (option.selected) {
-        this.valueChange.emit(optionKey as T);
-        this.value = optionValue;
-      } else {
-        this.valueChange.emit('' as T);
-        this.value = '';
-      }
-    }
-    this.field.setValue(this.value);
+    //this.delaySetSelected(); // TODO move to select option
   }
 
   registerOnChange(fn: (value: string[] | object[]) => void): void {
