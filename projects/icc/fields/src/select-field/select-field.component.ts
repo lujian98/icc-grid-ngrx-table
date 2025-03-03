@@ -97,7 +97,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private _value!: string | string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
-  private selectOptions: IccOptionType[] = [];
   fieldName: string = '';
   setSelected: boolean = false;
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
@@ -162,12 +161,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private initSelectField(): void {
     if (this.fieldSetting?.viewportReady) {
       if (!this.selectOptions$) {
-        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId).pipe(
-          map((selectOptions) => {
-            this.selectOptions = selectOptions;
-            return this.selectOptions;
-          }),
-        );
+        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
       if (!this.form) {
         if (!this.form && this.fieldName) {
@@ -295,7 +289,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  onChange(options: any): void {
+  onChange(): void {
     if (this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.fieldValue);
       this.setSelected = false;
