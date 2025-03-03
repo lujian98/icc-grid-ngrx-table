@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
@@ -98,14 +97,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private _value!: string | string[] | object[];
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
+  private selectOptions: IccOptionType[] = [];
   fieldName: string = '';
   setSelected: boolean = false;
-
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
-  private selectOptions: IccOptionType[] = [];
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -232,12 +230,18 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
   }
 
-  @ViewChild('inputEl') inputEl!: ElementRef;
+  get hasValue(): boolean {
+    const value = this.field.value;
+    return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
+  }
 
   @Output() valueChange = new EventEmitter<T | T[]>(true);
+
+  @ViewChild(IccAutocompleteComponent, { static: false })
+  autocompleteComponent!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
+
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
-
   clickedOption: string | undefined;
   onClickedOption(clickedOption: string) {
     this.clickedOption = clickedOption;
@@ -249,16 +253,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.value = value as string | string[] | object[];
     this.valueChange.emit(value);
   }
-
-  get hasValue(): boolean {
-    const value = this.field.value;
-    return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
-  }
-
-  @ViewChild(IccAutocompleteComponent, { static: false }) autocompleteComponent!: IccAutocompleteComponent<
-    { [key: string]: T } | { [key: string]: T }[],
-    G
-  >;
 
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
