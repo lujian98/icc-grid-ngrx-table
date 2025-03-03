@@ -27,8 +27,6 @@ export class AppGridRowGroupComponent {
       dir: 'desc',
     },
     virtualScroll: true,
-    //sortFields: [],
-    //columnFilters: [{ name: 'vin', value: '9' }],
     remoteColumnsConfig: false,
     remoteGridData: false,
   };

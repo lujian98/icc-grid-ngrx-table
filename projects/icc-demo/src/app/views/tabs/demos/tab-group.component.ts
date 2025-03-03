@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccTabComponent, IccTabGroupComponent } from '@icc/ui/tabs';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -11,16 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './tab-group.component.html',
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    //IccTabComponent,
-    //IccTabGroupComponent,
-    MatTabsModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormFieldModule,
-  ],
+  imports: [CommonModule, MatTabsModule, MatInputModule, ReactiveFormsModule, FormsModule, MatFormFieldModule],
 })
 export class AppTabGroupComponent {
   formGroup: FormGroup = new FormGroup({

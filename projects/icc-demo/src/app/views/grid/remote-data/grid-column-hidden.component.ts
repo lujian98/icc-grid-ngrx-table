@@ -35,7 +35,6 @@ export class AppGridColumnHiddenComponent {
       name: 'year',
       width: 50,
       align: 'right',
-      //sortField: false,
     },
     {
       name: 'color',

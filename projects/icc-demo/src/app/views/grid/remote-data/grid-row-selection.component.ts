@@ -16,7 +16,6 @@ export class AppGridRowSelectionComponent {
     rowSelection: true,
     columnMenu: true,
     columnSort: true,
-    //columnFilter: true,
     columnHidden: true,
     remoteGridData: true,
   };

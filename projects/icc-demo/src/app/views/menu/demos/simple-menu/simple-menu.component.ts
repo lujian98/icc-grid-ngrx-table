@@ -22,6 +22,6 @@ export class AppSimpleMenuComponent implements OnInit {
   }
 
   menuItemClick(item: IccMenuConfig): void {
-    console.log(' 999999 end  iccMenuItemClick=', item);
+    console.log('iccMenuItemClick=', item);
   }
 }

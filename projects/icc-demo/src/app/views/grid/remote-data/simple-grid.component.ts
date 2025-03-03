@@ -11,17 +11,7 @@ import { IccColumnConfig, IccGridConfig, IccGridComponent, defaultGridConfig } f
 })
 export class AppSimpleGridComponent {
   gridConfig: Partial<IccGridConfig> = {
-    //...defaultGridConfig,
     urlKey: 'DCR',
-    //rowHeight: 80,
-    //columnSort: true,
-    //columnFilter: true,
-    //columnResize: true,
-    //columnReorder: true,
-    //columnMenu: true,
-    //columnHidden: true,
-    //remoteColumnsConfig: false,
-
     remoteGridData: true,
   };
 

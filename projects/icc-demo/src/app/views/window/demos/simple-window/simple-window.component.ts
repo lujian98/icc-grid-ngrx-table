@@ -18,8 +18,8 @@ export class AppSimpleWindowComponent {
       .open(AppDialogTestDemoComponent, {
         context: {
           dialog: {
-            title: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN',
-            content: 'APPLIANCE_SERVICES.APPLIANCE_MAINTENANCE.SHUTDOWN_WARNING',
+            title: 'Test',
+            content: 'Warning',
           },
         },
         closeOnBackdropClick: false,

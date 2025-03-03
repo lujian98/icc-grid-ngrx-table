@@ -30,8 +30,4 @@ export class AppStringArrayComponent {
     placeholder: 'Select One or More...',
   };
   multiListStates = ['Louisiana', 'Nevada'];
-
-  constructor() {
-    //  console.log( ' listStates=', this.listStates)
-  }
 }

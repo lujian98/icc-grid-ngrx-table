@@ -29,7 +29,6 @@ export class AppSimpleSelectComponent {
   multiListStates = ['Louisiana', 'Nevada'];
 
   singleSelection: Partial<IccSelectFieldConfig> = {
-    //...defaultSelectFieldConfig,
     fieldLabel: 'Single Selection (Object)',
     optionLabel: 'state',
     optionKey: 'abbr',
