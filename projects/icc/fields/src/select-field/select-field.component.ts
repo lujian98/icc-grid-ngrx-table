@@ -56,6 +56,7 @@ import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
 import { IccSelectFilterPipe } from './pipes/select-filter.pipe';
+import { IccSelectViewComponent } from './components/select-view.component';
 
 export interface IccHeaderOption {
   name: string;
@@ -104,6 +105,7 @@ export interface IccHeaderOption {
     IccFormFieldErrorsDirective,
     IccFieldsErrorsComponent,
     IccFormFieldControlDirective,
+    IccSelectViewComponent,
   ],
 })
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
@@ -378,7 +380,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  onChange(options: { [key: string]: string } | null): void {
+  onChange(options: any): void {
     if (this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.fieldValue);
       this.delaySetSelected();

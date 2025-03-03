@@ -27,6 +27,7 @@
           [required]="required"
           placeholder="{{ fieldConfig.placeholder! | translate }}"
         />
+
         @if (fieldConfig.clearValue && hasValue) {
           <icc-icon icon="remove" iccSuffix (click)="clearSelected($event)"></icc-icon>
         }
@@ -42,6 +43,19 @@
           [displayWith]="displayFn.bind(this)"
           [compareWith]="compareFn.bind(this)"
         >
+          <ng-template iccAutocompleteContent>
+            <icc-select-view
+              [fieldConfig]="fieldConfig"
+              [form]="form"
+              [fieldName]="fieldName"
+              [selectOptions]="selectOptions"
+              [value]="value"
+            >
+            </icc-select-view>
+          </ng-template>
+        </icc-autocomplete>
+        <!--
+
           <ng-template iccAutocompleteContent>
             <div *ngIf="hasHeader(fieldConfig)" class="icc-select-field-sticky-header">
               @if (fieldConfig.multiSelection && fieldConfig.checkAll) {
@@ -108,7 +122,7 @@
             </ng-container>
           </ng-template>
         </icc-autocomplete>
-
+        -->
         @if (field && (field.touched || field.dirty) && field.errors) {
           <icc-form-field-errors>
             <icc-field-errors [errors]="field!.errors!"></icc-field-errors>
