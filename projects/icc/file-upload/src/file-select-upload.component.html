@@ -10,7 +10,7 @@
   </icc-layout-header>
 
   <div class="icc-file-select-files">
-    @for (fieldConfig of fieldConfigs; track fieldConfig; let index = $index) {
+    @for (fieldConfig of fieldConfigs; track $index; let index = $index) {
       <icc-upload-file-field [fieldConfig]="fieldConfig" (selectUploadFile)="selectUploadFile(fieldConfig, $event)">
       </icc-upload-file-field>
     }

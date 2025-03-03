@@ -1,5 +1,5 @@
 <icc-layout-header [title]="formConfig.title">
-  @for (button of formConfig.buttons; track button; let index = $index) {
+  @for (button of formConfig.buttons; track $index; let index = $index) {
     @if (!buttonHidden(button)) {
       <button icc-button [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
         @if (button.icon) {

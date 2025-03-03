@@ -8,7 +8,7 @@
     @if (fieldConfig.fieldLabel !== undefined) {
       <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
     }
-    @for (group of groups; track group; let index = $index) {
+    @for (group of groups; track $index; let index = $index) {
       <icc-radio
         [value]="group.name"
         [name]="fieldConfig.fieldName!"

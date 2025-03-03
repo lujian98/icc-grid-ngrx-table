@@ -1,4 +1,4 @@
-@for (item of items; track item; let index = $index) {
+@for (item of items; track $index; let index = $index) {
   <icc-layout [ngStyle]="{ flex: getLayoutFlex(item) }">
     <icc-layout-header>{{ item.title }}</icc-layout-header>
 
