@@ -27,7 +27,6 @@
           [required]="required"
           placeholder="{{ fieldConfig.placeholder! | translate }}"
         />
-
         @if (fieldConfig.clearValue && hasValue) {
           <icc-icon icon="remove" iccSuffix (click)="clearSelected($event)"></icc-icon>
         }
@@ -37,7 +36,6 @@
         @if (isOverlayOpen) {
           <icc-icon icon="angle-up" iccSuffix (click)="closeOverlay()"></icc-icon>
         }
-
         <icc-autocomplete
           #autocomplete="iccAutocomplete"
           [multiSelection]="fieldConfig.multiSelection"
@@ -59,7 +57,6 @@
             </icc-select-option>
           </ng-template>
         </icc-autocomplete>
-
         @if (field && (field.touched || field.dirty) && field.errors) {
           <icc-form-field-errors>
             <icc-field-errors [errors]="field!.errors!"></icc-field-errors>

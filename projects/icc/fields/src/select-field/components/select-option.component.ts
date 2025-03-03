@@ -190,7 +190,7 @@ export class IccSelectOptionComponent<T, G> {
         this.setValueChanged(value, value);
       }
     } else {
-      this.autocompleteClose.emit(true); // TODO output emit to select field
+      this.autocompleteClose.emit(true);
       if (option.selected) {
         value = optionValue as string;
         this.setValueChanged(value, optionKey as T);
