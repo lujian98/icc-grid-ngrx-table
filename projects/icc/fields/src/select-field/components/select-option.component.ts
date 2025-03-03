@@ -66,6 +66,7 @@ export class IccSelectOptionComponent<T, G> {
   }
   @Input() form!: FormGroup;
   @Input() fieldName!: string;
+  @Input() selectFilter: string = '';
   @Input() selectOptions: IccOptionType[] = [];
   @Input() value!: string | string[] | object[];
   @Input() autocomplete!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;

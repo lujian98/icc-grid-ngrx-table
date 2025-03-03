@@ -26,7 +26,7 @@
 </div>
 
 <ng-container
-  *ngIf="selectOptions | selectFilter: field.value : fieldConfig.optionLabel : fieldConfig.singleListOption as result"
+  *ngIf="selectOptions | selectFilter: selectFilter : fieldConfig.optionLabel : fieldConfig.singleListOption as result"
 >
   <cdk-virtual-scroll-viewport
     class="icc-select-virtual-scroll"
