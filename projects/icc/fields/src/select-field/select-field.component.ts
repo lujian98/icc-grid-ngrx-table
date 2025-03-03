@@ -42,7 +42,7 @@ import {
   IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
@@ -50,12 +50,6 @@ import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { IccSelectOptionComponent } from './components/select-option.component';
 import { defaultSelectFieldConfig } from './models/default-select-field';
 import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
-
-export interface IccHeaderOption {
-  name: string;
-  title: string;
-  [key: string]: string;
-}
 
 @Component({
   selector: 'icc-select-field',
@@ -98,7 +92,6 @@ export interface IccHeaderOption {
 })
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
   private changeDetectorRef = inject(ChangeDetectorRef);
-  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig;
@@ -106,20 +99,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private fieldId = uniqueId(16);
   private firstTimeLoad = true;
   fieldName: string = '';
+  setSelected: boolean = false;
 
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
   private selectOptions: IccOptionType[] = [];
-  isEmptyValue: IccHeaderOption = {
-    name: 'isEmpty',
-    title: this.translateService.instant('ICC.UI.ACTIONS.IS_EMPTY'),
-  };
-  notEmptyValue: IccHeaderOption = {
-    name: 'notEmpty',
-    title: this.translateService.instant('ICC.UI.ACTIONS.NOT_EMPTY'),
-  };
 
   @Input() form!: FormGroup;
   @Input() showFieldEditIndicator: boolean = true;
@@ -160,12 +146,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
         this.initSelectField();
-        if (this.fieldConfig) {
-          this.isEmptyValue[this.fieldConfig.optionKey] = this.isEmptyValue.name;
-          this.isEmptyValue[this.fieldConfig.optionLabel] = this.isEmptyValue.title;
-          this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
-          this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
-        }
         return fieldSetting;
       }),
     );
@@ -257,19 +237,18 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Output() valueChange = new EventEmitter<T | T[]>(true);
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
-  clickedOption: number | undefined; // TODO output from select-option
+
+  clickedOption: string | undefined;
+  onClickedOption(clickedOption: string) {
+    this.clickedOption = clickedOption;
+  }
+  onAutocompleteClose(close: boolean): void {
+    this.autocompleteClose = close;
+  }
 
   get hasValue(): boolean {
     const value = this.field.value;
     return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
-  }
-
-  get isAllChecked(): boolean {
-    return this.fieldValue.length === this.selectOptions.length;
-  }
-
-  get toDisplay(): string {
-    return this.autocompleteComponent.toDisplay;
   }
 
   @ViewChild(IccAutocompleteComponent, { static: false }) autocompleteComponent!: IccAutocompleteComponent<
@@ -314,7 +293,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.isOverlayOpen = event;
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
-      // this.delaySetSelected(true); // TODO move to select option
+      this.setSelected = true;
     } else if (!this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.field.value);
     }
@@ -323,7 +302,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onChange(options: any): void {
     if (this.fieldConfig.multiSelection) {
       this.valueChange.emit(this.fieldValue);
-      //this.delaySetSelected(); // TODO move to select option
+      this.setSelected = false;
     }
   }
 
@@ -341,7 +320,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.valueChange.emit('' as T);
     }
     this.changeDetectorRef.markForCheck();
-    //this.delaySetSelected(); // TODO move to select option
+    this.setSelected = false;
   }
 
   registerOnChange(fn: (value: string[] | object[]) => void): void {

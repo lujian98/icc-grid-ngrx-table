@@ -48,10 +48,13 @@
             <icc-select-option
               [fieldConfig]="fieldConfig"
               [autocomplete]="autocompleteComponent"
+              [setSelected]="setSelected"
               [form]="form"
               [fieldName]="fieldName"
               [selectOptions]="selectOptions"
               [value]="value"
+              (clickedOption)="onClickedOption($event)"
+              (autocompleteClose)="onAutocompleteClose($event)"
             >
             </icc-select-option>
           </ng-template>

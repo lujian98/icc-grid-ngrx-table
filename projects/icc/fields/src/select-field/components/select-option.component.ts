@@ -1,4 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import {
@@ -6,44 +5,23 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  ElementRef,
   Input,
-  OnDestroy,
   Output,
   QueryList,
   ViewChild,
   ViewChildren,
-  forwardRef,
   inject,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validator,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { BehaviorSubject, timer, Observable, take, Subject, interval, map, of } from 'rxjs';
-import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from '../models/select-field.model';
-
-import {
-  IccAutocompleteComponent,
-  IccAutocompleteContentDirective,
-  IccAutocompleteDirective,
-  IccFilterHighlightComponent,
-} from '@icc/ui/autocomplete';
-
+import { uniqueId } from '@icc/ui/core';
+import { take, timer } from 'rxjs';
+import { IccOptionType, IccSelectFieldConfig } from '../models/select-field.model';
+import { IccAutocompleteComponent, IccFilterHighlightComponent } from '@icc/ui/autocomplete';
+import { isEqual, sortByField } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { isEqual, sortByField } from '@icc/ui/core';
 import { IccSelectFilterPipe } from '../pipes/select-filter.pipe';
 
 export interface IccHeaderOption {
@@ -71,22 +49,30 @@ export interface IccHeaderOption {
 export class IccSelectOptionComponent<T, G> {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private translateService = inject(TranslateService);
-  private elementRef = inject(ElementRef);
   private _fieldConfig!: IccSelectFieldConfig;
 
   @Input()
   set fieldConfig(fieldConfig: IccSelectFieldConfig) {
     this._fieldConfig = fieldConfig;
+    if (this.fieldConfig) {
+      this.isEmptyValue[this.fieldConfig.optionKey] = this.isEmptyValue.name;
+      this.isEmptyValue[this.fieldConfig.optionLabel] = this.isEmptyValue.title;
+      this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
+      this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
+    }
   }
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
   }
-
   @Input() form!: FormGroup;
   @Input() fieldName!: string;
   @Input() selectOptions: IccOptionType[] = [];
   @Input() value!: string | string[] | object[];
   @Input() autocomplete!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
+  @Input()
+  set setSelected(overlayOpen: boolean) {
+    this.delaySetSelected(overlayOpen);
+  }
 
   isEmptyValue: IccHeaderOption = {
     name: 'isEmpty',
@@ -122,18 +108,18 @@ export class IccSelectOptionComponent<T, G> {
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   @Output() valueChange = new EventEmitter<T | T[]>(true);
-  isOverlayOpen!: boolean;
-  autocompleteClose!: boolean;
+  @Output() clickedOption = new EventEmitter<string>(false);
+  @Output() autocompleteClose = new EventEmitter<boolean>(false);
 
-  clickedOption: number | undefined;
-  private clickedOptions = 1;
   clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
-    this.clickedOption = this.clickedOptions++;
+    this.clickedOption.emit(uniqueId(16));
   }
+
   onScrolledIndexChange(index: number): void {
     this.setSelectChecked();
   }
+
   getOptionLabel(option: unknown): string {
     return (
       this.fieldConfig.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
@@ -147,10 +133,6 @@ export class IccSelectOptionComponent<T, G> {
       option.selected = !!find;
     });
     this.changeDetectorRef.markForCheck();
-  }
-
-  closeOverlay(): void {
-    this.autocompleteClose = true;
   }
 
   private delaySetSelected(overlayOpen?: boolean): void {
@@ -209,7 +191,7 @@ export class IccSelectOptionComponent<T, G> {
         this.valueChange.emit(this.value as T[]);
       }
     } else {
-      this.autocompleteClose = true;
+      this.autocompleteClose.emit(true); // TODO output emit to select field
       if (option.selected) {
         this.valueChange.emit(optionKey as T);
         this.value = optionValue as string;
