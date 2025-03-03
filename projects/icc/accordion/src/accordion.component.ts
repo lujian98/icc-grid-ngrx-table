@@ -99,6 +99,10 @@ export class IccAccordionComponent {
     }
   }
 
+  trackByIndex(index: number): number {
+    return index;
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
     this.setupLayout();

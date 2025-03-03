@@ -1,4 +1,4 @@
-@for (item of items; track item; let index = $index) {
+<ng-container *ngFor="let item of items; trackBy: trackByIndex; let index = index">
   <icc-layout [ngStyle]="{ flex: getHeaderStyle(item) }">
     <icc-layout-header
       [ngClass]="item.expanded ? 'icc-accordion-item-expanded' : ''"
@@ -18,4 +18,4 @@
       </icc-layout-horizontal>
     }
   </icc-layout>
-}
+</ng-container>
