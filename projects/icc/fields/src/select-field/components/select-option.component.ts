@@ -111,6 +111,7 @@ export class IccSelectOptionComponent<T, G> {
   @Output() valueChange = new EventEmitter<T | T[]>(true);
   @Output() clickedOption = new EventEmitter<string>(false);
   @Output() autocompleteClose = new EventEmitter<boolean>(false);
+  //@Output() selectedValue = new EventEmitter<string | string[] | object[]>(false);
 
   clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
@@ -118,7 +119,8 @@ export class IccSelectOptionComponent<T, G> {
   }
 
   onScrolledIndexChange(index: number): void {
-    this.setSelectChecked();
+    //this.setSelectChecked();
+    this.delaySetSelected();
   }
 
   getOptionLabel(option: unknown): string {

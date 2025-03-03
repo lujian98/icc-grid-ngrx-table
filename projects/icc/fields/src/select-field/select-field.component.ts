@@ -245,6 +245,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onAutocompleteClose(close: boolean): void {
     this.autocompleteClose = close;
   }
+  onSelectOptionValueChange(value: T | T[]): void {
+    this.value = value as string | string[] | object[];
+    this.valueChange.emit(value);
+  }
 
   get hasValue(): boolean {
     const value = this.field.value;
