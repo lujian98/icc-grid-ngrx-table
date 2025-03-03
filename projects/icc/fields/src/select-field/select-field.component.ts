@@ -139,7 +139,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return fieldConfig;
       }),
     );
-
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
@@ -239,7 +238,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   @ViewChild(IccAutocompleteComponent, { static: false })
   autocompleteComponent!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
-
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
   clickedOption: string | undefined;

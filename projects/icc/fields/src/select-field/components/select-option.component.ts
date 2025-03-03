@@ -13,15 +13,14 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { uniqueId } from '@icc/ui/core';
-import { take, timer } from 'rxjs';
-import { IccOptionType, IccSelectFieldConfig } from '../models/select-field.model';
 import { IccAutocompleteComponent, IccFilterHighlightComponent } from '@icc/ui/autocomplete';
-import { isEqual, sortByField } from '@icc/ui/core';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
+import { isEqual, sortByField, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
+import { IccOptionType, IccSelectFieldConfig } from '../models/select-field.model';
 import { IccSelectFilterPipe } from '../pipes/select-filter.pipe';
 
 export interface IccHeaderOption {
