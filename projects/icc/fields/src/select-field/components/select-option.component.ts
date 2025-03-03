@@ -65,10 +65,8 @@ export class IccSelectOptionComponent<T, G> {
     return this._fieldConfig;
   }
   @Input() form!: FormGroup;
-  @Input() fieldName!: string;
   @Input() selectFilter: string = '';
   @Input() selectOptions: IccOptionType[] = [];
-  @Input() value!: string | string[] | object[];
   @Input() autocomplete!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
   @Input()
   set setSelected(overlayOpen: boolean) {
@@ -85,7 +83,7 @@ export class IccSelectOptionComponent<T, G> {
   };
 
   get field(): FormControl {
-    return this.form?.get(this.fieldName!)! as FormControl;
+    return this.form?.get(this.fieldConfig.fieldName!)! as FormControl;
   }
 
   get hasValue(): boolean {
@@ -111,7 +109,6 @@ export class IccSelectOptionComponent<T, G> {
   @Output() valueChange = new EventEmitter<T | T[]>(true);
   @Output() clickedOption = new EventEmitter<string>(false);
   @Output() autocompleteClose = new EventEmitter<boolean>(false);
-  //@Output() selectedValue = new EventEmitter<string | string[] | object[]>(false);
 
   clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
@@ -119,8 +116,7 @@ export class IccSelectOptionComponent<T, G> {
   }
 
   onScrolledIndexChange(index: number): void {
-    //this.setSelectChecked();
-    this.delaySetSelected();
+    this.setSelectChecked();
   }
 
   getOptionLabel(option: unknown): string {
@@ -158,9 +154,8 @@ export class IccSelectOptionComponent<T, G> {
   }
 
   checkAll(selectOptions: IccOptionType[]): void {
-    this.value = [...selectOptions] as object[];
     this.delaySetSelected();
-    this.valueChange.emit(this.value as T[]);
+    this.valueChange.emit([...selectOptions] as T[]);
   }
 
   hasHeader(fieldConfig: IccSelectFieldConfig): boolean {
@@ -176,13 +171,14 @@ export class IccSelectOptionComponent<T, G> {
     option.selected = !option.selected;
     const optionKey = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
     const optionValue = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
+    let value = this.field.value;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {
-        this.value = [...this.value, optionValue] as object[];
-        const emitValue = [...this.value, optionKey];
-        this.valueChange.emit(emitValue as T[]);
+        value = [...value, optionValue] as object[];
+        const emitValue = [...value, optionKey];
+        this.setValueChanged(value, emitValue);
       } else {
-        this.value = [...this.value].filter((item) => {
+        value = [...value].filter((item) => {
           if (this.fieldConfig.singleListOption) {
             return item !== optionValue;
           } else {
@@ -191,18 +187,22 @@ export class IccSelectOptionComponent<T, G> {
             );
           }
         }) as object[];
-        this.valueChange.emit(this.value as T[]);
+        this.setValueChanged(value, value);
       }
     } else {
       this.autocompleteClose.emit(true); // TODO output emit to select field
       if (option.selected) {
-        this.valueChange.emit(optionKey as T);
-        this.value = optionValue as string;
+        value = optionValue as string;
+        this.setValueChanged(value, optionKey as T);
       } else {
-        this.valueChange.emit('' as T);
-        this.value = '';
+        value = '';
+        this.setValueChanged(value, value);
       }
     }
-    this.field.setValue(this.value);
+  }
+
+  private setValueChanged(value: string | string[] | object[], emitValue: T | T[]): void {
+    this.valueChange.emit(emitValue);
+    this.field.setValue(value);
   }
 }

@@ -1,6 +1,15 @@
 :host {
   display: flex;
-  position: relative;
   flex-direction: column;
-  height: -webkit-fill-available;
+}
+
+.icc-select-field-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+.icc-select-virtual-scroll {
+  display: flex;
+  flex: 1 1 320px;
 }

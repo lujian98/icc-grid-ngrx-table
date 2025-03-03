@@ -50,9 +50,8 @@
         <icc-filter-highlight [value]="getOptionLabel(option)" [filterValue]="filterValue"> </icc-filter-highlight>
       }
     </icc-option>
+    @if (!result.length) {
+      <icc-option class="no-result">{{ "ICC.UI.LIST.NO_RESULT" | translate }}</icc-option>
+    }
   </cdk-virtual-scroll-viewport>
-
-  @if (!result.length) {
-    <icc-option class="no-result">{{ "ICC.UI.LIST.NO_RESULT" | translate }}</icc-option>
-  }
 </ng-container>
