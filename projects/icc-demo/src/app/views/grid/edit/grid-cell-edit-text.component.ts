@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccBUTTONS, IccButtonConfg, IccObjectType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridComponent, IccGridConfig, IccGridData, defaultGridConfig } from '@icc/ui/grid';
+import {
+  IccColumnConfig,
+  IccGridComponent,
+  IccGridConfig,
+  IccGridData,
+  defaultGridConfig,
+  IccGridFacade,
+  IccButtonClick,
+} from '@icc/ui/grid';
 import { CARSDATA3, DCRBrands, DCRBrandsList, DCRColorsList, MakerColorList } from '../../../data/cars-large';
 
 @Component({
@@ -11,12 +19,15 @@ import { CARSDATA3, DCRBrands, DCRBrandsList, DCRColorsList, MakerColorList } fr
     [columnsConfig]="columnsConfig"
     [buttons]="buttons"
     [gridData]="gridData"
+    (iccButtonClick)="buttonClick($event)"
   ></icc-grid>`,
   styles: [':host {  display: flex; width: 100%; padding: 0 0px }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })
 export class AppGridCellEditTextComponent {
+  private gridFacade = inject(IccGridFacade);
+
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
     columnSort: true,
@@ -39,6 +50,7 @@ export class AppGridCellEditTextComponent {
   };
 
   buttons: IccButtonConfg[] = [
+    { title: 'Reload', name: 'Reload' },
     IccBUTTONS.Open,
     IccBUTTONS.Edit,
     IccBUTTONS.Save,
@@ -145,4 +157,11 @@ export class AppGridCellEditTextComponent {
     },
   ];
   gridData: IccGridData<any> = CARSDATA3;
+
+  buttonClick(buttonClick: IccButtonClick): void {
+    if (buttonClick.button.name === 'Reload') {
+      const gridSetting = buttonClick.gridSetting;
+      this.gridFacade.getGridData(gridSetting.gridId, gridSetting);
+    }
+  }
 }

@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -11,6 +20,12 @@ import { IccGridFooterComponent } from './components/grid-footer/grid-footer.com
 import { IccGridViewComponent } from './components/grid-view.component';
 import { defaultGridConfig, defaultGridSetting } from './models/default-grid';
 import { IccColumnConfig, IccGridConfig, IccGridData, IccGridSetting } from './models/grid-column.model';
+
+export interface IccButtonClick {
+  button: IccButtonConfg;
+  gridConfig: IccGridConfig;
+  gridSetting: IccGridSetting;
+}
 
 @Component({
   selector: 'icc-grid',
@@ -88,6 +103,8 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     return this._gridData;
   }
 
+  @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
+
   ngOnInit(): void {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
   }
@@ -162,6 +179,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       default:
         break;
     }
+    this.iccButtonClick.emit({ button, gridConfig, gridSetting });
   }
 
   ngOnDestroy(): void {
