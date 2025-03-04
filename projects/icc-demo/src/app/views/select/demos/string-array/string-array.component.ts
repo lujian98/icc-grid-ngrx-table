@@ -30,4 +30,21 @@ export class AppStringArrayComponent {
     placeholder: 'Select One or More...',
   };
   multiListStates = ['Louisiana', 'Nevada'];
+
+  displayFn(value: string | object | object[]): string {
+    if (Array.isArray(value)) {
+      return `Selected Total (${value.length})`;
+    }
+    return 'Test Display Fn';
+  }
+
+  multiSelectionDisplay: IccSelectFieldConfig = {
+    ...defaultSelectFieldConfig,
+    singleListOption: true,
+    multiSelection: true,
+    displayWith: this.displayFn.bind(this),
+    fieldLabel: 'Multi Selection (list)',
+    placeholder: 'Select One or More...',
+  };
+  multiListStatesDisplay = ['Louisiana', 'Nevada'];
 }

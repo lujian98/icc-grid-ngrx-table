@@ -16,6 +16,7 @@ export interface IccSelectFieldConfig extends IccBaseField {
   optionLabel: string;
   optionKey: string;
   options?: IccOptionType[]; // only used for local initial input
+  displayWith?: (value: string | object | object[]) => string;
 }
 
 export interface IccSelectFieldSetting {

@@ -248,6 +248,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
+    if (this.fieldConfig.displayWith) {
+      return this.fieldConfig.displayWith(this.value!);
+    }
     if (Array.isArray(value)) {
       if (value.length > 0) {
         return (
