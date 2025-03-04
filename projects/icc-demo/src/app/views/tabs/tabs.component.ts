@@ -31,6 +31,7 @@ export class AppTabsComponent {
       items: [
         { name: 'Simple Tabs', link: 'simple-tabs' },
         { name: 'Tab Group', link: 'tab-group' },
+        { name: 'Tab Form', link: 'tab-form' },
         { name: 'Double Tab Panels', link: 'double-tabs' },
       ],
     },
