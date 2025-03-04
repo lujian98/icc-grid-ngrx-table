@@ -229,7 +229,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   rowDblClick(record: object): void {
-    this.gridFacade.rowDblClick(this.gridSetting.gridId, record as object);
+    if (this.gridConfig.hasDetailView) {
+      this.gridFacade.rowDblClick(this.gridSetting.gridId, record as object);
+    }
   }
 
   @HostListener('window:resize', ['$event'])

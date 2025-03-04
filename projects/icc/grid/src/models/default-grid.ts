@@ -27,8 +27,9 @@ export const defaultGridConfig: IccGridConfig = {
   hideTopbar: false,
   hideGridFooter: false,
   rowHeight: 24, //px
-  headerHeight: 30, //px
+  headerHeight: 30, //px not working
   refreshRate: 0, //seconds  min 5 seconds to have refresh the grid data
+  hasDetailView: false,
 };
 
 export const defaultGridSetting: IccGridSetting = {

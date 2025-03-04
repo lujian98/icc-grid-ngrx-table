@@ -110,7 +110,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       case IccButtonType.Reset:
         return !gridSetting.recordModified;
       case IccButtonType.Open:
-        return gridSetting.selected !== 1;
+        return !(this.gridConfig.hasDetailView && gridSetting.selected === 1);
       default:
         return false;
     }

@@ -72,6 +72,7 @@ export interface IccGridConfig {
   rowGroupField?: IccRowGroupField;
   groupHeader?: boolean;
   refreshRate: number;
+  hasDetailView: boolean;
 }
 
 export interface GridState {

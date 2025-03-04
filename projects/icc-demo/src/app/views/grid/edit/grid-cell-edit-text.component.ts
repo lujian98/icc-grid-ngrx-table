@@ -35,6 +35,7 @@ export class AppGridCellEditTextComponent {
     ],
     remoteColumnsConfig: false,
     remoteGridData: false,
+    hasDetailView: true,
   };
 
   buttons: IccButtonConfg[] = [
