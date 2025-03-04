@@ -168,14 +168,6 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
     this.rangeStoreService.rangeUpdate$.pipe(takeUntil(this.destroy$)).subscribe((range) => {
       this.field.setValue(range);
       this.valueChange.emit(range);
-      /*
-       TODO check range if changed
-       if(selectedDate?.getTime() === this.value?.getTime()) {
-        this.field.markAsPristine();
-      } else {
-        this.field.markAsDirty();
-      }
-        */
       this.changeDetectorRef.detectChanges();
     });
   }

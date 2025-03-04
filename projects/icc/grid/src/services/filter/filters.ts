@@ -10,12 +10,6 @@ export class IccFilters {
   update<T>(filteredValues: { [index: string]: string | string[] }) {
     this.filters.forEach((filter) => {
       const key = filter.key;
-      /*
-      if (filter.type === 'date') {
-        const f = filter as IccDateFilter;
-        f.range = filteredValues[key];
-      } else {
-        */
       if (filteredValues[key]) {
         let value = filteredValues[key];
         if (value instanceof Array) {

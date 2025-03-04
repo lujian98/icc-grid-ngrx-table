@@ -98,7 +98,6 @@ export class IccDatePickerComponent implements OnInit {
 
   updateSelectedDate(date: Date | null): void {
     this.selectedDate = date;
-    //this.rangeStoreService.updateSelected(this.selectedDate);
   }
 
   updateSelectDateByPreset(item: IccDatePresetItem): void {

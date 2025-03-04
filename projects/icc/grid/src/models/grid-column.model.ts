@@ -152,7 +152,6 @@ export interface IccColumnConfig {
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
-  //index?: number;
   //draggable?: boolean;
   sortField?: boolean;
   filterField?: boolean | IccFilterField;
@@ -164,13 +163,8 @@ export interface IccColumnConfig {
   rendererFieldConfig?: IccFieldConfig;
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
-
   cellEditable?: boolean;
-
   //editField?: IccEditField;
   //validations?: IccValidation[];
-  //cellReadonly?: boolean | Function;
-
-  //priority?: number;
   //menu?: boolean | IccMenuConfig;
 }

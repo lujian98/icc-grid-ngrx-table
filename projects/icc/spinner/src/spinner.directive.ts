@@ -46,7 +46,7 @@ export class IccSpinnerDirective {
     }
   }
 
-  show() {
+  show(): void {
     if (!this.isSpinnerPresent) {
       this.spinner = this.viewContainerRef.createComponent<IccSpinnerComponent>(IccSpinnerComponent);
       this.spinner.instance.size = this.spinnerSize;
@@ -56,7 +56,7 @@ export class IccSpinnerDirective {
     }
   }
 
-  hide() {
+  hide(): void {
     if (this.isSpinnerPresent) {
       this.viewContainerRef.remove();
       this.isSpinnerPresent = false;

@@ -163,7 +163,6 @@ export class IccGridEffects {
       }),
       exhaustMap(([action, gridConfig, gridSetting, selection]) => {
         const dialogRef = this.dialogService.open(IccGridFormViewComponent, {
-          //context: {  },
           closeOnBackdropClick: false,
         });
         return dialogRef.onClose;

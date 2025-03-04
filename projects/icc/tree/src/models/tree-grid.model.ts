@@ -13,7 +13,6 @@ export const defaultTreeSetting: IccGridSetting = {
 
 export const defaultTreeConfig: IccTreeConfig = {
   ...defaultGridConfig,
-  //isTreeGrid: true,
   virtualScroll: true,
   pageSize: 10000,
   remoteLoadAll: false,

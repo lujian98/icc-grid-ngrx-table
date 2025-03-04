@@ -7,7 +7,6 @@ import {
   IccColumnFilter,
   IccRowGroupField,
   IccCellEdit,
-  IccGridSetting,
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 

@@ -9,7 +9,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   fieldLabel: undefined,
   remoteConfig: false, // remote config requires remote options
   remoteOptions: false,
-  selectOnly: true, // false select, true autocomplete
+  selectOnly: true, // true select, false autocomplete
   multiSelection: false,
   checkAll: true,
   uncheckAll: true,
@@ -18,7 +18,6 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
-  //virtualScroll: true, // only support virtualScroll
   ...defaultBaseField,
 };
 

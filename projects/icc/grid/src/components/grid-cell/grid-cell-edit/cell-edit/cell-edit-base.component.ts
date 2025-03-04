@@ -66,7 +66,6 @@ export class IccCellEditBaseComponent<T> {
 
   @Input()
   set record(data: T) {
-    //console.log(' edit set cell record=', data);
     this._record = data;
     this.resetField();
   }
@@ -103,8 +102,7 @@ export class IccCellEditBaseComponent<T> {
       originalValue: this.data,
       changed: changed,
     };
-    //this.filterChanged$.next(value); // TODO debounce change
-
+    // TODO debounce change
     this.gridFacade.setGridRecordModified(this.gridSetting.gridId, modified);
   }
 }

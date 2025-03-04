@@ -150,7 +150,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
 
   iccSuffixClick(event: MouseEvent): void {
     event.stopPropagation();
-    const val = this.field.value; // ? true : false;
+    const val = this.field.value;
     this.field.patchValue(!val);
     this.changeDetectorRef.markForCheck();
   }

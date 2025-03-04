@@ -15,7 +15,6 @@ export interface IccBaseField {
   validators?: ValidatorFn | ValidatorFn[];
   requiredFields?: string[]; // for boolean or select condition true children is required.
   readonlyFields?: string[]; // for boolean or select condition true children is readonly (need use cases).
-  // visibleFields?: string[]; // for boolean or select condition true children is visible (need use cases).
   readonlyHidden?: boolean;
   editButtons?: string[];
 }

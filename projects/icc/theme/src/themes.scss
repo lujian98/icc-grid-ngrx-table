@@ -1,4 +1,3 @@
-// use this file oly file build sass _theming.scss in dist/@icc
 @use "./_theming" as icc;
 
 @include icc.icc-install() {

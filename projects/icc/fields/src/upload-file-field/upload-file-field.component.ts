@@ -150,7 +150,6 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   onChange(event: Event): void {
-    //var files = event.target.files;
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     // TODO still need use uploadFileService.formUploadFileChanged ?? for from field save with upload file???

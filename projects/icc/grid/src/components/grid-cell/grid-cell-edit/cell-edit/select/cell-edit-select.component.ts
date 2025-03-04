@@ -20,12 +20,7 @@ export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
       ...config,
       fieldName: this.column.name,
       clearValue: false,
-      editable: true, // TODO from column config ???
+      editable: true,
     };
   }
-
-  /*
-  get value(): string | object | string[] | object[] {
-    return this.data as string | object | string[] | object[];
-  }*/
 }

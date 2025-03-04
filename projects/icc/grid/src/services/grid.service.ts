@@ -50,30 +50,6 @@ export class IccGridService {
     gridConfig: IccGridConfig,
     modifiedRecords: { [key: string]: unknown }[],
   ): Observable<{ [key: string]: unknown }[]> {
-    /*
-    const mockRecord = {
-      vin: 'af3b744b',
-      brand: 'Renault',
-      year: 1998,
-      color: 'Green',
-      ID: 78,
-      MakeDate: '1991-11-16T06:00:00.000Z',
-      image: 'assets/test-image.jpg',
-      Price: 19188.64177365439,
-      MakerColor: {
-        name: 'audi-green',
-        title: 'Audi: Green',
-      },
-    };
-    const records = [...modifiedRecords].map((item) => {
-      return {
-        ...mockRecord,
-        ID: item['ID'],
-      };
-    });
-
-    console.log('grid get data params=', gridConfig);
-    */
     const params = this.backendService.getParams(gridConfig.urlKey, 'update');
     const headers = new HttpHeaders({ Accept: 'application/vnd.api+json' });
     const url = this.backendService.apiUrl;
@@ -88,8 +64,6 @@ export class IccGridService {
         }),
         catchError((error) => throwError(() => error)),
       );
-
-    //return of(records as { [key: string]: unknown }[]);
   }
 
   getGridData<T>(gridConfig: IccGridConfig, columns: IccColumnConfig[]): Observable<IccGridData<object>> {
@@ -100,11 +74,9 @@ export class IccGridService {
     const limit = gridConfig.pageSize;
     params = params.append('offset', offset.toString());
     params = params.append('limit', limit.toString());
-    //console.log('grid get data params=', params);
     const url = this.backendService.apiUrl;
     return this.http.get<IccGridData<object>>(url, { params }).pipe(
       map((res) => {
-        //console.log(' service get grid data=', res); // TODO check initial load
         return res;
       }),
       catchError((error) =>

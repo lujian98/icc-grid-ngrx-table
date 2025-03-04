@@ -8,8 +8,6 @@ export interface IccFormConfig {
   remoteFormConfig: boolean;
   remoteFieldsConfig: boolean;
   remoteFormData: boolean;
-  //editable: boolean;
-  //readonly: boolean;
   labelWidth?: number | string;
   validators?: ValidatorFn | ValidatorFn[];
   autoFitHeight: boolean;
@@ -17,7 +15,7 @@ export interface IccFormConfig {
 }
 
 export interface IccFormSetting {
-  // for internal grid setting
+  // for internal setting
   formId: string; // auto generated unique id
   editing: boolean;
 }
