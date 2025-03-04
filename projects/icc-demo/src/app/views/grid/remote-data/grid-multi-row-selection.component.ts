@@ -21,6 +21,7 @@ export class AppGridMultiRowSelectionComponent {
     columnResize: true,
     columnReorder: true,
     multiRowSelection: true,
+    recordKey: 'ID',
     remoteColumnsConfig: true,
     remoteGridData: true,
   };

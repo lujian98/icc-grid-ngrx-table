@@ -1,11 +1,12 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { IccObjectType } from '@icc/ui/core';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
-import { SelectionModel } from '@angular/cdk/collections';
 import { defaultState } from '../models/default-grid';
-import { IccObjectType } from '@icc/ui/core';
 import { GridState } from '../models/grid-column.model';
 import { IccRowGroup } from '../services/row-group/row-group';
 import { IccRowGroups } from '../services/row-group/row-groups';
+import { getSelected } from '../utils/row-selection';
 import * as gridActions from './grid.actions';
 
 export const initialState: GridState = {};
@@ -186,9 +187,6 @@ export const iccGridFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const gridConfig = oldState.gridConfig;
-        if (oldState.selection.hasValue()) {
-          oldState.selection?.clear();
-        }
 
         let queryData = gridConfig.rowGroupField && oldState.rowGroups ? [...oldState.queryData] : [...oldState.data];
         let data =
@@ -215,7 +213,7 @@ export const iccGridFeature = createFeature({
             restEdit: false,
             recordModified: false,
             columnUpdating: false,
-            selected: 0,
+            selected: getSelected(gridConfig, oldState.selection, data),
           },
           totalCounts: totalCounts,
           data,
