@@ -10,7 +10,14 @@ import { AppForm3Component } from './form3.component';
 
 @Component({
   selector: 'app-tab-form',
-  templateUrl: './tab-form.component.html',
+  template: `
+    <icc-layout>
+      <icc-layout-header>
+        <button icc-button (click)="checkForm()">Check Form</button>
+      </icc-layout-header>
+      <icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig"> </icc-tabs>
+    </icc-layout>
+  `,
   styles: [':host {  display: flex; flex-direction: column; width: 450px; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
