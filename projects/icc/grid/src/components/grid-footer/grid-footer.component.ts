@@ -102,17 +102,18 @@ export class IccGridFooterComponent implements OnDestroy {
     this.gridFacade.getGridPageData(this.gridSetting.gridId, page);
   }
 
-  onValueChange(value: number | null): void {
-    let page: number = (value as number) || 0;
-    if (page < 1) {
-      page = 1;
-      this.pageField.patchValue(page);
-    } else if (page > this.lastPage) {
-      page = this.lastPage;
-      this.pageField.patchValue(page);
+  onValueChange(page: number | null): void {
+    if (page !== null) {
+      if (page < 1) {
+        page = 1;
+        this.pageField.patchValue(page);
+      } else if (page > this.lastPage) {
+        page = this.lastPage;
+        this.pageField.patchValue(page);
+      }
+      this.page = page;
+      this.valueChanged$.next(page);
     }
-    this.page = page;
-    this.valueChanged$.next(page);
   }
 
   ngOnDestroy(): void {
