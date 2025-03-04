@@ -16,7 +16,7 @@
   <div
     *ngIf="gridConfig.columnFilter"
     class="icc-header-no-filter-border"
-    [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
+    [ngStyle]="{ height: filterRowHeight }"
   ></div>
 </icc-grid-header-item>
 
@@ -52,7 +52,7 @@
     </icc-column-filter>
     <div
       class="icc-header-no-filter-border"
-      [ngStyle]="{ height: gridConfig.headerHeight + 'px' }"
+      [ngStyle]="{ height: filterRowHeight }"
       *ngIf="gridConfig.columnFilter && column.filterField === false"
     ></div>
 

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
-import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
+import { ROW_SELECTION_CELL_WIDTH, GRID_FILTER_ROW_HEIGHT } from '../../models/constants';
 import {
   ColumnMenuClick,
   IccColumnConfig,
@@ -67,6 +67,10 @@ export class IccGridHeaderComponent<T> {
 
   get selectColumnWidth(): string {
     return `${ROW_SELECTION_CELL_WIDTH}px`;
+  }
+
+  get filterRowHeight(): string {
+    return `${GRID_FILTER_ROW_HEIGHT}px`;
   }
 
   getColumnWidth(column: IccColumnConfig): string {
