@@ -21,7 +21,7 @@ import { CARSDATA3, DCRBrands, DCRBrandsList, DCRColorsList, MakerColorList } fr
     [gridData]="gridData"
     (iccButtonClick)="buttonClick($event)"
   ></icc-grid>`,
-  styles: [':host {  display: flex; width: 100%; padding: 0 0px }'],
+  styles: [':host {  display: flex; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccGridComponent],
 })
