@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { SelectionModel } from '@angular/cdk/collections';
-import { IccRowGroup } from '../services/row-group/row-group';
+import { IccRowGroup } from '../utils/row-group/row-group';
 import { GridState } from '../models/grid-column.model';
 import { defaultState } from '../models/default-grid';
 

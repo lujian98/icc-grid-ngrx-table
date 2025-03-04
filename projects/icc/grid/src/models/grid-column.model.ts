@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IccObjectType } from '@icc/ui/core';
-import { IccRowGroups } from '../services/row-group/row-groups';
+import { IccRowGroups } from '../utils/row-group/row-groups';
 import { IccFieldConfig, IccDateRange } from '@icc/ui/fields';
 
 export interface IccCellEdit<T> {

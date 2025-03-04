@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccColumnConfig, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
-import { IccRowGroup } from '../../services/row-group/row-group';
+import { IccRowGroup } from '../../utils/row-group/row-group';
 import { IccGridFacade } from '../../+state/grid.facade';
 
 @Component({

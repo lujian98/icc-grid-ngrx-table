@@ -8,7 +8,7 @@ import {
   IccRowGroupField,
   IccCellEdit,
 } from '../models/grid-column.model';
-import { IccRowGroup } from '../services/row-group/row-group';
+import { IccRowGroup } from '../utils/row-group/row-group';
 
 export const initGridConfig = createAction(
   '[Grid] Init Grid Config',

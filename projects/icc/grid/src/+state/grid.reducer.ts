@@ -4,8 +4,8 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { MIN_GRID_COLUMN_WIDTH, VIRTUAL_SCROLL_PAGE_SIZE } from '../models/constants';
 import { defaultState } from '../models/default-grid';
 import { GridState } from '../models/grid-column.model';
-import { IccRowGroup } from '../services/row-group/row-group';
-import { IccRowGroups } from '../services/row-group/row-groups';
+import { IccRowGroup } from '../utils/row-group/row-group';
+import { IccRowGroups } from '../utils/row-group/row-groups';
 import { getSelected } from '../utils/row-selection';
 import * as gridActions from './grid.actions';
 

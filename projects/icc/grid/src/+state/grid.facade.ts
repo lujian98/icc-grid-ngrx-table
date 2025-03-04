@@ -12,8 +12,8 @@ import {
   IccSortField,
   IccCellEdit,
 } from '../models/grid-column.model';
-import { IccRowGroup } from '../services/row-group/row-group';
-import { IccRowGroups } from '../services/row-group/row-groups';
+import { IccRowGroup } from '../utils/row-group/row-group';
+import { IccRowGroups } from '../utils/row-group/row-groups';
 import * as gridActions from './grid.actions';
 import {
   selectColumnsConfig,
