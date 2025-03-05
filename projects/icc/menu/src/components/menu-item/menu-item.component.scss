@@ -24,6 +24,16 @@
   icc-checkbox {
     width: 100%;
   }
+  ::ng-deep {
+    .icc-form-field .icc-form-field-flex {
+      padding-left: 0px;
+    }
+
+    .icc-form-field-wrapper .icc-form-field-container {
+      background-color: unset;
+      padding-right: 0px;
+    }
+  }
 
   .icc-menu-title,
   a {
