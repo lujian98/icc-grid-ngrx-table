@@ -27,7 +27,7 @@ import {
 export class AppLayoutComponent {
   items: IccAccordion[] = [
     {
-      name: 'Layout Demo Layout Demo Layout Demo Layout Demo',
+      name: 'Layout Demo',
       expanded: true,
       items: [
         { name: 'Horizontal Layout (Left, Center, Right)', link: 'horizontal-layout' },
