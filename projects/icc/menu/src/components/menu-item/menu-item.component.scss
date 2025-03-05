@@ -49,23 +49,6 @@
     width: 100%;
     border: none;
   }
-
-  ::ng-deep .icc-form-field-infix {
-    flex: unset !important;
-  }
-
-  ::ng-deep .icc-form-field-container {
-    height: 25px;
-    border-bottom: 0px;
-  }
-
-  ::ng-deep .icc-form-field {
-    padding: 0px !important;
-  }
-
-  ::ng-deep .icc-form-field-suffix {
-    width: 100%;
-  }
 }
 
 :-webkit-any-link {

@@ -1,6 +1,23 @@
 :host {
   width: 100%;
+
   icc-checkbox {
     padding-left: 5px;
+  }
+
+  ::ng-deep {
+    .icc-form-field-infix {
+      width: 100%;
+    }
+
+    .icc-checkbox-label {
+      max-width: 150px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      white-space: nowrap;
+    }
+    .icc-form-field-suffix {
+      width: unset;
+    }
   }
 }

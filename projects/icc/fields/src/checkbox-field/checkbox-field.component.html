@@ -9,11 +9,11 @@
     @if (fieldConfig.fieldLabel !== undefined && fieldConfig.labelBeforeCheckbox) {
       <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
     }
-    <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()"></icc-checkbox>
-
-    @if (!fieldConfig.labelBeforeCheckbox) {
-      <div class="icc-suffix-content" iccSuffix (click)="iccSuffixClick($event)">{{ fieldConfig.fieldLabel }}</div>
-    }
+    <icc-checkbox [formControlName]="fieldConfig.fieldName!" (change)="onChange()">
+      @if (fieldConfig.fieldLabel !== undefined && !fieldConfig.labelBeforeCheckbox) {
+        {{ fieldConfig.fieldLabel }}
+      }
+    </icc-checkbox>
 
     @if (field && (field.touched || field.dirty) && field.errors) {
       <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>

@@ -82,7 +82,9 @@ export class IccMenuItemComponent {
     if (this.disabled) {
       event.stopPropagation();
     }
+    console.log(' click 11111 ');
     if (!this.menuItem.checkbox && !this.disabled) {
+      console.log(' click 22222222 ');
       this.iccMenuItemClick.emit(this.menuItem);
     }
   }

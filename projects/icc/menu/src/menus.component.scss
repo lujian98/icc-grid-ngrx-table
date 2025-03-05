@@ -3,14 +3,6 @@
   flex-direction: column;
   width: 100%;
   //min-width: 120px;
-
-  ::ng-deep .icc-suffix-content {
-    //min-width: 120px;
-    max-width: 150px;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    white-space: nowrap;
-  }
 }
 
 .icc-menus-sub-level {
