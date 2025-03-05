@@ -30,7 +30,6 @@ import {
   IccLabelDirective,
   IccLabelWidthDirective,
   IccFieldWidthDirective,
-  IccSuffixDirective,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
 } from '@icc/ui/form-field';
@@ -63,7 +62,6 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
     FormsModule,
     TranslatePipe,
     IccFormFieldComponent,
-    IccSuffixDirective,
     IccLabelDirective,
     IccLabelWidthDirective,
     IccFieldWidthDirective,

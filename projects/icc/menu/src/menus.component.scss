@@ -3,6 +3,17 @@
   flex-direction: column;
   width: 100%;
   //min-width: 120px;
+
+  ::ng-deep {
+    .icc-form-field {
+      padding-left: 0px !important;
+    }
+
+    .icc-form-field-wrapper .icc-form-field-container {
+      background-color: unset;
+      padding-right: 0px;
+    }
+  }
 }
 
 .icc-menus-sub-level {
