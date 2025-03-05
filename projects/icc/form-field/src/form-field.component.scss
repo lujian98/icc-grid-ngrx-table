@@ -63,7 +63,7 @@
   .icc-form-field-label {
     line-height: 1.75rem; // TODO form field height variable
     font-size: 0.6875rem;
-    font-weight: 500 !important;
+    font-weight: 500;
     white-space: nowrap;
 
     ::ng-deep icc-label {
