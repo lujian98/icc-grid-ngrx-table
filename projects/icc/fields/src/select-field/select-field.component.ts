@@ -181,8 +181,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       .pipe(take(1))
       .subscribe(() => {
         if (!this.fieldConfig) {
-          const singleListOption = Array.isArray(val) && val.every((item) => typeof item === 'string');
-          this.initFieldConfig({ ...defaultSelectFieldConfig, singleListOption });
+          this.initFieldConfig({ ...defaultSelectFieldConfig });
         }
         this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
       });
@@ -256,7 +255,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return (
           value
             .map((item) => {
-              return this.fieldConfig.singleListOption ? item : item[this.fieldConfig.optionLabel];
+              return this.fieldSetting.singleListOption ? item : item[this.fieldConfig.optionLabel];
             })
             .sort()
             //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
@@ -266,7 +265,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return '';
       }
     } else {
-      if (this.fieldConfig.singleListOption) {
+      if (this.fieldSetting.singleListOption) {
         return value as string;
       } else {
         return value ? (value as { [key: string]: string })[this.fieldConfig.optionLabel] : '';
@@ -275,7 +274,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    if (this.fieldConfig.singleListOption) {
+    if (this.fieldSetting.singleListOption) {
       return s1 && s2 && s1 === s2;
     } else {
       return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;

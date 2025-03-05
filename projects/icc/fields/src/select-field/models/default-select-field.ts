@@ -15,7 +15,6 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
   uncheckAll: true,
   isEmpty: false,
   notEmpty: false,
-  singleListOption: false,
   optionLabel: 'title',
   optionKey: 'name',
   ...defaultBaseField,
@@ -24,6 +23,7 @@ export const defaultSelectFieldConfig: IccSelectFieldConfig = {
 export const defaultSelectFieldSetting: IccSelectFieldSetting = {
   fieldId: '191cf2bb6b5',
   viewportReady: false,
+  singleListOption: false,
 };
 
 export const defaultSelectFieldState: IccSelectFieldState = {

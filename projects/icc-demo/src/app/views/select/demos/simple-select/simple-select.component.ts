@@ -65,14 +65,12 @@ export class AppSimpleSelectComponent {
 
   singleSelectionList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     fieldLabel: 'Single Selection (list)',
     placeholder: 'Select One...',
   };
 
   multiSelectionList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     multiSelection: true,
     fieldLabel: 'Multi Selection (list)',
     placeholder: 'Select One or More...',
@@ -80,7 +78,6 @@ export class AppSimpleSelectComponent {
 
   singleAutocompleteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     selectOnly: false,
     fieldLabel: 'Single Autocomplete (list)',
     placeholder: 'Select One...',
@@ -88,7 +85,6 @@ export class AppSimpleSelectComponent {
 
   multiAutocompleteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     multiSelection: true,
     selectOnly: false,
     fieldLabel: 'Multi Autocomplete (list)',
@@ -147,7 +143,6 @@ export class AppSimpleSelectComponent {
   singleRemoteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     remoteOptions: true,
-    singleListOption: true,
     urlKey: 'usa',
     fieldName: 'statelist',
     fieldLabel: 'Single Selection (list)',
@@ -157,7 +152,6 @@ export class AppSimpleSelectComponent {
   multiRemoteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     remoteOptions: true,
-    singleListOption: true,
     urlKey: 'usa',
     fieldName: 'statelist',
     multiSelection: true,
@@ -168,7 +162,6 @@ export class AppSimpleSelectComponent {
   singleAutocompleteRemoteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     remoteOptions: true,
-    singleListOption: true,
     urlKey: 'usa',
     fieldName: 'statelist',
     selectOnly: false,
@@ -179,7 +172,6 @@ export class AppSimpleSelectComponent {
   multiAutocompleteRemoteList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
     remoteOptions: true,
-    singleListOption: true,
     urlKey: 'usa',
     fieldName: 'statelist',
     multiSelection: true,

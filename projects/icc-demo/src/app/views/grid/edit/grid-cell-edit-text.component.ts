@@ -76,7 +76,6 @@ export class AppGridCellEditTextComponent {
       rendererType: IccObjectType.Select,
       rendererFieldConfig: {
         options: DCRBrandsList,
-        singleListOption: true,
         remoteOptions: false,
       },
       filterFieldConfig: {
@@ -144,12 +143,10 @@ export class AppGridCellEditTextComponent {
       rendererFieldConfig: {
         fieldType: IccObjectType.Select,
         options: DCRColorsList,
-        singleListOption: true,
         remoteOptions: false,
       },
       filterFieldConfig: {
         fieldType: IccObjectType.Select,
-        singleListOption: true,
         options: DCRColorsList,
         remoteOptions: false,
       },

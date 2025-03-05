@@ -17,14 +17,12 @@ export class AppStringArrayComponent {
 
   singleSelectionList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     fieldLabel: 'Single Selection (list)',
     placeholder: 'Select One...',
   };
 
   multiSelectionList: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     multiSelection: true,
     fieldLabel: 'Multi Selection (list)',
     placeholder: 'Select One or More...',
@@ -40,7 +38,6 @@ export class AppStringArrayComponent {
 
   multiSelectionDisplay: IccSelectFieldConfig = {
     ...defaultSelectFieldConfig,
-    singleListOption: true,
     multiSelection: true,
     displayWith: this.displayFn.bind(this),
     fieldLabel: 'Multi Selection (list)',

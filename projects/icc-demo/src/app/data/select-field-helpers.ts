@@ -33,27 +33,23 @@ export const MultiAutocompleteConfig: Partial<IccSelectFieldConfig> = {
 };
 
 export const SingleListConfig: Partial<IccSelectFieldConfig> = {
-  singleListOption: true,
   fieldLabel: 'Single Selection (List)',
   placeholder: 'Select One...',
 };
 
 export const MultiListConfig: Partial<IccSelectFieldConfig> = {
-  singleListOption: true,
   multiSelection: true,
   fieldLabel: 'Multi Selection (List)',
   placeholder: 'Select One or More...',
 };
 
 export const SingleAutocompleteLisConfig: Partial<IccSelectFieldConfig> = {
-  singleListOption: true,
   selectOnly: false,
   fieldLabel: 'Single Autocomplete (List)',
   placeholder: 'Select One...',
 };
 
 export const MultiAutocompleteListConfig: Partial<IccSelectFieldConfig> = {
-  singleListOption: true,
   multiSelection: true,
   selectOnly: false,
   fieldLabel: 'Multi Autocomplete (List)',

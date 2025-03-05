@@ -46,11 +46,13 @@ export const iccSelectFieldFeature = createFeature({
       const key = action.fieldId;
       const newState: SelectFieldState = { ...state };
       if (state[key]) {
+        const isObjectOptions = [...action.options].every((item) => typeof item === 'object');
         newState[key] = {
           ...state[key],
           fieldSetting: {
             ...state[key].fieldSetting,
             viewportReady: true,
+            singleListOption: !isObjectOptions,
           },
           options: [...action.options] as string[] | object[],
         };

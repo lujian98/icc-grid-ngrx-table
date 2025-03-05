@@ -20,7 +20,7 @@ import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
-import { IccOptionType, IccSelectFieldConfig } from '../models/select-field.model';
+import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from '../models/select-field.model';
 import { IccSelectFilterPipe } from '../pipes/select-filter.pipe';
 
 export interface IccHeaderOption {
@@ -63,6 +63,7 @@ export class IccSelectOptionComponent<T, G> {
   get fieldConfig(): IccSelectFieldConfig {
     return this._fieldConfig;
   }
+  @Input() fieldSetting!: IccSelectFieldSetting;
   @Input() form!: FormGroup;
   @Input() selectFilter: string = '';
   @Input() selectOptions: IccOptionType[] = [];
@@ -120,7 +121,7 @@ export class IccSelectOptionComponent<T, G> {
 
   getOptionLabel(option: unknown): string {
     return (
-      this.fieldConfig.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
+      this.fieldSetting.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
     ) as string;
   }
 
@@ -168,8 +169,8 @@ export class IccSelectOptionComponent<T, G> {
   //support only header isEmpty and notEmpty
   headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
     option.selected = !option.selected;
-    const optionKey = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
-    const optionValue = this.fieldConfig.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
+    const optionKey = this.fieldSetting.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
+    const optionValue = this.fieldSetting.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
     let value = this.field.value;
     if (this.fieldConfig.multiSelection) {
       if (option.selected) {
@@ -178,7 +179,7 @@ export class IccSelectOptionComponent<T, G> {
         this.setValueChanged(value, emitValue);
       } else {
         value = [...value].filter((item) => {
-          if (this.fieldConfig.singleListOption) {
+          if (this.fieldSetting.singleListOption) {
             return item !== optionValue;
           } else {
             return (

@@ -12,7 +12,6 @@ export interface IccSelectFieldConfig extends IccBaseField {
   uncheckAll: boolean; // only for multiSelection is true
   isEmpty: boolean;
   notEmpty: boolean;
-  singleListOption: boolean;
   optionLabel: string;
   optionKey: string;
   options?: IccOptionType[]; // only used for local initial input
@@ -23,6 +22,7 @@ export interface IccSelectFieldSetting {
   // for internal setting
   fieldId: string;
   viewportReady: boolean;
+  singleListOption: boolean;
 }
 
 export interface SelectFieldState {
