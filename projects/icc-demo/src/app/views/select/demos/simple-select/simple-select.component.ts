@@ -14,6 +14,10 @@ export class AppSimpleSelectComponent {
   states = STATES;
   listStates = [...STATES].map((state) => state.state);
 
+  defaultSelection: Partial<IccSelectFieldConfig> = {
+    ...defaultSelectFieldConfig,
+  };
+
   defaultStateValue = [{ name: 'Nevada', title: 'Nevada' }];
   listDefaultStates = [...STATES].map((state) => {
     return {
