@@ -2,6 +2,7 @@ import { IccBaseField } from '../../models/base-field.model';
 
 export type IccOptionType = string | object;
 
+//TODO add filter remote option if needed???
 export interface IccSelectFieldConfig extends IccBaseField {
   urlKey: string; // Only for remote field config and options
   remoteConfig: boolean; // remote config requires remote options
