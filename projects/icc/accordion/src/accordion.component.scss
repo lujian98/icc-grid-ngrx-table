@@ -5,7 +5,18 @@
   overflow-y: hidden;
 
   icc-layout-header {
+    justify-content: flex-start;
     margin-bottom: 0px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    /*
+    div {
+      justify-content: flex-start;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    }
+    */
   }
 
   icc-layout-horizontal {
