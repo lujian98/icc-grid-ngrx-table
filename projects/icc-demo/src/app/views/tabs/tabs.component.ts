@@ -1,20 +1,20 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import {
-  IccLayoutRightComponent,
+  IccLayoutCenterComponent,
   IccLayoutHorizontalComponent,
   IccLayoutLeftComponent,
-  IccLayoutCenterComponent,
+  IccLayoutRightComponent,
 } from '@icc/ui/layout';
-import { IccTabsComponent, IccTabsConfig, IccTabConfig } from '@icc/ui/tabs';
+import { IccMenuConfig } from '@icc/ui/menu';
+import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
-import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-virtual-scroll.component';
-import { AppGridMultiRowSelectionComponent } from '../grid/remote-data/grid-multi-row-selection.component';
 import { PortalDemoComponent } from '../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../dashboard/demos/portal-demo2/portal-demo2.component';
+import { AppGridMultiRowSelectionComponent } from '../grid/remote-data/grid-multi-row-selection.component';
+import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-virtual-scroll.component';
 
 @Component({
   selector: 'app-tabs',
@@ -123,10 +123,8 @@ export class AppTabsComponent {
     } else {
       this.useRouterLink = false;
       const find = this.tabs.findIndex((tab) => tab.name === item.name);
-      console.log(' find=', find);
       if (find === -1) {
         const tab = this.mappedOptionTabs.find((option) => option.name === item.name);
-        console.log(' tab=', tab);
         if (tab) {
           const tabs = [...this.tabs];
           tabs.push(tab);
