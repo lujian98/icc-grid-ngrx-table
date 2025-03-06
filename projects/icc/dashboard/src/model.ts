@@ -3,19 +3,25 @@ import { IccPortalContent } from '@icc/ui/portal';
 export interface Tile<T> {
   name: string;
   title?: string;
-  index?: number;
-  header?: string;
   rowStart?: number;
   colStart?: number;
   rowHeight?: number;
   colWidth?: number;
-  color?: string;
-  gridColumn?: string;
-  gridRow?: string;
   content?: IccPortalContent<T>;
   context?: {};
   dragDisabled?: boolean;
+  enableContextMenu?: boolean;
+  color?: string; //no need can be removed
+  index?: number; // internal use?
+  gridColumn?: string; // internal use?
+  gridRow?: string; // internal use?
 }
+
+export const defaultTileConfig = {
+  name: 'tilename',
+  dragDisabled: false,
+  enableContextMenu: true,
+};
 
 export interface TileInfo {
   rowStart: number;

@@ -130,8 +130,6 @@
 
   // preview must be outside
   .cdk-drag {
-    cursor: move;
-
     &-preview {
       background-color: orange;
       border: 1.5px dashed cyan;

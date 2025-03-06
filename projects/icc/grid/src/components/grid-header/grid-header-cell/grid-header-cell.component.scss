@@ -3,6 +3,7 @@
   width: 100%;
   padding-left: 10px;
   align-items: center;
+  cursor: move; // TODO drag disaled use default cursor
 
   .grid-header-cell {
     display: flex;

@@ -19,7 +19,7 @@ import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
-import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus } from './model';
+import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus, defaultTileConfig } from './model';
 
 @Component({
   selector: 'icc-dashboard',
@@ -42,6 +42,7 @@ import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus } from './mode
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
+  private _tiles: Tile<T>[] = [];
   private gridMap: number[][] = [];
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
   resizeType = IccResizeType;
@@ -51,17 +52,23 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   tileMenus = defaultTileMenus;
 
-  @Input() tiles: Tile<T>[] = [];
+  @Input()
+  set tiles(tiles: Tile<T>[]) {
+    this._tiles = tiles.map((tile) => ({
+      ...defaultTileConfig,
+      ...tile,
+    }));
+  }
+  get tiles(): Tile<T>[] {
+    return this._tiles;
+  }
+
+  // TODO dashboard config as below
   @Input() gridGap = 2;
   @Input() gridWidth = 100;
   @Input() gridHeight = 100;
   @Input() cols = 10;
   @Input() rows = 6;
-
-  get contextMenuTrigger(): IccTrigger {
-    return IccTrigger.CONTEXTMENU;
-    // return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
-  }
 
   ngOnInit(): void {
     this.setGridTemplate();
@@ -70,6 +77,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.setupGrid();
+  }
+
+  getContextMenuTrigger(tile: Tile<T>): IccTrigger {
+    return tile.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
   onTileMenuClicked(tileMenu: IccMenuConfig, tile: Tile<T>): void {
