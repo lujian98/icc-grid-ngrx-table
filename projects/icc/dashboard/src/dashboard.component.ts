@@ -17,9 +17,9 @@ import { IccMenusComponent, IccMenuConfig } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccPortalComponent } from '@icc/ui/portal';
+import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
-import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus, defaultTileConfig } from './model';
+import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus, defaultTileConfig, IccTileOption } from './model';
 
 @Component({
   selector: 'icc-dashboard',
@@ -63,6 +63,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     return this._tiles;
   }
 
+  @Input() tileOptions: IccTileOption<T>[] = [];
+
   // TODO dashboard config as below
   @Input() gridGap = 2;
   @Input() gridWidth = 100;
@@ -77,6 +79,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.setupGrid();
+  }
+
+  getPortalContent(tile: Tile<T>): IccPortalContent<T> {
+    const find = this.tileOptions.find((option) => option.name === tile.titeType);
+    return find ? find.component : tile.content!;
   }
 
   getContextMenuTrigger(tile: Tile<T>): IccTrigger {

@@ -7,6 +7,7 @@ export interface Tile<T> {
   colStart?: number;
   rowHeight?: number;
   colWidth?: number;
+  titeType?: string; // use for save component mapping key
   content?: IccPortalContent<T>;
   context?: {};
   dragDisabled?: boolean;
@@ -22,6 +23,12 @@ export const defaultTileConfig = {
   dragDisabled: false,
   enableContextMenu: true,
 };
+
+export interface IccTileOption<T> {
+  name: string;
+  title?: string;
+  component: IccPortalContent<T>;
+}
 
 export interface TileInfo {
   rowStart: number;

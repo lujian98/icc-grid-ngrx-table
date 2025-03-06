@@ -43,7 +43,7 @@
               </icc-menus>
             </ng-template>
           </div>
-          <icc-portal [content]="tile.content!" [context]="tile.context!"></icc-portal>
+          <icc-portal [content]="getPortalContent(tile)" [context]="tile.context!"></icc-portal>
         </div>
       </cdk-drop-list>
       <div
