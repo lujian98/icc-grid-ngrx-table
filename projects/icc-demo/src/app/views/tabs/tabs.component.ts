@@ -8,6 +8,7 @@ import {
   IccLayoutLeftComponent,
   IccLayoutRightComponent,
 } from '@icc/ui/layout';
+import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
 import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
@@ -124,7 +125,13 @@ export class AppTabsComponent {
       this.useRouterLink = true;
     } else {
       this.useRouterLink = false;
-      this.tabsPanel.addTab(item.name);
+      if (this.tabsPanel) {
+        this.tabsPanel.addTab(item.name);
+      } else {
+        timer(10)
+          .pipe(take(1))
+          .subscribe(() => this.tabsPanel.addTab(item.name));
+      }
     }
   }
 }
