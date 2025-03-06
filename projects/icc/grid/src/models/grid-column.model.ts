@@ -148,13 +148,11 @@ export type IccFilterField = IccObjectType.DateRange | IccObjectType.Number | Ic
 export interface IccColumnConfig {
   name: string;
   title?: string;
-  hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
+  hidden?: boolean | string; // TODO column hidden: 'always' will hide always, 'never' will visible always
   width?: number;
   align?: string;
-  //fixedWidth?: boolean | 'auto';
-  //minWidth?: number;
   draggable?: boolean; // default is true
-  sortField?: boolean;
+  sortField?: boolean; // default is true
   filterField?: boolean | IccFilterField;
   filterFieldConfig?: IccFieldConfig;
   groupField?: boolean;
@@ -165,6 +163,9 @@ export interface IccColumnConfig {
   component?: Type<unknown>; // renderer component
   renderer?: Function; // renderer function
   cellEditable?: boolean;
+
+  //fixedWidth?: boolean | 'auto';
+  //minWidth?: number;
   //editField?: IccEditField;
   //validations?: IccValidation[];
   //menu?: boolean | IccMenuConfig;

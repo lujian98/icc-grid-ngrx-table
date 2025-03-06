@@ -71,7 +71,7 @@ export class IccGridHeaderComponent<T> {
   }
 
   get filterRowHeight(): string {
-    return `${GRID_FILTER_ROW_HEIGHT}px`;
+    return `${GRID_FILTER_ROW_HEIGHT + 1}px`;
   }
 
   getColumnWidth(column: IccColumnConfig): string {
