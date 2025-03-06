@@ -36,7 +36,6 @@ export class AppDashboardDemoComponent {
         colWidth: 10,
         content: AppStockChartComponent,
         context: this.portalData,
-        dblClickDrag: true,
       },
       {
         name: 'Card 2',

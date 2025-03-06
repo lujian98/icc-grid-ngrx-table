@@ -15,7 +15,6 @@ export interface Tile<T> {
   content?: IccPortalContent<T>;
   context?: {};
   dragDisabled?: boolean;
-  dblClickDrag?: boolean;
 }
 
 export interface TileInfo {

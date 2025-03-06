@@ -1,4 +1,4 @@
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -26,6 +26,7 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
   imports: [
     CommonModule,
     DragDropModule,
+    CdkDragHandle,
     IccPortalComponent,
     IccIconModule,
     IccLayoutComponent,
@@ -105,7 +106,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     }
     this.tiles.forEach((tile, index) => {
       tile.index = index;
-      tile.dragDisabled = tile.dblClickDrag ? true : tile.dragDisabled;
       if (tile.colWidth! <= 0) {
         tile.colWidth = 1;
       }
@@ -363,21 +363,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
       }
     }
     this.setTileLayouts();
-    tile.dragDisabled = tile.dblClickDrag ? true : tile.dragDisabled;
-  }
-
-  onDblClick(event: MouseEvent, tile: Tile<T>): void {
-    tile.dragDisabled = tile.dblClickDrag ? this.targetHasD3Brush(event.target as HTMLElement) : tile.dragDisabled;
-  }
-
-  // D3 zoom brush not able to fire mouseup event, use dblClickDrag:true and dropped dragDisabled: true
-  private targetHasD3Brush(el: HTMLElement): boolean {
-    if (el.classList.contains('brush')) {
-      return true;
-    } else if (el.parentElement) {
-      return this.targetHasD3Brush(el.parentElement);
-    }
-    return false;
   }
 
   isDragDisabled(tile: Tile<T>): boolean {

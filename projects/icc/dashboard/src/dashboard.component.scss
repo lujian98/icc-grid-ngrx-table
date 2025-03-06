@@ -37,7 +37,14 @@
   }
 
   [cdkDragHandle] {
-    float: left;
+    position: absolute;
+    z-index: 100;
+    top: 2px;
+    right: 2px;
+    color: green;
+    cursor: move;
+    width: 24px;
+    height: 24px;
   }
 
   .cdk-drag-animating {
