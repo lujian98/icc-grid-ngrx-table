@@ -97,7 +97,6 @@ export class IccTabsComponent {
     const prevActive = this.tabs[this.selectedTabIndex];
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
-    console.log('1111 droped=');
     this.iccTabsChange.emit(this.tabs);
   }
 

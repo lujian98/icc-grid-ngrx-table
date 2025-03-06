@@ -139,7 +139,6 @@ export class AppTabsComponent {
   }
 
   onTabsChange(tabs: IccTabConfig[]): void {
-    console.log('3333333333 tabs=', tabs);
     this.tabs = tabs;
   }
 }
