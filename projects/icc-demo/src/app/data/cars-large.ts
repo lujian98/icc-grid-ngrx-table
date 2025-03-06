@@ -1336,6 +1336,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
   },
   {
     name: 'vin',
+    width: 150,
     groupField: false,
     cellEditable: true,
     //align: 'center',
@@ -1349,7 +1350,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
       fieldType: 'select',
       multiSelection: true,
     },
-    width: 80,
+    width: 150,
   },
   {
     name: 'MakeDate',

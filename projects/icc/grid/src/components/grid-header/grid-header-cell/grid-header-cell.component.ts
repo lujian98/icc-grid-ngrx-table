@@ -51,7 +51,6 @@ export class IccGridHeaderCellComponent {
   @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
 
   headCellClick(event: MouseEvent): void {
-    console.log(' this.column=', this.column);
     if (this.gridConfig.columnSort && this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;

@@ -68,10 +68,12 @@ export class AppGridCellEditTextComponent {
     },
     {
       name: 'vin',
+      width: 100,
       cellEditable: true,
     },
     {
       name: 'brand',
+      width: 100,
       cellEditable: true,
       rendererType: IccObjectType.Select,
       rendererFieldConfig: {
