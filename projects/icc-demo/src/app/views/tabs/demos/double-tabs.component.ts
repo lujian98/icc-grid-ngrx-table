@@ -12,7 +12,7 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
   selector: 'app-double-tabs',
   template: `
     <icc-tabs [tabsConfig]="tabsConfig1" [tabs]="tabs"></icc-tabs>
-    <icc-tabs [tabsConfig]="tabsConfig2" [tabs]="tabs2" [selectedTabIndex]="2"> </icc-tabs>
+    <icc-tabs [tabsConfig]="tabsConfig2" [tabs]="tabs2"> </icc-tabs>
   `,
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +21,7 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
 export class AppDoubleTabsComponent {
   tabsConfig1: Partial<IccTabsConfig> = {
     enableContextMenu: true,
+    selectedTabIndex: 1,
     alignTabs: 'end',
   };
 

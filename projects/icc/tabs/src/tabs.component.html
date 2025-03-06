@@ -4,7 +4,7 @@
   (cdkDropListDropped)="drop($event)"
   cdkDropListElementContainer=".icc-mdc-tab-labels"
   class="icc-drag-tabs"
-  [selectedIndex]="selectedTabIndex"
+  [selectedIndex]="tabsConfig.selectedTabIndex"
   animationDuration="0"
   (selectedIndexChange)="onSelectedIndexChange($event)"
   [icc-align-tabs]="tabsConfig.alignTabs"
@@ -36,7 +36,7 @@
         >
         </icc-menus>
       </ng-template>
-      @if (index === selectedTabIndex) {
+      @if (index === tabsConfig.selectedTabIndex) {
         <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
       }
     </icc-tab>

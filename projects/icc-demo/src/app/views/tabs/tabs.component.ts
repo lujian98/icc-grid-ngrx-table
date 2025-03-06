@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import {
@@ -33,6 +33,7 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
   ],
 })
 export class AppTabsComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   useRouterLink: boolean = false;
 
   items: IccAccordion[] = [
@@ -61,9 +62,8 @@ export class AppTabsComponent {
 
   tabsConfig: Partial<IccTabsConfig> = {
     enableContextMenu: true,
+    selectedTabIndex: 0,
   };
-
-  selectedTabIndex: number = 0;
 
   portalData = {
     skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
@@ -132,12 +132,19 @@ export class AppTabsComponent {
           const tabs = [...this.tabs];
           tabs.push(tab);
           this.tabs = [...tabs];
-          this.selectedTabIndex = this.tabs.length - 1;
+          this.setSelectedIndex(this.tabs.length - 1);
         }
       } else {
-        this.selectedTabIndex = find;
+        this.setSelectedIndex(find);
       }
     }
+  }
+
+  private setSelectedIndex(index: number): void {
+    this.tabsConfig = {
+      ...this.tabsConfig,
+      selectedTabIndex: index,
+    };
   }
 
   onTabsChange(tabs: IccTabConfig[]): void {
