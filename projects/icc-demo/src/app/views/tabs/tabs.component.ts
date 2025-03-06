@@ -33,18 +33,9 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
   ],
 })
 export class AppTabsComponent {
-  useRouterLink: boolean = true;
+  useRouterLink: boolean = false;
 
   items: IccAccordion[] = [
-    {
-      name: 'Tabs Demos',
-      items: [
-        { name: 'Simple Tabs', link: 'simple-tabs' },
-        { name: 'Tab Group', link: 'tab-group' },
-        { name: 'Tab Form', link: 'tab-form' },
-        { name: 'Double Tab Panels', link: 'double-tabs' },
-      ],
-    },
     {
       name: 'Tabs Panel Demo',
       items: [
@@ -57,12 +48,21 @@ export class AppTabsComponent {
         { name: 'seven' },
       ],
     },
+    {
+      name: 'Tabs Demos',
+      items: [
+        { name: 'Simple Tabs', link: 'simple-tabs' },
+        { name: 'Tab Group', link: 'tab-group' },
+        { name: 'Tab Form', link: 'tab-form' },
+        { name: 'Double Tab Panels', link: 'double-tabs' },
+      ],
+    },
   ];
 
   tabsConfig: Partial<IccTabsConfig> = {
     enableContextMenu: true,
   };
-  tabs: IccTabConfig[] = [];
+
   selectedTabIndex: number = 0;
 
   portalData = {
@@ -116,6 +116,8 @@ export class AppTabsComponent {
       closeable: true,
     },
   ];
+
+  tabs: IccTabConfig[] = [this.mappedOptionTabs[0]];
 
   //TODO ngrx in the tabs with tabId to handle add/remove events
   onMenuItemClick(item: IccMenuConfig): void {
