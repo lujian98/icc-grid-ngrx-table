@@ -23,6 +23,25 @@
     border-radius: 5px;
     height: 100%;
     width: 100%;
+
+    .icc-drag-handle {
+      display: none;
+      position: absolute;
+      z-index: 100;
+      top: 2px;
+      right: 2px;
+      color: green;
+      cursor: move;
+      width: 24px;
+      height: 24px;
+    }
+
+    &:focus,
+    &:hover {
+      .icc-drag-handle {
+        display: block;
+      }
+    }
   }
 
   cdk-drop-list {
@@ -34,17 +53,6 @@
     icc-portal {
       display: flex;
     }
-  }
-
-  [cdkDragHandle] {
-    position: absolute;
-    z-index: 100;
-    top: 2px;
-    right: 2px;
-    color: green;
-    cursor: move;
-    width: 24px;
-    height: 24px;
   }
 
   .cdk-drag-animating {
