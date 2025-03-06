@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccDashboardComponent, Tile } from '@icc/ui/dashboard';
+import { IccDashboardComponent, Tile, IccTileOption } from '@icc/ui/dashboard';
 import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
 import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
@@ -16,6 +16,28 @@ import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
 })
 export class AppDashboardDemoComponent {
   tiles: Tile<any>[] = [];
+  tileOptions: IccTileOption<any>[] = [
+    {
+      name: 'stock-chart',
+      component: AppStockChartComponent,
+    },
+    {
+      name: 'grid-multi-row-selection',
+      component: AppGridMultiRowSelectionComponent,
+    },
+    {
+      name: 'grid-virtual-scroll',
+      component: AppGridRemoteVirtualScrollComponent,
+    },
+    {
+      name: 'portal-demo',
+      component: PortalDemoComponent,
+    },
+    {
+      name: 'portal-demo2',
+      component: PortalDemo2Component,
+    },
+  ];
 
   portalData = {
     skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
@@ -34,8 +56,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 1,
         colWidth: 10,
-        content: AppStockChartComponent,
-        context: this.portalData,
+        titeType: 'stock-chart',
       },
       {
         name: 'Card 2',
@@ -43,7 +64,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 2,
         colStart: 1,
         colWidth: 2,
-        content: PortalDemoComponent,
+        titeType: 'portal-demo',
         context: this.portalData,
       },
       {
@@ -52,7 +73,8 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        content: PortalDemo2Component,
+        titeType: 'portal-demo2',
+        context: this.portalData,
       },
       {
         name: 'Card 4',
@@ -60,7 +82,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        content: PortalDemoComponent,
+        titeType: 'portal-demo',
         context: this.portalData2,
       },
       {
@@ -69,7 +91,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 4,
         colWidth: 7,
-        content: AppGridMultiRowSelectionComponent, //AppGridRemoteVirtualScrollComponent,
+        titeType: 'grid-multi-row-selection',
       },
     ];
   }
