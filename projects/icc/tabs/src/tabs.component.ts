@@ -61,14 +61,29 @@ export class IccTabsComponent {
     return this._tabsConfig;
   }
 
-  //@Input() selectedTabIndex = 0;
   @Input() tabs!: IccTabConfig[];
+  @Input() tabOptions: IccTabConfig[] = [];
 
   get contextMenuTrigger(): IccTrigger {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
   @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
+
+  addTab(tabName: string): void {
+    const find = this.tabs.findIndex((tab) => tab.name === tabName);
+    if (find === -1) {
+      const tab = this.tabOptions.find((option) => option.name === tabName);
+      if (tab) {
+        const tabs = [...this.tabs];
+        tabs.push(tab);
+        this.tabs = [...tabs];
+        this.setSelectedIndex(this.tabs.length - 1);
+      }
+    } else {
+      this.setSelectedIndex(find);
+    }
+  }
 
   dragDisabled(tab: IccTabConfig): boolean {
     return !this.tabsConfig.tabReorder;

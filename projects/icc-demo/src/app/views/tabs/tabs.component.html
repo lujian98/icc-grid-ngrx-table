@@ -7,7 +7,7 @@
     @if (useRouterLink) {
       <router-outlet></router-outlet>
     } @else {
-      <icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig" (iccTabsChange)="onTabsChange($event)"> </icc-tabs>
+      <icc-tabs [tabsConfig]="tabsConfig" [tabs]="tabs" [tabOptions]="tabOptions"> </icc-tabs>
     }
   </icc-layout-center>
 

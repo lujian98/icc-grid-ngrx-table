@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import {
@@ -33,8 +33,8 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
   ],
 })
 export class AppTabsComponent {
-  private changeDetectorRef = inject(ChangeDetectorRef);
   useRouterLink: boolean = false;
+  @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
   items: IccAccordion[] = [
     {
@@ -73,7 +73,7 @@ export class AppTabsComponent {
     skills: [12, 13, 14, 15, 16],
   };
 
-  private mappedOptionTabs = [
+  tabOptions = [
     {
       name: 'grid-multi-row-selection',
       title: 'Grid Multi Row Selection',
@@ -117,37 +117,14 @@ export class AppTabsComponent {
     },
   ];
 
-  tabs: IccTabConfig[] = [this.mappedOptionTabs[0]];
+  tabs: IccTabConfig[] = [this.tabOptions[0]];
 
-  //TODO ngrx in the tabs with tabId to handle add/remove events
   onMenuItemClick(item: IccMenuConfig): void {
     if (item.link) {
       this.useRouterLink = true;
     } else {
       this.useRouterLink = false;
-      const find = this.tabs.findIndex((tab) => tab.name === item.name);
-      if (find === -1) {
-        const tab = this.mappedOptionTabs.find((option) => option.name === item.name);
-        if (tab) {
-          const tabs = [...this.tabs];
-          tabs.push(tab);
-          this.tabs = [...tabs];
-          this.setSelectedIndex(this.tabs.length - 1);
-        }
-      } else {
-        this.setSelectedIndex(find);
-      }
+      this.tabsPanel.addTab(item.name);
     }
-  }
-
-  private setSelectedIndex(index: number): void {
-    this.tabsConfig = {
-      ...this.tabsConfig,
-      selectedTabIndex: index,
-    };
-  }
-
-  onTabsChange(tabs: IccTabConfig[]): void {
-    this.tabs = tabs;
   }
 }
