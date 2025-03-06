@@ -117,6 +117,7 @@ export class AppTabsComponent {
     },
   ];
 
+  //TODO ngrx in the tabs with tabId to handle add/remove events
   onMenuItemClick(item: IccMenuConfig): void {
     if (item.link) {
       this.useRouterLink = true;
@@ -135,5 +136,10 @@ export class AppTabsComponent {
         this.selectedTabIndex = find;
       }
     }
+  }
+
+  onTabsChange(tabs: IccTabConfig[]): void {
+    console.log('3333333333 tabs=', tabs);
+    this.tabs = tabs;
   }
 }

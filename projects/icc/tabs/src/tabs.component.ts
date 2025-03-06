@@ -1,6 +1,14 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
@@ -60,6 +68,8 @@ export class IccTabsComponent {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
+  @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
+
   dragDisabled(tab: IccTabConfig): boolean {
     return !this.tabsConfig.tabReorder;
   }
@@ -87,6 +97,8 @@ export class IccTabsComponent {
     const prevActive = this.tabs[this.selectedTabIndex];
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
     this.selectedTabIndex = this.tabs.indexOf(prevActive);
+    console.log('1111 droped=');
+    this.iccTabsChange.emit(this.tabs);
   }
 
   onMenuItemClicked(menuItem: IccMenuConfig, tab: IccTabConfig, index: number): void {
@@ -112,6 +124,7 @@ export class IccTabsComponent {
     }
     this.checkSelectedTab(prevActive, index);
     this.changeDetectorRef.markForCheck();
+    this.iccTabsChange.emit(this.tabs);
   }
 
   closeTab(event: MouseEvent, tab: IccTabConfig, index: number): void {
@@ -119,6 +132,7 @@ export class IccTabsComponent {
     const prevActive = this.tabs[this.selectedTabIndex];
     this.tabs = [...this.tabs].filter((item) => item.name !== tab.name);
     this.checkSelectedTab(prevActive, index);
+    this.iccTabsChange.emit(this.tabs);
   }
 
   private menuItemDisabled(name: IccContextMenuType, tab: IccTabConfig, index: number): boolean {

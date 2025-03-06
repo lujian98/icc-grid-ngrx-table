@@ -7,7 +7,13 @@
     @if (useRouterLink) {
       <router-outlet></router-outlet>
     } @else {
-      <icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig" [selectedTabIndex]="selectedTabIndex"> </icc-tabs>
+      <icc-tabs
+        [tabs]="tabs"
+        [tabsConfig]="tabsConfig"
+        [selectedTabIndex]="selectedTabIndex"
+        (iccTabsChange)="onTabsChange($event)"
+      >
+      </icc-tabs>
     }
   </icc-layout-center>
 
