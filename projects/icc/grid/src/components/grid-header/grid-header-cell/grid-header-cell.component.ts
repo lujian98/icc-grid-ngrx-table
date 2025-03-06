@@ -15,6 +15,9 @@ import {
   selector: 'icc-grid-header-cell',
   templateUrl: './grid-header-cell.component.html',
   styleUrls: ['./grid-header-cell.component.scss'],
+  host: {
+    '[class.draggable]': 'draggable',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslatePipe, IccIconModule],
   providers: [IccGridFacade],
@@ -41,9 +44,14 @@ export class IccGridHeaderCellComponent {
     return this.findSortField!.dir;
   }
 
+  get draggable(): boolean {
+    return this.gridConfig.columnReorder && this.column.draggable !== false;
+  }
+
   @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
 
   headCellClick(event: MouseEvent): void {
+    console.log(' this.column=', this.column);
     if (this.gridConfig.columnSort && this.column.sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;

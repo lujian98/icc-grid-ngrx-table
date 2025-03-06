@@ -1332,6 +1332,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     align: 'center',
     groupField: false,
     filterField: IccObjectType.Number,
+    draggable: false,
   },
   {
     name: 'vin',

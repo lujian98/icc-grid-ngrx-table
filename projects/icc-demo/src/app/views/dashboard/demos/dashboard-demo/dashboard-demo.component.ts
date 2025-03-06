@@ -56,7 +56,8 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 1,
         colWidth: 10,
-        titeType: 'stock-chart',
+        //titeType: 'stock-chart',
+        content: AppStockChartComponent,
       },
       {
         name: 'Card 2',

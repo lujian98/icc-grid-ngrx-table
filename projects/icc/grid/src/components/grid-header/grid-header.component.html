@@ -31,7 +31,7 @@
     (columnResizing)="columnResizing.emit($event)"
     (columnResized)="columnResized.emit($event)"
     cdkDrag
-    [cdkDragDisabled]="dragDisabled"
+    [cdkDragDisabled]="dragDisabled(column)"
     iccColumnResize
   >
     <icc-grid-header-cell
@@ -40,6 +40,7 @@
       [gridSetting]="gridSetting"
       [gridConfig]="gridConfig"
       (columnMenuClick)="onColumnMenuClick($event)"
+      cdkDragHandle
     >
     </icc-grid-header-cell>
 

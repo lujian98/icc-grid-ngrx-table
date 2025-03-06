@@ -153,7 +153,7 @@ export interface IccColumnConfig {
   align?: string;
   //fixedWidth?: boolean | 'auto';
   //minWidth?: number;
-  //draggable?: boolean;
+  draggable?: boolean; // default is true
   sortField?: boolean;
   filterField?: boolean | IccFilterField;
   filterFieldConfig?: IccFieldConfig;

@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
@@ -30,6 +30,7 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   imports: [
     CommonModule,
     DragDropModule,
+    CdkDragHandle,
     IccGridHeaderCellComponent,
     IccGridHeaderItemComponent,
     IccColumnResizeDirective,
@@ -82,9 +83,8 @@ export class IccGridHeaderComponent<T> {
     return index;
   }
 
-  get dragDisabled(): boolean {
-    // TODO add each column enable/disable
-    return !this.gridConfig.columnReorder;
+  dragDisabled(column: IccColumnConfig): boolean {
+    return !(this.gridConfig.columnReorder && column.draggable !== false);
   }
 
   onToggleSelectAll(allSelected: boolean): void {
