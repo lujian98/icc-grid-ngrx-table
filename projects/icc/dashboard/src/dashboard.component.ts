@@ -13,10 +13,13 @@ import {
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccMenusComponent, IccMenuConfig } from '@icc/ui/menu';
+import { IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
-import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
+import { DxyPosition, ResizeMap, Tile, TileInfo, defaultTileMenus } from './model';
 
 @Component({
   selector: 'icc-dashboard',
@@ -28,6 +31,8 @@ import { DxyPosition, ResizeMap, Tile, TileInfo } from './model';
     DragDropModule,
     CdkDragHandle,
     IccPortalComponent,
+    IccMenusComponent,
+    IccPopoverDirective,
     IccIconModule,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
@@ -43,6 +48,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   dragDisabled: boolean = false;
   gridTemplateColumns!: string;
   gridTemplateRows!: string;
+  position: IccPosition = IccPosition.BOTTOMRIGHT;
+  tileMenus = defaultTileMenus;
 
   @Input() tiles: Tile<T>[] = [];
   @Input() gridGap = 2;
@@ -51,6 +58,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   @Input() cols = 10;
   @Input() rows = 6;
 
+  get contextMenuTrigger(): IccTrigger {
+    return IccTrigger.CONTEXTMENU;
+    // return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
+  }
+
   ngOnInit(): void {
     this.setGridTemplate();
     this.setTileLayouts();
@@ -58,6 +70,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.setupGrid();
+  }
+
+  onTileMenuClicked(tileMenu: IccMenuConfig, tile: Tile<T>): void {
+    console.log(' menuItem=', tileMenu);
+    console.log(' tile=', tile);
   }
 
   buttonClick(button: IccButtonConfg): void {

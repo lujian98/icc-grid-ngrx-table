@@ -8,6 +8,7 @@ export const ICC = {
       CLEAR: '清除',
       CLEAR_ALL_FILTERS: '清除所有过滤器',
       CLOSE: '关闭',
+      CONFIGURE: '设置',
       EDIT: '编辑',
       ENABLED: '启用',
       IS_EMPTY: 'Is Empty',

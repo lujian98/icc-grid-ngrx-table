@@ -37,3 +37,21 @@ export interface DxyPosition {
   dx: number;
   dy: number;
 }
+
+export enum IccDashboardMenuType {
+  CONFIGURE = 'Configure',
+  REMOVE = 'Remove',
+}
+
+export const defaultTileMenus = [
+  {
+    title: 'ICC.UI.ACTIONS.CONFIGURE',
+    name: IccDashboardMenuType.CONFIGURE,
+    icon: 'pen-to-square',
+  },
+  {
+    title: 'ICC.UI.ACTIONS.REMOVE',
+    name: IccDashboardMenuType.REMOVE,
+    icon: 'trash',
+  },
+];

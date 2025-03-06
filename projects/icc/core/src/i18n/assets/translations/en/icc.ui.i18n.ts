@@ -8,6 +8,7 @@ export const ICC = {
       CLEAR: 'Clear',
       CLEAR_ALL_FILTERS: 'Clear All Filters',
       CLOSE: 'Close',
+      CONFIGURE: 'Configure',
       EDIT: 'Edit',
       ENABLED: 'Enabled',
       IS_EMPTY: 'Is Empty',
