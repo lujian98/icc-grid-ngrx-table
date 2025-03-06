@@ -35,7 +35,6 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
 })
 export class AppTabsComponent {
   useRouterLink: boolean = false;
-  @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
   items: IccAccordion[] = [
     {
@@ -63,7 +62,7 @@ export class AppTabsComponent {
 
   tabsConfig: Partial<IccTabsConfig> = {
     enableContextMenu: true,
-    selectedTabIndex: 0,
+    selectedTabIndex: 1,
   };
 
   portalData = {
@@ -118,7 +117,8 @@ export class AppTabsComponent {
     },
   ];
 
-  tabs: IccTabConfig[] = [this.tabOptions[0]];
+  tabs: IccTabConfig[] = this.tabOptions;
+  @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
   onMenuItemClick(item: IccMenuConfig): void {
     if (item.link) {

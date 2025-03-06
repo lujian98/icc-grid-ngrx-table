@@ -4,10 +4,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   inject,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -55,7 +55,6 @@ export class IccTabsComponent {
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
     this._tabsConfig = { ...defaultTabsConfig, ...value };
-    this.changeDetectorRef.detectChanges();
   }
   get tabsConfig(): IccTabsConfig {
     return this._tabsConfig;
@@ -109,6 +108,7 @@ export class IccTabsComponent {
       ...this.tabsConfig,
       selectedTabIndex: index,
     };
+    this.changeDetectorRef.markForCheck();
   }
 
   onSelectedIndexChange(index: number): void {

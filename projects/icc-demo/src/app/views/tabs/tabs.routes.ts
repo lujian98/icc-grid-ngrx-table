@@ -15,6 +15,11 @@ export const AppTabsRoutes: Routes = [
       { path: 'tab-group', component: AppTabGroupComponent },
       { path: 'tab-form', component: AppTabFormComponent },
       { path: 'double-tabs', component: AppDoubleTabsComponent },
+      /*
+      {
+        path: '**',
+        redirectTo: 'simple-tabs',
+      },*/
     ],
   },
 ];
