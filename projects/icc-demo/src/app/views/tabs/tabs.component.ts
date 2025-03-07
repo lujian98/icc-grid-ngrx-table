@@ -121,11 +121,9 @@ export class AppTabsComponent {
 
   tabs: IccTabConfig[] = this.tabOptions.map((option) => {
     const find = this.tabMenus.find((item) => item.portalName === option.name);
-    return {
-      ...option,
-      ...find,
-    };
+    return { ...option, ...find };
   });
+
   @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
   onMenuItemClick(item: IccTabMenuConfig): void {
