@@ -25,9 +25,8 @@ export const defaultTabsConfig: IccTabsConfig = {
   alignTabs: 'start',
 };
 
-export interface IccTabMenuConfig extends IccMenuConfig {
+export interface IccTabMenuConfig extends IccMenuConfig, IccTabConfig {
   portalName?: string;
-  context?: {};
 }
 
 export enum IccContextMenuType {

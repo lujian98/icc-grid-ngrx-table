@@ -45,7 +45,12 @@ export class AppTabsComponent {
   };
 
   tabMenus: IccTabMenuConfig[] = [
-    { name: 'grid-selection1', portalName: 'grid-multi-row-selection', title: 'Grid Multi Row Selection 1' },
+    {
+      name: 'grid-selection1',
+      portalName: 'grid-multi-row-selection',
+      closeable: false,
+      title: 'Grid Multi Row Selection 1',
+    },
     { name: 'grid-selection2', portalName: 'grid-multi-row-selection', title: 'Grid Multi Row Selection 2' },
     { name: 'stock-chart', portalName: 'stock-chart', title: 'Stock Chart' },
     { name: 'grid-virtual-scroll', portalName: 'grid-virtual-scroll', title: 'Grid Virtual Scroll' },
