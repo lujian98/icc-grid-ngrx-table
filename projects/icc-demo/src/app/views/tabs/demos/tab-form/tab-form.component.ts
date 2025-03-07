@@ -42,7 +42,7 @@ export class AppTabFormComponent {
 
   tabs = [
     {
-      name: 'one',
+      name: 'tab1',
       title: 'Form Panel 1',
       content: AppForm1Component,
       context: {
@@ -50,7 +50,7 @@ export class AppTabFormComponent {
       },
     },
     {
-      name: 'two',
+      name: 'tab2',
       title: 'Form Panel 2',
       content: AppForm2Component,
       context: {
@@ -58,7 +58,7 @@ export class AppTabFormComponent {
       },
     },
     {
-      name: 'three',
+      name: 'tab3',
       title: 'Form Panel 3',
       content: AppForm3Component,
       context: {

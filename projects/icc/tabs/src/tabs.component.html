@@ -14,30 +14,9 @@
     @for (tab of tabs; track $index; let index = $index) {
       <icc-tab>
         <ng-template icc-tab-label>
-          <span
-            cdkDrag
-            [cdkDragDisabled]="dragDisabled(tab)"
-            cdkDragPreviewClass="icc-drag-tabs-preview"
-            cdkDragRootElement=".icc-mdc-tab"
-            [iccPopover]="menu"
-            [iccPopoverTrigger]="contextMenuTrigger"
-            [clickToClose]="true"
-            [iccPopoverPosition]="position"
-            >{{ getTabLabel(tab) }}
-          </span>
-          @if (closeable(tab)) {
-            <icc-icon class="icc-tab-remove-icon" icon="remove" (click)="closeTab($event, tab, index)"></icc-icon>
-          }
+          <icc-tabs-view [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-view>
         </ng-template>
-        <ng-template #menu>
-          <icc-menus
-            [items]="menuItem"
-            [level]="1"
-            [disabled]="getDisabled(tab, index)"
-            (iccMenuItemClick)="onMenuItemClicked($event, tab, index)"
-          >
-          </icc-menus>
-        </ng-template>
+
         @if (index === tabsConfig.selectedTabIndex) {
           <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
         }
