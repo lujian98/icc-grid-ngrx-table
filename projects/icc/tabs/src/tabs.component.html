@@ -1,44 +1,47 @@
-<icc-tab-group
-  cdkDropList
-  cdkDropListOrientation="horizontal"
-  (cdkDropListDropped)="drop($event)"
-  cdkDropListElementContainer=".icc-mdc-tab-labels"
-  class="icc-drag-tabs"
-  [selectedIndex]="tabsConfig.selectedTabIndex"
-  animationDuration="0"
-  (selectedIndexChange)="onSelectedIndexChange($event)"
-  [icc-align-tabs]="tabsConfig.alignTabs"
->
-  @for (tab of tabs; track $index; let index = $index) {
-    <icc-tab>
-      <ng-template icc-tab-label>
-        <span
-          cdkDrag
-          [cdkDragDisabled]="dragDisabled(tab)"
-          cdkDragPreviewClass="icc-drag-tabs-preview"
-          cdkDragRootElement=".icc-mdc-tab"
-          [iccPopover]="menu"
-          [iccPopoverTrigger]="contextMenuTrigger"
-          [clickToClose]="true"
-          [iccPopoverPosition]="position"
-          >{{ getTabLabel(tab) }}
-        </span>
-        @if (closeable(tab)) {
-          <icc-icon class="icc-tab-remove-icon" icon="remove" (click)="closeTab($event, tab, index)"></icc-icon>
+<ng-container *ngIf="tabsConfig$ | async as tabsConfig">
+  <icc-tab-group
+    *ngIf="tabsSetting$ | async as tabsSetting"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)"
+    cdkDropListElementContainer=".icc-mdc-tab-labels"
+    class="icc-drag-tabs"
+    [selectedIndex]="tabsConfig.selectedTabIndex"
+    animationDuration="0"
+    (selectedIndexChange)="onSelectedIndexChange($event)"
+    [icc-align-tabs]="tabsConfig.alignTabs"
+  >
+    @for (tab of tabs; track $index; let index = $index) {
+      <icc-tab>
+        <ng-template icc-tab-label>
+          <span
+            cdkDrag
+            [cdkDragDisabled]="dragDisabled(tab)"
+            cdkDragPreviewClass="icc-drag-tabs-preview"
+            cdkDragRootElement=".icc-mdc-tab"
+            [iccPopover]="menu"
+            [iccPopoverTrigger]="contextMenuTrigger"
+            [clickToClose]="true"
+            [iccPopoverPosition]="position"
+            >{{ getTabLabel(tab) }}
+          </span>
+          @if (closeable(tab)) {
+            <icc-icon class="icc-tab-remove-icon" icon="remove" (click)="closeTab($event, tab, index)"></icc-icon>
+          }
+        </ng-template>
+        <ng-template #menu>
+          <icc-menus
+            [items]="menuItem"
+            [level]="1"
+            [disabled]="getDisabled(tab, index)"
+            (iccMenuItemClick)="onMenuItemClicked($event, tab, index)"
+          >
+          </icc-menus>
+        </ng-template>
+        @if (index === tabsConfig.selectedTabIndex) {
+          <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
         }
-      </ng-template>
-      <ng-template #menu>
-        <icc-menus
-          [items]="menuItem"
-          [level]="1"
-          [disabled]="getDisabled(tab, index)"
-          (iccMenuItemClick)="onMenuItemClicked($event, tab, index)"
-        >
-        </icc-menus>
-      </ng-template>
-      @if (index === tabsConfig.selectedTabIndex) {
-        <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
-      }
-    </icc-tab>
-  }
-</icc-tab-group>
+      </icc-tab>
+    }
+  </icc-tab-group>
+</ng-container>

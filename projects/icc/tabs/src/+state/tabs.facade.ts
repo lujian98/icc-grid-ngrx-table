@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccTabsConfig, IccTabsSetting, IccTabConfig } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
-import { selectTabsSetting, selectTabsConfig, selectTabsOptions } from './tabs.selectors';
+import { selectTabsSetting, selectTabsConfig, selectTabsTabs, selectTabsOptions } from './tabs.selectors';
 
 @Injectable()
 export class IccTabsFacade {
@@ -20,6 +20,10 @@ export class IccTabsFacade {
     }
   }
 
+  setTabsTabs(tabsId: string, tabs: IccTabConfig[]): void {
+    this.store.dispatch(tabsActions.loadTabsTabsSuccess({ tabsId, tabs }));
+  }
+
   setTabsOptions(tabsId: string, options: IccTabConfig[]): void {
     this.store.dispatch(tabsActions.loadTabsOptionsSuccess({ tabsId, options }));
   }
@@ -28,15 +32,19 @@ export class IccTabsFacade {
     this.store.dispatch(tabsActions.clearTabsStore({ tabsId }));
   }
 
-  selectSetting(tabsId: string): Observable<IccTabsSetting | undefined> {
+  selectSetting(tabsId: string): Observable<IccTabsSetting> {
     return this.store.select(selectTabsSetting(tabsId));
   }
 
-  tabsConfig(tabsId: string): Observable<IccTabsConfig | undefined> {
+  selectTabsConfig(tabsId: string): Observable<IccTabsConfig> {
     return this.store.select(selectTabsConfig(tabsId));
   }
 
-  selectOptions(tabsId: string): Observable<IccTabConfig[]> {
+  selectTabsTabs(tabsId: string): Observable<IccTabConfig[]> {
+    return this.store.select(selectTabsTabs(tabsId));
+  }
+
+  selectTabsOptions(tabsId: string): Observable<IccTabConfig[]> {
     return this.store.select(selectTabsOptions(tabsId));
   }
 }

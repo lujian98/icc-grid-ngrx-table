@@ -21,6 +21,7 @@ export const iccTabsFeature = createFeature({
           viewportReady: !tabsConfig.remoteConfig && !tabsConfig.remoteOptions,
         },
       };
+      console.log(' newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.loadTabsConfigSuccess, (state, action) => {
@@ -39,23 +40,39 @@ export const iccTabsFeature = createFeature({
           },
         };
       }
+      console.log(' config newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.loadTabsOptionsSuccess, (state, action) => {
       const key = action.tabsId;
       const newState: TabsState = { ...state };
       if (state[key]) {
-        //const isObjectOptions = [...action.options].every((item) => typeof item === 'object');
         newState[key] = {
           ...state[key],
           tabsSetting: {
             ...state[key].tabsSetting,
             viewportReady: true,
-            ///singleListOption: !isObjectOptions,
           },
           options: [...action.options],
         };
       }
+      console.log(' option newState=', newState);
+      return { ...newState };
+    }),
+    on(tabsActions.loadTabsTabsSuccess, (state, action) => {
+      const key = action.tabsId;
+      const newState: TabsState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          tabsSetting: {
+            ...state[key].tabsSetting,
+            viewportReady: true,
+          },
+          tabs: [...action.tabs],
+        };
+      }
+      console.log(' tabs newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.removeTabsStore, (state, action) => {

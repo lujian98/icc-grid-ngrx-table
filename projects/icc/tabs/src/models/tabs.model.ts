@@ -19,6 +19,7 @@ export interface IccTabsConfig extends IccTabGroupConfig {
   urlKey: string; // Only for remote tab config and options
   remoteConfig: boolean; // remote config requires remote options
   remoteOptions: boolean;
+  remoteTabs: boolean;
 }
 
 export const defaultTabsConfig: IccTabsConfig = {
@@ -31,6 +32,7 @@ export const defaultTabsConfig: IccTabsConfig = {
   urlKey: 'tabs',
   remoteConfig: false,
   remoteOptions: false,
+  remoteTabs: false,
 };
 
 export interface IccTabsSetting {
@@ -46,6 +48,7 @@ export interface TabsState {
 export interface IccTabsState {
   tabsConfig: IccTabsConfig;
   tabsSetting: IccTabsSetting;
+  tabs: IccTabConfig[];
   options: IccTabConfig[];
 }
 
@@ -57,6 +60,7 @@ export const defaultTabsSetting: IccTabsSetting = {
 export const defaultTabsState: IccTabsState = {
   tabsConfig: defaultTabsConfig,
   tabsSetting: defaultTabsSetting,
+  tabs: [],
   options: [],
 };
 

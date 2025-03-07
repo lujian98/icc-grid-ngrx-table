@@ -16,6 +16,16 @@ export const loadTabsConfigSuccess = createAction(
   props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
 );
 
+export const loadTabsTabs = createAction(
+  '[Tabs] Load Tabs Tabs',
+  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
+);
+
+export const loadTabsTabsSuccess = createAction(
+  '[Tabs] Load Tabs Tabs Success',
+  props<{ tabsId: string; tabs: IccTabConfig[] }>(),
+);
+
 export const loadTabsOptions = createAction(
   '[Tabs] Load Tab Options',
   props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),

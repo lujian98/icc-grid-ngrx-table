@@ -9,16 +9,17 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { IccDisabled } from '@icc/ui/core';
+import { IccDisabled, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccPortalComponent } from '@icc/ui/portal';
-import { take, timer } from 'rxjs';
+import { take, timer, map, Observable } from 'rxjs';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
+import { IccTabsStateModule } from './+state/tabs-state.module';
 import {
   defaultContextMenu,
   defaultTabsConfig,
@@ -26,7 +27,9 @@ import {
   IccTabConfig,
   IccTabsConfig,
   IccTabMenuConfig,
+  IccTabsSetting,
 } from './models/tabs.model';
+import { IccTabsFacade } from './+state/tabs.facade';
 
 @Component({
   selector: 'icc-tabs',
@@ -45,24 +48,40 @@ import {
     IccTabGroupComponent,
     IccPortalComponent,
     IccIconModule,
+    IccTabsStateModule,
   ],
 })
 export class IccTabsComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
+  private tabsFacade = inject(IccTabsFacade);
+  private tabsId = uniqueId(16);
+  tabsConfig$!: Observable<IccTabsConfig>;
+  tabsSetting$!: Observable<IccTabsSetting>;
+  //columnsConfig$!: Observable<IccColumnConfig[]>;
+
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
-    this._tabsConfig = { ...defaultTabsConfig, ...value };
+    this.initTabsConfig({ ...defaultTabsConfig, ...value });
   }
   get tabsConfig(): IccTabsConfig {
     return this._tabsConfig;
   }
 
-  @Input() tabs!: IccTabConfig[];
+  private initTabsConfig(value: IccTabsConfig): void {
+    this._tabsConfig = { ...value };
+
+    this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
+    this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
+    //this.columnsConfig$ = this.tabsFacade.selectColumnsConfig(this.tabsId);
+    this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
+  }
+
   @Input() tabOptions: IccTabConfig[] = [];
+  @Input() tabs!: IccTabConfig[];
 
   get contextMenuTrigger(): IccTrigger {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
