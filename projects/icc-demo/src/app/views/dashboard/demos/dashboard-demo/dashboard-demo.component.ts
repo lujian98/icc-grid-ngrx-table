@@ -65,7 +65,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 2,
         colStart: 1,
         colWidth: 2,
-        titeType: 'portal-demo',
+        portalName: 'portal-demo',
         context: this.portalData,
       },
       {
@@ -74,7 +74,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        titeType: 'portal-demo2',
+        portalName: 'portal-demo2',
         context: this.portalData,
       },
       {
@@ -83,7 +83,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 1,
         colStart: 3,
         colWidth: 1,
-        titeType: 'portal-demo',
+        portalName: 'portal-demo',
         context: this.portalData2,
       },
       {
@@ -92,7 +92,7 @@ export class AppDashboardDemoComponent {
         rowHeight: 3,
         colStart: 4,
         colWidth: 7,
-        titeType: 'grid-multi-row-selection',
+        portalName: 'grid-multi-row-selection',
       },
     ];
   }

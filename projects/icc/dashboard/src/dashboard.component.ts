@@ -82,7 +82,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   getPortalContent(tile: Tile<T>): IccPortalContent<T> {
-    const find = this.tileOptions.find((option) => option.name === tile.titeType);
+    const find = this.tileOptions.find((option) => option.name === tile.portalName);
     return find ? find.component : tile.content!;
   }
 

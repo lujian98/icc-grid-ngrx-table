@@ -7,7 +7,7 @@ export interface Tile<T> {
   colStart?: number;
   rowHeight?: number;
   colWidth?: number;
-  titeType?: string; // use for save component mapping key
+  portalName?: string; // use for save component mapping key
   content?: IccPortalContent<T>;
   context?: {};
   dragDisabled?: boolean;
