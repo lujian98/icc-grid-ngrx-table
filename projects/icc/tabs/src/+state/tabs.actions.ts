@@ -1,0 +1,30 @@
+import { createAction, props } from '@ngrx/store';
+import { IccTabsConfig, IccTabConfig } from '../models/tabs.model';
+
+export const initTabsConfig = createAction(
+  '[Tabs] Init Tabs Config',
+  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
+);
+
+export const loadRemoteTabsConfig = createAction(
+  '[Tabs] Load Remote Tabs Config',
+  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
+);
+
+export const loadTabsConfigSuccess = createAction(
+  '[Tabs] Load Tabs Config Success',
+  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
+);
+
+export const loadTabsOptions = createAction(
+  '[Tabs] Load Tab Options',
+  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
+);
+
+export const loadTabsOptionsSuccess = createAction(
+  '[Tabs] Load Tab Options Success',
+  props<{ tabsId: string; options: IccTabConfig[] }>(),
+);
+
+export const clearTabsStore = createAction('[Tabs]] Clear Tabs Store', props<{ tabsId: string }>());
+export const removeTabsStore = createAction('[Tabs]] Remove Tabs Store', props<{ tabsId: string }>());

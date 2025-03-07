@@ -15,6 +15,10 @@ export interface IccTabsConfig extends IccTabGroupConfig {
   closeable: boolean;
   enableContextMenu: boolean;
   selectedTabIndex: number;
+  name: string;
+  urlKey: string; // Only for remote tab config and options
+  remoteConfig: boolean; // remote config requires remote options
+  remoteOptions: boolean;
 }
 
 export const defaultTabsConfig: IccTabsConfig = {
@@ -23,6 +27,37 @@ export const defaultTabsConfig: IccTabsConfig = {
   enableContextMenu: false,
   selectedTabIndex: 0,
   alignTabs: 'start',
+  name: 'tabs',
+  urlKey: 'tabs',
+  remoteConfig: false,
+  remoteOptions: false,
+};
+
+export interface IccTabsSetting {
+  // for internal setting
+  tabsId: string;
+  viewportReady: boolean;
+}
+
+export interface TabsState {
+  [key: string]: IccTabsState;
+}
+
+export interface IccTabsState {
+  tabsConfig: IccTabsConfig;
+  tabsSetting: IccTabsSetting;
+  options: IccTabConfig[];
+}
+
+export const defaultTabsSetting: IccTabsSetting = {
+  tabsId: '191cf2bb6b5',
+  viewportReady: false,
+};
+
+export const defaultTabsState: IccTabsState = {
+  tabsConfig: defaultTabsConfig,
+  tabsSetting: defaultTabsSetting,
+  options: [],
 };
 
 export interface IccTabMenuConfig extends IccMenuConfig, IccTabConfig {
