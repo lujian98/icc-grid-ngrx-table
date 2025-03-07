@@ -18,7 +18,7 @@ import { IccTabsStateModule } from './+state/tabs-state.module';
 import { IccTabsFacade } from './+state/tabs.facade';
 import { IccTabGroupComponent } from './components/tab-group/tab-group.component';
 import { IccTabComponent } from './components/tab/tab.component';
-import { IccTabsViewComponent } from './components/tabs-view.component';
+import { IccTabsTabComponent } from './components/tabs-tab.component';
 import { IccTabLabelDirective } from './directives/tab-label.directive';
 import {
   defaultContextMenu,
@@ -44,7 +44,7 @@ import {
     IccPortalComponent,
     IccIconModule,
     IccTabsStateModule,
-    IccTabsViewComponent,
+    IccTabsTabComponent,
   ],
 })
 export class IccTabsComponent {

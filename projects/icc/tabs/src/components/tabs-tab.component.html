@@ -9,6 +9,7 @@
   [iccPopoverPosition]="position"
   >{{ getTabLabel(tab) }}
 </span>
+
 @if (closeable(tab)) {
   <icc-icon class="icc-tab-remove-icon" icon="remove" (click)="closeTab($event, tab)"></icc-icon>
 }

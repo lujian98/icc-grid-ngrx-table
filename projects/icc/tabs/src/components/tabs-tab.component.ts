@@ -27,9 +27,8 @@ import {
 } from '../models/tabs.model';
 
 @Component({
-  selector: 'icc-tabs-view',
-  templateUrl: './tabs-view.component.html',
-  styleUrls: ['./tabs-view.component.scss'],
+  selector: 'icc-tabs-tab',
+  templateUrl: './tabs-tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -41,7 +40,7 @@ import {
     IccTabsStateModule,
   ],
 })
-export class IccTabsViewComponent {
+export class IccTabsTabComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);

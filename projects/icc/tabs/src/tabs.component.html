@@ -14,7 +14,7 @@
     @for (tab of tabs; track $index; let index = $index) {
       <icc-tab>
         <ng-template icc-tab-label>
-          <icc-tabs-view [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-view>
+          <icc-tabs-tab [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-tab>
         </ng-template>
 
         @if (index === tabsConfig.selectedTabIndex) {
