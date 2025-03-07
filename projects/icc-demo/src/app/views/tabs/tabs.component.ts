@@ -10,7 +10,7 @@ import {
 } from '@icc/ui/layout';
 import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
-import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
+import { IccTabConfig, IccTabsComponent, IccTabsConfig, IccTabMenuConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
 import { PortalDemoComponent } from '../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../dashboard/demos/portal-demo2/portal-demo2.component';
@@ -36,18 +36,30 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
 export class AppTabsComponent {
   useRouterLink: boolean = false;
 
+  portalData = {
+    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+  };
+
+  portalData2 = {
+    skills: [12, 13, 14, 15, 16],
+  };
+
+  tabMenus: IccTabMenuConfig[] = [
+    { name: 'grid-selection1', portalName: 'grid-multi-row-selection', title: 'Grid Multi Row Selection 1' },
+    { name: 'grid-selection2', portalName: 'grid-multi-row-selection', title: 'Grid Multi Row Selection 2' },
+    { name: 'stock-chart', portalName: 'stock-chart', title: 'Stock Chart' },
+    { name: 'grid-virtual-scroll', portalName: 'grid-virtual-scroll', title: 'Grid Virtual Scroll' },
+    { name: 'portal-demo', portalName: 'portal-demo', context: this.portalData, title: 'Portal Demo' },
+    { name: 'portal-demo2', portalName: 'portal-demo2', context: this.portalData2, title: 'Portal Demo 2' },
+    { name: 'portal-demo3', portalName: 'portal-demo', context: this.portalData2, title: 'Portal Demo 3' },
+    { name: 'six' },
+    { name: 'seven' },
+  ];
+
   items: IccAccordion[] = [
     {
       name: 'Tabs Panel Demo',
-      items: [
-        { name: 'grid-multi-row-selection', title: 'Grid Multi Row Selection' },
-        { name: 'stock-chart', title: 'Stock Chart' },
-        { name: 'grid-virtual-scroll', title: 'Grid Virtual Scroll' },
-        { name: 'portal-demo', title: 'Portal Demo' },
-        { name: 'portal-demo2', title: 'Portal Demo 2' },
-        { name: 'six' },
-        { name: 'seven' },
-      ],
+      items: this.tabMenus,
     },
     {
       name: 'Tabs Demos',
@@ -65,45 +77,30 @@ export class AppTabsComponent {
     selectedTabIndex: 1,
   };
 
-  portalData = {
-    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-  };
-
-  portalData2 = {
-    skills: [12, 13, 14, 15, 16],
-  };
-
   tabOptions = [
     {
       name: 'grid-multi-row-selection',
-      title: 'Grid Multi Row Selection',
       content: AppGridMultiRowSelectionComponent,
       closeable: true,
     },
     {
       name: 'stock-chart',
-      title: 'Stock Chart',
       content: AppStockChartComponent,
       closeable: true,
     },
     {
       name: 'grid-virtual-scroll',
-      title: 'Grid Virtual Scroll',
       content: AppGridRemoteVirtualScrollComponent,
       closeable: true,
     },
     {
       name: 'portal-demo',
-      title: 'Portal Demo',
       content: PortalDemoComponent,
-      context: this.portalData,
       closeable: true,
     },
     {
       name: 'portal-demo2',
-      title: 'Portal Demo2',
       content: PortalDemo2Component,
-      context: this.portalData2,
       closeable: false,
     },
     {
@@ -117,20 +114,26 @@ export class AppTabsComponent {
     },
   ];
 
-  tabs: IccTabConfig[] = this.tabOptions;
+  tabs: IccTabConfig[] = this.tabOptions.map((option) => {
+    const find = this.tabMenus.find((item) => item.portalName === option.name);
+    return {
+      ...option,
+      ...find,
+    };
+  });
   @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
-  onMenuItemClick(item: IccMenuConfig): void {
+  onMenuItemClick(item: IccTabMenuConfig): void {
     if (item.link) {
       this.useRouterLink = true;
     } else {
       this.useRouterLink = false;
       if (this.tabsPanel) {
-        this.tabsPanel.addTab(item.name);
+        this.tabsPanel.addTab(item);
       } else {
         timer(10)
           .pipe(take(1))
-          .subscribe(() => this.tabsPanel.addTab(item.name));
+          .subscribe(() => this.tabsPanel.addTab(item));
       }
     }
   }

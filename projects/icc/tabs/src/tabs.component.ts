@@ -25,6 +25,7 @@ import {
   IccContextMenuType,
   IccTabConfig,
   IccTabsConfig,
+  IccTabMenuConfig,
 } from './models/tabs.model';
 
 @Component({
@@ -69,13 +70,13 @@ export class IccTabsComponent {
 
   @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
 
-  addTab(tabName: string): void {
-    const find = this.tabs.findIndex((tab) => tab.name === tabName);
+  addTab(tabItem: IccTabMenuConfig): void {
+    const find = this.tabs.findIndex((item) => item.name === tabItem.name);
     if (find === -1) {
-      const tab = this.tabOptions.find((option) => option.name === tabName);
+      const tab = this.tabOptions.find((option) => option.name === tabItem.portalName);
       if (tab) {
         const tabs = [...this.tabs];
-        tabs.push(tab);
+        tabs.push({ ...tab, ...tabItem });
         this.tabs = [...tabs];
         this.setSelectedIndex(this.tabs.length - 1);
       }

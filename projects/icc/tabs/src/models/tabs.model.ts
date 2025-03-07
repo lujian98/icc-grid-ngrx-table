@@ -1,4 +1,5 @@
 import { IccPortalContent } from '@icc/ui/portal';
+import { IccMenuConfig } from '@icc/ui/menu';
 import { IccTabGroupConfig } from './tab-group.model';
 
 export interface IccTabConfig {
@@ -23,6 +24,11 @@ export const defaultTabsConfig: IccTabsConfig = {
   selectedTabIndex: 0,
   alignTabs: 'start',
 };
+
+export interface IccTabMenuConfig extends IccMenuConfig {
+  portalName?: string;
+  context?: {};
+}
 
 export enum IccContextMenuType {
   CLOSE = 'Close',
