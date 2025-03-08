@@ -1,15 +1,6 @@
-import { CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
@@ -49,17 +40,15 @@ import {
   ],
 })
 export class IccTabsComponent {
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private initialized: boolean = false;
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);
   private tabsId = uniqueId(16);
   private _options: IccTabConfig[] = [];
   private _tabs: IccTabConfig[] = [];
-  private initialized: boolean = false;
   tabsConfig$!: Observable<IccTabsConfig>;
   tabsSetting$!: Observable<IccTabsSetting>;
   tabsTabs$!: Observable<IccTabConfig[]>;
-
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
@@ -110,28 +99,16 @@ export class IccTabsComponent {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
-  @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
-
-  addTab(tabItem: IccTabMenuConfig): void {
-    this.tabsFacade.setAddTab(this.tabsId, tabItem);
-  }
-
-  private setSelectedIndex(index: number): void {
-    this.tabsConfig = {
-      ...this.tabsConfig,
-      selectedTabIndex: index,
-    };
-    this.changeDetectorRef.markForCheck();
-  }
-
   onSelectedIndexChange(index: number): void {
     this.tabsFacade.setSelectedIndex(this.tabsId, index);
   }
 
   drop(event: CdkDragDrop<IccTabConfig>): void {
-    const prevActive = this.tabs[this.tabsConfig.selectedTabIndex];
-    moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
-    this.setSelectedIndex(this.tabs.indexOf(prevActive));
-    this.iccTabsChange.emit(this.tabs);
+    this.tabsFacade.setDragDropTab(this.tabsId, event.previousIndex, event.currentIndex);
+  }
+
+  // add tab from left side menu
+  addTab(tabItem: IccTabMenuConfig | IccTabConfig): void {
+    this.tabsFacade.setAddTab(this.tabsId, tabItem);
   }
 }

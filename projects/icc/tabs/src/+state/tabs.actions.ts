@@ -41,6 +41,11 @@ export const setAddTab = createAction(
   props<{ tabsId: string; tab: IccTabMenuConfig | IccTabConfig }>(),
 );
 
+export const setDragDropTab = createAction(
+  '[Tabs] Set Drag Drop Tab',
+  props<{ tabsId: string; previousIndex: number; currentIndex: number }>(),
+);
+
 export const setSelectedIndex = createAction('[Tabs] Set Selected Index', props<{ tabsId: string; index: number }>());
 
 export const clearTabsStore = createAction('[Tabs]] Clear Tabs Store', props<{ tabsId: string }>());

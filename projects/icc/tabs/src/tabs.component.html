@@ -17,7 +17,6 @@
           <ng-template icc-tab-label>
             <icc-tabs-tab [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-tab>
           </ng-template>
-
           @if (index === tabsConfig.selectedTabIndex) {
             <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
           }

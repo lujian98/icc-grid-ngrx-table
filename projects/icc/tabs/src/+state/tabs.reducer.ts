@@ -1,3 +1,4 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { TabsState, defaultTabsState, IccTabMenuConfig } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
@@ -75,7 +76,6 @@ export const iccTabsFeature = createFeature({
       console.log(' tabs newState=', newState);
       return { ...newState };
     }),
-
     on(tabsActions.setSelectedIndex, (state, action) => {
       const key = action.tabsId;
       const newState: TabsState = { ...state };
@@ -88,10 +88,9 @@ export const iccTabsFeature = createFeature({
           },
         };
       }
-      console.log(' setSelectedIndex newState=', newState);
+      //console.log(' setSelectedIndex newState=', newState);
       return { ...newState };
     }),
-
     on(tabsActions.setAddTab, (state, action) => {
       const key = action.tabsId;
       const newState: TabsState = { ...state };
@@ -120,10 +119,29 @@ export const iccTabsFeature = createFeature({
           tabs,
         };
       }
-      console.log(' setAddTab newState=', newState);
+      //console.log(' setAddTab newState=', newState);
       return { ...newState };
     }),
-
+    on(tabsActions.setDragDropTab, (state, action) => {
+      const key = action.tabsId;
+      const newState: TabsState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const tabs = oldState.tabs;
+        const prevActive = tabs[oldState.tabsConfig.selectedTabIndex];
+        moveItemInArray(tabs, action.previousIndex, action.currentIndex);
+        newState[key] = {
+          ...state[key],
+          tabsConfig: {
+            ...state[key].tabsConfig,
+            selectedTabIndex: tabs.indexOf(prevActive),
+          },
+          tabs,
+        };
+      }
+      //console.log(' setDragDropTab newState=', newState);
+      return { ...newState };
+    }),
     on(tabsActions.removeTabsStore, (state, action) => {
       const key = action.tabsId;
       const newState: TabsState = { ...state };

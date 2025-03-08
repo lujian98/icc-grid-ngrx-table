@@ -40,6 +40,10 @@ export class IccTabsFacade {
     this.store.dispatch(tabsActions.setAddTab({ tabsId, tab }));
   }
 
+  setDragDropTab(tabsId: string, previousIndex: number, currentIndex: number): void {
+    this.store.dispatch(tabsActions.setDragDropTab({ tabsId, previousIndex, currentIndex }));
+  }
+
   clearTabsStore(tabsId: string): void {
     this.store.dispatch(tabsActions.clearTabsStore({ tabsId }));
   }
