@@ -16,7 +16,7 @@
 
 <ng-template #menu>
   <icc-menus
-    [items]="menuItem"
+    [items]="contextMenu"
     [level]="1"
     [disabled]="getDisabled(tab)"
     (iccMenuItemClick)="onContextMenuClicked($event, tab)"

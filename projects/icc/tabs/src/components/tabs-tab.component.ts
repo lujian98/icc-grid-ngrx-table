@@ -34,7 +34,7 @@ import {
 export class IccTabsTabComponent {
   private tabsFacade = inject(IccTabsFacade);
   position: IccPosition = IccPosition.BOTTOMRIGHT;
-  menuItem = defaultContextMenu;
+  contextMenu = defaultContextMenu;
 
   @Input() tabsConfig!: IccTabsConfig;
   @Input() tabsSetting!: IccTabsSetting;
