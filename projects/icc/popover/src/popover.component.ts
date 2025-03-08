@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, inject } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
@@ -17,6 +17,7 @@ import { IccPopoverContainer } from './popover.model';
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent<T> implements IccPopoverContainer {
+  private sanitizer = inject(DomSanitizer);
   @Input() content!: IccPortalContent<T>;
   @Input() context!: Object;
   @Input() popoverService!: IccPopoverService<T>;
@@ -26,9 +27,7 @@ export class IccPopoverComponent<T> implements IccPopoverContainer {
     return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
   }
 
-  @ViewChild(IccPortalComponent, { static: true }) overlayContainer!: IccPortalComponent<T>;
-
-  constructor(private sanitizer: DomSanitizer) {}
+  @ViewChild(IccPortalComponent, { static: true }) portal!: IccPortalComponent<T>;
 
   close(): void {
     this.popoverService.hide();
@@ -40,7 +39,7 @@ export class IccPopoverComponent<T> implements IccPopoverContainer {
   }
 
   private detachContent(): void {
-    this.overlayContainer.detach();
+    this.portal.detach();
   }
 
   private attachContent(): void {
@@ -49,12 +48,12 @@ export class IccPopoverComponent<T> implements IccPopoverContainer {
         $implicit: this.context,
         close: this.close.bind(this),
       };
-      this.overlayContainer.createTemplatePortal(this.content, context);
+      this.portal.createTemplatePortal(this.content, context);
     } else if (this.content instanceof Type) {
       const context = Object.assign({}, this.context, {
         close: this.close.bind(this),
       });
-      this.overlayContainer.createComponentPortal(this.content, context);
+      this.portal.createComponentPortal(this.content, context);
     }
   }
 }
