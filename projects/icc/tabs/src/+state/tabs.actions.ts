@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccTabsConfig, IccTabConfig, IccTabPortalConfig } from '../models/tabs.model';
+import { IccTabsConfig, IccTabConfig } from '../models/tabs.model';
 
 export const initTabsConfig = createAction(
   '[Tabs] Init Tabs Config',
@@ -36,10 +36,7 @@ export const loadTabsOptionsSuccess = createAction(
   props<{ tabsId: string; options: IccTabConfig[] }>(),
 );
 
-export const setAddTab = createAction(
-  '[Tabs] Set Add Tab',
-  props<{ tabsId: string; tab: IccTabPortalConfig | IccTabConfig }>(),
-);
+export const setAddTab = createAction('[Tabs] Set Add Tab', props<{ tabsId: string; tab: IccTabConfig }>());
 
 export const setDragDropTab = createAction(
   '[Tabs] Set Drag Drop Tab',

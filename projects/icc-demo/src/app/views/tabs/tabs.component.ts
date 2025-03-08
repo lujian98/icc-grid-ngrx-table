@@ -10,7 +10,7 @@ import {
 } from '@icc/ui/layout';
 import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
-import { IccTabConfig, IccTabsComponent, IccTabsConfig, IccTabPortalConfig } from '@icc/ui/tabs';
+import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
 import { PortalDemoComponent } from '../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../dashboard/demos/portal-demo2/portal-demo2.component';
@@ -44,7 +44,7 @@ export class AppTabsComponent {
     skills: [12, 13, 14, 15, 16],
   };
 
-  tabMenus: IccTabPortalConfig[] = [
+  tabMenus: IccTabConfig[] = [
     {
       name: 'grid-selection1',
       portalName: 'grid-multi-row-selection',
@@ -133,8 +133,8 @@ export class AppTabsComponent {
 
   @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
-  onMenuItemClick(item: IccTabPortalConfig): void {
-    if (item.link) {
+  onMenuItemClick(item: IccTabConfig | IccMenuConfig): void {
+    if ((item as IccMenuConfig).link) {
       this.useRouterLink = true;
     } else {
       this.useRouterLink = false;

@@ -82,30 +82,25 @@ export class IccTabsTabComponent {
     }
   }
 
-  onMenuItemClicked(menuItem: IccMenuConfig, tab: IccTabConfig): void {
+  onContextMenuClicked(menuItem: IccMenuConfig, tab: IccTabConfig): void {
     const selectedTabIndex = this.tabsConfig.selectedTabIndex;
     const prevActive = this.tabs[selectedTabIndex];
-    const tabs = this.getContextMenuClicked(menuItem, this.tabs, tab, this.index);
+    const tabs = this.contextMenuClicked(menuItem, this.tabs, tab);
     this.tabsFacade.setTabsTabs(this.tabsSetting.tabsId, tabs);
     this.checkSelectedTab(tabs, prevActive, selectedTabIndex);
   }
 
-  private getContextMenuClicked(
-    menuItem: IccMenuConfig,
-    tabs: IccTabConfig[],
-    tab: IccTabConfig,
-    index: number,
-  ): IccTabConfig[] {
-    switch (menuItem.name) {
+  private contextMenuClicked(menu: IccMenuConfig, tabs: IccTabConfig[], tab: IccTabConfig): IccTabConfig[] {
+    switch (menu.name) {
       case IccContextMenuType.CLOSE:
         return [...tabs].filter((item) => item.name !== tab.name || !item.closeable);
       case IccContextMenuType.CLOSE_OTHER_TABS:
         return [...tabs].filter((item) => item.name === tab.name || !item.closeable);
       case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
-        return [...tabs].filter((item, idx) => idx < index + 1 || !item.closeable);
+        return [...tabs].filter((item, idx) => idx < this.index + 1 || !item.closeable);
       case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
-        const right = [...tabs].slice(index);
-        const notCloseable = [...tabs].slice(0, index).filter((item) => !item.closeable);
+        const right = [...tabs].slice(this.index);
+        const notCloseable = [...tabs].slice(0, this.index).filter((item) => !item.closeable);
         return [...notCloseable, ...right];
       case IccContextMenuType.CLOSE_ALL_TABS:
         return [...tabs].filter((item) => !item.closeable);

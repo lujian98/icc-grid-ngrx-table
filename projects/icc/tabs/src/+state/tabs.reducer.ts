@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { defaultTabsState, IccTabPortalConfig, TabsState } from '../models/tabs.model';
+import { defaultTabsState, TabsState } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
 
 export const initialState: TabsState = {};
@@ -95,7 +95,7 @@ export const iccTabsFeature = createFeature({
         let tabs = [...oldState.tabs];
         const find = oldState.tabs.findIndex((item) => item.name === action.tab.name);
         if (find === -1) {
-          const tab = oldState.options.find((option) => option.name === (action.tab as IccTabPortalConfig).portalName);
+          const tab = oldState.options.find((option) => option.name === action.tab.portalName);
           const newtabs = [...oldState.tabs];
           if (tab) {
             newtabs.push({ ...tab, ...action.tab });

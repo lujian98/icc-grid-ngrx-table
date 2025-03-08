@@ -1,5 +1,4 @@
 import { IccPortalContent } from '@icc/ui/portal';
-import { IccMenuConfig } from '@icc/ui/menu';
 import { IccTabGroupConfig } from './tab-group.model';
 
 export interface IccTabConfig {
@@ -9,6 +8,7 @@ export interface IccTabConfig {
   context?: {};
   closeable?: boolean;
   disabled?: boolean;
+  portalName?: string; //used for mapping content to save config
 }
 
 export interface IccTabsConfig extends IccTabGroupConfig {
@@ -39,11 +39,7 @@ export const defaultTabsConfig: IccTabsConfig = {
 export interface IccTabsSetting {
   // for internal setting
   tabsId: string;
-  viewportReady: boolean;
-}
-
-export interface IccTabPortalConfig extends IccMenuConfig, IccTabConfig {
-  portalName?: string;
+  viewportReady: boolean; //not used
 }
 
 export interface TabsState {

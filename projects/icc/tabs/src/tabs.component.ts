@@ -1,7 +1,7 @@
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { uniqueId } from '@icc/ui/core';
+import { isEqual, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
@@ -16,7 +16,6 @@ import {
   defaultContextMenu,
   defaultTabsConfig,
   IccTabConfig,
-  IccTabPortalConfig,
   IccTabsConfig,
   IccTabsSetting,
 } from './models/tabs.model';
@@ -40,7 +39,6 @@ import {
   ],
 })
 export class IccTabsComponent {
-  private initialized: boolean = false;
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);
   private tabsId = uniqueId(16);
@@ -54,10 +52,9 @@ export class IccTabsComponent {
 
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
-    this._tabsConfig = { ...defaultTabsConfig, ...value };
-    if (!this.initialized) {
-      this.initTabsConfig();
-    } else {
+    const config = { ...defaultTabsConfig, ...value };
+    if (!isEqual(config, this.tabsConfig)) {
+      this._tabsConfig = config;
       this.tabsFacade.setTabsConfig(this.tabsId, this.tabsConfig);
     }
   }
@@ -65,21 +62,10 @@ export class IccTabsComponent {
     return this._tabsConfig;
   }
 
-  private initTabsConfig(): void {
-    if (!this.initialized) {
-      this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
-      this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
-      this.tabsTabs$ = this.tabsFacade.selectTabsTabs(this.tabsId);
-      this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
-      this.initialized = true;
-    }
-  }
-
   @Input()
   set options(options: IccTabConfig[]) {
     this._options = [...options];
     if (!this.tabsConfig.remoteOptions) {
-      this.initTabsConfig();
       this.tabsFacade.setTabsOptions(this.tabsId, this.options);
     }
   }
@@ -91,12 +77,22 @@ export class IccTabsComponent {
   set tabs(tabs: IccTabConfig[]) {
     this._tabs = [...tabs];
     if (!this.tabsConfig.remoteTabs) {
-      this.initTabsConfig();
       this.tabsFacade.setTabsTabs(this.tabsId, this.tabs);
     }
   }
   get tabs(): IccTabConfig[] {
     return this._tabs;
+  }
+
+  constructor() {
+    this.initTabsConfig();
+  }
+
+  private initTabsConfig(): void {
+    this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
+    this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
+    this.tabsTabs$ = this.tabsFacade.selectTabsTabs(this.tabsId);
+    this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
   }
 
   onSelectedIndexChange(index: number): void {
@@ -108,7 +104,7 @@ export class IccTabsComponent {
   }
 
   // add tab from left side menu
-  addTab(tabItem: IccTabPortalConfig | IccTabConfig): void {
+  addTab(tabItem: IccTabConfig): void {
     this.tabsFacade.setAddTab(this.tabsId, tabItem);
   }
 }
