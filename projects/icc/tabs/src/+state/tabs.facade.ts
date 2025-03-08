@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccTabsConfig, IccTabsSetting, IccTabConfig } from '../models/tabs.model';
+import { IccTabConfig, IccTabsConfig, IccTabsSetting } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
-import { selectTabsSetting, selectTabsConfig, selectTabsTabs, selectTabsOptions } from './tabs.selectors';
+import { selectTabsConfig, selectTabsOptions, selectTabsSetting, selectTabsTabs } from './tabs.selectors';
 
 @Injectable()
 export class IccTabsFacade {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
-import { IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPosition } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { Observable } from 'rxjs';
 import { IccTabsStateModule } from './+state/tabs-state.module';
@@ -55,7 +55,11 @@ export class IccTabsComponent {
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
     this._tabsConfig = { ...defaultTabsConfig, ...value };
-    this.initTabsConfig();
+    if (!this.initialized) {
+      this.initTabsConfig();
+    } else {
+      this.tabsFacade.setTabsConfig(this.tabsId, this.tabsConfig);
+    }
   }
   get tabsConfig(): IccTabsConfig {
     return this._tabsConfig;
@@ -93,10 +97,6 @@ export class IccTabsComponent {
   }
   get tabs(): IccTabConfig[] {
     return this._tabs;
-  }
-
-  get contextMenuTrigger(): IccTrigger {
-    return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
   onSelectedIndexChange(index: number): void {

@@ -1,14 +1,6 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
@@ -19,11 +11,10 @@ import { IccTabsStateModule } from '../+state/tabs-state.module';
 import { IccTabsFacade } from '../+state/tabs.facade';
 import {
   defaultContextMenu,
-  defaultTabsConfig,
   IccContextMenuType,
   IccTabConfig,
-  IccTabMenuConfig,
   IccTabsConfig,
+  IccTabsSetting,
 } from '../models/tabs.model';
 
 @Component({
@@ -41,20 +32,12 @@ import {
   ],
 })
 export class IccTabsTabComponent {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
-  @Input()
-  set tabsConfig(value: IccTabsConfig) {
-    this._tabsConfig = value;
-  }
-  get tabsConfig(): IccTabsConfig {
-    return this._tabsConfig;
-  }
-
+  @Input() tabsConfig!: IccTabsConfig;
+  @Input() tabsSetting!: IccTabsSetting;
   @Input() tab!: IccTabConfig;
   @Input() tabs!: IccTabConfig[];
   @Input() index!: number;
@@ -84,50 +67,6 @@ export class IccTabsTabComponent {
     return tab.title || tab.name;
   }
 
-  private setSelectedIndex(index: number): void {
-    this.tabsConfig = {
-      ...this.tabsConfig,
-      selectedTabIndex: index,
-    };
-    this.changeDetectorRef.markForCheck();
-  }
-
-  onMenuItemClicked(menuItem: IccMenuConfig, tab: IccTabConfig): void {
-    const index = this.index;
-    const prevActive = this.tabs[this.tabsConfig.selectedTabIndex];
-    switch (menuItem.name) {
-      case IccContextMenuType.CLOSE:
-        this.tabs = [...this.tabs].filter((item) => item.name !== tab.name || !item.closeable);
-        break;
-      case IccContextMenuType.CLOSE_OTHER_TABS:
-        this.tabs = [...this.tabs].filter((item) => item.name === tab.name || !item.closeable);
-        break;
-      case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
-        this.tabs = [...this.tabs].filter((item, idx) => idx < index + 1 || !item.closeable);
-        break;
-      case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
-        const right = [...this.tabs].slice(index);
-        const notCloseable = [...this.tabs].slice(0, index).filter((item) => !item.closeable);
-        this.tabs = [...notCloseable, ...right];
-        break;
-      case IccContextMenuType.CLOSE_ALL_TABS:
-        this.tabs = [...this.tabs].filter((item) => !item.closeable);
-        break;
-    }
-    this.checkSelectedTab(prevActive, index);
-    this.changeDetectorRef.markForCheck();
-    this.iccTabsChange.emit(this.tabs);
-  }
-
-  closeTab(event: MouseEvent, tab: IccTabConfig): void {
-    const index = this.index;
-    event.stopPropagation();
-    const prevActive = this.tabs[this.tabsConfig.selectedTabIndex];
-    this.tabs = [...this.tabs].filter((item) => item.name !== tab.name);
-    this.checkSelectedTab(prevActive, index);
-    this.iccTabsChange.emit(this.tabs);
-  }
-
   private menuItemDisabled(name: IccContextMenuType, tab: IccTabConfig, index: number): boolean {
     switch (name) {
       case IccContextMenuType.CLOSE:
@@ -145,17 +84,57 @@ export class IccTabsTabComponent {
     }
   }
 
-  private checkSelectedTab(prevActive: IccTabConfig, index: number): void {
-    const findPrevActive = this.tabs.findIndex((item) => item.name === prevActive.name);
+  onMenuItemClicked(menuItem: IccMenuConfig, tab: IccTabConfig): void {
+    const selectedTabIndex = this.tabsConfig.selectedTabIndex;
+    const prevActive = this.tabs[selectedTabIndex];
+    const tabs = this.getContextMenuClicked(menuItem, this.tabs, tab, this.index);
+    this.tabsFacade.setTabsTabs(this.tabsSetting.tabsId, tabs);
+    this.checkSelectedTab(tabs, prevActive, selectedTabIndex);
+  }
+
+  private getContextMenuClicked(
+    menuItem: IccMenuConfig,
+    tabs: IccTabConfig[],
+    tab: IccTabConfig,
+    index: number,
+  ): IccTabConfig[] {
+    switch (menuItem.name) {
+      case IccContextMenuType.CLOSE:
+        return [...tabs].filter((item) => item.name !== tab.name || !item.closeable);
+      case IccContextMenuType.CLOSE_OTHER_TABS:
+        return [...tabs].filter((item) => item.name === tab.name || !item.closeable);
+      case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
+        return [...tabs].filter((item, idx) => idx < index + 1 || !item.closeable);
+      case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
+        const right = [...tabs].slice(index);
+        const notCloseable = [...tabs].slice(0, index).filter((item) => !item.closeable);
+        return [...notCloseable, ...right];
+      case IccContextMenuType.CLOSE_ALL_TABS:
+        return [...tabs].filter((item) => !item.closeable);
+    }
+    return [...tabs];
+  }
+
+  closeTab(event: MouseEvent, tab: IccTabConfig): void {
+    const index = this.index;
+    event.stopPropagation();
+    const selectedTabIndex = this.tabsConfig.selectedTabIndex;
+    const prevActive = this.tabs[selectedTabIndex];
+    const tabs = [...this.tabs].filter((item) => item.name !== tab.name);
+    this.tabsFacade.setTabsTabs(this.tabsSetting.tabsId, tabs);
+    this.checkSelectedTab(tabs, prevActive, selectedTabIndex);
+  }
+
+  private checkSelectedTab(tabs: IccTabConfig[], prevActive: IccTabConfig, selectedTabIndex: number): void {
+    const findPrevActive = tabs.findIndex((item) => item.name === prevActive.name);
     if (this.tabs.length === 0) {
-      this.setSelectedIndex(-1);
-    } else if (findPrevActive === -1 || findPrevActive !== this.tabsConfig.selectedTabIndex) {
-      this.setSelectedIndex(-1);
+      this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, -1);
+    } else if (findPrevActive === -1 || findPrevActive !== selectedTabIndex) {
+      this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, -1);
       timer(10)
         .pipe(take(1))
         .subscribe(() => {
-          this.setSelectedIndex(0);
-          this.changeDetectorRef.markForCheck();
+          this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, 0);
         });
     }
   }

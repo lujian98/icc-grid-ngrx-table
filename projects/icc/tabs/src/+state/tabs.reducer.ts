@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { TabsState, defaultTabsState, IccTabMenuConfig } from '../models/tabs.model';
+import { defaultTabsState, IccTabMenuConfig, TabsState } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
 
 export const initialState: TabsState = {};
