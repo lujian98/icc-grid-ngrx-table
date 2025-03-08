@@ -13,7 +13,7 @@
       [icc-align-tabs]="tabsConfig.alignTabs"
     >
       @for (tab of tabs; track $index; let index = $index) {
-        <icc-tab>
+        <icc-tab [disabled]="tab.disabled">
           <ng-template icc-tab-label>
             <icc-tabs-tab
               [tabsConfig]="tabsConfig"
@@ -24,7 +24,7 @@
             >
             </icc-tabs-tab>
           </ng-template>
-          @if (index === tabsConfig.selectedTabIndex) {
+          @if (index === tabsConfig.selectedTabIndex && !tab.disabled) {
             <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
           }
         </icc-tab>

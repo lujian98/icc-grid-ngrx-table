@@ -39,9 +39,9 @@ import {
   ],
 })
 export class IccTabsComponent {
-  private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);
   private tabsId = uniqueId(16);
+  private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private _options: IccTabConfig[] = [];
   private _tabs: IccTabConfig[] = [];
   tabsConfig$!: Observable<IccTabsConfig>;

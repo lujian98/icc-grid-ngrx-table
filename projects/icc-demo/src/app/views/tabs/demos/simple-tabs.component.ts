@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
+import { IccTabsComponent, IccTabsConfig, IccTabConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../../d3/demos/stock-charts/stock-chart.component';
 import { AppGridRemoteVirtualScrollComponent } from '../../grid/remote-data/grid-virtual-scroll.component';
 import { AppGridMultiRowSelectionComponent } from '../../grid/remote-data/grid-multi-row-selection.component';
@@ -27,7 +27,7 @@ export class AppSimpleTabsComponent {
     skills: [12, 13, 14, 15, 16],
   };
 
-  tabs = [
+  tabs: IccTabConfig[] = [
     {
       name: 'one',
       content: AppGridMultiRowSelectionComponent,
@@ -38,6 +38,7 @@ export class AppSimpleTabsComponent {
       title: 'Two',
       content: AppStockChartComponent,
       closeable: false,
+      //disabled: true,
     },
     {
       name: 'three',
@@ -60,9 +61,11 @@ export class AppSimpleTabsComponent {
       name: 'six',
       content: 'test6',
       closeable: true,
+      disabled: true,
     },
     {
       name: 'seven',
+      content: 'test7',
       closeable: true,
     },
   ];
