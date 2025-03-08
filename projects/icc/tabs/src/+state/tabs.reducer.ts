@@ -10,7 +10,6 @@ export const iccTabsFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(tabsActions.initTabsConfig, (state, action) => {
-      //console.log(' 0000000000000000000000000=');
       const tabsConfig = { ...action.tabsConfig };
       const key = action.tabsId;
       const newState: TabsState = { ...state };
@@ -41,7 +40,6 @@ export const iccTabsFeature = createFeature({
           },
         };
       }
-      console.log(' config newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.loadTabsOptionsSuccess, (state, action) => {
@@ -57,7 +55,6 @@ export const iccTabsFeature = createFeature({
           options: [...action.options],
         };
       }
-      console.log(' option newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.loadTabsTabsSuccess, (state, action) => {
@@ -73,7 +70,6 @@ export const iccTabsFeature = createFeature({
           tabs: [...action.tabs],
         };
       }
-      console.log(' tabs newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.setSelectedIndex, (state, action) => {
@@ -88,7 +84,6 @@ export const iccTabsFeature = createFeature({
           },
         };
       }
-      //console.log(' setSelectedIndex newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.setAddTab, (state, action) => {
@@ -119,7 +114,6 @@ export const iccTabsFeature = createFeature({
           tabs,
         };
       }
-      //console.log(' setAddTab newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.setDragDropTab, (state, action) => {
@@ -139,7 +133,6 @@ export const iccTabsFeature = createFeature({
           tabs,
         };
       }
-      //console.log(' setDragDropTab newState=', newState);
       return { ...newState };
     }),
     on(tabsActions.removeTabsStore, (state, action) => {
