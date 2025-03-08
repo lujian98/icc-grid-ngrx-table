@@ -122,11 +122,11 @@ export class IccTabsTabComponent {
     if (this.tabs.length === 0) {
       this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, -1);
     } else if (findPrevActive === -1 || findPrevActive !== selectedTabIndex) {
-      this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, -1);
+      this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, 0);
       timer(10)
         .pipe(take(1))
         .subscribe(() => {
-          this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, 0);
+          //this.tabsFacade.setSelectedIndex(this.tabsSetting.tabsId, 0);
         });
     }
   }
