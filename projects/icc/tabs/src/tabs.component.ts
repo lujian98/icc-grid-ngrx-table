@@ -16,7 +16,7 @@ import {
   defaultContextMenu,
   defaultTabsConfig,
   IccTabConfig,
-  IccTabMenuConfig,
+  IccTabPortalConfig,
   IccTabsConfig,
   IccTabsSetting,
 } from './models/tabs.model';
@@ -108,7 +108,7 @@ export class IccTabsComponent {
   }
 
   // add tab from left side menu
-  addTab(tabItem: IccTabMenuConfig | IccTabConfig): void {
+  addTab(tabItem: IccTabPortalConfig | IccTabConfig): void {
     this.tabsFacade.setAddTab(this.tabsId, tabItem);
   }
 }

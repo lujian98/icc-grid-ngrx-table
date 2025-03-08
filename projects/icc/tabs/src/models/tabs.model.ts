@@ -8,6 +8,7 @@ export interface IccTabConfig {
   content?: IccPortalContent<any>;
   context?: {};
   closeable?: boolean;
+  disabled?: boolean;
 }
 
 export interface IccTabsConfig extends IccTabGroupConfig {
@@ -41,6 +42,10 @@ export interface IccTabsSetting {
   viewportReady: boolean;
 }
 
+export interface IccTabPortalConfig extends IccMenuConfig, IccTabConfig {
+  portalName?: string;
+}
+
 export interface TabsState {
   [key: string]: IccTabsState;
 }
@@ -49,7 +54,7 @@ export interface IccTabsState {
   tabsConfig: IccTabsConfig;
   tabsSetting: IccTabsSetting;
   tabs: IccTabConfig[];
-  options: IccTabConfig[];
+  options: IccTabConfig[]; // options are input to tabs mapped using portalName to portal component
 }
 
 export const defaultTabsSetting: IccTabsSetting = {
@@ -63,10 +68,6 @@ export const defaultTabsState: IccTabsState = {
   tabs: [],
   options: [],
 };
-
-export interface IccTabMenuConfig extends IccMenuConfig, IccTabConfig {
-  portalName?: string;
-}
 
 export enum IccContextMenuType {
   CLOSE = 'Close',

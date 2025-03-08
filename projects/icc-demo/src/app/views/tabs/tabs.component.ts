@@ -10,7 +10,7 @@ import {
 } from '@icc/ui/layout';
 import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
-import { IccTabConfig, IccTabsComponent, IccTabsConfig, IccTabMenuConfig } from '@icc/ui/tabs';
+import { IccTabConfig, IccTabsComponent, IccTabsConfig, IccTabPortalConfig } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
 import { PortalDemoComponent } from '../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../dashboard/demos/portal-demo2/portal-demo2.component';
@@ -44,7 +44,7 @@ export class AppTabsComponent {
     skills: [12, 13, 14, 15, 16],
   };
 
-  tabMenus: IccTabMenuConfig[] = [
+  tabMenus: IccTabPortalConfig[] = [
     {
       name: 'grid-selection1',
       portalName: 'grid-multi-row-selection',
@@ -55,7 +55,13 @@ export class AppTabsComponent {
     { name: 'stock-chart', portalName: 'stock-chart', title: 'Stock Chart' },
     { name: 'grid-virtual-scroll', portalName: 'grid-virtual-scroll', title: 'Grid Virtual Scroll' },
     { name: 'portal-demo', portalName: 'portal-demo', context: this.portalData, title: 'Portal Demo' },
-    { name: 'portal-demo2', portalName: 'portal-demo2', context: this.portalData2, title: 'Portal Demo 2' },
+    {
+      name: 'portal-demo2',
+      portalName: 'portal-demo2',
+      content: PortalDemo2Component,
+      context: this.portalData2,
+      title: 'Portal Demo 2',
+    },
     { name: 'portal-demo3', portalName: 'portal-demo', context: this.portalData2, title: 'Portal Demo 3' },
     { name: 'six' },
     { name: 'seven' },
@@ -103,11 +109,12 @@ export class AppTabsComponent {
       content: PortalDemoComponent,
       closeable: true,
     },
+    /*
     {
       name: 'portal-demo2',
       content: PortalDemo2Component,
       closeable: false,
-    },
+    },*/
     {
       name: 'six',
       content: 'test6',
@@ -126,7 +133,7 @@ export class AppTabsComponent {
 
   @ViewChild(IccTabsComponent, { static: false }) tabsPanel!: IccTabsComponent;
 
-  onMenuItemClick(item: IccTabMenuConfig): void {
+  onMenuItemClick(item: IccTabPortalConfig): void {
     if (item.link) {
       this.useRouterLink = true;
     } else {
