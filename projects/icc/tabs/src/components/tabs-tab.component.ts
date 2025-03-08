@@ -1,6 +1,6 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
@@ -45,8 +45,6 @@ export class IccTabsTabComponent {
   get contextMenuTrigger(): IccTrigger {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
-
-  @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
 
   dragDisabled(tab: IccTabConfig): boolean {
     return !this.tabsConfig.tabReorder;
@@ -116,7 +114,6 @@ export class IccTabsTabComponent {
   }
 
   closeTab(event: MouseEvent, tab: IccTabConfig): void {
-    const index = this.index;
     event.stopPropagation();
     const selectedTabIndex = this.tabsConfig.selectedTabIndex;
     const prevActive = this.tabs[selectedTabIndex];
