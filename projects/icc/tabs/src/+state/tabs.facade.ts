@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { IccMenuConfig } from '@icc/ui/menu';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccTabConfig, IccTabsConfig, IccTabsSetting } from '../models/tabs.model';
@@ -42,6 +43,14 @@ export class IccTabsFacade {
 
   setDragDropTab(tabsId: string, previousIndex: number, currentIndex: number): void {
     this.store.dispatch(tabsActions.setDragDropTab({ tabsId, previousIndex, currentIndex }));
+  }
+
+  setContextMenuClicked(tabsId: string, menuItem: IccMenuConfig, tab: IccTabConfig, index: number): void {
+    this.store.dispatch(tabsActions.setContextMenuClicked({ tabsId, menuItem, tab, index }));
+  }
+
+  setCloseTab(tabsId: string, tab: IccTabConfig): void {
+    this.store.dispatch(tabsActions.setCloseTab({ tabsId, tab }));
   }
 
   clearTabsStore(tabsId: string): void {

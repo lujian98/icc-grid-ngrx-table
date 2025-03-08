@@ -1,6 +1,8 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { defaultTabsState, TabsState } from '../models/tabs.model';
+import { contextClickedTabs } from '../utils/context-clicked-tabs';
+import { getSelectedTabIndex } from '../utils/selected-tab-index';
 import * as tabsActions from './tabs.actions';
 
 export const initialState: TabsState = {};
@@ -131,6 +133,46 @@ export const iccTabsFeature = createFeature({
           tabsConfig: {
             ...state[key].tabsConfig,
             selectedTabIndex: tabs.indexOf(prevActive),
+          },
+          tabs,
+        };
+      }
+      return { ...newState };
+    }),
+    on(tabsActions.setContextMenuClicked, (state, action) => {
+      const key = action.tabsId;
+      const newState: TabsState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const oldTabs = oldState.tabs;
+        const selectedTabIndex = oldState.tabsConfig.selectedTabIndex;
+        const prevActive = oldTabs[selectedTabIndex];
+        const tabs = contextClickedTabs(action.menuItem, oldTabs, action.tab, action.index);
+        newState[key] = {
+          ...state[key],
+          tabsConfig: {
+            ...state[key].tabsConfig,
+            selectedTabIndex: getSelectedTabIndex(tabs, prevActive, selectedTabIndex),
+          },
+          tabs,
+        };
+      }
+      return { ...newState };
+    }),
+    on(tabsActions.setCloseTab, (state, action) => {
+      const key = action.tabsId;
+      const newState: TabsState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const oldTabs = oldState.tabs;
+        const selectedTabIndex = oldState.tabsConfig.selectedTabIndex;
+        const prevActive = oldTabs[selectedTabIndex];
+        const tabs = [...oldTabs].filter((item) => item.name !== action.tab.name);
+        newState[key] = {
+          ...state[key],
+          tabsConfig: {
+            ...state[key].tabsConfig,
+            selectedTabIndex: getSelectedTabIndex(tabs, prevActive, selectedTabIndex),
           },
           tabs,
         };
