@@ -1,6 +1,7 @@
 import { CdkPortalOutlet, ComponentPortal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
@@ -23,8 +24,9 @@ import { IccPortalContent } from './portal.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, PortalModule],
 })
-export class IccPortalComponent<T> implements OnDestroy {
+export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef);
+  private isViewReady: boolean = false;
   private componentRef: ComponentRef<T> | undefined;
   private _content!: IccPortalContent<T>;
   private _context!: {};
@@ -32,7 +34,9 @@ export class IccPortalComponent<T> implements OnDestroy {
   @Input()
   set content(content: IccPortalContent<T>) {
     this._content = content;
-    this.addPortalContent(this.content, this.context);
+    if (this.isViewReady) {
+      this.addPortalContent(this.content, this.context);
+    }
   }
   get content(): IccPortalContent<T> {
     return this._content;
@@ -41,7 +45,9 @@ export class IccPortalComponent<T> implements OnDestroy {
   @Input()
   set context(context: {}) {
     this._context = context;
-    this.updateContext();
+    if (this.isViewReady) {
+      this.updateContext();
+    }
   }
   get context(): {} {
     return this._context;
@@ -53,18 +59,14 @@ export class IccPortalComponent<T> implements OnDestroy {
 
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
 
-  private updateContext(): void {
-    if (this.content instanceof Type && this.componentRef?.instance) {
-      Object.assign(this.componentRef.instance, this.context);
-    } else if (this.content instanceof TemplateRef) {
-      this.detach();
-      this.createTemplatePortal(this.content, this.context);
-    }
+  ngAfterViewInit(): void {
+    this.isViewReady = true;
+    this.addPortalContent(this.content, this.context);
   }
 
   addPortalContent(content: IccPortalContent<T>, context: Object, injector?: Injector): void {
-    this.detach();
     if (content instanceof Type) {
+      this.detach();
       this.componentRef = this.createComponentPortal(content, context, injector);
     } else if (content instanceof TemplateRef) {
       this.createTemplatePortal(content, context);
@@ -96,6 +98,15 @@ export class IccPortalComponent<T> implements OnDestroy {
     const templateRef = this.portalOutlet.attachTemplatePortal(portal);
     templateRef.detectChanges();
     return templateRef;
+  }
+
+  private updateContext(): void {
+    if (this.content instanceof Type && this.componentRef?.instance) {
+      Object.assign(this.componentRef.instance, this.context);
+    } else if (this.content instanceof TemplateRef) {
+      this.detach();
+      this.createTemplatePortal(this.content, this.context);
+    }
   }
 
   detach(): void {
