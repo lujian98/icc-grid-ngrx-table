@@ -8,6 +8,7 @@ import {
   inject,
   Input,
   Output,
+  OnInit,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -52,29 +53,58 @@ export class IccTabsComponent {
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private tabsFacade = inject(IccTabsFacade);
   private tabsId = uniqueId(16);
+  private _options: IccTabConfig[] = [];
+  private _tabs: IccTabConfig[] = [];
+  private initialized: boolean = false;
   tabsConfig$!: Observable<IccTabsConfig>;
   tabsSetting$!: Observable<IccTabsSetting>;
+  tabsTabs$!: Observable<IccTabConfig[]>;
 
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
   @Input()
   set tabsConfig(value: Partial<IccTabsConfig>) {
-    this.initTabsConfig({ ...defaultTabsConfig, ...value });
+    this._tabsConfig = { ...defaultTabsConfig, ...value };
+    this.initTabsConfig();
   }
   get tabsConfig(): IccTabsConfig {
     return this._tabsConfig;
   }
 
-  private initTabsConfig(value: IccTabsConfig): void {
-    this._tabsConfig = { ...value };
-    this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
-    this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
-    this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
+  private initTabsConfig(): void {
+    if (!this.initialized) {
+      this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
+      this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
+      this.tabsTabs$ = this.tabsFacade.selectTabsTabs(this.tabsId);
+      this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
+      this.initialized = true;
+    }
   }
 
-  @Input() tabOptions: IccTabConfig[] = [];
-  @Input() tabs!: IccTabConfig[];
+  @Input()
+  set options(options: IccTabConfig[]) {
+    this._options = [...options];
+    if (!this.tabsConfig.remoteOptions) {
+      this.initTabsConfig();
+      this.tabsFacade.setTabsOptions(this.tabsId, this.options);
+    }
+  }
+  get options(): IccTabConfig[] {
+    return this._options;
+  }
+
+  @Input()
+  set tabs(tabs: IccTabConfig[]) {
+    this._tabs = [...tabs];
+    if (!this.tabsConfig.remoteTabs) {
+      this.initTabsConfig();
+      this.tabsFacade.setTabsTabs(this.tabsId, this.tabs);
+    }
+  }
+  get tabs(): IccTabConfig[] {
+    return this._tabs;
+  }
 
   get contextMenuTrigger(): IccTrigger {
     return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
@@ -83,18 +113,7 @@ export class IccTabsComponent {
   @Output() iccTabsChange = new EventEmitter<IccTabConfig[]>(false);
 
   addTab(tabItem: IccTabMenuConfig): void {
-    const find = this.tabs.findIndex((item) => item.name === tabItem.name);
-    if (find === -1) {
-      const tab = this.tabOptions.find((option) => option.name === tabItem.portalName);
-      if (tab) {
-        const tabs = [...this.tabs];
-        tabs.push({ ...tab, ...tabItem });
-        this.tabs = [...tabs];
-        this.setSelectedIndex(this.tabs.length - 1);
-      }
-    } else {
-      this.setSelectedIndex(find);
-    }
+    this.tabsFacade.setAddTab(this.tabsId, tabItem);
   }
 
   private setSelectedIndex(index: number): void {
@@ -106,7 +125,7 @@ export class IccTabsComponent {
   }
 
   onSelectedIndexChange(index: number): void {
-    this.setSelectedIndex(index);
+    this.tabsFacade.setSelectedIndex(this.tabsId, index);
   }
 
   drop(event: CdkDragDrop<IccTabConfig>): void {

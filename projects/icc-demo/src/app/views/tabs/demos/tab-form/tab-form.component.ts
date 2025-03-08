@@ -40,6 +40,7 @@ export class AppTabFormComponent {
     enableContextMenu: true,
   };
 
+  options = [];
   tabs = [
     {
       name: 'tab1',

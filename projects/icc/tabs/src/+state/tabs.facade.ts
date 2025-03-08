@@ -20,12 +20,24 @@ export class IccTabsFacade {
     }
   }
 
+  setTabsConfig(tabsId: string, tabsConfig: IccTabsConfig): void {
+    this.store.dispatch(tabsActions.loadTabsConfigSuccess({ tabsId, tabsConfig }));
+  }
+
   setTabsTabs(tabsId: string, tabs: IccTabConfig[]): void {
     this.store.dispatch(tabsActions.loadTabsTabsSuccess({ tabsId, tabs }));
   }
 
   setTabsOptions(tabsId: string, options: IccTabConfig[]): void {
     this.store.dispatch(tabsActions.loadTabsOptionsSuccess({ tabsId, options }));
+  }
+
+  setSelectedIndex(tabsId: string, index: number): void {
+    this.store.dispatch(tabsActions.setSelectedIndex({ tabsId, index }));
+  }
+
+  setAddTab(tabsId: string, tab: IccTabConfig): void {
+    this.store.dispatch(tabsActions.setAddTab({ tabsId, tab }));
   }
 
   clearTabsStore(tabsId: string): void {

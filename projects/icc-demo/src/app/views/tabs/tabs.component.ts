@@ -82,7 +82,7 @@ export class AppTabsComponent {
     selectedTabIndex: 1,
   };
 
-  tabOptions = [
+  options = [
     {
       name: 'grid-multi-row-selection',
       content: AppGridMultiRowSelectionComponent,
@@ -119,7 +119,7 @@ export class AppTabsComponent {
     },
   ];
 
-  tabs: IccTabConfig[] = this.tabOptions.map((option) => {
+  tabs: IccTabConfig[] = this.options.map((option) => {
     const find = this.tabMenus.find((item) => item.portalName === option.name);
     return { ...option, ...find };
   });

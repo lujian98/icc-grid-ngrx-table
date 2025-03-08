@@ -1,26 +1,28 @@
 <ng-container *ngIf="tabsConfig$ | async as tabsConfig">
-  <icc-tab-group
-    *ngIf="tabsSetting$ | async as tabsSetting"
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="drop($event)"
-    cdkDropListElementContainer=".icc-mdc-tab-labels"
-    class="icc-drag-tabs"
-    [selectedIndex]="tabsConfig.selectedTabIndex"
-    animationDuration="0"
-    (selectedIndexChange)="onSelectedIndexChange($event)"
-    [icc-align-tabs]="tabsConfig.alignTabs"
-  >
-    @for (tab of tabs; track $index; let index = $index) {
-      <icc-tab>
-        <ng-template icc-tab-label>
-          <icc-tabs-tab [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-tab>
-        </ng-template>
+  <ng-container *ngIf="tabsSetting$ | async as tabsSetting">
+    <icc-tab-group
+      *ngIf="tabsTabs$ | async as tabs"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      cdkDropListElementContainer=".icc-mdc-tab-labels"
+      class="icc-drag-tabs"
+      [selectedIndex]="tabsConfig.selectedTabIndex"
+      animationDuration="0"
+      (selectedIndexChange)="onSelectedIndexChange($event)"
+      [icc-align-tabs]="tabsConfig.alignTabs"
+    >
+      @for (tab of tabs; track $index; let index = $index) {
+        <icc-tab>
+          <ng-template icc-tab-label>
+            <icc-tabs-tab [tabsConfig]="tabsConfig" [tab]="tab" [index]="index"> </icc-tabs-tab>
+          </ng-template>
 
-        @if (index === tabsConfig.selectedTabIndex) {
-          <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
-        }
-      </icc-tab>
-    }
-  </icc-tab-group>
+          @if (index === tabsConfig.selectedTabIndex) {
+            <icc-portal [content]="tab.content!" [context]="tab.context!"></icc-portal>
+          }
+        </icc-tab>
+      }
+    </icc-tab-group>
+  </ng-container>
 </ng-container>
