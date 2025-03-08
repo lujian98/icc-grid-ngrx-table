@@ -145,14 +145,13 @@ export const iccTabsFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const oldTabs = oldState.tabs;
-        const selectedTabIndex = oldState.tabsConfig.selectedTabIndex;
-        const prevActive = oldTabs[selectedTabIndex];
+        const prevActive = oldTabs[oldState.tabsConfig.selectedTabIndex];
         const tabs = contextClickedTabs(action.menuItem, oldTabs, action.tab, action.index);
         newState[key] = {
           ...state[key],
           tabsConfig: {
             ...state[key].tabsConfig,
-            selectedTabIndex: getSelectedTabIndex(tabs, prevActive, selectedTabIndex),
+            selectedTabIndex: getSelectedTabIndex(tabs, prevActive),
           },
           tabs,
         };
@@ -165,14 +164,13 @@ export const iccTabsFeature = createFeature({
       if (state[key]) {
         const oldState = state[key];
         const oldTabs = oldState.tabs;
-        const selectedTabIndex = oldState.tabsConfig.selectedTabIndex;
-        const prevActive = oldTabs[selectedTabIndex];
+        const prevActive = oldTabs[oldState.tabsConfig.selectedTabIndex];
         const tabs = [...oldTabs].filter((item) => item.name !== action.tab.name);
         newState[key] = {
           ...state[key],
           tabsConfig: {
             ...state[key].tabsConfig,
-            selectedTabIndex: getSelectedTabIndex(tabs, prevActive, selectedTabIndex),
+            selectedTabIndex: getSelectedTabIndex(tabs, prevActive),
           },
           tabs,
         };
