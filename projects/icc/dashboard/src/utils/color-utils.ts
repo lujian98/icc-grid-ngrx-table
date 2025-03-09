@@ -1,4 +1,5 @@
 export const COLORS: string[] = [
+  // NOT USED
   '#ea4335',
   '#4285f4',
   '#fbbc04',

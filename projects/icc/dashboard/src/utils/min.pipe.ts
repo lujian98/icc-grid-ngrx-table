@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core'; // TODO used this with
+import { Pipe, PipeTransform } from '@angular/core'; // NOT USED
 
 @Pipe({
   name: 'min',

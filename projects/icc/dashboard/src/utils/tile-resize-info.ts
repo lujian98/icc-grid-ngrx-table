@@ -151,6 +151,7 @@ function getDxy<T>(dx: number, dy: number, tile: Tile<T>, resizeMap: ResizeMap, 
   const gridMap = tileGridMap
     .slice(resizeMap.startRow, resizeMap.endRow)
     .map((i) => i.slice(resizeMap.startCol, resizeMap.endCol));
+
   if (gridMap.length === 0) {
     return ret;
   }

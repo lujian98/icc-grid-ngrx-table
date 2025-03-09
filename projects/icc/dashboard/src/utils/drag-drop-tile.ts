@@ -51,6 +51,7 @@ function isDroppable<T>(
     const gridMap = tileGridMap
       .slice(y - 1, y - 1 + tile.rowHeight!)
       .map((i) => i.slice(x - 1, x - 1 + tile.colWidth!));
+
     const gmap = gridMap.map((items, i) => {
       return items
         .map((item) => {
