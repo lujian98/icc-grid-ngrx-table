@@ -1,5 +1,21 @@
 import { IccPortalContent } from '@icc/ui/portal';
 
+export interface IccDashboardConfig {
+  gridGap: number;
+  gridWidth: number;
+  gridHeight: number;
+  cols: number;
+  rows: number;
+}
+
+export const defaultDashboardConfig: IccDashboardConfig = {
+  gridGap: 2,
+  gridWidth: 100,
+  gridHeight: 100,
+  cols: 10,
+  rows: 6,
+};
+
 export interface Tile<T> {
   name: string;
   title?: string;
