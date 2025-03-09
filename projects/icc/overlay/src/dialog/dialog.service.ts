@@ -37,8 +37,8 @@ export class IccDialogService {
         { provide: ICC_DIALOG_CONFIG, useValue: config },
       ],
     });
-    const container = this.createContainer(overlayRef, injector);
-    this.createContent(config, content, container, dialogRef, injector);
+    const portal = this.createContainer(overlayRef, injector);
+    this.createContent(config, content, portal, dialogRef, injector);
     this.registerCloseListeners(config, overlayRef, dialogRef);
     return dialogRef;
   }
@@ -60,17 +60,17 @@ export class IccDialogService {
   private createContent<T>(
     config: IccDialogConfig,
     content: Type<T> | TemplateRef<T>,
-    container: IccPortalComponent<T>,
+    portal: IccPortalComponent<T>,
     dialogRef: IccDialogRef<T>,
     injector: Injector,
   ) {
     if (content instanceof TemplateRef) {
-      container.createTemplatePortal(content, {
+      portal.createTemplatePortal(content, {
         $implicit: config.context,
         dialogRef,
       });
     } else {
-      dialogRef.componentRef = container.createComponentPortal(content, config.context, injector);
+      dialogRef.componentRef = portal.createComponentPortal(content, config.context, injector);
     }
   }
 
