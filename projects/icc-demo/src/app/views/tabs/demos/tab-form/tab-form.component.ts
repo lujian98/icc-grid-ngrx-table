@@ -1,24 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
+import { IccTabsComponent, IccTabsConfig, IccTabConfig } from '@icc/ui/tabs';
+import { take } from 'rxjs';
 import { AppForm1Component } from './form1.component';
 import { AppForm2Component } from './form2.component';
 import { AppForm3Component } from './form3.component';
+import { TabsMockService } from './tabs-mock.service';
 
 @Component({
   selector: 'app-tab-form',
   template: `
     <icc-layout>
       <icc-layout-header>
+        <button icc-button (click)="loadValues()">Load Values</button>
         <button icc-button (click)="checkForm()">Check Form</button>
       </icc-layout-header>
       <icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig"> </icc-tabs>
     </icc-layout>
   `,
-  styles: [':host {  display: flex; flex-direction: column; width: 450px; }'],
+  styles: [':host {  display: flex; flex-direction: column; width: 475px; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -31,6 +34,8 @@ import { AppForm3Component } from './form3.component';
   ],
 })
 export class AppTabFormComponent {
+  private tabsMockService = inject(TabsMockService);
+
   form: FormGroup = new FormGroup({
     fieldA: new FormControl('field A'),
     fieldTest3: new FormControl('Form Panel 3'),
@@ -41,13 +46,14 @@ export class AppTabFormComponent {
   };
 
   options = [];
-  tabs = [
+  tabs: IccTabConfig[] = [
     {
       name: 'tab1',
       title: 'Form Panel 1',
       content: AppForm1Component,
       context: {
         form: this.form,
+        values: ['test1', 'test2', 'test3'],
       },
     },
     {
@@ -77,6 +83,30 @@ export class AppTabFormComponent {
       closeable: true,
     },
   ];
+
+  loadValues(): void {
+    this.tabsMockService
+      .getTabsMockData()
+      .pipe(take(1))
+      .subscribe((values) => {
+        this.setTabContextValues(values);
+      });
+  }
+
+  private setTabContextValues(values: string[][]): void {
+    this.tabs = [...this.tabs].map((tab, index) => {
+      if (index < 3) {
+        return {
+          ...tab,
+          context: {
+            ...tab.context,
+            values: values[index],
+          },
+        };
+      }
+      return { ...tab };
+    });
+  }
 
   checkForm(): void {
     const values = this.form.value;
