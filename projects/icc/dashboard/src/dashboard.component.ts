@@ -20,15 +20,16 @@ import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
 import {
+  defaultDashboardConfig,
   defaultTileConfig,
   defaultTileMenus,
   IccDashboardConfig,
   IccTileOption,
   Tile,
-  defaultDashboardConfig,
 } from './model';
-import { getResizeTileInfo } from './utils/tile-resize-info';
+import { dragDropTile } from './utils/drag-drop-tile';
 import { setTileLayouts } from './utils/setup-tiles';
+import { getResizeTileInfo } from './utils/tile-resize-info';
 
 @Component({
   selector: 'icc-dashboard',
@@ -101,7 +102,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const size = this.getDashboardSize()!;
     const width = (size.width - this.config.cols * this.config.gridGap - 4) / this.config.cols;
     const height = (size.height - this.config.cols * this.config.gridGap - 4) / this.config.rows;
-
     if (width !== this.config.gridWidth || height !== this.config.gridHeight) {
       this.config.gridWidth = width;
       this.config.gridHeight = height;
@@ -115,11 +115,9 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const el = this.elementRef.nativeElement;
     const node = el.firstChild;
     if (node) {
-      const width = node.clientWidth - 0; // - padding left/right
-      const height = node.clientHeight - 30; // - top bar height
       return {
-        width: width,
-        height: height,
+        width: node.clientWidth - 0, // - padding left/right,
+        height: node.clientHeight - 30,
       };
     }
     return null;
@@ -154,54 +152,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>): void {
-    const draggedTile = this.tiles[e.item.data];
-    const dx = Math.round(e.distance.x / this.config.gridWidth);
-    const dy = Math.round(e.distance.y / this.config.gridHeight);
-    const x = Math.min(Math.max(draggedTile.colStart! + dx, 1), this.config.cols);
-    const y = Math.min(Math.max(draggedTile.rowStart! + dy, 1), this.config.rows);
-    const xyState = this.gridMap[y - 1][x - 1];
-    // if drop into empty space check if tile will cover other tile
-    if (e.item.data === tile.index || xyState < 0) {
-      if (this.isDroppable(x, y, draggedTile, tile.index!) && this.isDroppable(x, y, draggedTile, -1)) {
-        draggedTile.colStart = x;
-        draggedTile.rowStart = y;
-      }
-    } else {
-      // if drop into other tile(s)
-      tile = this.tiles[xyState];
-      if (
-        this.isDroppable(tile.colStart! + draggedTile.colWidth!, tile.rowStart!, tile, draggedTile.index!) &&
-        this.isDroppable(tile.colStart!, tile.rowStart!, draggedTile, tile.index!)
-      ) {
-        draggedTile.colStart = tile.colStart;
-        draggedTile.rowStart = tile.rowStart;
-        tile.colStart = draggedTile.colStart! + draggedTile.colWidth!;
-      }
-    }
+    this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
     this.setTileLayouts();
-  }
-
-  private isDroppable(x: number, y: number, tile: Tile<T>, index: number): boolean {
-    if (x <= this.config.cols && y <= this.config.rows) {
-      const gridMap = this.gridMap
-        .slice(y - 1, y - 1 + tile.rowHeight!)
-        .map((i) => i.slice(x - 1, x - 1 + tile.colWidth!));
-      const gmap = gridMap.map((items, i) => {
-        return items
-          .map((item) => {
-            if (item >= 0 && item !== tile.index) {
-              if ((index !== -1 && item !== index) || index === -1) {
-                return item;
-              }
-            }
-            return undefined;
-          })
-          .filter((item) => item !== undefined)
-          .concat();
-      });
-      return Math.max(...([] as number[]).concat(...gmap), -1) === -1;
-    }
-    return false;
   }
 
   @HostListener('window:resize', ['$event'])
