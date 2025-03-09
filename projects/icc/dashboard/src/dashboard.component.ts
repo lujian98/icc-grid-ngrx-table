@@ -28,6 +28,7 @@ import {
   defaultDashboardConfig,
 } from './model';
 import { getResizeTileInfo } from './utils/tile-resize-info';
+import { setTileLayouts } from './utils/setup-tiles';
 
 @Component({
   selector: 'icc-dashboard',
@@ -136,38 +137,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
         this.gridMap[i][j] = -1;
       }
     }
-    this.tiles.forEach((tile, index) => {
-      tile.index = index;
-      if (tile.colWidth! <= 0) {
-        tile.colWidth = 1;
-      }
-      if (tile.rowHeight! <= 0) {
-        tile.rowHeight = 1;
-      }
-      if (tile.colStart! <= 0) {
-        tile.colStart = 1;
-      }
-      if (tile.rowStart! <= 0) {
-        tile.rowStart = 1;
-      }
-      if (tile.rowStart! + tile.rowHeight! > this.config.rows) {
-        tile.rowHeight = this.config.rows - tile.rowStart! + 1;
-      }
-      if (tile.colStart! + tile.colWidth! > this.config.cols) {
-        tile.colWidth = this.config.cols - tile.colStart! + 1;
-      }
-      for (let j = tile.colStart! - 1; j < tile.colStart! + tile.colWidth! - 1; j++) {
-        for (let i = tile.rowStart! - 1; i < tile.rowStart! + tile.rowHeight! - 1; i++) {
-          this.gridMap[i][j] = index;
-        }
-      }
-      tile.gridRow = `${tile.rowStart}/${tile.rowStart! + tile.rowHeight!}`;
-      tile.gridColumn = `${tile.colStart}/${tile.colStart! + tile.colWidth!}`;
-
-      if (!tile.content) {
-        tile.content = tile.title || tile.name;
-      }
-    });
+    this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
     window.dispatchEvent(new Event('resize'));
   }
 
