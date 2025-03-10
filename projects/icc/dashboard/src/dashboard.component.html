@@ -1,8 +1,9 @@
-<icc-layout>
+<icc-layout *ngIf="dashboardConfig$ | async as config">
   <icc-layout-header title="ICC.UI.TITLE.DASHBOARD" [buttons]="buttons" (iccButtonClick)="buttonClick($event)">
   </icc-layout-header>
 
   <div
+    *ngIf="dashboardSetting$ | async as dashboardSetting"
     class="icc-tile-list"
     cdkDropListGroup
     [ngStyle]="{
