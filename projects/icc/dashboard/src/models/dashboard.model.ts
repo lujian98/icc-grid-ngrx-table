@@ -25,10 +25,7 @@ export const defaultDashboardConfig: IccDashboardConfig = {
 export interface IccDashboardSetting {
   // for internal setting
   dashboardId: string;
-  gridMap: number[][];
   viewportReady: boolean; //not used
-  gridTemplateColumns: string;
-  gridTemplateRows: string;
 }
 
 export interface DashboardState {
@@ -44,10 +41,7 @@ export interface IccDashboardState {
 
 export const defaultDashboardSetting: IccDashboardSetting = {
   dashboardId: '191cf2bb6b5',
-  gridMap: [],
   viewportReady: false,
-  gridTemplateColumns: '',
-  gridTemplateRows: '',
 };
 
 export const defaultDashboardState: IccDashboardState = {
