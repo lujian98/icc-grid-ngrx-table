@@ -35,6 +35,10 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ dashboardId, tiles }));
   }
 
+  setGridViewport(dashboardId: string, width: number, height: number): void {
+    this.store.dispatch(dashboardActions.setGridViewport({ dashboardId, width, height }));
+  }
+
   setResizeTile(dashboardId: string, resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     this.store.dispatch(dashboardActions.setResizeTile({ dashboardId, resizeInfo, tile }));
   }

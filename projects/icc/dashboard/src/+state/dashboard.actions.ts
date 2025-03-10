@@ -28,6 +28,11 @@ export const loadDashboardTilesSuccess = createAction(
   props<{ dashboardId: string; tiles: IccTile<unknown>[] }>(),
 );
 
+export const setGridViewport = createAction(
+  '[Dashboard] Set Grid Viewport',
+  props<{ dashboardId: string; width: number; height: number }>(),
+);
+
 export const setResizeTile = createAction(
   '[Dashboard] Set Resize Tile',
   props<{ dashboardId: string; resizeInfo: IccResizeInfo; tile: IccTile<unknown> }>(),

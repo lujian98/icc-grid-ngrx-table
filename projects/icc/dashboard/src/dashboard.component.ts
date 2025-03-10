@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccSize } from '@icc/ui/resize';
 import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
@@ -91,34 +90,23 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.setupGrid();
+    this.setupGridViewport();
   }
 
   buttonClick(button: IccButtonConfg): void {}
 
-  private setupGrid(): void {
-    const size = this.getDashboardSize()!;
-    const width = (size.width - this.config.cols * this.config.gridGap - 4) / this.config.cols;
-    const height = (size.height - this.config.cols * this.config.gridGap - 4) / this.config.rows;
-    if (width !== this.config.gridWidth || height !== this.config.gridHeight) {
-      this.config = { ...this.config, gridWidth: width, gridHeight: height };
-    }
-  }
-
-  private getDashboardSize(): IccSize | null {
+  private setupGridViewport(): void {
     const el = this.elementRef.nativeElement;
     const node = el.firstChild;
     if (node) {
-      return {
-        width: node.clientWidth - 0, // - padding left/right,
-        height: node.clientHeight - 30,
-      };
+      const width = node.clientWidth - 0; // - padding left/right,
+      const height = node.clientHeight - 30;
+      this.dashboardFacade.setGridViewport(this.dashboardId, width, height);
     }
-    return null;
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
-    this.setupGrid();
+    this.setupGridViewport();
   }
 }

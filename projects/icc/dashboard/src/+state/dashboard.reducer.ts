@@ -1,26 +1,10 @@
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { defaultDashboardState, DashboardState, IccDashboardConfig } from '../models/dashboard.model';
-//import { contextClickedDashboard } from '../utils/context-clicked-dashboard';
-//import { getSelectedTabIndex } from '../utils/selected-tab-index';
-import * as dashboardActions from './dashboard.actions';
+import { DashboardState, defaultDashboardState } from '../models/dashboard.model';
 import { dragDropTile } from '../utils/drag-drop-tile';
 import { setTileLayouts } from '../utils/setup-tiles';
 import { getTileResizeInfo } from '../utils/tile-resize-info';
-
-export function getGridMap(config: IccDashboardConfig): number[][] {
-  const gridMap: number[][] = [];
-
-  for (let i = 0; i < config.rows; i++) {
-    gridMap[i] = [];
-    for (let j = 0; j < config.cols; j++) {
-      gridMap[i][j] = -1;
-    }
-  }
-  return gridMap;
-  //this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
-  //window.dispatchEvent(new Event('resize'));
-}
+import { getGridMap, getViewportSetting, gridViewportConfig } from '../utils/viewport-setting';
+import * as dashboardActions from './dashboard.actions';
 
 export const initialState: DashboardState = {};
 
@@ -32,17 +16,15 @@ export const iccDashboardFeature = createFeature({
       const dashboardConfig = { ...action.dashboardConfig };
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
+      const setting = {
+        ...defaultDashboardState.dashboardSetting,
+        dashboardId: action.dashboardId,
+        viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
+      };
       newState[key] = {
         ...defaultDashboardState,
         dashboardConfig,
-        dashboardSetting: {
-          ...defaultDashboardState.dashboardSetting,
-          dashboardId: action.dashboardId,
-          gridMap: getGridMap(dashboardConfig),
-          gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
-          gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
-          viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
-        },
+        dashboardSetting: getViewportSetting(dashboardConfig, setting),
       };
       return { ...newState };
     }),
@@ -51,21 +33,18 @@ export const iccDashboardFeature = createFeature({
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
+        const setting = {
+          ...state[key].dashboardSetting,
+          viewportReady: !dashboardConfig.remoteOptions,
+        };
         newState[key] = {
           ...state[key],
           dashboardConfig: {
             ...dashboardConfig,
           },
-          dashboardSetting: {
-            ...state[key].dashboardSetting,
-            gridMap: getGridMap(dashboardConfig),
-            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
-            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
-            viewportReady: !dashboardConfig.remoteOptions,
-          },
+          dashboardSetting: getViewportSetting(dashboardConfig, setting),
         };
       }
-      console.log(' cccccccccccccc new tiles state=', newState);
       return { ...newState };
     }),
     /*
@@ -101,9 +80,25 @@ export const iccDashboardFeature = createFeature({
           tiles,
         };
       }
-      console.log(' new tiles state=', newState);
+      //console.log(' new tiles state=', newState);
       return { ...newState };
     }),
+
+    on(dashboardActions.setGridViewport, (state, action) => {
+      const key = action.dashboardId;
+      const newState: DashboardState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const dashboardConfig = gridViewportConfig(oldState.dashboardConfig, action.width, action.height);
+        newState[key] = {
+          ...state[key],
+          dashboardConfig,
+          dashboardSetting: getViewportSetting(dashboardConfig, state[key].dashboardSetting),
+        };
+      }
+      return { ...newState };
+    }),
+
     on(dashboardActions.setResizeTile, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
@@ -124,10 +119,9 @@ export const iccDashboardFeature = createFeature({
           tiles,
         };
       }
-      console.log(' new tiles state=', newState);
+      //console.log(' new tiles state=', newState);
       return { ...newState };
     }),
-
     on(dashboardActions.setDragDropTile, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
@@ -145,7 +139,7 @@ export const iccDashboardFeature = createFeature({
           tiles,
         };
       }
-      console.log(' new tiles state=', newState);
+      //console.log(' new tiles state=', newState);
       return { ...newState };
     }),
 
