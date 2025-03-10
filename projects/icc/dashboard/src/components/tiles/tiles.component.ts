@@ -20,6 +20,11 @@ import {
   templateUrl: './tiles.component.html',
   styleUrls: ['./tiles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[style.grid-gap]': 'gridGap',
+    '[style.grid-template-columns]': 'setting.gridTemplateColumns',
+    '[style.grid-template-rows]': 'setting.gridTemplateRows',
+  },
   imports: [
     CommonModule,
     DragDropModule,
@@ -32,15 +37,28 @@ import {
 })
 export class IccTilesComponent {
   private dashboardFacade = inject(IccDashboardFacade);
+  private _setting!: IccDashboardSetting;
   resizeType = IccResizeType;
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   tileMenus = defaultTileMenus;
 
   @Input() config!: IccDashboardConfig;
-  @Input() dashboardSetting!: IccDashboardSetting;
+
+  @Input()
+  set setting(setting: IccDashboardSetting) {
+    this._setting = setting;
+    //console.log( ' 22222 settings =', this.setting)
+  }
+  get setting(): IccDashboardSetting {
+    return this._setting;
+  }
+
   @Input() tiles!: IccTile<unknown>[];
   @Input() options: IccTileOption<unknown>[] = [];
 
+  get gridGap(): string {
+    return `${this.config.gridGap}px`;
+  }
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
     const find = this.options.find((option) => option.name === tile.portalName);
     return find ? find.component : tile.content!;
@@ -54,7 +72,7 @@ export class IccTilesComponent {
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
-      this.dashboardFacade.setResizeTile(this.dashboardSetting.dashboardId, resizeInfo, tile);
+      this.dashboardFacade.setResizeTile(this.setting.dashboardId, resizeInfo, tile);
     }
   }
 
@@ -63,6 +81,6 @@ export class IccTilesComponent {
   }
 
   onDropListDropped<D>(e: CdkDragDrop<any>, tile: IccTile<unknown>): void {
-    this.dashboardFacade.setDragDropTile(this.dashboardSetting.dashboardId, e, tile);
+    this.dashboardFacade.setDragDropTile(this.setting.dashboardId, e, tile);
   }
 }

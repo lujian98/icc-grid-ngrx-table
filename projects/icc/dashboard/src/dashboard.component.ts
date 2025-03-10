@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -17,7 +16,6 @@ import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
 import { IccTilesComponent } from './components/tiles/tiles.component';
-
 import {
   defaultDashboardConfig,
   defaultTileConfig,
@@ -42,19 +40,16 @@ import {
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit {
-  private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   private dashboardFacade = inject(IccDashboardFacade);
   private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
   private _tiles: IccTile<unknown>[] = [];
-  dashboardConfig$!: Observable<IccDashboardConfig>;
-  dashboardSetting$!: Observable<IccDashboardSetting>;
+  config$!: Observable<IccDashboardConfig>;
+  setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
   dragDisabled: boolean = false; // TODO not used
-  gridTemplateColumns!: string;
-  gridTemplateRows!: string;
 
   @Input()
   set config(value: Partial<IccDashboardConfig>) {
@@ -89,8 +84,8 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   }
 
   private initTabsConfig(): void {
-    this.dashboardConfig$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.dashboardSetting$ = this.dashboardFacade.selectSetting(this.dashboardId);
+    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
+    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
     this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
     this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
   }
@@ -106,16 +101,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
     const width = (size.width - this.config.cols * this.config.gridGap - 4) / this.config.cols;
     const height = (size.height - this.config.cols * this.config.gridGap - 4) / this.config.rows;
     if (width !== this.config.gridWidth || height !== this.config.gridHeight) {
-      this.config.gridWidth = width;
-      this.config.gridHeight = height;
-      this.config = {
-        ...this.config,
-        gridWidth: width,
-        gridHeight: height,
-      };
-      this.setGridTemplate();
-      this.changeDetectorRef.detectChanges();
-      window.dispatchEvent(new Event('resize'));
+      this.config = { ...this.config, gridWidth: width, gridHeight: height };
     }
   }
 
@@ -129,11 +115,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
       };
     }
     return null;
-  }
-
-  private setGridTemplate(): void {
-    this.gridTemplateColumns = `repeat(${this.config.cols}, ${this.config.gridWidth}px)`;
-    this.gridTemplateRows = `repeat(${this.config.rows}, ${this.config.gridHeight}px)`;
   }
 
   @HostListener('window:resize', ['$event'])
