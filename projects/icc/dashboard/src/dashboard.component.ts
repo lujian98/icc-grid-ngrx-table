@@ -1,4 +1,4 @@
-import { CdkDragDrop, CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -11,20 +11,16 @@ import {
   Input,
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
-import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
-import { IccPosition, IccTrigger } from '@icc/ui/overlay';
-import { IccPopoverDirective } from '@icc/ui/popover';
-import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
-import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
+import { IccSize } from '@icc/ui/resize';
 import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
+import { IccTilesComponent } from './components/tiles/tiles.component';
+
 import {
   defaultDashboardConfig,
   defaultTileConfig,
-  defaultTileMenus,
   IccDashboardConfig,
   IccDashboardSetting,
   IccTile,
@@ -39,15 +35,10 @@ import {
   imports: [
     CommonModule,
     DragDropModule,
-    CdkDragHandle,
     IccDashboardStateModule,
-    IccPortalComponent,
-    IccMenusComponent,
-    IccPopoverDirective,
-    IccIconModule,
+    IccTilesComponent,
     IccLayoutComponent,
     IccLayoutHeaderComponent,
-    IccResizeDirective,
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit {
@@ -56,19 +47,14 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   private dashboardFacade = inject(IccDashboardFacade);
   private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
-
   private _tiles: IccTile<unknown>[] = [];
   dashboardConfig$!: Observable<IccDashboardConfig>;
   dashboardSetting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
-
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
-  resizeType = IccResizeType;
-  dragDisabled: boolean = false;
+  dragDisabled: boolean = false; // TODO not used
   gridTemplateColumns!: string;
   gridTemplateRows!: string;
-  position: IccPosition = IccPosition.BOTTOMRIGHT;
-  tileMenus = defaultTileMenus;
 
   @Input()
   set config(value: Partial<IccDashboardConfig>) {
@@ -96,7 +82,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
     return this._tiles;
   }
 
-  @Input() tileOptions: IccTileOption<unknown>[] = [];
+  @Input() options: IccTileOption<unknown>[] = [];
 
   constructor() {
     this.initTabsConfig();
@@ -112,17 +98,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   ngAfterViewInit(): void {
     this.setupGrid();
   }
-
-  getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
-    const find = this.tileOptions.find((option) => option.name === tile.portalName);
-    return find ? find.component : tile.content!;
-  }
-
-  getContextMenuTrigger(tile: IccTile<unknown>): IccTrigger {
-    return tile.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
-  }
-
-  onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<unknown>): void {}
 
   buttonClick(button: IccButtonConfg): void {}
 
@@ -159,20 +134,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   private setGridTemplate(): void {
     this.gridTemplateColumns = `repeat(${this.config.cols}, ${this.config.gridWidth}px)`;
     this.gridTemplateRows = `repeat(${this.config.rows}, ${this.config.gridHeight}px)`;
-  }
-
-  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
-    if (resizeInfo.isResized) {
-      this.dashboardFacade.setResizeTile(this.dashboardId, resizeInfo, tile);
-    }
-  }
-
-  isDragDisabled(tile: IccTile<unknown>): boolean {
-    return !!tile.dragDisabled;
-  }
-
-  onDropListDropped<D>(e: CdkDragDrop<any>, tile: IccTile<unknown>): void {
-    this.dashboardFacade.setDragDropTile(this.dashboardId, e, tile);
   }
 
   @HostListener('window:resize', ['$event'])
