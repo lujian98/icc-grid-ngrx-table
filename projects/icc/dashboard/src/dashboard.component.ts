@@ -62,7 +62,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
 
-  private _tiles: IccTile<T>[] = [];
+  private _tiles: IccTile<unknown>[] = [];
   dashboardConfig$!: Observable<IccDashboardConfig>;
   dashboardSetting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
@@ -89,17 +89,21 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   @Input()
-  set tiles(tiles: IccTile<T>[]) {
+  set tiles(tiles: IccTile<unknown>[]) {
+    console.log(' 1111111111 tiles=', tiles);
     this._tiles = tiles.map((tile) => ({
       ...defaultTileConfig,
       ...tile,
     }));
+    if (!this.config.remoteTiles) {
+      this.dashboardFacade.setDashboardTiles(this.dashboardId, this.tiles);
+    }
   }
-  get tiles(): IccTile<T>[] {
+  get tiles(): IccTile<unknown>[] {
     return this._tiles;
   }
 
-  @Input() tileOptions: IccTileOption<T>[] = [];
+  @Input() tileOptions: IccTileOption<unknown>[] = [];
 
   constructor() {
     this.initTabsConfig();
@@ -121,16 +125,16 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.setupGrid();
   }
 
-  getPortalContent(tile: IccTile<T>): IccPortalContent<T> {
+  getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
     const find = this.tileOptions.find((option) => option.name === tile.portalName);
     return find ? find.component : tile.content!;
   }
 
-  getContextMenuTrigger(tile: IccTile<T>): IccTrigger {
+  getContextMenuTrigger(tile: IccTile<unknown>): IccTrigger {
     return tile.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
-  onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<T>): void {}
+  onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<unknown>): void {}
 
   buttonClick(button: IccButtonConfg): void {}
 
@@ -175,7 +179,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     window.dispatchEvent(new Event('resize'));
   }
 
-  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<T>): void {
+  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
       Object.assign(tile, tileInfo);
@@ -183,11 +187,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     }
   }
 
-  isDragDisabled(tile: IccTile<T>): boolean {
+  isDragDisabled(tile: IccTile<unknown>): boolean {
     return !!tile.dragDisabled;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<T>): void {
+  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
     this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
     this.setTileLayouts();
   }

@@ -29,10 +29,11 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.loadDashboardConfigSuccess({ dashboardId, dashboardConfig }));
   }
 
-  /*
-  setDashboardDashboard(dashboardId: string, dashboard: IccTabConfig[]): void {
-    this.store.dispatch(dashboardActions.loadDashboardDashboardSuccess({ dashboardId, dashboard }));
+  setDashboardTiles(dashboardId: string, tiles: IccTile<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ dashboardId, tiles }));
   }
+
+  /*
 
   setDashboardOptions(dashboardId: string, options: IccTabConfig[]): void {
     this.store.dispatch(dashboardActions.loadDashboardOptionsSuccess({ dashboardId, options }));

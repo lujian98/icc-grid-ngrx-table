@@ -8,6 +8,7 @@ export interface IccDashboardConfig {
   rows: number;
   remoteConfig: boolean;
   remoteOptions: boolean;
+  remoteTiles: boolean;
 }
 
 export const defaultDashboardConfig: IccDashboardConfig = {
@@ -18,6 +19,7 @@ export const defaultDashboardConfig: IccDashboardConfig = {
   rows: 6,
   remoteConfig: false,
   remoteOptions: false,
+  remoteTiles: false,
 };
 
 export interface IccDashboardSetting {

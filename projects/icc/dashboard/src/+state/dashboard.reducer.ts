@@ -73,6 +73,7 @@ export const iccDashboardFeature = createFeature({
           tiles: [...action.tiles],
         };
       }
+      console.log(' new tiles state=', newState);
       return { ...newState };
     }),
     /*

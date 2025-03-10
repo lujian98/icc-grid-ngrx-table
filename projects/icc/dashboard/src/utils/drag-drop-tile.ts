@@ -3,11 +3,11 @@ import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 
 export function dragDropTile<D, T>(
   e: CdkDragDrop<D>,
-  tile: IccTile<T>,
-  tiles: IccTile<T>[],
+  tile: IccTile<unknown>,
+  tiles: IccTile<unknown>[],
   config: IccDashboardConfig,
   gridMap: number[][],
-): IccTile<T>[] {
+): IccTile<unknown>[] {
   const draggedTile = tiles[e.item.data];
   const dx = Math.round(e.distance.x / config.gridWidth);
   const dy = Math.round(e.distance.y / config.gridHeight);
@@ -41,7 +41,7 @@ export function dragDropTile<D, T>(
 function isDroppable<T>(
   x: number,
   y: number,
-  tile: IccTile<T>,
+  tile: IccTile<unknown>,
   index: number,
   config: IccDashboardConfig,
   tileGridMap: number[][],
