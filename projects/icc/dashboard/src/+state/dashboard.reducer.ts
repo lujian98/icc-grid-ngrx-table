@@ -1,9 +1,26 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { defaultDashboardState, DashboardState } from '../models/dashboard.model';
+import { defaultDashboardState, DashboardState, IccDashboardConfig } from '../models/dashboard.model';
 //import { contextClickedDashboard } from '../utils/context-clicked-dashboard';
 //import { getSelectedTabIndex } from '../utils/selected-tab-index';
 import * as dashboardActions from './dashboard.actions';
+import { dragDropTile } from '../utils/drag-drop-tile';
+import { setTileLayouts } from '../utils/setup-tiles';
+import { getTileResizeInfo } from '../utils/tile-resize-info';
+
+export function getGridMap(config: IccDashboardConfig): number[][] {
+  const gridMap: number[][] = [];
+
+  for (let i = 0; i < config.rows; i++) {
+    gridMap[i] = [];
+    for (let j = 0; j < config.cols; j++) {
+      gridMap[i][j] = -1;
+    }
+  }
+  return gridMap;
+  //this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
+  //window.dispatchEvent(new Event('resize'));
+}
 
 export const initialState: DashboardState = {};
 
@@ -21,6 +38,9 @@ export const iccDashboardFeature = createFeature({
         dashboardSetting: {
           ...defaultDashboardState.dashboardSetting,
           dashboardId: action.dashboardId,
+          gridMap: getGridMap(dashboardConfig),
+          gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
+          gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
           viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
         },
       };
@@ -38,10 +58,14 @@ export const iccDashboardFeature = createFeature({
           },
           dashboardSetting: {
             ...state[key].dashboardSetting,
+            gridMap: getGridMap(dashboardConfig),
+            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
+            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
             viewportReady: !dashboardConfig.remoteOptions,
           },
         };
       }
+      console.log(' cccccccccccccc new tiles state=', newState);
       return { ...newState };
     }),
     /*
@@ -64,123 +88,67 @@ export const iccDashboardFeature = createFeature({
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
+        const oldState = state[key];
+        const gridMap = getGridMap(oldState.dashboardConfig);
+        const tiles = setTileLayouts(action.tiles, oldState.dashboardConfig, gridMap);
         newState[key] = {
           ...state[key],
           dashboardSetting: {
             ...state[key].dashboardSetting,
+            gridMap,
             viewportReady: true,
           },
-          tiles: [...action.tiles],
+          tiles,
         };
       }
       console.log(' new tiles state=', newState);
       return { ...newState };
     }),
-    /*
-    on(dashboardActions.setSelectedIndex, (state, action) => {
-      const key = action.dashboardId;
-      const newState: DashboardState = { ...state };
-      if (state[key]) {
-        newState[key] = {
-          ...state[key],
-          dashboardConfig: {
-            ...state[key].dashboardConfig,
-            selectedTabIndex: action.index,
-          },
-        };
-      }
-      return { ...newState };
-    }),
-    on(dashboardActions.setAddTab, (state, action) => {
+    on(dashboardActions.setResizeTile, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-        let selectedTabIndex = oldState.dashboardConfig.selectedTabIndex;
-        let dashboard = [...oldState.dashboard];
-        const find = oldState.dashboard.findIndex((item) => item.name === action.tab.name);
-        if (find === -1) {
-          const tab = oldState.options.find((option) => option.name === action.tab.portalName);
-          const newdashboard = [...oldState.dashboard];
-          if (tab) {
-            newdashboard.push({ ...tab, ...action.tab });
-          } else {
-            newdashboard.push({ ...action.tab });
-          }
-          dashboard = [...newdashboard];
-          selectedTabIndex = dashboard.length - 1;
-        } else {
-          selectedTabIndex = find;
-        }
+        const gridMap = getGridMap(oldState.dashboardConfig);
+        const tileInfo = getTileResizeInfo(action.resizeInfo, action.tile, oldState.dashboardConfig, gridMap);
+        const resizedTiles = [...oldState.tiles].map((tile) => {
+          return tile.name === action.tile.name ? { ...action.tile, ...tileInfo } : { ...tile };
+        });
+        const tiles = setTileLayouts(resizedTiles, oldState.dashboardConfig, gridMap);
         newState[key] = {
           ...state[key],
-          dashboardConfig: {
-            ...state[key].dashboardConfig,
-            selectedTabIndex,
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            gridMap,
           },
-          dashboard,
+          tiles,
         };
       }
+      console.log(' new tiles state=', newState);
       return { ...newState };
     }),
-    on(dashboardActions.setDragDropTab, (state, action) => {
+
+    on(dashboardActions.setDragDropTile, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-        const dashboard = oldState.dashboard;
-        const prevActive = dashboard[oldState.dashboardConfig.selectedTabIndex];
-        moveItemInArray(dashboard, action.previousIndex, action.currentIndex);
+        const gridMap = getGridMap(oldState.dashboardConfig);
+        const droppedTiles = dragDropTile(action.e, action.tile, oldState.tiles, oldState.dashboardConfig, gridMap);
+        const tiles = setTileLayouts(droppedTiles, oldState.dashboardConfig, gridMap);
         newState[key] = {
           ...state[key],
-          dashboardConfig: {
-            ...state[key].dashboardConfig,
-            selectedTabIndex: dashboard.indexOf(prevActive),
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            gridMap,
           },
-          dashboard,
+          tiles,
         };
       }
+      console.log(' new tiles state=', newState);
       return { ...newState };
     }),
-    on(dashboardActions.setContextMenuClicked, (state, action) => {
-      const key = action.dashboardId;
-      const newState: DashboardState = { ...state };
-      if (state[key]) {
-        const oldState = state[key];
-        const oldDashboard = oldState.dashboard;
-        const prevActive = oldDashboard[oldState.dashboardConfig.selectedTabIndex];
-        const dashboard = contextClickedDashboard(action.menuItem, oldDashboard, action.tab, action.index);
-        newState[key] = {
-          ...state[key],
-          dashboardConfig: {
-            ...state[key].dashboardConfig,
-            selectedTabIndex: getSelectedTabIndex(dashboard, prevActive),
-          },
-          dashboard,
-        };
-      }
-      return { ...newState };
-    }),
-    on(dashboardActions.setCloseTab, (state, action) => {
-      const key = action.dashboardId;
-      const newState: DashboardState = { ...state };
-      if (state[key]) {
-        const oldState = state[key];
-        const oldDashboard = oldState.dashboard;
-        const prevActive = oldDashboard[oldState.dashboardConfig.selectedTabIndex];
-        const dashboard = [...oldDashboard].filter((item) => item.name !== action.tab.name);
-        newState[key] = {
-          ...state[key],
-          dashboardConfig: {
-            ...state[key].dashboardConfig,
-            selectedTabIndex: getSelectedTabIndex(dashboard, prevActive),
-          },
-          dashboard,
-        };
-      }
-      return { ...newState };
-    }),
-    */
+
     on(dashboardActions.removeDashboardStore, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };

@@ -1,6 +1,7 @@
-import { IccMenuConfig } from '@icc/ui/menu';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { IccResizeInfo } from '@icc/ui/resize';
 import { createAction, props } from '@ngrx/store';
-import { IccTile, IccDashboardConfig } from '../models/dashboard.model';
+import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 
 export const initDashboardConfig = createAction(
   '[Dashboard] Init Dashboard Config',
@@ -27,42 +28,15 @@ export const loadDashboardTilesSuccess = createAction(
   props<{ dashboardId: string; tiles: IccTile<unknown>[] }>(),
 );
 
-/*
-export const loadDashboardOptions = createAction(
-  '[Dashboard] Load Tile Options',
-  props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
-);
-
-export const loadDashboardOptionsSuccess = createAction(
-  '[Dashboard] Load Tile Options Success',
-  props<{ dashboardId: string; options: IccTile<unknown>[] }>(),
-);
-
-export const setAddTile = createAction(
-  '[Dashboard] Set Add Tile',
-  props<{ dashboardId: string; tile: IccTile<unknown> }>(),
+export const setResizeTile = createAction(
+  '[Dashboard] Set Resize Tile',
+  props<{ dashboardId: string; resizeInfo: IccResizeInfo; tile: IccTile<unknown> }>(),
 );
 
 export const setDragDropTile = createAction(
   '[Dashboard] Set Drag Drop Tile',
-  props<{ dashboardId: string; previousIndex: number; currentIndex: number }>(),
+  props<{ dashboardId: string; e: CdkDragDrop<unknown>; tile: IccTile<unknown> }>(),
 );
-
-export const setSelectedIndex = createAction(
-  '[Dashboard] Set Selected Index',
-  props<{ dashboardId: string; index: number }>(),
-);
-
-export const setContextMenuClicked = createAction(
-  '[Dashboard] Set Context Menu Clicked',
-  props<{ dashboardId: string; menuItem: IccMenuConfig; tile: IccTile<unknown>; index: number }>(),
-);
-
-export const setCloseTile = createAction(
-  '[Dashboard] Set Close Tile',
-  props<{ dashboardId: string; tile: IccTile<unknown> }>(),
-);
-*/
 
 export const clearDashboardStore = createAction('[Dashboard]] Clear Dashboard Store', props<{ dashboardId: string }>());
 export const removeDashboardStore = createAction(

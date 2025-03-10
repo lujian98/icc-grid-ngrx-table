@@ -9,32 +9,27 @@ import {
   HostListener,
   inject,
   Input,
-  OnInit,
 } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
-import { isEqual, uniqueId } from '@icc/ui/core';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
+import { Observable } from 'rxjs';
+import { IccDashboardStateModule } from './+state/dashboard-state.module';
+import { IccDashboardFacade } from './+state/dashboard.facade';
 import {
   defaultDashboardConfig,
   defaultTileConfig,
   defaultTileMenus,
   IccDashboardConfig,
   IccDashboardSetting,
-  IccTileOption,
   IccTile,
+  IccTileOption,
 } from './models/dashboard.model';
-import { Observable } from 'rxjs';
-import { dragDropTile } from './utils/drag-drop-tile';
-import { setTileLayouts } from './utils/setup-tiles';
-import { getTileResizeInfo } from './utils/tile-resize-info';
-import { IccDashboardFacade } from './+state/dashboard.facade';
-import { IccDashboardStateModule } from './+state/dashboard-state.module';
 
 @Component({
   selector: 'icc-dashboard',
@@ -55,7 +50,7 @@ import { IccDashboardStateModule } from './+state/dashboard-state.module';
     IccResizeDirective,
   ],
 })
-export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
+export class IccDashboardComponent<T> implements AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   private dashboardFacade = inject(IccDashboardFacade);
@@ -67,7 +62,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   dashboardSetting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
 
-  private gridMap: number[][] = [];
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
   resizeType = IccResizeType;
   dragDisabled: boolean = false;
@@ -90,7 +84,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   @Input()
   set tiles(tiles: IccTile<unknown>[]) {
-    console.log(' 1111111111 tiles=', tiles);
     this._tiles = tiles.map((tile) => ({
       ...defaultTileConfig,
       ...tile,
@@ -114,11 +107,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.dashboardSetting$ = this.dashboardFacade.selectSetting(this.dashboardId);
     this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
     this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
-  }
-
-  ngOnInit(): void {
-    this.setGridTemplate();
-    this.setTileLayouts();
   }
 
   ngAfterViewInit(): void {
@@ -145,6 +133,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     if (width !== this.config.gridWidth || height !== this.config.gridHeight) {
       this.config.gridWidth = width;
       this.config.gridHeight = height;
+      this.config = {
+        ...this.config,
+        gridWidth: width,
+        gridHeight: height,
+      };
       this.setGridTemplate();
       this.changeDetectorRef.detectChanges();
       window.dispatchEvent(new Event('resize'));
@@ -168,22 +161,9 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.gridTemplateRows = `repeat(${this.config.rows}, ${this.config.gridHeight}px)`;
   }
 
-  private setTileLayouts(): void {
-    for (let i = 0; i < this.config.rows; i++) {
-      this.gridMap[i] = [];
-      for (let j = 0; j < this.config.cols; j++) {
-        this.gridMap[i][j] = -1;
-      }
-    }
-    this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
-    window.dispatchEvent(new Event('resize'));
-  }
-
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
-      const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
-      Object.assign(tile, tileInfo);
-      this.setTileLayouts();
+      this.dashboardFacade.setResizeTile(this.dashboardId, resizeInfo, tile);
     }
   }
 
@@ -191,9 +171,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     return !!tile.dragDisabled;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
-    this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
-    this.setTileLayouts();
+  onDropListDropped<D>(e: CdkDragDrop<any>, tile: IccTile<unknown>): void {
+    this.dashboardFacade.setDragDropTile(this.dashboardId, e, tile);
   }
 
   @HostListener('window:resize', ['$event'])

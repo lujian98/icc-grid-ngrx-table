@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { IccResizeInfo } from '@icc/ui/resize';
 import { IccDashboardConfig, IccDashboardSetting, IccTile } from '../models/dashboard.model';
 import * as dashboardActions from './dashboard.actions';
 import {
@@ -31,6 +33,14 @@ export class IccDashboardFacade {
 
   setDashboardTiles(dashboardId: string, tiles: IccTile<unknown>[]): void {
     this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ dashboardId, tiles }));
+  }
+
+  setResizeTile(dashboardId: string, resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
+    this.store.dispatch(dashboardActions.setResizeTile({ dashboardId, resizeInfo, tile }));
+  }
+
+  setDragDropTile(dashboardId: string, e: CdkDragDrop<unknown>, tile: IccTile<unknown>): void {
+    this.store.dispatch(dashboardActions.setDragDropTile({ dashboardId, e, tile }));
   }
 
   /*
