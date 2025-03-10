@@ -1,19 +1,19 @@
 import { IccResizeInfo, IccResizeType } from '@icc/ui/resize';
-import { DxyPosition, IccDashboardConfig, ResizeMap, Tile, TileInfo } from '../model';
+import { DxyPosition, IccDashboardConfig, IccTileResizeMap, IccTile, IccTileInfo } from '../models/dashboard.model';
 
-export function getResizeTileInfo<T>(
+export function getTileResizeInfo<T>(
   resizeInfo: IccResizeInfo,
-  tile: Tile<T>,
+  tile: IccTile<T>,
   config: IccDashboardConfig,
   gridMap: number[][],
-): TileInfo {
-  const tileInfo: TileInfo = {
+): IccTileInfo {
+  const tileInfo: IccTileInfo = {
     rowStart: tile.rowStart!,
     colStart: tile.colStart!,
     rowHeight: tile.rowHeight!,
     colWidth: tile.colWidth!,
   };
-  let resizeMap: ResizeMap;
+  let resizeMap: IccTileResizeMap;
   let dxy: DxyPosition;
   let dx = Math.round(resizeInfo.dx / config.gridWidth);
   let dy = Math.round(resizeInfo.dy / config.gridHeight);
@@ -146,7 +146,13 @@ export function getResizeTileInfo<T>(
   return tileInfo;
 }
 
-function getDxy<T>(dx: number, dy: number, tile: Tile<T>, resizeMap: ResizeMap, tileGridMap: number[][]): DxyPosition {
+function getDxy<T>(
+  dx: number,
+  dy: number,
+  tile: IccTile<T>,
+  resizeMap: IccTileResizeMap,
+  tileGridMap: number[][],
+): DxyPosition {
   const ret: DxyPosition = { dx: dx, dy: dy };
   const gridMap = tileGridMap
     .slice(resizeMap.startRow, resizeMap.endRow)

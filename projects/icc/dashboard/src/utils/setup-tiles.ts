@@ -1,6 +1,6 @@
-import { IccDashboardConfig, Tile } from '../model';
+import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 
-export function setTileLayouts<T>(tiles: Tile<T>[], config: IccDashboardConfig, gridMap: number[][]): Tile<T>[] {
+export function setTileLayouts<T>(tiles: IccTile<T>[], config: IccDashboardConfig, gridMap: number[][]): IccTile<T>[] {
   return [...tiles].map((tile, index) => {
     tile.index = index;
     if (tile.colWidth! <= 0) {

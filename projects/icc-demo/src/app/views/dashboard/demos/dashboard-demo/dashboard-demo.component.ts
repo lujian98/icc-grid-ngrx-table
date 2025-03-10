@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IccDashboardComponent, Tile, IccTileOption } from '@icc/ui/dashboard';
+import { IccDashboardComponent, IccTile, IccTileOption } from '@icc/ui/dashboard';
 import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
 import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
@@ -15,7 +15,7 @@ import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
   imports: [CommonModule, IccDashboardComponent],
 })
 export class AppDashboardDemoComponent {
-  tiles: Tile<any>[] = [];
+  tiles: IccTile<any>[] = [];
   tileOptions: IccTileOption<any>[] = [
     {
       name: 'stock-chart',

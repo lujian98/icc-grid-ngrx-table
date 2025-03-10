@@ -1,14 +1,13 @@
-import { IccResizeInfo, IccResizeType } from '@icc/ui/resize';
-import { CdkDragDrop, CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
-import { DxyPosition, IccDashboardConfig, ResizeMap, Tile, TileInfo } from '../model';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 
 export function dragDropTile<D, T>(
   e: CdkDragDrop<D>,
-  tile: Tile<T>,
-  tiles: Tile<T>[],
+  tile: IccTile<T>,
+  tiles: IccTile<T>[],
   config: IccDashboardConfig,
   gridMap: number[][],
-): Tile<T>[] {
+): IccTile<T>[] {
   const draggedTile = tiles[e.item.data];
   const dx = Math.round(e.distance.x / config.gridWidth);
   const dy = Math.round(e.distance.y / config.gridHeight);
@@ -42,7 +41,7 @@ export function dragDropTile<D, T>(
 function isDroppable<T>(
   x: number,
   y: number,
-  tile: Tile<T>,
+  tile: IccTile<T>,
   index: number,
   config: IccDashboardConfig,
   tileGridMap: number[][],

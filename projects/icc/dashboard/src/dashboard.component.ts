@@ -25,11 +25,11 @@ import {
   defaultTileMenus,
   IccDashboardConfig,
   IccTileOption,
-  Tile,
-} from './model';
+  IccTile,
+} from './models/dashboard.model';
 import { dragDropTile } from './utils/drag-drop-tile';
 import { setTileLayouts } from './utils/setup-tiles';
-import { getResizeTileInfo } from './utils/tile-resize-info';
+import { getTileResizeInfo } from './utils/tile-resize-info';
 
 @Component({
   selector: 'icc-dashboard',
@@ -52,7 +52,7 @@ import { getResizeTileInfo } from './utils/tile-resize-info';
 export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
-  private _tiles: Tile<T>[] = [];
+  private _tiles: IccTile<T>[] = [];
   private gridMap: number[][] = [];
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
   resizeType = IccResizeType;
@@ -63,13 +63,13 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   tileMenus = defaultTileMenus;
 
   @Input()
-  set tiles(tiles: Tile<T>[]) {
+  set tiles(tiles: IccTile<T>[]) {
     this._tiles = tiles.map((tile) => ({
       ...defaultTileConfig,
       ...tile,
     }));
   }
-  get tiles(): Tile<T>[] {
+  get tiles(): IccTile<T>[] {
     return this._tiles;
   }
 
@@ -85,16 +85,16 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.setupGrid();
   }
 
-  getPortalContent(tile: Tile<T>): IccPortalContent<T> {
+  getPortalContent(tile: IccTile<T>): IccPortalContent<T> {
     const find = this.tileOptions.find((option) => option.name === tile.portalName);
     return find ? find.component : tile.content!;
   }
 
-  getContextMenuTrigger(tile: Tile<T>): IccTrigger {
+  getContextMenuTrigger(tile: IccTile<T>): IccTrigger {
     return tile.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
-  onTileMenuClicked(tileMenu: IccMenuConfig, tile: Tile<T>): void {}
+  onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<T>): void {}
 
   buttonClick(button: IccButtonConfg): void {}
 
@@ -139,19 +139,19 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     window.dispatchEvent(new Event('resize'));
   }
 
-  onResizeTile(resizeInfo: IccResizeInfo, tile: Tile<T>): void {
+  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<T>): void {
     if (resizeInfo.isResized) {
-      const tileInfo = getResizeTileInfo(resizeInfo, tile, this.config, this.gridMap);
+      const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
       Object.assign(tile, tileInfo);
       this.setTileLayouts();
     }
   }
 
-  isDragDisabled(tile: Tile<T>): boolean {
+  isDragDisabled(tile: IccTile<T>): boolean {
     return !!tile.dragDisabled;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<D>, tile: Tile<T>): void {
+  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<T>): void {
     this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
     this.setTileLayouts();
   }
