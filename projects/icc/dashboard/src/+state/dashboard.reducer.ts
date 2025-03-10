@@ -1,8 +1,8 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { defaultDashboardState, DashboardState } from '../models/dashboard.model';
-import { contextClickedDashboard } from '../utils/context-clicked-dashboard';
-import { getSelectedTabIndex } from '../utils/selected-tab-index';
+//import { contextClickedDashboard } from '../utils/context-clicked-dashboard';
+//import { getSelectedTabIndex } from '../utils/selected-tab-index';
 import * as dashboardActions from './dashboard.actions';
 
 export const initialState: DashboardState = {};
@@ -44,6 +44,7 @@ export const iccDashboardFeature = createFeature({
       }
       return { ...newState };
     }),
+    /*
     on(dashboardActions.loadDashboardOptionsSuccess, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
@@ -58,8 +59,8 @@ export const iccDashboardFeature = createFeature({
         };
       }
       return { ...newState };
-    }),
-    on(dashboardActions.loadDashboardDashboardSuccess, (state, action) => {
+    }),*/
+    on(dashboardActions.loadDashboardTilesSuccess, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
@@ -69,11 +70,12 @@ export const iccDashboardFeature = createFeature({
             ...state[key].dashboardSetting,
             viewportReady: true,
           },
-          dashboard: [...action.dashboard],
+          tiles: [...action.tiles],
         };
       }
       return { ...newState };
     }),
+    /*
     on(dashboardActions.setSelectedIndex, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
@@ -177,6 +179,7 @@ export const iccDashboardFeature = createFeature({
       }
       return { ...newState };
     }),
+    */
     on(dashboardActions.removeDashboardStore, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };

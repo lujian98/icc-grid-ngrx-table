@@ -17,16 +17,17 @@ export const loadDashboardConfigSuccess = createAction(
   props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
 );
 
-export const loadDashboardDashboard = createAction(
-  '[Dashboard] Load Dashboard Dashboard',
+export const loadDashboardTiles = createAction(
+  '[Dashboard] Load Dashboard Tiles',
   props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
 );
 
-export const loadDashboardDashboardSuccess = createAction(
-  '[Dashboard] Load Dashboard Dashboard Success',
-  props<{ dashboardId: string; dashboard: IccTile<unknown>[] }>(),
+export const loadDashboardTilesSuccess = createAction(
+  '[Dashboard] Load Dashboard Tiles Success',
+  props<{ dashboardId: string; tiles: IccTile<unknown>[] }>(),
 );
 
+/*
 export const loadDashboardOptions = createAction(
   '[Dashboard] Load Tile Options',
   props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
@@ -61,6 +62,7 @@ export const setCloseTile = createAction(
   '[Dashboard] Set Close Tile',
   props<{ dashboardId: string; tile: IccTile<unknown> }>(),
 );
+*/
 
 export const clearDashboardStore = createAction('[Dashboard]] Clear Dashboard Store', props<{ dashboardId: string }>());
 export const removeDashboardStore = createAction(

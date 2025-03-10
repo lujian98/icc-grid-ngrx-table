@@ -6,6 +6,8 @@ export interface IccDashboardConfig {
   gridHeight: number;
   cols: number;
   rows: number;
+  remoteConfig: boolean;
+  remoteOptions: boolean;
 }
 
 export const defaultDashboardConfig: IccDashboardConfig = {
@@ -14,6 +16,37 @@ export const defaultDashboardConfig: IccDashboardConfig = {
   gridHeight: 100,
   cols: 10,
   rows: 6,
+  remoteConfig: false,
+  remoteOptions: false,
+};
+
+export interface IccDashboardSetting {
+  // for internal setting
+  dashboardId: string;
+  viewportReady: boolean; //not used
+}
+
+export interface DashboardState {
+  [key: string]: IccDashboardState;
+}
+
+export interface IccDashboardState {
+  dashboardConfig: IccDashboardConfig;
+  dashboardSetting: IccDashboardSetting;
+  tiles: IccTile<unknown>[];
+  //options: IccTabConfig[]; // options are input to tabs mapped using portalName to portal component
+}
+
+export const defaultDashboardSetting: IccDashboardSetting = {
+  dashboardId: '191cf2bb6b5',
+  viewportReady: false,
+};
+
+export const defaultDashboardState: IccDashboardState = {
+  dashboardConfig: defaultDashboardConfig,
+  dashboardSetting: defaultDashboardSetting,
+  tiles: [],
+  //options: [],
 };
 
 export interface IccTile<T> {

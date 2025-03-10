@@ -23,12 +23,13 @@ export const selectDashboardConfig = (dashboardId: string) =>
       : defaultDashboardState.dashboardConfig;
   });
 
-export const selectDashboardDashboard = (dashboardId: string) =>
+export const selectDashboardTiles = (dashboardId: string) =>
   createSelector(featureSelector, (state: DashboardState) => {
-    return state && state[dashboardId] ? state[dashboardId].dashboard : [];
+    return state && state[dashboardId] ? state[dashboardId].tiles : [];
   });
-
+/*
 export const selectDashboardOptions = (dashboardId: string) =>
   createSelector(featureSelector, (state: DashboardState) => {
     return state && state[dashboardId] ? state[dashboardId].options : [];
   });
+  */

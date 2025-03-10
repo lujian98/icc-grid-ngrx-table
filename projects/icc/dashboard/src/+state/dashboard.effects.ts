@@ -2,15 +2,16 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { concatMap, delay, map, mergeMap, of } from 'rxjs';
-import { IccDashboardService } from '../services/dashboard.service';
+//import { IccDashboardService } from '../services/dashboard.service';
 import * as dashboardActions from './dashboard.actions';
 
 @Injectable()
 export class IccDashboardEffects {
   private store = inject(Store);
   private actions$ = inject(Actions);
-  private dashboardService = inject(IccDashboardService);
+  //private dashboardService = inject(IccDashboardService);
 
+  /*
   getRemoteDashboardConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(dashboardActions.loadRemoteDashboardConfig),
@@ -37,7 +38,7 @@ export class IccDashboardEffects {
       }),
     ),
   );
-
+*/
   clearDashboardStore$ = createEffect(() =>
     this.actions$.pipe(
       ofType(dashboardActions.clearDashboardStore),
