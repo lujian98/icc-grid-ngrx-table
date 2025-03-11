@@ -1,16 +1,16 @@
 import { CdkDragDrop, CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { IccDashboardFacade } from '../../+state/dashboard.facade';
+import { dragDropTile } from '../../utils/drag-drop-tile';
 import { setTileLayouts } from '../../utils/setup-tiles';
 import { getTileResizeInfo } from '../../utils/tile-resize-info';
-import { dragDropTile } from '../../utils/drag-drop-tile';
-
+import { getGridMap } from '../../utils/viewport-setting';
 import {
   defaultTileMenus,
   IccDashboardConfig,
@@ -26,8 +26,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.grid-gap]': 'gridGap',
-    '[style.grid-template-columns]': 'gridTemplateColumns',
-    '[style.grid-template-rows]': 'gridTemplateRows',
+    '[style.grid-template-columns]': 'setting.gridTemplateColumns',
+    '[style.grid-template-rows]': 'setting.gridTemplateRows',
   },
   imports: [
     CommonModule,
@@ -39,7 +39,7 @@ import {
     IccResizeDirective,
   ],
 })
-export class IccTilesComponent {
+export class IccTilesComponent implements OnInit {
   private dashboardFacade = inject(IccDashboardFacade);
   resizeType = IccResizeType;
   position: IccPosition = IccPosition.BOTTOMRIGHT;
@@ -50,14 +50,13 @@ export class IccTilesComponent {
   @Input() tiles!: IccTile<unknown>[];
   @Input() options: IccTileOption<unknown>[] = [];
 
-  @Input() gridTemplateColumns!: string;
-  @Input() gridTemplateRows!: string;
-
   get gridGap(): string {
     return `${this.config.gridGap}px`;
   }
 
-  @Output() iccTilesChange = new EventEmitter<IccTile<unknown>[]>(false);
+  ngOnInit(): void {
+    this.setTileLayouts(this.tiles);
+  }
 
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
     const find = this.options.find((option) => option.name === tile.portalName);
@@ -70,16 +69,17 @@ export class IccTilesComponent {
 
   onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<unknown>): void {}
 
+  private setTileLayouts(tiles: IccTile<unknown>[]): void {
+    const gridMap = getGridMap(this.config); //WARNING this always need run here!!!
+    const newTiles = setTileLayouts(tiles, this.config, gridMap);
+    this.dashboardFacade.loadDashboardGridMapTiles(this.setting.dashboardId, gridMap, newTiles);
+  }
+
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
-      //this.dashboardFacade.setResizeTile(this.setting.dashboardId, resizeInfo, tile);
-      /*
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.setting.gridMap);
       Object.assign(tile, tileInfo);
-      const tiles = setTileLayouts(this.tiles, this.config, this.setting.gridMap);
-      this.iccTilesChange.emit(tiles);
-      */
-      //this.setTileLayouts();
+      this.setTileLayouts(this.tiles);
     }
   }
 
@@ -87,10 +87,8 @@ export class IccTilesComponent {
     return !!tile.dragDisabled;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<any>, tile: IccTile<unknown>): void {
-    //this.dashboardFacade.setDragDropTile(this.setting.dashboardId, e, tile);
-    //const tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.setting.gridMap);
-    //this.iccTilesChange.emit(tiles);
-    //   this.setTileLayouts();
+  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
+    const newTiles = dragDropTile(e, tile, this.tiles, this.config, this.setting.gridMap);
+    this.setTileLayouts(newTiles);
   }
 }
