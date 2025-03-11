@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { DashboardState, defaultDashboardState } from '../models/dashboard.model';
-import { getViewportSetting, gridViewportConfig } from '../utils/viewport-setting';
+import { viewportSetting, viewportConfig } from '../utils/viewport-setting';
 import * as dashboardActions from './dashboard.actions';
 
 export const initialState: DashboardState = {};
@@ -21,7 +21,7 @@ export const iccDashboardFeature = createFeature({
       newState[key] = {
         ...defaultDashboardState,
         dashboardConfig,
-        dashboardSetting: getViewportSetting(dashboardConfig, setting),
+        dashboardSetting: viewportSetting(dashboardConfig, setting),
       };
       return { ...newState };
     }),
@@ -37,7 +37,7 @@ export const iccDashboardFeature = createFeature({
         newState[key] = {
           ...state[key],
           dashboardConfig,
-          dashboardSetting: getViewportSetting(dashboardConfig, setting),
+          dashboardSetting: viewportSetting(dashboardConfig, setting),
         };
       }
       return { ...newState };
@@ -62,11 +62,11 @@ export const iccDashboardFeature = createFeature({
       const newState: DashboardState = { ...state };
       if (state[key]) {
         const oldState = state[key];
-        const dashboardConfig = gridViewportConfig(oldState.dashboardConfig, action.width, action.height);
+        const dashboardConfig = viewportConfig(oldState.dashboardConfig, action.width, action.height);
         newState[key] = {
           ...state[key],
           dashboardConfig,
-          dashboardSetting: getViewportSetting(dashboardConfig, state[key].dashboardSetting),
+          dashboardSetting: viewportSetting(dashboardConfig, state[key].dashboardSetting),
         };
       }
       return { ...newState };

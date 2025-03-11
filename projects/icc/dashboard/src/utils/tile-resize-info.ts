@@ -1,7 +1,7 @@
 import { IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { DxyPosition, IccDashboardConfig, IccTileResizeMap, IccTile, IccTileInfo } from '../models/dashboard.model';
 
-export function getTileResizeInfo<T>(
+export function tileResizeInfo<T>(
   resizeInfo: IccResizeInfo,
   tile: IccTile<T>,
   config: IccDashboardConfig,

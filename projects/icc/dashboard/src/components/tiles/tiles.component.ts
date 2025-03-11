@@ -8,9 +8,9 @@ import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 import { IccDashboardFacade } from '../../+state/dashboard.facade';
 import { dragDropTile } from '../../utils/drag-drop-tile';
-import { setTileLayouts } from '../../utils/setup-tiles';
-import { getTileResizeInfo } from '../../utils/tile-resize-info';
-import { getGridMap } from '../../utils/viewport-setting';
+import { setupTilesLayout } from '../../utils/setup-tiles-layout';
+import { tileResizeInfo } from '../../utils/tile-resize-info';
+import { initGridMap } from '../../utils/viewport-setting';
 import {
   defaultTileMenus,
   IccDashboardConfig,
@@ -49,7 +49,7 @@ export class IccTilesComponent implements OnInit {
   @Input()
   set config(config: IccDashboardConfig) {
     if (this.config && (config.rows !== this.config.rows || config.cols !== this.config.cols)) {
-      this.setTileLayouts(this.tiles); //TODO test confg change
+      this.setupTilesLayout(this.tiles); //TODO test confg change
     }
     this._config = config;
   }
@@ -65,7 +65,7 @@ export class IccTilesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setTileLayouts(this.tiles);
+    this.setupTilesLayout(this.tiles);
   }
 
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
@@ -81,9 +81,9 @@ export class IccTilesComponent implements OnInit {
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
-      const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.setting.gridMap);
+      const tileInfo = tileResizeInfo(resizeInfo, tile, this.config, this.setting.gridMap);
       Object.assign(tile, tileInfo);
-      this.setTileLayouts(this.tiles);
+      this.setupTilesLayout(this.tiles);
     }
   }
 
@@ -93,12 +93,12 @@ export class IccTilesComponent implements OnInit {
 
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
     const newTiles = dragDropTile(e, tile, this.tiles, this.config, this.setting.gridMap);
-    this.setTileLayouts(newTiles);
+    this.setupTilesLayout(newTiles);
   }
 
-  private setTileLayouts(tiles: IccTile<unknown>[]): void {
-    const gridMap = getGridMap(this.config); //WARNING initialize gridMap!!!
-    const newTiles = setTileLayouts(tiles, this.config, gridMap);
+  private setupTilesLayout(tiles: IccTile<unknown>[]): void {
+    const gridMap = initGridMap(this.config); //WARNING initialize gridMap!!!
+    const newTiles = setupTilesLayout(tiles, this.config, gridMap);
     this.dashboardFacade.loadDashboardGridMapTiles(this.setting.dashboardId, gridMap, newTiles);
   }
 }

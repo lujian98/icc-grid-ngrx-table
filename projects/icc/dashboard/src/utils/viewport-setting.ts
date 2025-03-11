@@ -1,6 +1,6 @@
 import { IccDashboardConfig, IccDashboardSetting } from '../models/dashboard.model';
 
-export function getGridMap(config: IccDashboardConfig): number[][] {
+export function initGridMap(config: IccDashboardConfig): number[][] {
   const gridMap: number[][] = [];
   for (let i = 0; i < config.rows; i++) {
     gridMap[i] = [];
@@ -11,7 +11,7 @@ export function getGridMap(config: IccDashboardConfig): number[][] {
   return gridMap;
 }
 
-export function gridViewportConfig(config: IccDashboardConfig, width: number, height: number): IccDashboardConfig {
+export function viewportConfig(config: IccDashboardConfig, width: number, height: number): IccDashboardConfig {
   const gridWidth = (width - config.cols * config.gridGap - 4) / config.cols;
   const gridHeight = (height - config.cols * config.gridGap - 4) / config.rows;
   if (gridWidth !== config.gridWidth || gridHeight !== config.gridHeight) {
@@ -20,7 +20,7 @@ export function gridViewportConfig(config: IccDashboardConfig, width: number, he
   return config;
 }
 
-export function getViewportSetting(
+export function viewportSetting(
   dashboardConfig: IccDashboardConfig,
   setting: IccDashboardSetting,
 ): IccDashboardSetting {

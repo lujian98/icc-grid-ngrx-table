@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 
-export function dragDropTile<D, T>(
+export function dragDropTile<D>(
   e: CdkDragDrop<D>,
   tile: IccTile<unknown>,
   tiles: IccTile<unknown>[],
@@ -38,7 +38,7 @@ export function dragDropTile<D, T>(
   return tiles;
 }
 
-function isDroppable<T>(
+function isDroppable(
   x: number,
   y: number,
   tile: IccTile<unknown>,
