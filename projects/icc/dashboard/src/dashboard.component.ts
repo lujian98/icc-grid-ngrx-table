@@ -29,7 +29,7 @@ import {
   IccTileOption,
   IccTile,
 } from './models/dashboard.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { dragDropTile } from './utils/drag-drop-tile';
 import { setTileLayouts } from './utils/setup-tiles';
 import { getTileResizeInfo } from './utils/tile-resize-info';
@@ -63,8 +63,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private _config: IccDashboardConfig = defaultDashboardConfig;
 
   private _tiles: IccTile<unknown>[] = [];
-  dashboardConfig$!: Observable<IccDashboardConfig>;
-  dashboardSetting$!: Observable<IccDashboardSetting>;
+  config$!: Observable<IccDashboardConfig>;
+  setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
 
   private gridMap: number[][] = [];
@@ -90,11 +90,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   @Input()
   set tiles(tiles: IccTile<unknown>[]) {
-    console.log(' 1111111111 tiles=', tiles);
-    this._tiles = tiles.map((tile) => ({
-      ...defaultTileConfig,
-      ...tile,
-    }));
+    this._tiles = tiles.map((tile) => ({ ...defaultTileConfig, ...tile }));
     if (!this.config.remoteTiles) {
       this.dashboardFacade.setDashboardTiles(this.dashboardId, this.tiles);
     }
@@ -110,19 +106,18 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   private initTabsConfig(): void {
-    this.dashboardConfig$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.dashboardSetting$ = this.dashboardFacade.selectSetting(this.dashboardId);
+    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
+    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
     this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
     this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
   }
 
   ngOnInit(): void {
-    this.setGridTemplate();
     this.setTileLayouts();
   }
 
   ngAfterViewInit(): void {
-    this.setupGrid();
+    this.setupGridViewport();
   }
 
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
@@ -138,34 +133,14 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   buttonClick(button: IccButtonConfg): void {}
 
-  private setupGrid(): void {
-    const size = this.getDashboardSize()!;
-    const width = (size.width - this.config.cols * this.config.gridGap - 4) / this.config.cols;
-    const height = (size.height - this.config.cols * this.config.gridGap - 4) / this.config.rows;
-    if (width !== this.config.gridWidth || height !== this.config.gridHeight) {
-      this.config.gridWidth = width;
-      this.config.gridHeight = height;
-      this.setGridTemplate();
-      this.changeDetectorRef.detectChanges();
-      window.dispatchEvent(new Event('resize'));
-    }
-  }
-
-  private getDashboardSize(): IccSize | null {
+  private setupGridViewport(): void {
     const el = this.elementRef.nativeElement;
     const node = el.firstChild;
     if (node) {
-      return {
-        width: node.clientWidth - 0, // - padding left/right,
-        height: node.clientHeight - 30,
-      };
+      const width = node.clientWidth - 0; // - padding left/right,
+      const height = node.clientHeight - 30;
+      this.dashboardFacade.setGridViewport(this.dashboardId, width, height);
     }
-    return null;
-  }
-
-  private setGridTemplate(): void {
-    this.gridTemplateColumns = `repeat(${this.config.cols}, ${this.config.gridWidth}px)`;
-    this.gridTemplateRows = `repeat(${this.config.rows}, ${this.config.gridHeight}px)`;
   }
 
   private setTileLayouts(): void {
@@ -198,6 +173,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent): void {
-    this.setupGrid();
+    this.setupGridViewport();
   }
 }

@@ -1,8 +1,9 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { defaultDashboardState, DashboardState } from '../models/dashboard.model';
-//import { contextClickedDashboard } from '../utils/context-clicked-dashboard';
-//import { getSelectedTabIndex } from '../utils/selected-tab-index';
+import { setTileLayouts } from '../utils/setup-tiles';
+import { getTileResizeInfo } from '../utils/tile-resize-info';
+import { getGridMap, getViewportSetting, gridViewportConfig } from '../utils/viewport-setting';
 import * as dashboardActions from './dashboard.actions';
 
 export const initialState: DashboardState = {};
@@ -15,14 +16,23 @@ export const iccDashboardFeature = createFeature({
       const dashboardConfig = { ...action.dashboardConfig };
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
+      const setting = {
+        ...defaultDashboardState.dashboardSetting,
+        dashboardId: action.dashboardId,
+        viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
+      };
       newState[key] = {
         ...defaultDashboardState,
         dashboardConfig,
+        /*
         dashboardSetting: {
           ...defaultDashboardState.dashboardSetting,
           dashboardId: action.dashboardId,
+          gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
+          gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
           viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
-        },
+        }*/
+        dashboardSetting: getViewportSetting(dashboardConfig, setting),
       };
       return { ...newState };
     }),
@@ -31,15 +41,21 @@ export const iccDashboardFeature = createFeature({
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
       if (state[key]) {
+        const setting = {
+          ...state[key].dashboardSetting,
+          viewportReady: !dashboardConfig.remoteOptions,
+        };
         newState[key] = {
           ...state[key],
-          dashboardConfig: {
-            ...dashboardConfig,
-          },
+          dashboardConfig,
+          /*
           dashboardSetting: {
             ...state[key].dashboardSetting,
+            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
+            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
             viewportReady: !dashboardConfig.remoteOptions,
-          },
+          },*/
+          dashboardSetting: getViewportSetting(dashboardConfig, setting),
         };
       }
       return { ...newState };
@@ -74,6 +90,27 @@ export const iccDashboardFeature = createFeature({
         };
       }
       console.log(' new tiles state=', newState);
+      return { ...newState };
+    }),
+
+    on(dashboardActions.setGridViewport, (state, action) => {
+      const key = action.dashboardId;
+      const newState: DashboardState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        const dashboardConfig = gridViewportConfig(oldState.dashboardConfig, action.width, action.height);
+        newState[key] = {
+          ...state[key],
+          dashboardConfig,
+          /*
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
+            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
+          }*/
+          dashboardSetting: getViewportSetting(dashboardConfig, state[key].dashboardSetting),
+        };
+      }
       return { ...newState };
     }),
     /*

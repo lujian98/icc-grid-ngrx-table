@@ -1,16 +1,16 @@
-<icc-layout *ngIf="dashboardConfig$ | async as config">
+<icc-layout *ngIf="config$ | async as config">
   <icc-layout-header title="ICC.UI.TITLE.DASHBOARD" [buttons]="buttons" (iccButtonClick)="buttonClick($event)">
   </icc-layout-header>
 
-  <ng-container *ngIf="dashboardSetting$ | async as dashboardSetting">
+  <ng-container *ngIf="setting$ | async as setting">
     <div
       *ngIf="tiles$ | async as tiles"
       class="icc-tile-list"
       cdkDropListGroup
       [ngStyle]="{
         'grid-gap': config.gridGap + 'px',
-        'grid-template-columns': gridTemplateColumns,
-        'grid-template-rows': gridTemplateRows,
+        'grid-template-columns': setting.gridTemplateColumns,
+        'grid-template-rows': setting.gridTemplateRows,
       }"
     >
       <div
