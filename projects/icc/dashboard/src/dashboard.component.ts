@@ -147,12 +147,14 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   private setTileLayouts(): void {
     this.gridMap = getGridMap(this.config); //WARNING this always need run here!!!
+    console.log(' 222222222  this.gridMap=', this.gridMap);
     this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
     //window.dispatchEvent(new Event('resize'));
   }
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
+      console.log(' 11111111111  this.gridMap=', this.gridMap);
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
       Object.assign(tile, tileInfo);
       this.setTileLayouts();
@@ -164,6 +166,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
+    console.log(' aaaaaaaaaa  this.gridMap=', this.gridMap);
     this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
     this.setTileLayouts();
   }
