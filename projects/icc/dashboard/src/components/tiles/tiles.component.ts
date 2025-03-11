@@ -41,11 +41,21 @@ import {
 })
 export class IccTilesComponent implements OnInit {
   private dashboardFacade = inject(IccDashboardFacade);
+  private _config!: IccDashboardConfig;
   resizeType = IccResizeType;
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   tileMenus = defaultTileMenus;
 
-  @Input() config!: IccDashboardConfig;
+  @Input()
+  set config(config: IccDashboardConfig) {
+    if (this.config && (config.rows !== this.config.rows || config.cols !== this.config.cols)) {
+      this.setTileLayouts(this.tiles); //TODO test confg change
+    }
+    this._config = config;
+  }
+  get config(): IccDashboardConfig {
+    return this._config;
+  }
   @Input() setting!: IccDashboardSetting;
   @Input() tiles!: IccTile<unknown>[];
   @Input() options: IccTileOption<unknown>[] = [];

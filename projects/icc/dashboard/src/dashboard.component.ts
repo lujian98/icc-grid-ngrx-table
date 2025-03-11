@@ -53,9 +53,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   set config(value: Partial<IccDashboardConfig>) {
     const config = { ...defaultDashboardConfig, ...value };
     if (!isEqual(config, this.config)) {
-      if (config.rows !== this.config.rows || config.cols !== this.config.cols) {
-        //this.setTileLayouts(this.tiles); //TODO add to tile component test confg change
-      }
       this._config = config;
       this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
     }
