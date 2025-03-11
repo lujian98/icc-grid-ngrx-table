@@ -2,12 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import {
-  IccLayoutCenterComponent,
-  IccLayoutHorizontalComponent,
-  IccLayoutLeftComponent,
-  IccLayoutRightComponent,
-} from '@icc/ui/layout';
+import { IccLayoutCenterComponent, IccLayoutHorizontalComponent, IccLayoutLeftComponent } from '@icc/ui/layout';
 import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
 import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
@@ -28,7 +23,6 @@ import { AppGridRemoteVirtualScrollComponent } from '../grid/remote-data/grid-vi
     IccLayoutHorizontalComponent,
     IccLayoutLeftComponent,
     IccLayoutCenterComponent,
-    IccLayoutRightComponent,
     IccAccordionComponent,
     IccTabsComponent,
   ],

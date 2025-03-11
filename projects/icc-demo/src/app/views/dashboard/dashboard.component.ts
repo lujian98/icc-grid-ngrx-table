@@ -2,12 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
-import {
-  IccLayoutRightComponent,
-  IccLayoutHorizontalComponent,
-  IccLayoutLeftComponent,
-  IccLayoutCenterComponent,
-} from '@icc/ui/layout';
+import { IccLayoutHorizontalComponent, IccLayoutLeftComponent, IccLayoutCenterComponent } from '@icc/ui/layout';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +15,6 @@ import {
     IccLayoutHorizontalComponent,
     IccLayoutLeftComponent,
     IccLayoutCenterComponent,
-    IccLayoutRightComponent,
     IccAccordionComponent,
   ],
 })
