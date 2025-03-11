@@ -18,6 +18,11 @@ export const loadDashboardConfigSuccess = createAction(
   props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
 );
 
+export const setGridViewport = createAction(
+  '[Dashboard] Set Grid Viewport',
+  props<{ dashboardId: string; width: number; height: number }>(),
+);
+
 export const loadDashboardTiles = createAction(
   '[Dashboard] Load Dashboard Tiles',
   props<{ dashboardId: string; dashboardConfig: IccDashboardConfig }>(),
@@ -31,21 +36,6 @@ export const loadDashboardTilesSuccess = createAction(
 export const loadDashboardGridMapTiles = createAction(
   '[Dashboard] Load Dashboard Grid Map and Tiles',
   props<{ dashboardId: string; gridMap: number[][]; tiles: IccTile<unknown>[] }>(),
-);
-
-export const setGridViewport = createAction(
-  '[Dashboard] Set Grid Viewport',
-  props<{ dashboardId: string; width: number; height: number }>(),
-);
-
-export const setResizeTile = createAction(
-  '[Dashboard] Set Resize Tile',
-  props<{ dashboardId: string; resizeInfo: IccResizeInfo; tile: IccTile<unknown> }>(),
-);
-
-export const setDragDropTile = createAction(
-  '[Dashboard] Set Drag Drop Tile',
-  props<{ dashboardId: string; e: CdkDragDrop<unknown>; tile: IccTile<unknown> }>(),
 );
 
 export const clearDashboardStore = createAction('[Dashboard]] Clear Dashboard Store', props<{ dashboardId: string }>());

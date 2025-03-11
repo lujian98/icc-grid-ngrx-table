@@ -28,7 +28,7 @@ export interface IccDashboardSetting {
   viewportReady: boolean; //not used
   gridTemplateColumns: string;
   gridTemplateRows: string;
-  gridMap: number[][]; // NOT working put here???
+  gridMap: number[][];
 }
 
 export interface DashboardState {

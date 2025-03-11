@@ -69,12 +69,6 @@ export class IccTilesComponent implements OnInit {
 
   onTileMenuClicked(tileMenu: IccMenuConfig, tile: IccTile<unknown>): void {}
 
-  private setTileLayouts(tiles: IccTile<unknown>[]): void {
-    const gridMap = getGridMap(this.config); //WARNING this always need run here!!!
-    const newTiles = setTileLayouts(tiles, this.config, gridMap);
-    this.dashboardFacade.loadDashboardGridMapTiles(this.setting.dashboardId, gridMap, newTiles);
-  }
-
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.setting.gridMap);
@@ -90,5 +84,11 @@ export class IccTilesComponent implements OnInit {
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
     const newTiles = dragDropTile(e, tile, this.tiles, this.config, this.setting.gridMap);
     this.setTileLayouts(newTiles);
+  }
+
+  private setTileLayouts(tiles: IccTile<unknown>[]): void {
+    const gridMap = getGridMap(this.config); //WARNING initialize gridMap!!!
+    const newTiles = setTileLayouts(tiles, this.config, gridMap);
+    this.dashboardFacade.loadDashboardGridMapTiles(this.setting.dashboardId, gridMap, newTiles);
   }
 }

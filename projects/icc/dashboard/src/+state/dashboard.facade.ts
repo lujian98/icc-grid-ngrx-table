@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccResizeInfo } from '@icc/ui/resize';
 import { IccDashboardConfig, IccDashboardSetting, IccTile } from '../models/dashboard.model';
 import * as dashboardActions from './dashboard.actions';
 import {
@@ -43,39 +41,10 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.setGridViewport({ dashboardId, width, height }));
   }
 
-  setResizeTile(dashboardId: string, resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
-    this.store.dispatch(dashboardActions.setResizeTile({ dashboardId, resizeInfo, tile }));
-  }
-
-  setDragDropTile(dashboardId: string, e: CdkDragDrop<unknown>, tile: IccTile<unknown>): void {
-    this.store.dispatch(dashboardActions.setDragDropTile({ dashboardId, e, tile }));
-  }
-
   /*
-
   setDashboardOptions(dashboardId: string, options: IccTabConfig[]): void {
     this.store.dispatch(dashboardActions.loadDashboardOptionsSuccess({ dashboardId, options }));
-  }
-
-  setSelectedIndex(dashboardId: string, index: number): void {
-    this.store.dispatch(dashboardActions.setSelectedIndex({ dashboardId, index }));
-  }
-
-  setAddTab(dashboardId: string, tab: IccTabConfig): void {
-    this.store.dispatch(dashboardActions.setAddTab({ dashboardId, tab }));
-  }
-
-  setDragDropTab(dashboardId: string, previousIndex: number, currentIndex: number): void {
-    this.store.dispatch(dashboardActions.setDragDropTab({ dashboardId, previousIndex, currentIndex }));
-  }
-
-  setContextMenuClicked(dashboardId: string, menuItem: IccMenuConfig, tab: IccTabConfig, index: number): void {
-    this.store.dispatch(dashboardActions.setContextMenuClicked({ dashboardId, menuItem, tab, index }));
-  }
-
-  setCloseTab(dashboardId: string, tab: IccTabConfig): void {
-    this.store.dispatch(dashboardActions.setCloseTab({ dashboardId, tab }));
-  }
+  } 
     */
 
   clearDashboardStore(dashboardId: string): void {

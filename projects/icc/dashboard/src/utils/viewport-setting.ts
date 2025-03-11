@@ -8,7 +8,6 @@ export function getGridMap(config: IccDashboardConfig): number[][] {
       gridMap[i][j] = -1;
     }
   }
-  console.log(' uuuuuuu gridMap=', gridMap[0]);
   return gridMap;
 }
 
@@ -27,7 +26,6 @@ export function getViewportSetting(
 ): IccDashboardSetting {
   return {
     ...setting,
-    //gridMap: getGridMap(dashboardConfig),
     gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
     gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
   };
