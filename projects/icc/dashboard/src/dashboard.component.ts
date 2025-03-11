@@ -156,7 +156,9 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     if (resizeInfo.isResized) {
       console.log(' 11111111111  this.gridMap=', this.gridMap);
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
+      console.log(' bbbbbbbbbb this.tiles=', this.tiles[3]);
       Object.assign(tile, tileInfo);
+      console.log(' cccccccccccc this.tiles=', this.tiles[3]);
       this.setTileLayouts();
     }
   }

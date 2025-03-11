@@ -28,7 +28,7 @@ export interface IccDashboardSetting {
   viewportReady: boolean; //not used
   gridTemplateColumns: string;
   gridTemplateRows: string;
-  // gridMap: number[][]; // NOT working put here???
+  gridMap: number[][]; // NOT working put here???
 }
 
 export interface DashboardState {
@@ -47,6 +47,7 @@ export const defaultDashboardSetting: IccDashboardSetting = {
   viewportReady: false,
   gridTemplateColumns: '',
   gridTemplateRows: '',
+  gridMap: [],
 };
 
 export const defaultDashboardState: IccDashboardState = {
