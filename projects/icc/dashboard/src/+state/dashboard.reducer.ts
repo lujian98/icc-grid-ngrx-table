@@ -88,6 +88,7 @@ export const iccDashboardFeature = createFeature({
           dashboardSetting: getViewportSetting(dashboardConfig, state[key].dashboardSetting),
         };
       }
+      console.log(' 66666666666 gridmap=', newState[key].dashboardSetting.gridMap);
       return { ...newState };
     }),
     /*
