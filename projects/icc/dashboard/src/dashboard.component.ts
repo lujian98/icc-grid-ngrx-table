@@ -11,30 +11,29 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
-import { isEqual, uniqueId } from '@icc/ui/core';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
-import { IccResizeDirective, IccResizeInfo, IccResizeType, IccSize } from '@icc/ui/resize';
+import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
+import { map, Observable } from 'rxjs';
+import { IccDashboardStateModule } from './+state/dashboard-state.module';
+import { IccDashboardFacade } from './+state/dashboard.facade';
 import {
   defaultDashboardConfig,
   defaultTileConfig,
   defaultTileMenus,
   IccDashboardConfig,
   IccDashboardSetting,
-  IccTileOption,
   IccTile,
+  IccTileOption,
 } from './models/dashboard.model';
-import { Observable, map } from 'rxjs';
 import { dragDropTile } from './utils/drag-drop-tile';
 import { setTileLayouts } from './utils/setup-tiles';
 import { getTileResizeInfo } from './utils/tile-resize-info';
-import { IccDashboardFacade } from './+state/dashboard.facade';
-import { IccDashboardStateModule } from './+state/dashboard-state.module';
 
 @Component({
   selector: 'icc-dashboard',
@@ -60,14 +59,13 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   private elementRef = inject(ElementRef);
   private dashboardFacade = inject(IccDashboardFacade);
   private dashboardId = uniqueId(16);
+  private gridMap: number[][] = [];
   private _config: IccDashboardConfig = defaultDashboardConfig;
-
   private _tiles: IccTile<unknown>[] = [];
   config$!: Observable<IccDashboardConfig>;
   setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
 
-  private gridMap: number[][] = [];
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
   resizeType = IccResizeType;
   dragDisabled: boolean = false;
@@ -82,6 +80,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     if (!isEqual(config, this.config)) {
       this._config = config;
       this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
+      this.setTileLayouts();
     }
   }
   get config(): IccDashboardConfig {
@@ -107,7 +106,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
 
   private initTabsConfig(): void {
     this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
+    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId).pipe(
+      map((setting) => {
+        return setting;
+      }),
+    );
     this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
     this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
   }

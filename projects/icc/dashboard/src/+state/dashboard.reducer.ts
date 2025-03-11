@@ -1,4 +1,3 @@
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { defaultDashboardState, DashboardState } from '../models/dashboard.model';
 import { setTileLayouts } from '../utils/setup-tiles';
@@ -24,14 +23,6 @@ export const iccDashboardFeature = createFeature({
       newState[key] = {
         ...defaultDashboardState,
         dashboardConfig,
-        /*
-        dashboardSetting: {
-          ...defaultDashboardState.dashboardSetting,
-          dashboardId: action.dashboardId,
-          gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
-          gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
-          viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
-        }*/
         dashboardSetting: getViewportSetting(dashboardConfig, setting),
       };
       return { ...newState };
@@ -48,13 +39,6 @@ export const iccDashboardFeature = createFeature({
         newState[key] = {
           ...state[key],
           dashboardConfig,
-          /*
-          dashboardSetting: {
-            ...state[key].dashboardSetting,
-            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
-            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
-            viewportReady: !dashboardConfig.remoteOptions,
-          },*/
           dashboardSetting: getViewportSetting(dashboardConfig, setting),
         };
       }
@@ -89,7 +73,6 @@ export const iccDashboardFeature = createFeature({
           tiles: [...action.tiles],
         };
       }
-      console.log(' new tiles state=', newState);
       return { ...newState };
     }),
 
@@ -102,12 +85,6 @@ export const iccDashboardFeature = createFeature({
         newState[key] = {
           ...state[key],
           dashboardConfig,
-          /*
-          dashboardSetting: {
-            ...state[key].dashboardSetting,
-            gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
-            gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
-          }*/
           dashboardSetting: getViewportSetting(dashboardConfig, state[key].dashboardSetting),
         };
       }

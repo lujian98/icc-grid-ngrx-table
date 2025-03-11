@@ -73,10 +73,12 @@ export class IccTilesComponent {
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
       //this.dashboardFacade.setResizeTile(this.setting.dashboardId, resizeInfo, tile);
+      /*
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.setting.gridMap);
       Object.assign(tile, tileInfo);
       const tiles = setTileLayouts(this.tiles, this.config, this.setting.gridMap);
       this.iccTilesChange.emit(tiles);
+      */
       //this.setTileLayouts();
     }
   }
@@ -87,8 +89,8 @@ export class IccTilesComponent {
 
   onDropListDropped<D>(e: CdkDragDrop<any>, tile: IccTile<unknown>): void {
     //this.dashboardFacade.setDragDropTile(this.setting.dashboardId, e, tile);
-    const tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.setting.gridMap);
-    this.iccTilesChange.emit(tiles);
+    //const tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.setting.gridMap);
+    //this.iccTilesChange.emit(tiles);
     //   this.setTileLayouts();
   }
 }

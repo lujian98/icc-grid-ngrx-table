@@ -26,7 +26,6 @@ export function getViewportSetting(
 ): IccDashboardSetting {
   return {
     ...setting,
-    gridMap: getGridMap(dashboardConfig),
     gridTemplateColumns: `repeat(${dashboardConfig.cols}, ${dashboardConfig.gridWidth}px)`,
     gridTemplateRows: `repeat(${dashboardConfig.rows}, ${dashboardConfig.gridHeight}px)`,
   };
