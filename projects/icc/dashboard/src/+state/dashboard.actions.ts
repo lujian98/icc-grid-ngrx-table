@@ -1,5 +1,3 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { IccResizeInfo } from '@icc/ui/resize';
 import { createAction, props } from '@ngrx/store';
 import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
 

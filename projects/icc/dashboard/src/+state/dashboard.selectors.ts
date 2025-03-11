@@ -27,9 +27,3 @@ export const selectDashboardTiles = (dashboardId: string) =>
   createSelector(featureSelector, (state: DashboardState) => {
     return state && state[dashboardId] ? state[dashboardId].tiles : [];
   });
-/*
-export const selectDashboardOptions = (dashboardId: string) =>
-  createSelector(featureSelector, (state: DashboardState) => {
-    return state && state[dashboardId] ? state[dashboardId].options : [];
-  });
-  */

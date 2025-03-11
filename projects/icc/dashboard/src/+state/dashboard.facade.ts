@@ -3,12 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccDashboardConfig, IccDashboardSetting, IccTile } from '../models/dashboard.model';
 import * as dashboardActions from './dashboard.actions';
-import {
-  selectDashboardConfig,
-  //selectDashboardOptions,
-  selectDashboardSetting,
-  selectDashboardTiles,
-} from './dashboard.selectors';
+import { selectDashboardConfig, selectDashboardSetting, selectDashboardTiles } from './dashboard.selectors';
 
 @Injectable()
 export class IccDashboardFacade {
@@ -19,10 +14,6 @@ export class IccDashboardFacade {
     if (dashboardConfig.remoteConfig) {
       this.store.dispatch(dashboardActions.loadRemoteDashboardConfig({ dashboardId, dashboardConfig }));
     }
-
-    //if (dashboardConfig.remoteOptions && !dashboardConfig.remoteConfig) {
-    //  this.store.dispatch(dashboardActions.loadDashboardOptions({ dashboardId, dashboardConfig }));
-    //}
   }
 
   setDashboardConfig(dashboardId: string, dashboardConfig: IccDashboardConfig): void {
@@ -41,12 +32,6 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.setGridViewport({ dashboardId, width, height }));
   }
 
-  /*
-  setDashboardOptions(dashboardId: string, options: IccTabConfig[]): void {
-    this.store.dispatch(dashboardActions.loadDashboardOptionsSuccess({ dashboardId, options }));
-  } 
-    */
-
   clearDashboardStore(dashboardId: string): void {
     this.store.dispatch(dashboardActions.clearDashboardStore({ dashboardId }));
   }
@@ -62,8 +47,4 @@ export class IccDashboardFacade {
   selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
     return this.store.select(selectDashboardTiles(dashboardId));
   }
-  /*
-  selectDashboardOptions(dashboardId: string): Observable<IccTabConfig[]> {
-    return this.store.select(selectDashboardOptions(dashboardId));
-  }*/
 }

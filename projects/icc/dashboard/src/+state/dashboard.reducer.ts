@@ -16,7 +16,7 @@ export const iccDashboardFeature = createFeature({
       const setting = {
         ...defaultDashboardState.dashboardSetting,
         dashboardId: action.dashboardId,
-        viewportReady: !dashboardConfig.remoteConfig && !dashboardConfig.remoteOptions,
+        viewportReady: !dashboardConfig.remoteConfig,
       };
       newState[key] = {
         ...defaultDashboardState,
@@ -32,7 +32,7 @@ export const iccDashboardFeature = createFeature({
       if (state[key]) {
         const setting = {
           ...state[key].dashboardSetting,
-          viewportReady: !dashboardConfig.remoteOptions,
+          viewportReady: true,
         };
         newState[key] = {
           ...state[key],
@@ -42,22 +42,6 @@ export const iccDashboardFeature = createFeature({
       }
       return { ...newState };
     }),
-    /*
-    on(dashboardActions.loadDashboardOptionsSuccess, (state, action) => {
-      const key = action.dashboardId;
-      const newState: DashboardState = { ...state };
-      if (state[key]) {
-        newState[key] = {
-          ...state[key],
-          dashboardSetting: {
-            ...state[key].dashboardSetting,
-            viewportReady: true,
-          },
-          options: [...action.options],
-        };
-      }
-      return { ...newState };
-    }),*/
     on(dashboardActions.loadDashboardTilesSuccess, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };

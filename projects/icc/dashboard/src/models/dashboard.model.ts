@@ -7,7 +7,7 @@ export interface IccDashboardConfig {
   cols: number;
   rows: number;
   remoteConfig: boolean;
-  remoteOptions: boolean;
+  //remoteOptions: boolean; // options list cannot be remote due the IccPortalContent mapping!!
   remoteTiles: boolean;
 }
 
@@ -18,7 +18,7 @@ export const defaultDashboardConfig: IccDashboardConfig = {
   cols: 10,
   rows: 6,
   remoteConfig: false,
-  remoteOptions: false,
+  //remoteOptions: false,
   remoteTiles: false,
 };
 
@@ -34,28 +34,6 @@ export interface IccDashboardSetting {
 export interface DashboardState {
   [key: string]: IccDashboardState;
 }
-
-export interface IccDashboardState {
-  dashboardConfig: IccDashboardConfig;
-  dashboardSetting: IccDashboardSetting;
-  tiles: IccTile<unknown>[];
-  //options: IccTabConfig[]; // options are input to tabs mapped using portalName to portal component
-}
-
-export const defaultDashboardSetting: IccDashboardSetting = {
-  dashboardId: '191cf2bb6b5',
-  viewportReady: false,
-  gridTemplateColumns: '',
-  gridTemplateRows: '',
-  gridMap: [],
-};
-
-export const defaultDashboardState: IccDashboardState = {
-  dashboardConfig: defaultDashboardConfig,
-  dashboardSetting: defaultDashboardSetting,
-  tiles: [],
-  //options: [],
-};
 
 export interface IccTile<T> {
   name: string;
@@ -79,6 +57,28 @@ export const defaultTileConfig = {
   name: 'tilename',
   dragDisabled: false,
   enableContextMenu: true,
+};
+
+export interface IccDashboardState {
+  dashboardConfig: IccDashboardConfig;
+  dashboardSetting: IccDashboardSetting;
+  tiles: IccTile<unknown>[];
+  options: IccTile<unknown>[]; // options are input to tabs mapped using portalName to portal component
+}
+
+export const defaultDashboardSetting: IccDashboardSetting = {
+  dashboardId: '191cf2bb6b5',
+  viewportReady: false,
+  gridTemplateColumns: '',
+  gridTemplateRows: '',
+  gridMap: [],
+};
+
+export const defaultDashboardState: IccDashboardState = {
+  dashboardConfig: defaultDashboardConfig,
+  dashboardSetting: defaultDashboardSetting,
+  tiles: [],
+  options: [],
 };
 
 export interface IccTileOption<T> {
