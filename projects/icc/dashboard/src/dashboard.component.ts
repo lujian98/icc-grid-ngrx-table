@@ -34,6 +34,7 @@ import {
 import { dragDropTile } from './utils/drag-drop-tile';
 import { setTileLayouts } from './utils/setup-tiles';
 import { getTileResizeInfo } from './utils/tile-resize-info';
+import { getGridMap, getViewportSetting, gridViewportConfig } from './utils/viewport-setting';
 
 @Component({
   selector: 'icc-dashboard',
@@ -78,9 +79,11 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   set config(value: Partial<IccDashboardConfig>) {
     const config = { ...defaultDashboardConfig, ...value };
     if (!isEqual(config, this.config)) {
+      if (config.rows !== this.config.rows || config.cols !== this.config.cols) {
+        this.setTileLayouts(); //TODO test confg change
+      }
       this._config = config;
       this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
-      this.setTileLayouts();
     }
   }
   get config(): IccDashboardConfig {
@@ -104,23 +107,19 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     this.initTabsConfig();
   }
 
-  private initTabsConfig(): void {
-    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId).pipe(
-      map((setting) => {
-        return setting;
-      }),
-    );
-    this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
-    this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
-  }
-
   ngOnInit(): void {
     this.setTileLayouts();
   }
 
   ngAfterViewInit(): void {
     this.setupGridViewport();
+  }
+
+  private initTabsConfig(): void {
+    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
+    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
+    this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
+    this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
   }
 
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
@@ -147,14 +146,9 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   private setTileLayouts(): void {
-    for (let i = 0; i < this.config.rows; i++) {
-      this.gridMap[i] = [];
-      for (let j = 0; j < this.config.cols; j++) {
-        this.gridMap[i][j] = -1;
-      }
-    }
+    this.gridMap = getGridMap(this.config); //WARNING this always need run here!!!
     this.tiles = setTileLayouts(this.tiles, this.config, this.gridMap);
-    window.dispatchEvent(new Event('resize'));
+    //window.dispatchEvent(new Event('resize'));
   }
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
