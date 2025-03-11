@@ -80,7 +80,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     const config = { ...defaultDashboardConfig, ...value };
     if (!isEqual(config, this.config)) {
       if (config.rows !== this.config.rows || config.cols !== this.config.cols) {
-        this.setTileLayouts(); //TODO test confg change
+        this.setTileLayouts(this.tiles); //TODO test confg change
       }
       this._config = config;
       this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
@@ -108,7 +108,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.setTileLayouts();
+    this.setTileLayouts(this.tiles);
   }
 
   ngAfterViewInit(): void {
@@ -145,16 +145,17 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     }
   }
 
-  private setTileLayouts(): void {
+  private setTileLayouts(tiles: IccTile<unknown>[]): void {
     const gridMap = getGridMap(this.config); //WARNING this always need run here!!!
     console.log(' 222222222  this.gridMap=', gridMap);
-    this.tiles = setTileLayouts(this.tiles, this.config, gridMap);
+    const newTiles = setTileLayouts(tiles, this.config, gridMap);
     this.gridMap = gridMap;
+    this.dashboardFacade.setDashboardTiles(this.dashboardId, newTiles);
     console.log(' 999999999999  this.gridMap=', this.gridMap[0]);
     //window.dispatchEvent(new Event('resize'));
   }
 
-  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
+  onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>, tiles: IccTile<unknown>[]): void {
     if (resizeInfo.isResized) {
       console.log(' 11111111111  this.gridMap=', this.gridMap[0]);
       const tileInfo = getTileResizeInfo(resizeInfo, tile, this.config, this.gridMap);
@@ -162,7 +163,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
       console.log(' bbbbbbbbbb this.tiles=', this.tiles[3]);
       Object.assign(tile, tileInfo);
       console.log(' cccccccccccc this.tiles=', this.tiles[3]);
-      this.setTileLayouts();
+      this.setTileLayouts(tiles);
     }
   }
 
@@ -170,10 +171,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit {
     return !!tile.dragDisabled;
   }
 
-  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
+  onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>, tiles: IccTile<unknown>[]): void {
     console.log(' aaaaaaaaaa  this.gridMap=', this.gridMap);
-    this.tiles = dragDropTile(e, tile, [...this.tiles], this.config, this.gridMap);
-    this.setTileLayouts();
+    const newTiles = dragDropTile(e, tile, tiles, this.config, this.gridMap);
+    this.setTileLayouts(newTiles);
   }
 
   @HostListener('window:resize', ['$event'])

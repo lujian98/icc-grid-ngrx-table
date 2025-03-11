@@ -91,6 +91,28 @@ export const iccDashboardFeature = createFeature({
       console.log(' 66666666666 gridmap=', newState[key].dashboardSetting.gridMap);
       return { ...newState };
     }),
+
+    on(dashboardActions.loadDashboardTilesSuccess, (state, action) => {
+      const key = action.dashboardId;
+      const newState: DashboardState = { ...state };
+      if (state[key]) {
+        const oldState = state[key];
+        //const gridMap = getGridMap(oldState.dashboardConfig);
+        const tiles = action.tiles; //setTileLayouts(action.tiles, oldState.dashboardConfig, gridMap);
+        newState[key] = {
+          ...state[key],
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            //gridMap,
+            viewportReady: true,
+          },
+          tiles,
+        };
+      }
+      //console.log(' new tiles state=', newState);
+      return { ...newState };
+    }),
+
     /*
     on(dashboardActions.setSelectedIndex, (state, action) => {
       const key = action.dashboardId;
