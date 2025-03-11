@@ -35,6 +35,10 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ dashboardId, tiles }));
   }
 
+  loadDashboardGridMapTiles(dashboardId: string, gridMap: number[][], tiles: IccTile<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardGridMapTiles({ dashboardId, gridMap, tiles }));
+  }
+
   setGridViewport(dashboardId: string, width: number, height: number): void {
     this.store.dispatch(dashboardActions.setGridViewport({ dashboardId, width, height }));
   }

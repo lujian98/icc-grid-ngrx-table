@@ -113,6 +113,23 @@ export const iccDashboardFeature = createFeature({
       return { ...newState };
     }),
 
+    on(dashboardActions.loadDashboardGridMapTiles, (state, action) => {
+      const key = action.dashboardId;
+      const newState: DashboardState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            gridMap: action.gridMap,
+          },
+          tiles: action.tiles,
+        };
+      }
+      //console.log(' new tiles state=', newState);
+      return { ...newState };
+    }),
+
     /*
     on(dashboardActions.setSelectedIndex, (state, action) => {
       const key = action.dashboardId;
