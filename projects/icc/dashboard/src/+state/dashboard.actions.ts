@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IccDashboardConfig, IccTile } from '../models/dashboard.model';
+import { IccDashboardConfig, IccTile, IccTileOption } from '../models/dashboard.model';
 
 export const initDashboardConfig = createAction(
   '[Dashboard] Init Dashboard Config',
@@ -19,6 +19,11 @@ export const loadDashboardConfigSuccess = createAction(
 export const setGridViewport = createAction(
   '[Dashboard] Set Grid Viewport',
   props<{ dashboardId: string; width: number; height: number }>(),
+);
+
+export const loadDashboardOptions = createAction(
+  '[Dashboard] Load Tab Options',
+  props<{ dashboardId: string; options: IccTileOption<unknown>[] }>(),
 );
 
 export const loadDashboardTiles = createAction(

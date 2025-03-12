@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccDashboardConfig, IccDashboardSetting, IccTile } from '../models/dashboard.model';
+import { IccDashboardConfig, IccDashboardSetting, IccTile, IccTileOption } from '../models/dashboard.model';
 import * as dashboardActions from './dashboard.actions';
 import { selectDashboardConfig, selectDashboardSetting, selectDashboardTiles } from './dashboard.selectors';
 
@@ -18,6 +18,10 @@ export class IccDashboardFacade {
 
   setDashboardConfig(dashboardId: string, dashboardConfig: IccDashboardConfig): void {
     this.store.dispatch(dashboardActions.loadDashboardConfigSuccess({ dashboardId, dashboardConfig }));
+  }
+
+  setDashboardOptions(dashboardId: string, options: IccTileOption<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardOptions({ dashboardId, options }));
   }
 
   setDashboardTiles(dashboardId: string, tiles: IccTile<unknown>[]): void {

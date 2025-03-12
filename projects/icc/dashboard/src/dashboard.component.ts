@@ -43,6 +43,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   private dashboardFacade = inject(IccDashboardFacade);
   private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
+  private _options: IccTileOption<unknown>[] = [];
   private _tiles: IccTile<unknown>[] = [];
   config$!: Observable<IccDashboardConfig>;
   setting$!: Observable<IccDashboardSetting>;
@@ -62,6 +63,15 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   }
 
   @Input()
+  set options(options: IccTileOption<unknown>[]) {
+    this._options = [...options];
+    this.dashboardFacade.setDashboardOptions(this.dashboardId, this.options);
+  }
+  get options(): IccTileOption<unknown>[] {
+    return this._options;
+  }
+
+  @Input()
   set tiles(tiles: IccTile<unknown>[]) {
     this._tiles = tiles.map((tile) => ({ ...defaultTileConfig, ...tile }));
     if (!this.config.remoteTiles) {
@@ -71,8 +81,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   get tiles(): IccTile<unknown>[] {
     return this._tiles;
   }
-
-  @Input() options: IccTileOption<unknown>[] = [];
 
   constructor() {
     this.initTabsConfig();

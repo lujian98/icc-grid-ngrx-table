@@ -42,6 +42,21 @@ export const iccDashboardFeature = createFeature({
       }
       return { ...newState };
     }),
+    on(dashboardActions.loadDashboardOptions, (state, action) => {
+      const key = action.dashboardId;
+      const newState: DashboardState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          dashboardSetting: {
+            ...state[key].dashboardSetting,
+            viewportReady: true,
+          },
+          options: [...action.options],
+        };
+      }
+      return { ...newState };
+    }),
     on(dashboardActions.loadDashboardTilesSuccess, (state, action) => {
       const key = action.dashboardId;
       const newState: DashboardState = { ...state };
@@ -67,21 +82,6 @@ export const iccDashboardFeature = createFeature({
           ...state[key],
           dashboardConfig,
           dashboardSetting: viewportSetting(dashboardConfig, state[key].dashboardSetting),
-        };
-      }
-      return { ...newState };
-    }),
-    on(dashboardActions.loadDashboardTilesSuccess, (state, action) => {
-      const key = action.dashboardId;
-      const newState: DashboardState = { ...state };
-      if (state[key]) {
-        newState[key] = {
-          ...state[key],
-          dashboardSetting: {
-            ...state[key].dashboardSetting,
-            viewportReady: true,
-          },
-          tiles: action.tiles,
         };
       }
       return { ...newState };
