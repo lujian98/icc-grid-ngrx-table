@@ -84,7 +84,7 @@ export const defaultDashboardState: IccDashboardState = {
 export interface IccTileOption<T> {
   name: string;
   title?: string;
-  component: IccPortalContent<T>;
+  content: IccPortalContent<T>;
 }
 
 export interface IccTileInfo {

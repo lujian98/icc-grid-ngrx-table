@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { IccMenuConfig } from '@icc/ui/menu';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IccTabConfig, IccTabsConfig, IccTabsSetting } from '../models/tabs.model';
+import { IccTabConfig, IccTabOption, IccTabsConfig, IccTabsSetting } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
 import { selectTabsConfig, selectTabsOptions, selectTabsSetting, selectTabsTabs } from './tabs.selectors';
 
@@ -15,10 +15,6 @@ export class IccTabsFacade {
     if (tabsConfig.remoteConfig) {
       this.store.dispatch(tabsActions.loadRemoteTabsConfig({ tabsId, tabsConfig }));
     }
-
-    if (tabsConfig.remoteOptions && !tabsConfig.remoteConfig) {
-      this.store.dispatch(tabsActions.loadTabsOptions({ tabsId, tabsConfig }));
-    }
   }
 
   setTabsConfig(tabsId: string, tabsConfig: IccTabsConfig): void {
@@ -29,8 +25,8 @@ export class IccTabsFacade {
     this.store.dispatch(tabsActions.loadTabsTabsSuccess({ tabsId, tabs }));
   }
 
-  setTabsOptions(tabsId: string, options: IccTabConfig[]): void {
-    this.store.dispatch(tabsActions.loadTabsOptionsSuccess({ tabsId, options }));
+  setTabsOptions(tabsId: string, options: IccTabOption<unknown>[]): void {
+    this.store.dispatch(tabsActions.loadTabsOptions({ tabsId, options }));
   }
 
   setSelectedIndex(tabsId: string, index: number): void {

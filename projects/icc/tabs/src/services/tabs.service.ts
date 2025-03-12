@@ -20,12 +20,12 @@ export class IccTabsService {
         return {
           ...tabsConfig,
           ...config,
-          remoteOptions: true, // remote config requires remote options
         };
       }),
     );
   }
 
+  //NOT used
   getTabsOptions(tabsConfig: IccTabsConfig): Observable<IccTabConfig[]> {
     const params = this.backendService.getParams(tabsConfig.urlKey, 'select', tabsConfig.name);
     const url = this.backendService.apiUrl;

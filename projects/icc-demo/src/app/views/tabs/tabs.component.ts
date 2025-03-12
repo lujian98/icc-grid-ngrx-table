@@ -5,7 +5,7 @@ import { IccAccordion, IccAccordionComponent } from '@icc/ui/accordion';
 import { IccLayoutCenterComponent, IccLayoutHorizontalComponent, IccLayoutLeftComponent } from '@icc/ui/layout';
 import { take, timer } from 'rxjs';
 import { IccMenuConfig } from '@icc/ui/menu';
-import { IccTabConfig, IccTabsComponent, IccTabsConfig } from '@icc/ui/tabs';
+import { IccTabConfig, IccTabsComponent, IccTabsConfig, IccTabOption } from '@icc/ui/tabs';
 import { AppStockChartComponent } from '../d3/demos/stock-charts/stock-chart.component';
 import { PortalDemoComponent } from '../dashboard/demos/portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../dashboard/demos/portal-demo2/portal-demo2.component';
@@ -82,41 +82,35 @@ export class AppTabsComponent {
     selectedTabIndex: 1,
   };
 
-  options = [
+  options: IccTabOption<unknown>[] = [
     {
       name: 'grid-multi-row-selection',
       content: AppGridMultiRowSelectionComponent,
-      closeable: true,
     },
     {
       name: 'stock-chart',
       content: AppStockChartComponent,
-      closeable: true,
     },
     {
       name: 'grid-virtual-scroll',
       content: AppGridRemoteVirtualScrollComponent,
-      closeable: true,
     },
     {
       name: 'portal-demo',
       content: PortalDemoComponent,
-      closeable: true,
     },
     /*
     {
       name: 'portal-demo2',
       content: PortalDemo2Component,
-      closeable: false,
     },*/
     {
       name: 'six',
       content: 'test6',
-      closeable: true,
     },
     {
       name: 'seven',
-      closeable: true,
+      content: 'test7',
     },
   ];
 

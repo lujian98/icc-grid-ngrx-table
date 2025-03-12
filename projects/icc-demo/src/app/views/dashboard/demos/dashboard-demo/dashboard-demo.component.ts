@@ -16,26 +16,26 @@ import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
 })
 export class AppDashboardDemoComponent {
   tiles: IccTile<any>[] = [];
-  tileOptions: IccTileOption<any>[] = [
+  tileOptions: IccTileOption<unknown>[] = [
     {
       name: 'stock-chart',
-      component: AppStockChartComponent,
+      content: AppStockChartComponent,
     },
     {
       name: 'grid-multi-row-selection',
-      component: AppGridMultiRowSelectionComponent,
+      content: AppGridMultiRowSelectionComponent,
     },
     {
       name: 'grid-virtual-scroll',
-      component: AppGridRemoteVirtualScrollComponent,
+      content: AppGridRemoteVirtualScrollComponent,
     },
     {
       name: 'portal-demo',
-      component: PortalDemoComponent,
+      content: PortalDemoComponent,
     },
     {
       name: 'portal-demo2',
-      component: PortalDemo2Component,
+      content: PortalDemo2Component,
     },
   ];
 

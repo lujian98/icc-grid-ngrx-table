@@ -11,6 +11,12 @@ export interface IccTabConfig {
   portalName?: string; //used for mapping content to save config
 }
 
+export interface IccTabOption<T> {
+  name: string;
+  title?: string;
+  content: IccPortalContent<T>;
+}
+
 export interface IccTabsConfig extends IccTabGroupConfig {
   tabReorder: boolean;
   closeable: boolean;
@@ -19,7 +25,7 @@ export interface IccTabsConfig extends IccTabGroupConfig {
   name: string;
   urlKey: string; // Only for remote tab config and options
   remoteConfig: boolean; // remote config requires remote options
-  remoteOptions: boolean;
+  //remoteOptions: boolean; // options list cannot be remote due the IccPortalContent mapping!!
   remoteTabs: boolean;
 }
 
@@ -32,7 +38,6 @@ export const defaultTabsConfig: IccTabsConfig = {
   name: 'tabs',
   urlKey: 'tabs',
   remoteConfig: false,
-  remoteOptions: false,
   remoteTabs: false,
 };
 
@@ -50,7 +55,7 @@ export interface IccTabsState {
   tabsConfig: IccTabsConfig;
   tabsSetting: IccTabsSetting;
   tabs: IccTabConfig[];
-  options: IccTabConfig[]; // options are input to tabs mapped using portalName to portal component
+  options: IccTabOption<unknown>[]; // options are input to tabs mapped using portalName to portal component
 }
 
 export const defaultTabsSetting: IccTabsSetting = {

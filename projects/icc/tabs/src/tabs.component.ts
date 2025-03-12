@@ -18,6 +18,7 @@ import {
   IccTabConfig,
   IccTabsConfig,
   IccTabsSetting,
+  IccTabOption,
 } from './models/tabs.model';
 
 @Component({
@@ -42,7 +43,7 @@ export class IccTabsComponent {
   private tabsFacade = inject(IccTabsFacade);
   private tabsId = uniqueId(16);
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
-  private _options: IccTabConfig[] = [];
+  private _options: IccTabOption<unknown>[] = [];
   private _tabs: IccTabConfig[] = [];
   tabsConfig$!: Observable<IccTabsConfig>;
   tabsSetting$!: Observable<IccTabsSetting>;
@@ -63,13 +64,11 @@ export class IccTabsComponent {
   }
 
   @Input()
-  set options(options: IccTabConfig[]) {
+  set options(options: IccTabOption<unknown>[]) {
     this._options = [...options];
-    if (!this.tabsConfig.remoteOptions) {
-      this.tabsFacade.setTabsOptions(this.tabsId, this.options);
-    }
+    this.tabsFacade.setTabsOptions(this.tabsId, this.options);
   }
-  get options(): IccTabConfig[] {
+  get options(): IccTabOption<unknown>[] {
     return this._options;
   }
 

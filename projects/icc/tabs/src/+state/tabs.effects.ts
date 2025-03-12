@@ -17,26 +17,13 @@ export class IccTabsEffects {
       concatMap(({ tabsId, tabsConfig }) => {
         return this.tabsService.getRemoteTabsConfig(tabsConfig).pipe(
           map((tabsConfig) => {
-            this.store.dispatch(tabsActions.loadTabsConfigSuccess({ tabsId, tabsConfig }));
-            return tabsActions.loadTabsOptions({ tabsId, tabsConfig });
+            return tabsActions.loadTabsConfigSuccess({ tabsId, tabsConfig });
           }),
         );
       }),
     ),
   );
-
-  loadTabsOptions$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(tabsActions.loadTabsOptions),
-      concatMap(({ tabsId, tabsConfig }) => {
-        return this.tabsService.getTabsOptions(tabsConfig).pipe(
-          map((options) => {
-            return tabsActions.loadTabsOptionsSuccess({ tabsId, options });
-          }),
-        );
-      }),
-    ),
-  );
+  // TODO load remote saveed tile
 
   clearTabsStore$ = createEffect(() =>
     this.actions$.pipe(

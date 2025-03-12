@@ -21,7 +21,7 @@ export const iccTabsFeature = createFeature({
         tabsSetting: {
           ...defaultTabsState.tabsSetting,
           tabsId: action.tabsId,
-          viewportReady: !tabsConfig.remoteConfig && !tabsConfig.remoteOptions,
+          viewportReady: !tabsConfig.remoteConfig,
         },
       };
       return { ...newState };
@@ -38,13 +38,13 @@ export const iccTabsFeature = createFeature({
           },
           tabsSetting: {
             ...state[key].tabsSetting,
-            viewportReady: !tabsConfig.remoteOptions,
+            viewportReady: true,
           },
         };
       }
       return { ...newState };
     }),
-    on(tabsActions.loadTabsOptionsSuccess, (state, action) => {
+    on(tabsActions.loadTabsOptions, (state, action) => {
       const key = action.tabsId;
       const newState: TabsState = { ...state };
       if (state[key]) {

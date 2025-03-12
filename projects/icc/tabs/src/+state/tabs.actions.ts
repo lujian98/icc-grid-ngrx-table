@@ -1,6 +1,6 @@
 import { IccMenuConfig } from '@icc/ui/menu';
 import { createAction, props } from '@ngrx/store';
-import { IccTabConfig, IccTabsConfig } from '../models/tabs.model';
+import { IccTabConfig, IccTabOption, IccTabsConfig } from '../models/tabs.model';
 
 export const initTabsConfig = createAction(
   '[Tabs] Init Tabs Config',
@@ -29,12 +29,7 @@ export const loadTabsTabsSuccess = createAction(
 
 export const loadTabsOptions = createAction(
   '[Tabs] Load Tab Options',
-  props<{ tabsId: string; tabsConfig: IccTabsConfig }>(),
-);
-
-export const loadTabsOptionsSuccess = createAction(
-  '[Tabs] Load Tab Options Success',
-  props<{ tabsId: string; options: IccTabConfig[] }>(),
+  props<{ tabsId: string; options: IccTabOption<unknown>[] }>(),
 );
 
 export const setAddTab = createAction('[Tabs] Set Add Tab', props<{ tabsId: string; tab: IccTabConfig }>());

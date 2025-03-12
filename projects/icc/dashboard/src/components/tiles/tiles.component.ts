@@ -70,7 +70,7 @@ export class IccTilesComponent implements OnInit {
 
   getPortalContent(tile: IccTile<unknown>): IccPortalContent<unknown> {
     const find = this.options.find((option) => option.name === tile.portalName);
-    return find ? find.component : tile.content!;
+    return find ? find.content : tile.content!;
   }
 
   getContextMenuTrigger(tile: IccTile<unknown>): IccTrigger {
