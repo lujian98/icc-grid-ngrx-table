@@ -8,6 +8,13 @@ import { selectDashboardConfig, selectDashboardSetting, selectDashboardTiles } f
 @Injectable()
 export class IccDashboardFacade {
   private store = inject(Store);
+  private _featureName: string = 'iccDashboard';
+  set featureName(value: string) {
+    this._featureName = value;
+  }
+  get featureName(): string {
+    return this._featureName;
+  }
 
   initDashboardConfig(dashboardId: string, dashboardConfig: IccDashboardConfig): void {
     this.store.dispatch(dashboardActions.initDashboardConfig({ dashboardId, dashboardConfig }));
@@ -41,14 +48,14 @@ export class IccDashboardFacade {
   }
 
   selectSetting(dashboardId: string): Observable<IccDashboardSetting> {
-    return this.store.select(selectDashboardSetting(dashboardId));
+    return this.store.select(selectDashboardSetting(dashboardId, this.featureName));
   }
 
   selectDashboardConfig(dashboardId: string): Observable<IccDashboardConfig> {
-    return this.store.select(selectDashboardConfig(dashboardId));
+    return this.store.select(selectDashboardConfig(dashboardId, this.featureName));
   }
 
   selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
-    return this.store.select(selectDashboardTiles(dashboardId));
+    return this.store.select(selectDashboardTiles(dashboardId, this.featureName));
   }
 }
