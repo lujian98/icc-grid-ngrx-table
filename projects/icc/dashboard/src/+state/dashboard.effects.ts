@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Store, ReducerManager } from '@ngrx/store';
+
 import { concatMap, delay, map, mergeMap, of } from 'rxjs';
 //import { IccDashboardService } from '../services/dashboard.service';
 import * as dashboardActions from './dashboard.actions';
@@ -8,6 +9,7 @@ import * as dashboardActions from './dashboard.actions';
 @Injectable()
 export class IccDashboardEffects {
   private store = inject(Store);
+  private reducerManager = inject(ReducerManager);
   private actions$ = inject(Actions);
   //private dashboardService = inject(IccDashboardService);
 
@@ -44,7 +46,12 @@ export class IccDashboardEffects {
       ofType(dashboardActions.clearDashboardStore),
       delay(250), // wait 250 after destory the component to clear data store
       mergeMap(({ dashboardId }) =>
-        of(dashboardId).pipe(map((dashboardId) => dashboardActions.removeDashboardStore({ dashboardId }))),
+        of(dashboardId).pipe(
+          map((dashboardId) => {
+            this.reducerManager.removeReducer(dashboardId);
+            return dashboardActions.removeDashboardStore({ dashboardId });
+          }),
+        ),
       ),
     ),
   );

@@ -5,6 +5,8 @@ export interface AppDashboardState {
   [key: string]: DashboardState;
 }
 
+const featureSelector = (state: AppTabsState) => state.iccTabs;
+
 export const selectDashboardSetting = (dashboardId: string, featureName: string) =>
   createSelector(
     (state: AppDashboardState) => state[featureName],
