@@ -56,6 +56,7 @@ export class IccDashboardFacade {
   }
 
   selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
+    console.log(' this.featureName=', this.featureName);
     return this.store.select(selectDashboardTiles(dashboardId, this.featureName));
   }
 }

@@ -1,6 +1,7 @@
 import { IccPortalContent } from '@icc/ui/portal';
 
 export interface IccDashboardConfig {
+  featureName: string;
   gridGap: number;
   gridWidth: number;
   gridHeight: number;
@@ -12,6 +13,7 @@ export interface IccDashboardConfig {
 }
 
 export const defaultDashboardConfig: IccDashboardConfig = {
+  featureName: '',
   gridGap: 2,
   gridWidth: 100,
   gridHeight: 100,

@@ -11,9 +11,11 @@ import {
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { ReducerManager } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
+import { iccDashboardReducer } from './+state/dashboard.reducer';
 import { IccTilesComponent } from './components/tiles/tiles.component';
 import {
   defaultDashboardConfig,
@@ -40,6 +42,7 @@ import {
 })
 export class IccDashboardComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
+  private reducerManager = inject(ReducerManager);
   private dashboardFacade = inject(IccDashboardFacade);
   private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
@@ -49,10 +52,20 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
-
   @Input()
   set config(value: Partial<IccDashboardConfig>) {
-    const config = { ...defaultDashboardConfig, ...value };
+    const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
+    const config = { ...defaultDashboardConfig, ...value, featureName };
+
+    if (this.dashboardFacade.featureName !== config.featureName) {
+      if (this.dashboardFacade.featureName) {
+        this.reducerManager.removeReducer(this.dashboardFacade.featureName);
+      }
+      this.reducerManager.addReducer(config.featureName, iccDashboardReducer);
+      this.dashboardFacade.featureName = config.featureName;
+      this.initTabsConfig();
+    }
+
     if (!isEqual(config, this.config)) {
       this._config = config;
       this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
@@ -80,10 +93,6 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   }
   get tiles(): IccTile<unknown>[] {
     return this._tiles;
-  }
-
-  constructor() {
-    this.initTabsConfig();
   }
 
   ngAfterViewInit(): void {

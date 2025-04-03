@@ -1,22 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccDashboardComponent, IccTile, IccTileOption, IccDashboardFacade } from '@icc/ui/dashboard';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { IccDashboardComponent, IccTile, IccTileOption, defaultDashboardConfig } from '@icc/ui/dashboard';
 import { AppStockChartComponent } from '../../../d3/demos/stock-charts/stock-chart.component';
-import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 import { AppGridMultiRowSelectionComponent } from '../../../grid/remote-data/grid-multi-row-selection.component';
+import { AppGridRemoteVirtualScrollComponent } from '../../../grid/remote-data/grid-virtual-scroll.component';
 import { PortalDemoComponent } from '../portal-demo/portal-demo.component';
 import { PortalDemo2Component } from '../portal-demo2/portal-demo2.component';
-import { IccDashboardDemoModule, iccDashboardFeature } from './dashboard-demo.module';
 
 @Component({
   selector: 'app-dashboard-demo',
   templateUrl: './dashboard-demo.component.html',
   styleUrls: ['./dashboard-demo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccDashboardComponent, IccDashboardDemoModule],
+  imports: [CommonModule, IccDashboardComponent],
 })
-export class AppDashboardDemoComponent {
-  private dashboardFacade = inject(IccDashboardFacade);
+export class AppDashboardDemoComponent implements OnInit {
+  config = defaultDashboardConfig;
   tiles: IccTile<any>[] = [];
   tileOptions: IccTileOption<unknown>[] = [
     {
@@ -49,8 +48,9 @@ export class AppDashboardDemoComponent {
     skills: [12, 13, 14, 15, 16],
   };
 
+  ngOnInit() {}
+
   constructor() {
-    this.dashboardFacade.featureName = 'iccDashboard2';
     this.tiles = [
       {
         name: 'Card 1',
