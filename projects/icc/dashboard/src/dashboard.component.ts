@@ -52,6 +52,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
+
   @Input()
   set config(value: Partial<IccDashboardConfig>) {
     const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
