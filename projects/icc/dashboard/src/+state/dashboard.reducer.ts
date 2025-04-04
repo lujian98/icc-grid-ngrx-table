@@ -1,6 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import { DashboardState, defaultDashboardState, IccDashboardState } from '../models/dashboard.model';
-import { viewportSetting, viewportConfig } from '../utils/viewport-setting';
+import { defaultDashboardState, IccDashboardState } from '../models/dashboard.model';
+import { viewportConfig, viewportSetting } from '../utils/viewport-setting';
 import * as dashboardActions from './dashboard.actions';
 
 export const initialState: IccDashboardState = defaultDashboardState;

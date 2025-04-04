@@ -8,8 +8,9 @@ import {
   HostListener,
   inject,
   Input,
+  OnDestroy,
 } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS, isEqual, uniqueId } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { ReducerManager } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -40,11 +41,10 @@ import {
     IccLayoutHeaderComponent,
   ],
 })
-export class IccDashboardComponent<T> implements AfterViewInit {
+export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private reducerManager = inject(ReducerManager);
   private dashboardFacade = inject(IccDashboardFacade);
-  private dashboardId = uniqueId(16);
   private _config: IccDashboardConfig = defaultDashboardConfig;
   private _options: IccTileOption<unknown>[] = [];
   private _tiles: IccTile<unknown>[] = [];
@@ -68,7 +68,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
 
     if (!isEqual(config, this.config)) {
       this._config = config;
-      this.dashboardFacade.setDashboardConfig(this.dashboardId, this.config);
+      this.dashboardFacade.setDashboardConfig(this.config);
     }
   }
   get config(): IccDashboardConfig {
@@ -78,7 +78,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   @Input()
   set options(options: IccTileOption<unknown>[]) {
     this._options = [...options];
-    this.dashboardFacade.setDashboardOptions(this.dashboardId, this.options);
+    this.dashboardFacade.setDashboardOptions(this.options);
   }
   get options(): IccTileOption<unknown>[] {
     return this._options;
@@ -88,7 +88,7 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   set tiles(tiles: IccTile<unknown>[]) {
     this._tiles = tiles.map((tile) => ({ ...defaultTileConfig, ...tile }));
     if (!this.config.remoteTiles) {
-      this.dashboardFacade.setDashboardTiles(this.dashboardId, this.tiles);
+      this.dashboardFacade.setDashboardTiles(this.tiles);
     }
   }
   get tiles(): IccTile<unknown>[] {
@@ -100,10 +100,10 @@ export class IccDashboardComponent<T> implements AfterViewInit {
   }
 
   private initTabsConfig(): void {
-    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
-    this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
-    this.dashboardFacade.initDashboardConfig(this.dashboardId, this.config);
+    this.config$ = this.dashboardFacade.selectDashboardConfig();
+    this.setting$ = this.dashboardFacade.selectSetting();
+    this.tiles$ = this.dashboardFacade.selectDashboardTiles();
+    this.dashboardFacade.initDashboardConfig(this.config);
   }
 
   buttonClick(button: IccButtonConfg): void {}
@@ -114,8 +114,12 @@ export class IccDashboardComponent<T> implements AfterViewInit {
     if (node) {
       const width = node.clientWidth - 0; // - padding left/right,
       const height = node.clientHeight - 30;
-      this.dashboardFacade.setGridViewport(this.dashboardId, width, height);
+      this.dashboardFacade.setGridViewport(width, height);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.dashboardFacade.removeDashboardStore();
   }
 
   @HostListener('window:resize', ['$event'])

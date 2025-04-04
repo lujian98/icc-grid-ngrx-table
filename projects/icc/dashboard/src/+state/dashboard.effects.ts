@@ -41,15 +41,15 @@ export class IccDashboardEffects {
     ),
   );
 */
-  clearDashboardStore$ = createEffect(() =>
+  removeDashboardStore$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(dashboardActions.clearDashboardStore),
+      ofType(dashboardActions.removeDashboardStore),
       delay(250), // wait 250 after destory the component to clear data store
-      mergeMap(({ dashboardId }) =>
-        of(dashboardId).pipe(
-          map((dashboardId) => {
-            this.reducerManager.removeReducer(dashboardId);
-            return dashboardActions.removeDashboardStore({ dashboardId });
+      mergeMap(({ featureName }) =>
+        of(featureName).pipe(
+          map((featureName) => {
+            this.reducerManager.removeReducer(featureName);
+            return dashboardActions.removeDashboardStoreComplete({ featureName });
           }),
         ),
       ),
