@@ -1,5 +1,5 @@
 import { IccPortalContent } from '@icc/ui/portal';
-import { IccTabGroupConfig } from './tab-group.model';
+import { IccTabGroupConfig } from '@icc/ui/tab-group';
 
 export interface IccTabConfig {
   name: string;

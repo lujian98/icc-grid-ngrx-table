@@ -1,35 +1,35 @@
+import { _IdGenerator, CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
+import { Platform } from '@angular/cdk/platform';
+import { CdkPortalOutlet } from '@angular/cdk/portal';
 import {
   AfterContentChecked,
   AfterContentInit,
+  AfterViewInit,
+  ANIMATION_MODULE_TYPE,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
+  NgZone,
+  numberAttribute,
   OnDestroy,
   Output,
   QueryList,
   ViewChild,
-  booleanAttribute,
-  inject,
-  numberAttribute,
-  ANIMATION_MODULE_TYPE,
   ViewChildren,
-  AfterViewInit,
-  NgZone,
 } from '@angular/core';
-import { ICC_TAB_GROUP, IccTabComponent } from '../tab/tab.component';
-import { IccTabHeaderComponent } from '../tab-header/tab-header.component';
 import { merge, Subscription } from 'rxjs';
-import { ICC_TAB_GROUP_CONFIG, IccTabGroupConfig } from '../../models/tab-group.model';
 import { startWith } from 'rxjs/operators';
-import { _IdGenerator, CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
-import { IccTabBodyComponent } from '../tab-body/tab-body.component';
-import { CdkPortalOutlet } from '@angular/cdk/portal';
-import { IccTabLabelWrapperDirective } from '../../directives/tab-label-wrapper.directive';
-import { Platform } from '@angular/cdk/platform';
+import { IccTabBodyComponent } from './components/tab-body/tab-body.component';
+import { IccTabHeaderComponent } from './components/tab-header/tab-header.component';
+import { ICC_TAB_GROUP, IccTabComponent } from './components/tab/tab.component';
+import { IccTabLabelWrapperDirective } from './directives/tab-label-wrapper.directive';
+import { ICC_TAB_GROUP_CONFIG, IccTabGroupConfig } from './models/tab-group.model';
 
 export interface IccTabGroupBaseHeader {
   _alignInkBarToSelectedTab(): void;
