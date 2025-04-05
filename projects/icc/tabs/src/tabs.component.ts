@@ -1,7 +1,7 @@
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { isEqual, uniqueId } from '@icc/ui/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
+import { isEqual } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
@@ -39,9 +39,9 @@ import {
     IccTabsTabComponent,
   ],
 })
-export class IccTabsComponent {
+export class IccTabsComponent implements OnDestroy {
   private tabsFacade = inject(IccTabsFacade);
-  private tabsId = uniqueId(16);
+  private tabsId = `tab-${crypto.randomUUID()}`;
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private _options: IccTabOption<unknown>[] = [];
   private _tabs: IccTabConfig[] = [];
@@ -105,5 +105,9 @@ export class IccTabsComponent {
   // add tab from left side menu
   addTab(tabItem: IccTabConfig): void {
     this.tabsFacade.setAddTab(this.tabsId, tabItem);
+  }
+
+  ngOnDestroy(): void {
+    this.tabsFacade.clearTabsStore(this.tabsId);
   }
 }

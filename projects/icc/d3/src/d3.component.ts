@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { IccD3StateModule } from './+state/d3-state.module';
 import { IccD3Facade } from './+state/d3.facade';
-import { uniqueId } from '@icc/ui/core';
 import {
   IccD3Options,
   IccD3ChartConfig,
@@ -31,7 +30,7 @@ export class IccD3Component<T> implements OnDestroy {
   private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
   private _data!: any[];
-  private d3Id = uniqueId(16);
+  private d3Id = `d3-${crypto.randomUUID()}`;
   d3Setting$!: Observable<IccD3Setting>;
   d3Config$!: Observable<IccD3Config>;
   chartConfigs$!: Observable<IccD3ChartConfig[] | undefined>;

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { uniqueId } from '@icc/ui/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, OnDestroy } from '@angular/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccLayoutComponent } from '@icc/ui/layout';
 import { Observable } from 'rxjs';
@@ -20,11 +19,11 @@ import { IccFormConfig, IccFormButtonClick, IccFormSetting } from './models/form
   },
   imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
 })
-export class IccFormComponent {
+export class IccFormComponent implements OnDestroy {
   private formFacade = inject(IccFormFacade);
   private _formConfig!: IccFormConfig;
   private _formFields: IccFormField[] = [];
-  private formId = uniqueId(16);
+  private formId = `form-${crypto.randomUUID()}`;
   formSetting$!: Observable<IccFormSetting>;
   formConfig$!: Observable<IccFormConfig>;
   formFieldsConfig$!: Observable<IccFormField[]>;
@@ -74,5 +73,9 @@ export class IccFormComponent {
 
   get autoFitHeight() {
     return this.formConfig.autoFitHeight;
+  }
+
+  ngOnDestroy(): void {
+    this.formFacade.clearformDataStore(this.formId);
   }
 }

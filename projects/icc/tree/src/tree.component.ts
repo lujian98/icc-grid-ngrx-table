@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS, IccButtonType, uniqueId } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
 import { IccColumnConfig, IccGridFacade, IccGridSetting, IccGridStateModule } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -39,7 +39,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   private _treeConfig!: IccTreeConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _treeData!: IccTreeNode<T>[];
-  private treeId = uniqueId(16);
+  private treeId = `tree-${crypto.randomUUID()}`;
   treeConfig$!: Observable<IccTreeConfig>;
   gridSetting$!: Observable<IccTreeSetting>; // Only support gridSetting for now
   columnsConfig$!: Observable<IccColumnConfig[]>;

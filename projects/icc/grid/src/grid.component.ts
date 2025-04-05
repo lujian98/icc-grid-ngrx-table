@@ -9,7 +9,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService, uniqueId } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccSpinnerDirective } from '@icc/ui/spinner';
@@ -49,7 +49,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   private _gridConfig!: IccGridConfig;
   private _columnsConfig: IccColumnConfig[] = [];
   private _gridData!: IccGridData<T>;
-  private gridId = uniqueId(16);
+  private gridId = `grid-${crypto.randomUUID()}`;
   gridConfig$!: Observable<IccGridConfig>;
   gridSetting$!: Observable<IccGridSetting>;
   columnsConfig$!: Observable<IccColumnConfig[]>;

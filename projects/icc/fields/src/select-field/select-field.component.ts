@@ -29,7 +29,6 @@ import {
   IccAutocompleteContentDirective,
   IccAutocompleteDirective,
 } from '@icc/ui/autocomplete';
-import { uniqueId } from '@icc/ui/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
@@ -95,7 +94,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
-  private fieldId = uniqueId(16);
+  private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   fieldName: string = '';
   setSelected: boolean = false;

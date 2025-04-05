@@ -59,6 +59,7 @@ export class IccWindowComponent<T> implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log(' elementKey=', this.elementKey);
     this.setWindow();
   }
 
