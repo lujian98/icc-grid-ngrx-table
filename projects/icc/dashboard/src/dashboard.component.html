@@ -2,9 +2,10 @@
   <icc-layout-header title="ICC.UI.TITLE.DASHBOARD" [buttons]="buttons" (iccButtonClick)="buttonClick($event)">
   </icc-layout-header>
 
+  <!--TODO options from ngrx state-->
   <ng-container *ngIf="setting$ | async as setting">
     <div *ngIf="tiles$ | async as tiles" cdkDropListGroup>
-      <icc-tiles [config]="config" [setting]="setting" [tiles]="tiles" [options]="options"> </icc-tiles>
+      <icc-tiles [config]="config" [setting]="setting" [tiles]="tiles" [options]="options()"> </icc-tiles>
     </div>
   </ng-container>
 </icc-layout>

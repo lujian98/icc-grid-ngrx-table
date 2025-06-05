@@ -7,7 +7,7 @@ import {
   ElementRef,
   HostListener,
   inject,
-  Input,
+  input,
   OnDestroy,
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
@@ -45,66 +45,56 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private reducerManager = inject(ReducerManager);
   private dashboardFacade = inject(IccDashboardFacade);
-  private _config: IccDashboardConfig = defaultDashboardConfig;
-  private _options: IccTileOption<unknown>[] = [];
-  private _tiles: IccTile<unknown>[] = [];
   config$!: Observable<IccDashboardConfig>;
   setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
 
-  @Input()
-  set config(value: Partial<IccDashboardConfig>) {
-    const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
-    const config = { ...defaultDashboardConfig, ...value, featureName };
-
-    if (this.dashboardFacade.featureName !== config.featureName) {
-      if (this.dashboardFacade.featureName) {
-        this.reducerManager.removeReducer(this.dashboardFacade.featureName);
+  config = input.required<IccDashboardConfig, IccDashboardConfig>({
+    transform: (value: Partial<IccDashboardConfig>) => {
+      const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
+      const config = { ...defaultDashboardConfig, ...value, featureName };
+      if (this.dashboardFacade.featureName !== config.featureName) {
+        if (this.dashboardFacade.featureName) {
+          this.reducerManager.removeReducer(this.dashboardFacade.featureName);
+        }
+        this.reducerManager.addReducer(config.featureName, iccDashboardReducer);
+        this.dashboardFacade.featureName = config.featureName;
+        this.initTabsConfig(config);
       }
-      this.reducerManager.addReducer(config.featureName, iccDashboardReducer);
-      this.dashboardFacade.featureName = config.featureName;
-      this.initTabsConfig();
-    }
+      //if (!isEqual(config, this.config())) {
+      this.dashboardFacade.setDashboardConfig(config);
+      //}
+      return config;
+    },
+  });
 
-    if (!isEqual(config, this.config)) {
-      this._config = config;
-      this.dashboardFacade.setDashboardConfig(this.config);
-    }
-  }
-  get config(): IccDashboardConfig {
-    return this._config;
-  }
+  options = input<IccTileOption<unknown>[], IccTileOption<unknown>[]>([], {
+    transform: (options: IccTileOption<unknown>[]) => {
+      this.dashboardFacade.setDashboardOptions(options);
+      return options;
+    },
+  });
 
-  @Input()
-  set options(options: IccTileOption<unknown>[]) {
-    this._options = [...options];
-    this.dashboardFacade.setDashboardOptions(this.options);
-  }
-  get options(): IccTileOption<unknown>[] {
-    return this._options;
-  }
-
-  @Input()
-  set tiles(tiles: IccTile<unknown>[]) {
-    this._tiles = tiles.map((tile) => ({ ...defaultTileConfig, ...tile }));
-    if (!this.config.remoteTiles) {
-      this.dashboardFacade.setDashboardTiles(this.tiles);
-    }
-  }
-  get tiles(): IccTile<unknown>[] {
-    return this._tiles;
-  }
+  tiles = input<IccTile<unknown>[], IccTile<unknown>[]>([], {
+    transform: (items: IccTile<unknown>[]) => {
+      const tiles = items.map((tile) => ({ ...defaultTileConfig, ...tile }));
+      if (!this.config().remoteTiles) {
+        this.dashboardFacade.setDashboardTiles(tiles);
+      }
+      return tiles;
+    },
+  });
 
   ngAfterViewInit(): void {
     this.setupGridViewport();
   }
 
-  private initTabsConfig(): void {
+  private initTabsConfig(config: IccDashboardConfig): void {
     this.config$ = this.dashboardFacade.selectDashboardConfig();
     this.setting$ = this.dashboardFacade.selectSetting();
     this.tiles$ = this.dashboardFacade.selectDashboardTiles();
-    this.dashboardFacade.initDashboardConfig(this.config);
+    this.dashboardFacade.initDashboardConfig(config);
   }
 
   buttonClick(button: IccButtonConfg): void {}
