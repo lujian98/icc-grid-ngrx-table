@@ -5,7 +5,10 @@ import {
   ElementRef,
   HostListener,
   inject,
-  Input,
+  effect,
+  signal,
+  Signal,
+  input,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -19,6 +22,14 @@ import {
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { take, timer } from 'rxjs';
 import { IccAccordion } from './models/accordion.model';
+
+function merge<T>(source: Signal<T>) {
+  const s = signal(source());
+  effect(() => {
+    s.set(source());
+  });
+  return s;
+}
 
 @Component({
   selector: 'icc-accordion',
@@ -37,8 +48,37 @@ import { IccAccordion } from './models/accordion.model';
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-  private _items: IccAccordion[] = [];
+  items = input([], {
+    transform: (items: IccAccordion[]) => {
+      return items;
+    },
+  });
 
+  itemList = merge(this.items);
+  /*
+
+      items2 = input([],
+    {
+      //alias: 'config',
+      transform: (items: IccAccordion[]) =>  {
+
+        return items;
+      }
+    });
+
+
+  itemList = signal<IccAccordion[]>([]);
+ // itemList = merge(this.items);
+    /*
+
+      items2 = input([],
+    {
+      //alias: 'config',
+      transform: (items: IccAccordion[]) =>  {
+
+        return items;
+      }
+    });
   @Input()
   set items(val: IccAccordion[]) {
     this._items = val;
@@ -56,6 +96,27 @@ export class IccAccordionComponent {
   }
   get items(): IccAccordion[] {
     return this._items;
+  }*/
+
+  constructor() {
+    effect(() => {
+      //const items = this.itemList();
+
+      if (this.isFirstTime) {
+        //this.itemList = merge(this.items);
+
+        console.log(' 000000 items =', this.itemList());
+        this.isFirstTime = false;
+        if (this.itemList().length > 0) {
+          const expanded = this.itemList().filter((item) => item.expanded);
+          if (expanded.length !== 1) {
+            this.toggle(this.itemList()[0], false);
+          } else {
+            this.toggle(expanded[0], false);
+          }
+        }
+      }
+    });
   }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
@@ -65,12 +126,15 @@ export class IccAccordionComponent {
   }
 
   toggle(item: IccAccordion, currentExpanded: boolean): void {
-    this.items = [...this.items].map((data) => {
-      return {
-        ...data,
-        expanded: data.name === item.name ? !currentExpanded : false,
-      };
+    this.itemList.update((items) => {
+      return items.map((data) => {
+        return {
+          ...data,
+          expanded: data.name === item.name ? !currentExpanded : false,
+        };
+      });
     });
+
     timer(20)
       .pipe(take(1))
       .subscribe(() => this.setupLayout());
