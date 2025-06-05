@@ -10,7 +10,6 @@ import {
   input,
   Output,
   signal,
-  Signal,
 } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import {
@@ -22,14 +21,6 @@ import {
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { take, timer } from 'rxjs';
 import { IccAccordion } from './models/accordion.model';
-
-function merge<T>(source: Signal<T>) {
-  const s = signal(source());
-  effect(() => {
-    s.set(source());
-  });
-  return s;
-}
 
 @Component({
   selector: 'icc-accordion',
@@ -48,18 +39,14 @@ function merge<T>(source: Signal<T>) {
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
+  items = input.required<IccAccordion[]>();
   itemList = signal<IccAccordion[]>([]);
-  items = input([], {
-    transform: (items: IccAccordion[]) => {
-      this.itemList.update((current) => [...current, ...items]);
-      return items;
-    },
-  });
 
   constructor() {
     effect(() => {
       if (this.isFirstTime) {
         this.isFirstTime = false;
+        this.itemList.update((current) => [...current, ...this.items()]);
         if (this.itemList().length > 0) {
           const expanded = this.itemList().filter((item) => item.expanded);
           if (expanded.length !== 1) {
@@ -79,14 +66,12 @@ export class IccAccordionComponent {
   }
 
   toggle(item: IccAccordion, currentExpanded: boolean): void {
-    this.itemList.update((items) => {
-      return items.map((data) => {
-        return {
-          ...data,
-          expanded: data.name === item.name ? !currentExpanded : false,
-        };
-      });
-    });
+    this.itemList.update((items) =>
+      items.map((data) => ({
+        ...data,
+        expanded: data.name === item.name ? !currentExpanded : false,
+      })),
+    );
 
     timer(20)
       .pipe(take(1))
