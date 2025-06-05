@@ -13,8 +13,8 @@ export interface IccUploadFile {
   providedIn: 'root',
 })
 export class IccUploadFileService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   private _uploadFiles: IccUploadFile[] = [];
   // private uploadFiles = new BehaviorSubject<IccUploadFile[] | null>(null);

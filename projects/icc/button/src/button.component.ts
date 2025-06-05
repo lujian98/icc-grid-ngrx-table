@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ElementRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
 
 export type IccButtonStatus = 'default' | 'primary' | 'danger';
 
@@ -9,33 +7,21 @@ export type IccButtonStatus = 'default' | 'primary' | 'danger';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   host: {
-    '[class.status-default]': 'status === "default"',
-    '[class.status-primary]': 'status === "primary"',
-    '[class.status-danger]': 'status === "danger"',
-    '[class.size-medium]': 'size === "medium"',
-    '[class.size-standard]': 'size === "standard"',
-    '[class.appearance-ghost]': 'appearance === "ghost"',
+    '[class.status-default]': 'status() === "default"',
+    '[class.status-primary]': 'status() === "primary"',
+    '[class.status-danger]': 'status() === "danger"',
+    '[class.appearance-ghost]': 'appearance() === "ghost"',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccButtonComponent {
-  private elementRef = inject(ElementRef<HTMLElement>);
+  status = input<IccButtonStatus>('default');
+  ghost = input(false);
+  appearance = signal<string>('');
 
-  @Input() status: IccButtonStatus = 'default';
-  @Input() appearance!: string;
-
-  get default() {
-    return this.status === 'default';
-  }
-
-  @Input()
-  get ghost(): boolean {
-    return this.appearance === 'ghost';
-  }
-  set ghost(value: boolean) {
-    if (coerceBooleanProperty(value)) {
-      this.appearance = 'ghost';
-    }
+  constructor() {
+    effect(() => {
+      this.appearance.update(() => (this.ghost() ? 'ghost' : ''));
+    });
   }
 }

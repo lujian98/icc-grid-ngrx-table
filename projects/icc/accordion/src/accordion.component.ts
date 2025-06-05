@@ -37,7 +37,7 @@ import { IccAccordion } from './models/accordion.model';
   ],
 })
 export class IccAccordionComponent {
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
   items = input.required<IccAccordion[], IccAccordion[]>({
     transform: (items: IccAccordion[]) => {

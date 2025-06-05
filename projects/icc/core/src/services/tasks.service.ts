@@ -19,7 +19,7 @@ export interface IccTask {
   providedIn: 'root',
 })
 export class IccTasksService {
-  private injector = inject(Injector);
+  private readonly injector = inject(Injector);
   private tasks: IccTask[] = [];
 
   loadTaskService(key: string, provide: any, config: IccTaskConfig): void {
