@@ -54,6 +54,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
     transform: (value: Partial<IccDashboardConfig>) => {
       const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
       const config = { ...defaultDashboardConfig, ...value, featureName };
+
       if (this.dashboardFacade.featureName !== config.featureName) {
         if (this.dashboardFacade.featureName) {
           this.reducerManager.removeReducer(this.dashboardFacade.featureName);
