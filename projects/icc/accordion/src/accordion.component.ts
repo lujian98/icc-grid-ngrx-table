@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
+  EventEmitter,
   HostListener,
   inject,
-  effect,
-  signal,
-  Signal,
   input,
   Output,
-  EventEmitter,
+  signal,
+  Signal,
 } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import {
@@ -48,64 +48,12 @@ function merge<T>(source: Signal<T>) {
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-  items = input([], {
-    transform: (items: IccAccordion[]) => {
-      return items;
-    },
-  });
-
+  items = input([], { transform: (items: IccAccordion[]) => items });
   itemList = merge(this.items);
-  /*
-
-      items2 = input([],
-    {
-      //alias: 'config',
-      transform: (items: IccAccordion[]) =>  {
-
-        return items;
-      }
-    });
-
-
-  itemList = signal<IccAccordion[]>([]);
- // itemList = merge(this.items);
-    /*
-
-      items2 = input([],
-    {
-      //alias: 'config',
-      transform: (items: IccAccordion[]) =>  {
-
-        return items;
-      }
-    });
-  @Input()
-  set items(val: IccAccordion[]) {
-    this._items = val;
-    if (this.isFirstTime) {
-      this.isFirstTime = false;
-      if (this.items.length > 0) {
-        const expanded = this.items.filter((item) => item.expanded);
-        if (expanded.length !== 1) {
-          this.toggle(this.items[0], false);
-        } else {
-          this.toggle(expanded[0], false);
-        }
-      }
-    }
-  }
-  get items(): IccAccordion[] {
-    return this._items;
-  }*/
 
   constructor() {
     effect(() => {
-      //const items = this.itemList();
-
       if (this.isFirstTime) {
-        //this.itemList = merge(this.items);
-
-        console.log(' 000000 items =', this.itemList());
         this.isFirstTime = false;
         if (this.itemList().length > 0) {
           const expanded = this.itemList().filter((item) => item.expanded);
