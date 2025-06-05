@@ -1,6 +1,6 @@
 <div
   class="icc-tile-item"
-  *ngFor="let tile of tiles; let i = index"
+  *ngFor="let tile of tiles(); let i = index"
   [ngStyle]="{ 'grid-column': tile.gridColumn, 'grid-row': tile.gridRow }"
 >
   <cdk-drop-list class="icc-drag-tile" [cdkDropListData]="i" (cdkDropListDropped)="onDropListDropped($event, tile)">
