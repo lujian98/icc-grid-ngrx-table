@@ -9,6 +9,7 @@ import {
   inject,
   input,
   OnDestroy,
+  signal,
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -50,6 +51,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   tiles$!: Observable<IccTile<unknown>[]>;
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
 
+  prevConfig = signal<IccDashboardConfig | undefined>(undefined);
   config = input.required<IccDashboardConfig, IccDashboardConfig>({
     transform: (value: Partial<IccDashboardConfig>) => {
       const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
@@ -63,9 +65,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
         this.dashboardFacade.featureName = config.featureName;
         this.initTabsConfig(config);
       }
-      //if (!isEqual(config, this.config())) {
-      this.dashboardFacade.setDashboardConfig(config);
-      //}
+      if (this.prevConfig() && !isEqual(config, this.prevConfig())) {
+        this.dashboardFacade.setDashboardConfig(config);
+      }
+      this.prevConfig.update(() => config);
       return config;
     },
   });
