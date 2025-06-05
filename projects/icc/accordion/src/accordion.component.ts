@@ -39,14 +39,18 @@ import { IccAccordion } from './models/accordion.model';
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-  items = input.required<IccAccordion[]>();
+  items = input.required<IccAccordion[], IccAccordion[]>({
+    transform: (items: IccAccordion[]) => {
+      this.itemList.update((current) => [...current, ...items]);
+      return items;
+    },
+  });
   itemList = signal<IccAccordion[]>([]);
 
   constructor() {
     effect(() => {
       if (this.isFirstTime) {
         this.isFirstTime = false;
-        this.itemList.update((current) => [...current, ...this.items()]);
         if (this.itemList().length > 0) {
           const expanded = this.itemList().filter((item) => item.expanded);
           if (expanded.length !== 1) {
