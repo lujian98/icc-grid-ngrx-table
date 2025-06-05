@@ -48,8 +48,13 @@ function merge<T>(source: Signal<T>) {
 export class IccAccordionComponent {
   private elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-  items = input([], { transform: (items: IccAccordion[]) => items });
-  itemList = merge(this.items);
+  itemList = signal<IccAccordion[]>([]);
+  items = input([], {
+    transform: (items: IccAccordion[]) => {
+      this.itemList.update((current) => [...current, ...items]);
+      return items;
+    },
+  });
 
   constructor() {
     effect(() => {
