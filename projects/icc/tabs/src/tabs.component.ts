@@ -6,18 +6,10 @@ import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
 import { IccTabComponent, IccTabGroupComponent, IccTabLabelDirective } from '@icc/ui/tab-group';
-import { Observable } from 'rxjs';
 import { IccTabsStateModule } from './+state/tabs-state.module';
 import { IccTabsFacade } from './+state/tabs.facade';
 import { IccTabsTabComponent } from './components/tabs-tab.component';
-import {
-  defaultContextMenu,
-  defaultTabsConfig,
-  IccTabConfig,
-  IccTabOption,
-  IccTabsConfig,
-  IccTabsSetting,
-} from './models/tabs.model';
+import { defaultContextMenu, defaultTabsConfig, IccTabConfig, IccTabOption, IccTabsConfig } from './models/tabs.model';
 
 @Component({
   selector: 'icc-tabs',
@@ -43,9 +35,9 @@ export class IccTabsComponent implements OnDestroy {
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private _options: IccTabOption<unknown>[] = [];
   private _tabs: IccTabConfig[] = [];
-  tabsConfig$!: Observable<IccTabsConfig>;
-  tabsSetting$!: Observable<IccTabsSetting>;
-  tabsTabs$!: Observable<IccTabConfig[]>;
+  tabsConfig$ = this.tabsFacade.getTabsConfig(this.tabsId);
+  tabsSetting$ = this.tabsFacade.getSetting(this.tabsId);
+  tabsTabs$ = this.tabsFacade.getTabsTabs(this.tabsId);
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
@@ -82,13 +74,6 @@ export class IccTabsComponent implements OnDestroy {
   }
 
   constructor() {
-    this.initTabsConfig();
-  }
-
-  private initTabsConfig(): void {
-    this.tabsConfig$ = this.tabsFacade.selectTabsConfig(this.tabsId);
-    this.tabsSetting$ = this.tabsFacade.selectSetting(this.tabsId);
-    this.tabsTabs$ = this.tabsFacade.selectTabsTabs(this.tabsId);
     this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
   }
 

@@ -1,7 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { IccMenuConfig } from '@icc/ui/menu';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { IccTabConfig, IccTabOption, IccTabsConfig, IccTabsSetting } from '../models/tabs.model';
 import * as tabsActions from './tabs.actions';
 import { selectTabsConfig, selectTabsOptions, selectTabsSetting, selectTabsTabs } from './tabs.selectors';
@@ -53,19 +52,19 @@ export class IccTabsFacade {
     this.store.dispatch(tabsActions.clearTabsStore({ tabsId }));
   }
 
-  selectSetting(tabsId: string): Observable<IccTabsSetting> {
-    return this.store.select(selectTabsSetting(tabsId));
+  getSetting(tabsId: string): Signal<IccTabsSetting> {
+    return this.store.selectSignal(selectTabsSetting(tabsId));
   }
 
-  selectTabsConfig(tabsId: string): Observable<IccTabsConfig> {
-    return this.store.select(selectTabsConfig(tabsId));
+  getTabsConfig(tabsId: string): Signal<IccTabsConfig> {
+    return this.store.selectSignal(selectTabsConfig(tabsId));
   }
 
-  selectTabsTabs(tabsId: string): Observable<IccTabConfig[]> {
-    return this.store.select(selectTabsTabs(tabsId));
+  getTabsTabs(tabsId: string): Signal<IccTabConfig[]> {
+    return this.store.selectSignal(selectTabsTabs(tabsId));
   }
 
-  selectTabsOptions(tabsId: string): Observable<IccTabConfig[]> {
-    return this.store.select(selectTabsOptions(tabsId));
+  getTabsOptions(tabsId: string): Signal<IccTabConfig[]> {
+    return this.store.selectSignal(selectTabsOptions(tabsId));
   }
 }
