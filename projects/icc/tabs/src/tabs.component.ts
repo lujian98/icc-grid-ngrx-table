@@ -44,14 +44,12 @@ export class IccTabsComponent implements OnDestroy {
       return config;
     },
   });
-
   options = input([], {
     transform: (options: IccTabOption<unknown>[]) => {
       this.tabsFacade.setTabsOptions(this.tabsId, options);
       return options;
     },
   });
-
   tabs = input([], {
     transform: (tabs: IccTabConfig[]) => {
       if (this.tabsConfig() && !this.tabsConfig().remoteTabs) {

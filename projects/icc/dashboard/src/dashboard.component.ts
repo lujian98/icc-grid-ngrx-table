@@ -9,9 +9,8 @@ import {
   inject,
   input,
   OnDestroy,
-  signal,
 } from '@angular/core';
-import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
+import { IccButtonConfg, IccBUTTONS } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
@@ -47,26 +46,19 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   tiles$ = this.dashboardFacade.getDashboardTiles(this.dashboardId);
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
 
-  prevConfig = signal<IccDashboardConfig | undefined>(undefined);
   config = input.required({
     transform: (value: Partial<IccDashboardConfig>) => {
       const config = { ...defaultDashboardConfig, ...value };
-      this.initTabsConfig(config);
-      if (this.prevConfig() && !isEqual(config, this.prevConfig())) {
-        this.dashboardFacade.setDashboardConfig(this.dashboardId, config);
-      }
-      this.prevConfig.update(() => config);
+      this.dashboardFacade.setDashboardConfig(this.dashboardId, config);
       return config;
     },
   });
-
   options = input([], {
     transform: (options: IccTileOption<unknown>[]) => {
       this.dashboardFacade.setDashboardOptions(this.dashboardId, options);
       return options;
     },
   });
-
   tiles = input([], {
     transform: (items: IccTile<unknown>[]) => {
       const tiles = items.map((tile) => ({ ...defaultTileConfig, ...tile }));
@@ -76,6 +68,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
       return tiles;
     },
   });
+
+  constructor() {
+    this.dashboardFacade.initDashboardConfig(this.dashboardId, defaultDashboardConfig);
+  }
 
   ngAfterViewInit(): void {
     this.setupGridViewport();
