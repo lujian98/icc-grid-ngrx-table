@@ -1,33 +1,29 @@
 import { createSelector } from '@ngrx/store';
-import { defaultDashboardState, IccDashboardState } from '../models/dashboard.model';
+import { DashboardState, defaultDashboardState } from '../models/dashboard.model';
 
-interface DashboardState {
-  [key: string]: IccDashboardState;
+export interface AppDashboardState {
+  iccDashboard: DashboardState;
 }
 
-const featureSelector = (featureName: string) =>
-  createSelector(
-    (state: DashboardState) => state[featureName],
-    (state: IccDashboardState) => state,
-  );
+export const featureSelector = (state: AppDashboardState) => state.iccDashboard;
 
-export const selectDashboardSetting = (featureName: string) =>
-  createSelector(featureSelector(featureName), (state: IccDashboardState) => {
-    const dashboardSetting = state ? state.dashboardSetting : undefined;
+export const selectDashboardSetting = (dashboardId: string) =>
+  createSelector(featureSelector, (state: DashboardState) => {
+    const dashboardSetting = state && state[dashboardId] ? state[dashboardId].dashboardSetting : undefined;
     return dashboardSetting && dashboardSetting.viewportReady
       ? dashboardSetting
       : defaultDashboardState.dashboardSetting;
   });
 
-export const selectDashboardConfig = (featureName: string) =>
-  createSelector(featureSelector(featureName), (state: IccDashboardState) => {
-    const dashboardConfig = state ? state.dashboardConfig : undefined;
-    return dashboardConfig && state.dashboardSetting.viewportReady
+export const selectDashboardConfig = (dashboardId: string) =>
+  createSelector(featureSelector, (state: DashboardState) => {
+    const dashboardConfig = state && state[dashboardId] ? state[dashboardId].dashboardConfig : undefined;
+    return dashboardConfig && state[dashboardId].dashboardSetting.viewportReady
       ? dashboardConfig
       : defaultDashboardState.dashboardConfig;
   });
 
-export const selectDashboardTiles = (featureName: string) =>
-  createSelector(featureSelector(featureName), (state: IccDashboardState) => {
-    return state && state ? state.tiles : [];
+export const selectDashboardTiles = (dashboardId: string) =>
+  createSelector(featureSelector, (state: DashboardState) => {
+    return state && state[dashboardId] ? state[dashboardId].tiles : [];
   });

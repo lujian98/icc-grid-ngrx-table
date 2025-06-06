@@ -8,9 +8,9 @@ import * as dashboardActions from './dashboard.actions';
 
 @Injectable()
 export class IccDashboardEffects {
-  private store = inject(Store);
-  private reducerManager = inject(ReducerManager);
-  private actions$ = inject(Actions);
+  //private store = inject(Store);
+  //private reducerManager = inject(ReducerManager);
+  private readonly actions$ = inject(Actions);
   //private dashboardService = inject(IccDashboardService);
 
   /*
@@ -41,17 +41,13 @@ export class IccDashboardEffects {
     ),
   );
 */
-  removeDashboardStore$ = createEffect(() =>
+
+  clearDashboardStore$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(dashboardActions.removeDashboardStore),
+      ofType(dashboardActions.clearDashboardStore),
       delay(250), // wait 250 after destory the component to clear data store
-      mergeMap(({ featureName }) =>
-        of(featureName).pipe(
-          map((featureName) => {
-            this.reducerManager.removeReducer(featureName);
-            return dashboardActions.removeDashboardStoreComplete({ featureName });
-          }),
-        ),
+      mergeMap(({ dashboardId }) =>
+        of(dashboardId).pipe(map((dashboardId) => dashboardActions.removeDashboardStore({ dashboardId }))),
       ),
     ),
   );

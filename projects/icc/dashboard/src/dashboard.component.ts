@@ -13,11 +13,9 @@ import {
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { ReducerManager } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
-import { iccDashboardReducer } from './+state/dashboard.reducer';
 import { IccTilesComponent } from './components/tiles/tiles.component';
 import {
   defaultDashboardConfig,
@@ -43,9 +41,9 @@ import {
   ],
 })
 export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
-  private elementRef = inject(ElementRef);
-  private reducerManager = inject(ReducerManager);
-  private dashboardFacade = inject(IccDashboardFacade);
+  private readonly elementRef = inject(ElementRef);
+  private readonly dashboardFacade = inject(IccDashboardFacade);
+  private dashboardId = `dashbard-${crypto.randomUUID()}`;
   config$!: Observable<IccDashboardConfig>;
   setting$!: Observable<IccDashboardSetting>;
   tiles$!: Observable<IccTile<unknown>[]>;
@@ -54,19 +52,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   prevConfig = signal<IccDashboardConfig | undefined>(undefined);
   config = input.required<IccDashboardConfig, IccDashboardConfig>({
     transform: (value: Partial<IccDashboardConfig>) => {
-      const featureName = value?.featureName ? value.featureName : `dashbard-${crypto.randomUUID()}`;
-      const config = { ...defaultDashboardConfig, ...value, featureName };
-
-      if (this.dashboardFacade.featureName !== config.featureName) {
-        if (this.dashboardFacade.featureName) {
-          this.reducerManager.removeReducer(this.dashboardFacade.featureName);
-        }
-        this.reducerManager.addReducer(config.featureName, iccDashboardReducer);
-        this.dashboardFacade.featureName = config.featureName;
-        this.initTabsConfig(config);
-      }
+      const config = { ...defaultDashboardConfig, ...value };
+      this.initTabsConfig(config);
       if (this.prevConfig() && !isEqual(config, this.prevConfig())) {
-        this.dashboardFacade.setDashboardConfig(config);
+        this.dashboardFacade.setDashboardConfig(this.dashboardId, config);
       }
       this.prevConfig.update(() => config);
       return config;
@@ -75,7 +64,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
 
   options = input<IccTileOption<unknown>[], IccTileOption<unknown>[]>([], {
     transform: (options: IccTileOption<unknown>[]) => {
-      this.dashboardFacade.setDashboardOptions(options);
+      this.dashboardFacade.setDashboardOptions(this.dashboardId, options);
       return options;
     },
   });
@@ -84,7 +73,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
     transform: (items: IccTile<unknown>[]) => {
       const tiles = items.map((tile) => ({ ...defaultTileConfig, ...tile }));
       if (!this.config().remoteTiles) {
-        this.dashboardFacade.setDashboardTiles(tiles);
+        this.dashboardFacade.setDashboardTiles(this.dashboardId, tiles);
       }
       return tiles;
     },
@@ -95,10 +84,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private initTabsConfig(config: IccDashboardConfig): void {
-    this.config$ = this.dashboardFacade.selectDashboardConfig();
-    this.setting$ = this.dashboardFacade.selectSetting();
-    this.tiles$ = this.dashboardFacade.selectDashboardTiles();
-    this.dashboardFacade.initDashboardConfig(config);
+    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
+    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
+    this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
+    this.dashboardFacade.initDashboardConfig(this.dashboardId, config);
   }
 
   buttonClick(button: IccButtonConfg): void {}
@@ -109,12 +98,12 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
     if (node) {
       const width = node.clientWidth - 0; // - padding left/right,
       const height = node.clientHeight - 30;
-      this.dashboardFacade.setGridViewport(width, height);
+      this.dashboardFacade.setGridViewport(this.dashboardId, width, height);
     }
   }
 
   ngOnDestroy(): void {
-    this.dashboardFacade.removeDashboardStore();
+    this.dashboardFacade.clearDashboardStore(this.dashboardId);
   }
 
   @HostListener('window:resize', ['$event'])

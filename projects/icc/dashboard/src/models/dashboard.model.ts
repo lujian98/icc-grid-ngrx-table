@@ -1,7 +1,6 @@
 import { IccPortalContent } from '@icc/ui/portal';
 
 export interface IccDashboardConfig {
-  featureName: string;
   gridGap: number;
   gridWidth: number;
   gridHeight: number;
@@ -13,7 +12,6 @@ export interface IccDashboardConfig {
 }
 
 export const defaultDashboardConfig: IccDashboardConfig = {
-  featureName: '',
   gridGap: 2,
   gridWidth: 100,
   gridHeight: 100,
@@ -26,11 +24,17 @@ export const defaultDashboardConfig: IccDashboardConfig = {
 
 export interface IccDashboardSetting {
   // for internal setting
+  dashboardId: string;
   viewportReady: boolean; //not used
   gridTemplateColumns: string;
   gridTemplateRows: string;
   gridMap: number[][];
 }
+
+export interface DashboardState {
+  [key: string]: IccDashboardState;
+}
+
 export interface IccTile<T> {
   name: string;
   title?: string;
@@ -63,6 +67,7 @@ export interface IccDashboardState {
 }
 
 export const defaultDashboardSetting: IccDashboardSetting = {
+  dashboardId: '191cf2bb6b5',
   viewportReady: false,
   gridTemplateColumns: '',
   gridTemplateRows: '',

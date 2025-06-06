@@ -7,57 +7,48 @@ import { selectDashboardConfig, selectDashboardSetting, selectDashboardTiles } f
 
 @Injectable()
 export class IccDashboardFacade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  private _featureName: string = '';
-  set featureName(value: string) {
-    this._featureName = value;
-  }
-  get featureName(): string {
-    return this._featureName;
-  }
-
-  initDashboardConfig(dashboardConfig: IccDashboardConfig): void {
-    this.store.dispatch(dashboardActions.initDashboardConfig({ dashboardConfig }));
+  initDashboardConfig(dashboardId: string, dashboardConfig: IccDashboardConfig): void {
+    this.store.dispatch(dashboardActions.initDashboardConfig({ dashboardId, dashboardConfig }));
     if (dashboardConfig.remoteConfig) {
-      this.store.dispatch(dashboardActions.loadRemoteDashboardConfig({ dashboardConfig }));
+      this.store.dispatch(dashboardActions.loadRemoteDashboardConfig({ dashboardId, dashboardConfig }));
     }
   }
 
-  setDashboardConfig(dashboardConfig: IccDashboardConfig): void {
-    this.store.dispatch(dashboardActions.loadDashboardConfigSuccess({ dashboardConfig }));
+  setDashboardConfig(dashboardId: string, dashboardConfig: IccDashboardConfig): void {
+    this.store.dispatch(dashboardActions.loadDashboardConfigSuccess({ dashboardId, dashboardConfig }));
   }
 
-  setDashboardOptions(options: IccTileOption<unknown>[]): void {
-    this.store.dispatch(dashboardActions.loadDashboardOptions({ options }));
+  setDashboardOptions(dashboardId: string, options: IccTileOption<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardOptions({ dashboardId, options }));
   }
 
-  setDashboardTiles(tiles: IccTile<unknown>[]): void {
-    this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ tiles }));
+  setDashboardTiles(dashboardId: string, tiles: IccTile<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardTilesSuccess({ dashboardId, tiles }));
   }
 
-  loadDashboardGridMapTiles(gridMap: number[][], tiles: IccTile<unknown>[]): void {
-    this.store.dispatch(dashboardActions.loadDashboardGridMapTiles({ gridMap, tiles }));
+  loadDashboardGridMapTiles(dashboardId: string, gridMap: number[][], tiles: IccTile<unknown>[]): void {
+    this.store.dispatch(dashboardActions.loadDashboardGridMapTiles({ dashboardId, gridMap, tiles }));
   }
 
-  setGridViewport(width: number, height: number): void {
-    this.store.dispatch(dashboardActions.setGridViewport({ width, height }));
+  setGridViewport(dashboardId: string, width: number, height: number): void {
+    this.store.dispatch(dashboardActions.setGridViewport({ dashboardId, width, height }));
   }
 
-  removeDashboardStore(): void {
-    this.store.dispatch(dashboardActions.removeDashboardStore({ featureName: this.featureName }));
+  clearDashboardStore(dashboardId: string): void {
+    this.store.dispatch(dashboardActions.clearDashboardStore({ dashboardId }));
   }
 
-  selectSetting(): Observable<IccDashboardSetting> {
-    return this.store.select(selectDashboardSetting(this.featureName));
+  selectSetting(dashboardId: string): Observable<IccDashboardSetting> {
+    return this.store.select(selectDashboardSetting(dashboardId));
   }
 
-  selectDashboardConfig(): Observable<IccDashboardConfig> {
-    return this.store.select(selectDashboardConfig(this.featureName));
+  selectDashboardConfig(dashboardId: string): Observable<IccDashboardConfig> {
+    return this.store.select(selectDashboardConfig(dashboardId));
   }
 
-  selectDashboardTiles(): Observable<IccTile<unknown>[]> {
-    console.log(' this.featureName=', this.featureName);
-    return this.store.select(selectDashboardTiles(this.featureName));
+  selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
+    return this.store.select(selectDashboardTiles(dashboardId));
   }
 }
