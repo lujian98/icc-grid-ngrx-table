@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccLayoutComponent, IccLayoutFooterComponent, IccLayoutHorizontalComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
@@ -27,7 +27,6 @@ export class IccConfirmationComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private _confirmationConfig: IccConfirmationConfig = defaultConfirmationConfig;
 
-  @Input()
   set confirmationConfig(val: IccConfirmationConfig) {
     this._confirmationConfig = { ...defaultConfirmationConfig, ...val };
     this.changeDetectorRef.markForCheck();
