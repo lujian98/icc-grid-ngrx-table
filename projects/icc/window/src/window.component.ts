@@ -1,13 +1,13 @@
 import { CdkDrag, CdkDragEnd, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccDialogRef } from '@icc/ui/overlay';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { take, timer } from 'rxjs';
 import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/window.model';
 
@@ -26,23 +26,14 @@ import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/wi
     IccLayoutHeaderComponent,
   ],
 })
-export class IccWindowComponent<T> implements AfterViewInit {
-  private dialogRef = inject(IccDialogRef<T>);
-  private document = inject(ICC_DOCUMENT);
-  private elementRef = inject(ElementRef);
-  private _windowConfig: IccWindowConfig = defaultWindowConfig;
+export class IccWindowComponent<T> {
+  private readonly dialogRef = inject(IccDialogRef<T>);
+  private readonly document = inject(ICC_DOCUMENT);
+  private readonly elementRef = inject(ElementRef);
   private windowInfo!: IccWindowInfo;
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
-
-  @Input()
-  set windowConfig(val: IccWindowConfig) {
-    this._windowConfig = { ...defaultWindowConfig, ...val };
-    this.setWindow();
-  }
-  get windowConfig(): IccWindowConfig {
-    return this._windowConfig;
-  }
+  windowConfig = input.required({ transform: (val: IccWindowConfig) => ({ ...defaultWindowConfig, ...val }) });
 
   get element(): HTMLElement {
     return this.elementRef.nativeElement;
@@ -58,16 +49,16 @@ export class IccWindowComponent<T> implements AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    console.log(' elementKey=', this.elementKey);
-    this.setWindow();
+  constructor() {
+    effect(() => this.setWindow());
   }
 
   private setWindow(): void {
-    if (this.windowConfig.height) {
-      this.setHeight(parseFloat(this.windowConfig.height));
+    const height = this.windowConfig().height;
+    if (height) {
+      this.setHeight(parseFloat(height));
     }
-    this.setWidth(parseFloat(this.windowConfig.width));
+    this.setWidth(parseFloat(this.windowConfig().width));
 
     timer(10)
       .pipe(take(1))

@@ -2,18 +2,18 @@
   class="icc-dragable-window"
   cdkDragBoundary=".cdk-overlay-container"
   cdkDrag
-  [cdkDragDisabled]="windowConfig.dragDisabled"
+  [cdkDragDisabled]="windowConfig().dragDisabled"
   (cdkDragEnded)="dragEnded($event)"
 >
-  @if (windowConfig.showHeader) {
-    <icc-layout-header [title]="windowConfig.title" cdkDragHandle>
-      @if (windowConfig.maximizable && isMaxWindowSize) {
+  @if (windowConfig().showHeader) {
+    <icc-layout-header [title]="windowConfig().title" cdkDragHandle>
+      @if (windowConfig().maximizable && isMaxWindowSize) {
         <button icc-button [ghost]="true" (click)="restore()"><icc-icon icon="window-restore"></icc-icon>&nbsp;</button>
       }
-      @if (windowConfig.maximizable && !isMaxWindowSize) {
+      @if (windowConfig().maximizable && !isMaxWindowSize) {
         <button icc-button [ghost]="true" (click)="maximize()"><icc-icon icon="expand"></icc-icon>&nbsp;</button>
       }
-      @if (windowConfig.closable) {
+      @if (windowConfig().closable) {
         <button icc-button [ghost]="true" (click)="close()"><icc-icon icon="close"></icc-icon>&nbsp;</button>
       }
     </icc-layout-header>
@@ -21,7 +21,7 @@
 
   <ng-content></ng-content>
 
-  @if (windowConfig.resizeable) {
+  @if (windowConfig().resizeable) {
     <div
       IccResizeTop
       iccResize
