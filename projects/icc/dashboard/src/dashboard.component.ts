@@ -48,7 +48,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
 
   prevConfig = signal<IccDashboardConfig | undefined>(undefined);
-  config = input.required<IccDashboardConfig, IccDashboardConfig>({
+  config = input.required({
     transform: (value: Partial<IccDashboardConfig>) => {
       const config = { ...defaultDashboardConfig, ...value };
       this.initTabsConfig(config);
@@ -60,14 +60,14 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
     },
   });
 
-  options = input<IccTileOption<unknown>[], IccTileOption<unknown>[]>([], {
+  options = input([], {
     transform: (options: IccTileOption<unknown>[]) => {
       this.dashboardFacade.setDashboardOptions(this.dashboardId, options);
       return options;
     },
   });
 
-  tiles = input<IccTile<unknown>[], IccTile<unknown>[]>([], {
+  tiles = input([], {
     transform: (items: IccTile<unknown>[]) => {
       const tiles = items.map((tile) => ({ ...defaultTileConfig, ...tile }));
       if (!this.config().remoteTiles) {

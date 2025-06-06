@@ -46,7 +46,7 @@ export class IccTilesComponent implements OnInit {
   tileMenus = defaultTileMenus;
 
   prevConfig = signal<IccDashboardConfig | undefined>(undefined);
-  config = input.required<IccDashboardConfig, IccDashboardConfig>({
+  config = input.required({
     transform: (config: IccDashboardConfig) => {
       if (this.prevConfig() && (config.rows !== this.prevConfig()!.rows || config.cols !== this.prevConfig()!.cols)) {
         this.setupTilesLayout(this.tiles()); //TODO test confg change

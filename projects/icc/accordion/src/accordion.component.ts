@@ -39,7 +39,7 @@ import { IccAccordion } from './models/accordion.model';
 export class IccAccordionComponent {
   private readonly elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
-  items = input.required<IccAccordion[], IccAccordion[]>({
+  items = input.required({
     transform: (items: IccAccordion[]) => {
       this.itemList.update((current) => [...current, ...items]);
       return items;
