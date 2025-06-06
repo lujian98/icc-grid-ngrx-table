@@ -50,18 +50,4 @@ export class IccDashboardFacade {
   getDashboardTiles(dashboardId: string): Signal<IccTile<unknown>[]> {
     return this.store.selectSignal(selectDashboardTiles(dashboardId));
   }
-
-  /*
-    selectSetting(dashboardId: string): Observable<IccDashboardSetting> {
-    return this.store.select(selectDashboardSetting(dashboardId));
-  }
-
-  selectDashboardConfig(dashboardId: string): Observable<IccDashboardConfig> {
-    return this.store.select(selectDashboardConfig(dashboardId));
-  }
-
-  selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
-    return this.store.select(selectDashboardTiles(dashboardId));
-  }
-    */
 }
