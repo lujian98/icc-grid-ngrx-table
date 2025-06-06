@@ -1,7 +1,6 @@
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
-import { isEqual } from '@icc/ui/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
 import { IccPortalComponent } from '@icc/ui/portal';
@@ -32,49 +31,38 @@ import { defaultContextMenu, defaultTabsConfig, IccTabConfig, IccTabOption, IccT
 export class IccTabsComponent implements OnDestroy {
   private readonly tabsFacade = inject(IccTabsFacade);
   private readonly tabsId = `tab-${crypto.randomUUID()}`;
-  private _tabsConfig: IccTabsConfig = defaultTabsConfig;
-  private _options: IccTabOption<unknown>[] = [];
-  private _tabs: IccTabConfig[] = [];
   tabsConfig$ = this.tabsFacade.getTabsConfig(this.tabsId);
   tabsSetting$ = this.tabsFacade.getSetting(this.tabsId);
   tabsTabs$ = this.tabsFacade.getTabsTabs(this.tabsId);
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   menuItem = defaultContextMenu;
 
-  @Input()
-  set tabsConfig(value: Partial<IccTabsConfig>) {
-    const config = { ...defaultTabsConfig, ...value };
-    if (!isEqual(config, this.tabsConfig)) {
-      this._tabsConfig = config;
-      this.tabsFacade.setTabsConfig(this.tabsId, this.tabsConfig);
-    }
-  }
-  get tabsConfig(): IccTabsConfig {
-    return this._tabsConfig;
-  }
+  tabsConfig = input.required({
+    transform: (value: Partial<IccTabsConfig>) => {
+      const config = { ...defaultTabsConfig, ...value };
+      this.tabsFacade.setTabsConfig(this.tabsId, config);
+      return config;
+    },
+  });
 
-  @Input()
-  set options(options: IccTabOption<unknown>[]) {
-    this._options = [...options];
-    this.tabsFacade.setTabsOptions(this.tabsId, this.options);
-  }
-  get options(): IccTabOption<unknown>[] {
-    return this._options;
-  }
+  options = input([], {
+    transform: (options: IccTabOption<unknown>[]) => {
+      this.tabsFacade.setTabsOptions(this.tabsId, options);
+      return options;
+    },
+  });
 
-  @Input()
-  set tabs(tabs: IccTabConfig[]) {
-    this._tabs = [...tabs];
-    if (!this.tabsConfig.remoteTabs) {
-      this.tabsFacade.setTabsTabs(this.tabsId, this.tabs);
-    }
-  }
-  get tabs(): IccTabConfig[] {
-    return this._tabs;
-  }
+  tabs = input([], {
+    transform: (tabs: IccTabConfig[]) => {
+      if (this.tabsConfig() && !this.tabsConfig().remoteTabs) {
+        this.tabsFacade.setTabsTabs(this.tabsId, tabs);
+      }
+      return tabs;
+    },
+  });
 
   constructor() {
-    this.tabsFacade.initTabsConfig(this.tabsId, this.tabsConfig);
+    this.tabsFacade.initTabsConfig(this.tabsId, defaultTabsConfig);
   }
 
   onSelectedIndexChange(index: number): void {

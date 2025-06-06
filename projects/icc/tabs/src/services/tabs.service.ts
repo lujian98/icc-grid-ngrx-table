@@ -9,8 +9,8 @@ import { IccTabsConfig, IccTabConfig } from '../models/tabs.model';
   providedIn: 'root',
 })
 export class IccTabsService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   getRemoteTabsConfig(tabsConfig: IccTabsConfig): Observable<IccTabsConfig> {
     const params = this.backendService.getParams(tabsConfig.urlKey, 'tabsConfig', tabsConfig.name);

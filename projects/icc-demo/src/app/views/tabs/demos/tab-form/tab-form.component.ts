@@ -18,7 +18,7 @@ import { TabsMockService } from './tabs-mock.service';
         <button icc-button (click)="loadValues()">Load Values</button>
         <button icc-button (click)="checkForm()">Check Form</button>
       </icc-layout-header>
-      <icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig"> </icc-tabs>
+      <icc-tabs [tabsConfig]="tabsConfig" [tabs]="tabs"> </icc-tabs>
     </icc-layout>
   `,
   styles: [':host {  display: flex; flex-direction: column; width: 475px; }'],

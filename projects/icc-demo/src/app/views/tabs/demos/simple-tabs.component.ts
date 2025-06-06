@@ -9,7 +9,7 @@ import { PortalDemo2Component } from '../../dashboard/demos/portal-demo2/portal-
 
 @Component({
   selector: 'app-simple-tabs',
-  template: `<icc-tabs [tabs]="tabs" [tabsConfig]="tabsConfig"> </icc-tabs>`,
+  template: `<icc-tabs [tabsConfig]="tabsConfig" [tabs]="tabs"> </icc-tabs>`,
   styles: [':host {  display: flex; flex-direction: column; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccTabsComponent],

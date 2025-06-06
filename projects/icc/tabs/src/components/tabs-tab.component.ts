@@ -1,6 +1,6 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
@@ -35,22 +35,22 @@ export class IccTabsTabComponent {
   position: IccPosition = IccPosition.BOTTOMRIGHT;
   contextMenu = defaultContextMenu;
 
-  @Input() tabsConfig!: IccTabsConfig;
-  @Input() tabsSetting!: IccTabsSetting;
-  @Input() tab!: IccTabConfig;
-  @Input() tabs!: IccTabConfig[];
-  @Input() index!: number;
+  tabsConfig = input.required<IccTabsConfig>();
+  tabsSetting = input.required<IccTabsSetting>();
+  tab = input.required<IccTabConfig>();
+  tabs = input.required<IccTabConfig[]>();
+  index = input.required<number>();
 
   get contextMenuTrigger(): IccTrigger {
-    return this.tabsConfig.enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
+    return this.tabsConfig().enableContextMenu ? IccTrigger.CONTEXTMENU : IccTrigger.NOOP;
   }
 
   dragDisabled(tab: IccTabConfig): boolean {
-    return !this.tabsConfig.tabReorder;
+    return !this.tabsConfig().tabReorder;
   }
 
   closeable(tab: IccTabConfig): boolean {
-    return this.tabsConfig.closeable && !!tab.closeable;
+    return this.tabsConfig().closeable && !!tab.closeable;
   }
 
   getTabLabel(tab: IccTabConfig): string {
@@ -60,7 +60,7 @@ export class IccTabsTabComponent {
   getDisabled(tab: IccTabConfig): IccDisabled[] {
     return [...defaultContextMenu].map((menu) => ({
       name: menu.name,
-      disabled: this.menuItemDisabled(menu.name, tab, this.index),
+      disabled: this.menuItemDisabled(menu.name, tab, this.index()),
     }));
   }
 
@@ -69,24 +69,24 @@ export class IccTabsTabComponent {
       case IccContextMenuType.CLOSE:
         return !tab.closeable;
       case IccContextMenuType.CLOSE_OTHER_TABS:
-        return [...this.tabs].filter((item) => item.name === tab.name || !item.closeable).length === this.tabs.length;
+        return [...this.tabs()].filter((item) => item.name === tab.name || !item.closeable).length === this.tabs.length;
       case IccContextMenuType.CLOSE_TABS_TO_THE_RIGHT:
-        return [...this.tabs].filter((item, idx) => idx < index + 1 || !item.closeable).length === this.tabs.length;
+        return [...this.tabs()].filter((item, idx) => idx < index + 1 || !item.closeable).length === this.tabs.length;
       case IccContextMenuType.CLOSE_TABS_TO_THE_LEFT:
-        const right = [...this.tabs].slice(index);
-        const notCloseable = [...this.tabs].slice(0, index).filter((item) => !item.closeable);
+        const right = [...this.tabs()].slice(index);
+        const notCloseable = [...this.tabs()].slice(0, index).filter((item) => !item.closeable);
         return [...notCloseable, ...right].length === this.tabs.length;
       case IccContextMenuType.CLOSE_ALL_TABS:
-        return [...this.tabs].filter((item) => item.closeable).length === 0;
+        return [...this.tabs()].filter((item) => item.closeable).length === 0;
     }
   }
 
   onContextMenuClicked(menuItem: IccMenuConfig, tab: IccTabConfig): void {
-    this.tabsFacade.setContextMenuClicked(this.tabsSetting.tabsId, menuItem, tab, this.index);
+    this.tabsFacade.setContextMenuClicked(this.tabsSetting().tabsId, menuItem, tab, this.index());
   }
 
   closeTab(event: MouseEvent, tab: IccTabConfig): void {
     event.stopPropagation();
-    this.tabsFacade.setCloseTab(this.tabsSetting.tabsId, tab);
+    this.tabsFacade.setCloseTab(this.tabsSetting().tabsId, tab);
   }
 }
