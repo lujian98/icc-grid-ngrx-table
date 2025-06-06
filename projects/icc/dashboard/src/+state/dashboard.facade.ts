@@ -1,6 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { IccDashboardConfig, IccDashboardSetting, IccTile, IccTileOption } from '../models/dashboard.model';
 import * as dashboardActions from './dashboard.actions';
 import { selectDashboardConfig, selectDashboardSetting, selectDashboardTiles } from './dashboard.selectors';
@@ -40,7 +39,20 @@ export class IccDashboardFacade {
     this.store.dispatch(dashboardActions.clearDashboardStore({ dashboardId }));
   }
 
-  selectSetting(dashboardId: string): Observable<IccDashboardSetting> {
+  getSetting(dashboardId: string): Signal<IccDashboardSetting> {
+    return this.store.selectSignal(selectDashboardSetting(dashboardId));
+  }
+
+  getDashboardConfig(dashboardId: string): Signal<IccDashboardConfig> {
+    return this.store.selectSignal(selectDashboardConfig(dashboardId));
+  }
+
+  getDashboardTiles(dashboardId: string): Signal<IccTile<unknown>[]> {
+    return this.store.selectSignal(selectDashboardTiles(dashboardId));
+  }
+
+  /*
+    selectSetting(dashboardId: string): Observable<IccDashboardSetting> {
     return this.store.select(selectDashboardSetting(dashboardId));
   }
 
@@ -51,4 +63,5 @@ export class IccDashboardFacade {
   selectDashboardTiles(dashboardId: string): Observable<IccTile<unknown>[]> {
     return this.store.select(selectDashboardTiles(dashboardId));
   }
+    */
 }

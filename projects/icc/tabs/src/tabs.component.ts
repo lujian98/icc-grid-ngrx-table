@@ -30,8 +30,8 @@ import { defaultContextMenu, defaultTabsConfig, IccTabConfig, IccTabOption, IccT
   ],
 })
 export class IccTabsComponent implements OnDestroy {
-  private tabsFacade = inject(IccTabsFacade);
-  private tabsId = `tab-${crypto.randomUUID()}`;
+  private readonly tabsFacade = inject(IccTabsFacade);
+  private readonly tabsId = `tab-${crypto.randomUUID()}`;
   private _tabsConfig: IccTabsConfig = defaultTabsConfig;
   private _options: IccTabOption<unknown>[] = [];
   private _tabs: IccTabConfig[] = [];

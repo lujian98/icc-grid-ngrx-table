@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, isEqual } from '@icc/ui/core';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
-import { Observable } from 'rxjs';
 import { IccDashboardStateModule } from './+state/dashboard-state.module';
 import { IccDashboardFacade } from './+state/dashboard.facade';
 import { IccTilesComponent } from './components/tiles/tiles.component';
@@ -21,7 +20,6 @@ import {
   defaultDashboardConfig,
   defaultTileConfig,
   IccDashboardConfig,
-  IccDashboardSetting,
   IccTile,
   IccTileOption,
 } from './models/dashboard.model';
@@ -43,10 +41,10 @@ import {
 export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef);
   private readonly dashboardFacade = inject(IccDashboardFacade);
-  private dashboardId = `dashbard-${crypto.randomUUID()}`;
-  config$!: Observable<IccDashboardConfig>;
-  setting$!: Observable<IccDashboardSetting>;
-  tiles$!: Observable<IccTile<unknown>[]>;
+  private readonly dashboardId = `dashbard-${crypto.randomUUID()}`;
+  config$ = this.dashboardFacade.getDashboardConfig(this.dashboardId);
+  setting$ = this.dashboardFacade.getSetting(this.dashboardId);
+  tiles$ = this.dashboardFacade.getDashboardTiles(this.dashboardId);
   buttons: IccButtonConfg[] = [IccBUTTONS.Add, IccBUTTONS.Remove];
 
   prevConfig = signal<IccDashboardConfig | undefined>(undefined);
@@ -84,9 +82,6 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   private initTabsConfig(config: IccDashboardConfig): void {
-    this.config$ = this.dashboardFacade.selectDashboardConfig(this.dashboardId);
-    this.setting$ = this.dashboardFacade.selectSetting(this.dashboardId);
-    this.tiles$ = this.dashboardFacade.selectDashboardTiles(this.dashboardId);
     this.dashboardFacade.initDashboardConfig(this.dashboardId, config);
   }
 
