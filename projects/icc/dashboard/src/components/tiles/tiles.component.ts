@@ -1,6 +1,6 @@
 import { CdkDragDrop, CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverDirective } from '@icc/ui/popover';
@@ -26,8 +26,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.grid-gap]': 'gridGap',
-    '[style.grid-template-columns]': 'setting.gridTemplateColumns',
-    '[style.grid-template-rows]': 'setting.gridTemplateRows',
+    '[style.grid-template-columns]': 'setting().gridTemplateColumns',
+    '[style.grid-template-rows]': 'setting().gridTemplateRows',
   },
   imports: [
     CommonModule,
@@ -55,7 +55,7 @@ export class IccTilesComponent implements OnInit {
       return config;
     },
   });
-  @Input() setting!: IccDashboardSetting; //TODO change to input??? not working
+  setting = input.required<IccDashboardSetting>();
   tiles = input.required<IccTile<unknown>[]>();
   options = input<IccTileOption<unknown>[]>([]);
 
@@ -80,7 +80,7 @@ export class IccTilesComponent implements OnInit {
 
   onResizeTile(resizeInfo: IccResizeInfo, tile: IccTile<unknown>): void {
     if (resizeInfo.isResized) {
-      const tileInfo = tileResizeInfo(resizeInfo, tile, this.config(), this.setting.gridMap);
+      const tileInfo = tileResizeInfo(resizeInfo, tile, this.config(), this.setting().gridMap);
       Object.assign(tile, tileInfo);
       this.setupTilesLayout(this.tiles());
     }
@@ -91,13 +91,13 @@ export class IccTilesComponent implements OnInit {
   }
 
   onDropListDropped<D>(e: CdkDragDrop<D>, tile: IccTile<unknown>): void {
-    const newTiles = dragDropTile(e, tile, this.tiles(), this.config(), this.setting.gridMap);
+    const newTiles = dragDropTile(e, tile, this.tiles(), this.config(), this.setting().gridMap);
     this.setupTilesLayout(newTiles);
   }
 
   private setupTilesLayout(tiles: IccTile<unknown>[]): void {
     const gridMap = initGridMap(this.config()); //WARNING initialize gridMap!!!
     const newTiles = setupTilesLayout(tiles, this.config(), gridMap);
-    this.dashboardFacade.loadDashboardGridMapTiles(this.setting.dashboardId, gridMap, newTiles);
+    this.dashboardFacade.loadDashboardGridMapTiles(this.setting().dashboardId, gridMap, newTiles);
   }
 }
