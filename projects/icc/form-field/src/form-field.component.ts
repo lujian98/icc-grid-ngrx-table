@@ -94,7 +94,9 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
       this.fieldWidth = this.fieldWidthDirective.width;
     }
     this.setFieldIndicator();
-    this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFieldIndicator());
+    if (this.formFieldControl) {
+      this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFieldIndicator());
+    }
   }
 
   private setFieldIndicator(): void {
