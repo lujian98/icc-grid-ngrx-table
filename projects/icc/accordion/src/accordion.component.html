@@ -1,7 +1,7 @@
 @for (item of itemList(); track $index; let index = $index) {
-  <icc-layout [ngStyle]="{ flex: getHeaderStyle(item) }">
+  <icc-layout [style.flex]="getHeaderStyle(item)">
     <icc-layout-header
-      [ngClass]="item.expanded ? 'icc-accordion-item-expanded' : ''"
+      [class.icc-accordion-item-expanded]="item.expanded"
       [title]="getTitle(item)"
       (click)="toggle(item, !!item.expanded)"
     >
