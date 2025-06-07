@@ -1,8 +1,12 @@
 <ng-content select="icc-layout-left"></ng-content>
 <ng-content></ng-content>
-<ng-container #contentResizeLeftRight *ngIf="resizeable"></ng-container>
+@if (resizeable()) {
+  <ng-container #contentResizeLeftRight></ng-container>
+}
 <ng-content select="icc-layout-center"></ng-content>
-<ng-container #contentResizeRightLeft *ngIf="resizeable"></ng-container>
+@if (resizeable()) {
+  <ng-container #contentResizeRightLeft></ng-container>
+}
 <ng-content select="icc-layout-right"></ng-content>
 
 <ng-template #tplResizeLeftRight>

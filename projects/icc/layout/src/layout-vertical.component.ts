@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -40,7 +39,7 @@ export class IccLayoutBottomComponent {}
   templateUrl: './layout-vertical.component.html',
   styleUrls: ['./layout-vertical.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccResizeDirective],
+  imports: [IccResizeDirective],
 })
 export class IccLayoutVerticalComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);

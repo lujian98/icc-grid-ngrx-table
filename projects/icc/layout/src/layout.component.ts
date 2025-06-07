@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
@@ -12,7 +11,7 @@ import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize
     '[class.icc-main-viewport-layout]': 'layout() === "viewport"',
     '[class.icc-normal-layout]': 'layout() !== "viewport"',
   },
-  imports: [CommonModule, IccResizeDirective],
+  imports: [IccResizeDirective],
 })
 export class IccLayoutComponent {
   private readonly elementRef = inject(ElementRef);

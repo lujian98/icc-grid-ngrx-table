@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg } from '@icc/ui/core';
@@ -18,12 +17,12 @@ export class IccLayoutHeaderEndComponent {}
   templateUrl: './layout-header.component.html',
   styleUrls: ['./layout-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslatePipe, IccButtonComponent, IccIconModule],
+  imports: [TranslatePipe, IccButtonComponent, IccIconModule],
 })
 export class IccLayoutHeaderComponent {
-  private router = inject(Router);
-  @Input() title: string | undefined;
-  @Input() buttons: IccButtonConfg[] = [];
+  private readonly router = inject(Router);
+  title = input<string | undefined>(undefined);
+  buttons = input<IccButtonConfg[]>([]);
 
   @Output() iccButtonClick = new EventEmitter<IccButtonConfg>(false);
 

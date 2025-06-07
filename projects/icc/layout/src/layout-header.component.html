@@ -1,9 +1,9 @@
-@if (title !== undefined) {
-  <div class="icc-layout-header-title">{{ title | translate }}</div>
+@if (title() !== undefined) {
+  <div class="icc-layout-header-title">{{ title()! | translate }}</div>
 }
 <ng-content></ng-content>
 
-<ng-container *ngFor="let button of buttons">
+@for (button of buttons(); track $index; let index = $index) {
   @if (!button.hidden) {
     <button icc-button [disabled]="button.disabled" (click)="buttonClick(button)">
       @if (button.icon) {
@@ -12,6 +12,6 @@
       {{ getTitle(button) | translate }}
     </button>
   }
-</ng-container>
+}
 
 <ng-content select="icc-layout-header-end"></ng-content>
