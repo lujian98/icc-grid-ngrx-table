@@ -1,5 +1,4 @@
 import { CdkDragDrop, CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccPosition, IccTrigger } from '@icc/ui/overlay';
@@ -30,7 +29,6 @@ import {
     '[style.grid-template-rows]': 'setting().gridTemplateRows',
   },
   imports: [
-    CommonModule,
     DragDropModule,
     CdkDragHandle,
     IccPortalComponent,

@@ -1,5 +1,5 @@
 @for (tile of tiles(); track $index; let i = $index) {
-  <div class="icc-tile-item" [ngStyle]="{ 'grid-column': tile.gridColumn, 'grid-row': tile.gridRow }">
+  <div class="icc-tile-item" [style.grid-column]="tile.gridColumn" [style.grid-row]="tile.gridRow">
     <cdk-drop-list class="icc-drag-tile" [cdkDropListData]="i" (cdkDropListDropped)="onDropListDropped($event, tile)">
       <div
         class="icc-drag-tile"
