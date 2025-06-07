@@ -1,13 +1,13 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ComponentRef,
   Directive,
+  effect,
   ElementRef,
   HostBinding,
-  Input,
+  inject,
+  input,
   Renderer2,
   ViewContainerRef,
-  inject,
 } from '@angular/core';
 import { IccSpinnerComponent } from './spinner.component';
 import { IccSpinnerSize } from './spinner.model';
@@ -16,41 +16,34 @@ import { IccSpinnerSize } from './spinner.model';
   selector: '[iccSpinner]',
 })
 export class IccSpinnerDirective {
-  private viewContainerRef = inject(ViewContainerRef);
-  private renderer = inject(Renderer2);
-  private elementRef = inject(ElementRef);
-  private _message!: string;
-  spinner!: ComponentRef<IccSpinnerComponent>;
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly elementRef = inject(ElementRef);
+  private spinner!: ComponentRef<IccSpinnerComponent>;
+  spinnerSize = input<IccSpinnerSize>('medium', { alias: 'iccSpinnerSize' });
+  message = input<string>('', { alias: 'iccSpinnerMessage' });
+  nbSpinner = input<boolean>(false, { alias: 'iccSpinner' });
 
   @HostBinding('class.icc-spinner-container') isSpinnerPresent = false;
 
-  @Input('iccSpinnerSize') spinnerSize: IccSpinnerSize = 'medium';
-
-  @Input('iccSpinnerMessage')
-  set message(value: string) {
-    this._message = value;
-    if (this.spinner) {
-      this.spinner.instance.message = value;
-    }
-  }
-  get message(): string {
-    return this._message;
-  }
-
-  @Input('iccSpinner')
-  set nbSpinner(value: boolean) {
-    if (coerceBooleanProperty(value)) {
-      this.show();
-    } else {
-      this.hide();
-    }
+  constructor() {
+    effect(() => {
+      if (this.spinner) {
+        this.spinner.instance.message = this.message();
+      }
+      if (this.nbSpinner()) {
+        this.show();
+      } else {
+        this.hide();
+      }
+    });
   }
 
   show(): void {
     if (!this.isSpinnerPresent) {
       this.spinner = this.viewContainerRef.createComponent<IccSpinnerComponent>(IccSpinnerComponent);
-      this.spinner.instance.size = this.spinnerSize;
-      this.spinner.instance.message = this.message;
+      this.spinner.instance.size = this.spinnerSize();
+      this.spinner.instance.message = this.message();
       this.renderer.appendChild(this.elementRef.nativeElement, this.spinner.location.nativeElement);
       this.isSpinnerPresent = true;
     }

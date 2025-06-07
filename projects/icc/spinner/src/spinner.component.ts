@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, input } from '@angular/core';
 import { IccSpinnerSize } from './spinner.model';
 
 @Component({
@@ -12,6 +12,8 @@ import { IccSpinnerSize } from './spinner.model';
 export class IccSpinnerComponent {
   @Input() size: IccSpinnerSize = 'medium';
   @Input() message!: string;
+  //size = input<IccSpinnerSize>('medium');
+  //message = input<string>('');
 
   @HostBinding('class.size-small')
   get small() {
