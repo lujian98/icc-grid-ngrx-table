@@ -1,16 +1,16 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
+  IccCellEdit,
   IccColumnConfig,
   IccColumnFilter,
   IccGridConfig,
-  IccGridSetting,
   IccGridData,
+  IccGridSetting,
   IccRowGroupField,
   IccSortField,
-  IccCellEdit,
 } from '../models/grid-column.model';
 import { IccRowGroup } from '../utils/row-group/row-group';
 import { IccRowGroups } from '../utils/row-group/row-groups';
@@ -18,13 +18,13 @@ import * as gridActions from './grid.actions';
 import {
   selectColumnsConfig,
   selectGridConfig,
-  selectGridSetting,
   selectGridData,
   selectGridInMemoryData,
+  selectGridModifiedRecords,
+  selectGridSetting,
   selectRowGroups,
   selectRowSelection,
   selectRowSelections,
-  selectGridModifiedRecords,
 } from './grid.selectors';
 
 @Injectable()
@@ -211,6 +211,14 @@ export class IccGridFacade {
 
   selectGridConfig(gridId: string): Observable<IccGridConfig> {
     return this.store.select(selectGridConfig(gridId));
+  }
+
+  getGridConfig(gridId: string): Signal<IccGridConfig> {
+    return this.store.selectSignal(selectGridConfig(gridId));
+  }
+
+  getColumnsConfig(gridId: string): Signal<IccColumnConfig[]> {
+    return this.store.selectSignal(selectColumnsConfig(gridId));
   }
 
   selectColumnsConfig(gridId: string): Observable<IccColumnConfig[]> {

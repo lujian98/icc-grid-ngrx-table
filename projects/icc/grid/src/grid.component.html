@@ -1,23 +1,49 @@
-<icc-layout *ngIf="gridConfig$ | async as gridConfig">
-  <ng-container *ngIf="gridSetting$ | async as gridSetting">
-    <ng-container *ngIf="columnsConfig$ | async as columns">
+@if (gridConfig$() && columnsConfig$()) {
+  <icc-layout>
+    <ng-container *ngIf="gridSetting$ | async as gridSetting">
       <icc-layout-header
-        *ngIf="!gridConfig.hideTopbar"
+        *ngIf="!gridConfig$().hideTopbar"
         [buttons]="buttons"
-        (iccButtonClick)="buttonClick($event, gridConfig, gridSetting)"
+        (iccButtonClick)="buttonClick($event, gridConfig$(), gridSetting)"
       >
       </icc-layout-header>
 
       <icc-grid-view
-        [gridConfig]="gridConfig"
+        [gridConfig]="gridConfig$()"
+        [gridSetting]="gridSetting"
+        [columns]="columnsConfig$()"
+        [iccSpinner]="gridSetting.loading"
+      >
+      </icc-grid-view>
+
+      <icc-grid-footer *ngIf="!gridConfig$().hideGridFooter" [gridSetting]="gridSetting" [gridConfig]="gridConfig$()">
+      </icc-grid-footer>
+    </ng-container>
+  </icc-layout>
+}
+
+<!--
+<icc-layout>
+  <ng-container *ngIf="gridSetting$ | async as gridSetting">
+    <ng-container *ngIf="columnsConfig$ | async as columns">
+      <icc-layout-header
+        *ngIf="!gridConfig$().hideTopbar"
+        [buttons]="buttons"
+        (iccButtonClick)="buttonClick($event, gridConfig$(), gridSetting)"
+      >
+      </icc-layout-header>
+
+      <icc-grid-view
+        [gridConfig]="gridConfig$()"
         [gridSetting]="gridSetting"
         [columns]="columns"
         [iccSpinner]="gridSetting.loading"
       >
       </icc-grid-view>
 
-      <icc-grid-footer *ngIf="!gridConfig.hideGridFooter" [gridSetting]="gridSetting" [gridConfig]="gridConfig">
+      <icc-grid-footer *ngIf="!gridConfig$().hideGridFooter" [gridSetting]="gridSetting" [gridConfig]="gridConfig$()">
       </icc-grid-footer>
     </ng-container>
   </ng-container>
 </icc-layout>
+-->

@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -44,59 +45,62 @@ export interface IccButtonClick {
   ],
 })
 export class IccGridComponent<T> implements OnInit, OnDestroy {
-  private gridFacade = inject(IccGridFacade);
-  private tasksService = inject(IccTasksService);
-  private _gridConfig!: IccGridConfig;
-  private _columnsConfig: IccColumnConfig[] = [];
+  private readonly gridFacade = inject(IccGridFacade);
+  private readonly tasksService = inject(IccTasksService);
   private _gridData!: IccGridData<T>;
   private gridId = `grid-${crypto.randomUUID()}`;
-  gridConfig$!: Observable<IccGridConfig>;
+  gridConfig$ = this.gridFacade.getGridConfig(this.gridId);
+
   gridSetting$!: Observable<IccGridSetting>;
-  columnsConfig$!: Observable<IccColumnConfig[]>;
+  columnsConfig$ = this.gridFacade.getColumnsConfig(this.gridId);
 
   @Input() buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
 
-  @Input()
-  set gridConfig(value: Partial<IccGridConfig>) {
-    this.initGridConfig({ ...defaultGridConfig, ...value });
-  }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
-  }
+  gridConfig = input(defaultGridConfig, {
+    transform: (value: Partial<IccGridConfig>) => {
+      const config = { ...defaultGridConfig, ...value };
+      this.initGridConfig(config);
+      return config;
+    },
+  });
 
-  private initGridConfig(value: IccGridConfig): void {
-    this._gridConfig = { ...value };
-    this.gridConfig$ = this.gridFacade.selectGridConfig(this.gridId);
+  private initGridConfig(config: IccGridConfig): void {
     this.gridSetting$ = this.gridFacade.selectSetting(this.gridId).pipe(
       map((gridSetting) => {
         this.setButtons(gridSetting);
         return gridSetting;
       }),
     );
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.gridId);
-    this.gridFacade.initGridConfig(this.gridId, this.gridConfig, 'grid');
+    this.gridFacade.initGridConfig(this.gridId, config, 'grid');
   }
 
-  @Input()
-  set columnsConfig(val: IccColumnConfig[]) {
-    this._columnsConfig = val;
-    if (!this.gridConfig) {
-      this.initGridConfig({ ...defaultGridConfig });
-    }
-    if (!this.gridConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      const gridSetting = { ...defaultGridSetting, gridId: this.gridId };
-      this.gridFacade.setGridColumnsConfig(this.gridConfig, gridSetting, this.columnsConfig);
-    }
-  }
-  get columnsConfig(): IccColumnConfig[] {
-    return this._columnsConfig;
-  }
+  columnsConfig = input([], {
+    transform: (columnsConfig: IccColumnConfig[]) => {
+      if (!this.gridConfig) {
+        this.initGridConfig({ ...defaultGridConfig });
+      }
+      if (!this.gridConfig$().remoteColumnsConfig && columnsConfig.length > 0) {
+        const gridSetting = { ...defaultGridSetting, gridId: this.gridId };
+        this.gridFacade.setGridColumnsConfig(this.gridConfig$(), gridSetting, columnsConfig);
+      }
+      return columnsConfig;
+    },
+  });
+
+  gridData2 = input(undefined, {
+    transform: (gridData: IccGridData<T>) => {
+      if (!this.gridConfig$().remoteGridData && gridData) {
+        this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig$(), gridData as IccGridData<object>);
+      }
+      return gridData;
+    },
+  });
 
   @Input()
   set gridData(val: IccGridData<T>) {
     this._gridData = { ...val };
-    if (!this.gridConfig.remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig, this.gridData as IccGridData<object>);
+    if (!this.gridConfig().remoteGridData && this.gridData) {
+      this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig(), this.gridData as IccGridData<object>);
     }
   }
   get gridData(): IccGridData<T> {
@@ -106,7 +110,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
 
   ngOnInit(): void {
-    this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig);
+    this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig());
   }
 
   private setButtons(gridSetting: IccGridSetting): void {
@@ -127,7 +131,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       case IccButtonType.Reset:
         return !gridSetting.recordModified;
       case IccButtonType.Open:
-        return !(this.gridConfig.hasDetailView && gridSetting.selected === 1);
+        return !(this.gridConfig().hasDetailView && gridSetting.selected === 1);
       default:
         return false;
     }
