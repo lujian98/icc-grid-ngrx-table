@@ -29,7 +29,7 @@ export class IccSpinnerDirective {
   constructor() {
     effect(() => {
       if (this.spinner) {
-        this.spinner.instance.message = this.message();
+        this.spinner.instance._message.update(() => this.message());
       }
       if (this.nbSpinner()) {
         this.show();
@@ -42,8 +42,8 @@ export class IccSpinnerDirective {
   show(): void {
     if (!this.isSpinnerPresent) {
       this.spinner = this.viewContainerRef.createComponent<IccSpinnerComponent>(IccSpinnerComponent);
-      this.spinner.instance.size = this.spinnerSize();
-      this.spinner.instance.message = this.message();
+      this.spinner.instance._size.update(() => this.spinnerSize());
+      this.spinner.instance._message.update(() => this.message());
       this.renderer.appendChild(this.elementRef.nativeElement, this.spinner.location.nativeElement);
       this.isSpinnerPresent = true;
     }

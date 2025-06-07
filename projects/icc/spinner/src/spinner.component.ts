@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, Input, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, input, signal } from '@angular/core';
 import { IccSpinnerSize } from './spinner.model';
 
 @Component({
@@ -7,26 +6,36 @@ import { IccSpinnerSize } from './spinner.model';
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccSpinnerComponent {
-  @Input() size: IccSpinnerSize = 'medium';
-  @Input() message!: string;
-  //size = input<IccSpinnerSize>('medium');
-  //message = input<string>('');
+  size = input('medium', {
+    transform: (size: IccSpinnerSize) => {
+      this._size.update(() => size);
+      return size;
+    },
+  });
+  message = input('', {
+    transform: (message: string) => {
+      this._message.update(() => message);
+      return message;
+    },
+  });
+
+  _size = signal<IccSpinnerSize>('medium');
+  _message = signal<string>('');
 
   @HostBinding('class.size-small')
   get small() {
-    return this.size === 'small';
+    return this._size() === 'small';
   }
 
   @HostBinding('class.size-medium')
   get medium() {
-    return this.size === 'medium';
+    return this._size() === 'medium';
   }
 
   @HostBinding('class.size-large')
   get large() {
-    return this.size === 'large';
+    return this._size() === 'large';
   }
 }
