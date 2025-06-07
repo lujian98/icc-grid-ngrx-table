@@ -6,8 +6,8 @@
         [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
         [iccLabelWidth]="fieldConfig.labelWidth"
         [iccFieldWidth]="fieldConfig.fieldWidth"
-        [iccFormFieldControl]="field"
         [showFieldEditIndicator]="showFieldEditIndicator"
+        [iccFormFieldControl]="field"
       >
         @if (fieldConfig.fieldLabel !== undefined) {
           <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>

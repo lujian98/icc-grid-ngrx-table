@@ -8,6 +8,7 @@ import {
   ElementRef,
   inject,
   Input,
+  input,
   OnDestroy,
   Optional,
   ViewChild,
@@ -44,12 +45,21 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
 
   @Input() showFieldEditIndicator: boolean = true;
 
-  get formFieldControl(): FormControl {
-    return this.formFieldControlDirective?.fieldControl;
+  field = input(undefined, {
+    alias: 'iccFormFieldControl',
+    transform: (field: FormControl) => {
+      field.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFieldIndicator());
+      return field;
+    },
+  });
+
+  get formFieldControl(): FormControl | undefined {
+    return this.field();
+    //return this.formFieldControlDirective?.fieldControl;
   }
   get required(): boolean {
     const control = this.formFieldControl;
-    return control && control.hasValidator(Validators.required) && !control.disabled;
+    return !!control && control.hasValidator(Validators.required) && !control.disabled;
   }
 
   private set fieldIndicator(val: string) {
@@ -68,7 +78,6 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
     @Optional() private fieldsetLabelWidthDirective: IccFieldsetLabelWidthDirective,
     @Optional() private labelWidthDirective: IccLabelWidthDirective,
     @Optional() private fieldWidthDirective: IccFieldWidthDirective,
-    @Optional() private formFieldControlDirective: IccFormFieldControlDirective,
   ) {}
 
   ngAfterViewInit(): void {
@@ -94,15 +103,12 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
       this.fieldWidth = this.fieldWidthDirective.width;
     }
     this.setFieldIndicator();
-    if (this.formFieldControl) {
-      this.formFieldControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFieldIndicator());
-    }
   }
 
   private setFieldIndicator(): void {
     this.checkFieldIndicator();
     const control = this.formFieldControl;
-    this.invalid = (control?.touched || control?.dirty) && control?.invalid;
+    this.invalid = (!!control?.touched || !!control?.dirty) && !!control?.invalid;
     this.changeDetectorRef.markForCheck();
   }
 

@@ -27,7 +27,7 @@
     <icc-radio-group-field [fieldConfig]="fieldConfig" [form]="form"></icc-radio-group-field>
   }
   @case (FieldType.Select) {
-    <icc-select-field [fieldConfig]="fieldConfig" [form]="form"></icc-select-field>
+    <icc-select-field [form]="form" [fieldConfig]="fieldConfig"></icc-select-field>
   }
   @case (FieldType.Textarea) {
     <icc-textarea-field [fieldConfig]="fieldConfig" [form]="form"></icc-textarea-field>
