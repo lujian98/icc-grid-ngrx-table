@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
@@ -9,48 +9,37 @@ import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.icc-main-viewport-layout]': 'layout === "viewport"',
-    '[class.icc-normal-layout]': 'layout !== "viewport"',
+    '[class.icc-main-viewport-layout]': 'layout() === "viewport"',
+    '[class.icc-normal-layout]': 'layout() !== "viewport"',
   },
   imports: [CommonModule, IccResizeDirective],
 })
 export class IccLayoutComponent {
-  private elementRef = inject(ElementRef);
-  private _width: string = '';
-  private _height: string = '';
+  private readonly elementRef = inject(ElementRef);
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
-  @Input() resizeable!: boolean;
-  @Input() layout: string = ''; // viewport
-
-  @Input()
-  set height(val: string) {
-    this._height = val;
-    if (val) {
-      this.setHeight(val);
-    }
-  }
-  get height(): string {
-    return this._height;
-  }
-
-  @Input()
-  set width(val: string) {
-    this._width = val;
-    if (val) {
-      this.setWidth(val);
-    }
-  }
-  get width(): string {
-    return this._width;
-  }
+  resizeable = input<boolean>(false);
+  layout = input<string>(''); // viewport
+  height = input<string>('');
+  width = input<string>('');
 
   get viewportLayout(): boolean {
-    return this.layout === 'viewport';
+    return this.layout() === 'viewport';
   }
 
   get normalLayout(): boolean {
-    return this.layout !== 'viewport';
+    return this.layout() !== 'viewport';
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.height()) {
+        this.setHeight(this.height());
+      }
+      if (this.width()) {
+        this.setWidth(this.width());
+      }
+    });
   }
 
   onResizePanel(resizeInfo: IccResizeInfo): void {

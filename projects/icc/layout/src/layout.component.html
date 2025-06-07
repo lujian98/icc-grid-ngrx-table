@@ -2,7 +2,7 @@
 <ng-content></ng-content>
 <ng-content select="icc-layout-footer"></ng-content>
 
-@if (resizeable) {
+@if (resizeable()) {
   <div
     class="icc-layout-resize-right"
     IccResizeRight

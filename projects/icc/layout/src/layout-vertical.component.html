@@ -1,8 +1,12 @@
 <ng-content select="icc-layout-top"></ng-content>
 <ng-content></ng-content>
-<ng-container #contentResizeTopBottom *ngIf="resizeable"></ng-container>
+@if (resizeable()) {
+  <ng-container #contentResizeTopBottom></ng-container>
+}
 <ng-content select="icc-layout-middle"></ng-content>
-<ng-container #contentResizeBottomTop *ngIf="resizeable"></ng-container>
+@if (resizeable()) {
+  <ng-container #contentResizeBottomTop></ng-container>
+}
 <ng-content select="icc-layout-bottom"></ng-content>
 
 <ng-template #tplResizeTopBottom>

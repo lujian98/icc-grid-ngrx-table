@@ -4,11 +4,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Input,
+  inject,
+  input,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  inject,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
@@ -46,7 +46,7 @@ export class IccLayoutVerticalComponent<T> implements AfterViewInit {
   private elementRef = inject(ElementRef);
   elementKey = uniqueId(16);
   resizeType = IccResizeType;
-  @Input() resizeable!: boolean;
+  resizeable = input<boolean>(false);
 
   @ViewChild('tplResizeTopBottom', { static: true }) tplResizeTopBottom!: TemplateRef<T>;
   @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop!: TemplateRef<T>;
@@ -54,7 +54,7 @@ export class IccLayoutVerticalComponent<T> implements AfterViewInit {
   @ViewChild('contentResizeBottomTop', { read: ViewContainerRef }) contentResizeBottomTop!: ViewContainerRef;
 
   ngAfterViewInit(): void {
-    if (this.resizeable) {
+    if (this.resizeable()) {
       this.checkResizeCondition();
     }
   }
