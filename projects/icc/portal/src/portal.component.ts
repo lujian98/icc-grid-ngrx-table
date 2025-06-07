@@ -8,7 +8,7 @@ import {
   EmbeddedViewRef,
   inject,
   Injector,
-  Input,
+  input,
   OnDestroy,
   TemplateRef,
   Type,
@@ -28,40 +28,34 @@ export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private isViewReady: boolean = false;
   private componentRef: ComponentRef<T> | undefined;
-  private _content!: IccPortalContent<T>;
-  private _context!: {};
 
-  @Input()
-  set content(content: IccPortalContent<T>) {
-    this._content = content;
-    if (this.isViewReady) {
-      this.addPortalContent(this.content, this.context);
-    }
-  }
-  get content(): IccPortalContent<T> {
-    return this._content;
-  }
+  content = input<IccPortalContent<T>, IccPortalContent<T>>(undefined, {
+    transform: (content: IccPortalContent<T>) => {
+      if (this.isViewReady) {
+        this.addPortalContent(content, this.context()!);
+      }
+      return content;
+    },
+  });
 
-  @Input()
-  set context(context: {}) {
-    this._context = context;
-    if (this.isViewReady) {
-      this.updateContext();
-    }
-  }
-  get context(): {} {
-    return this._context;
-  }
+  context = input(undefined, {
+    transform: (context: {}) => {
+      if (this.isViewReady) {
+        this.updateContext(this.content()!, context);
+      }
+      return context;
+    },
+  });
 
   get isTextContent(): boolean {
-    return !(this.content instanceof Type || this.content instanceof TemplateRef);
+    return !(this.content() instanceof Type || this.content() instanceof TemplateRef);
   }
 
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
 
   ngAfterViewInit(): void {
     this.isViewReady = true;
-    this.addPortalContent(this.content, this.context);
+    this.addPortalContent(this.content()!, this.context()!);
   }
 
   addPortalContent(content: IccPortalContent<T>, context: Object, injector?: Injector): void {
@@ -100,12 +94,12 @@ export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
     return templateRef;
   }
 
-  private updateContext(): void {
-    if (this.content instanceof Type && this.componentRef?.instance) {
-      Object.assign(this.componentRef.instance, this.context);
-    } else if (this.content instanceof TemplateRef) {
+  private updateContext(content: IccPortalContent<T>, context: Object): void {
+    if (content instanceof Type && this.componentRef?.instance) {
+      Object.assign(this.componentRef.instance, context);
+    } else if (content instanceof TemplateRef) {
       this.detach();
-      this.createTemplatePortal(this.content, this.context);
+      this.createTemplatePortal(content, context);
     }
   }
 
