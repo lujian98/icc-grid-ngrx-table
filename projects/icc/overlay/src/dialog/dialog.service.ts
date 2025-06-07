@@ -12,8 +12,8 @@ import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog.model';
 
 @Injectable()
 export class IccDialogService {
-  private overlayService = inject(IccOverlayService);
-  private injector = inject(Injector);
+  private readonly overlayService = inject(IccOverlayService);
+  private readonly injector = inject(Injector);
 
   constructor(
     @Inject(ICC_DOCUMENT) private document: Document,

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, Type, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input, TemplateRef, Type, ViewChild, inject } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccOverlayModule } from '@icc/ui/overlay';
 import { IccPortalComponent, IccPortalContent } from '@icc/ui/portal';
@@ -17,20 +17,21 @@ import { IccPopoverContainer } from './popover.model';
   imports: [CommonModule, IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent<T> implements IccPopoverContainer {
-  private sanitizer = inject(DomSanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
   @Input() content!: IccPortalContent<T>;
   @Input() context!: Object;
-  @Input() popoverService!: IccPopoverService<T>;
-  @Input() customStyle: string | undefined;
+  //content = input.required<IccPortalContent<T>>();
+  popoverService = input.required<IccPopoverService<T>>();
+  customStyle = input<string>('');
 
   get style(): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(this.customStyle || '');
+    return this.customStyle ? this.sanitizer.bypassSecurityTrustStyle(this.customStyle()) : '';
   }
 
   @ViewChild(IccPortalComponent, { static: true }) portal!: IccPortalComponent<T>;
 
   close(): void {
-    this.popoverService.hide();
+    this.popoverService().hide();
   }
 
   renderContent(): void {
