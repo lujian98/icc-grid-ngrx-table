@@ -9,7 +9,6 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
@@ -17,7 +16,6 @@ import { Subject, Observable } from 'rxjs';
   templateUrl: './option.component.html',
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
   host: {
     role: 'option',
     '[class.selected]': 'selected',

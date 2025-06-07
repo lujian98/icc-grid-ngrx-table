@@ -1,5 +1,4 @@
 import { CdkDrag, CdkDragEnd, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { uniqueId } from '@icc/ui/core';
@@ -16,15 +15,7 @@ import { defaultWindowConfig, IccWindowConfig, IccWindowInfo } from './models/wi
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    IccIconModule,
-    CdkDrag,
-    CdkDragHandle,
-    IccResizeDirective,
-    IccButtonComponent,
-    IccLayoutHeaderComponent,
-  ],
+  imports: [IccIconModule, CdkDrag, CdkDragHandle, IccResizeDirective, IccButtonComponent, IccLayoutHeaderComponent],
 })
 export class IccWindowComponent<T> {
   private readonly dialogRef = inject(IccDialogRef<T>);

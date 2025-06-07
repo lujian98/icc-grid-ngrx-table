@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, input, TemplateRef, Type, ViewChild, inject } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { IccOverlayModule } from '@icc/ui/overlay';
@@ -14,7 +13,7 @@ import { IccPopoverContainer } from './popover.model';
   host: {
     '[class.style]': 'style',
   },
-  imports: [CommonModule, IccOverlayModule, IccPortalComponent],
+  imports: [IccOverlayModule, IccPortalComponent],
 })
 export class IccPopoverComponent<T> implements IccPopoverContainer {
   private readonly sanitizer = inject(DomSanitizer);

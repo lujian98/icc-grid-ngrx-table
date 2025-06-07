@@ -1,5 +1,4 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -20,15 +19,7 @@ import {
   selector: 'icc-tabs-tab',
   templateUrl: './tabs-tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    DragDropModule,
-    CdkDrag,
-    IccMenusComponent,
-    IccPopoverDirective,
-    IccIconModule,
-    IccTabsStateModule,
-  ],
+  imports: [DragDropModule, CdkDrag, IccMenusComponent, IccPopoverDirective, IccIconModule, IccTabsStateModule],
 })
 export class IccTabsTabComponent {
   private tabsFacade = inject(IccTabsFacade);

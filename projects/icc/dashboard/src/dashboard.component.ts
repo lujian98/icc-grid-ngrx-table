@@ -1,5 +1,4 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -28,14 +27,7 @@ import {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    DragDropModule,
-    IccDashboardStateModule,
-    IccTilesComponent,
-    IccLayoutComponent,
-    IccLayoutHeaderComponent,
-  ],
+  imports: [DragDropModule, IccDashboardStateModule, IccTilesComponent, IccLayoutComponent, IccLayoutHeaderComponent],
 })
 export class IccDashboardComponent<T> implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef);

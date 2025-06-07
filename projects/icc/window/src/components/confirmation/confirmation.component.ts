@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccLayoutComponent, IccLayoutFooterComponent, IccLayoutHorizontalComponent } from '@icc/ui/layout';
@@ -13,7 +12,6 @@ import { IccWindowComponent } from '../../window.component';
   styleUrls: ['./confirmation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     IccLayoutComponent,
     IccLayoutFooterComponent,

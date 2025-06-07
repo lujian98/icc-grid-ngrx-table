@@ -1,5 +1,4 @@
 import { CdkPortalOutlet, ComponentPortal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -22,7 +21,7 @@ import { IccPortalContent } from './portal.model';
   templateUrl: './portal.component.html',
   styleUrls: ['./portal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, PortalModule],
+  imports: [PortalModule],
 })
 export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
   private readonly viewContainerRef = inject(ViewContainerRef);

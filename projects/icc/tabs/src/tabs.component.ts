@@ -1,5 +1,4 @@
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, OnDestroy } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccPosition } from '@icc/ui/overlay';
@@ -16,7 +15,6 @@ import { defaultContextMenu, defaultTabsConfig, IccTabConfig, IccTabOption, IccT
   styleUrls: ['./tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     DragDropModule,
     CdkDropList,
     IccTabLabelDirective,
