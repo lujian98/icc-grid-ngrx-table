@@ -25,7 +25,7 @@ import { IccPortalContent } from './portal.model';
   imports: [CommonModule, PortalModule],
 })
 export class IccPortalComponent<T> implements AfterViewInit, OnDestroy {
-  private viewContainerRef = inject(ViewContainerRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
   private isViewReady: boolean = false;
   private componentRef: ComponentRef<T> | undefined;
   private _content!: IccPortalContent<T>;

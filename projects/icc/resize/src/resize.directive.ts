@@ -2,12 +2,12 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  Input,
+  inject,
+  input,
   OnDestroy,
   OnInit,
   Output,
   Renderer2,
-  inject,
 } from '@angular/core';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { IccResizeInfo, IccResizeType } from './model';
@@ -17,17 +17,16 @@ import { IccResizeInfo, IccResizeType } from './model';
   exportAs: 'iccResize',
 })
 export class IccResizeDirective implements OnInit, OnDestroy {
-  private document = inject(ICC_DOCUMENT);
-  private renderer = inject(Renderer2);
-  private elementRef = inject(ElementRef);
+  private readonly document = inject(ICC_DOCUMENT);
+  private readonly renderer = inject(Renderer2);
+  private readonly elementRef = inject(ElementRef);
   private resizableMousedown!: () => void;
   private resizableMousemove!: () => void;
   private resizableMouseup!: () => void;
   private isResizing = false;
   private resizeInfo!: IccResizeInfo;
-
-  @Input() direction!: IccResizeType;
-  @Input() elementKey!: string;
+  direction = input.required<IccResizeType>();
+  elementKey = input.required<string>();
 
   @Output() iccResizeEvent: EventEmitter<IccResizeInfo> = new EventEmitter<IccResizeInfo>();
 
@@ -36,7 +35,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
       const el = this.document.elementFromPoint(event.x, event.y)!;
       const direction = el.getAttribute('ng-reflect-direction');
       const elementKey = el.getAttribute('ng-reflect-element-key');
-      if (!this.isResizing && elementKey === this.elementKey && direction === this.direction) {
+      if (!this.isResizing && elementKey === this.elementKey() && direction === this.direction()) {
         this.isResizing = true;
         this.setElementResize(event);
       }
@@ -44,9 +43,9 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private getResizeEl(): HTMLDivElement {
-    if (this.direction === IccResizeType.LEFT_RIGHT || this.direction === IccResizeType.TOP_BOTTOM) {
+    if (this.direction() === IccResizeType.LEFT_RIGHT || this.direction() === IccResizeType.TOP_BOTTOM) {
       return this.elementRef.nativeElement.previousElementSibling;
-    } else if (this.direction === IccResizeType.RIGHT_LEFT || this.direction === IccResizeType.BOTTOM_TOP) {
+    } else if (this.direction() === IccResizeType.RIGHT_LEFT || this.direction() === IccResizeType.BOTTOM_TOP) {
       return this.elementRef.nativeElement.nextElementSibling;
     }
     return this.elementRef.nativeElement.parentNode;
@@ -56,7 +55,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     const el = this.getResizeEl();
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
-      direction: this.direction,
+      direction: this.direction(),
       element: el,
       isResized: false,
       origin: null,
@@ -78,10 +77,10 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.elementTransform();
         if (this.resizeInfo.origin) {
           this.iccResizeEvent.emit(this.resizeInfo);
-          if (this.direction === IccResizeType.LEFT_RIGHT || this.direction === IccResizeType.RIGHT_LEFT) {
+          if (this.direction() === IccResizeType.LEFT_RIGHT || this.direction() === IccResizeType.RIGHT_LEFT) {
             const width = this.resizeInfo.width * this.resizeInfo.scaleX;
             el.style.flex = `0 0 ${width}px`;
-          } else if (this.direction === IccResizeType.TOP_BOTTOM || this.direction === IccResizeType.BOTTOM_TOP) {
+          } else if (this.direction() === IccResizeType.TOP_BOTTOM || this.direction() === IccResizeType.BOTTOM_TOP) {
             const height = this.resizeInfo.height * this.resizeInfo.scaleY;
             el.style.flex = `0 0 ${height}px`;
           } else {
@@ -93,12 +92,12 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     });
     this.resizableMouseup = this.renderer.listen(this.document, 'mouseup', (event: MouseEvent) => {
       if (this.isResizing && this.resizeInfo.origin) {
-        if (this.direction === IccResizeType.TOP_BOTTOM || this.direction === IccResizeType.BOTTOM_TOP) {
+        if (this.direction() === IccResizeType.TOP_BOTTOM || this.direction() === IccResizeType.BOTTOM_TOP) {
           const height = this.resizeInfo.height * this.resizeInfo.scaleY;
           const parent = this.elementRef.nativeElement.parentElement;
           const dh = parent.scrollHeight - parent.clientHeight;
           el.style.flex = `0 0 ${height - dh}px`;
-        } else if (this.direction === IccResizeType.LEFT_RIGHT) {
+        } else if (this.direction() === IccResizeType.LEFT_RIGHT) {
           const parent = this.elementRef.nativeElement.parentElement;
           const dw = parent.scrollWidth - parent.clientWidth;
           const width = this.resizeInfo.width * this.resizeInfo.scaleX;
@@ -109,10 +108,10 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.isResized = true;
         this.iccResizeEvent.emit(this.resizeInfo);
         if (
-          this.direction === IccResizeType.LEFT_RIGHT ||
-          this.direction === IccResizeType.RIGHT_LEFT || // WARNING IE not supported
-          this.direction === IccResizeType.TOP_BOTTOM ||
-          this.direction === IccResizeType.BOTTOM_TOP
+          this.direction() === IccResizeType.LEFT_RIGHT ||
+          this.direction() === IccResizeType.RIGHT_LEFT || // WARNING IE not supported
+          this.direction() === IccResizeType.TOP_BOTTOM ||
+          this.direction() === IccResizeType.BOTTOM_TOP
         ) {
           window.dispatchEvent(new Event('resize'));
         }
@@ -127,7 +126,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
 
   private elementTransform(): void {
     this.resizeInfo.origin = null;
-    switch (this.direction) {
+    switch (this.direction()) {
       case IccResizeType.TOP:
       case IccResizeType.TOP_BOTTOM:
         this.resizeInfo.origin = 'bottom';
