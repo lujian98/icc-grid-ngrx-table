@@ -79,6 +79,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       }
     });
   }
+
   ngAfterViewInit(): void {
     interval(10)
       .pipe(take(1))

@@ -8,7 +8,10 @@ import {
   Component,
   ElementRef,
   HostListener,
+  effect,
   Input,
+  input,
+  Signal,
   OnDestroy,
   ViewChild,
   inject,
@@ -36,50 +39,37 @@ import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
   imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
-  private elementRef = inject(ElementRef);
-  private document = inject(ICC_DOCUMENT);
-  private treeFacade = inject(IccTreeFacade);
-  private gridFacade = inject(IccGridFacade);
-  private _gridSetting!: IccGridSetting;
-  private _treeConfig!: IccTreeConfig;
-  private destroy$ = new Subject<void>();
-  sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
-  treeData$!: Observable<IccTreeNode<T>[]>;
-  columnHeaderPosition = 0;
-  columnWidths: IccColumnWidth[] = [];
+  private readonly elementRef = inject(ElementRef);
+  private readonly document = inject(ICC_DOCUMENT);
+  private readonly treeFacade = inject(IccTreeFacade);
+  private readonly gridFacade = inject(IccGridFacade);
+  private readonly destroy$ = new Subject<void>();
   private dragNode: IccTreeNode<T> | null = null;
   private dropInfo: IccTreeDropInfo<T> | null = null;
+  columnHeaderPosition = 0;
+  columnWidths: IccColumnWidth[] = [];
+  sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
+  treeData$!: Signal<IccTreeNode<T>[]>;
+  gridSetting = input.required({
+    transform: (gridSetting: IccGridSetting) => {
+      if (!this.treeData$) {
+        this.treeData$ = this.treeFacade.getTreeSignalData(gridSetting.gridId);
+      }
+      return gridSetting;
+    },
+  });
+  treeConfig = input.required<IccTreeConfig>();
+  columns = input.required<IccColumnConfig[]>();
 
-  @Input()
-  set gridSetting(val: IccGridSetting) {
-    this._gridSetting = { ...val };
-    if (!this.treeData$) {
-      this.treeData$ = this.treeFacade.selectTreeData(this.gridSetting.gridId).pipe(
-        map((data) => {
-          this.checkViewport(data);
-          return data;
-        }),
-      );
-    }
-  }
-  get gridSetting(): IccGridSetting {
-    return this._gridSetting;
-  }
-  @Input() columns: IccColumnConfig[] = [];
-  @Input()
-  set treeConfig(val: IccTreeConfig) {
-    this._treeConfig = { ...val };
-  }
-  get treeConfig(): IccTreeConfig {
-    return this._treeConfig;
-  }
+  @ViewChild(CdkVirtualScrollViewport, { static: true }) private viewport!: CdkVirtualScrollViewport;
 
-  gridColumnWidthsEvent(values: IccColumnWidth[]): void {
-    this.columnWidths = values;
+  constructor() {
+    effect(() => {
+      if (this.treeData$()) {
+        this.checkViewport(this.treeData$());
+      }
+    });
   }
-
-  @ViewChild(CdkVirtualScrollViewport, { static: true })
-  private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewInit(): void {
     interval(10)
@@ -101,6 +91,10 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
     return index;
   }
 
+  gridColumnWidthsEvent(values: IccColumnWidth[]): void {
+    this.columnWidths = values;
+  }
+
   onScrolledIndexChange(index: number): void {}
 
   onViewportScroll(event: Event): void {
@@ -110,27 +104,27 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(loadData: boolean = true, event?: string | MouseEvent | null): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
+    const fitPageSize = Math.floor(clientHeight / this.treeConfig().rowHeight);
     const pageSize =
-      !this.treeConfig.virtualScroll && !this.treeConfig.verticalScroll ? fitPageSize : this.treeConfig.pageSize;
-    this.gridFacade.setViewportPageSize(this.treeConfig, this.gridSetting, pageSize, clientWidth, loadData);
+      !this.treeConfig().virtualScroll && !this.treeConfig().verticalScroll ? fitPageSize : this.treeConfig().pageSize;
+    this.gridFacade.setViewportPageSize(this.treeConfig(), this.gridSetting(), pageSize, clientWidth, loadData);
     if (loadData) {
       if (!event || typeof event === 'string') {
-        this.treeFacade.viewportReadyLoadData(this.gridSetting.gridId, this.treeConfig, this.gridSetting);
+        this.treeFacade.viewportReadyLoadData(this.gridSetting().gridId, this.treeConfig(), this.gridSetting());
       } else {
-        this.treeFacade.windowResizeLoadData(this.gridSetting.gridId, this.treeConfig, this.gridSetting);
+        this.treeFacade.windowResizeLoadData(this.gridSetting().gridId, this.treeConfig(), this.gridSetting());
       }
     }
   }
 
   private checkViewport(data: IccTreeNode<T>[]): void {
-    if (this.treeConfig.virtualScroll || this.treeConfig.verticalScroll) {
+    if (this.treeConfig().virtualScroll || this.treeConfig().verticalScroll) {
       // make sure column width with vertical scroll are correct
       const el = this.viewport.elementRef.nativeElement;
       const clientHeight = el.clientHeight;
       const clientWidth = el.clientWidth;
       const widowWidth = this.elementRef.nativeElement.clientWidth;
-      const pageSize = Math.floor(clientHeight / this.treeConfig.rowHeight);
+      const pageSize = Math.floor(clientHeight / this.treeConfig().rowHeight);
       if (data.length > pageSize && clientWidth === widowWidth) {
         this.sizeChanged$.next(uniqueId(16));
       } else if (data.length <= pageSize && clientWidth < widowWidth) {
@@ -256,8 +250,8 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   drop(event: CdkDragDrop<string[]>): void {
     if (this.dropInfo && this.dragNode) {
       this.treeFacade.dropNode(
-        this.gridSetting.gridId,
-        this.treeConfig,
+        this.gridSetting().gridId,
+        this.treeConfig(),
         this.dragNode,
         this.dropInfo.targetParent!,
         this.dropInfo.targetIndex!,

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccColumnConfig, IccGridFacade, IccGridStateModule, IccGridSetting } from '@icc/ui/grid';
@@ -76,6 +76,10 @@ export class IccTreeFacade {
 
   clearTreeDataStore(treeId: string): void {
     this.store.dispatch(treeActions.clearTreeDataStore({ treeId }));
+  }
+
+  getTreeSignalData<T>(treeId: string): Signal<IccTreeNode<T>[]> {
+    return this.store.selectSignal(selectTreeData(treeId));
   }
 
   selectTreeData<T>(treeId: string): Observable<IccTreeNode<T>[]> {

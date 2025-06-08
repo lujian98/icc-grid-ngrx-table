@@ -1,45 +1,45 @@
 <icc-grid-header-view
-  [gridSetting]="gridSetting"
-  [gridConfig]="treeConfig"
-  [columnConfigs]="columns"
+  [gridSetting]="gridSetting()"
+  [gridConfig]="treeConfig()"
+  [columnConfigs]="columns()"
   [columnHeaderPosition]="columnHeaderPosition"
   (gridColumnWidthsEvent)="gridColumnWidthsEvent($event)"
 >
 </icc-grid-header-view>
 
 <cdk-virtual-scroll-viewport
-  [itemSize]="treeConfig.rowHeight"
+  [itemSize]="treeConfig().rowHeight"
   [ngStyle]="{
-    'overflow-x': treeConfig.horizontalScroll ? 'auto' : 'hidden',
-    'overflow-y': treeConfig.virtualScroll || treeConfig.verticalScroll ? 'auto' : 'hidden',
+    'overflow-x': treeConfig().horizontalScroll ? 'auto' : 'hidden',
+    'overflow-y': treeConfig().virtualScroll || treeConfig().verticalScroll ? 'auto' : 'hidden',
   }"
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
 >
-  <ng-container *ngIf="treeData$ | async as treeData">
+  @if (treeData$()) {
     <div
       class="icc-grid-row"
-      *cdkVirtualFor="let record of treeData; trackBy: trackByIndex; let index = index"
+      *cdkVirtualFor="let record of treeData$(); trackBy: trackByIndex; let index = index"
       cdkDropList
       [cdkDropListSortingDisabled]="true"
       (cdkDropListDropped)="drop($event)"
     >
       <icc-tree-row
         class="icc-tree-node"
-        [gridSetting]="gridSetting"
-        [treeConfig]="treeConfig"
-        [columns]="columns"
+        [gridSetting]="gridSetting()"
+        [treeConfig]="treeConfig()"
+        [columns]="columns()"
         [columnWidths]="columnWidths"
         [record]="record"
         cdkDrag
-        [cdkDragDisabled]="treeConfig.dragDisabled"
+        [cdkDragDisabled]="treeConfig().dragDisabled"
         (cdkDragStarted)="dragStart(record)"
-        (cdkDragMoved)="dragMoved($event, treeData)"
+        (cdkDragMoved)="dragMoved($event, treeData$())"
         [cdkDragData]="record"
         [attr.tree-node-id]="record.id"
         [attr.id]="record.id"
       >
       </icc-tree-row>
     </div>
-  </ng-container>
+  }
 </cdk-virtual-scroll-viewport>

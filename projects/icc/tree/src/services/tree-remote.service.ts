@@ -9,8 +9,8 @@ import { IccTreeConfig, IccTreeData } from '../models/tree-grid.model';
   providedIn: 'root',
 })
 export class IccTreeRemoteService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   getTreeRemoteData<T>(treeConfig: IccTreeConfig, columns: IccColumnConfig[]): Observable<IccTreeData[]> {
     let params = this.backendService.getParams(treeConfig.urlKey, 'treeData');
