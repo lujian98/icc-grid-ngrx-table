@@ -1,21 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridFacade, IccGridSetting, IccGridStateModule } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridFacade, IccGridStateModule } from '@icc/ui/grid';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccSpinnerDirective } from '@icc/ui/spinner';
-import { Observable } from 'rxjs';
 import { IccTreeStateModule } from './+state/tree-state.module';
 import { IccTreeFacade } from './+state/tree.facade';
 import { IccTreeViewComponent } from './components/tree-view.component';
-import {
-  defaultTreeConfig,
-  defaultTreeSetting,
-  IccTreeConfig,
-  IccTreeNode,
-  IccTreeSetting,
-} from './models/tree-grid.model';
+import { defaultTreeConfig, defaultTreeSetting, IccTreeConfig, IccTreeNode } from './models/tree-grid.model';
 
 @Component({
   selector: 'icc-tree',
@@ -23,7 +15,6 @@ import {
   styleUrls: ['./tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     IccIconModule,
     IccTreeStateModule,
     IccGridStateModule,
@@ -34,15 +25,12 @@ import {
   ],
 })
 export class IccTreeComponent<T> implements OnDestroy {
-  private treeFacade = inject(IccTreeFacade);
-  private gridFacade = inject(IccGridFacade);
-  private _treeConfig!: IccTreeConfig;
-  private _columnsConfig: IccColumnConfig[] = [];
-  private _treeData!: IccTreeNode<T>[];
+  private readonly treeFacade = inject(IccTreeFacade);
+  private readonly gridFacade = inject(IccGridFacade);
   private treeId = `tree-${crypto.randomUUID()}`;
-  treeConfig$!: Observable<IccTreeConfig>;
-  gridSetting$!: Observable<IccTreeSetting>; // Only support gridSetting for now
-  columnsConfig$!: Observable<IccColumnConfig[]>;
+  treeConfig$ = this.gridFacade.getGridConfig(this.treeId);
+  gridSetting$ = this.gridFacade.getSetting(this.treeId); // Only support gridSetting for now
+  columnsConfig$ = this.gridFacade.getColumnsConfig(this.treeId);
 
   buttons: IccButtonConfg[] = [
     IccBUTTONS.Refresh,
@@ -51,64 +39,53 @@ export class IccTreeComponent<T> implements OnDestroy {
     IccBUTTONS.CollapseAll,
   ];
 
-  @Input()
-  set treeConfig(value: Partial<IccTreeConfig>) {
-    this.initGridConfig({ ...defaultTreeConfig, ...value });
-  }
-  get treeConfig(): IccTreeConfig {
-    return this._treeConfig;
+  treeConfig = input(defaultTreeConfig, {
+    transform: (value: Partial<IccTreeConfig>) => {
+      const treeConfig = { ...defaultTreeConfig, ...value };
+      this.initGridConfig(treeConfig);
+      return treeConfig;
+    },
+  });
+  columnsConfig = input([], {
+    transform: (columnsConfig: IccColumnConfig[]) => {
+      if (!this.treeConfig) {
+        this.initGridConfig({ ...defaultTreeConfig });
+      }
+      if (!this.treeConfig$().remoteColumnsConfig && columnsConfig.length > 0) {
+        const treeSetting = { ...defaultTreeSetting, gridId: this.treeId };
+        this.gridFacade.setGridColumnsConfig(this.treeConfig$(), treeSetting, columnsConfig);
+      }
+      return columnsConfig;
+    },
+  });
+  treeData = input(undefined, {
+    transform: (treeData: IccTreeNode<T>[]) => {
+      if (!this.treeConfig$().remoteGridData && treeData) {
+        this.treeFacade.setTreeInMemoryData(this.treeId, this.treeConfig$(), treeData);
+      }
+      return treeData;
+    },
+  });
+
+  private initGridConfig(treeConfig: IccTreeConfig): void {
+    this.gridFacade.initGridConfig(this.treeId, treeConfig, 'treeGrid');
+    this.treeFacade.initTreeConfig(this.treeId, treeConfig);
   }
 
-  private initGridConfig(value: IccTreeConfig): void {
-    this._treeConfig = { ...value };
-    this.treeConfig$ = this.gridFacade.selectGridConfig(this.treeId);
-    this.gridSetting$ = this.gridFacade.selectSetting(this.treeId);
-
-    this.columnsConfig$ = this.gridFacade.selectColumnsConfig(this.treeId);
-    this.gridFacade.initGridConfig(this.treeId, this.treeConfig, 'treeGrid');
-    this.treeFacade.initTreeConfig(this.treeId, this.treeConfig);
-  }
-
-  @Input()
-  set columnsConfig(val: IccColumnConfig[]) {
-    this._columnsConfig = val;
-    if (!this.treeConfig) {
-      this.initGridConfig({ ...defaultTreeConfig });
-    }
-    if (!this.treeConfig.remoteColumnsConfig && this.columnsConfig.length > 0) {
-      const treeSetting = { ...defaultTreeSetting, gridId: this.treeId };
-      this.gridFacade.setGridColumnsConfig(this.treeConfig, treeSetting, this.columnsConfig);
-    }
-  }
-  get columnsConfig(): IccColumnConfig[] {
-    return this._columnsConfig;
-  }
-
-  @Input()
-  set treeData(val: IccTreeNode<T>[]) {
-    this._treeData = [...val];
-    if (!this.treeConfig.remoteGridData && this.treeData) {
-      this.treeFacade.setTreeInMemoryData(this.treeId, this.treeConfig, this._treeData);
-    }
-  }
-  get treeData(): IccTreeNode<T>[] {
-    return this._treeData;
-  }
-
-  buttonClick(button: IccButtonConfg, treeConfig: IccTreeConfig, gridSetting: IccGridSetting): void {
+  buttonClick(button: IccButtonConfg): void {
     switch (button.name) {
       case IccButtonType.Refresh:
-        this.treeFacade.getTreeData(this.treeId, treeConfig);
+        this.treeFacade.getTreeData(this.treeId, this.treeConfig$());
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(this.treeConfig, gridSetting, []);
+        this.gridFacade.setGridColumnFilters(this.treeConfig$(), this.gridSetting$(), []);
         break;
 
       case IccButtonType.ExpandAll:
-        this.treeFacade.expandAllNodes(this.treeId, treeConfig, true);
+        this.treeFacade.expandAllNodes(this.treeId, this.treeConfig$(), true);
         break;
       case IccButtonType.CollapseAll:
-        this.treeFacade.expandAllNodes(this.treeId, treeConfig, false);
+        this.treeFacade.expandAllNodes(this.treeId, this.treeConfig$(), false);
         break;
       default:
         break;

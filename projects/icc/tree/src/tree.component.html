@@ -1,20 +1,15 @@
-<icc-layout *ngIf="treeConfig$ | async as treeConfig">
-  <ng-container *ngIf="gridSetting$ | async as gridSetting">
-    <ng-container *ngIf="columnsConfig$ | async as columns">
-      <icc-layout-header
-        *ngIf="!treeConfig.hideTopbar"
-        [buttons]="buttons"
-        (iccButtonClick)="buttonClick($event, treeConfig, gridSetting)"
-      >
-      </icc-layout-header>
+@if (treeConfig$() && gridSetting$() && columnsConfig$()) {
+  <icc-layout>
+    @if (!treeConfig$().hideTopbar) {
+      <icc-layout-header [buttons]="buttons" (iccButtonClick)="buttonClick($event)"> </icc-layout-header>
+    }
 
-      <icc-tree-view
-        [gridSetting]="gridSetting"
-        [treeConfig]="treeConfig"
-        [columns]="columns"
-        [iccSpinner]="gridSetting.loading"
-      >
-      </icc-tree-view>
-    </ng-container>
-  </ng-container>
-</icc-layout>
+    <icc-tree-view
+      [gridSetting]="gridSetting$()"
+      [treeConfig]="treeConfig$()"
+      [columns]="columnsConfig$()"
+      [iccSpinner]="gridSetting$().loading"
+    >
+    </icc-tree-view>
+  </icc-layout>
+}
