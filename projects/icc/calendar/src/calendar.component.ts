@@ -1,16 +1,15 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   OnChanges,
   OnDestroy,
   Output,
   ViewChild,
   inject,
+  input,
 } from '@angular/core';
 import { MatCalendar, MatCalendarCellCssClasses, MatCalendarUserEvent } from '@angular/material/datepicker';
 import { IccLocaleDatePipe } from '@icc/ui/core';
@@ -23,62 +22,55 @@ import { IccCalendarConfig, defaultCalendarConfig } from './models/calendar.mode
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslateDirective, IccLocaleDatePipe, MatCalendar],
+  imports: [TranslateDirective, IccLocaleDatePipe, MatCalendar],
 })
 export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _calendarConfig: IccCalendarConfig = defaultCalendarConfig;
-  private _selectedRangeDates: Array<Date> = [];
-  private _selectedDate: Date | null = null;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroy$ = new Subject<void>();
   private currentMonth!: Date | null;
   minDate!: Date | null;
   maxDate!: Date | null;
   weekendFilter = (d: Date) => true;
 
-  @Input() set calendarConfig(value: Partial<IccCalendarConfig>) {
-    this._calendarConfig = { ...defaultCalendarConfig, ...value };
-    if (this.calendarConfig.excludeWeekends) {
-      this.weekendFilter = (d: Date): boolean => {
-        const day = d.getDay();
-        return day !== 0 && day !== 6;
-      };
-    }
-    this.minDate = this.calendarConfig.minDate;
-    this.maxDate = this.calendarConfig.maxDate;
-  }
-  get calendarConfig(): IccCalendarConfig {
-    return this._calendarConfig;
-  }
-
-  @Input() set selectedDate(value: Date | null) {
-    if (value instanceof Date) {
-      this.matCalendar.activeDate = value;
-      this._selectedDate = value;
-    } else {
-      this._selectedDate = null;
-      if (this.calendarConfig.viewType === 'rangeTo') {
-        const current = new Date();
-        this.matCalendar.activeDate = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+  calendarConfig = input(defaultCalendarConfig, {
+    transform: (value: Partial<IccCalendarConfig>) => {
+      const calendarConfig = { ...defaultCalendarConfig, ...value };
+      if (calendarConfig.excludeWeekends) {
+        this.weekendFilter = (d: Date): boolean => {
+          const day = d.getDay();
+          return day !== 0 && day !== 6;
+        };
       }
-    }
-  }
-  get selectedDate(): Date | null {
-    return this._selectedDate;
-  }
-
-  @Input() set selectedRangeDates(value: Array<Date>) {
-    this._selectedRangeDates = value;
-    if (this.selectedDate) {
-      this.matCalendar.activeDate = this.selectedDate;
-    } else {
-      this.matCalendar.activeDate = new Date();
-    }
-    this.changeDetectorRef.detectChanges();
-  }
-  get selectedRangeDates(): Array<Date> {
-    return this._selectedRangeDates;
-  }
+      this.minDate = calendarConfig.minDate;
+      this.maxDate = calendarConfig.maxDate;
+      return calendarConfig;
+    },
+  });
+  selectedDate = input(null, {
+    transform: (value: Date | null) => {
+      if (value instanceof Date) {
+        this.matCalendar.activeDate = value;
+        return value;
+      } else {
+        if (this.calendarConfig().viewType === 'rangeTo') {
+          const current = new Date();
+          this.matCalendar.activeDate = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+        }
+        return null;
+      }
+    },
+  });
+  selectedRangeDates = input([], {
+    transform: (value: Array<Date>) => {
+      if (this.selectedDate()) {
+        this.matCalendar.activeDate = this.selectedDate()!;
+      } else {
+        this.matCalendar.activeDate = new Date();
+      }
+      this.changeDetectorRef.detectChanges();
+      return value;
+    },
+  });
 
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
   @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
@@ -150,8 +142,8 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
 
   dateClass() {
     return (date: Date): MatCalendarCellCssClasses => {
-      if (this.selectedRangeDates.length > 0) {
-        const find = this.selectedRangeDates.findIndex(
+      if (this.selectedRangeDates().length > 0) {
+        const find = this.selectedRangeDates().findIndex(
           (d) =>
             d.getDate() === date.getDate() &&
             d.getMonth() === date.getMonth() &&
@@ -159,7 +151,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
         );
         if (find === 0) {
           return 'icc-date-range-selected-date-start';
-        } else if (find === this.selectedRangeDates.length - 1) {
+        } else if (find === this.selectedRangeDates().length - 1) {
           return 'icc-date-range-selected-date-end';
         } else if (find > 0) {
           return 'icc-date-range-dates';
