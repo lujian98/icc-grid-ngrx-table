@@ -9,7 +9,7 @@ export class IccFileUploadFacade {
   private readonly store = inject(Store);
   selectUploadFiles$ = this.store.select(selectUploadFiles);
   getUploadFiles$ = this.store.selectSignal(selectUploadFiles);
-  selectUploadFilesGridData$ = this.store.select(selectUploadFilesGridData);
+  getUploadFilesGridData$ = this.store.selectSignal(selectUploadFilesGridData);
 
   dropUploadFile(relativePath: string, file: File): void {
     this.store.dispatch(fileUploadActions.dropUploadFile({ relativePath, file }));

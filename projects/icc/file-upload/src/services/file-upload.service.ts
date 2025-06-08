@@ -8,8 +8,8 @@ import { IccFileUploadConfig } from '../models/file-upload.model';
   providedIn: 'root',
 })
 export class IccFileUploadService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   sendUploadFiles(fileUploadConfig: IccFileUploadConfig, files: IccUploadFile[]): Observable<object> {
     const url = this.backendService.apiUrl;

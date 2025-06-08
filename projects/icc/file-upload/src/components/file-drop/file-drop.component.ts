@@ -6,6 +6,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  input,
   NgZone,
   OnDestroy,
   Output,
@@ -27,74 +28,55 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   imports: [CommonModule, TranslatePipe],
 })
 export class IccFileDropComponent<T> implements OnDestroy {
-  @Input()
-  public accept: string = '*';
-
-  @Input()
-  public directory: boolean = false;
-
-  @Input()
-  public multiple: boolean = true;
-
-  @Input()
-  public dropZoneLabel: string = '';
-
-  @Input()
-  public dropZoneClassName: string = 'icc-file-drop__drop-zone';
-
-  @Input()
-  public useDragEnter: boolean = false;
-
-  @Input()
-  public contentClassName: string = 'icc-file-drop__content';
-
-  @Input()
-  public showBrowseBtn: boolean = false;
-
-  @Input()
-  public browseBtnClassName: string = 'btn btn-primary btn-xs icc-file-drop__browse-btn';
-
-  @Input()
-  public browseBtnLabel: string = 'Browse files';
-
-  @Output()
-  public onFileDrop: EventEmitter<IccFileDropEntry[]> = new EventEmitter();
-
-  @Output()
-  public onFileOver: EventEmitter<DragEvent | Event> = new EventEmitter();
-
-  @Output()
-  public onFileLeave: EventEmitter<Event> = new EventEmitter();
-
-  @ContentChild(IccFileDropContentTemplateDirective, { read: TemplateRef }) contentTemplate?: TemplateRef<T>;
-
-  @ViewChild('fileSelector', { static: true })
-  public fileSelector?: ElementRef;
-
-  public isDraggingOverDropZone: boolean = false;
-
-  private globalDraggingInProgress: boolean = false;
-  private readonly globalDragStartListener: () => void;
-  private readonly globalDragEndListener: () => void;
-
-  private files: IccFileDropEntry[] = [];
-  private numOfActiveReadEntries: number = 0;
-
-  private helperFormEl: HTMLFormElement | null = null;
-  private fileInputPlaceholderEl: HTMLDivElement | null = null;
-
-  private dropEventTimerSubscription: Subscription | null = null;
+  /*
+  accept = input<string>('*');
+  directory = input<boolean>(false);
+  multiple = input<boolean>(true);
+  dropZoneLabel = input<string>('');
+  dropZoneClassName = input<string>('icc-file-drop__drop-zone');
+  useDragEnter = input<boolean>(false);
+  contentClassName = input<string>('icc-file-drop__content');
+  showBrowseBtn = input<boolean>(false);
+  browseBtnClassName = input<string>('btn btn-primary btn-xs icc-file-drop__browse-btn');
+  browseBtnLabel = input<string>('Browse files');
+  disabled = input<boolean>(false);
+  */
+  @Input() public accept: string = '*';
+  @Input() public directory: boolean = false;
+  @Input() public multiple: boolean = true;
+  @Input() public dropZoneLabel: string = '';
+  @Input() public dropZoneClassName: string = 'icc-file-drop__drop-zone';
+  @Input() public useDragEnter: boolean = false;
+  @Input() public contentClassName: string = 'icc-file-drop__content';
+  @Input() public showBrowseBtn: boolean = false;
+  @Input() public browseBtnClassName: string = 'btn btn-primary btn-xs icc-file-drop__browse-btn';
+  @Input() public browseBtnLabel: string = 'Browse files';
 
   private _disabled: boolean = false;
-
-  public get disabled(): boolean {
-    return this._disabled;
-  }
-
   @Input()
   public set disabled(value: boolean) {
     this._disabled = value != null && `${value}` !== 'false';
   }
+  public get disabled(): boolean {
+    return this._disabled;
+  }
+
+  @Output() public onFileDrop: EventEmitter<IccFileDropEntry[]> = new EventEmitter();
+  @Output() public onFileOver: EventEmitter<DragEvent | Event> = new EventEmitter();
+  @Output() public onFileLeave: EventEmitter<Event> = new EventEmitter();
+
+  @ContentChild(IccFileDropContentTemplateDirective, { read: TemplateRef }) contentTemplate?: TemplateRef<T>;
+  @ViewChild('fileSelector', { static: true }) public fileSelector?: ElementRef;
+
+  public isDraggingOverDropZone: boolean = false;
+  private globalDraggingInProgress: boolean = false;
+  private readonly globalDragStartListener: () => void;
+  private readonly globalDragEndListener: () => void;
+  private files: IccFileDropEntry[] = [];
+  private numOfActiveReadEntries: number = 0;
+  private helperFormEl: HTMLFormElement | null = null;
+  private fileInputPlaceholderEl: HTMLDivElement | null = null;
+  private dropEventTimerSubscription: Subscription | null = null;
 
   constructor(
     private zone: NgZone,

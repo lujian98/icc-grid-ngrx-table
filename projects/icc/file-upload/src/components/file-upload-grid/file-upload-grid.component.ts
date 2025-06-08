@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { IccGridConfig, IccGridComponent, IccColumnConfig, defaultGridConfig } from '@icc/ui/grid';
+import { IccColumnConfig, IccGridComponent, IccGridConfig, defaultGridConfig } from '@icc/ui/grid';
 import { IccFileUploadFacade } from '../../+state/file-upload.facade';
 
 @Component({
@@ -8,11 +7,11 @@ import { IccFileUploadFacade } from '../../+state/file-upload.facade';
   templateUrl: './file-upload-grid.component.html',
   styles: [':host { width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridComponent],
+  imports: [IccGridComponent],
 })
 export class IccFileUploadGridComponent {
-  private fileUploadFacade = inject(IccFileUploadFacade);
-  gridData$ = this.fileUploadFacade.selectUploadFilesGridData$;
+  private readonly fileUploadFacade = inject(IccFileUploadFacade);
+  gridData$ = this.fileUploadFacade.getUploadFilesGridData$;
 
   gridConfig: IccGridConfig = {
     ...defaultGridConfig,
