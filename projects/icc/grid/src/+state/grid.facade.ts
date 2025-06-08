@@ -217,6 +217,10 @@ export class IccGridFacade {
     return this.store.selectSignal(selectGridConfig(gridId));
   }
 
+  getSetting(gridId: string): Signal<IccGridSetting> {
+    return this.store.selectSignal(selectGridSetting(gridId));
+  }
+
   getColumnsConfig(gridId: string): Signal<IccColumnConfig[]> {
     return this.store.selectSignal(selectColumnsConfig(gridId));
   }

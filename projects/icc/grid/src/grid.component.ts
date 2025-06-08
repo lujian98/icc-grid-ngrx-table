@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   Input,
+  signal,
   input,
   OnDestroy,
   OnInit,
@@ -14,7 +16,6 @@ import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { IccSpinnerDirective } from '@icc/ui/spinner';
-import { map, Observable } from 'rxjs';
 import { IccGridStateModule } from './+state/grid-state.module';
 import { IccGridFacade } from './+state/grid.facade';
 import { IccGridFooterComponent } from './components/grid-footer/grid-footer.component';
@@ -47,15 +48,13 @@ export interface IccButtonClick {
 export class IccGridComponent<T> implements OnInit, OnDestroy {
   private readonly gridFacade = inject(IccGridFacade);
   private readonly tasksService = inject(IccTasksService);
-  private _gridData!: IccGridData<T>;
   private gridId = `grid-${crypto.randomUUID()}`;
   gridConfig$ = this.gridFacade.getGridConfig(this.gridId);
-
-  gridSetting$!: Observable<IccGridSetting>;
+  gridSetting$ = this.gridFacade.getSetting(this.gridId);
   columnsConfig$ = this.gridFacade.getColumnsConfig(this.gridId);
+  buttonList = signal<IccButtonConfg[]>([IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters]);
 
-  @Input() buttons: IccButtonConfg[] = [IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters];
-
+  buttons = input<IccButtonConfg[]>([...this.buttonList()]);
   gridConfig = input(defaultGridConfig, {
     transform: (value: Partial<IccGridConfig>) => {
       const config = { ...defaultGridConfig, ...value };
@@ -63,16 +62,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       return config;
     },
   });
-
-  private initGridConfig(config: IccGridConfig): void {
-    this.gridSetting$ = this.gridFacade.selectSetting(this.gridId).pipe(
-      map((gridSetting) => {
-        this.setButtons(gridSetting);
-        return gridSetting;
-      }),
-    );
-    this.gridFacade.initGridConfig(this.gridId, config, 'grid');
-  }
 
   columnsConfig = input([], {
     transform: (columnsConfig: IccColumnConfig[]) => {
@@ -87,34 +76,36 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     },
   });
 
-  gridData2 = input(undefined, {
+  gridData = input(undefined, {
     transform: (gridData: IccGridData<T>) => {
       if (!this.gridConfig$().remoteGridData && gridData) {
+        //console.log(' xxxxxthis._gridData=', gridData)
         this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig$(), gridData as IccGridData<object>);
       }
       return gridData;
     },
   });
 
-  @Input()
-  set gridData(val: IccGridData<T>) {
-    this._gridData = { ...val };
-    if (!this.gridConfig().remoteGridData && this.gridData) {
-      this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig(), this.gridData as IccGridData<object>);
-    }
-  }
-  get gridData(): IccGridData<T> {
-    return this._gridData;
-  }
-
   @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
+
+  constructor() {
+    effect(() => {
+      if (this.gridSetting$()) {
+        this.setButtons(this.gridSetting$());
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig());
   }
 
+  private initGridConfig(config: IccGridConfig): void {
+    this.gridFacade.initGridConfig(this.gridId, config, 'grid');
+  }
+
   private setButtons(gridSetting: IccGridSetting): void {
-    this.buttons = [...this.buttons].map((button) => {
+    const buttons = [...this.buttons()].map((button) => {
       const hidden = this.getHidden(button, gridSetting);
       const disabled = this.getDisabled(button, gridSetting);
       return {
@@ -123,6 +114,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         disabled,
       };
     });
+    this.buttonList.update(() => buttons);
   }
 
   private getDisabled(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
