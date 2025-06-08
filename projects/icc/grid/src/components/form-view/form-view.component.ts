@@ -15,7 +15,7 @@ import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/u
   imports: [CommonModule, IccLayoutComponent, IccWindowComponent, IccFormComponent],
 })
 export class IccGridFormViewComponent {
-  private dialogRef = inject(IccDialogRef<IccGridFormViewComponent>);
+  private readonly dialogRef = inject(IccDialogRef<IccGridFormViewComponent>);
 
   windowConfig: IccWindowConfig = {
     ...defaultWindowConfig,

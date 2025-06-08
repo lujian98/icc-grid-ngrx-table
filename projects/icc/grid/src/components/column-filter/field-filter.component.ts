@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -10,18 +9,17 @@ import {
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, of, Subject, skip, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, debounceTime, of, skip, switchMap, takeUntil } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccFilterValueType, IccGridSetting } from '../../models/grid-column.model';
+import { IccColumnConfig, IccFilterValueType, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
-  private gridFacade = inject(IccGridFacade);
-  protected destroy$ = new Subject<void>();
+  private readonly gridFacade = inject(IccGridFacade);
+  protected readonly destroy$ = new Subject<void>();
   protected _value: IccFilterValueType = '';
 
   changeDetectorRef = inject(ChangeDetectorRef);

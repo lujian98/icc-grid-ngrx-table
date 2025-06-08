@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 import { IccFieldFilterComponent } from '../field-filter.component';
@@ -8,7 +7,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   templateUrl: './text-filter.component.html',
   styleUrls: ['text-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTextFieldComponent],
+  imports: [IccTextFieldComponent],
 })
 export class IccTextFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccTextFieldConfig>;

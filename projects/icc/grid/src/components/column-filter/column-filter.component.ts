@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,7 +27,6 @@ export interface IccColumnFilterInstance {
   selector: 'icc-column-filter',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccColumnFilterComponent implements OnInit {
   private viewContainerRef = inject(ViewContainerRef);

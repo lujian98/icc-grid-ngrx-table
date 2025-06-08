@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccSelectFieldConfig, defaultSelectFieldConfig } from '@icc/ui/fields';
@@ -9,7 +8,7 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-select.component.html',
   styleUrls: ['./grid-cell-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslatePipe],
+  imports: [TranslatePipe],
 })
 export class IccGridCellSelectComponent<T> extends IccGridCellRendererComponent<T> {
   get fieldConfig(): IccSelectFieldConfig {

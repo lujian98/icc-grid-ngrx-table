@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   IccDateRange,
@@ -13,7 +12,7 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   templateUrl: './date-range-filter.component.html',
   styleUrls: ['date-range-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccDateRangeFieldComponent],
+  imports: [IccDateRangeFieldComponent],
 })
 export class IccDateRangeFilterComponent extends IccFieldFilterComponent {
   override fieldConfig!: Partial<IccDateRangeFieldConfig>;

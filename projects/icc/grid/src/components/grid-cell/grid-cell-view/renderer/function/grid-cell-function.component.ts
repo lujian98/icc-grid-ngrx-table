@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
 
@@ -7,7 +6,6 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-function.component.html',
   styleUrls: ['./grid-cell-function.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccGridCellFunctionComponent extends IccGridCellRendererComponent<string> {
   get display(): string {

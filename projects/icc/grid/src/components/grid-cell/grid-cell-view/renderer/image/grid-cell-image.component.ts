@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
 
@@ -7,7 +6,6 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-image.component.html',
   styleUrls: ['./grid-cell-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccGridCellImageComponent extends IccGridCellRendererComponent<string> {
   get rowHeight(): number {

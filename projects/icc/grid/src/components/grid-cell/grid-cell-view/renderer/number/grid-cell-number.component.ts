@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { isNumeric } from '@icc/ui/core';
 import { IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
@@ -9,7 +8,6 @@ import { IccGridCellRendererComponent } from '../grid-cell-renderer.component';
   templateUrl: './grid-cell-number.component.html',
   styleUrls: ['./grid-cell-number.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccGridCellNumberComponent extends IccGridCellRendererComponent<number> {
   get fieldConfig(): IccNumberFieldConfig {

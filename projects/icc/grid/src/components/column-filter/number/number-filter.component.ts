@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { IccTextFieldComponent, IccTextFieldConfig } from '@icc/ui/fields';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,11 +9,11 @@ import { IccFieldFilterComponent } from '../field-filter.component';
   templateUrl: './number-filter.component.html',
   styleUrls: ['number-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTextFieldComponent],
+  imports: [IccTextFieldComponent],
 })
 export class IccNumberFilterComponent extends IccFieldFilterComponent implements OnInit {
   override fieldConfig!: Partial<IccTextFieldConfig>;
-  private translateService = inject(TranslateService);
+  private readonly translateService = inject(TranslateService);
 
   override checkField(): void {
     const filterI18n = this.translateService.instant('ICC.UI.GRID.FILTER');
