@@ -7,14 +7,15 @@
     <icc-icon config="caret-left"></icc-icon>
   </button>
 
-  <icc-number-field
-    [fieldConfig]="fieldConfig"
-    [value]="page"
-    [showFieldEditIndicator]="false"
-    (valueChange)="onValueChange($event)"
-  >
-  </icc-number-field>
-
+  @if (fieldConfig()) {
+    <icc-number-field
+      [fieldConfig]="fieldConfig()!"
+      [value]="page"
+      [showFieldEditIndicator]="false"
+      (valueChange)="onValueChange($event)"
+    >
+    </icc-number-field>
+  }
   <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
   <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
     <icc-icon config="caret-right"></icc-icon>
@@ -30,13 +31,13 @@
 
   <span>
     {{ "ICC.UI.GRID.PAGE_SIZE" | translate }}:
-    <input iccInput type="number" min="1" max="10" [value]="gridConfig.pageSize" autocomplete="off" readonly />
+    <input iccInput type="number" min="1" max="10" [value]="gridConfig().pageSize" autocomplete="off" readonly />
   </span>
 
   <icc-layout-footer-end>
     {{ "ICC.UI.GRID.DISPLAYING" | translate }}
     {{ displaying }}
     {{ "ICC.UI.GRID.OF" | translate }}
-    {{ gridSetting.totalCounts }}
+    {{ gridSetting().totalCounts }}
   </icc-layout-footer-end>
 </icc-layout-footer>
