@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccSelectFieldComponent, IccSelectFieldConfig, defaultSelectFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
@@ -8,7 +7,7 @@ import { IccCellEditBaseComponent } from '../cell-edit-base.component';
   templateUrl: './cell-edit-select.component.html',
   styleUrls: ['cell-edit-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccSelectFieldComponent],
+  imports: [IccSelectFieldComponent],
 })
 export class IccCellEditSelectComponent<T> extends IccCellEditBaseComponent<T> {
   override fieldConfig!: Partial<IccSelectFieldConfig>;

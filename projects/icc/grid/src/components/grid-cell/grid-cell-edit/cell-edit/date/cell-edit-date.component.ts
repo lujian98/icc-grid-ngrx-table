@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccDateFieldComponent, IccDateFieldConfig, defaultDateFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
@@ -8,7 +7,7 @@ import { IccCellEditBaseComponent } from '../cell-edit-base.component';
   templateUrl: './cell-edit-date.component.html',
   styleUrls: ['cell-edit-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccDateFieldComponent],
+  imports: [IccDateFieldComponent],
 })
 export class IccCellEditDateComponent extends IccCellEditBaseComponent<Date> {
   override fieldConfig!: Partial<IccDateFieldConfig>;

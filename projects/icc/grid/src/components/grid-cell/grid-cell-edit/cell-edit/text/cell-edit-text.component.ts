@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IccTextFieldComponent, IccTextFieldConfig, defaultTextFieldConfig } from '@icc/ui/fields';
 import { IccCellEditBaseComponent } from '../cell-edit-base.component';
@@ -8,7 +7,7 @@ import { IccCellEditBaseComponent } from '../cell-edit-base.component';
   templateUrl: './cell-edit-text.component.html',
   styleUrls: ['cell-edit-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTextFieldComponent],
+  imports: [IccTextFieldComponent],
 })
 export class IccCellEditTextComponent extends IccCellEditBaseComponent<string> {
   override fieldConfig!: Partial<IccTextFieldConfig>;

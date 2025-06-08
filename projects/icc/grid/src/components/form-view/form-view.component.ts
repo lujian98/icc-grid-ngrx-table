@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
@@ -12,7 +11,7 @@ import { IccWindowComponent, IccWindowConfig, defaultWindowConfig } from '@icc/u
   templateUrl: './form-view.component.html',
   styleUrls: ['./form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccLayoutComponent, IccWindowComponent, IccFormComponent],
+  imports: [IccLayoutComponent, IccWindowComponent, IccFormComponent],
 })
 export class IccGridFormViewComponent {
   private readonly dialogRef = inject(IccDialogRef<IccGridFormViewComponent>);

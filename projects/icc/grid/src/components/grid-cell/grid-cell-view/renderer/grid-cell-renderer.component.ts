@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.model';
 
 @Component({
@@ -10,7 +9,6 @@ import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.m
     '[class.grid-cell-align-center]': 'align === "center"',
     '[class.grid-cell-align-right]': 'align === "right"',
   },
-  imports: [CommonModule],
 })
 export class IccGridCellRendererComponent<T> {
   protected readonly changeDetectorRef = inject(ChangeDetectorRef);

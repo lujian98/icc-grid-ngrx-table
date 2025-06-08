@@ -1,16 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccGridFacade } from '../../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccCellEdit, IccGridSetting } from '../../../../models/grid-column.model';
+import { IccCellEdit, IccColumnConfig, IccGridConfig, IccGridSetting } from '../../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-cell-edit-base',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccCellEditBaseComponent<T> {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
