@@ -51,7 +51,7 @@ export class IccGridCellViewComponent<T> implements OnInit {
 
   private loadComponent(column: IccColumnConfig): void {
     this.viewContainerRef.clear();
-    const cellComponent = this.getRenderer();
+    const cellComponent = this.getRenderer(column);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccGridCell<T>;
     this.instance.gridConfig = this.gridConfig();
@@ -60,8 +60,8 @@ export class IccGridCellViewComponent<T> implements OnInit {
     this.instance.record = this.record();
   }
 
-  private getRenderer(): Type<unknown> {
-    switch (this.column().rendererType) {
+  private getRenderer(column: IccColumnConfig): Type<unknown> {
+    switch (column.rendererType) {
       case IccObjectType.Text:
         return IccGridCellTextComponent;
       case IccObjectType.Select:
@@ -73,13 +73,13 @@ export class IccGridCellViewComponent<T> implements OnInit {
       case IccObjectType.Image:
         return IccGridCellImageComponent;
       case IccObjectType.Function:
-        if (this.column().renderer) {
+        if (column.renderer) {
           return IccGridCellFunctionComponent;
         }
         break;
       case IccObjectType.Component:
-        if (this.column().component) {
-          return this.column().component!;
+        if (column.component) {
+          return column.component!;
         }
         break;
       default:

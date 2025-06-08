@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
   inject,
-  Input,
+  input,
   OnInit,
   Type,
   ViewContainerRef,
@@ -20,82 +19,63 @@ import { IccCellEditTextComponent } from './cell-edit/text/cell-edit-text.compon
   selector: 'icc-grid-cell-edit',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccGridCellEditComponent<T> implements OnInit {
-  private viewContainerRef = inject(ViewContainerRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
   private instance!: IccGridCell<T>;
   private _componentRef!: ComponentRef<unknown>;
-  private _gridConfig!: IccGridConfig;
-  private _gridSetting!: IccGridSetting;
-  private _column!: IccColumnConfig;
-
-  @Input() rowIndex!: number;
-
-  @Input()
-  set gridConfig(val: IccGridConfig) {
-    this._gridConfig = { ...val };
-    if (this._componentRef) {
-      this.instance.gridConfig = this.gridConfig;
-    }
-  }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
-  }
-
-  @Input()
-  set gridSetting(val: IccGridSetting) {
-    this._gridSetting = { ...val };
-    if (this._componentRef) {
-      this.instance.gridSetting = this.gridSetting;
-    }
-  }
-  get gridSetting(): IccGridSetting {
-    return this._gridSetting;
-  }
-
-  @Input()
-  set column(val: IccColumnConfig) {
-    this._column = { ...val };
-    if (this._componentRef) {
-      this.loadComponent();
-    }
-  }
-  get column(): IccColumnConfig {
-    return this._column;
-  }
-
-  private _record!: T;
-
-  @Input()
-  set record(data: T) {
-    this._record = data;
-    if (this._componentRef) {
-      this.instance.record = this.record;
-    }
-  }
-  get record(): T {
-    return this._record;
-  }
+  rowIndex = input<number>(0);
+  gridConfig = input.required({
+    transform: (gridConfig: IccGridConfig) => {
+      if (gridConfig && this._componentRef) {
+        this.instance.gridConfig = gridConfig;
+      }
+      return gridConfig;
+    },
+  });
+  gridSetting = input.required({
+    transform: (gridSetting: IccGridSetting) => {
+      if (gridSetting && this._componentRef) {
+        this.instance.gridSetting = gridSetting;
+      }
+      return gridSetting;
+    },
+  });
+  column = input.required({
+    transform: (column: IccColumnConfig) => {
+      if (column && this._componentRef) {
+        this.loadComponent(column);
+      }
+      return column;
+    },
+  });
+  record = input.required({
+    transform: (record: T) => {
+      if (record && this._componentRef) {
+        this.instance.record = record;
+      }
+      return record;
+    },
+  });
 
   ngOnInit(): void {
-    this.loadComponent();
+    this.loadComponent(this.column());
   }
 
-  private loadComponent(): void {
+  private loadComponent(column: IccColumnConfig): void {
     this.viewContainerRef.clear();
-    const cellComponent = this.getRenderer();
+    const cellComponent = this.getRenderer(column);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccGridCell<T>;
-    this.instance.column = this.column;
-    this.instance.rowIndex = this.rowIndex;
-    this.instance.record = this.record;
-    this.instance.gridConfig = this.gridConfig;
-    this.instance.gridSetting = this.gridSetting;
+    this.instance.column = column;
+    this.instance.rowIndex = this.rowIndex();
+    this.instance.record = this.record();
+    this.instance.gridConfig = this.gridConfig();
+    this.instance.gridSetting = this.gridSetting();
   }
 
-  private getRenderer(): Type<unknown> {
-    switch (this.column.rendererType) {
+  private getRenderer(column: IccColumnConfig): Type<unknown> {
+    switch (column.rendererType) {
       case IccObjectType.Text:
         return IccCellEditTextComponent;
       case IccObjectType.Select:
