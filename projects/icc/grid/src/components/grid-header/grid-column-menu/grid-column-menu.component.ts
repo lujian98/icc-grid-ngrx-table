@@ -1,57 +1,55 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, Signal } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
-import { Observable, combineLatest, map } from 'rxjs';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
 import { IccGridFacade } from '../../../+state/grid.facade';
-import { IccColumnConfig, IccGridConfig, IccRowGroupField, IccGridSetting } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridConfig, IccGridSetting, IccRowGroupField } from '../../../models/grid-column.model';
 
 @Component({
   selector: 'icc-grid-column-menu',
   templateUrl: './grid-column-menu.component.html',
   styleUrls: ['./grid-column-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridStateModule, IccMenusComponent],
+  imports: [IccGridStateModule, IccMenusComponent],
 })
 export class IccGridColumnMenuComponent {
-  private gridFacade = inject(IccGridFacade);
+  private readonly gridFacade = inject(IccGridFacade);
   private _gridId!: string;
-  private gridConfig!: IccGridConfig;
-  private gridSetting!: IccGridSetting;
-  private columns!: IccColumnConfig[];
-
-  columnMenus$!: Observable<[IccGridConfig, IccColumnConfig[]]>;
   level = 0;
+  gridConfig$!: Signal<IccGridConfig>;
+  gridSetting$!: Signal<IccGridSetting>;
+  columns$!: Signal<IccColumnConfig[]>;
 
-  @Input()
   set gridId(val: string) {
     this._gridId = val;
-    this.columnMenus$ = combineLatest([
-      this.gridFacade.selectGridConfig(this.gridId),
-      this.gridFacade.selectSetting(this.gridId),
-      this.gridFacade.selectColumnsConfig(this.gridId),
-    ]).pipe(
-      map(([gridConfig, gridSetting, columns]) => {
-        this.gridConfig = gridConfig;
-        this.gridSetting = gridSetting;
-        this.columns = columns;
-        if (this.menuItems.length === 0) {
-          this.setMenuItems();
-        }
-        this.setDisabledMenu();
-        return [gridConfig, columns];
-      }),
-    );
+    if (!this.gridConfig$) {
+      this.gridConfig$ = this.gridFacade.getGridConfig(this.gridId);
+    }
+    if (!this.gridSetting$) {
+      this.gridSetting$ = this.gridFacade.getSetting(this.gridId);
+    }
+    if (!this.columns$) {
+      this.columns$ = this.gridFacade.getColumnsConfig(this.gridId);
+    }
   }
   get gridId(): string {
     return this._gridId;
   }
+  column!: IccColumnConfig;
+  menuItems: IccMenuConfig[] = [];
+  values: { [key: string]: boolean } = {};
+  disabled: IccDisabled[] = [];
 
-  @Input() column!: IccColumnConfig;
-  @Input() menuItems: IccMenuConfig[] = [];
-  @Input() values: { [key: string]: boolean } = {};
-  @Input() disabled: IccDisabled[] = [];
+  constructor() {
+    effect(() => {
+      if (this.columns$()) {
+        if (this.menuItems.length === 0) {
+          this.setMenuItems();
+        }
+        this.setDisabledMenu();
+      }
+    });
+  }
 
   private setDisabledMenu(): void {
     this.disabled = [
@@ -79,14 +77,14 @@ export class IccGridColumnMenuComponent {
   }
 
   private setMenuItems(): void {
-    const columnItems = [...this.columns].map((column) => {
+    const columnItems = [...this.columns$()].map((column) => {
       return {
         name: column.name,
         title: column.title,
         keepOpen: true,
         checkbox: true,
         checked: !column.hidden,
-        disabled: !this.gridConfig.columnHidden || this.column.sortField === false,
+        disabled: !this.gridConfig$().columnHidden || this.column.sortField === false,
       };
     });
     const menuItems = [
@@ -124,7 +122,7 @@ export class IccGridColumnMenuComponent {
   }
 
   onMenuFormChanges(values: { [key: string]: boolean }): void {
-    this.columnHideShow(values, this.columns);
+    this.columnHideShow(values, this.columns$());
   }
 
   onMenuItemClick(item: IccMenuConfig): void {
@@ -135,28 +133,28 @@ export class IccGridColumnMenuComponent {
         field: this.column.name,
         dir: 'asc',
       };
-      this.gridFacade.setGridGroupBy(this.gridId, this.gridConfig, rowGroupField);
+      this.gridFacade.setGridGroupBy(this.gridId, this.gridConfig$(), rowGroupField);
     } else if (item.name === 'unGroupBy') {
-      this.gridFacade.setGridUnGroupBy(this.gridId, this.gridConfig);
+      this.gridFacade.setGridUnGroupBy(this.gridId, this.gridConfig$());
     }
   }
 
   private groupByDisabled(): boolean {
-    const rowGroupField = this.gridConfig.rowGroupField;
+    const rowGroupField = this.gridConfig$().rowGroupField;
     return (
-      !this.gridConfig.rowGroup ||
+      !this.gridConfig$().rowGroup ||
       this.column.groupField === false ||
       !!(rowGroupField && rowGroupField.field === this.column.name)
     );
   }
 
   private unGroupByDisabled(): boolean {
-    return !this.gridConfig.rowGroupField;
+    return !this.gridConfig$().rowGroupField;
   }
 
   private sortDisabled(dir: string): boolean {
-    const sortField = this.gridConfig.sortFields.find((field) => field.field === this.column.name);
-    return !this.gridConfig.columnSort || this.column.sortField === false || (!!sortField && sortField.dir === dir);
+    const sortField = this.gridConfig$().sortFields.find((field) => field.field === this.column.name);
+    return !this.gridConfig$().columnSort || this.column.sortField === false || (!!sortField && sortField.dir === dir);
   }
 
   private columnSort(dir: string): void {
@@ -164,7 +162,7 @@ export class IccGridColumnMenuComponent {
       field: this.column.name,
       dir: dir,
     };
-    this.gridFacade.setGridSortFields(this.gridConfig, this.gridSetting, [sort]);
+    this.gridFacade.setGridSortFields(this.gridConfig$(), this.gridSetting$(), [sort]);
   }
 
   private columnHideShow(values: { [key: string]: boolean }, columns: IccColumnConfig[]): void {
