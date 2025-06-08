@@ -33,8 +33,8 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   imports: [ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
-  private elementRef = inject(ElementRef);
-  private gridFacade = inject(IccGridFacade);
+  private readonly elementRef = inject(ElementRef);
+  private readonly gridFacade = inject(IccGridFacade);
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
   private destroy$ = new Subject<void>();

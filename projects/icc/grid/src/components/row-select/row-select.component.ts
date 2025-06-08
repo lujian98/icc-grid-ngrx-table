@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 
 @Component({
@@ -7,9 +6,9 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   templateUrl: 'row-select.component.html',
   styleUrls: ['./row-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccCheckboxComponent],
+  imports: [IccCheckboxComponent],
 })
 export class IccRowSelectComponent {
-  @Input() selected: boolean = false;
-  @Input() indeterminate: boolean = false;
+  selected = input<boolean>(false);
+  indeterminate = input<boolean>(false);
 }
