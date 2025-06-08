@@ -1,23 +1,20 @@
 <div class="grid-header-container" [style.flex]="'0 0 ' + tableWidth + 'px'">
-  <icc-grid-group-header
-    *ngIf="gridConfig().groupHeader"
-    [ngStyle]="{
-      left: columnHeaderPosition() + 'px',
-      height: gridConfig().headerHeight + 'px',
-    }"
-    [gridSetting]="gridSetting()"
-    [gridConfig]="gridConfig()"
-    [columns]="columns()"
-    [columnWidths]="columnWidths"
-    (columnResizing)="onColumnResizing($event)"
-    (columnResized)="onColumnResized($event)"
-  >
-  </icc-grid-group-header>
+  @if (gridConfig().groupHeader) {
+    <icc-grid-group-header
+      [style.left]="columnHeaderPosition() + 'px'"
+      [style.height]="gridConfig().headerHeight + 'px'"
+      [gridSetting]="gridSetting()"
+      [gridConfig]="gridConfig()"
+      [columns]="columns()"
+      [columnWidths]="columnWidths"
+      (columnResizing)="onColumnResizing($event)"
+      (columnResized)="onColumnResized($event)"
+    >
+    </icc-grid-group-header>
+  }
 
   <icc-grid-header
-    [ngStyle]="{
-      left: columnHeaderPosition() + 'px',
-    }"
+    [style.left]="columnHeaderPosition() + 'px'"
     [gridSetting]="gridSetting()"
     [gridConfig]="gridConfig()"
     [columns]="columns()"

@@ -1,6 +1,5 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, Output, signal } from '@angular/core';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
@@ -15,7 +14,7 @@ import { IccGridHeaderComponent } from '../grid-header/grid-header.component';
   templateUrl: './grid-header-view.component.html',
   styleUrls: ['./grid-header-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridGroupHeaderComponent],
+  imports: [DragDropModule, ScrollingModule, IccGridHeaderComponent, IccGridGroupHeaderComponent],
 })
 export class IccGridHeaderViewComponent {
   private readonly gridFacade = inject(IccGridFacade);
