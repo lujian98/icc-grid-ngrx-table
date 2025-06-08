@@ -1,16 +1,14 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   effect,
+  EventEmitter,
   inject,
-  Input,
-  signal,
   input,
   OnDestroy,
   OnInit,
   Output,
-  EventEmitter,
+  signal,
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -35,7 +33,6 @@ export interface IccButtonClick {
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     IccIconModule,
     IccGridStateModule,
     IccGridViewComponent,
@@ -62,7 +59,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       return config;
     },
   });
-
   columnsConfig = input([], {
     transform: (columnsConfig: IccColumnConfig[]) => {
       if (!this.gridConfig) {
@@ -75,7 +71,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       return columnsConfig;
     },
   });
-
   gridData = input(undefined, {
     transform: (gridData: IccGridData<T>) => {
       if (!this.gridConfig$().remoteGridData && gridData) {
@@ -91,7 +86,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   constructor() {
     effect(() => {
       if (this.gridSetting$()) {
-        this.setButtons(this.gridSetting$());
+        this.setButtons();
       }
     });
   }
@@ -104,10 +99,10 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     this.gridFacade.initGridConfig(this.gridId, config, 'grid');
   }
 
-  private setButtons(gridSetting: IccGridSetting): void {
+  private setButtons(): void {
     const buttons = [...this.buttons()].map((button) => {
-      const hidden = this.getHidden(button, gridSetting);
-      const disabled = this.getDisabled(button, gridSetting);
+      const hidden = this.getHidden(button);
+      const disabled = this.getDisabled(button);
       return {
         ...button,
         hidden,
@@ -117,45 +112,45 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     this.buttonList.update(() => buttons);
   }
 
-  private getDisabled(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
+  private getDisabled(button: IccButtonConfg): boolean {
     switch (button.name) {
       case IccButtonType.Save:
       case IccButtonType.Reset:
-        return !gridSetting.recordModified;
+        return !this.gridSetting$().recordModified;
       case IccButtonType.Open:
-        return !(this.gridConfig().hasDetailView && gridSetting.selected === 1);
+        return !(this.gridConfig().hasDetailView && this.gridSetting$().selected === 1);
       default:
         return false;
     }
   }
 
-  private getHidden(button: IccButtonConfg, gridSetting: IccGridSetting): boolean {
+  private getHidden(button: IccButtonConfg): boolean {
     switch (button.name) {
       case IccButtonType.Edit:
       case IccButtonType.Open:
       case IccButtonType.Refresh:
       case IccButtonType.ClearAllFilters:
-        return gridSetting.gridEditable;
+        return this.gridSetting$().gridEditable;
       case IccButtonType.Save:
       case IccButtonType.Reset:
       case IccButtonType.View:
-        return !gridSetting.gridEditable;
+        return !this.gridSetting$().gridEditable;
       default:
         return false;
     }
   }
 
-  buttonClick(button: IccButtonConfg, gridConfig: IccGridConfig, gridSetting: IccGridSetting): void {
+  buttonClick(button: IccButtonConfg): void {
     switch (button.name) {
       case IccButtonType.Refresh: // in-memory api not able to refresh since the data are same
-        if (gridConfig.virtualScroll) {
+        if (this.gridConfig$().virtualScroll) {
           this.gridFacade.getGridPageData(this.gridId, 1);
         } else {
-          this.gridFacade.getGridData(this.gridId, gridSetting);
+          this.gridFacade.getGridData(this.gridId, this.gridSetting$());
         }
         break;
       case IccButtonType.ClearAllFilters:
-        this.gridFacade.setGridColumnFilters(gridConfig, gridSetting, []);
+        this.gridFacade.setGridColumnFilters(this.gridConfig$(), this.gridSetting$(), []);
         break;
       case IccButtonType.Edit:
         this.gridFacade.setGridEditable(this.gridId, true);
@@ -175,7 +170,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       default:
         break;
     }
-    this.iccButtonClick.emit({ button, gridConfig, gridSetting });
+    this.iccButtonClick.emit({ button, gridConfig: this.gridConfig$(), gridSetting: this.gridSetting$() });
   }
 
   ngOnDestroy(): void {
