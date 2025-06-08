@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  EventEmitter,
+  signal,
+  Input,
+  input,
+  Output,
+  inject,
+} from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccColumnConfig, IccGridConfig, IccGridSetting } from '../../models/grid-column.model';
@@ -17,13 +27,20 @@ import { IccGridFacade } from '../../+state/grid.facade';
   imports: [CommonModule, TranslatePipe, IccIconModule],
 })
 export class IccGridRowGroupComponent<T> {
-  private gridFacade = inject(IccGridFacade);
+  private readonly gridFacade = inject(IccGridFacade);
   private _record!: IccRowGroup;
+  //record$ = signal<IccRowGroup | undefined>(undefined);
 
-  @Input() gridSetting!: IccGridSetting;
-  @Input() gridConfig!: IccGridConfig;
-  @Input() columns: IccColumnConfig[] = [];
-  @Input() rowIndex!: number;
+  columns = input.required<IccColumnConfig[]>();
+  gridSetting = input.required<IccGridSetting>();
+  gridConfig = input.required<IccGridConfig>();
+  rowIndex = input.required<number>();
+  //record = input.required<IccRowGroup>();
+
+  //@Input() gridSetting!: IccGridSetting;
+  //@Input() gridConfig!: IccGridConfig;
+  //@Input() columns: IccColumnConfig[] = [];
+  //@Input() rowIndex!: number;
 
   @Input()
   set record(data: T | IccRowGroup) {
@@ -36,15 +53,40 @@ export class IccGridRowGroupComponent<T> {
   }
 
   get title(): string {
-    const column = this.columns.find((item) => item.name === this.record.field)!;
+    const column = this.columns().find((item) => item.name === this.record.field)!;
     return column.title || column.name;
   }
 
   @Output() onToggleRowGroup = new EventEmitter<IccRowGroup>();
 
+  constructor() {
+    /*
+      effect(() => {
+        if (this.record()) {
+          this.record$.update(()=> {
+            if (this.record() instanceof IccRowGroup) {
+              return this.record();
+            } else {
+              return undefined;
+            }
+          })
+        }
+      });*/
+  }
+
   toggleRowGroup(): void {
     this.record.expanded = !this.record.expanded;
-    this.gridFacade.setToggleRowGroup(this.gridSetting.gridId, this.record);
+    /*
+      this.record$.update((record)=> {
+        if (record instanceof IccRowGroup && record !== undefined) {
+          return {...record};
+        } else {
+          return undefined;
+        }
+      });
+      */
+
+    this.gridFacade.setToggleRowGroup(this.gridSetting().gridId, this.record);
     this.onToggleRowGroup.emit(this.record);
   }
 
