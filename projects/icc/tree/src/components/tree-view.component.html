@@ -9,10 +9,8 @@
 
 <cdk-virtual-scroll-viewport
   [itemSize]="treeConfig().rowHeight"
-  [ngStyle]="{
-    'overflow-x': treeConfig().horizontalScroll ? 'auto' : 'hidden',
-    'overflow-y': treeConfig().virtualScroll || treeConfig().verticalScroll ? 'auto' : 'hidden',
-  }"
+  [style.overflow-x]="treeConfig().horizontalScroll ? 'auto' : 'hidden'"
+  [style.overflow-y]="treeConfig().virtualScroll || treeConfig().verticalScroll ? 'auto' : 'hidden'"
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
 >

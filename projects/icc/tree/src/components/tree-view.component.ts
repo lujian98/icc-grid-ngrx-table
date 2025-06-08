@@ -1,42 +1,40 @@
-import { DragDropModule, CdkDragDrop, CdkDragMove } from '@angular/cdk/drag-drop';
-import { ICC_DOCUMENT } from '@icc/ui/theme';
+import { CdkDragDrop, CdkDragMove, DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
   HostListener,
-  effect,
-  Input,
-  input,
-  Signal,
-  OnDestroy,
-  ViewChild,
   inject,
+  input,
+  OnDestroy,
+  Signal,
+  ViewChild,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import {
   IccColumnConfig,
+  IccColumnWidth,
   IccGridFacade,
   IccGridHeaderViewComponent,
-  IccColumnWidth,
   IccGridSetting,
 } from '@icc/ui/grid';
-import { BehaviorSubject, Observable, interval, of, map, Subject } from 'rxjs';
+import { ICC_DOCUMENT } from '@icc/ui/theme';
+import { BehaviorSubject, interval, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccTreeFacade } from '../+state/tree.facade';
-import { IccTreeConfig, IccTreeNode, IccTreeDropInfo } from '../models/tree-grid.model';
-import { IccTreeRowComponent } from './tree-row/tree-row.component';
+import { IccTreeConfig, IccTreeDropInfo, IccTreeNode } from '../models/tree-grid.model';
 import { iccFindNodeId, iccGetNodeParent } from '../utils/nested-tree';
+import { IccTreeRowComponent } from './tree-row/tree-row.component';
 
 @Component({
   selector: 'icc-tree-view',
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
+  imports: [DragDropModule, ScrollingModule, IccGridHeaderViewComponent, IccTreeRowComponent],
 })
 export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef);
