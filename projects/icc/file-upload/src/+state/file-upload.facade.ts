@@ -6,7 +6,7 @@ import { IccFileUploadConfig } from '../models/file-upload.model';
 
 @Injectable()
 export class IccFileUploadFacade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
   selectUploadFiles$ = this.store.select(selectUploadFiles);
   getUploadFiles$ = this.store.selectSignal(selectUploadFiles);
   selectUploadFilesGridData$ = this.store.select(selectUploadFilesGridData);

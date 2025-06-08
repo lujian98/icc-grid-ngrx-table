@@ -1,22 +1,24 @@
-<icc-layout *ngIf="uploadFiles$ | async as uploadFiles">
-  <icc-layout-header
-    title="ICC.UI.FILE_UPLOAD.FILE_DROP_UPLOAD"
-    [buttons]="buttons"
-    (iccButtonClick)="buttonClick($event)"
-  >
-    <icc-checkbox [checked]="checked" (change)="onChange($event)">{{
-      "ICC.UI.ACTIONS.ENABLED" | translate
-    }}</icc-checkbox>
-  </icc-layout-header>
+@if (uploadFiles$()) {
+  <icc-layout>
+    <icc-layout-header
+      title="ICC.UI.FILE_UPLOAD.FILE_DROP_UPLOAD"
+      [buttons]="buttons"
+      (iccButtonClick)="buttonClick($event)"
+    >
+      <icc-checkbox [checked]="enabled()" (change)="onChange($event)">{{
+        "ICC.UI.ACTIONS.ENABLED" | translate
+      }}</icc-checkbox>
+    </icc-layout-header>
 
-  <icc-file-drop
-    [accept]="'*'"
-    [dropZoneClassName]="className"
-    [disabled]="!checked"
-    [multiple]="true"
-    (onFileDrop)="dropped($event)"
-  >
-  </icc-file-drop>
+    <icc-file-drop
+      [accept]="'*'"
+      [dropZoneClassName]="className"
+      [disabled]="!enabled()"
+      [multiple]="true"
+      (onFileDrop)="dropped($event)"
+    >
+    </icc-file-drop>
 
-  <icc-file-upload-grid> </icc-file-upload-grid>
-</icc-layout>
+    <icc-file-upload-grid> </icc-file-upload-grid>
+  </icc-layout>
+}

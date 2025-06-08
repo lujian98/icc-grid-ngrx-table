@@ -1,17 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, Input } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, effect, inject, input, signal } from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { IccButtonConfg, IccButtonType, IccBUTTONS } from '@icc/ui/core';
-import { map } from 'rxjs';
+import { IccBUTTONS, IccButtonConfg, IccButtonType } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
+import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileDropEntry } from './components/file-drop/file-drop-entry';
 import { IccFileDropComponent } from './components/file-drop/file-drop.component';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
-import { IccFileUploadConfig, defaultFileUploadConfig, IccFileUpload } from './models/file-upload.model';
-import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
+import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-drop-upload',
@@ -19,7 +17,6 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
   styleUrls: ['./file-drop-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     IccFileUploadStateModule,
     IccIconModule,
@@ -31,32 +28,24 @@ import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
   ],
 })
 export class IccFileDropUploadComponent implements OnDestroy {
-  private fileUploadFacade = inject(IccFileUploadFacade);
-  private uploadFiles: IccFileUpload[] = [];
-
-  uploadFiles$ = this.fileUploadFacade.selectUploadFiles$.pipe(
-    map((uploadFiles) => {
-      this.uploadFiles = uploadFiles;
-      this.setButtonDisabled();
-      return uploadFiles;
-    }),
-  );
-  private _fileUploadConfig!: IccFileUploadConfig;
-
-  @Input()
-  set fileUploadConfig(val: Partial<IccFileUploadConfig>) {
-    this._fileUploadConfig = { ...defaultFileUploadConfig, ...val };
-  }
-  get fileUploadConfig(): IccFileUploadConfig {
-    return this._fileUploadConfig;
-  }
-
+  private readonly fileUploadFacade = inject(IccFileUploadFacade);
+  uploadFiles$ = this.fileUploadFacade.getUploadFiles$;
   buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
-
-  checked = true;
+  enabled = signal<boolean>(true);
+  fileUploadConfig = input(defaultFileUploadConfig, {
+    transform: (val: Partial<IccFileUploadConfig>) => ({ ...defaultFileUploadConfig, ...val }),
+  });
 
   get className(): string {
-    return !this.checked ? 'icc-file-drop__drop-zone--disabled' : 'icc-file-drop__drop-zone--enabled';
+    return !this.enabled() ? 'icc-file-drop__drop-zone--disabled' : 'icc-file-drop__drop-zone--enabled';
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.uploadFiles$()) {
+        this.setButtonDisabled();
+      }
+    });
   }
 
   dropped(files: IccFileDropEntry[]): void {
@@ -70,15 +59,14 @@ export class IccFileDropUploadComponent implements OnDestroy {
     }
   }
 
-  onChange(checked: boolean): void {
-    if (typeof checked === 'boolean') {
-      this.checked = checked;
-      this.setButtonDisabled(!this.checked);
+  onChange(enabled: boolean): void {
+    if (typeof enabled === 'boolean') {
+      this.enabled.set(enabled);
     }
   }
 
   private setButtonDisabled(disabled: boolean = false): void {
-    disabled = this.uploadFiles.length === 0 ? true : disabled;
+    disabled = this.uploadFiles$().length === 0 ? true : disabled;
     this.buttons = [...this.buttons].map((button) => {
       return {
         ...button,
@@ -93,7 +81,7 @@ export class IccFileDropUploadComponent implements OnDestroy {
         this.fileUploadFacade.clearUploadFiles();
         break;
       case IccButtonType.UploadFile:
-        this.fileUploadFacade.uploadFiles(this.fileUploadConfig);
+        this.fileUploadFacade.uploadFiles(this.fileUploadConfig());
         break;
       default:
         break;
