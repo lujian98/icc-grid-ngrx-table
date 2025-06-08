@@ -1,16 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  QueryList,
+  signal,
+  ViewChildren,
+} from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccObjectType } from '@icc/ui/core';
 import { IccUploadFileFieldComponent, IccUploadFileFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs';
 import { IccFileUploadStateModule } from './+state/file-upload-state.module';
 import { IccFileUploadFacade } from './+state/file-upload.facade';
 import { IccFileUploadGridComponent } from './components/file-upload-grid/file-upload-grid.component';
-import { defaultFileUploadConfig, IccFileUpload, IccFileUploadConfig } from './models/file-upload.model';
+import { defaultFileUploadConfig, IccFileUploadConfig } from './models/file-upload.model';
 
 @Component({
   selector: 'icc-file-select-upload',
@@ -18,7 +27,6 @@ import { defaultFileUploadConfig, IccFileUpload, IccFileUploadConfig } from './m
   styleUrls: ['./file-select-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     TranslatePipe,
     IccFileUploadStateModule,
     IccIconModule,
@@ -30,62 +38,50 @@ import { defaultFileUploadConfig, IccFileUpload, IccFileUploadConfig } from './m
   ],
 })
 export class IccFileSelectUploadComponent implements OnDestroy {
-  private fileUploadFacade = inject(IccFileUploadFacade);
-  private translateService = inject(TranslateService);
-  private uploadFiles: IccFileUpload[] = [];
-
-  uploadFiles$ = this.fileUploadFacade.selectUploadFiles$.pipe(
-    map((uploadFiles) => {
-      this.uploadFiles = uploadFiles;
-      this.setButtonDisabled();
-      return uploadFiles;
-    }),
-  );
-  private _fileUploadConfig!: IccFileUploadConfig;
-  fieldConfigs: IccUploadFileFieldConfig[] = [];
-
+  private readonly fileUploadFacade = inject(IccFileUploadFacade);
+  private readonly translateService = inject(TranslateService);
+  uploadFiles$ = this.fileUploadFacade.getUploadFiles$;
   buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
+  enabled = signal<boolean>(true);
+  fileUploadConfig = input(defaultFileUploadConfig, {
+    transform: (val: Partial<IccFileUploadConfig>) => ({ ...defaultFileUploadConfig, ...val }),
+  });
 
-  checked = true;
-
-  @Input()
-  set fileUploadConfig(val: Partial<IccFileUploadConfig>) {
-    this._fileUploadConfig = { ...defaultFileUploadConfig, ...val };
-    if (this._fileUploadConfig.maxSelectUploads) {
+  fieldConfigs = computed(() => {
+    const fieldConfigs = [];
+    if (this.fileUploadConfig().maxSelectUploads) {
       const fileI18n = this.translateService.instant('ICC.UI.FILE.FILE');
-      this.fieldConfigs = [];
-      for (let i = 0; i < this._fileUploadConfig.maxSelectUploads; i++) {
-        this.fieldConfigs.push({
+      for (let i = 0; i < this.fileUploadConfig().maxSelectUploads; i++) {
+        fieldConfigs.push({
           fieldType: IccObjectType.UploadFile,
           labelWidth: 60,
           fieldName: `file_select_upload_${i + 1}`,
           fieldLabel: `${fileI18n} ${i + 1}`,
-          editable: this.checked,
+          editable: this.enabled(),
           clearValue: true,
         });
       }
     }
-  }
-  get fileUploadConfig(): IccFileUploadConfig {
-    return this._fileUploadConfig;
-  }
+    return fieldConfigs;
+  });
 
   @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
+
+  constructor() {
+    effect(() => {
+      if (this.uploadFiles$()) {
+        this.setButtonDisabled();
+      }
+    });
+  }
 
   selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File | null): void {
     this.fileUploadFacade.selectUploadFile(fieldConfig.fieldName!, file);
   }
 
-  onChange(checked: boolean): void {
-    if (typeof checked === 'boolean') {
-      this.checked = checked;
-      this.setButtonDisabled(!this.checked);
-      this.fieldConfigs = [...this.fieldConfigs].map((config) => {
-        return {
-          ...config,
-          editable: this.checked,
-        };
-      });
+  onChange(enabled: boolean): void {
+    if (typeof enabled === 'boolean') {
+      this.enabled.set(enabled);
     }
   }
 
@@ -94,7 +90,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
   }
 
   private setButtonDisabled(disabled: boolean = false): void {
-    disabled = this.uploadFiles.length === 0 ? true : disabled;
+    disabled = this.uploadFiles$().length === 0 ? true : disabled;
     this.buttons = [...this.buttons].map((button) => {
       return {
         ...button,
@@ -110,7 +106,7 @@ export class IccFileSelectUploadComponent implements OnDestroy {
         this.clearUploadFileFields();
         break;
       case IccButtonType.UploadFile:
-        this.fileUploadFacade.uploadFiles(this.fileUploadConfig);
+        this.fileUploadFacade.uploadFiles(this.fileUploadConfig());
         break;
       default:
         break;

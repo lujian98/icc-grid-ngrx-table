@@ -8,6 +8,7 @@ import { IccFileUploadConfig } from '../models/file-upload.model';
 export class IccFileUploadFacade {
   private store = inject(Store);
   selectUploadFiles$ = this.store.select(selectUploadFiles);
+  getUploadFiles$ = this.store.selectSignal(selectUploadFiles);
   selectUploadFilesGridData$ = this.store.select(selectUploadFilesGridData);
 
   dropUploadFile(relativePath: string, file: File): void {
