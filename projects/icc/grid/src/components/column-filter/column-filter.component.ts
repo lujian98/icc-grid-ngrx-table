@@ -3,7 +3,7 @@ import {
   Component,
   ComponentRef,
   inject,
-  Input,
+  input,
   OnInit,
   Type,
   ViewContainerRef,
@@ -29,65 +29,52 @@ export interface IccColumnFilterInstance {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccColumnFilterComponent implements OnInit {
-  private viewContainerRef = inject(ViewContainerRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
   private instance!: IccColumnFilterInstance;
   private _componentRef: ComponentRef<unknown> | undefined;
-  private _gridSetting!: IccGridSetting;
-  private _gridConfig!: IccGridConfig;
-  private _column!: IccColumnConfig;
-
-  @Input()
-  set gridSetting(val: IccGridSetting) {
-    this._gridSetting = { ...val };
-    if (this._componentRef) {
-      this.instance.gridSetting = this.gridSetting;
-    }
-  }
-  get gridSetting(): IccGridSetting {
-    return this._gridSetting;
-  }
-
-  @Input()
-  set column(val: IccColumnConfig) {
-    this._column = { ...val };
-    if (this._componentRef) {
-      this._componentRef = undefined;
-      this.viewContainerRef.clear();
-      this.loadComponent();
-    }
-  }
-  get column(): IccColumnConfig {
-    return this._column;
-  }
-
-  @Input()
-  set gridConfig(value: IccGridConfig) {
-    this._gridConfig = value;
-    if (this._componentRef) {
-      this.instance.gridConfig = this.gridConfig;
-    }
-  }
-  get gridConfig(): IccGridConfig {
-    return this._gridConfig;
-  }
+  gridSetting = input.required({
+    transform: (gridSetting: IccGridSetting) => {
+      if (gridSetting && this._componentRef) {
+        this.instance.gridSetting = gridSetting;
+      }
+      return gridSetting;
+    },
+  });
+  column = input.required({
+    transform: (column: IccColumnConfig) => {
+      if (column && this._componentRef) {
+        this.loadComponent(column);
+      }
+      return column;
+    },
+  });
+  gridConfig = input.required({
+    transform: (gridConfig: IccGridConfig) => {
+      if (gridConfig && this._componentRef) {
+        this.instance.gridConfig = gridConfig;
+      }
+      return gridConfig;
+    },
+  });
 
   ngOnInit(): void {
-    this.viewContainerRef.clear();
-    this.loadComponent();
+    this.loadComponent(this.column());
   }
 
-  private loadComponent(): void {
-    const filterType = this.getFilterType(this.column);
+  private loadComponent(column: IccColumnConfig): void {
+    this._componentRef = undefined;
+    this.viewContainerRef.clear();
+    const filterType = this.getFilterType(column);
 
     const cellComponent = this.getFilterTypeComponent(filterType);
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccColumnFilterInstance;
-    if (this.column.filterFieldConfig) {
-      this.instance.fieldConfig = this.column.filterFieldConfig;
+    if (column.filterFieldConfig) {
+      this.instance.fieldConfig = column.filterFieldConfig;
     }
-    this.instance.column = this.column;
-    this.instance.gridSetting = this.gridSetting;
-    this.instance.gridConfig = this.gridConfig;
+    this.instance.column = column;
+    this.instance.gridSetting = this.gridSetting();
+    this.instance.gridConfig = this.gridConfig();
   }
 
   private getFilterType(column: IccColumnConfig): string {
@@ -110,11 +97,11 @@ export class IccColumnFilterComponent implements OnInit {
     return IccTextFilterComponent;
   }
 
-  private getFilterFieldConfig(filterType: string): IccFormField {
+  private getFilterFieldConfig(filterType: string, column: IccColumnConfig): IccFormField {
     if (filterType === 'select') {
       return {
         ...defaultSelectFieldConfig,
-        ...this.column.filterFieldConfig,
+        ...column.filterFieldConfig, // TODO
       };
     }
     return {
