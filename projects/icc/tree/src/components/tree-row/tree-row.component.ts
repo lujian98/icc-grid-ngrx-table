@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   IccColumnConfig,
   IccColumnWidth,
-  IccGridCellViewComponent,
   IccGridCellComponent,
-  ROW_SELECTION_CELL_WIDTH,
+  IccGridCellViewComponent,
   IccGridSetting,
+  ROW_SELECTION_CELL_WIDTH,
 } from '@icc/ui/grid';
 import { IccTreeConfig, IccTreeNode } from '../../models/tree-grid.model';
 import { IccTreeNodeComponent } from './tree-node/tree-node.component';
@@ -16,27 +15,26 @@ import { IccTreeNodeComponent } from './tree-node/tree-node.component';
   templateUrl: './tree-row.component.html',
   styleUrls: ['./tree-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccTreeNodeComponent, IccGridCellComponent, IccGridCellViewComponent],
+  imports: [IccTreeNodeComponent, IccGridCellComponent, IccGridCellViewComponent],
 })
 export class IccTreeRowComponent<T> {
-  @Input() columns: IccColumnConfig[] = [];
-  @Input() gridSetting!: IccGridSetting;
-  @Input() treeConfig!: IccTreeConfig;
-  @Input() record!: IccTreeNode<T>;
-  @Input() selected = false;
-  @Input() columnWidths: IccColumnWidth[] = [];
-  rowIndex = 0; //TODO
+  columns = input.required<IccColumnConfig[]>();
+  gridSetting = input.required<IccGridSetting>();
+  treeConfig = input.required<IccTreeConfig>();
+  record = input.required<IccTreeNode<T>>();
+  columnWidths = input.required<IccColumnWidth[]>();
+  rowIndex = input.required<number>();
 
   get treeColumn(): IccColumnConfig | undefined {
-    return this.columns.find((col) => col.name === 'name');
+    return this.columns().find((col) => col.name === 'name');
   }
 
   get nodePadding(): number {
-    return (this.record.level! + 1) * 10;
+    return (this.record().level! + 1) * 10;
   }
 
   getColumnWidth(column: IccColumnConfig): string {
-    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+    const width = this.columnWidths().find((col) => col.name === column.name)?.width;
     return width ? `${width}px` : '';
   }
 

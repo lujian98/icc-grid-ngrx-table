@@ -1,37 +1,26 @@
-<!-- not support tree row selection
-<icc-grid-cell
-  *ngIf="treeConfig.rowSelection"
-  class="icc-tree-cell-row-select"
-  [ngStyle]="{ height: treeConfig.rowHeight + 'px', flex: '0 0 ' + selectColumnWidth, 'max-width': selectColumnWidth }"
->
-  <icc-row-select [selected]="selected"> </icc-row-select>
-</icc-grid-cell>
--->
+<!-- not support tree row selection -->
 
-<icc-grid-cell
-  *ngIf="treeColumn && !treeColumn.hidden"
-  [ngStyle]="{
-    height: treeConfig.rowHeight + 'px',
-    'padding-left': nodePadding + 'px',
-    flex: '0 0 ' + getColumnWidth(treeColumn),
-    'max-width': getColumnWidth(treeColumn),
-  }"
->
-  <icc-tree-node [gridSetting]="gridSetting" [treeConfig]="treeConfig" [node]="record" [column]="treeColumn">
-  </icc-tree-node>
-</icc-grid-cell>
+@if (treeColumn && !treeColumn.hidden) {
+  <icc-grid-cell
+    [style.height]="treeConfig().rowHeight + 'px'"
+    [style.padding-left]="nodePadding + 'px'"
+    [style.flex]="'0 0 ' + getColumnWidth(treeColumn)"
+    [style.max-width]="getColumnWidth(treeColumn)"
+  >
+    <icc-tree-node [gridSetting]="gridSetting()" [treeConfig]="treeConfig()" [node]="record()" [column]="treeColumn">
+    </icc-tree-node>
+  </icc-grid-cell>
+}
 
-<ng-container *ngFor="let column of columns; trackBy: trackByIndex; let index = index">
+@for (column of columns(); track $index; let index = $index) {
   @if (!column.hidden && column.name !== "name") {
     <icc-grid-cell
-      [ngStyle]="{
-        height: treeConfig.rowHeight + 'px',
-        flex: '0 0 ' + getColumnWidth(column),
-        'max-width': getColumnWidth(column),
-      }"
+      [style.height]="treeConfig().rowHeight + 'px'"
+      [style.flex]="'0 0 ' + getColumnWidth(column)"
+      [style.max-width]="getColumnWidth(column)"
     >
-      <icc-grid-cell-view [gridConfig]="treeConfig" [rowIndex]="rowIndex" [record]="record" [column]="column">
+      <icc-grid-cell-view [gridConfig]="treeConfig()" [rowIndex]="rowIndex()" [record]="record()" [column]="column">
       </icc-grid-cell-view>
     </icc-grid-cell>
   }
-</ng-container>
+}
