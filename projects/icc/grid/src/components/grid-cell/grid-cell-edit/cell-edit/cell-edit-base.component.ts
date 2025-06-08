@@ -13,8 +13,8 @@ import { IccColumnConfig, IccGridConfig, IccCellEdit, IccGridSetting } from '../
   imports: [CommonModule],
 })
 export class IccCellEditBaseComponent<T> {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private gridFacade = inject(IccGridFacade);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly gridFacade = inject(IccGridFacade);
   private _gridConfig!: IccGridConfig;
   private _gridSetting!: IccGridSetting;
   private _column!: IccColumnConfig;
@@ -23,9 +23,8 @@ export class IccCellEditBaseComponent<T> {
 
   fieldConfig!: Partial<IccFormField>;
 
-  @Input() rowIndex!: number;
+  rowIndex!: number;
 
-  @Input()
   set gridSetting(value: IccGridSetting) {
     this._gridSetting = { ...value };
     if (this.gridSetting.restEdit) {
@@ -37,7 +36,6 @@ export class IccCellEditBaseComponent<T> {
     return this._gridSetting;
   }
 
-  @Input()
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
     this.checkField();
@@ -47,7 +45,6 @@ export class IccCellEditBaseComponent<T> {
     return this._gridConfig;
   }
 
-  @Input()
   set column(val: IccColumnConfig) {
     this._column = val;
     if (!this.form) {
@@ -64,7 +61,6 @@ export class IccCellEditBaseComponent<T> {
     return this.form!.get(this.column.name) as FormControl;
   }
 
-  @Input()
   set record(data: T) {
     this._record = data;
     this.resetField();

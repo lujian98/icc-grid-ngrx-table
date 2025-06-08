@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
 import { BehaviorSubject, Subject, debounceTime, of, skip, switchMap, takeUntil } from 'rxjs';
@@ -28,8 +20,7 @@ export class IccFieldFilterComponent implements AfterViewInit, OnDestroy {
   column!: IccColumnConfig;
   fieldConfig!: Partial<IccFormField>;
 
-  @Input() gridSetting!: IccGridSetting;
-  @Input()
+  gridSetting!: IccGridSetting;
   set gridConfig(value: IccGridConfig) {
     this._gridConfig = { ...value };
     this.checkField();

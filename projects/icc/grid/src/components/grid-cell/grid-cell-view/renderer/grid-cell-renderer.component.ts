@@ -13,14 +13,13 @@ import { IccColumnConfig, IccGridConfig } from '../../../../models/grid-column.m
   imports: [CommonModule],
 })
 export class IccGridCellRendererComponent<T> {
-  protected changeDetectorRef = inject(ChangeDetectorRef);
+  protected readonly changeDetectorRef = inject(ChangeDetectorRef);
   private _record!: T;
 
-  @Input() gridConfig!: IccGridConfig;
-  @Input() rowIndex!: number;
-  @Input() column!: IccColumnConfig;
+  gridConfig!: IccGridConfig;
+  rowIndex!: number;
+  column!: IccColumnConfig;
 
-  @Input()
   set record(data: T) {
     this._record = data;
     this.changeDetectorRef.markForCheck();
