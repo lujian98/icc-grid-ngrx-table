@@ -1,35 +1,35 @@
 <div
-  [className]="dropZoneClassName"
+  [className]="dropZoneClassName()"
   [class.icc-file-drop__drop-zone--over]="isDraggingOverDropZone"
   (drop)="dropFiles($event)"
   (dragover)="onDragOver($event)"
   (dragenter)="onDragEnter($event)"
   (dragleave)="onDragLeave($event)"
 >
-  <div [className]="contentClassName">
+  <div [className]="contentClassName()">
     <input
       type="file"
       #fileSelector
-      [accept]="accept"
-      [attr.directory]="directory || undefined"
-      [attr.webkitdirectory]="directory || undefined"
-      [attr.mozdirectory]="directory || undefined"
-      [attr.msdirectory]="directory || undefined"
-      [attr.odirectory]="directory || undefined"
-      [multiple]="multiple"
+      [accept]="accept()"
+      [attr.directory]="directory() || undefined"
+      [attr.webkitdirectory]="directory() || undefined"
+      [attr.mozdirectory]="directory() || undefined"
+      [attr.msdirectory]="directory() || undefined"
+      [attr.odirectory]="directory() || undefined"
+      [multiple]="multiple()"
       (change)="uploadFiles($event)"
       class="icc-file-drop__file-input"
     />
 
     <ng-template #defaultContentTemplate>
-      @if (dropZoneLabel) {
-        <div class="icc-file-drop__drop-zone-label">{{ dropZoneLabel }}</div>
+      @if (dropZoneLabel()) {
+        <div class="icc-file-drop__drop-zone-label">{{ dropZoneLabel() }}</div>
       }
-      @if (showBrowseBtn) {
+      @if (showBrowseBtn()) {
         <input
           type="button"
-          [className]="browseBtnClassName"
-          value="{{ browseBtnLabel }}"
+          [className]="browseBtnClassName()"
+          value="{{ browseBtnLabel() }}"
           (click)="openFileSelector($event)"
         />
       }

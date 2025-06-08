@@ -5,7 +5,6 @@ import {
   ContentChild,
   ElementRef,
   EventEmitter,
-  Input,
   input,
   NgZone,
   OnDestroy,
@@ -14,10 +13,10 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IccFileDropEntry } from './file-drop-entry';
+import { Subscription, timer } from 'rxjs';
 import { FileSystemDirectoryEntry, FileSystemEntry, FileSystemFileEntry } from './dom.types';
+import { IccFileDropEntry } from './file-drop-entry';
 import { IccFileDropContentTemplateDirective } from './templates.directive';
 
 @Component({
@@ -28,7 +27,6 @@ import { IccFileDropContentTemplateDirective } from './templates.directive';
   imports: [CommonModule, TranslatePipe],
 })
 export class IccFileDropComponent<T> implements OnDestroy {
-  /*
   accept = input<string>('*');
   directory = input<boolean>(false);
   multiple = input<boolean>(true);
@@ -40,26 +38,6 @@ export class IccFileDropComponent<T> implements OnDestroy {
   browseBtnClassName = input<string>('btn btn-primary btn-xs icc-file-drop__browse-btn');
   browseBtnLabel = input<string>('Browse files');
   disabled = input<boolean>(false);
-  */
-  @Input() public accept: string = '*';
-  @Input() public directory: boolean = false;
-  @Input() public multiple: boolean = true;
-  @Input() public dropZoneLabel: string = '';
-  @Input() public dropZoneClassName: string = 'icc-file-drop__drop-zone';
-  @Input() public useDragEnter: boolean = false;
-  @Input() public contentClassName: string = 'icc-file-drop__content';
-  @Input() public showBrowseBtn: boolean = false;
-  @Input() public browseBtnClassName: string = 'btn btn-primary btn-xs icc-file-drop__browse-btn';
-  @Input() public browseBtnLabel: string = 'Browse files';
-
-  private _disabled: boolean = false;
-  @Input()
-  public set disabled(value: boolean) {
-    this._disabled = value != null && `${value}` !== 'false';
-  }
-  public get disabled(): boolean {
-    return this._disabled;
-  }
 
   @Output() public onFileDrop: EventEmitter<IccFileDropEntry[]> = new EventEmitter();
   @Output() public onFileOver: EventEmitter<DragEvent | Event> = new EventEmitter();
@@ -103,12 +81,12 @@ export class IccFileDropComponent<T> implements OnDestroy {
   }
 
   public onDragOver(event: DragEvent): void {
-    if (this.useDragEnter) {
+    if (this.useDragEnter()) {
       this.preventAndStop(event);
       if (event.dataTransfer) {
         event.dataTransfer.dropEffect = 'copy';
       }
-    } else if (!this.isDropzoneDisabled() && !this.useDragEnter && event.dataTransfer) {
+    } else if (!this.isDropzoneDisabled() && !this.useDragEnter() && event.dataTransfer) {
       if (!this.isDraggingOverDropZone) {
         this.isDraggingOverDropZone = true;
         this.onFileOver.emit(event);
@@ -119,7 +97,7 @@ export class IccFileDropComponent<T> implements OnDestroy {
   }
 
   public onDragEnter(event: Event): void {
-    if (!this.isDropzoneDisabled() && this.useDragEnter) {
+    if (!this.isDropzoneDisabled() && this.useDragEnter()) {
       if (!this.isDraggingOverDropZone) {
         this.isDraggingOverDropZone = true;
         this.onFileOver.emit(event);
@@ -288,7 +266,7 @@ export class IccFileDropComponent<T> implements OnDestroy {
   }
 
   private isDropzoneDisabled(): boolean {
-    return this.globalDraggingInProgress || this.disabled;
+    return this.globalDraggingInProgress || this.disabled();
   }
 
   private addToQueue(item: IccFileDropEntry): void {
