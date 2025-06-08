@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -7,8 +6,8 @@ import {
   ColumnMenuClick,
   IccColumnConfig,
   IccGridConfig,
-  IccSortField,
   IccGridSetting,
+  IccSortField,
 } from '../../../models/grid-column.model';
 
 @Component({
@@ -19,25 +18,25 @@ import {
     '[class.draggable]': 'draggable',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, TranslatePipe, IccIconModule],
+  imports: [TranslatePipe, IccIconModule],
   providers: [IccGridFacade],
 })
 export class IccGridHeaderCellComponent {
-  private gridFacade = inject(IccGridFacade);
-  @Input() column!: IccColumnConfig;
-  @Input() gridSetting!: IccGridSetting;
-  @Input() gridConfig!: IccGridConfig;
+  private readonly gridFacade = inject(IccGridFacade);
+  column = input.required<IccColumnConfig>();
+  gridSetting = input.required<IccGridSetting>();
+  gridConfig = input.required<IccGridConfig>();
 
   get title(): string {
-    return this.column.title === undefined ? this.column.name : this.column.title;
+    return this.column().title === undefined ? this.column().name : this.column().title!;
   }
 
   get findSortField(): IccSortField | undefined {
-    return this.gridConfig.sortFields.find((field) => field.field === this.column.name);
+    return this.gridConfig().sortFields.find((field) => field.field === this.column().name);
   }
 
   get isSortField(): boolean {
-    return this.column.sortField !== false && !!this.findSortField;
+    return this.column().sortField !== false && !!this.findSortField;
   }
 
   get sortDir(): string {
@@ -45,13 +44,13 @@ export class IccGridHeaderCellComponent {
   }
 
   get draggable(): boolean {
-    return this.gridConfig.columnReorder && this.column.draggable !== false;
+    return this.gridConfig().columnReorder && this.column().draggable !== false;
   }
 
   @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
 
   headCellClick(event: MouseEvent): void {
-    if (this.gridConfig.columnSort && this.column.sortField !== false) {
+    if (this.gridConfig().columnSort && this.column().sortField !== false) {
       let find = this.findSortField;
       let sort: IccSortField;
       if (find) {
@@ -59,16 +58,16 @@ export class IccGridHeaderCellComponent {
         sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
       } else {
         sort = {
-          field: this.column.name,
+          field: this.column().name,
           dir: 'asc',
         };
       }
-      this.gridFacade.setGridSortFields(this.gridConfig, this.gridSetting, [sort]);
+      this.gridFacade.setGridSortFields(this.gridConfig(), this.gridSetting(), [sort]);
     }
   }
 
   onClickColumnMenu(event: MouseEvent): void {
     event.stopPropagation();
-    this.columnMenuClick.emit({ column: this.column, event: event });
+    this.columnMenuClick.emit({ column: this.column(), event: event });
   }
 }
