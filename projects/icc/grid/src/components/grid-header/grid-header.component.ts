@@ -1,24 +1,21 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { DragDropModule, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
+import { CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   inject,
-  Signal,
-  Input,
   input,
   Output,
+  Signal,
 } from '@angular/core';
 import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverService } from '@icc/ui/popover';
-import { Observable } from 'rxjs';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { IccColumnResizeTriggerDirective } from '../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../directives/column-resize.directive';
-import { ROW_SELECTION_CELL_WIDTH, GRID_FILTER_ROW_HEIGHT } from '../../models/constants';
+import { GRID_FILTER_ROW_HEIGHT, ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import {
   ColumnMenuClick,
   IccColumnConfig,
@@ -38,7 +35,6 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   styleUrls: ['./grid-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     DragDropModule,
     CdkDragHandle,
     IccGridHeaderCellComponent,

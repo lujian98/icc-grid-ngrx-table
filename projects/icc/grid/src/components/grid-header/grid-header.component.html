@@ -1,9 +1,9 @@
 @if (gridConfig().rowSelection) {
-  <icc-grid-header-item [ngStyle]="{ flex: '0 0 ' + selectColumnWidth }">
+  <icc-grid-header-item [style.flex]="'0 0 ' + selectColumnWidth">
     @if (gridConfig().multiRowSelection) {
       <icc-row-select
         class="icc-header-row-select"
-        [ngStyle]="{ height: gridConfig().headerHeight + 'px' }"
+        [style.height]="gridConfig().headerHeight + 'px'"
         [selected]="rowSelections$().allSelected"
         [indeterminate]="rowSelections$().indeterminate"
         (click)="onToggleSelectAll(rowSelections$().allSelected)"
@@ -11,11 +11,11 @@
       </icc-row-select>
     }
     @if (!gridConfig().multiRowSelection) {
-      <div [ngStyle]="{ height: gridConfig().headerHeight + 'px' }"></div>
+      <div [style.height]="gridConfig().headerHeight + 'px'"></div>
     }
 
     @if (gridConfig().columnFilter) {
-      <div class="icc-header-no-filter-border" [ngStyle]="{ height: filterRowHeight }"></div>
+      <div class="icc-header-no-filter-border" [style.height]="filterRowHeight"></div>
     }
   </icc-grid-header-item>
 }
@@ -23,7 +23,8 @@
 @for (column of columns(); track $index; let index = $index) {
   @if (!column.hidden) {
     <icc-grid-header-item
-      [ngStyle]="{ flex: '0 0 ' + getColumnWidth(column), 'max-width': getColumnWidth(column) }"
+      [style.flex]="'0 0 ' + getColumnWidth(column)"
+      [style.max-width]="getColumnWidth(column)"
       [column]="column"
       [columns]="columns()"
       [gridConfig]="gridConfig()"
@@ -35,7 +36,7 @@
       iccColumnResize
     >
       <icc-grid-header-cell
-        [ngStyle]="{ height: gridConfig().headerHeight + 'px' }"
+        [style.height]="gridConfig().headerHeight + 'px'"
         [column]="column"
         [gridSetting]="gridSetting()"
         [gridConfig]="gridConfig()"
@@ -50,10 +51,11 @@
       }
 
       @if (gridConfig().columnFilter && column.filterField === false) {
-        <div class="icc-header-no-filter-border" [ngStyle]="{ height: filterRowHeight }"></div>
+        <div class="icc-header-no-filter-border" [style.height]="filterRowHeight"></div>
       }
 
       <div class="drag-placeholder" *cdkDragPlaceholder></div>
+
       @if (gridConfig().columnResize) {
         <div class="icc-grid-column-resize-action" iccColumnResizeTrigger></div>
       }
