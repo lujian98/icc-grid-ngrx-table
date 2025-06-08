@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
-  effect,
   inject,
   input,
   OnInit,
@@ -29,31 +28,35 @@ export class IccGridCellViewComponent<T> implements OnInit {
   private _componentRef!: ComponentRef<unknown>;
   gridConfig = input.required<IccGridConfig>();
   rowIndex = input<number>(0);
-  column = input.required<IccColumnConfig>();
-  record = input.required<T>();
+  column = input.required({
+    transform: (column: IccColumnConfig) => {
+      if (column && this._componentRef) {
+        this.loadComponent(column);
+      }
+      return column;
+    },
+  });
+  record = input.required({
+    transform: (record: T) => {
+      if (record && this._componentRef) {
+        this.instance.record = record;
+      }
+      return record;
+    },
+  });
 
-  constructor() {
-    effect(() => {
-      if (this.column() && this._componentRef) {
-        this.loadComponent();
-      }
-      if (this.record() && this._componentRef) {
-        this.instance.record = this.record();
-      }
-    });
-  }
   ngOnInit(): void {
-    this.loadComponent();
+    this.loadComponent(this.column());
   }
 
-  private loadComponent(): void {
+  private loadComponent(column: IccColumnConfig): void {
     this.viewContainerRef.clear();
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccGridCell<T>;
     this.instance.gridConfig = this.gridConfig();
     this.instance.rowIndex = this.rowIndex();
-    this.instance.column = this.column();
+    this.instance.column = column;
     this.instance.record = this.record();
   }
 
