@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, input, Output } from '@angular/core';
 import { IccColumnResizeTriggerDirective } from '../../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../../directives/column-resize.directive';
 import { ROW_SELECTION_CELL_WIDTH } from '../../../models/constants';
@@ -17,37 +16,34 @@ import { IccGridHeaderItemComponent } from '../grid-header-item/grid-header-item
   templateUrl: './grid-group-header.component.html',
   styleUrls: ['./grid-group-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccGridHeaderItemComponent, IccColumnResizeTriggerDirective, IccColumnResizeDirective],
+  imports: [IccGridHeaderItemComponent, IccColumnResizeTriggerDirective, IccColumnResizeDirective],
 })
 export class IccGridGroupHeaderComponent {
-  private _columns: IccColumnConfig[] = [];
+  rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
   groupHeaderColumns: IccGroupHeader[] = [];
-
-  @Input() gridConfig!: IccGridConfig;
-  @Input() gridSetting!: IccGridSetting;
-  @Input() columnWidths: IccColumnWidth[] = [];
-
-  @Input()
-  set columns(val: IccColumnConfig[]) {
-    this._columns = [...val];
-    this.setGroupHeaderColumns();
-  }
-  get columns(): IccColumnConfig[] {
-    return this._columns;
-  }
+  columns = input.required<IccColumnConfig[]>();
+  gridSetting = input.required<IccGridSetting>();
+  gridConfig = input.required<IccGridConfig>();
+  columnWidths = input<IccColumnWidth[]>([]);
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
 
-  rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
+  constructor() {
+    effect(() => {
+      if (this.columns()) {
+        this.setGroupHeaderColumns();
+      }
+    });
+  }
 
   getColumn(header: IccGroupHeader): IccColumnConfig {
-    return this.columns.find((col) => col.name === header.field)!;
+    return this.columns().find((col) => col.name === header.field)!;
   }
 
   private setGroupHeaderColumns(): void {
     this.groupHeaderColumns = [];
-    this.columns.forEach((column) => {
+    this.columns().forEach((column) => {
       if (!column.hidden) {
         this.setGroupHeader(column);
       }
@@ -78,20 +74,16 @@ export class IccGridGroupHeaderComponent {
   getHeaderWidth(header: IccGroupHeader): string {
     let width = 0;
     if (!header.isGroupHeader) {
-      width = this.columnWidths.find((col) => col.name === header.field)!.width;
+      width = this.columnWidths().find((col) => col.name === header.field)!.width;
     } else {
-      const columns = this.columns.filter((col) => col.groupHeader?.name === header.name);
+      const columns = this.columns().filter((col) => col.groupHeader?.name === header.name);
       columns.forEach((column) => {
-        const find = this.columnWidths.find((col) => col.name === column.name);
+        const find = this.columnWidths().find((col) => col.name === column.name);
         if (find) {
           width += find.width;
         }
       });
     }
     return width ? `${width}px` : '';
-  }
-
-  trackByIndex(index: number): number {
-    return index;
   }
 }
