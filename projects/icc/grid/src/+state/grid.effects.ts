@@ -1,24 +1,24 @@
 import { Injectable, inject } from '@angular/core';
+import { IccDialogService } from '@icc/ui/overlay';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { IccDialogService } from '@icc/ui/overlay';
-import { concatMap, debounceTime, delay, map, mergeMap, of, switchMap, exhaustMap } from 'rxjs';
+import { concatMap, debounceTime, delay, exhaustMap, map, mergeMap, of, switchMap } from 'rxjs';
+import { IccGridFormViewComponent } from '../components/form-view/form-view.component';
 import { IccColumnConfig, IccGridConfig } from '../models/grid-column.model';
 import { IccGridinMemoryService } from '../services/grid-in-memory.service';
 import { IccGridService } from '../services/grid.service';
 import * as gridActions from './grid.actions';
 import { IccGridFacade } from './grid.facade';
-import { IccGridFormViewComponent } from '../components/form-view/form-view.component';
 
 @Injectable()
 export class IccGridEffects {
-  private store = inject(Store);
-  private dialogService = inject(IccDialogService);
-  private actions$ = inject(Actions);
-  private gridFacade = inject(IccGridFacade);
-  private gridService = inject(IccGridService);
-  private gridinMemoryService = inject(IccGridinMemoryService);
+  private readonly store = inject(Store);
+  private readonly dialogService = inject(IccDialogService);
+  private readonly actions$ = inject(Actions);
+  private readonly gridFacade = inject(IccGridFacade);
+  private readonly gridService = inject(IccGridService);
+  private readonly gridinMemoryService = inject(IccGridinMemoryService);
 
   setupGridConfig$ = createEffect(() =>
     this.actions$.pipe(

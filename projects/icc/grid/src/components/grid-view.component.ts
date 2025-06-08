@@ -76,8 +76,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     this.columnWidths = values;
   }
 
-  @ViewChild(CdkVirtualScrollViewport, { static: true })
-  private viewport!: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport, { static: true }) private viewport!: CdkVirtualScrollViewport;
 
   ngAfterViewInit(): void {
     interval(10)

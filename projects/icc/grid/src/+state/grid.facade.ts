@@ -29,7 +29,7 @@ import {
 
 @Injectable()
 export class IccGridFacade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   initGridConfig(gridId: string, gridConfig: IccGridConfig, gridType: string): void {
     this.store.dispatch(gridActions.initGridConfig({ gridId, gridConfig, gridType }));
