@@ -1,21 +1,20 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  effect,
   ElementRef,
   HostListener,
   OnDestroy,
   Signal,
   ViewChild,
+  effect,
   inject,
   input,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
-import { BehaviorSubject, Observable, Subject, interval, map, of } from 'rxjs';
+import { BehaviorSubject, Subject, interval, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, skip, switchMap, take, takeUntil } from 'rxjs/operators';
 import { IccGridFacade } from '../+state/grid.facade';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridSetting } from '../models/grid-column.model';
@@ -31,7 +30,7 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
+  imports: [ScrollingModule, IccGridRowComponent, IccGridRowGroupComponent, IccGridHeaderViewComponent],
 })
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
@@ -40,9 +39,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private prevRowIndex: number = -1;
   private destroy$ = new Subject<void>();
   gridData$!: Signal<object[]>;
+  rowSelection$!: Signal<SelectionModel<object>>;
+  rowGroups$!: Signal<IccRowGroups | boolean>;
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
-  rowSelection$: Observable<SelectionModel<object>> | undefined;
-  rowGroups$: Observable<IccRowGroups | boolean> | undefined;
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
@@ -52,10 +51,10 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
         this.gridData$ = this.gridFacade.getGridSignalData(gridSetting.gridId);
       }
       if (!this.rowSelection$) {
-        this.rowSelection$ = this.gridFacade.selectRowSelection(gridSetting.gridId);
+        this.rowSelection$ = this.gridFacade.getRowSelection(gridSetting.gridId);
       }
       if (!this.rowGroups$) {
-        this.rowGroups$ = this.gridFacade.selectRowGroups(gridSetting.gridId);
+        this.rowGroups$ = this.gridFacade.getRowGroups(gridSetting.gridId);
       }
       return gridSetting;
     },
@@ -166,21 +165,21 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     return record instanceof IccRowGroup;
   }
 
-  rowClick(event: MouseEvent, rowIndex: number, record: object, selection: SelectionModel<object>): void {
+  rowClick(event: MouseEvent, rowIndex: number, record: object): void {
     if (this.gridConfig().rowSelection) {
       if (this.prevRowIndex < 0) {
         this.prevRowIndex = rowIndex;
       }
-      const selected = selection.isSelected(record as object);
+      const selected = this.rowSelection$().isSelected(record as object);
       if (this.gridConfig().multiRowSelection) {
         if (event.ctrlKey || event.metaKey) {
-          this.selectRecord([record], !selected, selection);
+          this.selectRecord([record], !selected);
         } else if (event.shiftKey) {
           if (rowIndex === this.prevRowIndex) {
-            this.selectRecord([record], !selected, selection);
+            this.selectRecord([record], !selected);
           } else {
             const records = this.getSelectionRange(this.prevRowIndex, rowIndex);
-            this.selectRecord(records, true, selection);
+            this.selectRecord(records, true);
           }
         } else {
           if (selected) {
@@ -190,7 +189,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           }
         }
       } else {
-        this.selectRecord([record], !selected, selection);
+        this.selectRecord([record], !selected);
       }
       this.prevRowIndex = rowIndex;
     }
@@ -204,16 +203,16 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     }
   }
 
-  private selectRecord(record: object[], isSelected: boolean, selection: SelectionModel<object>): void {
-    const selected = this.getSelectedTotal(record, isSelected, selection);
+  private selectRecord(record: object[], isSelected: boolean): void {
+    const selected = this.getSelectedTotal(record, isSelected);
     this.gridFacade.setSelectRows(this.gridSetting().gridId, record as object[], isSelected, selected);
   }
 
-  private getSelectedTotal(record: object[], isSelected: boolean, selection: SelectionModel<object>): number {
+  private getSelectedTotal(record: object[], isSelected: boolean): number {
     if (this.gridConfig().multiRowSelection) {
-      const prevSelectedLength = selection.selected.length;
+      const prevSelectedLength = this.rowSelection$().selected.length;
       if (isSelected) {
-        const preSelected = record.filter((item) => selection.isSelected(item));
+        const preSelected = record.filter((item) => this.rowSelection$().isSelected(item));
         return prevSelectedLength - preSelected.length + record.length;
       } else {
         return prevSelectedLength - record.length;

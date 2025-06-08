@@ -241,6 +241,10 @@ export class IccGridFacade {
     return this.store.select(selectGridModifiedRecords(gridId)) as Observable<{ [key: string]: unknown }[]>;
   }
 
+  getRowSelection(gridId: string): Signal<SelectionModel<object>> {
+    return this.store.selectSignal(selectRowSelection(gridId));
+  }
+
   selectRowSelection<T>(gridId: string): Observable<SelectionModel<object>> {
     return this.store.select(selectRowSelection(gridId));
   }
@@ -249,6 +253,10 @@ export class IccGridFacade {
     gridId: string,
   ): Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }> {
     return this.store.select(selectRowSelections(gridId));
+  }
+
+  getRowGroups(gridId: string): Signal<IccRowGroups | boolean> {
+    return this.store.selectSignal(selectRowGroups(gridId));
   }
 
   selectRowGroups(gridId: string): Observable<IccRowGroups | boolean> {
