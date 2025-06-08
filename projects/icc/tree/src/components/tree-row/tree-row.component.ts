@@ -25,6 +25,7 @@ export class IccTreeRowComponent<T> {
   @Input() record!: IccTreeNode<T>;
   @Input() selected = false;
   @Input() columnWidths: IccColumnWidth[] = [];
+  rowIndex = 0; //TODO
 
   get treeColumn(): IccColumnConfig | undefined {
     return this.columns.find((col) => col.name === 'name');

@@ -30,7 +30,8 @@
         'max-width': getColumnWidth(column),
       }"
     >
-      <icc-grid-cell-view [record]="record" [column]="column"> </icc-grid-cell-view>
+      <icc-grid-cell-view [gridConfig]="treeConfig" [rowIndex]="rowIndex" [record]="record" [column]="column">
+      </icc-grid-cell-view>
     </icc-grid-cell>
   }
 </ng-container>

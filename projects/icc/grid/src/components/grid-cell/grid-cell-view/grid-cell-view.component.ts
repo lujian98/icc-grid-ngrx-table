@@ -1,16 +1,16 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
+  effect,
   inject,
-  Input,
+  input,
   OnInit,
   Type,
   ViewContainerRef,
 } from '@angular/core';
 import { IccObjectType } from '@icc/ui/core';
-import { IccColumnConfig, IccGridConfig, IccGridCell } from '../../../models/grid-column.model';
+import { IccColumnConfig, IccGridCell, IccGridConfig } from '../../../models/grid-column.model';
 import { IccGridCellDateComponent } from './renderer/date/grid-cell-date.component';
 import { IccGridCellFunctionComponent } from './renderer/function/grid-cell-function.component';
 import { IccGridCellImageComponent } from './renderer/image/grid-cell-image.component';
@@ -22,41 +22,26 @@ import { IccGridCellTextComponent } from './renderer/text/grid-cell-text.compone
   selector: 'icc-grid-cell-view',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccGridCellViewComponent<T> implements OnInit {
-  private viewContainerRef = inject(ViewContainerRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
   private instance!: IccGridCell<T>;
   private _componentRef!: ComponentRef<unknown>;
-  private _column!: IccColumnConfig;
+  gridConfig = input.required<IccGridConfig>();
+  rowIndex = input<number>(0);
+  column = input.required<IccColumnConfig>();
+  record = input.required<T>();
 
-  @Input() gridConfig!: IccGridConfig;
-  @Input() rowIndex!: number;
-
-  @Input()
-  set column(val: IccColumnConfig) {
-    this._column = { ...val };
-    if (this._componentRef) {
-      this.loadComponent();
-    }
+  constructor() {
+    effect(() => {
+      if (this.column() && this._componentRef) {
+        this.loadComponent();
+      }
+      if (this.record() && this._componentRef) {
+        this.instance.record = this.record();
+      }
+    });
   }
-  get column(): IccColumnConfig {
-    return this._column;
-  }
-
-  private _record!: T;
-
-  @Input()
-  set record(data: T) {
-    this._record = data;
-    if (this._componentRef) {
-      this.instance.record = this.record;
-    }
-  }
-  get record(): T {
-    return this._record;
-  }
-
   ngOnInit(): void {
     this.loadComponent();
   }
@@ -66,14 +51,14 @@ export class IccGridCellViewComponent<T> implements OnInit {
     const cellComponent = this.getRenderer();
     this._componentRef = this.viewContainerRef.createComponent(cellComponent);
     this.instance = this._componentRef.instance as IccGridCell<T>;
-    this.instance.gridConfig = this.gridConfig;
-    this.instance.rowIndex = this.rowIndex;
-    this.instance.column = this.column;
-    this.instance.record = this.record;
+    this.instance.gridConfig = this.gridConfig();
+    this.instance.rowIndex = this.rowIndex();
+    this.instance.column = this.column();
+    this.instance.record = this.record();
   }
 
   private getRenderer(): Type<unknown> {
-    switch (this.column.rendererType) {
+    switch (this.column().rendererType) {
       case IccObjectType.Text:
         return IccGridCellTextComponent;
       case IccObjectType.Select:
@@ -85,13 +70,13 @@ export class IccGridCellViewComponent<T> implements OnInit {
       case IccObjectType.Image:
         return IccGridCellImageComponent;
       case IccObjectType.Function:
-        if (this.column.renderer) {
+        if (this.column().renderer) {
           return IccGridCellFunctionComponent;
         }
         break;
       case IccObjectType.Component:
-        if (this.column.component) {
-          return this.column.component;
+        if (this.column().component) {
+          return this.column().component!;
         }
         break;
       default:
