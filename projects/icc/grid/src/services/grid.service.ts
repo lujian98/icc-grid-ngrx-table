@@ -16,8 +16,8 @@ import { IccRansackFilterFactory } from './ransack/filter/filter-factory';
   providedIn: 'root',
 })
 export class IccGridService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   getGridConfig(gridConfig: IccGridConfig): Observable<IccGridConfig> {
     const params = this.backendService.getParams(gridConfig.urlKey, 'gridConfig');

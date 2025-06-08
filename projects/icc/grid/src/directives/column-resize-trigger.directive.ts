@@ -5,7 +5,7 @@ import { IccColumnResizeDirective } from './column-resize.directive';
   selector: '[iccColumnResizeTrigger]',
 })
 export class IccColumnResizeTriggerDirective {
-  private columnResizeDirective = inject(IccColumnResizeDirective);
+  private readonly columnResizeDirective = inject(IccColumnResizeDirective);
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent): void {

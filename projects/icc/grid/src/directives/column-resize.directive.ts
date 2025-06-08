@@ -1,21 +1,21 @@
-import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, inject, input, Output, Renderer2 } from '@angular/core';
+import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
 import { IccColumnConfig, IccColumnWidth, IccGridConfig, IccGridSetting } from '../models/grid-column.model';
-import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 import { viewportWidthRatio } from '../utils/viewport-width-ratio';
 
 @Directive({
   selector: '[iccColumnResize]',
 })
 export class IccColumnResizeDirective {
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  @Input() column!: IccColumnConfig;
-  @Input() columns!: IccColumnConfig[];
-  @Input() gridConfig!: IccGridConfig;
-  @Input() gridSetting!: IccGridSetting;
-  @Input() groupHeader: boolean = false;
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  column = input.required<IccColumnConfig>();
+  columns = input.required<IccColumnConfig[]>();
+  gridConfig = input.required<IccGridConfig>();
+  gridSetting = input.required<IccGridSetting>();
+  groupHeader = input<boolean>(false);
 
   @Output() readonly columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() readonly columnResized = new EventEmitter<IccColumnWidth[]>();
@@ -27,7 +27,7 @@ export class IccColumnResizeDirective {
   private currentWidth!: number;
 
   get displayedColumns(): IccColumnConfig[] {
-    return this.columns.filter((column) => column.hidden !== true);
+    return this.columns().filter((column) => column.hidden !== true);
   }
 
   get element(): HTMLBaseElement {
@@ -36,20 +36,20 @@ export class IccColumnResizeDirective {
 
   get elementWidth(): number {
     const width = this.element.getBoundingClientRect().width;
-    if (this.groupHeader && this.column.groupHeader) {
-      const totalWidth = this.columns
-        .filter((col) => col.groupHeader === this.column.groupHeader)
+    if (this.groupHeader() && this.column().groupHeader) {
+      const totalWidth = this.columns()
+        .filter((col) => col.groupHeader === this.column().groupHeader)
         .reduce((sum, col) => sum + col.width!, 0);
-      return (this.column.width! * width) / totalWidth;
+      return (this.column().width! * width) / totalWidth;
     }
     return width;
   }
 
   onMouseDown(event: MouseEvent): void {
-    this.currentIndex = this.displayedColumns.findIndex((item) => item.name === this.column.name);
+    this.currentIndex = this.displayedColumns.findIndex((item) => item.name === this.column().name);
     this.columnWidths = [...this.displayedColumns].map((column) => ({
       name: column.name,
-      width: viewportWidthRatio(this.gridConfig, this.gridSetting, this.displayedColumns) * column.width!,
+      width: viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.displayedColumns) * column.width!,
     }));
     event.stopPropagation();
     this.columnInResizeMode = true;
@@ -114,7 +114,7 @@ export class IccColumnResizeDirective {
           width = MIN_GRID_COLUMN_WIDTH;
           dx = 0;
         }
-      } else if (idx == nextIndex && !this.gridConfig.horizontalScroll) {
+      } else if (idx == nextIndex && !this.gridConfig().horizontalScroll) {
         width = column.width! - dx;
         if (width < MIN_GRID_COLUMN_WIDTH) {
           width = MIN_GRID_COLUMN_WIDTH;
