@@ -1,7 +1,17 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DragDropModule, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Signal,
+  Input,
+  input,
+  Output,
+} from '@angular/core';
 import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverService } from '@icc/ui/popover';
 import { Observable } from 'rxjs';
@@ -41,27 +51,21 @@ import { IccGridHeaderItemComponent } from './grid-header-item/grid-header-item.
   providers: [IccPopoverService],
 })
 export class IccGridHeaderComponent<T> {
-  private gridFacade = inject(IccGridFacade);
-  private popoverService = inject(IccPopoverService);
-  private elementRef = inject(ElementRef);
-  private _gridSetting!: IccGridSetting;
-  rowSelections$:
-    | Observable<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }>
-    | undefined;
-
-  @Input() set gridSetting(val: IccGridSetting) {
-    this._gridSetting = { ...val };
-    if (!this.rowSelections$) {
-      this.rowSelections$ = this.gridFacade.selectRowSelections(this.gridSetting.gridId);
-    }
-  }
-  get gridSetting(): IccGridSetting {
-    return this._gridSetting;
-  }
-  @Input() gridConfig!: IccGridConfig;
-  @Input() columns: IccColumnConfig[] = [];
-
-  @Input() columnWidths: IccColumnWidth[] = [];
+  private readonly gridFacade = inject(IccGridFacade);
+  private readonly popoverService = inject(IccPopoverService);
+  private readonly elementRef = inject(ElementRef);
+  rowSelections$!: Signal<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }>;
+  gridSetting = input.required({
+    transform: (gridSetting: IccGridSetting) => {
+      if (!this.rowSelections$) {
+        this.rowSelections$ = this.gridFacade.getRowSelections(gridSetting.gridId);
+      }
+      return gridSetting;
+    },
+  });
+  gridConfig = input.required<IccGridConfig>();
+  columns = input.required<IccColumnConfig[]>();
+  columnWidths = input.required<IccColumnWidth[]>();
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
@@ -75,7 +79,7 @@ export class IccGridHeaderComponent<T> {
   }
 
   getColumnWidth(column: IccColumnConfig): string {
-    const width = this.columnWidths.find((col) => col.name === column.name)?.width;
+    const width = this.columnWidths().find((col) => col.name === column.name)?.width;
     return width ? `${width}px` : '';
   }
 
@@ -84,20 +88,20 @@ export class IccGridHeaderComponent<T> {
   }
 
   dragDisabled(column: IccColumnConfig): boolean {
-    return !(this.gridConfig.columnReorder && column.draggable !== false);
+    return !(this.gridConfig().columnReorder && column.draggable !== false);
   }
 
   onToggleSelectAll(allSelected: boolean): void {
-    this.gridFacade.setSelectAllRows(this.gridSetting.gridId, !allSelected);
+    this.gridFacade.setSelectAllRows(this.gridSetting().gridId, !allSelected);
   }
 
   onColumnMenuClick(menuClick: ColumnMenuClick): void {
     let values: { [key: string]: boolean } = {};
-    [...this.columns].forEach((column) => {
+    [...this.columns()].forEach((column) => {
       values[column.name] = !column.hidden;
     });
     const popoverContext = {
-      gridId: this.gridSetting.gridId,
+      gridId: this.gridSetting().gridId,
       column: menuClick.column,
       values: values,
     };
@@ -127,7 +131,7 @@ export class IccGridHeaderComponent<T> {
     this.popoverService.show();
   }
 
-  private hideMenu() {
+  private hideMenu(): void {
     this.popoverService.hide();
   }
 }

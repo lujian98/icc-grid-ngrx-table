@@ -255,6 +255,12 @@ export class IccGridFacade {
     return this.store.select(selectRowSelections(gridId));
   }
 
+  getRowSelections(
+    gridId: string,
+  ): Signal<{ selection: SelectionModel<object>; allSelected: boolean; indeterminate: boolean }> {
+    return this.store.selectSignal(selectRowSelections(gridId));
+  }
+
   getRowGroups(gridId: string): Signal<IccRowGroups | boolean> {
     return this.store.selectSignal(selectRowGroups(gridId));
   }
