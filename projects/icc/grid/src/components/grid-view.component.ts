@@ -7,10 +7,10 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   ViewChild,
   inject,
+  input,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { BehaviorSubject, Observable, Subject, interval, map, of } from 'rxjs';
@@ -34,7 +34,6 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private gridFacade = inject(IccGridFacade);
-  private _gridSetting!: IccGridSetting;
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
   private destroy$ = new Subject<void>();
@@ -45,31 +44,30 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
 
-  @Input() set gridSetting(val: IccGridSetting) {
-    this._gridSetting = { ...val };
-    if (!this.gridData$) {
-      this.gridData$ = this.gridFacade.selectGridData(this.gridSetting.gridId).pipe(
-        map((data) => {
-          this.checkViewport(data);
-          return data;
-        }),
-      );
-    }
-    if (!this.rowSelection$) {
-      this.rowSelection$ = this.gridFacade.selectRowSelection(this.gridSetting.gridId);
-    }
-    if (!this.rowGroups$) {
-      this.rowGroups$ = this.gridFacade.selectRowGroups(this.gridSetting.gridId);
-    }
-  }
-  get gridSetting(): IccGridSetting {
-    return this._gridSetting;
-  }
-  @Input() gridConfig!: IccGridConfig;
-  @Input() columns: IccColumnConfig[] = [];
+  gridSetting = input.required({
+    transform: (gridSetting: IccGridSetting) => {
+      if (!this.gridData$) {
+        this.gridData$ = this.gridFacade.selectGridData(gridSetting.gridId).pipe(
+          map((data) => {
+            this.checkViewport(data);
+            return data;
+          }),
+        );
+      }
+      if (!this.rowSelection$) {
+        this.rowSelection$ = this.gridFacade.selectRowSelection(gridSetting.gridId);
+      }
+      if (!this.rowGroups$) {
+        this.rowGroups$ = this.gridFacade.selectRowGroups(gridSetting.gridId);
+      }
+      return gridSetting;
+    },
+  });
+  gridConfig = input.required<IccGridConfig>();
+  columns = input.required<IccColumnConfig[]>();
 
   get tableWidth(): number {
-    return this.gridConfig.horizontalScroll ? getTableWidth(this.columns) : this.gridSetting.viewportWidth;
+    return this.gridConfig().horizontalScroll ? getTableWidth(this.columns()) : this.gridSetting().viewportWidth;
   }
 
   gridColumnWidthsEvent(values: IccColumnWidth[]): void {
@@ -101,25 +99,25 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   onScrolledIndexChange(index: number): void {
-    if (this.gridConfig.virtualScroll) {
+    if (this.gridConfig().virtualScroll) {
       this.scrollIndex = index;
-      const nextPage = this.gridConfig.page + 1;
-      const pageSize = this.gridConfig.pageSize;
+      const nextPage = this.gridConfig().page + 1;
+      const pageSize = this.gridConfig().pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
-      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridSetting.totalCounts) {
-        this.gridFacade.getGridPageData(this.gridSetting.gridId, nextPage);
+      if (displayTotal - index < pageSize - 10 && displayTotal < this.gridSetting().totalCounts) {
+        this.gridFacade.getGridPageData(this.gridSetting().gridId, nextPage);
       }
     }
   }
 
   onToggleRowGroup(rowGroups: IccRowGroups | boolean): void {
-    if (this.gridConfig.virtualScroll && rowGroups instanceof IccRowGroups) {
-      const nextPage = this.gridConfig.page + 1;
-      const pageSize = this.gridConfig.pageSize;
+    if (this.gridConfig().virtualScroll && rowGroups instanceof IccRowGroups) {
+      const nextPage = this.gridConfig().page + 1;
+      const pageSize = this.gridConfig().pageSize;
       const displayTotal = (nextPage - 1) * pageSize;
       const actualDisplay = displayTotal - rowGroups.totalHiddenCounts;
-      if (actualDisplay - this.scrollIndex < pageSize - 10 && displayTotal < this.gridSetting.totalCounts) {
-        this.gridFacade.getGridPageData(this.gridSetting.gridId, nextPage);
+      if (actualDisplay - this.scrollIndex < pageSize - 10 && displayTotal < this.gridSetting().totalCounts) {
+        this.gridFacade.getGridPageData(this.gridSetting().gridId, nextPage);
       }
     }
   }
@@ -131,14 +129,14 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(loadData: boolean = true, event?: string | MouseEvent | null): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
+    const fitPageSize = Math.floor(clientHeight / this.gridConfig().rowHeight);
     const pageSize =
-      !this.gridConfig.virtualScroll && !this.gridConfig.verticalScroll ? fitPageSize : this.gridConfig.pageSize;
+      !this.gridConfig().virtualScroll && !this.gridConfig().verticalScroll ? fitPageSize : this.gridConfig().pageSize;
 
     if (!event || typeof event === 'string') {
-      this.gridFacade.setViewportPageSize(this.gridConfig, this.gridSetting, pageSize, clientWidth, loadData);
+      this.gridFacade.setViewportPageSize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, loadData);
     } else {
-      this.gridFacade.setWindowResize(this.gridConfig, this.gridSetting, pageSize, clientWidth, loadData);
+      this.gridFacade.setWindowResize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, loadData);
     }
   }
 
@@ -146,8 +144,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     const el = this.viewport.elementRef.nativeElement;
     const clientWidth = el.clientWidth;
     const clientHeight = el.clientHeight;
-    const pageSize = Math.floor(clientHeight / this.gridConfig.rowHeight);
-    if (this.gridConfig.virtualScroll || this.gridConfig.verticalScroll) {
+    const pageSize = Math.floor(clientHeight / this.gridConfig().rowHeight);
+    if (this.gridConfig().virtualScroll || this.gridConfig().verticalScroll) {
       // make sure column width with vertical scroll are correct
       const widowWidth = this.elementRef.nativeElement.clientWidth;
       if (data.length > pageSize && clientWidth === widowWidth) {
@@ -155,8 +153,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       } else if (data.length <= pageSize && clientWidth < widowWidth) {
         this.sizeChanged$.next(uniqueId(16));
       }
-    } else if (pageSize !== this.gridConfig.pageSize) {
-      this.gridFacade.setViewportPageSize(this.gridConfig, this.gridSetting, pageSize, clientWidth, true);
+    } else if (pageSize !== this.gridConfig().pageSize) {
+      this.gridFacade.setViewportPageSize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, true);
     }
   }
 
@@ -171,12 +169,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
     selection: SelectionModel<object>,
     data: object[],
   ): void {
-    if (this.gridConfig.rowSelection) {
+    if (this.gridConfig().rowSelection) {
       if (this.prevRowIndex < 0) {
         this.prevRowIndex = rowIndex;
       }
       const selected = selection.isSelected(record as object);
-      if (this.gridConfig.multiRowSelection) {
+      if (this.gridConfig().multiRowSelection) {
         if (event.ctrlKey || event.metaKey) {
           this.selectRecord([record], !selected, selection);
         } else if (event.shiftKey) {
@@ -188,9 +186,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
           }
         } else {
           if (selected) {
-            this.gridFacade.setSelectAllRows(this.gridSetting.gridId, false);
+            this.gridFacade.setSelectAllRows(this.gridSetting().gridId, false);
           } else {
-            this.gridFacade.setSelectRow(this.gridSetting.gridId, record as object);
+            this.gridFacade.setSelectRow(this.gridSetting().gridId, record as object);
           }
         }
       } else {
@@ -210,11 +208,11 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   private selectRecord(record: object[], isSelected: boolean, selection: SelectionModel<object>): void {
     const selected = this.getSelectedTotal(record, isSelected, selection);
-    this.gridFacade.setSelectRows(this.gridSetting.gridId, record as object[], isSelected, selected);
+    this.gridFacade.setSelectRows(this.gridSetting().gridId, record as object[], isSelected, selected);
   }
 
   private getSelectedTotal(record: object[], isSelected: boolean, selection: SelectionModel<object>): number {
-    if (this.gridConfig.multiRowSelection) {
+    if (this.gridConfig().multiRowSelection) {
       const prevSelectedLength = selection.selected.length;
       if (isSelected) {
         const preSelected = record.filter((item) => selection.isSelected(item));
@@ -228,8 +226,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   rowDblClick(record: object): void {
-    if (this.gridConfig.hasDetailView) {
-      this.gridFacade.rowDblClick(this.gridSetting.gridId, record as object);
+    if (this.gridConfig().hasDetailView) {
+      this.gridFacade.rowDblClick(this.gridSetting().gridId, record as object);
     }
   }
 

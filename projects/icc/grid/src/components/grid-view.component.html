@@ -1,17 +1,17 @@
 <icc-grid-header-view
-  [gridSetting]="gridSetting"
-  [gridConfig]="gridConfig"
-  [columns]="columns"
+  [gridSetting]="gridSetting()"
+  [gridConfig]="gridConfig()"
+  [columns]="columns()"
   [columnHeaderPosition]="columnHeaderPosition"
   (gridColumnWidthsEvent)="gridColumnWidthsEvent($event)"
 >
 </icc-grid-header-view>
 
 <cdk-virtual-scroll-viewport
-  [itemSize]="gridConfig.rowHeight"
+  [itemSize]="gridConfig().rowHeight"
   [ngStyle]="{
-    'overflow-x': gridConfig.horizontalScroll ? 'auto' : 'hidden',
-    'overflow-y': gridConfig.virtualScroll || gridConfig.verticalScroll ? 'auto' : 'hidden',
+    'overflow-x': gridConfig().horizontalScroll ? 'auto' : 'hidden',
+    'overflow-y': gridConfig().virtualScroll || gridConfig().verticalScroll ? 'auto' : 'hidden',
   }"
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
@@ -21,10 +21,10 @@
       <ng-container *ngIf="rowGroups$ | async as rowGroups">
         <icc-grid-row-group
           *ngIf="isRowGroup(index, record)"
-          [gridConfig]="gridConfig"
-          [gridSetting]="gridSetting"
+          [gridConfig]="gridConfig()"
+          [gridSetting]="gridSetting()"
           [rowIndex]="index"
-          [columns]="columns"
+          [columns]="columns()"
           [record]="record"
           (onToggleRowGroup)="onToggleRowGroup(rowGroups)"
         >
@@ -35,10 +35,10 @@
         <icc-grid-row
           *ngIf="!isRowGroup(index, record)"
           [ngStyle]="{ width: tableWidth + 'px' }"
-          [gridConfig]="gridConfig"
-          [gridSetting]="gridSetting"
+          [gridConfig]="gridConfig()"
+          [gridSetting]="gridSetting()"
           [rowIndex]="index"
-          [columns]="columns"
+          [columns]="columns()"
           [columnWidths]="columnWidths"
           [record]="record"
           [selected]="selection.isSelected(record)"
