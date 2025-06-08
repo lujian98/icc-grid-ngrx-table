@@ -225,6 +225,10 @@ export class IccGridFacade {
     return this.store.selectSignal(selectColumnsConfig(gridId));
   }
 
+  getGridSignalData(gridId: string): Signal<object[]> {
+    return this.store.selectSignal(selectGridData(gridId));
+  }
+
   selectColumnsConfig(gridId: string): Observable<IccColumnConfig[]> {
     return this.store.select(selectColumnsConfig(gridId));
   }
