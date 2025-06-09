@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragEnd, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { uniqueId } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -24,7 +24,13 @@ export class IccWindowComponent<T> {
   private windowInfo!: IccWindowInfo;
   resizeType = IccResizeType;
   elementKey = uniqueId(16);
-  windowConfig = input.required({ transform: (val: IccWindowConfig) => ({ ...defaultWindowConfig, ...val }) });
+  windowConfig = input.required({
+    transform: (val: IccWindowConfig) => {
+      const windowConfig = { ...defaultWindowConfig, ...val };
+      this.setWindow(windowConfig);
+      return windowConfig;
+    },
+  });
 
   get element(): HTMLElement {
     return this.elementRef.nativeElement;
@@ -40,16 +46,12 @@ export class IccWindowComponent<T> {
     );
   }
 
-  constructor() {
-    effect(() => this.setWindow());
-  }
-
-  private setWindow(): void {
-    const height = this.windowConfig().height;
+  private setWindow(windowConfig: IccWindowConfig): void {
+    const height = windowConfig.height;
     if (height) {
       this.setHeight(parseFloat(height));
     }
-    this.setWidth(parseFloat(this.windowConfig().width));
+    this.setWidth(parseFloat(windowConfig.width));
 
     timer(10)
       .pipe(take(1))

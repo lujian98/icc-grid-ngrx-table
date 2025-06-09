@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -40,13 +39,6 @@ export class IccAccordionComponent {
   items = input.required({
     transform: (items: IccAccordion[]) => {
       this.itemList.update((current) => [...current, ...items]);
-      return items;
-    },
-  });
-  itemList = signal<IccAccordion[]>([]);
-
-  constructor() {
-    effect(() => {
       if (this.isFirstTime) {
         this.isFirstTime = false;
         if (this.itemList().length > 0) {
@@ -58,8 +50,10 @@ export class IccAccordionComponent {
           }
         }
       }
-    });
-  }
+      return items;
+    },
+  });
+  itemList = signal<IccAccordion[]>([]);
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
 

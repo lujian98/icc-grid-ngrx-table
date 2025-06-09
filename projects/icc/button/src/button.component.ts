@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 
 export type IccButtonStatus = 'default' | 'primary' | 'danger';
 
@@ -16,12 +16,11 @@ export type IccButtonStatus = 'default' | 'primary' | 'danger';
 })
 export class IccButtonComponent {
   status = input<IccButtonStatus>('default');
-  ghost = input(false);
+  ghost = input(false, {
+    transform: (ghost: boolean) => {
+      this.appearance.set(ghost ? 'ghost' : '');
+      return ghost;
+    },
+  });
   appearance = signal<string>('');
-
-  constructor() {
-    effect(() => {
-      this.appearance.update(() => (this.ghost() ? 'ghost' : ''));
-    });
-  }
 }
