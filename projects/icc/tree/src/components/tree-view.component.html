@@ -14,10 +14,10 @@
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
 >
-  @if (treeData$()) {
+  @if (treeData()) {
     <div
       class="icc-grid-row"
-      *cdkVirtualFor="let record of treeData$(); trackBy: trackByIndex; let index = index"
+      *cdkVirtualFor="let record of treeData(); trackBy: trackByIndex; let index = index"
       cdkDropList
       [cdkDropListSortingDisabled]="true"
       (cdkDropListDropped)="drop($event)"
@@ -33,7 +33,7 @@
         cdkDrag
         [cdkDragDisabled]="treeConfig().dragDisabled"
         (cdkDragStarted)="dragStart(record)"
-        (cdkDragMoved)="dragMoved($event, treeData$())"
+        (cdkDragMoved)="dragMoved($event, treeData())"
         [cdkDragData]="record"
         [attr.tree-node-id]="record.id"
         [attr.id]="record.id"

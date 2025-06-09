@@ -1,4 +1,4 @@
-@if (treeConfig$() && gridSetting$() && columnsConfig$()) {
+@if (treeConfig$() && gridSetting$() && columnsConfig$() && treeData$()) {
   <icc-layout>
     @if (!treeConfig$().hideTopbar) {
       <icc-layout-header [buttons]="buttons" (iccButtonClick)="buttonClick($event)"> </icc-layout-header>
@@ -8,6 +8,7 @@
       [gridSetting]="gridSetting$()"
       [treeConfig]="treeConfig$()"
       [columns]="columnsConfig$()"
+      [treeData]="treeData$()"
       [iccSpinner]="gridSetting$().loading"
     >
     </icc-tree-view>

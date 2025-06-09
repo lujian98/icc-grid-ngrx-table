@@ -4,13 +4,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  effect,
   ElementRef,
   HostListener,
   inject,
   input,
   OnDestroy,
-  Signal,
   ViewChild,
 } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
@@ -47,27 +45,17 @@ export class IccTreeViewComponent<T> implements AfterViewInit, OnDestroy {
   columnHeaderPosition = 0;
   columnWidths: IccColumnWidth[] = [];
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
-  treeData$!: Signal<IccTreeNode<T>[]>;
-  gridSetting = input.required({
-    transform: (gridSetting: IccGridSetting) => {
-      if (!this.treeData$) {
-        this.treeData$ = this.treeFacade.getTreeSignalData(gridSetting.gridId);
-      }
-      return gridSetting;
-    },
-  });
+  gridSetting = input.required<IccGridSetting>();
   treeConfig = input.required<IccTreeConfig>();
   columns = input.required<IccColumnConfig[]>();
+  treeData = input.required({
+    transform: (treeData: IccTreeNode<T>[]) => {
+      this.checkViewport(treeData);
+      return treeData;
+    },
+  });
 
   @ViewChild(CdkVirtualScrollViewport, { static: true }) private viewport!: CdkVirtualScrollViewport;
-
-  constructor() {
-    effect(() => {
-      if (this.treeData$()) {
-        this.checkViewport(this.treeData$());
-      }
-    });
-  }
 
   ngAfterViewInit(): void {
     interval(10)

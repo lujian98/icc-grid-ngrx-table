@@ -31,6 +31,7 @@ export class IccTreeComponent<T> implements OnDestroy {
   treeConfig$ = this.gridFacade.getGridConfig(this.treeId);
   gridSetting$ = this.gridFacade.getSetting(this.treeId); // Only support gridSetting for now
   columnsConfig$ = this.gridFacade.getColumnsConfig(this.treeId);
+  treeData$ = this.treeFacade.getTreeSignalData(this.treeId);
 
   buttons: IccButtonConfg[] = [
     IccBUTTONS.Refresh,
