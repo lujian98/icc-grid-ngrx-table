@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, Signal } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
@@ -38,21 +38,21 @@ export class IccGridColumnMenuComponent {
   column!: IccColumnConfig;
   menuItems: IccMenuConfig[] = [];
   values: { [key: string]: boolean } = {};
-  disabled: IccDisabled[] = [];
+
+  disabled = computed(() => {
+    return this.getDisabledMenu();
+  });
 
   constructor() {
     effect(() => {
-      if (this.columns$()) {
-        if (this.menuItems.length === 0) {
-          this.setMenuItems();
-        }
-        this.setDisabledMenu();
+      if (this.columns$() && this.menuItems.length === 0) {
+        this.setMenuItems();
       }
     });
   }
 
-  private setDisabledMenu(): void {
-    this.disabled = [
+  private getDisabledMenu(): IccDisabled[] {
+    return [
       {
         name: 'asc',
         disabled: this.sortDisabled('asc'),
