@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import { FormControl, FormGroup } from '@angular/forms';
 import { isEqual } from '@icc/ui/core';
 import { IccFormField } from '@icc/ui/fields';
+import { take, timer } from 'rxjs';
 import { IccGridFacade } from '../../../../+state/grid.facade';
 import { IccCellEdit, IccColumnConfig, IccGridConfig, IccGridSetting } from '../../../../models/grid-column.model';
 
@@ -77,8 +78,12 @@ export class IccCellEditBaseComponent<T> {
   checkField(): void {}
 
   resetField(): void {
-    this.field.setValue(this.data);
-    this.field.markAsPristine();
+    timer(10)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.field.setValue(this.data);
+        this.field.markAsPristine();
+      });
   }
 
   onValueChange(value: T | null): void {
