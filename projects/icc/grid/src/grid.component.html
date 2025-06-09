@@ -1,7 +1,7 @@
 @if (gridConfig$() && gridSetting$() && columnsConfig$() && gridData$()) {
   <icc-layout>
     @if (!gridConfig$().hideTopbar) {
-      <icc-layout-header [buttons]="buttonList()" (iccButtonClick)="buttonClick($event)"> </icc-layout-header>
+      <icc-layout-header [buttons]="buttons$()" (iccButtonClick)="buttonClick($event)"> </icc-layout-header>
     }
 
     <icc-grid-view

@@ -1,14 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
+  computed,
   EventEmitter,
   inject,
   input,
   OnDestroy,
   OnInit,
   Output,
-  signal,
 } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -50,9 +49,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridSetting$ = this.gridFacade.getSetting(this.gridId);
   columnsConfig$ = this.gridFacade.getColumnsConfig(this.gridId);
   gridData$ = this.gridFacade.getGridSignalData(this.gridId);
-  buttonList = signal<IccButtonConfg[]>([IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters]);
-
-  buttons = input<IccButtonConfg[]>([...this.buttonList()]);
+  buttons = input<IccButtonConfg[]>([IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters]);
   gridConfig = input(defaultGridConfig, {
     transform: (value: Partial<IccGridConfig>) => {
       const config = { ...defaultGridConfig, ...value };
@@ -81,26 +78,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       return gridData;
     },
   });
-
-  @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
-
-  constructor() {
-    effect(() => {
-      if (this.gridSetting$()) {
-        this.setButtons();
-      }
-    });
-  }
-
-  ngOnInit(): void {
-    this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig());
-  }
-
-  private initGridConfig(config: IccGridConfig): void {
-    this.gridFacade.initGridConfig(this.gridId, config, 'grid');
-  }
-
-  private setButtons(): void {
+  buttons$ = computed(() => {
     const buttons = [...this.buttons()].map((button) => {
       const hidden = this.getHidden(button);
       const disabled = this.getDisabled(button);
@@ -110,7 +88,17 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         disabled,
       };
     });
-    this.buttonList.update(() => buttons);
+    return buttons;
+  });
+
+  @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
+
+  ngOnInit(): void {
+    this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig());
+  }
+
+  private initGridConfig(config: IccGridConfig): void {
+    this.gridFacade.initGridConfig(this.gridId, config, 'grid');
   }
 
   private getDisabled(button: IccButtonConfg): boolean {
