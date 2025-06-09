@@ -39,7 +39,7 @@ export const defaultGridSetting: IccGridSetting = {
   columnUpdating: false,
   viewportReady: false,
   viewportWidth: 1000,
-  lastUpdateTime: new Date(),
+  //lastUpdateTime: new Date(),
   gridEditable: false,
   restEdit: false,
   recordModified: false,

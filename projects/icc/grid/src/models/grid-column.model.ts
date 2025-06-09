@@ -86,7 +86,7 @@ export interface IccGridSetting {
   loading: boolean;
   columnUpdating: boolean; // prevent filter fetch data when column changes
   viewportWidth: number;
-  lastUpdateTime: Date;
+  lastUpdateTime?: Date;
   gridEditable: boolean;
   restEdit: boolean;
   recordModified: boolean;

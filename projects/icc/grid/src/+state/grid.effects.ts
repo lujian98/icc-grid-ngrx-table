@@ -66,7 +66,7 @@ export class IccGridEffects {
               this.store.dispatch(
                 gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, isTreeGrid, columnsConfig }),
               );
-              return gridActions.getGridData({ gridId });
+              return gridActions.getConcatGridData({ gridId });
             } else {
               // TODO tree need load local data?
               return gridActions.loadGridColumnsConfigSuccess({ gridId, gridConfig, isTreeGrid, columnsConfig });
@@ -104,7 +104,7 @@ export class IccGridEffects {
           this.gridFacade.selectGridInMemoryData(action.gridId),
         ];
       }),
-      concatMap(([action, gridConfig, columns, inMemoryData]) => {
+      mergeMap(([action, gridConfig, columns, inMemoryData]) => {
         return this.getGridData(action.gridId, gridConfig, columns, inMemoryData);
       }),
     ),

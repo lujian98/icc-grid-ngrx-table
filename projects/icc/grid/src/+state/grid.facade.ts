@@ -185,7 +185,12 @@ export class IccGridFacade {
 
   getGridData(gridId: string, gridSetting: IccGridSetting): void {
     if (!gridSetting.isTreeGrid) {
-      this.dispatchGridData(gridId);
+      if (gridSetting.lastUpdateTime) {
+        this.dispatchGridData(gridId);
+      } else {
+        // make sure first time to use load
+        this.store.dispatch(gridActions.getConcatGridData({ gridId }));
+      }
     } else {
       this.setLoadTreeDataLoading(gridId, true);
     }

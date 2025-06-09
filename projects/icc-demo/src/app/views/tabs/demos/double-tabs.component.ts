@@ -21,7 +21,7 @@ import { AppGridGroupHeaderComponent } from '../../grid/remote-data/grid-group-h
 export class AppDoubleTabsComponent {
   tabsConfig1: Partial<IccTabsConfig> = {
     enableContextMenu: true,
-    selectedTabIndex: 1,
+    selectedTabIndex: 2,
     alignTabs: 'end',
   };
 
