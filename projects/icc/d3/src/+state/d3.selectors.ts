@@ -19,7 +19,7 @@ export const selectD3Config = (d3Id: string) =>
 
 export const selectD3ChartConfigs = (d3Id: string) =>
   createSelector(featureSelector, (state: D3State) => {
-    return state && state[d3Id] && state[d3Id].chartConfigs.length > 0 ? state[d3Id].chartConfigs : undefined;
+    return state && state[d3Id] && state[d3Id].chartConfigs.length > 0 ? state[d3Id].chartConfigs : [];
   });
 
 export const selectD3Data = (d3Id: string) =>

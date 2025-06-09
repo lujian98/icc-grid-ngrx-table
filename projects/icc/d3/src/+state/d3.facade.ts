@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccD3Config, IccD3Setting } from '../models/d3.model';
@@ -8,7 +8,7 @@ import { selectD3Config, selectD3ChartConfigs, selectD3Data, selectD3Setting } f
 
 @Injectable()
 export class IccD3Facade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   initD3Config(d3Id: string, d3Config: IccD3Config): void {
     this.store.dispatch(d3Actions.initD3Config({ d3Id, d3Config }));
@@ -33,6 +33,22 @@ export class IccD3Facade {
 
   clearD3DataStore(d3Id: string): void {
     this.store.dispatch(d3Actions.clearD3DataStore({ d3Id }));
+  }
+
+  getD3Config(d3Id: string): Signal<IccD3Config> {
+    return this.store.selectSignal(selectD3Config(d3Id));
+  }
+
+  getSetting(d3Id: string): Signal<IccD3Setting> {
+    return this.store.selectSignal(selectD3Setting(d3Id));
+  }
+
+  getD3ChartConfigs(d3Id: string): Signal<IccD3ChartConfig[]> {
+    return this.store.selectSignal(selectD3ChartConfigs(d3Id));
+  }
+
+  getD3Data(d3Id: string): Signal<any> {
+    return this.store.selectSignal(selectD3Data(d3Id));
   }
 
   selectD3Config(d3Id: string): Observable<IccD3Config> {
