@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -24,20 +24,21 @@ export class IccGridRowGroupComponent<T> {
   record = input.required<T | IccRowGroup>();
   rowGroup!: IccRowGroup;
 
+  rowGroup$ = computed(() => {
+    if (this.record() instanceof IccRowGroup) {
+      this.rowGroup = this.record() as IccRowGroup;
+      return this.record() as IccRowGroup;
+    } else {
+      return undefined;
+    }
+  });
+
   get title(): string {
     const column = this.columns().find((item) => item.name === this.rowGroup.field)!;
     return column.title || column.name;
   }
 
   @Output() onToggleRowGroup = new EventEmitter<IccRowGroup>();
-
-  constructor() {
-    effect(() => {
-      if (this.record() instanceof IccRowGroup) {
-        this.rowGroup = this.record() as IccRowGroup;
-      }
-    });
-  }
 
   toggleRowGroup(): void {
     this.rowGroup.expanded = !this.rowGroup.expanded;
