@@ -74,6 +74,7 @@ export class IccGridHeaderViewComponent {
     }
   }
 
+  //TODO Group header drop and drop sometime incorrect
   private moveGroupHeader(previousIndex: number, currentIndex: number): void {
     const moved = this.columns()[previousIndex];
     const changed = this.columns()[currentIndex];
