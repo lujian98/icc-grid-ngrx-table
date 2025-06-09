@@ -79,7 +79,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
     },
   });
   buttons$ = computed(() => {
-    const buttons = [...this.buttons()].map((button) => {
+    return [...this.buttons()].map((button) => {
       const hidden = this.getHidden(button);
       const disabled = this.getDisabled(button);
       return {
@@ -88,7 +88,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
         disabled,
       };
     });
-    return buttons;
   });
 
   @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
