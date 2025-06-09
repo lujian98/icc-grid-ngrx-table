@@ -72,7 +72,6 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridData = input(undefined, {
     transform: (gridData: IccGridData<T>) => {
       if (!this.gridConfig$().remoteGridData && gridData) {
-        //console.log(' xxxxxthis._gridData=', gridData)
         this.gridFacade.setGridInMemoryData(this.gridId, this.gridConfig$(), gridData as IccGridData<object>);
       }
       return gridData;
@@ -91,6 +90,10 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   });
 
   @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
+
+  constructor() {
+    this.initGridConfig({ ...defaultGridConfig });
+  }
 
   ngOnInit(): void {
     this.tasksService.loadTaskService(this.gridId, IccGridFacade, this.gridConfig());

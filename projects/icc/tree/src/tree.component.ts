@@ -68,6 +68,10 @@ export class IccTreeComponent<T> implements OnDestroy {
     },
   });
 
+  constructor() {
+    this.initGridConfig({ ...defaultTreeConfig });
+  }
+
   private initGridConfig(treeConfig: IccTreeConfig): void {
     this.gridFacade.initGridConfig(this.treeId, treeConfig, 'treeGrid');
     this.treeFacade.initTreeConfig(this.treeId, treeConfig);
