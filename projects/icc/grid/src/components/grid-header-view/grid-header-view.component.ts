@@ -1,6 +1,16 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, Output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  EventEmitter,
+  inject,
+  input,
+  Output,
+  signal,
+} from '@angular/core';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { DragDropEvent } from '../../models/drag-drop-event';
@@ -23,8 +33,17 @@ export class IccGridHeaderViewComponent {
   gridSetting = input.required<IccGridSetting>();
   columnHeaderPosition = input<number>(0);
   gridConfig = input.required<IccGridConfig>();
-  columnConfigs = input.required<IccColumnConfig[]>();
+  columnConfigs = input.required({
+    transform: (columnConfigs: IccColumnConfig[]) => {
+      this.columns.set(columnConfigs);
+      return columnConfigs;
+    },
+  });
   columns = signal<IccColumnConfig[]>([]);
+
+  widthRatio = computed(() => {
+    return viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.columns());
+  });
 
   set columnWidths(values: IccColumnWidth[]) {
     this._columnWidths = values;
@@ -39,11 +58,7 @@ export class IccGridHeaderViewComponent {
 
   constructor() {
     effect(() => {
-      if (this.columnConfigs()) {
-        this.columns.set(this.columnConfigs());
-      }
-      const widthRatio = viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.columns());
-      this.setColumWidths(this.columns(), widthRatio);
+      this.setColumWidths(this.columns(), this.widthRatio());
     });
   }
 
@@ -55,12 +70,11 @@ export class IccGridHeaderViewComponent {
   }
 
   onColumnResized(columnWidths: IccColumnWidth[]): void {
-    const widthRatio = viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.columns());
     const columns: IccColumnConfig[] = [...this.columns()].map((column, index) => ({
       ...column,
-      width: columnWidths[index].width / widthRatio,
+      width: columnWidths[index].width / this.widthRatio(),
     }));
-    this.setColumWidths(columnWidths, widthRatio);
+    this.setColumWidths(columnWidths, this.widthRatio());
     this.gridFacade.setGridColumnsConfig(this.gridConfig(), this.gridSetting(), columns);
   }
 
