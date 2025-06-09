@@ -7,21 +7,21 @@
     <icc-icon config="caret-left"></icc-icon>
   </button>
 
-  @if (fieldConfig()) {
+  @if (fieldConfig$()) {
     <icc-number-field
-      [fieldConfig]="fieldConfig()!"
+      [fieldConfig]="fieldConfig$()!"
       [value]="page"
       [showFieldEditIndicator]="false"
       (valueChange)="onValueChange($event)"
     >
     </icc-number-field>
   }
-  <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage }} </span>
-  <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage">
+  <span> {{ "ICC.UI.GRID.OF" | translate }} {{ lastPage() }} </span>
+  <button icc-button (click)="getGridPageData(page + 1)" [disabled]="page === lastPage()">
     <icc-icon config="caret-right"></icc-icon>
   </button>
 
-  <button icc-button (click)="getGridPageData(lastPage)" [disabled]="page === lastPage">
+  <button icc-button (click)="getGridPageData(lastPage())" [disabled]="page === lastPage()">
     <icc-icon config="forward-step"></icc-icon>
   </button>
 

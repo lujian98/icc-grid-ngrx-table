@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild, computed, inject, input } from '@angular/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccNumberFieldComponent, IccNumberFieldConfig, defaultNumberFieldConfig } from '@icc/ui/fields';
+import { IccNumberFieldComponent, defaultNumberFieldConfig } from '@icc/ui/fields';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutFooterComponent, IccLayoutFooterEndComponent } from '@icc/ui/layout';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,13 +29,7 @@ export class IccGridFooterComponent implements OnDestroy {
   valueChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
   gridSetting = input.required<IccGridSetting>();
   gridConfig = input.required<IccGridConfig>();
-  fieldConfig = signal<IccNumberFieldConfig | undefined>(undefined);
   page: number = 1;
-
-  get lastPage(): number {
-    return Math.ceil(this.gridSetting().totalCounts / this.gridConfig().pageSize) - 0;
-  }
-
   get displaying(): string {
     const start = (this.gridConfig().page - 1) * this.gridConfig().pageSize + 1;
     let end = start + this.gridConfig().pageSize - 1;
@@ -44,24 +38,29 @@ export class IccGridFooterComponent implements OnDestroy {
     }
     return `${start} - ${end}`;
   }
+  lastPage = computed(() => {
+    return Math.ceil(this.gridSetting().totalCounts / this.gridConfig().pageSize) - 0;
+  });
+  fieldConfig$ = computed(() => {
+    if (this.gridConfig()) {
+      this.page = this.gridConfig().page;
+      return {
+        ...defaultNumberFieldConfig,
+        fieldLabel: 'ICC.UI.GRID.PAGE',
+        editable: true,
+        minValue: 1,
+        maxValue: this.lastPage(),
+        labelWidth: 25,
+        fieldWidth: 50,
+      };
+    } else {
+      return undefined;
+    }
+  });
 
-  @ViewChild(IccNumberFieldComponent, { static: true }) pageField!: IccNumberFieldComponent;
+  @ViewChild(IccNumberFieldComponent, { static: false }) pageField!: IccNumberFieldComponent;
 
   constructor() {
-    effect(() => {
-      if (this.gridConfig()) {
-        this.page = this.gridConfig().page;
-        this.fieldConfig.set({
-          ...defaultNumberFieldConfig,
-          fieldLabel: 'ICC.UI.GRID.PAGE',
-          editable: true,
-          minValue: 1,
-          maxValue: this.lastPage,
-          labelWidth: 25,
-          fieldWidth: 50,
-        });
-      }
-    });
     this.valueChanged$
       .pipe(
         skip(1),
@@ -92,8 +91,8 @@ export class IccGridFooterComponent implements OnDestroy {
       if (page < 1) {
         page = 1;
         this.pageField.patchValue(page);
-      } else if (page > this.lastPage) {
-        page = this.lastPage;
+      } else if (page > this.lastPage()) {
+        page = this.lastPage();
         this.pageField.patchValue(page);
       }
       this.page = page;
