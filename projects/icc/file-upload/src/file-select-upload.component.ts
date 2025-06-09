@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
   input,
   OnDestroy,
@@ -40,8 +39,8 @@ import { defaultFileUploadConfig, IccFileUploadConfig } from './models/file-uplo
 export class IccFileSelectUploadComponent implements OnDestroy {
   private readonly fileUploadFacade = inject(IccFileUploadFacade);
   private readonly translateService = inject(TranslateService);
+  private buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
   uploadFiles$ = this.fileUploadFacade.getUploadFiles$;
-  buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
   enabled = signal<boolean>(true);
   fileUploadConfig = input(defaultFileUploadConfig, {
     transform: (val: Partial<IccFileUploadConfig>) => ({ ...defaultFileUploadConfig, ...val }),
@@ -65,15 +64,17 @@ export class IccFileSelectUploadComponent implements OnDestroy {
     return fieldConfigs;
   });
 
-  @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
-
-  constructor() {
-    effect(() => {
-      if (this.uploadFiles$()) {
-        this.setButtonDisabled();
-      }
+  buttons$ = computed(() => {
+    const disabled = this.uploadFiles$().length === 0 ? true : false;
+    return [...this.buttons].map((button) => {
+      return {
+        ...button,
+        disabled: disabled,
+      };
     });
-  }
+  });
+
+  @ViewChildren(IccUploadFileFieldComponent) private uploadFileFields!: QueryList<IccUploadFileFieldComponent>;
 
   selectUploadFile(fieldConfig: IccUploadFileFieldConfig, file: File | null): void {
     this.fileUploadFacade.selectUploadFile(fieldConfig.fieldName!, file);
@@ -87,16 +88,6 @@ export class IccFileSelectUploadComponent implements OnDestroy {
 
   private clearUploadFileFields(): void {
     this.uploadFileFields?.toArray().forEach((field) => field.clearValue());
-  }
-
-  private setButtonDisabled(disabled: boolean = false): void {
-    disabled = this.uploadFiles$().length === 0 ? true : disabled;
-    this.buttons = [...this.buttons].map((button) => {
-      return {
-        ...button,
-        disabled: disabled,
-      };
-    });
   }
 
   buttonClick(button: IccButtonConfg): void {

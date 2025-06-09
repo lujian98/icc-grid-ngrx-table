@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, computed, inject, input, signal } from '@angular/core';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import { IccBUTTONS, IccButtonConfg, IccButtonType } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -29,23 +29,24 @@ import { IccFileUploadConfig, defaultFileUploadConfig } from './models/file-uplo
 })
 export class IccFileDropUploadComponent implements OnDestroy {
   private readonly fileUploadFacade = inject(IccFileUploadFacade);
+  private buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
   uploadFiles$ = this.fileUploadFacade.getUploadFiles$;
-  buttons: IccButtonConfg[] = [IccBUTTONS.UploadFile, IccBUTTONS.Reset];
   enabled = signal<boolean>(true);
   fileUploadConfig = input(defaultFileUploadConfig, {
     transform: (val: Partial<IccFileUploadConfig>) => ({ ...defaultFileUploadConfig, ...val }),
   });
+  buttons$ = computed(() => {
+    const disabled = this.uploadFiles$().length === 0 ? true : false;
+    return [...this.buttons].map((button) => {
+      return {
+        ...button,
+        disabled: disabled,
+      };
+    });
+  });
 
   get className(): string {
     return !this.enabled() ? 'icc-file-drop__drop-zone--disabled' : 'icc-file-drop__drop-zone--enabled';
-  }
-
-  constructor() {
-    effect(() => {
-      if (this.uploadFiles$()) {
-        this.setButtonDisabled();
-      }
-    });
   }
 
   dropped(files: IccFileDropEntry[]): void {
@@ -63,16 +64,6 @@ export class IccFileDropUploadComponent implements OnDestroy {
     if (typeof enabled === 'boolean') {
       this.enabled.set(enabled);
     }
-  }
-
-  private setButtonDisabled(disabled: boolean = false): void {
-    disabled = this.uploadFiles$().length === 0 ? true : disabled;
-    this.buttons = [...this.buttons].map((button) => {
-      return {
-        ...button,
-        disabled: disabled,
-      };
-    });
   }
 
   buttonClick(button: IccButtonConfg): void {
