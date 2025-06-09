@@ -9,7 +9,6 @@ import {
   OnDestroy,
   Signal,
   ViewChild,
-  effect,
   inject,
   input,
 } from '@angular/core';
@@ -35,10 +34,9 @@ import { IccGridRowComponent } from './grid-row/grid-row.component';
 export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef);
   private readonly gridFacade = inject(IccGridFacade);
+  private readonly destroy$ = new Subject<void>();
   private scrollIndex: number = 0;
   private prevRowIndex: number = -1;
-  private destroy$ = new Subject<void>();
-  gridData$!: Signal<object[]>;
   rowSelection$!: Signal<SelectionModel<object>>;
   rowGroups$!: Signal<IccRowGroups | boolean>;
   sizeChanged$ = new BehaviorSubject<string | MouseEvent | null>(null);
@@ -47,9 +45,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   gridSetting = input.required({
     transform: (gridSetting: IccGridSetting) => {
-      if (!this.gridData$) {
-        this.gridData$ = this.gridFacade.getGridSignalData(gridSetting.gridId);
-      }
       if (!this.rowSelection$) {
         this.rowSelection$ = this.gridFacade.getRowSelection(gridSetting.gridId);
       }
@@ -61,6 +56,12 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   });
   gridConfig = input.required<IccGridConfig>();
   columns = input.required<IccColumnConfig[]>();
+  gridData = input.required({
+    transform: (gridData: object[]) => {
+      this.checkViewport(gridData);
+      return gridData;
+    },
+  });
 
   get tableWidth(): number {
     return this.gridConfig().horizontalScroll ? getTableWidth(this.columns()) : this.gridSetting().viewportWidth;
@@ -71,14 +72,6 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   }
 
   @ViewChild(CdkVirtualScrollViewport, { static: true }) private viewport!: CdkVirtualScrollViewport;
-
-  constructor() {
-    effect(() => {
-      if (this.gridData$()) {
-        this.checkViewport(this.gridData$());
-      }
-    });
-  }
 
   ngAfterViewInit(): void {
     interval(10)
@@ -198,9 +191,9 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
 
   private getSelectionRange(prevRowIndex: number, rowIndex: number): object[] {
     if (prevRowIndex > rowIndex) {
-      return [...this.gridData$()].slice(rowIndex, prevRowIndex);
+      return [...this.gridData()].slice(rowIndex, prevRowIndex);
     } else {
-      return [...this.gridData$()].slice(prevRowIndex, rowIndex + 1);
+      return [...this.gridData()].slice(prevRowIndex, rowIndex + 1);
     }
   }
 

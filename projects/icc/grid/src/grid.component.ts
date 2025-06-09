@@ -49,6 +49,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   gridConfig$ = this.gridFacade.getGridConfig(this.gridId);
   gridSetting$ = this.gridFacade.getSetting(this.gridId);
   columnsConfig$ = this.gridFacade.getColumnsConfig(this.gridId);
+  gridData$ = this.gridFacade.getGridSignalData(this.gridId);
   buttonList = signal<IccButtonConfg[]>([IccBUTTONS.Refresh, IccBUTTONS.ClearAllFilters]);
 
   buttons = input<IccButtonConfg[]>([...this.buttonList()]);

@@ -14,8 +14,8 @@
   (scrolledIndexChange)="onScrolledIndexChange($event)"
   (scroll)="onViewportScroll($event)"
 >
-  @if (gridData$()) {
-    <div class="icc-grid-row" *cdkVirtualFor="let record of gridData$(); trackBy: trackByIndex; let index = index">
+  @if (gridData()) {
+    <div class="icc-grid-row" *cdkVirtualFor="let record of gridData(); trackBy: trackByIndex; let index = index">
       @if (rowGroups$() && isRowGroup(index, record)) {
         <icc-grid-row-group
           [gridConfig]="gridConfig()"
