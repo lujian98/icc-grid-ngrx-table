@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, input, Output } from '@angular/core';
 import { IccColumnResizeTriggerDirective } from '../../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../../directives/column-resize.directive';
 import { ROW_SELECTION_CELL_WIDTH } from '../../../models/constants';
@@ -20,55 +20,47 @@ import { IccGridHeaderItemComponent } from '../grid-header-item/grid-header-item
 })
 export class IccGridGroupHeaderComponent {
   rowSelectionCellWidth = ROW_SELECTION_CELL_WIDTH;
-  groupHeaderColumns: IccGroupHeader[] = [];
   columns = input.required<IccColumnConfig[]>();
   gridSetting = input.required<IccGridSetting>();
   gridConfig = input.required<IccGridConfig>();
   columnWidths = input<IccColumnWidth[]>([]);
+  groupHeaderColumns = computed(() => {
+    let groupHeaders: IccGroupHeader[] = [];
+    this.columns().forEach((column) => {
+      if (!column.hidden) {
+        groupHeaders = this.getGroupHeader(column, groupHeaders);
+      }
+    });
+    return groupHeaders;
+  });
 
   @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
   @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
-
-  constructor() {
-    effect(() => {
-      if (this.columns()) {
-        this.setGroupHeaderColumns();
-      }
-    });
-  }
 
   getColumn(header: IccGroupHeader): IccColumnConfig {
     return this.columns().find((col) => col.name === header.field)!;
   }
 
-  private setGroupHeaderColumns(): void {
-    this.groupHeaderColumns = [];
-    this.columns().forEach((column) => {
-      if (!column.hidden) {
-        this.setGroupHeader(column);
-      }
-    });
-  }
-
-  private setGroupHeader(column: IccColumnConfig): void {
+  private getGroupHeader(column: IccColumnConfig, groupHeaders: IccGroupHeader[]): IccGroupHeader[] {
     if (column.groupHeader) {
-      const find = this.groupHeaderColumns.find((item) => item.name === column.groupHeader?.name);
+      const find = groupHeaders.find((item) => item.name === column.groupHeader?.name);
       if (!find) {
         const groupHeader = column.groupHeader;
         groupHeader.isGroupHeader = true;
         groupHeader.field = column.name;
-        this.groupHeaderColumns.push(groupHeader);
+        groupHeaders.push(groupHeader);
       } else {
         find.field = column.name;
       }
     } else {
-      this.groupHeaderColumns.push({
+      groupHeaders.push({
         name: `group${column.name}`,
         title: '',
         isGroupHeader: false,
         field: column.name,
       });
     }
+    return groupHeaders;
   }
 
   getHeaderWidth(header: IccGroupHeader): string {
