@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { IccDisabled } from '@icc/ui/core';
 import { IccMenuConfig, IccMenusComponent } from '@icc/ui/menu';
 import { IccGridStateModule } from '../../../+state/grid-state.module';
@@ -37,19 +37,13 @@ export class IccGridColumnMenuComponent {
   }
   column!: IccColumnConfig;
   menuItems: IccMenuConfig[] = [];
+  set columns(columns: IccColumnConfig[]) {
+    this.menuItems = this.getMenuItems(columns);
+  }
   values: { [key: string]: boolean } = {};
-
   disabled = computed(() => {
     return this.getDisabledMenu();
   });
-
-  constructor() {
-    effect(() => {
-      if (this.columns$() && this.menuItems.length === 0) {
-        this.setMenuItems();
-      }
-    });
-  }
 
   private getDisabledMenu(): IccDisabled[] {
     return [
@@ -76,8 +70,8 @@ export class IccGridColumnMenuComponent {
     ];
   }
 
-  private setMenuItems(): void {
-    const columnItems = [...this.columns$()].map((column) => {
+  private getMenuItems(columns: IccColumnConfig[]): IccMenuConfig[] {
+    const columnItems = [...columns].map((column) => {
       return {
         name: column.name,
         title: column.title,
@@ -87,7 +81,7 @@ export class IccGridColumnMenuComponent {
         disabled: !this.gridConfig$().columnHidden || this.column.sortField === false,
       };
     });
-    const menuItems = [
+    return [
       {
         name: 'asc',
         title: 'ICC.UI.GRID.SORT_ASCENDING',
@@ -118,7 +112,6 @@ export class IccGridColumnMenuComponent {
         children: columnItems,
       },
     ];
-    this.menuItems = [...menuItems];
   }
 
   onMenuFormChanges(values: { [key: string]: boolean }): void {

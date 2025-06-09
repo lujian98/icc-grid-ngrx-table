@@ -99,6 +99,7 @@ export class IccGridHeaderComponent<T> {
     const popoverContext = {
       gridId: this.gridSetting().gridId,
       column: menuClick.column,
+      columns: this.columns(),
       values: values,
     };
     this.buildPopover(popoverContext, menuClick.event);
