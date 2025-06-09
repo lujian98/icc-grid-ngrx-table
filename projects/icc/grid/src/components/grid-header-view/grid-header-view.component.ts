@@ -36,6 +36,7 @@ export class IccGridHeaderViewComponent {
   columnConfigs = input.required({
     transform: (columnConfigs: IccColumnConfig[]) => {
       this.columns.set(columnConfigs);
+      //this.setColumWidths(this.columns(), this.widthRatio());
       return columnConfigs;
     },
   });
@@ -58,6 +59,7 @@ export class IccGridHeaderViewComponent {
 
   constructor() {
     effect(() => {
+      // need this for columns and gridConfig
       this.setColumWidths(this.columns(), this.widthRatio());
     });
   }
