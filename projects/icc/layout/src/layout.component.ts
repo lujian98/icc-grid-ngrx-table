@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input } from '@angular/core';
 import { uniqueId } from '@icc/ui/core';
 import { IccResizeDirective, IccResizeInfo, IccResizeType } from '@icc/ui/resize';
 
@@ -19,8 +19,22 @@ export class IccLayoutComponent {
   elementKey = uniqueId(16);
   resizeable = input<boolean>(false);
   layout = input<string>(''); // viewport
-  height = input<string>('');
-  width = input<string>('');
+  height = input('', {
+    transform: (height: string) => {
+      if (height) {
+        this.setHeight(height);
+      }
+      return height;
+    },
+  });
+  width = input('', {
+    transform: (width: string) => {
+      if (width) {
+        this.setWidth(width);
+      }
+      return width;
+    },
+  });
 
   get viewportLayout(): boolean {
     return this.layout() === 'viewport';
@@ -28,17 +42,6 @@ export class IccLayoutComponent {
 
   get normalLayout(): boolean {
     return this.layout() !== 'viewport';
-  }
-
-  constructor() {
-    effect(() => {
-      if (this.height()) {
-        this.setHeight(this.height());
-      }
-      if (this.width()) {
-        this.setWidth(this.width());
-      }
-    });
   }
 
   onResizePanel(resizeInfo: IccResizeInfo): void {
