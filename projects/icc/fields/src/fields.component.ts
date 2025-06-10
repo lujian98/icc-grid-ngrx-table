@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IccObjectType } from '@icc/ui/core';
 import { IccCheckboxFieldComponent } from './checkbox-field/checkbox-field.component';
 import { IccDateFieldComponent } from './date-field/date-field.component';
 import { IccDateRangeFieldComponent } from './date-range-field/date-range-field.component';
@@ -14,7 +14,6 @@ import { IccSelectFieldComponent } from './select-field/select-field.component';
 import { IccTextFieldComponent } from './text-field/text-field.component';
 import { IccTextareaFieldComponent } from './textarea-field/textarea-field.component';
 import { IccUploadFileFieldComponent } from './upload-file-field/upload-file-field.component';
-import { IccObjectType } from '@icc/ui/core';
 
 @Component({
   selector: 'icc-fields',
@@ -22,7 +21,6 @@ import { IccObjectType } from '@icc/ui/core';
   styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     IccTextFieldComponent,
@@ -40,16 +38,7 @@ import { IccObjectType } from '@icc/ui/core';
   ],
 })
 export class IccFieldsComponent {
-  private _fieldConfig!: Partial<IccFormField>;
   FieldType = IccObjectType;
-
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(val: Partial<IccFormField>) {
-    this._fieldConfig = { ...val };
-  }
-  get fieldConfig(): Partial<IccFormField> {
-    return this._fieldConfig;
-  }
+  form = input.required<FormGroup>();
+  fieldConfig = input.required<Partial<IccFormField>>();
 }
