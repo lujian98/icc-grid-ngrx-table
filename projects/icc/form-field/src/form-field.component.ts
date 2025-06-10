@@ -7,7 +7,6 @@ import {
   ContentChild,
   ElementRef,
   inject,
-  Input,
   input,
   OnDestroy,
   Optional,
@@ -17,7 +16,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccFieldWidthDirective } from './directive/field-width.directive';
 import { IccFieldsetLabelWidthDirective } from './directive/fieldset-label-width.directive';
-import { IccFormFieldControlDirective } from './directive/form-field-control.directive';
 import { IccFormLabelWidthDirective } from './directive/form-label-width.directive';
 import { IccInputDirective } from './directive/input.directive';
 import { IccLabelWidthDirective } from './directive/label-width.directive';
@@ -32,19 +30,16 @@ import { DEFAULT_FORM_FIELD_LABEL_WIDTH } from './models/form-field.model';
   host: {
     '[class.icc-form-field-invalid]': 'invalid',
   },
-  imports: [CommonModule],
 })
 export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroy$ = new Subject<void>();
   private _fieldIndicator: string = '';
-  public elementRef = inject(ElementRef); // autocomplete.directive need this public
+  public readonly elementRef = inject(ElementRef); // autocomplete.directive need this public
   focused: boolean = false;
   fieldWidth: string = '100%';
   invalid: boolean = false;
-
-  @Input() showFieldEditIndicator: boolean = true;
-
+  showFieldEditIndicator = input(false);
   field = input(undefined, {
     alias: 'iccFormFieldControl',
     transform: (field: FormControl) => {
@@ -66,7 +61,7 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
     this._fieldIndicator = val;
   }
   get fieldIndicator(): string {
-    return this.showFieldEditIndicator ? this._fieldIndicator : '';
+    return this.showFieldEditIndicator() ? this._fieldIndicator : '';
   }
 
   @ContentChild(IccInputDirective) public inputDirective!: IccInputDirective;
