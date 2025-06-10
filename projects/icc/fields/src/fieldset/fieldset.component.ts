@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { IccObjectType } from '@icc/ui/core';
 import { IccFieldsetLabelWidthDirective, IccFieldWidthDirective } from '@icc/ui/form-field';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IccFieldsComponent } from '../fields.component';
 import { IccFormField } from '../models/fields.model';
-import { IccFieldsetConfig, defaultFieldsetConfig } from './models/fieldset.model';
-import { IccObjectType } from '@icc/ui/core';
+import { defaultFieldsetConfig, IccFieldsetConfig } from './models/fieldset.model';
 
 @Component({
   selector: 'icc-fieldset',
@@ -14,7 +13,6 @@ import { IccObjectType } from '@icc/ui/core';
   styleUrls: ['./fieldset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -24,23 +22,16 @@ import { IccObjectType } from '@icc/ui/core';
   ],
 })
 export class IccFieldsetComponent {
-  private _fieldConfig!: IccFieldsetConfig;
   FieldType = IccObjectType;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccFieldsetConfig>) {
-    this._fieldConfig = { ...defaultFieldsetConfig, ...fieldConfig };
-  }
-  get fieldConfig(): IccFieldsetConfig {
-    return this._fieldConfig;
-  }
+  form = input.required<FormGroup>();
+  fieldConfig = input.required({
+    transform: (fieldConfig: Partial<IccFieldsetConfig>) => {
+      const formConfig = { ...defaultFieldsetConfig, ...fieldConfig };
+      return formConfig;
+    },
+  });
 
   get formFields(): IccFormField[] {
-    return this.fieldConfig?.formFields;
-  }
-
-  trackByIndex(index: number): number {
-    return index;
+    return this.fieldConfig().formFields;
   }
 }

@@ -1,17 +1,17 @@
 <fieldset
-  [iccFieldsetLabelWidth]="fieldConfig.labelWidth"
-  [iccFieldWidth]="fieldConfig.fieldWidth"
-  [ngStyle]="{ 'flex-direction': fieldConfig.flexDirection }"
+  [iccFieldsetLabelWidth]="fieldConfig().labelWidth"
+  [iccFieldWidth]="fieldConfig().fieldWidth"
+  [style.flex-direction]="fieldConfig().flexDirection"
 >
-  @if (fieldConfig.legend !== undefined) {
-    <legend>{{ fieldConfig.legend | translate }}</legend>
+  @if (fieldConfig().legend !== undefined) {
+    <legend>{{ fieldConfig().legend! | translate }}</legend>
   }
 
-  <ng-container *ngFor="let config of formFields; trackBy: trackByIndex; let index = index">
-    @if (config.fieldType === FieldType.Fieldset) {
-      <icc-fieldset [fieldConfig]="config" [form]="form"> </icc-fieldset>
+  @for (fieldConfig of formFields; track $index; let index = $index) {
+    @if (fieldConfig.fieldType === FieldType.Fieldset) {
+      <icc-fieldset [form]="form()" [fieldConfig]="fieldConfig"> </icc-fieldset>
     } @else {
-      <icc-fields [fieldConfig]="config" [form]="form"> </icc-fields>
+      <icc-fields [form]="form()" [fieldConfig]="fieldConfig"> </icc-fields>
     }
-  </ng-container>
+  }
 </fieldset>
