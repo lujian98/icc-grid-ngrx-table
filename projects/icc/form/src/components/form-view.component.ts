@@ -1,18 +1,17 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
-import { IccButtonConfg, IccButtonType, IccUploadFileService, isEqual } from '@icc/ui/core';
+import { IccButtonConfg, IccButtonType, IccObjectType, IccUploadFileService, isEqual } from '@icc/ui/core';
 import {
   IccFieldsComponent,
   IccFieldsetComponent,
@@ -27,8 +26,7 @@ import { IccLayoutHeaderComponent } from '@icc/ui/layout';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { IccFormFacade } from '../+state/form.facade';
-import { IccFormConfig, IccFormButtonClick, IccFormSetting } from '../models/form.model';
-import { IccObjectType } from '@icc/ui/core';
+import { IccFormButtonClick, IccFormConfig, IccFormSetting } from '../models/form.model';
 
 @Component({
   selector: 'icc-form-view',
@@ -36,7 +34,6 @@ import { IccObjectType } from '@icc/ui/core';
   styleUrls: ['./form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     FormsModule,
@@ -49,33 +46,31 @@ import { IccObjectType } from '@icc/ui/core';
   ],
 })
 export class IccFormViewComponent implements OnInit, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private uploadFileService = inject(IccUploadFileService);
-  private formFacade = inject(IccFormFacade);
-  private destroy$ = new Subject<void>();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly uploadFileService = inject(IccUploadFileService);
+  private readonly formFacade = inject(IccFormFacade);
+  private readonly destroy$ = new Subject<void>();
   form: FormGroup = new FormGroup({});
-  private _formFields: IccFormField[] = [];
-  private _values!: object;
   FieldType = IccObjectType;
-
-  @Input() formSetting!: IccFormSetting;
-  @Input() formConfig!: IccFormConfig;
-  @Input()
-  set formFields(val: IccFormField[]) {
-    this._formFields = val;
-    this.addFormControls(this.formFields);
-
-    if (this.formConfig.remoteFieldsConfig && !this.formConfig.remoteFormData) {
-      this.form.patchValue({ ...this.values });
-    }
-
-    if (this.formConfig.validators) {
-      this.form.addValidators(this.formConfig.validators);
-    }
-  }
-  get formFields(): IccFormField[] {
-    return this._formFields;
-  }
+  formSetting = input.required<IccFormSetting>();
+  formConfig = input.required<IccFormConfig>();
+  formFields = input([], {
+    transform: (formFields: IccFormField[]) => {
+      this.addFormControls(formFields);
+      if (this.formConfig().validators) {
+        this.form.addValidators(this.formConfig().validators!);
+      }
+      return formFields;
+    },
+  });
+  values = input.required({
+    transform: (values: object) => {
+      if (this.form && values) {
+        this.form.patchValue({ ...values });
+      }
+      return values;
+    },
+  });
 
   private addFormControls(formFields: IccFormField[]): void {
     formFields.forEach((field) => {
@@ -120,17 +115,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input()
-  set values(values: object) {
-    this._values = values;
-    if (this.form) {
-      this.form.patchValue({ ...values });
-    }
-  }
-  get values(): object {
-    return this._values;
-  }
-
   private getFieldType(key: string, formFields: IccFormField[]): string {
     let fieldType = '';
     const find = formFields.find((field) => field.fieldName === key);
@@ -146,7 +130,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   get buttons(): IccButtonConfg[] {
-    return [...this.formConfig.buttons].map((button) => {
+    return [...this.formConfig().buttons].map((button) => {
       return {
         ...button,
         hidden: this.buttonHidden(button),
@@ -166,13 +150,9 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
     this.uploadFileService.uploadFiles = [];
   }
 
-  trackByIndex(index: number): number {
-    return index;
-  }
-
   private checkFormValueChanged(values: object): void {
-    isEqual(values, this.values) ? this.form.markAsPristine() : this.form.markAsDirty();
-    this.setFieldDirty(values, this.values);
+    isEqual(values, this.values()) ? this.form.markAsPristine() : this.form.markAsDirty();
+    this.setFieldDirty(values, this.values());
     this.changeDetectorRef.markForCheck();
   }
 
@@ -194,10 +174,10 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       case IccButtonType.Reset:
       case IccButtonType.Save:
         //case IccButtonType.UploadFile:
-        return !this.formSetting.editing;
+        return !this.formSetting().editing;
       case IccButtonType.Edit:
       default:
-        return this.formSetting.editing;
+        return this.formSetting().editing;
     }
   }
 
@@ -218,7 +198,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   buttonClick(button: IccButtonConfg): void {
-    this.formFacade.setFormEditable(this.formSetting.formId, button);
+    this.formFacade.setFormEditable(this.formSetting().formId, button);
     switch (button.name) {
       case IccButtonType.Edit:
         this.editForm(button);
@@ -251,18 +231,18 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private refreshForm(): void {
-    this.formFacade.getFormData(this.formSetting.formId, this.formConfig);
+    this.formFacade.getFormData(this.formSetting().formId, this.formConfig());
   }
 
   private resetForm(): void {
-    this.form.patchValue({ ...this.values });
+    this.form.patchValue({ ...this.values() });
     this.uploadFileService.uploadFiles = [];
     this.changeDetectorRef.markForCheck();
   }
 
   private saveForm(): void {
     if (this.form.valid) {
-      this.formFacade.saveFormData(this.formSetting.formId, this.formConfig, this.form.getRawValue());
+      this.formFacade.saveFormData(this.formSetting().formId, this.formConfig(), this.form.getRawValue());
     }
   }
 

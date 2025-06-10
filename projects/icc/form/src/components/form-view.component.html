@@ -1,5 +1,5 @@
-<icc-layout-header [title]="formConfig.title">
-  @for (button of formConfig.buttons; track $index; let index = $index) {
+<icc-layout-header [title]="formConfig().title">
+  @for (button of formConfig().buttons; track $index; let index = $index) {
     @if (!buttonHidden(button)) {
       <button icc-button [disabled]="buttonDisabled(button)" (click)="buttonClick(button)">
         @if (button.icon) {
@@ -11,12 +11,12 @@
   }
 </icc-layout-header>
 
-<form [formGroup]="form" [iccFormLabelWidth]="formConfig.labelWidth">
-  <ng-container *ngFor="let fieldConfig of formFields; trackBy: trackByIndex; let index = index">
+<form [formGroup]="form" [iccFormLabelWidth]="formConfig().labelWidth">
+  @for (fieldConfig of formFields(); track $index; let index = $index) {
     @if (fieldConfig.fieldType === FieldType.Fieldset) {
       <icc-fieldset [form]="form" [fieldConfig]="fieldConfig"></icc-fieldset>
     } @else {
       <icc-fields [form]="form" [fieldConfig]="fieldConfig"></icc-fields>
     }
-  </ng-container>
+  }
 </form>

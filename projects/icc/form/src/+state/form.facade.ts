@@ -1,6 +1,5 @@
 import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { IccButtonConfg } from '@icc/ui/core';
 import { IccFormConfig, IccFormSetting } from '../models/form.model';
 import { IccFormField } from '@icc/ui/fields';
@@ -9,7 +8,7 @@ import { selectFormConfig, selectFormFieldsConfig, selectFormData, selectFormSet
 
 @Injectable()
 export class IccFormFacade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   initFormConfig(formId: string, formConfig: IccFormConfig): void {
     this.store.dispatch(formActions.initFormConfig({ formId, formConfig }));
@@ -74,21 +73,4 @@ export class IccFormFacade {
   getFormSignalData(formId: string): Signal<object | undefined> {
     return this.store.selectSignal(selectFormData(formId));
   }
-
-  /*
-  selectFormConfig(formId: string): Observable<IccFormConfig> {
-    return this.store.select(selectFormConfig(formId));
-  }
-
-  selectFormFieldsConfig(formId: string): Observable<IccFormField[]> {
-    return this.store.select(selectFormFieldsConfig(formId));
-  }
-
-  selectSetting(fieldId: string): Observable<IccFormSetting> {
-    return this.store.select(selectFormSetting(fieldId));
-  }
-
-  selectFormData(formId: string): Observable<object | undefined> {
-    return this.store.select(selectFormData(formId));
-  }*/
 }
