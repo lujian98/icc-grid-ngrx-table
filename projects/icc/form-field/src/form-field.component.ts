@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -39,7 +38,7 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
   focused: boolean = false;
   fieldWidth: string = '100%';
   invalid: boolean = false;
-  showFieldEditIndicator = input(false);
+  showFieldEditIndicator = input<boolean>(false);
   field = input(undefined, {
     alias: 'iccFormFieldControl',
     transform: (field: FormControl) => {
@@ -80,22 +79,22 @@ export class IccFormFieldComponent implements AfterViewInit, OnDestroy {
       this.label.nativeElement.remove();
     } else if (this.label) {
       let width = '';
-      if (this.formLabelWidthDirective && this.formLabelWidthDirective.width) {
-        width = this.formLabelWidthDirective.width;
+      if (this.formLabelWidthDirective && this.formLabelWidthDirective.width()) {
+        width = this.formLabelWidthDirective.width()!;
       }
-      if (this.fieldsetLabelWidthDirective && this.fieldsetLabelWidthDirective.width) {
-        width = this.fieldsetLabelWidthDirective.width;
+      if (this.fieldsetLabelWidthDirective && this.fieldsetLabelWidthDirective.width()) {
+        width = this.fieldsetLabelWidthDirective.width()!;
       }
-      if (this.labelWidthDirective && this.labelWidthDirective.width) {
-        width = this.labelWidthDirective.width;
+      if (this.labelWidthDirective && this.labelWidthDirective.width()) {
+        width = this.labelWidthDirective.width()!;
       }
       if (!width) {
         width = DEFAULT_FORM_FIELD_LABEL_WIDTH;
       }
       this.label.nativeElement.style.setProperty('flex', `0 0 ${width}`);
     }
-    if (this.fieldWidthDirective && this.fieldWidthDirective.width) {
-      this.fieldWidth = this.fieldWidthDirective.width;
+    if (this.fieldWidthDirective && this.fieldWidthDirective.width()) {
+      this.fieldWidth = this.fieldWidthDirective.width()!;
     }
     this.setFieldIndicator();
   }

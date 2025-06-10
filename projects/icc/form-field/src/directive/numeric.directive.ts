@@ -1,5 +1,4 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Directive, ElementRef, HostListener, Input, OnDestroy, Optional, Self } from '@angular/core';
+import { Directive, ElementRef, HostListener, input, OnDestroy, Optional, Self } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { BehaviorSubject, interval, Subject } from 'rxjs';
 import { debounce, filter, takeUntil } from 'rxjs/operators';
@@ -8,19 +7,10 @@ import { debounce, filter, takeUntil } from 'rxjs/operators';
   selector: '[iccNumeric]',
 })
 export class IccNumericDirective implements OnDestroy {
-  private _allowNegative = false;
-  private destroy$ = new Subject<void>();
-  private valueChange$: BehaviorSubject<string> = new BehaviorSubject('');
-
-  @Input() decimals = 2;
-
-  @Input()
-  get allowNegative(): boolean {
-    return this._allowNegative;
-  }
-  set allowNegative(value: boolean) {
-    this._allowNegative = coerceBooleanProperty(value);
-  }
+  private readonly destroy$ = new Subject<void>();
+  private readonly valueChange$: BehaviorSubject<string> = new BehaviorSubject('');
+  decimals = input<number>(2);
+  allowNegative = input<boolean>(false);
 
   constructor(
     @Optional() @Self() private ngControl: NgControl,
@@ -34,7 +24,7 @@ export class IccNumericDirective implements OnDestroy {
       )
       .subscribe(() => {
         if (!this.check(this.el.nativeElement.value)) {
-          this.setValue(Number(this.el.nativeElement.value).toFixed(this.decimals));
+          this.setValue(Number(this.el.nativeElement.value).toFixed(this.decimals()));
         }
         if (!this.allowNegative && Number(this.el.nativeElement.value) < 0) {
           this.setValue(String(-Number(this.el.nativeElement.value)));
@@ -43,7 +33,7 @@ export class IccNumericDirective implements OnDestroy {
   }
 
   private check(value: string): RegExpMatchArray | null {
-    if (this.decimals <= 0) {
+    if (this.decimals() <= 0) {
       return String(value).match(new RegExp(/^-?\d+$/));
     } else {
       /****** the regex try to find if the number of chars after char dot '.' match input decimals value  *****/

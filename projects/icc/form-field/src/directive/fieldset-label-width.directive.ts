@@ -1,19 +1,17 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 import { isNumeric } from '@icc/ui/core';
 
 @Directive({
   selector: 'fieldset[iccFieldsetLabelWidth]',
 })
 export class IccFieldsetLabelWidthDirective {
-  private _width!: string;
-
-  @Input('iccFieldsetLabelWidth')
-  set width(width: number | string | undefined) {
-    if (width) {
-      this._width = isNumeric(width) ? `${width}px` : (width as string);
-    }
-  }
-  get width(): string {
-    return this._width;
-  }
+  width = input(undefined, {
+    alias: 'iccFieldsetLabelWidth',
+    transform: (width: number | string | undefined) => {
+      if (width) {
+        return isNumeric(width) ? `${width}px` : (width as string);
+      }
+      return undefined;
+    },
+  });
 }
