@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   EventEmitter,
   inject,
   input,
@@ -28,7 +27,6 @@ import { IccGridHeaderComponent } from '../grid-header/grid-header.component';
 })
 export class IccGridHeaderViewComponent {
   private readonly gridFacade = inject(IccGridFacade);
-  private _columnWidths: IccColumnWidth[] = [];
   tableWidth: number = 1000;
   gridSetting = input.required<IccGridSetting>();
   columnHeaderPosition = input<number>(0);
@@ -36,36 +34,41 @@ export class IccGridHeaderViewComponent {
   columnConfigs = input.required({
     transform: (columnConfigs: IccColumnConfig[]) => {
       this.columns.set(columnConfigs);
-      //this.setColumWidths(this.columns(), this.widthRatio());
+      this.resizedColumns.set(this.columns());
       return columnConfigs;
     },
   });
   columns = signal<IccColumnConfig[]>([]);
-
+  resizedColumns = signal<IccColumnConfig[]>([]);
+  isResizing = signal<boolean>(false);
   widthRatio = computed(() => {
-    return viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.columns());
+    return this.isResizing() ? 1 : viewportWidthRatio(this.gridConfig(), this.gridSetting(), this.columns());
   });
-
-  set columnWidths(values: IccColumnWidth[]) {
-    this._columnWidths = values;
-    this.gridColumnWidthsEvent.emit(values);
-  }
-
-  get columnWidths(): IccColumnWidth[] {
-    return this._columnWidths;
-  }
+  columnWidths = computed(() => {
+    const w = this.gridConfig().horizontalScroll ? getTableWidth(this.columns()) : this.gridSetting().viewportWidth;
+    this.tableWidth = w;
+    const displayColumns = [...this.resizedColumns()].filter((column) => column.hidden !== true);
+    let tot = this.gridConfig().rowSelection ? ROW_SELECTION_CELL_WIDTH : 0;
+    const columnWidths = displayColumns.map((column, index) => {
+      let width = Math.round(this.widthRatio() * column.width!);
+      tot += width;
+      if (index === displayColumns.length - 1) {
+        width += this.tableWidth - tot;
+      }
+      return {
+        name: column.name,
+        width: width,
+      };
+    });
+    this.gridColumnWidthsEvent.emit(columnWidths);
+    return columnWidths;
+  });
 
   @Output() gridColumnWidthsEvent = new EventEmitter<IccColumnWidth[]>();
 
-  constructor() {
-    effect(() => {
-      // need this for columns and gridConfig
-      this.setColumWidths(this.columns(), this.widthRatio());
-    });
-  }
-
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
-    this.setColumWidths(columnWidths, 1);
+    this.resizedColumns.set(columnWidths);
+    this.isResizing.set(true);
     if (this.gridConfig().horizontalScroll) {
       this.tableWidth = getTableWidth(columnWidths);
     }
@@ -76,7 +79,8 @@ export class IccGridHeaderViewComponent {
       ...column,
       width: columnWidths[index].width / this.widthRatio(),
     }));
-    this.setColumWidths(columnWidths, this.widthRatio());
+    this.resizedColumns.set(this.columns());
+    this.isResizing.set(false);
     this.gridFacade.setGridColumnsConfig(this.gridConfig(), this.gridSetting(), columns);
   }
 
@@ -154,25 +158,6 @@ export class IccGridHeaderViewComponent {
     const columns = [...this.columns()];
     moveItemInArray(columns, previousIndex, currentIndex);
     this.gridFacade.setGridColumnsConfig(this.gridConfig(), this.gridSetting(), columns);
-  }
-
-  private setColumWidths(columns: IccColumnConfig[], widthRatio: number): void {
-    this.tableWidth = this.gridConfig().horizontalScroll
-      ? getTableWidth(this.columns())
-      : this.gridSetting().viewportWidth;
-    const displayColumns = [...columns].filter((column) => column.hidden !== true);
-    let tot = this.gridConfig().rowSelection ? ROW_SELECTION_CELL_WIDTH : 0;
-    this.columnWidths = displayColumns.map((column, index) => {
-      let width = Math.round(widthRatio * column.width!);
-      tot += width;
-      if (index === displayColumns.length - 1) {
-        width += this.tableWidth - tot;
-      }
-      return {
-        name: column.name,
-        width: width,
-      };
-    });
   }
 
   private indexCorrection(idx: number): number {
