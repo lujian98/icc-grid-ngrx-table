@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccButtonConfg } from '@icc/ui/core';
@@ -59,6 +59,23 @@ export class IccFormFacade {
     this.store.dispatch(formActions.clearFormDataStore({ formId }));
   }
 
+  getFormConfig(formId: string): Signal<IccFormConfig> {
+    return this.store.selectSignal(selectFormConfig(formId));
+  }
+
+  getSetting(fieldId: string): Signal<IccFormSetting> {
+    return this.store.selectSignal(selectFormSetting(fieldId));
+  }
+
+  getFormFieldsConfig(formId: string): Signal<IccFormField[]> {
+    return this.store.selectSignal(selectFormFieldsConfig(formId));
+  }
+
+  getFormSignalData(formId: string): Signal<object | undefined> {
+    return this.store.selectSignal(selectFormData(formId));
+  }
+
+  /*
   selectFormConfig(formId: string): Observable<IccFormConfig> {
     return this.store.select(selectFormConfig(formId));
   }
@@ -73,5 +90,5 @@ export class IccFormFacade {
 
   selectFormData(formId: string): Observable<object | undefined> {
     return this.store.select(selectFormData(formId));
-  }
+  }*/
 }

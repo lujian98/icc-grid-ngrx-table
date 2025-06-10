@@ -9,8 +9,8 @@ import { IccFormField } from '@icc/ui/fields';
   providedIn: 'root',
 })
 export class IccFormService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   getRemoteFormConfig(formConfig: IccFormConfig): Observable<IccFormConfig> {
     const params = this.backendService.getParams(formConfig.urlKey, 'formConfig');

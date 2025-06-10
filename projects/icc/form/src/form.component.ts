@@ -1,13 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnDestroy, Output } from '@angular/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccLayoutComponent } from '@icc/ui/layout';
-import { Observable } from 'rxjs';
 import { IccFormStateModule } from './+state/form-state.module';
 import { IccFormFacade } from './+state/form.facade';
 import { IccFormViewComponent } from './components/form-view.component';
 import { defaultFormConfig } from './models/default-form';
-import { IccFormConfig, IccFormButtonClick, IccFormSetting } from './models/form.model';
+import { IccFormButtonClick, IccFormConfig } from './models/form.model';
 
 @Component({
   selector: 'icc-form',
@@ -17,62 +15,53 @@ import { IccFormConfig, IccFormButtonClick, IccFormSetting } from './models/form
   host: {
     '[class.auto-fit-height]': 'formConfig.autoFitHeight',
   },
-  imports: [CommonModule, IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
+  imports: [IccFormStateModule, IccFormViewComponent, IccLayoutComponent],
 })
 export class IccFormComponent implements OnDestroy {
-  private formFacade = inject(IccFormFacade);
-  private _formConfig!: IccFormConfig;
-  private _formFields: IccFormField[] = [];
+  private readonly formFacade = inject(IccFormFacade);
   private formId = `form-${crypto.randomUUID()}`;
-  formSetting$!: Observable<IccFormSetting>;
-  formConfig$!: Observable<IccFormConfig>;
-  formFieldsConfig$!: Observable<IccFormField[]>;
-  formData$!: Observable<object | undefined>;
+  formConfig$ = this.formFacade.getFormConfig(this.formId);
+  formSetting$ = this.formFacade.getSetting(this.formId);
+  formFieldsConfig$ = this.formFacade.getFormFieldsConfig(this.formId);
+  formData$ = this.formFacade.getFormSignalData(this.formId);
+  formConfig = input(defaultFormConfig, {
+    transform: (value: Partial<IccFormConfig>) => {
+      const formConfig = { ...defaultFormConfig, ...value };
+      this.initFormConfig(formConfig);
+      return formConfig;
+    },
+  });
+  formFields = input([], {
+    transform: (formFields: IccFormField[]) => {
+      if (!this.formConfig$().remoteFieldsConfig && formFields.length > 0) {
+        this.formFacade.setFormFieldsConfig(this.formId, this.formConfig$(), formFields);
+      }
+      return formFields;
+    },
+  });
+  values = input(undefined, {
+    transform: (values: object) => {
+      this.formFacade.setFormData(this.formId, this.formConfig(), values);
+      return values;
+    },
+  });
 
-  @Input()
-  set formConfig(formConfig: Partial<IccFormConfig>) {
-    this.initFormConfig({ ...defaultFormConfig, ...formConfig });
-  }
-  get formConfig(): IccFormConfig {
-    return this._formConfig;
-  }
-
-  private initFormConfig(value: IccFormConfig): void {
-    this._formConfig = { ...value };
-    this.formConfig$ = this.formFacade.selectFormConfig(this.formId);
-    this.formSetting$ = this.formFacade.selectSetting(this.formId);
-    this.formFieldsConfig$ = this.formFacade.selectFormFieldsConfig(this.formId);
-    this.formData$ = this.formFacade.selectFormData(this.formId);
-    this.formFacade.initFormConfig(this.formId, this.formConfig);
-  }
-
-  @Input()
-  set formFields(val: IccFormField[]) {
-    this._formFields = val;
-    if (!this.formConfig) {
-      this.initFormConfig({ ...defaultFormConfig });
-    }
-    if (!this.formConfig.remoteFieldsConfig && this.formFields.length > 0) {
-      this.formFacade.setFormFieldsConfig(this.formId, this.formConfig, this.formFields);
-    }
-  }
-  get formFields(): IccFormField[] {
-    return this._formFields;
-  }
-
-  @Input()
-  set values(val: object) {
-    this.formFacade.setFormData(this.formId, this.formConfig, val);
+  get autoFitHeight() {
+    return this.formConfig().autoFitHeight;
   }
 
   @Output() iccFormButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
-  formButtonClick(buttonClick: IccFormButtonClick): void {
-    this.iccFormButtonClick.emit(buttonClick);
+  constructor() {
+    this.initFormConfig({ ...defaultFormConfig });
   }
 
-  get autoFitHeight() {
-    return this.formConfig.autoFitHeight;
+  private initFormConfig(formConfig: IccFormConfig): void {
+    this.formFacade.initFormConfig(this.formId, formConfig);
+  }
+
+  formButtonClick(buttonClick: IccFormButtonClick): void {
+    this.iccFormButtonClick.emit(buttonClick);
   }
 
   ngOnDestroy(): void {

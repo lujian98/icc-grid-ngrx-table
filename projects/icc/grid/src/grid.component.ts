@@ -59,9 +59,9 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
   });
   columnsConfig = input([], {
     transform: (columnsConfig: IccColumnConfig[]) => {
-      if (!this.gridConfig) {
-        this.initGridConfig({ ...defaultGridConfig });
-      }
+      //if (!this.gridConfig) {
+      //  this.initGridConfig({ ...defaultGridConfig });
+      //}
       if (!this.gridConfig$().remoteColumnsConfig && columnsConfig.length > 0) {
         const gridSetting = { ...defaultGridSetting, gridId: this.gridId };
         this.gridFacade.setGridColumnsConfig(this.gridConfig$(), gridSetting, columnsConfig);
