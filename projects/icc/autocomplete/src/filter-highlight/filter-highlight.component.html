@@ -1,7 +1,7 @@
-<ng-container *ngFor="let val of values">
+@for (val of values$(); track $index; let index = $index) {
   @if (isMarkedValue(val)) {
     <mark>{{ val }}</mark>
   } @else {
     <span>{{ val }}</span>
   }
-</ng-container>
+}
