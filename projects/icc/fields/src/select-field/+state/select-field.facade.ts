@@ -7,7 +7,7 @@ import { selectFieldSetting, selectFieldConfig, selectOptions } from './select-f
 
 @Injectable()
 export class IccSelectFieldFacade {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   initFieldConfig(fieldId: string, fieldConfig: IccSelectFieldConfig): void {
     this.store.dispatch(selectFieldActions.initFieldConfig({ fieldId, fieldConfig }));

@@ -9,8 +9,8 @@ import { IccSelectFieldConfig, IccOptionType } from '../models/select-field.mode
   providedIn: 'root',
 })
 export class IccSelectFieldService {
-  private http = inject(HttpClient);
-  private backendService = inject(IccBackendService);
+  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(IccBackendService);
 
   getRemoteFieldConfig(fieldConfig: IccSelectFieldConfig): Observable<IccSelectFieldConfig> {
     const params = this.backendService.getParams(fieldConfig.urlKey, 'selectFieldConfig', fieldConfig.fieldName);

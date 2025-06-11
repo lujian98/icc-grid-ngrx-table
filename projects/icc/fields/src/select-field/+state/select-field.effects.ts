@@ -7,9 +7,9 @@ import * as selectFieldActions from './select-field.actions';
 
 @Injectable()
 export class IccSelectFieldEffects {
-  private store = inject(Store);
-  private actions$ = inject(Actions);
-  private selectfieldService = inject(IccSelectFieldService);
+  private readonly store = inject(Store);
+  private readonly actions$ = inject(Actions);
+  private readonly selectfieldService = inject(IccSelectFieldService);
 
   getRemoteFieldConfig$ = createEffect(() =>
     this.actions$.pipe(
