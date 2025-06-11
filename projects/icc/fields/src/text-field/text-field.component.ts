@@ -76,6 +76,8 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
 export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
   fieldConfig = input.required({
@@ -131,16 +133,15 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   clearValue(): void {
-    //this.value = '';
+    this.field.setValue('');
     this.valueChange.emit('');
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
-
-  registerOnTouched(fn: (value: string) => void): void {
-    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
