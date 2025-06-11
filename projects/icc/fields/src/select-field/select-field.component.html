@@ -1,13 +1,13 @@
 <ng-container *ngIf="fieldConfig$ | async as fieldConfig">
   <ng-container *ngIf="fieldSetting$ | async as fieldSetting">
-    <ng-container *ngIf="form()" [formGroup]="form()">
+    <ng-container *ngIf="form" [formGroup]="form">
       <icc-form-field
         *ngIf="selectOptions$ | async as selectOptions"
         [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
         [iccLabelWidth]="fieldConfig.labelWidth"
         [iccFieldWidth]="fieldConfig.fieldWidth"
-        [showFieldEditIndicator]="showFieldEditIndicator()"
         [iccFormFieldControl]="field"
+        [showFieldEditIndicator]="showFieldEditIndicator"
       >
         @if (fieldConfig.fieldLabel !== undefined) {
           <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
@@ -49,7 +49,7 @@
               [autocomplete]="autocompleteComponent"
               [setSelected]="setSelected"
               [selectFilter]="field.value"
-              [form]="form()"
+              [form]="form"
               [selectOptions]="selectOptions"
               (clickedOption)="onClickedOption($event)"
               (autocompleteClose)="onAutocompleteClose($event)"
