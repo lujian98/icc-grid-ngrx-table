@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,7 +8,7 @@ import {
   forwardRef,
   inject,
   Injector,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -54,7 +54,6 @@ import { IccDateRangeStoreService } from './services/date-range-store.service';
   styleUrls: ['./date-range-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -86,55 +85,42 @@ import { IccDateRangeStoreService } from './services/date-range-store.service';
   ],
 })
 export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private translateService = inject(TranslateService);
-  private dialogService = inject(IccDialogService);
-  private injector = inject(Injector);
-  private rangeStoreService = inject(IccDateRangeStoreService);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccDateRangeFieldConfig;
-  private _value!: IccDateRange | null;
-
-  @Input() form!: FormGroup;
-  @Input() showFieldEditIndicator: boolean = true;
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccDateRangeFieldConfig>) {
-    this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccDateRangeFieldConfig {
-    return this._fieldConfig;
-  }
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly translateService = inject(TranslateService);
+  private readonly dialogService = inject(IccDialogService);
+  private readonly injector = inject(Injector);
+  private readonly rangeStoreService = inject(IccDateRangeStoreService);
+  private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccDateRangeFieldConfig>) => {
+      const fieldConfig = { ...defaultDateRangeFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input(null, {
+    transform: (value: IccDateRange | null) => {
+      this.field.setValue(value);
+      this.rangeStoreService.updateRange(value?.fromDate!, value?.toDate!);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccDateRangeFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<IccDateRange | null>(null),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<IccDateRange | null>(null));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: IccDateRange | null) {
-    this._value = val;
-    this.initForm({ ...defaultDateRangeFieldConfig });
-    this.field.setValue(val);
-    this.rangeStoreService.updateRange(val?.fromDate!, val?.toDate!);
-  }
-  get value(): IccDateRange | null {
-    return this._value;
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -142,7 +128,7 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -153,8 +139,8 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
     const range = this.field.value;
     if (range && range.fromDate && range.toDate) {
       const locale = this.translateService.currentLang || 'en-US';
-      const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig.dateFormat);
-      const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig.dateFormat);
+      const from = new DatePipe(locale).transform(range.fromDate, this.fieldConfig().dateFormat);
+      const to = new DatePipe(locale).transform(range.toDate, this.fieldConfig().dateFormat);
       return `${from} - ${to}`;
     } else {
       return '';
@@ -175,7 +161,7 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   openCalendar(): void {
     this.dialogService.open(IccDateRangePickerComponent, {
       context: {
-        fieldConfig: this.fieldConfig,
+        fieldConfig: this.fieldConfig(),
       },
       hostElemRef: this.calendarInput,
       injector: this.injector,
@@ -191,28 +177,29 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   clearValue(): void {
-    this.value = null;
+    this.field.setValue(null);
+    this.valueChange.emit(null);
   }
 
-  registerOnChange(fn: (value: IccDateRange) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: IccDateRange) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: IccDateRange }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 
   ngOnDestroy(): void {
