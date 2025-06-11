@@ -1,4 +1,4 @@
-@if (gridConfig$() && gridSetting$() && columnsConfig$() && gridData$()) {
+@if (gridConfig$()) {
   <icc-layout>
     @if (!gridConfig$().hideTopbar) {
       <icc-layout-header [buttons]="buttons$()" (iccButtonClick)="buttonClick($event)"> </icc-layout-header>
