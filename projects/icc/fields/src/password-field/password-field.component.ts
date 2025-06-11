@@ -75,7 +75,6 @@ export class IccPasswordFieldComponent implements ControlValueAccessor, Validato
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
-  showFieldEditIndicator = input<boolean>(true);
   fieldConfig = input.required({
     transform: (config: Partial<IccPasswordFieldConfig>) => {
       const fieldConfig = { ...defaultPasswordFieldConfig, ...config };

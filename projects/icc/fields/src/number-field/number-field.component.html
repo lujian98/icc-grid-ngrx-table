@@ -1,30 +1,31 @@
-<ng-container *ngIf="form" [formGroup]="form">
+@if (form()) {
   <icc-form-field
-    [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
-    [iccLabelWidth]="fieldConfig.labelWidth"
-    [iccFieldWidth]="fieldConfig.fieldWidth"
+    [formGroup]="form()"
+    [style.display]="hidden ? 'none' : 'inherit'"
+    [iccLabelWidth]="fieldConfig().labelWidth"
+    [iccFieldWidth]="fieldConfig().fieldWidth"
     [iccFormFieldControl]="field"
-    [showFieldEditIndicator]="showFieldEditIndicator"
+    [showFieldEditIndicator]="showFieldEditIndicator()"
   >
-    @if (fieldConfig.fieldLabel !== undefined) {
-      <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
+    @if (fieldConfig().fieldLabel !== undefined) {
+      <icc-label>{{ fieldConfig().fieldLabel! | translate }}</icc-label>
     }
     <input
       iccInput
       #inputEl
       type="number"
       autocomplete="off"
-      [formControlName]="fieldConfig.fieldName!"
+      [formControlName]="fieldConfig().fieldName!"
       (keyup)="onChange()"
       (wheel)="onChange()"
       [required]="required"
-      placeholder="{{ fieldConfig.placeholder! | translate }}"
+      placeholder="{{ fieldConfig().placeholder! | translate }}"
     />
-    @if (fieldConfig.clearValue && hasValue) {
+    @if (fieldConfig().clearValue && hasValue) {
       <icc-icon icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
     }
     @if (field && (field.touched || field.dirty) && field.errors) {
       <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
     }
   </icc-form-field>
-</ng-container>
+}

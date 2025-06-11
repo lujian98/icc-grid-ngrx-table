@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,8 +6,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
-  Input,
-  OnDestroy,
+  input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -26,19 +24,19 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
   IccFieldWidthDirective,
-  IccSuffixDirective,
+  IccFormFieldComponent,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccInputDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
 } from '@icc/ui/form-field';
-import { TranslatePipe } from '@ngx-translate/core';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { TranslatePipe } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-field.model';
 
 @Component({
@@ -59,7 +57,6 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     IccFormFieldComponent,
@@ -75,55 +72,39 @@ import { defaultNumberFieldConfig, IccNumberFieldConfig } from './models/number-
     IccFormFieldControlDirective,
   ],
 })
-export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccNumberFieldConfig;
-  private _value!: number | null;
-
-  @Input() form!: FormGroup;
-  @Input() showFieldEditIndicator: boolean = true;
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccNumberFieldConfig>) {
-    this._fieldConfig = { ...defaultNumberFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccNumberFieldConfig {
-    return this._fieldConfig;
-  }
+export class IccNumberFieldComponent implements ControlValueAccessor, Validator {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccNumberFieldConfig>) => {
+      const fieldConfig = { ...defaultNumberFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input(null, {
+    transform: (value: number | null) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccNumberFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<number | null>(null),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<number | null>(null));
     }
-
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: number | null) {
-    this._value = val;
-    this.initForm({ ...defaultNumberFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): number | null {
-    return this._value;
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   @Output() valueChange = new EventEmitter<number | null>();
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -131,7 +112,7 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -146,20 +127,20 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   clearValue(): void {
-    this.value = null;
+    this.field.setValue(null);
     this.valueChange.emit(null);
   }
 
-  registerOnChange(fn: (value: number) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: number) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   patchValue(value: number): void {
@@ -167,16 +148,11 @@ export class IccNumberFieldComponent implements OnDestroy, ControlValueAccessor,
   }
 
   writeValue(value: { [key: string]: number }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }

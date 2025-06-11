@@ -79,7 +79,6 @@ export class IccUploadFileFieldComponent implements ControlValueAccessor, Valida
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
-  showFieldEditIndicator = input<boolean>(true);
   fieldConfig = input.required({
     transform: (config: Partial<IccUploadFileFieldConfig>) => {
       const fieldConfig = { ...defaultUploadFileFieldConfig, ...config };
