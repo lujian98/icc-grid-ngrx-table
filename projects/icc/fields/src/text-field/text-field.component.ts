@@ -94,9 +94,16 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   private initForm(fieldConfig: IccTextFieldConfig): void {
     if (!this.form) {
       this._fieldConfig = { ...fieldConfig };
+      this.form = new FormGroup({});
+      /*
       this.form = new FormGroup({
         [this.fieldConfig.fieldName!]: new FormControl<string>(''),
       });
+      */
+    }
+    if (!this.form!.get(this.fieldConfig.fieldName!)) {
+      console.log(' add missing field =', this.fieldConfig.fieldName);
+      this.form.addControl(this.fieldConfig.fieldName!, new FormControl<string>(''));
     }
 
     this.setFieldEditable();
