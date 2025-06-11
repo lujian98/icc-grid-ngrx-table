@@ -7,6 +7,7 @@ import {
   forwardRef,
   inject,
   Input,
+  input,
   OnDestroy,
   Output,
   ViewChild,
@@ -76,29 +77,30 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
     IccFormFieldControlDirective,
   ],
 })
-export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private uploadFileService = inject(IccUploadFileService);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccUploadFileFieldConfig;
-  private _value!: string;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccUploadFileFieldConfig>) {
-    this._fieldConfig = { ...defaultUploadFileFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccUploadFileFieldConfig {
-    return this._fieldConfig;
-  }
+export class IccUploadFileFieldComponent implements ControlValueAccessor, Validator {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly uploadFileService = inject(IccUploadFileService);
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccUploadFileFieldConfig>) => {
+      const fieldConfig = { ...defaultUploadFileFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input('', {
+    transform: (value: string) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccUploadFileFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
     this.setFieldEditable();
   }
@@ -106,25 +108,14 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: string) {
-    this._value = val;
-    this.initForm({ ...defaultUploadFileFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): string {
-    return this._value;
+      .subscribe(() => (this.fieldConfig().editable ? this.field.enable() : this.field.disable()));
   }
 
   @Output() valueChange = new EventEmitter<string>(false);
   @Output() selectUploadFile = new EventEmitter<File | null>(false);
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -132,7 +123,7 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -153,41 +144,35 @@ export class IccUploadFileFieldComponent implements OnDestroy, ControlValueAcces
     this.field.markAsTouched();
     this.valueChange.emit(this.field.value);
     // TODO still need use uploadFileService.formUploadFileChanged ?? for from field save with upload file???
-    this.uploadFileService.formUploadFileChanged(this.fieldConfig.fieldName!, this.selectedFile);
+    this.uploadFileService.formUploadFileChanged(this.fieldConfig().fieldName!, this.selectedFile);
     this.selectUploadFile.emit(this.selectedFile);
   }
 
   clearValue(): void {
-    this.value = '';
+    this.field.setValue('');
     this.field.markAsPristine();
     this.valueChange.emit('');
     this.selectUploadFile.emit(this.selectedFile);
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+    isDisabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.uploadFileService.uploadFiles = [];
-    this.destroy$.next();
-    this.destroy$.complete();
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }

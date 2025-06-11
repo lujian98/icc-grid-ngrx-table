@@ -7,7 +7,6 @@ import {
   forwardRef,
   inject,
   input,
-  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -36,7 +35,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Subject, take, timer } from 'rxjs';
+import { take, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
 
@@ -73,9 +72,8 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
     IccFormFieldControlDirective,
   ],
 })
-export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
+export class IccTextFieldComponent implements ControlValueAccessor, Validator {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private readonly destroy$ = new Subject<void>();
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
@@ -156,10 +154,5 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
 
   validate(control: AbstractControl): ValidationErrors | null {
     return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
