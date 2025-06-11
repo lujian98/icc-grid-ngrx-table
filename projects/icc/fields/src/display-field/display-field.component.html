@@ -1,13 +1,14 @@
-<ng-container *ngIf="form" [formGroup]="form">
+@if (form()) {
   <icc-form-field
-    [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
-    [iccLabelWidth]="fieldConfig.labelWidth"
-    [iccFieldWidth]="fieldConfig.fieldWidth"
+    [formGroup]="form()"
+    [style.display]="hidden ? 'none' : 'inherit'"
+    [iccLabelWidth]="fieldConfig().labelWidth"
+    [iccFieldWidth]="fieldConfig().fieldWidth"
     [iccFormFieldControl]="field"
   >
-    @if (fieldConfig.fieldLabel !== undefined) {
-      <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
+    @if (fieldConfig().fieldLabel !== undefined) {
+      <icc-label>{{ fieldConfig().fieldLabel! | translate }}</icc-label>
     }
-    <input iccInput type="text" [formControlName]="fieldConfig.fieldName!" readonly />
+    <input iccInput type="text" [formControlName]="fieldConfig().fieldName!" readonly />
   </icc-form-field>
-</ng-container>
+}

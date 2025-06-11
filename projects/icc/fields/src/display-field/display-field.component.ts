@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -22,7 +21,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Subject, take, takeUntil, timer } from 'rxjs';
+import { take, timer } from 'rxjs';
 import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/display-field.model';
 
 @Component({
@@ -43,7 +42,6 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -57,72 +55,58 @@ import { defaultDisplayFieldConfig, IccDisplayFieldConfig } from './models/displ
   ],
 })
 export class IccDisplayFieldComponent implements ControlValueAccessor, Validator {
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccDisplayFieldConfig;
-  private _value!: string;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccDisplayFieldConfig>) {
-    this._fieldConfig = { ...defaultDisplayFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccDisplayFieldConfig {
-    return this._fieldConfig;
-  }
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccDisplayFieldConfig>) => {
+      const fieldConfig = { ...defaultDisplayFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input('', {
+    transform: (value: string) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccDisplayFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
       .subscribe(() => this.field.disable());
   }
 
-  @Input()
-  set value(val: string) {
-    this._value = val;
-    this.initForm({ ...defaultDisplayFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): string {
-    return this._value;
-  }
-
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }
