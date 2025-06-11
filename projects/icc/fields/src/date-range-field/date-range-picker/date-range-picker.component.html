@@ -1,24 +1,26 @@
 <icc-layout [@transformPickerOverlay]="shouldAnimate">
   <div class="icc-date-range-calendar-container">
-    <icc-calendar
-      *ngIf="fromCalendarConfig"
-      [calendarConfig]="fromCalendarConfig"
-      [selectedDate]="fromDate"
-      [selectedRangeDates]="selectedRangeDates"
-      (monthViewChange)="fromMonthViewChange($event)"
-      (selectedDateChange)="updateFromDate($event)"
-    >
-    </icc-calendar>
+    @if (fromCalendarConfig) {
+      <icc-calendar
+        [calendarConfig]="fromCalendarConfig"
+        [selectedDate]="fromDate"
+        [selectedRangeDates]="selectedRangeDates"
+        (monthViewChange)="fromMonthViewChange($event)"
+        (selectedDateChange)="updateFromDate($event)"
+      >
+      </icc-calendar>
+    }
 
-    <icc-calendar
-      *ngIf="toCalendarConfig"
-      [calendarConfig]="toCalendarConfig"
-      [selectedDate]="toDate"
-      [selectedRangeDates]="selectedRangeDates"
-      (monthViewChange)="toMonthViewChange($event)"
-      (selectedDateChange)="updateToDate($event)"
-    >
-    </icc-calendar>
+    @if (toCalendarConfig) {
+      <icc-calendar
+        [calendarConfig]="toCalendarConfig"
+        [selectedDate]="toDate"
+        [selectedRangeDates]="selectedRangeDates"
+        (monthViewChange)="toMonthViewChange($event)"
+        (selectedDateChange)="updateToDate($event)"
+      >
+      </icc-calendar>
+    }
   </div>
 
   <icc-layout-footer>

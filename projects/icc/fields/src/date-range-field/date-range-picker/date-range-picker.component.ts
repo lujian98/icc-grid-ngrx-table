@@ -1,14 +1,5 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
@@ -19,15 +10,15 @@ import {
   IccLayoutFooterEndComponent,
   IccLayoutFooterStartComponent,
 } from '@icc/ui/layout';
-import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { take, timer } from 'rxjs';
+import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import {
   IccDateRangeFieldConfig,
+  IccDateRangePresetItem,
   defaultDateRangeFieldConfig,
   iccDefaultDateRangePresets,
   presetSelectionConfig,
-  IccDateRangePresetItem,
 } from '../models/date-range-field.model';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 
@@ -38,7 +29,6 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [
-    CommonModule,
     IccButtonComponent,
     TranslateDirective,
     IccCalendarComponent,
@@ -65,7 +55,6 @@ export class IccDateRangePickerComponent implements AfterViewInit, OnInit {
   selectedRangeDates: Array<Date> = [];
   shouldAnimate: string = 'enter'; // 'enter' : 'noop';
 
-  @Input()
   set fieldConfig(fieldConfig: IccDateRangeFieldConfig) {
     this._fieldConfig = fieldConfig;
     this._fieldConfig = { ...defaultDateRangeFieldConfig, ...fieldConfig };
