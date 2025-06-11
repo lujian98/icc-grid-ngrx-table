@@ -1,17 +1,14 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   forwardRef,
   inject,
-  Input,
   input,
-  OnDestroy,
   Output,
   ViewChild,
-  ElementRef,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -26,21 +23,21 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import { IccUploadFileService } from '@icc/ui/core';
 import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
   IccFieldWidthDirective,
-  IccSuffixDirective,
+  IccFormFieldComponent,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccInputDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
-import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
 import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models/upload-file-field.model';
 
 @Component({
@@ -61,7 +58,6 @@ import { defaultUploadFileFieldConfig, IccUploadFileFieldConfig } from './models
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -102,13 +98,9 @@ export class IccUploadFileFieldComponent implements ControlValueAccessor, Valida
     if (!this.form().get(fieldConfig.fieldName!)) {
       this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig().editable ? this.field.enable() : this.field.disable()));
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   @Output() valueChange = new EventEmitter<string>(false);
@@ -163,8 +155,8 @@ export class IccUploadFileFieldComponent implements ControlValueAccessor, Valida
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form().disable() : this.form().enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {

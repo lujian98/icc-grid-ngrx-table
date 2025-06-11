@@ -93,13 +93,9 @@ export class IccTextareaFieldComponent implements ControlValueAccessor, Validato
     if (!this.form().get(fieldConfig.fieldName!)) {
       this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig().editable ? this.field.enable() : this.field.disable()));
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   @Output() valueChange = new EventEmitter<string>(undefined);
@@ -138,8 +134,8 @@ export class IccTextareaFieldComponent implements ControlValueAccessor, Validato
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form().disable() : this.form().enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {

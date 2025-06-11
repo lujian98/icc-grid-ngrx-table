@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,8 +5,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
-  Input,
-  OnDestroy,
+  input,
   Output,
 } from '@angular/core';
 import {
@@ -23,20 +21,20 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import {
+  IccFieldWidthDirective,
   IccFormFieldComponent,
+  IccFormFieldControlDirective,
+  IccFormFieldErrorsDirective,
+  IccInputDirective,
   IccLabelDirective,
   IccLabelWidthDirective,
-  IccFieldWidthDirective,
   IccSuffixDirective,
-  IccFormFieldErrorsDirective,
-  IccFormFieldControlDirective,
 } from '@icc/ui/form-field';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { TranslatePipe } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/password-field.model';
 
 @Component({
@@ -57,7 +55,6 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -73,53 +70,39 @@ import { defaultPasswordFieldConfig, IccPasswordFieldConfig } from './models/pas
     IccFormFieldControlDirective,
   ],
 })
-export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccPasswordFieldConfig;
-  private _value!: string;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccPasswordFieldConfig>) {
-    this._fieldConfig = { ...defaultPasswordFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccPasswordFieldConfig {
-    return this._fieldConfig;
-  }
+export class IccPasswordFieldComponent implements ControlValueAccessor, Validator {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccPasswordFieldConfig>) => {
+      const fieldConfig = { ...defaultPasswordFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input('', {
+    transform: (value: string) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccPasswordFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: string) {
-    this._value = val;
-    this.initForm({ ...defaultPasswordFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): string {
-    return this._value;
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   @Output() valueChange = new EventEmitter<string>(false);
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -127,7 +110,7 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -140,33 +123,28 @@ export class IccPasswordFieldComponent implements OnDestroy, ControlValueAccesso
   }
 
   clearValue(): void {
-    this.value = '';
+    this.field.setValue('');
     this.valueChange.emit('');
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }
