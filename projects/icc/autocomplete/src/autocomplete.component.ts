@@ -1,4 +1,3 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonModule } from '@angular/common';
 import {
@@ -9,7 +8,7 @@ import {
   ContentChildren,
   ElementRef,
   inject,
-  Input,
+  input,
   OnDestroy,
   QueryList,
   TemplateRef,
@@ -29,22 +28,19 @@ import { IccAutocompleteContentDirective } from './autocomplete-content.directiv
   imports: [CommonModule, IccOverlayModule],
 })
 export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestroy {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private _selection = new SelectionModel<IccOptionComponent<T>>(this.multiSelection, []);
-  private _multiSelection: boolean = false;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private _selection = new SelectionModel<IccOptionComponent<T>>(false, []);
   private _value: T | null = null;
   private destroy$ = new Subject<void>();
 
-  @Input() displayWith!: (value: T) => string;
-  @Input() compareWith!: (value: T, option: T) => boolean;
-  @Input()
-  get multiSelection(): boolean {
-    return this._multiSelection;
-  }
-  set multiSelection(val: boolean) {
-    this._multiSelection = coerceBooleanProperty(val);
-    this.selection = new SelectionModel<IccOptionComponent<T>>(this._multiSelection, []);
-  }
+  displayWith = input<(value: T) => string>();
+  compareWith = input<(value: T, option: T) => boolean>();
+  multiSelection = input(false, {
+    transform: (multiSelection: boolean) => {
+      this.selection = new SelectionModel<IccOptionComponent<T>>(multiSelection, []);
+      return multiSelection;
+    },
+  });
 
   get selection(): SelectionModel<IccOptionComponent<T>> {
     return this._selection;
@@ -61,10 +57,10 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   get toDisplay(): string {
-    if (this.displayWith) {
-      return this.displayWith(this.value!);
+    if (this.displayWith()) {
+      return this.displayWith()!(this.value!);
     } else if (
-      this.multiSelection &&
+      this.multiSelection() &&
       Array.isArray(this.value) &&
       this.value.every((i) => typeof i === 'string' || typeof i === 'number')
     ) {
@@ -108,7 +104,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   setSelectionOption(option: IccOptionComponent<T>): void {
-    if (this.multiSelection && Array.isArray(this.value)) {
+    if (this.multiSelection() && Array.isArray(this.value)) {
       const find = this.value.findIndex((item: T) => this.compareValue(option.value, item));
       if (find > -1) {
         option.deselect();
@@ -181,7 +177,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   private compareValue(value: T, item: T): boolean {
-    return this.compareWith ? this.compareWith(value, item) : value === item;
+    return this.compareWith() ? this.compareWith()!(value, item) : value === item;
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,3 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
@@ -10,7 +9,7 @@ import {
   Host,
   HostListener,
   inject,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Optional,
@@ -45,37 +44,43 @@ import { IccAutocompleteComponent } from './autocomplete.component';
   ],
 })
 export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnInit, OnDestroy {
-  private document = inject(ICC_DOCUMENT);
-  private host = inject(ElementRef<HTMLInputElement>);
-  private viewContainerRef = inject(ViewContainerRef);
-  private overlay = inject(Overlay);
-  private overlayPositionBuilder = inject(IccPositionBuilderService);
-  private triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService<T>);
+  private readonly document = inject(ICC_DOCUMENT);
+  private readonly host = inject(ElementRef<HTMLInputElement>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly overlay = inject(Overlay);
+  private readonly overlayPositionBuilder = inject(IccPositionBuilderService);
+  private readonly triggerStrategyBuilder = inject(IccTriggerStrategyBuilderService<T>);
   private overlayRef!: OverlayRef | null;
   private position: IccPosition = IccPosition.BOTTOM;
   private triggerStrategy!: IccTriggerStrategy;
   private trigger: IccTrigger = IccTrigger.FOCUS;
   private isShow: boolean = false;
 
-  @Input('iccAutocomplete') autocomplete!: IccAutocompleteComponent<T, G>;
-  @Input('iccAutocompleteClose')
-  set autocompleteClose(value: boolean) {
-    if (coerceBooleanProperty(value)) {
-      this.hide();
-    }
-  }
-
-  @Input('iccAutocompleteClickOption')
-  set autocompleteClickOption(clicked: string | undefined) {
-    if (clicked) {
-      this.setTriggerValue();
-      this.change.emit(this.autocomplete.value);
-      this._onChange(this.autocomplete.value);
-      if (!this.autocomplete.multiSelection) {
+  autocomplete = input.required<IccAutocompleteComponent<T, G>>({
+    alias: 'iccAutocomplete',
+  });
+  autocompleteClose = input(false, {
+    alias: 'iccAutocompleteClose',
+    transform: (autocompleteClose: boolean) => {
+      if (autocompleteClose) {
         this.hide();
       }
-    }
-  }
+      return autocompleteClose;
+    },
+  });
+  autocompleteClickOption = input(undefined, {
+    alias: 'iccAutocompleteClickOption',
+    transform: (clicked: string | undefined) => {
+      if (clicked) {
+        this.setTriggerValue();
+        this.change.emit(this.autocomplete().value);
+        this._onChange(this.autocomplete().value);
+        if (!this.autocomplete().multiSelection) {
+          this.hide();
+        }
+      }
+    },
+  });
 
   get origin(): HTMLInputElement {
     return this.host.nativeElement;
@@ -140,21 +145,21 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.inputHost, this.position, 0),
     });
-    const template = new TemplatePortal(this.autocomplete.rootTemplate, this.viewContainerRef);
+    const template = new TemplatePortal(this.autocomplete().rootTemplate, this.viewContainerRef);
     this.overlayRef.attach(template);
     this.triggerStrategy.hide$
       .pipe(takeUntil(this.overlayRef.detachments().pipe(tap(() => this.hide()))))
       .subscribe(() => this.hide());
 
-    this.autocomplete
+    this.autocomplete()
       .optionsClick()
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent<T>) => {
-        this.autocomplete.setSelectionOption(option);
+        this.autocomplete().setSelectionOption(option);
         this.setTriggerValue();
-        this.change.emit(this.autocomplete.value);
-        this._onChange(this.autocomplete.value);
-        if (!this.autocomplete.multiSelection) {
+        this.change.emit(this.autocomplete().value);
+        this._onChange(this.autocomplete().value);
+        if (!this.autocomplete().multiSelection) {
           this.hide();
         }
       });
@@ -201,7 +206,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   }
 
   private setTriggerValue(): void {
-    const inputValue = this.autocomplete.toDisplay;
+    const inputValue = this.autocomplete().toDisplay;
     if (this.formField && inputValue) {
       this.formField.inputDirective.value = inputValue;
     } else {
@@ -226,7 +231,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   }
 
   writeValue(value: T): void {
-    this.autocomplete.value = value;
+    this.autocomplete().value = value;
     Promise.resolve(null).then(() => this.setTriggerValue());
   }
 
