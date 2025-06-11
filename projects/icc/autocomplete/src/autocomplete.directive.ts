@@ -75,7 +75,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
         this.setTriggerValue();
         this.change.emit(this.autocomplete().value);
         this._onChange(this.autocomplete().value);
-        if (!this.autocomplete().multiSelection) {
+        if (!this.autocomplete().multiSelection()) {
           this.hide();
         }
       }
