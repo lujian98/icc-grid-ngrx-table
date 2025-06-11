@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,7 +6,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
-  Input,
+  input,
   OnDestroy,
   Output,
   ViewChild,
@@ -25,20 +24,20 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
   IccFieldWidthDirective,
-  IccSuffixDirective,
+  IccFormFieldComponent,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccInputDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
+  IccSuffixDirective,
 } from '@icc/ui/form-field';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccIconModule } from '@icc/ui/icon';
-import { Subject, takeUntil, timer, take } from 'rxjs';
-import { IccInputDirective } from '@icc/ui/form-field';
+import { TranslatePipe } from '@ngx-translate/core';
+import { Subject, take, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.model';
 
 @Component({
@@ -59,7 +58,6 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -76,60 +74,41 @@ import { defaultTextFieldConfig, IccTextFieldConfig } from './models/text-field.
   ],
 })
 export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccTextFieldConfig;
-  private _value!: string;
-  @Input() form!: FormGroup;
-  @Input() showFieldEditIndicator: boolean = true;
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccTextFieldConfig>) {
-    this._fieldConfig = { ...defaultTextFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccTextFieldConfig {
-    return this._fieldConfig;
-  }
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroy$ = new Subject<void>();
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccTextFieldConfig>) => {
+      const fieldConfig = { ...defaultTextFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input('', {
+    transform: (value: string) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccTextFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({});
-      /*
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
-      });
-      */
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
-    if (!this.form!.get(this.fieldConfig.fieldName!)) {
-      console.log(' add missing field =', this.fieldConfig.fieldName);
-      this.form.addControl(this.fieldConfig.fieldName!, new FormControl<string>(''));
-    }
-
     this.setFieldEditable();
   }
 
   private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: string) {
-    this._value = val;
-    this.initForm({ ...defaultTextFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): string {
-    return this._value;
+      .subscribe(() => (this.fieldConfig().editable ? this.field.enable() : this.field.disable()));
   }
 
   @Output() valueChange = new EventEmitter<string>(true);
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -137,7 +116,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -152,29 +131,29 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   }
 
   clearValue(): void {
-    this.value = '';
+    //this.value = '';
     this.valueChange.emit('');
   }
 
   registerOnChange(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   registerOnTouched(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+    isDisabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 
   ngOnDestroy(): void {

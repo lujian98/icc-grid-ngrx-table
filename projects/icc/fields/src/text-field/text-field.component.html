@@ -1,29 +1,31 @@
-<ng-container *ngIf="form" [formGroup]="form">
-  <icc-form-field
-    [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
-    [iccLabelWidth]="fieldConfig.labelWidth"
-    [iccFieldWidth]="fieldConfig.fieldWidth"
-    [iccFormFieldControl]="field"
-    [showFieldEditIndicator]="showFieldEditIndicator"
-  >
-    @if (fieldConfig.fieldLabel !== undefined) {
-      <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
-    }
-    <input
-      iccInput
-      #inputEl
-      type="text"
-      autocomplete="off"
-      [formControlName]="fieldConfig.fieldName!"
-      (keyup)="onChange()"
-      [required]="required"
-      placeholder="{{ fieldConfig.placeholder! | translate }}"
-    />
-    @if (fieldConfig.clearValue && hasValue) {
-      <icc-icon icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
-    }
-    @if (field && (field.touched || field.dirty) && field.errors) {
-      <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
-    }
-  </icc-form-field>
-</ng-container>
+@if (form()) {
+  <div [formGroup]="form()">
+    <icc-form-field
+      [style.display]="hidden ? 'none' : 'inherit'"
+      [iccLabelWidth]="fieldConfig().labelWidth"
+      [iccFieldWidth]="fieldConfig().fieldWidth"
+      [iccFormFieldControl]="field"
+      [showFieldEditIndicator]="showFieldEditIndicator()"
+    >
+      @if (fieldConfig().fieldLabel !== undefined) {
+        <icc-label>{{ fieldConfig().fieldLabel! | translate }}</icc-label>
+      }
+      <input
+        iccInput
+        #inputEl
+        type="text"
+        autocomplete="off"
+        [formControlName]="fieldConfig().fieldName!"
+        (keyup)="onChange()"
+        [required]="required"
+        placeholder="{{ fieldConfig().placeholder! | translate }}"
+      />
+      @if (fieldConfig().clearValue && hasValue) {
+        <icc-icon icon="remove" iccSuffix (click)="clearValue()"></icc-icon>
+      }
+      @if (field && (field.touched || field.dirty) && field.errors) {
+        <icc-form-field-errors><icc-field-errors [errors]="field!.errors!"></icc-field-errors></icc-form-field-errors>
+      }
+    </icc-form-field>
+  </div>
+}
