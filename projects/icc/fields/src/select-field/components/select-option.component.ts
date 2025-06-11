@@ -6,6 +6,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  input,
   Output,
   QueryList,
   ViewChild,
@@ -35,7 +36,6 @@ export interface IccHeaderOption {
   styleUrls: ['./select-option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ScrollingModule,
     TranslatePipe,
     IccIconModule,
@@ -46,32 +46,30 @@ export interface IccHeaderOption {
   ],
 })
 export class IccSelectOptionComponent<T, G> {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private translateService = inject(TranslateService);
-  private _fieldConfig!: IccSelectFieldConfig;
-
-  @Input()
-  set fieldConfig(fieldConfig: IccSelectFieldConfig) {
-    this._fieldConfig = fieldConfig;
-    if (this.fieldConfig) {
-      this.isEmptyValue[this.fieldConfig.optionKey] = this.isEmptyValue.name;
-      this.isEmptyValue[this.fieldConfig.optionLabel] = this.isEmptyValue.title;
-      this.notEmptyValue[this.fieldConfig.optionKey] = this.notEmptyValue.name;
-      this.notEmptyValue[this.fieldConfig.optionLabel] = this.notEmptyValue.title;
-    }
-  }
-  get fieldConfig(): IccSelectFieldConfig {
-    return this._fieldConfig;
-  }
-  @Input() fieldSetting!: IccSelectFieldSetting;
-  @Input() form!: FormGroup;
-  @Input() selectFilter: string = '';
-  @Input() selectOptions: IccOptionType[] = [];
-  @Input() autocomplete!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
-  @Input()
-  set setSelected(overlayOpen: boolean) {
-    this.delaySetSelected(overlayOpen);
-  }
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly translateService = inject(TranslateService);
+  fieldConfig = input.required({
+    transform: (fieldConfig: IccSelectFieldConfig) => {
+      if (fieldConfig) {
+        this.isEmptyValue[fieldConfig.optionKey] = this.isEmptyValue.name;
+        this.isEmptyValue[fieldConfig.optionLabel] = this.isEmptyValue.title;
+        this.notEmptyValue[fieldConfig.optionKey] = this.notEmptyValue.name;
+        this.notEmptyValue[fieldConfig.optionLabel] = this.notEmptyValue.title;
+      }
+      return fieldConfig;
+    },
+  });
+  fieldSetting = input.required<IccSelectFieldSetting>();
+  form = input.required<FormGroup>();
+  selectFilter = input<string>('');
+  selectOptions = input<IccOptionType[]>(['']);
+  autocomplete = input.required<IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>>();
+  setSelected = input.required({
+    transform: (overlayOpen: boolean) => {
+      this.delaySetSelected(overlayOpen);
+      return overlayOpen;
+    },
+  });
 
   isEmptyValue: IccHeaderOption = {
     name: 'isEmpty',
@@ -83,7 +81,7 @@ export class IccSelectOptionComponent<T, G> {
   };
 
   get field(): FormControl {
-    return this.form?.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get hasValue(): boolean {
@@ -111,7 +109,7 @@ export class IccSelectOptionComponent<T, G> {
   @Output() autocompleteClose = new EventEmitter<boolean>(false);
 
   clickOption(option: IccOptionComponent<unknown>): void {
-    this.autocomplete.setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
+    this.autocomplete().setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
     this.clickedOption.emit(uniqueId(16));
   }
 
@@ -121,7 +119,7 @@ export class IccSelectOptionComponent<T, G> {
 
   getOptionLabel(option: unknown): string {
     return (
-      this.fieldSetting.singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig.optionLabel]
+      this.fieldSetting().singleListOption ? option : (option as { [key: string]: T })[this.fieldConfig().optionLabel]
     ) as string;
   }
 
@@ -147,8 +145,8 @@ export class IccSelectOptionComponent<T, G> {
 
   private setVirtualScrollPosition(): void {
     if (this.viewport && this.hasValue && !this.isAllChecked) {
-      const values = sortByField([...this.fieldValue], this.fieldConfig.optionLabel, 'asc');
-      const index = this.selectOptions.findIndex((option) => isEqual(option, values[0] as { [key: string]: T }));
+      const values = sortByField([...this.fieldValue], this.fieldConfig().optionLabel, 'asc');
+      const index = this.selectOptions().findIndex((option) => isEqual(option, values[0] as { [key: string]: T }));
       this.viewport.scrollToIndex(index);
     }
   }
@@ -169,21 +167,24 @@ export class IccSelectOptionComponent<T, G> {
   //support only header isEmpty and notEmpty
   headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
     option.selected = !option.selected;
-    const optionKey = this.fieldSetting.singleListOption ? option.value[this.fieldConfig.optionKey] : option.value;
-    const optionValue = this.fieldSetting.singleListOption ? option.value[this.fieldConfig.optionLabel] : option.value;
+    const optionKey = this.fieldSetting().singleListOption ? option.value[this.fieldConfig().optionKey] : option.value;
+    const optionValue = this.fieldSetting().singleListOption
+      ? option.value[this.fieldConfig().optionLabel]
+      : option.value;
     let value = this.field.value;
-    if (this.fieldConfig.multiSelection) {
+    if (this.fieldConfig().multiSelection) {
       if (option.selected) {
         value = [...value, optionValue] as object[];
         const emitValue = [...value, optionKey];
         this.setValueChanged(value, emitValue);
       } else {
         value = [...value].filter((item) => {
-          if (this.fieldSetting.singleListOption) {
+          if (this.fieldSetting().singleListOption) {
             return item !== optionValue;
           } else {
             return (
-              (item as { [key: string]: T })[this.fieldConfig.optionKey] !== option.value[this.fieldConfig.optionKey]
+              (item as { [key: string]: T })[this.fieldConfig().optionKey] !==
+              option.value[this.fieldConfig().optionKey]
             );
           }
         }) as object[];
