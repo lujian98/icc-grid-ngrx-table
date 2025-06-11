@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  input,
   OnDestroy,
   Output,
   ViewChild,
@@ -104,14 +105,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   @Input() form!: FormGroup;
-  @Input() showFieldEditIndicator: boolean = true;
+  showFieldEditIndicator = input<boolean>(true);
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
     this.fieldName = config.fieldName ? config.fieldName : '';
     if (config.options) {
       this.options = [...config.options] as string[] | object[];
-      delete config.options;
+      //delete config.options;
     }
     if (this.firstTimeLoad) {
       this.initFieldConfig(config);

@@ -7,7 +7,7 @@
         [iccLabelWidth]="fieldConfig.labelWidth"
         [iccFieldWidth]="fieldConfig.fieldWidth"
         [iccFormFieldControl]="field"
-        [showFieldEditIndicator]="showFieldEditIndicator"
+        [showFieldEditIndicator]="showFieldEditIndicator()"
       >
         @if (fieldConfig.fieldLabel !== undefined) {
           <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
