@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -13,7 +12,6 @@ import {
   Validator,
 } from '@angular/forms';
 import { IccFormFieldComponent, IccInputDirective } from '@icc/ui/form-field';
-import { Subject, takeUntil } from 'rxjs';
 import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-field.model';
 
 @Component({
@@ -33,69 +31,53 @@ import { defaultHiddenFieldConfig, IccHiddenFieldConfig } from './models/hidden-
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccFormFieldComponent, IccInputDirective],
+  imports: [ReactiveFormsModule, FormsModule, IccFormFieldComponent, IccInputDirective],
 })
-export class IccHiddenFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccHiddenFieldConfig;
-  private _value!: string;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccHiddenFieldConfig>) {
-    this._fieldConfig = { ...defaultHiddenFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccHiddenFieldConfig {
-    return this._fieldConfig;
-  }
+export class IccHiddenFieldComponent implements ControlValueAccessor, Validator {
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  fieldConfig = input.required({
+    transform: (config: Partial<IccHiddenFieldConfig>) => {
+      const fieldConfig = { ...defaultHiddenFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input('', {
+    transform: (value: string) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccHiddenFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<string>(''),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
     }
   }
 
-  @Input()
-  set value(val: string) {
-    this._value = val;
-    this.initForm({ ...defaultHiddenFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): string {
-    return this._value;
-  }
-
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }

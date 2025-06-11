@@ -1,5 +1,5 @@
-<ng-container *ngIf="form" [formGroup]="form">
-  <icc-form-field>
-    <input iccInput type="hidden" [formControlName]="fieldConfig.fieldName!" />
+@if (form()) {
+  <icc-form-field [formGroup]="form()">
+    <input iccInput type="hidden" [formControlName]="fieldConfig().fieldName!" />
   </icc-form-field>
-</ng-container>
+}
