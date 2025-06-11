@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,8 +5,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
-  Input,
-  OnDestroy,
+  input,
   Output,
 } from '@angular/core';
 import {
@@ -22,18 +20,18 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
 import {
   IccFieldWidthDirective,
   IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
 } from '@icc/ui/form-field';
-import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccRadioComponent } from '@icc/ui/radio';
-import { Subject, takeUntil, timer, take } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
+import { take, timer } from 'rxjs';
+import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import {
   defaultRadioGroupFieldConfig,
   IccRadioGroup,
@@ -58,7 +56,6 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -72,62 +69,49 @@ import {
     IccFormFieldControlDirective,
   ],
 })
-export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccRadioGroupFieldConfig;
-  private _value!: boolean;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccRadioGroupFieldConfig>) {
-    this._fieldConfig = { ...defaultRadioGroupFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccRadioGroupFieldConfig {
-    return this._fieldConfig;
-  }
+export class IccRadioGroupFieldComponent implements ControlValueAccessor, Validator {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  fieldConfig = input.required({
+    transform: (config: Partial<IccRadioGroupFieldConfig>) => {
+      const fieldConfig = { ...defaultRadioGroupFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input(false, {
+    transform: (value: boolean) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccRadioGroupFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<boolean>(false));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: boolean) {
-    this._value = val;
-    this.initForm({ ...defaultRadioGroupFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): boolean {
-    return this._value;
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   @Output() valueChange = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get hidden(): boolean {
     // not able to hide for the radio group if field is dirty
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden && !this.field.dirty);
+    return (
+      !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden && !this.field.dirty)
+    );
   }
 
   get groups(): IccRadioGroup[] {
-    return this.fieldConfig.groups;
+    return this.fieldConfig().groups;
   }
 
   getChecked(name: string): boolean {
@@ -138,33 +122,24 @@ export class IccRadioGroupFieldComponent implements OnDestroy, ControlValueAcces
     this.valueChange.emit(this.field.value);
   }
 
-  trackByIndex(index: number): number {
-    return index;
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnChange(fn: (value: boolean) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  registerOnTouched(fn: (value: boolean) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: boolean }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 }
