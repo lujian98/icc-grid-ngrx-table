@@ -1,11 +1,12 @@
 <icc-layout [@transformPickerOverlay]="shouldAnimate">
-  <icc-calendar
-    *ngIf="calendarConfig"
-    [calendarConfig]="calendarConfig"
-    [selectedDate]="selectedDate"
-    (selectedDateChange)="updateSelectedDate($event)"
-  >
-  </icc-calendar>
+  @if (calendarConfig) {
+    <icc-calendar
+      [calendarConfig]="calendarConfig"
+      [selectedDate]="selectedDate"
+      (selectedDateChange)="updateSelectedDate($event)"
+    >
+    </icc-calendar>
+  }
 
   <icc-layout-footer>
     <icc-layout-footer-start>

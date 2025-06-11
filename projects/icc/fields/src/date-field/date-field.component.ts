@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,7 +8,7 @@ import {
   forwardRef,
   inject,
   Injector,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -54,7 +54,6 @@ import { IccDateStoreService } from './services/date-store.service';
   styleUrls: ['./date-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -86,55 +85,42 @@ import { IccDateStoreService } from './services/date-store.service';
   ],
 })
 export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private translateService = inject(TranslateService);
-  private dialogService = inject(IccDialogService);
-  private injector = inject(Injector);
-  private dateStoreService = inject(IccDateStoreService);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccDateFieldConfig;
-  private _value!: Date | null;
-
-  @Input() form!: FormGroup;
-  @Input() showFieldEditIndicator: boolean = true;
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccDateFieldConfig>) {
-    this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccDateFieldConfig {
-    return this._fieldConfig;
-  }
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly translateService = inject(TranslateService);
+  private readonly dialogService = inject(IccDialogService);
+  private readonly injector = inject(Injector);
+  private readonly dateStoreService = inject(IccDateStoreService);
+  private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccDateFieldConfig>) => {
+      const fieldConfig = { ...defaultDateFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input(null, {
+    transform: (value: Date | null) => {
+      this.field.setValue(value);
+      this.dateStoreService.updateSelected(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccDateFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<Date | string>(''),
-      });
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<Date | string>(''));
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
-      .subscribe(() => (this.fieldConfig.editable ? this.field.enable() : this.field.disable()));
-  }
-
-  @Input()
-  set value(val: Date | null) {
-    this._value = val;
-    this.initForm({ ...defaultDateFieldConfig });
-    this.field.setValue(val);
-    this.dateStoreService.updateSelected(val);
-  }
-  get value(): Date | null {
-    return this._value;
+      .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get required(): boolean {
@@ -142,7 +128,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -153,7 +139,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
     const date = this.field.value;
     if (date) {
       const locale = this.translateService.currentLang || 'en-US';
-      return new DatePipe(locale).transform(date, this.fieldConfig.dateFormat)!;
+      return new DatePipe(locale).transform(date, this.fieldConfig().dateFormat)!;
     } else {
       return '';
     }
@@ -187,7 +173,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   openCalendar(): void {
     this.dialogService.open(IccDatePickerComponent, {
       context: {
-        fieldConfig: this.fieldConfig,
+        fieldConfig: this.fieldConfig(),
         field: this.field,
       },
       hostElemRef: this.calendarInput,
@@ -204,28 +190,29 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   clearValue(): void {
-    this.value = null;
+    this.field.setValue(null);
+    this.valueChange.emit(null);
   }
 
-  registerOnChange(fn: (value: Date) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: Date) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: Date }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 
   ngOnDestroy(): void {

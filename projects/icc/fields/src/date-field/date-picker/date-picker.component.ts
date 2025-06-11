@@ -1,21 +1,8 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { IccButtonComponent } from '@icc/ui/button';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validator,
-  Validators,
-} from '@angular/forms';
 import { IccCalendarComponent, IccCalendarConfig, IccPickerOverlayAnimations } from '@icc/ui/calendar';
 import {
   IccLayoutComponent,
@@ -23,14 +10,14 @@ import {
   IccLayoutFooterEndComponent,
   IccLayoutFooterStartComponent,
 } from '@icc/ui/layout';
-import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { IccSelectFieldComponent } from '../../select-field/select-field.component';
 import {
   IccDateFieldConfig,
-  defaultDateFieldConfig,
-  presetDateSelectionConfig,
   IccDatePresetItem,
+  defaultDateFieldConfig,
   iccDefaultDatePresets,
+  presetDateSelectionConfig,
 } from '../models/date-field.model';
 import { IccDateStoreService } from '../services/date-store.service';
 
@@ -41,7 +28,6 @@ import { IccDateStoreService } from '../services/date-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [IccPickerOverlayAnimations.transformPanel],
   imports: [
-    CommonModule,
     IccButtonComponent,
     TranslateDirective,
     IccCalendarComponent,
@@ -53,17 +39,16 @@ import { IccDateStoreService } from '../services/date-store.service';
   ],
 })
 export class IccDatePickerComponent implements OnInit {
-  private overlayRef = inject(OverlayRef);
-  private translateService = inject(TranslateService);
-  private dateStoreService = inject(IccDateStoreService);
-  private adapter = inject(DateAdapter<Date>);
+  private readonly overlayRef = inject(OverlayRef);
+  private readonly translateService = inject(TranslateService);
+  private readonly dateStoreService = inject(IccDateStoreService);
+  private readonly adapter = inject(DateAdapter<Date>);
   private _fieldConfig!: IccDateFieldConfig;
 
   calendarConfig!: Partial<IccCalendarConfig>;
   selectedDate!: Date | null;
   shouldAnimate: string = 'enter'; //  'enter' : 'noop';
 
-  @Input()
   set fieldConfig(fieldConfig: IccDateFieldConfig) {
     this._fieldConfig = fieldConfig;
     this._fieldConfig = { ...defaultDateFieldConfig, ...fieldConfig };
@@ -78,8 +63,7 @@ export class IccDatePickerComponent implements OnInit {
   get fieldConfig(): IccDateFieldConfig {
     return this._fieldConfig;
   }
-
-  @Input() field: FormControl | null = null;
+  field: FormControl | null = null;
 
   presetSelectionConfig = presetDateSelectionConfig;
   presets: IccDatePresetItem[] = [];
