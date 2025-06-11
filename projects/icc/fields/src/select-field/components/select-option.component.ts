@@ -1,17 +1,15 @@
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  inject,
   input,
   Output,
   QueryList,
   ViewChild,
   ViewChildren,
-  inject,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IccAutocompleteComponent, IccFilterHighlightComponent } from '@icc/ui/autocomplete';
