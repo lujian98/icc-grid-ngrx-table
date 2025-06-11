@@ -140,6 +140,7 @@ export class IccTextFieldComponent implements OnDestroy, ControlValueAccessor, V
   registerOnChange(fn: Function): void {
     this.onChanged = fn;
   }
+
   registerOnTouched(fn: Function): void {
     this.onTouched = fn;
   }
