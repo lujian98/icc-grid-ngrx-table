@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,10 +5,10 @@ import {
   EventEmitter,
   forwardRef,
   inject,
-  Input,
+  input,
   OnDestroy,
-  Output,
   OnInit,
+  Output,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,20 +23,20 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { IccCheckboxComponent } from '@icc/ui/checkbox';
 import {
-  IccFormFieldComponent,
-  IccLabelDirective,
-  IccLabelWidthDirective,
   IccFieldWidthDirective,
+  IccFormFieldComponent,
   IccFormFieldControlDirective,
   IccFormFieldErrorsDirective,
+  IccLabelDirective,
+  IccLabelWidthDirective,
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
-import { Subject, takeUntil, timer, take } from 'rxjs';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldConfig } from './models/checkbox-field.model';
-import { IccCheckboxComponent } from '@icc/ui/checkbox';
 
 @Component({
   selector: 'icc-checkbox-field',
@@ -57,7 +56,6 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -73,42 +71,36 @@ import { IccCheckboxComponent } from '@icc/ui/checkbox';
   ],
 })
 export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
-  private _fieldConfig!: IccCheckboxFieldConfig;
-  private _value!: boolean;
-
-  @Input() disabled: boolean = false;
-  @Input() showFieldEditIndicator: boolean = true;
-
-  @Input() form!: FormGroup;
-
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccCheckboxFieldConfig>) {
-    this._fieldConfig = { ...defaultCheckboxFieldConfig, ...fieldConfig };
-    this.initForm(this.fieldConfig);
-  }
-  get fieldConfig(): IccCheckboxFieldConfig {
-    return this._fieldConfig;
-  }
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
+  showFieldEditIndicator = input<boolean>(true);
+  disabled = input<boolean>(false);
+  fieldConfig = input.required({
+    transform: (config: Partial<IccCheckboxFieldConfig>) => {
+      const fieldConfig = { ...defaultCheckboxFieldConfig, ...config };
+      this.initForm(fieldConfig);
+      return fieldConfig;
+    },
+  });
+  value = input(false, {
+    transform: (value: boolean) => {
+      this.field.setValue(value);
+      return value;
+    },
+  });
 
   private initForm(fieldConfig: IccCheckboxFieldConfig): void {
-    if (!this.form) {
-      this._fieldConfig = { ...fieldConfig };
-      this.form = new FormGroup({
-        [this.fieldConfig.fieldName!]: new FormControl<boolean>(false),
-      });
-
+    if (!this.form().get(fieldConfig.fieldName!)) {
+      this.form().addControl(fieldConfig.fieldName!, new FormControl<boolean>(false));
       this.setEnableFields();
     }
-    this.setFieldEditable();
-  }
-
-  private setFieldEditable(): void {
     timer(5)
       .pipe(take(1))
       .subscribe(() => {
-        this.fieldConfig.editable ? this.field.enable() : this.field.disable();
+        this.setDisabledState(!this.fieldConfig().editable);
         this.setEnableFields();
       });
   }
@@ -119,25 +111,14 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     }
   }
 
-  @Input()
-  set value(val: boolean) {
-    this._value = val;
-    this.initForm({ ...defaultCheckboxFieldConfig });
-    this.field.setValue(val);
-  }
-
-  get value(): boolean {
-    return this._value;
-  }
-
   @Output() valueChange = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
-    return this.form!.get(this.fieldConfig.fieldName!)! as FormControl;
+    return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig().hidden || (this.field.disabled && !!this.fieldConfig().readonlyHidden);
   }
 
   onChange(): void {
@@ -163,9 +144,9 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   private setRequiredFields(checked: boolean): void {
-    if (this.fieldConfig.requiredFields) {
-      this.fieldConfig.requiredFields.forEach((name) => {
-        const formField = this.form.get(name)!;
+    if (this.fieldConfig().requiredFields) {
+      this.fieldConfig().requiredFields!.forEach((name) => {
+        const formField = this.form().get(name)!;
         if (formField) {
           if (checked) {
             formField.addValidators(Validators.required);
@@ -180,11 +161,11 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
   }
 
   private setReadonlyFields(checked: boolean): void {
-    if (this.fieldConfig.readonlyFields) {
-      this.fieldConfig.readonlyFields.forEach((name) => {
-        const formField = this.form.get(name)!;
+    if (this.fieldConfig().readonlyFields) {
+      this.fieldConfig().readonlyFields!.forEach((name) => {
+        const formField = this.form().get(name)!;
         if (formField) {
-          if (checked && this.fieldConfig.editable) {
+          if (checked && this.fieldConfig().editable) {
             formField.enable();
           } else {
             formField.setErrors(null);
@@ -195,25 +176,25 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     }
   }
 
-  registerOnChange(fn: (value: boolean) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: boolean) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: boolean }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName!]: true };
+    return this.form().valid ? null : { [this.fieldConfig().fieldName!]: true };
   }
 
   ngOnDestroy(): void {
