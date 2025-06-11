@@ -90,8 +90,8 @@ import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './mo
   ],
 })
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
@@ -241,7 +241,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.autocompleteClose = close;
   }
   onSelectOptionValueChange(value: T | T[]): void {
-    this.value = value as string | string[] | object[];
+    //this.value = value as string | string[] | object[];
+    this.field.setValue(value);
     this.valueChange.emit(value);
   }
 
