@@ -40,6 +40,10 @@ export class IccSelectFieldFacade {
     return this.store.selectSignal(selectViewportReady(fieldId));
   }
 
+  getSetting(fieldId: string): Signal<IccSelectFieldSetting | undefined> {
+    return this.store.selectSignal(selectFieldSetting(fieldId));
+  }
+
   selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
     return this.store.select(selectFieldSetting(fieldId));
   }
