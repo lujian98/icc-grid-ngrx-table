@@ -58,7 +58,7 @@ export class IccMenuItemComponent {
       event.stopPropagation();
     }
     if (!this.menuItem().checkbox && !this.disabled()) {
-      this.iccMenuItemClick.emit(this.menuItem);
+      this.iccMenuItemClick.emit(this.menuItem());
     }
   }
 }
