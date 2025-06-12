@@ -95,10 +95,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   setSelected: boolean = false;
-  fieldSetting$ = this.selectFieldFacade.getSetting(this.fieldId);
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
+  fieldSetting$ = this.selectFieldFacade.getSetting(this.fieldId);
   selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
-  viewportReady$ = this.selectFieldFacade.getViewportReady(this.fieldId);
 
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
@@ -133,7 +132,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   });
 
   getForm(): FormGroup {
-    if (this.viewportReady$() && !this.field) {
+    if (this.fieldSetting$()?.viewportReady && !this.field) {
       this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
       this.setFormvalue();
     }
