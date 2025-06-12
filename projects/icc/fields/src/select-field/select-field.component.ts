@@ -94,7 +94,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   setSelected: boolean = false;
@@ -102,7 +101,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldSetting!: IccSelectFieldSetting;
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
   selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
-  //selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
@@ -111,7 +109,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
       if (this.firstTimeLoad) {
         this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
-        this.initFieldConfig(fieldConfig);
+        this.initFieldConfig();
         this.firstTimeLoad = false;
       }
       if (fieldConfig.options) {
@@ -122,7 +120,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     },
   });
 
-  private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
+  private initFieldConfig(): void {
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
@@ -144,15 +142,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private initSelectField(): void {
-    if (this.fieldSetting?.viewportReady) {
-      /*
-      if (!this.selectOptions$) {
-        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-      }*/
-      if (!this.field) {
-        this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
-        this.setFormvalue();
-      }
+    if (this.fieldSetting?.viewportReady && !this.field) {
+      this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
+      this.setFormvalue();
     }
   }
 
