@@ -111,8 +111,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
 
       if (fieldConfig.options) {
-        this.options = [...fieldConfig.options] as string[] | object[];
+        // this.options = [...fieldConfig.options] as string[] | object[];
         //delete config.options;
+        this.selectFieldFacade.setSelectFieldOptions(this.fieldId, fieldConfig.options);
       }
       if (this.firstTimeLoad) {
         this.initFieldConfig(fieldConfig);
