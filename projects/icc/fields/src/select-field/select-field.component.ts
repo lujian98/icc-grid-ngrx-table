@@ -108,12 +108,16 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldConfig = input.required({
     transform: (config: Partial<IccSelectFieldConfig>) => {
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
+      this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
 
       if (fieldConfig.options) {
         this.options = [...fieldConfig.options] as string[] | object[];
         //delete config.options;
       }
       if (this.firstTimeLoad) {
+        if (!this.form) {
+          this.form = new FormGroup({});
+        }
         this.initFieldConfig(fieldConfig);
       }
       this.setFieldEditable();
@@ -124,15 +128,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
-    this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
         this.initSelectField(fieldConfig);
-        if (!this.form && fieldConfig.fieldName) {
-          this.form = new FormGroup({
-            [fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-          });
+        if (!this.form.get(fieldConfig.fieldName!)) {
+          this.form.addControl(fieldConfig.fieldName!, new FormControl<string>(''));
         }
         this.setFormvalue();
         return fieldSetting;
@@ -141,7 +142,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private setFieldEditable(): void {
-    if (this.form) {
+    if (this.form && this.field) {
       // filter not working and need check this form
       timer(5)
         .pipe(take(1))
