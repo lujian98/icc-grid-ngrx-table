@@ -129,6 +129,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
         this.initSelectField(fieldConfig);
+        if (!this.form && fieldConfig.fieldName) {
+          this.form = new FormGroup({
+            [fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
+          });
+        }
+        this.setFormvalue();
         return fieldSetting;
       }),
     );
@@ -149,14 +155,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.fieldSetting?.viewportReady) {
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-      }
-      if (!this.form) {
-        if (!this.form && fieldConfig.fieldName) {
-          this.form = new FormGroup({
-            [fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-          });
-        }
-        this.setFormvalue();
       }
     }
   }
