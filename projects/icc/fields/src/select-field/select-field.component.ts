@@ -1,15 +1,14 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  forwardRef,
+  inject,
   input,
   OnDestroy,
   Output,
   ViewChild,
-  forwardRef,
-  inject,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -41,13 +40,13 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable, Subject, map, take, timer } from 'rxjs';
+import { Subject, take, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
 import { IccSelectOptionComponent } from './components/select-option.component';
 import { defaultSelectFieldConfig } from './models/default-select-field';
-import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './models/select-field.model';
+import { IccOptionType, IccSelectFieldConfig } from './models/select-field.model';
 
 @Component({
   selector: 'icc-select-field',
@@ -67,7 +66,6 @@ import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './mo
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -138,7 +136,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.viewportReady$() && !this.field) {
       this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
       this.setFormvalue();
-      console.log(' ttte =', this.fieldConfig$().fieldName);
     }
     return this.form();
   }
@@ -171,7 +168,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig$().hidden || (this.field.disabled && !!this.fieldConfig$().readonlyHidden);
+    return !!this.fieldConfig$().hidden || (this.field?.disabled && !!this.fieldConfig$().readonlyHidden);
   }
 
   get hasValue(): boolean {
