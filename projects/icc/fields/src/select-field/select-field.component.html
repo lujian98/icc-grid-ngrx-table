@@ -1,6 +1,6 @@
 @if (fieldConfig$() && selectOptions$() && fieldSetting$ | async; as fieldSetting) {
   <icc-form-field
-    [formGroup]="form()"
+    [formGroup]="getForm()"
     [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
     [iccLabelWidth]="fieldConfig$().labelWidth"
     [iccFieldWidth]="fieldConfig$().fieldWidth"

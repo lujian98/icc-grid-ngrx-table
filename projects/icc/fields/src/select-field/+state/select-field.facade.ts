@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccSelectFieldConfig, IccOptionType, IccSelectFieldSetting } from '../models/select-field.model';
 import * as selectFieldActions from './select-field.actions';
-import { selectFieldSetting, selectFieldConfig, selectOptions } from './select-field.selectors';
+import { selectFieldSetting, selectFieldConfig, selectOptions, selectViewportReady } from './select-field.selectors';
 
 @Injectable()
 export class IccSelectFieldFacade {
@@ -34,6 +34,10 @@ export class IccSelectFieldFacade {
 
   getOptions(fieldId: string): Signal<IccOptionType[]> {
     return this.store.selectSignal(selectOptions(fieldId));
+  }
+
+  getViewportReady(fieldId: string): Signal<boolean> {
+    return this.store.selectSignal(selectViewportReady(fieldId));
   }
 
   selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
