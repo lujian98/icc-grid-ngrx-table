@@ -9,26 +9,26 @@
         (iccMenuItemClick)="menuItemClick($event)"
       >
       </icc-menu-item>
-    } @else if (hasChildItem(item) && level === 0) {
+    } @else if (hasChildItem(item) && level() === 0) {
       <span
         [iccPopover]="menu"
-        [iccPopoverTrigger]="menuTrigger"
-        [popoverLevel]="level"
-        [clickToClose]="clickToClose"
+        [iccPopoverTrigger]="menuTrigger()"
+        [popoverLevel]="level()"
+        [clickToClose]="clickToClose()"
         [iccPopoverPosition]="bottom"
       >
         <icc-icon *ngIf="item.icon" [config]="item.icon"></icc-icon>
         <span class="icc-menu-item-title"> {{ item.title }}</span>
       </span>
-    } @else if (hasChildItem(item) && level > 0) {
+    } @else if (hasChildItem(item) && level() > 0) {
       <icc-menu-item
         [disabled]="getDisabled(item)"
         [form]="form"
         [menuItem]="item"
         [iccPopover]="menu"
         [iccPopoverTrigger]="hoverTrigger"
-        [popoverLevel]="level"
-        [clickToClose]="clickToClose"
+        [popoverLevel]="level()"
+        [clickToClose]="clickToClose()"
         [iccPopoverPosition]="rightBottom"
         (iccMenuItemClick)="menuItemClick($event)"
       >
@@ -40,9 +40,9 @@
         class="icc-menus-sub-level"
         [items]="item.children!"
         [values]="values"
-        [disabled]="disabled"
-        [level]="level + 1"
-        [clickToClose]="clickToClose"
+        [disabled]="disabled()"
+        [level]="level() + 1"
+        [clickToClose]="clickToClose()"
         (iccMenuItemClick)="menuItemClick($event)"
       >
       </icc-menus>
