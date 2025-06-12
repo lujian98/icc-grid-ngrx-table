@@ -1,4 +1,4 @@
-@if (fieldConfig$() && selectOptions$() && fieldSetting$ | async; as fieldSetting) {
+@if (fieldConfig$() && fieldSetting$() && selectOptions$()) {
   <icc-form-field
     [formGroup]="getForm()"
     [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
@@ -43,7 +43,7 @@
       <ng-template iccAutocompleteContent>
         <icc-select-option
           [fieldConfig]="fieldConfig$()"
-          [fieldSetting]="fieldSetting"
+          [fieldSetting]="fieldSetting$()!"
           [autocomplete]="autocompleteComponent"
           [setSelected]="setSelected"
           [selectFilter]="field.value"

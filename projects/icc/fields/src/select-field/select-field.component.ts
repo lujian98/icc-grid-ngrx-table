@@ -96,10 +96,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
-  private firstTime = true;
   setSelected: boolean = false;
-  fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
-  fieldSetting!: IccSelectFieldSetting;
+  fieldSetting$ = this.selectFieldFacade.getSetting(this.fieldId);
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
   selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
   viewportReady$ = this.selectFieldFacade.getViewportReady(this.fieldId);
@@ -111,7 +109,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
       if (this.firstTimeLoad) {
         this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
-        this.initFieldConfig();
         this.firstTimeLoad = false;
       }
       if (fieldConfig.options) {
@@ -121,26 +118,29 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       return fieldConfig;
     },
   });
+  //WARNING local set option only, only add field config if no initial input fieldconfig
+  options = input([], {
+    transform: (options: IccOptionType[]) => {
+      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
+      return options;
+    },
+  });
+  value = input('', {
+    transform: (value: string | object | string[] | object[]) => {
+      if (this.field && value !== undefined) {
+        this.field.setValue(value);
+      }
+      return value;
+    },
+  });
 
   getForm(): FormGroup {
-    if (this.viewportReady$() && this.firstTime) {
-      if (!this.field) {
-        this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
-        this.setFormvalue();
-      }
+    if (this.viewportReady$() && !this.field) {
+      this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
+      this.setFormvalue();
       console.log(' ttte =', this.fieldConfig$().fieldName);
-      this.firstTime = false;
     }
     return this.form();
-  }
-
-  private initFieldConfig(): void {
-    this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
-      map((fieldSetting) => {
-        this.fieldSetting = fieldSetting!;
-        return fieldSetting;
-      }),
-    );
   }
 
   private setFieldEditable(): void {
@@ -153,23 +153,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         });
     }
   }
-
-  //WARNING local set option only, only add field config if no initial input fieldconfig
-  options = input([], {
-    transform: (options: IccOptionType[]) => {
-      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
-      return options;
-    },
-  });
-
-  value = input('', {
-    transform: (value: string | object | string[] | object[]) => {
-      if (this.field && value !== undefined) {
-        this.field.setValue(value);
-      }
-      return value;
-    },
-  });
 
   private setFormvalue(): void {
     this.field?.setValue(this.value());
@@ -210,7 +193,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.autocompleteClose = close;
   }
   onSelectOptionValueChange(value: T | T[]): void {
-    //this.value = value as string | string[] | object[];
     this.field.setValue(value);
     this.valueChange.emit(value);
   }
@@ -225,7 +207,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return (
           value
             .map((item) => {
-              return this.fieldSetting.singleListOption ? item : item[this.fieldConfig$().optionLabel];
+              return this.fieldSetting$()!.singleListOption ? item : item[this.fieldConfig$().optionLabel];
             })
             .sort()
             //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
@@ -235,7 +217,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         return '';
       }
     } else {
-      if (this.fieldSetting.singleListOption) {
+      if (this.fieldSetting$()!.singleListOption) {
         return value as string;
       } else {
         return value ? (value as { [key: string]: string })[this.fieldConfig$().optionLabel] : '';
@@ -244,7 +226,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   compareFn(s1: { [key: string]: string }, s2: { [key: string]: string }): boolean {
-    if (this.fieldSetting.singleListOption) {
+    if (this.fieldSetting$()!.singleListOption) {
       return s1 && s2 && s1 === s2;
     } else {
       return s1 && s2 ? s1[this.fieldConfig$().optionKey] === s2[this.fieldConfig$().optionKey] : s1 === s2;
