@@ -97,14 +97,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
-  fieldName: string = '';
   setSelected: boolean = false;
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
-  //fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId)
 
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
-  //fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   @Input() form!: FormGroup;
@@ -112,7 +109,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
     const config = { ...defaultSelectFieldConfig, ...fieldConfig };
-    this.fieldName = config.fieldName ? config.fieldName : '';
     if (config.options) {
       this.options = [...config.options] as string[] | object[];
       //delete config.options;
@@ -131,17 +127,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
     this._fieldConfig = { ...fieldConfig };
-    if (!this.fieldName) {
-      this.fieldName = this.fieldConfig.fieldName!;
-    }
     this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
-    /*
-    this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
-      map((fieldConfig) => {
-        this._fieldConfig = fieldConfig!;
-        return fieldConfig;
-      }),
-    );*/
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
@@ -168,9 +154,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
       if (!this.form) {
-        if (!this.form && this.fieldName) {
+        if (!this.form && this.fieldConfig.fieldName) {
           this.form = new FormGroup({
-            [this.fieldName!]: new FormControl<{ [key: string]: T }>({}),
+            [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
           });
         }
         this.setFormvalue();
@@ -211,7 +197,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get field(): FormControl {
-    return this.form?.get(this.fieldName!)! as FormControl;
+    return this.form?.get(this.fieldConfig$().fieldName!)! as FormControl;
   }
 
   get fieldValue(): T[] {
@@ -338,7 +324,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldName!]: true };
+    return this.form.valid ? null : { [this.fieldConfig$().fieldName!]: true };
   }
 
   ngOnDestroy(): void {
