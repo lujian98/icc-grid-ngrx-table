@@ -101,7 +101,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
-  selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
+  selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
+  //selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
@@ -144,9 +145,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   private initSelectField(): void {
     if (this.fieldSetting?.viewportReady) {
+      /*
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-      }
+      }*/
       if (!this.field) {
         this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
         this.setFormvalue();

@@ -32,6 +32,10 @@ export class IccSelectFieldFacade {
     return this.store.selectSignal(selectFieldConfig(fieldId));
   }
 
+  getOptions(fieldId: string): Signal<IccOptionType[]> {
+    return this.store.selectSignal(selectOptions(fieldId));
+  }
+
   selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
     return this.store.select(selectFieldSetting(fieldId));
   }
