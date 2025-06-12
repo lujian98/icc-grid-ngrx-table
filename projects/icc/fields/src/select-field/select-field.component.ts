@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   input,
   OnDestroy,
   Output,
@@ -42,7 +41,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
+import { Observable, Subject, map, take, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
@@ -111,8 +110,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
       if (fieldConfig.options) {
         this.selectFieldFacade.setSelectFieldOptions(this.fieldId, fieldConfig.options);
-        //this.options = [...fieldConfig.options] as string[] | object[];
-        //delete config.options;
       }
       if (this.firstTimeLoad) {
         this.initFieldConfig(fieldConfig);
@@ -151,17 +148,19 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
       if (!this.field) {
-        this.form().addControl(this.fieldConfig$().fieldName!, new FormControl<{ [key: string]: T }>({}));
+        this.form().addControl(this.fieldConfig$().fieldName, new FormControl<{ [key: string]: T }>({}));
         this.setFormvalue();
       }
     }
   }
 
-  @Input()
-  set options(val: IccOptionType[]) {
-    //WARNING local set option only, only add field config if no initial input fieldconfig
-    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-  }
+  //WARNING local set option only, only add field config if no initial input fieldconfig
+  options = input([], {
+    transform: (options: IccOptionType[]) => {
+      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
+      return options;
+    },
+  });
 
   value = input('', {
     transform: (value: string | object | string[] | object[]) => {
