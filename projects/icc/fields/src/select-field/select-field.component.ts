@@ -93,7 +93,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
@@ -106,28 +105,26 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   @Input() form!: FormGroup;
   showFieldEditIndicator = input<boolean>(true);
-  @Input()
-  set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    const config = { ...defaultSelectFieldConfig, ...fieldConfig };
-    if (config.options) {
-      this.options = [...config.options] as string[] | object[];
-      //delete config.options;
-    }
-    if (this.firstTimeLoad) {
-      this.initFieldConfig(config);
-    } else {
-      this._fieldConfig = config;
-    }
-    this.setFieldEditable();
-  }
-  get fieldConfig(): IccSelectFieldConfig {
-    return this._fieldConfig;
-  }
+  fieldConfig = input.required({
+    transform: (config: Partial<IccSelectFieldConfig>) => {
+      const fieldConfig = { ...defaultSelectFieldConfig, ...config };
+
+      if (fieldConfig.options) {
+        this.options = [...fieldConfig.options] as string[] | object[];
+        //delete config.options;
+      }
+      if (this.firstTimeLoad) {
+        this.initFieldConfig(fieldConfig);
+      }
+      this.setFieldEditable();
+
+      return fieldConfig;
+    },
+  });
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
-    this._fieldConfig = { ...fieldConfig };
-    this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
+    this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
