@@ -11,6 +11,7 @@ export interface IccFieldsetConfig extends IccBaseField {
 
 export const defaultFieldsetConfig: IccFieldsetConfig = {
   fieldType: IccObjectType.Fieldset,
+  fieldName: 'fieldset',
   flexDirection: 'column',
   formFields: [],
 };

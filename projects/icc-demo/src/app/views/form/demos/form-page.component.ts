@@ -50,6 +50,7 @@ export class AppFromPageDemoComponent {
     },
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       flexDirection: 'row',
       formFields: this.formFields2,
     },
@@ -290,6 +291,7 @@ export class AppFromPageDemoComponent {
   fieldSet3: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldSet',
       legend: 'Checkbox enable required Demo',
       formFields: this.formFields3,
     },

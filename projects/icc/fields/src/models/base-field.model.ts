@@ -2,7 +2,7 @@ import { ValidatorFn } from '@angular/forms';
 
 export interface IccBaseField {
   fieldType: string;
-  fieldName?: string;
+  fieldName: string;
   fieldLabel?: string;
   placeholder?: string;
   clearValue?: boolean;

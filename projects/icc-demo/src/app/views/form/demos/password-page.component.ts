@@ -43,6 +43,7 @@ export class AppPasswordPageDemoComponent {
   fieldSet: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Password Demo',
       formFields: this.formFields,
     },
@@ -166,6 +167,7 @@ export class AppPasswordPageDemoComponent {
   fieldSet3: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Readonly field Demo',
       formFields: this.formFields3,
     },
@@ -298,6 +300,7 @@ export class AppPasswordPageDemoComponent {
   fieldSet4: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Checkbox enable edit/readonly Demo',
       formFields: this.formFields4,
     },
@@ -433,6 +436,7 @@ export class AppPasswordPageDemoComponent {
   fieldSet5: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Checkbox hidden Demo',
       formFields: this.formFields5,
     },
@@ -588,6 +592,7 @@ export class AppPasswordPageDemoComponent {
   fieldSet6: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Checkbox visile fields Demo',
       formFields: this.formFields6,
     },

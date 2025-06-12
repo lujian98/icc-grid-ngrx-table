@@ -138,6 +138,7 @@ export class IccGridFormViewComponent {
   fieldSet: IccFormField[] = [
     {
       fieldType: 'fieldset',
+      fieldName: 'fieldset',
       legend: 'Readonly field Demo',
       formFields: this.formFields,
     },
