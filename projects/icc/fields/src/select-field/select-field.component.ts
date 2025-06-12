@@ -108,11 +108,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldConfig = input.required({
     transform: (config: Partial<IccSelectFieldConfig>) => {
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
+      if (this.firstTimeLoad) {
+        this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
+        this.initFieldConfig(fieldConfig);
+        this.firstTimeLoad = false;
+      }
       if (fieldConfig.options) {
         this.selectFieldFacade.setSelectFieldOptions(this.fieldId, fieldConfig.options);
-      }
-      if (this.firstTimeLoad) {
-        this.initFieldConfig(fieldConfig);
       }
       this.setFieldEditable();
       return fieldConfig;
@@ -120,8 +122,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   });
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
-    this.firstTimeLoad = false;
-    this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
