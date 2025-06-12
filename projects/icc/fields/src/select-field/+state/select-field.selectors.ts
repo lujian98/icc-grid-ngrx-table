@@ -8,6 +8,11 @@ export interface AppSelectState {
 
 export const featureSelector = (state: AppSelectState) => state.iccSelectField;
 
+export const selectViewportReady = (fieldId: string) =>
+  createSelector(featureSelector, (state: SelectFieldState) => {
+    return state[fieldId].fieldSetting.viewportReady;
+  });
+
 export const selectFieldSetting = (fieldId: string) =>
   createSelector(featureSelector, (state: SelectFieldState) => {
     const fieldSetting = state && state[fieldId] ? state[fieldId].fieldSetting : undefined;

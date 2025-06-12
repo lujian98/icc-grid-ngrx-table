@@ -97,6 +97,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   setSelected: boolean = false;
+
+  viewportReady$ = this.selectFieldFacade.getViewportReady(this.fieldId);
+
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
   selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
 
@@ -124,6 +127,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
+    console.log(' viewportReady=', this.viewportReady$());
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;

@@ -1,4 +1,4 @@
-@if (fieldConfig$() && fieldSetting$ | async; as fieldSetting && form() && selectOptions$()) {
+@if (fieldConfig$() && fieldSetting$ | async; as fieldSetting && viewportReady$() && form() && selectOptions$()) {
   <icc-form-field
     [formGroup]="form()"
     [style.display]="hidden ? 'none' : 'inherit'"
