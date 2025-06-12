@@ -106,16 +106,21 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input() form!: FormGroup;
   showFieldEditIndicator = input<boolean>(true);
   @Input()
-  set fieldConfig(fieldConfig: Partial<IccSelectFieldConfig>) {
-    const config = { ...defaultSelectFieldConfig, ...fieldConfig };
-    if (config.options) {
-      this.options = [...config.options] as string[] | object[];
+  set fieldConfig(config: Partial<IccSelectFieldConfig>) {
+    const fieldConfig = { ...defaultSelectFieldConfig, ...config };
+    if (!this.form) {
+      this.form = new FormGroup({});
+    }
+
+    if (fieldConfig.options) {
+      this.options = [...fieldConfig.options] as string[] | object[];
       //delete config.options;
     }
+
     if (this.firstTimeLoad) {
-      this.initFieldConfig(config);
+      this.initFieldConfig(fieldConfig);
     } else {
-      this._fieldConfig = config;
+      this._fieldConfig = fieldConfig;
     }
     this.setFieldEditable();
   }
@@ -143,7 +148,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   private setFieldEditable(): void {
-    if (this.form) {
+    if (this.field) {
       // filter not working and need check this form
       timer(5)
         .pipe(take(1))
@@ -158,6 +163,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       if (!this.selectOptions$) {
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
+      if (!this.field) {
+        this.form.addControl(this.fieldConfig.fieldName!, new FormControl<{ [key: string]: T }>({}));
+        this.setFormvalue();
+      }
+
+      /*
       if (!this.form) {
         if (!this.form && this.fieldConfig.fieldName) {
           this.form = new FormGroup({
@@ -165,7 +176,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
           });
         }
         this.setFormvalue();
-      }
+      }*/
+      //this.setFormvalue();
     }
   }
 
@@ -185,10 +197,10 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   @Input()
   set value(val: string | object | string[] | object[]) {
-    if (this.form && val !== undefined) {
+    if (this.field && val !== undefined) {
       this._value = val as string | string[] | object[];
       this.setFormvalue();
-    } else if (!this.form) {
+    } else if (!this.field) {
       this._value = val as string | string[] | object[];
     }
   }
