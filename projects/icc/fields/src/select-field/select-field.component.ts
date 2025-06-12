@@ -171,22 +171,15 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
 
-  @Input()
-  set value(val: string | object | string[] | object[]) {
-    if (this.form() && val !== undefined) {
-      this._value = val as string | string[] | object[];
-      this.setFormvalue();
-    } else if (!this.form()) {
-      this._value = val as string | string[] | object[];
-    }
-  }
-
-  get value(): string | string[] | object[] {
-    return this._value;
-  }
+  value = input('', {
+    transform: (value: string | object | string[] | object[]) => {
+      this.field?.setValue(value);
+      return value;
+    },
+  });
 
   private setFormvalue(): void {
-    this.field?.setValue(this.value);
+    this.field?.setValue(this.value());
   }
 
   get field(): FormControl {
@@ -236,7 +229,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
     if (this.fieldConfig$().displayWith) {
-      return this.fieldConfig$().displayWith!(this.value!);
+      return this.fieldConfig$().displayWith!(this.value());
     }
     if (Array.isArray(value)) {
       if (value.length > 0) {
