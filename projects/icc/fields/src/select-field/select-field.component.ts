@@ -95,7 +95,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  // private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
@@ -111,7 +110,8 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     transform: (config: Partial<IccSelectFieldConfig>) => {
       const fieldConfig = { ...defaultSelectFieldConfig, ...config };
       if (fieldConfig.options) {
-        this.options = [...fieldConfig.options] as string[] | object[];
+        this.selectFieldFacade.setSelectFieldOptions(this.fieldId, fieldConfig.options);
+        //this.options = [...fieldConfig.options] as string[] | object[];
         //delete config.options;
       }
       if (this.firstTimeLoad) {
@@ -163,22 +163,17 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
 
-  @Input()
-  set value(val: string | object | string[] | object[]) {
-    if (this.field && val !== undefined) {
-      this._value = val as string | string[] | object[];
-      this.setFormvalue();
-    } else if (!this.field) {
-      this._value = val as string | string[] | object[];
-    }
-  }
-
-  get value(): string | string[] | object[] {
-    return this._value;
-  }
+  value = input('', {
+    transform: (value: string | object | string[] | object[]) => {
+      if (this.field && value !== undefined) {
+        this.field.setValue(value);
+      }
+      return value;
+    },
+  });
 
   private setFormvalue(): void {
-    this.field?.setValue(this.value);
+    this.field?.setValue(this.value());
   }
 
   get field(): FormControl {
@@ -224,7 +219,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
     if (this.fieldConfig$().displayWith) {
-      return this.fieldConfig$().displayWith!(this.value!);
+      return this.fieldConfig$().displayWith!(this.value());
     }
     if (Array.isArray(value)) {
       if (value.length > 0) {
