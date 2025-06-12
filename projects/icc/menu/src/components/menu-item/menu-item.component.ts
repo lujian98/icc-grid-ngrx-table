@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, input, Output } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
@@ -17,48 +16,27 @@ import { IccMenuConfig } from '../../models/menu-item.model';
     '[class.selected]': 'menuItem.selected',
     '[class.disabled]': 'disabled',
   },
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IccCheckboxFieldComponent,
-    TranslatePipe,
-    IccIconModule,
-  ],
+  imports: [RouterModule, FormsModule, ReactiveFormsModule, IccCheckboxFieldComponent, TranslatePipe, IccIconModule],
 })
 export class IccMenuItemComponent {
-  private _menuItem!: IccMenuConfig;
   private _disabled: boolean = false;
   fieldConfig: IccCheckboxFieldConfig = {
     ...defaultCheckboxFieldConfig,
   };
 
-  @Input() menuType!: string;
-  @Input() form!: FormGroup;
-
-  @Input()
-  set menuItem(val: IccMenuConfig) {
-    this._menuItem = val;
-    this.fieldConfig = {
-      ...defaultCheckboxFieldConfig,
-      fieldName: this.menuItem.name,
-      fieldLabel: this.menuItem.title || this.menuItem.name,
-      labelBeforeCheckbox: false,
-      editable: true,
-    };
-  }
-  get menuItem(): IccMenuConfig {
-    return this._menuItem;
-  }
-
-  get separator() {
-    return this.menuItem.separator;
-  }
-
-  get selectedClass(): boolean {
-    return !!this.menuItem.selected;
-  }
+  form = input.required<FormGroup>();
+  menuItem = input.required({
+    transform: (menuItem: IccMenuConfig) => {
+      this.fieldConfig = {
+        ...defaultCheckboxFieldConfig,
+        fieldName: menuItem.name,
+        fieldLabel: menuItem.title || menuItem.name,
+        labelBeforeCheckbox: false,
+        editable: true,
+      };
+      return menuItem;
+    },
+  });
 
   @Input()
   set disabled(disabled: boolean) {
@@ -68,8 +46,16 @@ export class IccMenuItemComponent {
     return this._disabled;
   }
 
+  get separator() {
+    return this.menuItem().separator;
+  }
+
+  get selectedClass(): boolean {
+    return !!this.menuItem().selected;
+  }
+
   get title(): string {
-    return this.menuItem.title === undefined ? this.menuItem.name : this.menuItem.title;
+    return this.menuItem().title === undefined ? this.menuItem().name : this.menuItem().title!;
   }
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
@@ -82,7 +68,7 @@ export class IccMenuItemComponent {
     if (this.disabled) {
       event.stopPropagation();
     }
-    if (!this.menuItem.checkbox && !this.disabled) {
+    if (!this.menuItem().checkbox && !this.disabled) {
       this.iccMenuItemClick.emit(this.menuItem);
     }
   }

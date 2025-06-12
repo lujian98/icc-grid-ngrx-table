@@ -1,5 +1,5 @@
-import { Directive, Input } from '@angular/core';
-import { CdkMenuItemSelectable, CdkMenuItem } from '@angular/cdk/menu';
+import { CdkMenuItem, CdkMenuItemSelectable } from '@angular/cdk/menu';
+import { Directive, input } from '@angular/core';
 
 @Directive({
   selector: '[iccMenuItem]',
@@ -14,12 +14,12 @@ import { CdkMenuItemSelectable, CdkMenuItem } from '@angular/cdk/menu';
   ],
 })
 export class IccMenuItem extends CdkMenuItemSelectable {
-  @Input() keepOpen: boolean = false;
+  keepOpen = input<boolean>(false);
 
   override trigger(options: { keepOpen: boolean } = { keepOpen: false }) {
     super.trigger({
       ...options,
-      keepOpen: this.keepOpen,
+      keepOpen: this.keepOpen(),
     });
 
     if (!this.disabled) {

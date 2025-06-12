@@ -1,20 +1,26 @@
-@if (menuItem.link) {
+@if (menuItem().link) {
   <a
     class="icc-menu-item"
-    [routerLink]="menuItem.link"
-    [queryParams]="menuItem.queryParams"
-    [routerLinkActiveOptions]="menuItem.routerOptions || { exact: false }"
+    [routerLink]="menuItem().link"
+    [queryParams]="menuItem().queryParams"
+    [routerLinkActiveOptions]="menuItem().routerOptions || { exact: false }"
     routerLinkActive="active"
   >
-    <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
+    @if (menuItem().icon) {
+      <icc-icon class="icc-menu-icon" [config]="menuItem().icon!"></icc-icon>
+    }
     <span class="icc-menu-title"> {{ title | translate }} </span>
   </a>
-} @else if (menuItem.checkbox) {
-  <icc-checkbox-field [form]="form" [fieldConfig]="fieldConfig" [showFieldEditIndicator]="false"></icc-checkbox-field>
+} @else if (menuItem().checkbox) {
+  <icc-checkbox-field [form]="form()" [fieldConfig]="fieldConfig" [showFieldEditIndicator]="false"></icc-checkbox-field>
 } @else {
   <div class="icc-menu-item">
-    <icc-icon *ngIf="menuItem.icon" class="icc-menu-icon" [config]="menuItem.icon"></icc-icon>
+    @if (menuItem().icon) {
+      <icc-icon class="icc-menu-icon" [config]="menuItem().icon!"></icc-icon>
+    }
     <span class="icc-menu-title"> {{ title | translate }} </span>
-    <icc-icon class="icc-menu-icon-has-children" *ngIf="hasChildItem(menuItem)" config="caret-right"></icc-icon>
+    @if (hasChildItem(menuItem())) {
+      <icc-icon class="icc-menu-icon-has-children" config="caret-right"></icc-icon>
+    }
   </div>
 }
