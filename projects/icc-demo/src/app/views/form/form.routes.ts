@@ -24,7 +24,7 @@ export const AppFormRoutes: Routes = [
       { path: 'file-select-upload', component: AppFileSelectUploadComponent },
       {
         path: '**',
-        redirectTo: 'simple-form',
+        redirectTo: 'form-page',
       },
     ],
   },
