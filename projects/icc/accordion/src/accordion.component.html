@@ -1,4 +1,4 @@
-@for (item of itemList(); track $index; let index = $index) {
+@for (item of items$(); track $index; let index = $index) {
   <icc-layout [style.flex]="getHeaderStyle(item)">
     <icc-layout-header
       [class.icc-accordion-item-expanded]="item.expanded"

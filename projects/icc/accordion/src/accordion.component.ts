@@ -36,15 +36,16 @@ import { IccAccordion } from './models/accordion.model';
 export class IccAccordionComponent {
   private readonly elementRef = inject(ElementRef);
   private isFirstTime: boolean = true;
+  items$ = signal<IccAccordion[]>([]);
   items = input.required({
     transform: (items: IccAccordion[]) => {
-      this.itemList.update((current) => [...current, ...items]);
+      this.items$.update((current) => [...current, ...items]);
       if (this.isFirstTime) {
         this.isFirstTime = false;
-        if (this.itemList().length > 0) {
-          const expanded = this.itemList().filter((item) => item.expanded);
+        if (this.items$().length > 0) {
+          const expanded = this.items$().filter((item) => item.expanded);
           if (expanded.length !== 1) {
-            this.toggle(this.itemList()[0], false);
+            this.toggle(this.items$()[0], false);
           } else {
             this.toggle(expanded[0], false);
           }
@@ -53,7 +54,6 @@ export class IccAccordionComponent {
       return items;
     },
   });
-  itemList = signal<IccAccordion[]>([]);
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
 
@@ -62,7 +62,7 @@ export class IccAccordionComponent {
   }
 
   toggle(item: IccAccordion, currentExpanded: boolean): void {
-    this.itemList.update((items) =>
+    this.items$.update((items) =>
       items.map((data) => ({
         ...data,
         expanded: data.name === item.name ? !currentExpanded : false,
