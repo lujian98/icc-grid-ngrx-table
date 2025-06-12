@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, input, Output } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
@@ -12,18 +12,14 @@ import { IccMenuConfig } from '../../models/menu-item.model';
   styleUrls: ['./menu-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.menu-item-separator]': 'menuItem.separator',
-    '[class.selected]': 'menuItem.selected',
-    '[class.disabled]': 'disabled',
+    '[class.menu-item-separator]': 'menuItem().separator',
+    '[class.selected]': 'menuItem().selected',
+    '[class.disabled]': 'disabled()',
   },
   imports: [RouterModule, FormsModule, ReactiveFormsModule, IccCheckboxFieldComponent, TranslatePipe, IccIconModule],
 })
 export class IccMenuItemComponent {
-  private _disabled: boolean = false;
-  fieldConfig: IccCheckboxFieldConfig = {
-    ...defaultCheckboxFieldConfig,
-  };
-
+  fieldConfig: IccCheckboxFieldConfig = { ...defaultCheckboxFieldConfig };
   form = input.required<FormGroup>();
   menuItem = input.required({
     transform: (menuItem: IccMenuConfig) => {
@@ -37,14 +33,7 @@ export class IccMenuItemComponent {
       return menuItem;
     },
   });
-
-  @Input()
-  set disabled(disabled: boolean) {
-    this._disabled = disabled;
-  }
-  get disabled(): boolean {
-    return this._disabled;
-  }
+  disabled = input<boolean>(false);
 
   get separator() {
     return this.menuItem().separator;
@@ -65,10 +54,10 @@ export class IccMenuItemComponent {
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent): void {
-    if (this.disabled) {
+    if (this.disabled()) {
       event.stopPropagation();
     }
-    if (!this.menuItem().checkbox && !this.disabled) {
+    if (!this.menuItem().checkbox && !this.disabled()) {
       this.iccMenuItemClick.emit(this.menuItem);
     }
   }
