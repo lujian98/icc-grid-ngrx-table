@@ -1,9 +1,9 @@
-import { Injectable, inject, Signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccSelectFieldConfig, IccOptionType, IccSelectFieldSetting } from '../models/select-field.model';
 import * as selectFieldActions from './select-field.actions';
-import { selectFieldSetting, selectFieldConfig, selectOptions, selectViewportReady } from './select-field.selectors';
+import { selectFieldSetting, selectFieldConfig, selectOptions } from './select-field.selectors';
 
 @Injectable()
 export class IccSelectFieldFacade {
@@ -26,22 +26,6 @@ export class IccSelectFieldFacade {
 
   clearSelectFieldStore(fieldId: string): void {
     this.store.dispatch(selectFieldActions.clearSelectFieldStore({ fieldId }));
-  }
-
-  getViewportReady(fieldId: string): Signal<boolean> {
-    return this.store.selectSignal(selectViewportReady(fieldId));
-  }
-
-  getFieldConfig(fieldId: string): Signal<IccSelectFieldConfig> {
-    return this.store.selectSignal(selectFieldConfig(fieldId));
-  }
-
-  getSetting(fieldId: string): Signal<IccSelectFieldSetting> {
-    return this.store.selectSignal(selectFieldSetting(fieldId));
-  }
-
-  getOptions(fieldId: string): Signal<IccOptionType[]> {
-    return this.store.selectSignal(selectOptions(fieldId));
   }
 
   selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
