@@ -36,10 +36,6 @@ export class IccSelectFieldFacade {
     return this.store.select(selectFieldSetting(fieldId));
   }
 
-  selectFieldConfig(fieldId: string): Observable<IccSelectFieldConfig> {
-    return this.store.select(selectFieldConfig(fieldId));
-  }
-
   selectOptions(fieldId: string): Observable<IccOptionType[]> {
     return this.store.select(selectOptions(fieldId));
   }
