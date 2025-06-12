@@ -1,8 +1,8 @@
 @if (fieldConfig$()) {
   <ng-container *ngIf="fieldSetting$ | async as fieldSetting">
-    <ng-container *ngIf="form()" [formGroup]="form()">
+    @if (form() && selectOptions$()) {
       <icc-form-field
-        *ngIf="selectOptions$ | async as selectOptions"
+        [formGroup]="form()"
         [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
         [iccLabelWidth]="fieldConfig$().labelWidth"
         [iccFieldWidth]="fieldConfig$().fieldWidth"
@@ -50,7 +50,7 @@
               [setSelected]="setSelected"
               [selectFilter]="field.value"
               [form]="form()"
-              [selectOptions]="selectOptions"
+              [selectOptions]="selectOptions$()"
               (clickedOption)="onClickedOption($event)"
               (autocompleteClose)="onAutocompleteClose($event)"
               (valueChange)="onSelectOptionValueChange($event)"
@@ -64,6 +64,6 @@
           </icc-form-field-errors>
         }
       </icc-form-field>
-    </ng-container>
+    }
   </ng-container>
 }

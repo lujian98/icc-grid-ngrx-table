@@ -93,15 +93,14 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroy$ = new Subject<void>();
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   setSelected: boolean = false;
   fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
+  selectOptions$ = this.selectFieldFacade.getOptions(this.fieldId);
 
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
-  selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
@@ -111,8 +110,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
 
       if (fieldConfig.options) {
-        // this.options = [...fieldConfig.options] as string[] | object[];
-        //delete config.options;
         this.selectFieldFacade.setSelectFieldOptions(this.fieldId, fieldConfig.options);
       }
       if (this.firstTimeLoad) {
@@ -129,7 +126,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
-        this.initSelectField(fieldConfig);
         if (!this.form().get(fieldConfig.fieldName!)) {
           this.form().addControl(fieldConfig.fieldName!, new FormControl<string>(''));
         }
@@ -150,27 +146,12 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     }
   }
 
-  private initSelectField(fieldConfig: IccSelectFieldConfig): void {
-    if (this.fieldSetting?.viewportReady) {
-      if (!this.selectOptions$) {
-        this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
-      }
-    }
-  }
-
-  @Input()
-  set options(val: IccOptionType[]) {
-    //WARNING local set option only, only add field config if no initial input fieldconfig
-    timer(5)
-      .pipe(take(1))
-      .subscribe(() => {
-        if (!this.fieldConfig$()) {
-          this.initFieldConfig({ ...defaultSelectFieldConfig });
-        }
-        this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-      });
-    this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-  }
+  options = input([], {
+    transform: (options: IccOptionType[]) => {
+      this.selectFieldFacade.setSelectFieldOptions(this.fieldId, options);
+      return options;
+    },
+  });
 
   value = input('', {
     transform: (value: string | object | string[] | object[]) => {
