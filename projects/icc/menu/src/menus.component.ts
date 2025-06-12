@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, input, Output, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, input, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -15,7 +14,7 @@ import { IccMenuConfig } from './models/menu-item.model';
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
+  imports: [ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
 export class IccMenusComponent<T> implements OnDestroy {
   private _items: IccMenuConfig[] = [];
@@ -31,10 +30,6 @@ export class IccMenusComponent<T> implements OnDestroy {
   level = input<number>(0);
   clickToClose = input<boolean>(false);
   menuTrigger = input<IccTrigger>(IccTrigger.CLICK);
-  //@Input() disabled: IccDisabled[] = [];
-  //@Input() level = 0;
-  //@Input() clickToClose = false;
-  //@Input() menuTrigger: IccTrigger = IccTrigger.CLICK;
 
   @Input()
   set items(val: IccMenuConfig[]) {
