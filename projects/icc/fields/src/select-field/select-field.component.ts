@@ -95,47 +95,36 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
-  private _fieldConfig!: IccSelectFieldConfig;
+  // private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
   setSelected: boolean = false;
   fieldSetting$!: Observable<IccSelectFieldSetting | undefined>;
   fieldSetting!: IccSelectFieldSetting;
-  fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
+  fieldConfig$ = this.selectFieldFacade.getFieldConfig(this.fieldId);
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
   form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
-  @Input()
-  set fieldConfig(config: Partial<IccSelectFieldConfig>) {
-    const fieldConfig = { ...defaultSelectFieldConfig, ...config };
-    if (fieldConfig.options) {
-      this.options = [...fieldConfig.options] as string[] | object[];
-      //delete config.options;
-    }
-
-    if (this.firstTimeLoad) {
-      this.initFieldConfig(fieldConfig);
-    } else {
-      this._fieldConfig = fieldConfig;
-    }
-    this.setFieldEditable();
-  }
-  get fieldConfig(): IccSelectFieldConfig {
-    return this._fieldConfig;
-  }
+  fieldConfig = input.required({
+    transform: (config: Partial<IccSelectFieldConfig>) => {
+      const fieldConfig = { ...defaultSelectFieldConfig, ...config };
+      if (fieldConfig.options) {
+        this.options = [...fieldConfig.options] as string[] | object[];
+        //delete config.options;
+      }
+      if (this.firstTimeLoad) {
+        this.initFieldConfig(fieldConfig);
+      }
+      this.setFieldEditable();
+      return fieldConfig;
+    },
+  });
 
   private initFieldConfig(fieldConfig: IccSelectFieldConfig): void {
     this.firstTimeLoad = false;
-    this._fieldConfig = { ...fieldConfig };
-    this.selectFieldFacade.initFieldConfig(this.fieldId, this.fieldConfig);
-    this.fieldConfig$ = this.selectFieldFacade.selectFieldConfig(this.fieldId).pipe(
-      map((fieldConfig) => {
-        this._fieldConfig = fieldConfig!;
-        return fieldConfig;
-      }),
-    );
+    this.selectFieldFacade.initFieldConfig(this.fieldId, fieldConfig);
     this.fieldSetting$ = this.selectFieldFacade.selectSetting(this.fieldId).pipe(
       map((fieldSetting) => {
         this.fieldSetting = fieldSetting!;
@@ -151,7 +140,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       timer(5)
         .pipe(take(1))
         .subscribe(() => {
-          return this.fieldConfig.editable ? this.field.enable() : this.field.disable();
+          return this.fieldConfig$().editable ? this.field.enable() : this.field.disable();
         });
     }
   }
@@ -162,7 +151,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
       if (!this.field) {
-        this.form().addControl(this.fieldConfig.fieldName!, new FormControl<{ [key: string]: T }>({}));
+        this.form().addControl(this.fieldConfig$().fieldName!, new FormControl<{ [key: string]: T }>({}));
         this.setFormvalue();
       }
     }
@@ -171,14 +160,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   @Input()
   set options(val: IccOptionType[]) {
     //WARNING local set option only, only add field config if no initial input fieldconfig
-    timer(5)
-      .pipe(take(1))
-      .subscribe(() => {
-        if (!this.fieldConfig) {
-          this.initFieldConfig({ ...defaultSelectFieldConfig });
-        }
-        this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
-      });
     this.selectFieldFacade.setSelectFieldOptions(this.fieldId, val);
   }
 
@@ -201,7 +182,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get field(): FormControl {
-    return this.form()?.get(this.fieldConfig.fieldName)! as FormControl;
+    return this.form()?.get(this.fieldConfig$().fieldName)! as FormControl;
   }
 
   get fieldValue(): T[] {
@@ -213,7 +194,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get hidden(): boolean {
-    return !!this.fieldConfig.hidden || (this.field.disabled && !!this.fieldConfig.readonlyHidden);
+    return !!this.fieldConfig$().hidden || (this.field.disabled && !!this.fieldConfig$().readonlyHidden);
   }
 
   get hasValue(): boolean {
@@ -242,15 +223,15 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
-    if (this.fieldConfig.displayWith) {
-      return this.fieldConfig.displayWith(this.value!);
+    if (this.fieldConfig$().displayWith) {
+      return this.fieldConfig$().displayWith!(this.value!);
     }
     if (Array.isArray(value)) {
       if (value.length > 0) {
         return (
           value
             .map((item) => {
-              return this.fieldSetting.singleListOption ? item : item[this.fieldConfig.optionLabel];
+              return this.fieldSetting.singleListOption ? item : item[this.fieldConfig$().optionLabel];
             })
             .sort()
             //.sort((a, b) => (a && b) ? a.localeCompare(b) : 0)
@@ -263,7 +244,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       if (this.fieldSetting.singleListOption) {
         return value as string;
       } else {
-        return value ? (value as { [key: string]: string })[this.fieldConfig.optionLabel] : '';
+        return value ? (value as { [key: string]: string })[this.fieldConfig$().optionLabel] : '';
       }
     }
   }
@@ -272,7 +253,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.fieldSetting.singleListOption) {
       return s1 && s2 && s1 === s2;
     } else {
-      return s1 && s2 ? s1[this.fieldConfig.optionKey] === s2[this.fieldConfig.optionKey] : s1 === s2;
+      return s1 && s2 ? s1[this.fieldConfig$().optionKey] === s2[this.fieldConfig$().optionKey] : s1 === s2;
     }
   }
 
@@ -281,13 +262,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
       this.setSelected = true;
-    } else if (!this.fieldConfig.multiSelection) {
+    } else if (!this.fieldConfig$().multiSelection) {
       this.valueChange.emit(this.field.value);
     }
   }
 
   onChange(): void {
-    if (this.fieldConfig.multiSelection) {
+    if (this.fieldConfig$().multiSelection) {
       this.valueChange.emit(this.fieldValue);
       this.setSelected = false;
     }
@@ -299,7 +280,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   clearSelected(event: MouseEvent): void {
     event.stopPropagation();
-    if (this.fieldConfig.multiSelection) {
+    if (this.fieldConfig$().multiSelection) {
       this.field.setValue([]);
       this.valueChange.emit([]);
     } else {
@@ -329,7 +310,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form().valid ? null : { [this.fieldConfig.fieldName]: true };
+    return this.form().valid ? null : { [this.fieldConfig$().fieldName]: true };
   }
 
   ngOnDestroy(): void {

@@ -1,33 +1,33 @@
-<ng-container *ngIf="fieldConfig$ | async as fieldConfig">
+<ng-container *ngIf="fieldConfig$()">
   <ng-container *ngIf="fieldSetting$ | async as fieldSetting">
     <icc-form-field
       [formGroup]="form()"
       *ngIf="selectOptions$ | async as selectOptions"
       [ngStyle]="{ display: hidden ? 'none' : 'inherit' }"
-      [iccLabelWidth]="fieldConfig.labelWidth"
-      [iccFieldWidth]="fieldConfig.fieldWidth"
+      [iccLabelWidth]="fieldConfig$().labelWidth"
+      [iccFieldWidth]="fieldConfig$().fieldWidth"
       [iccFormFieldControl]="field"
       [showFieldEditIndicator]="showFieldEditIndicator()"
     >
-      @if (fieldConfig.fieldLabel !== undefined) {
-        <icc-label>{{ fieldConfig.fieldLabel | translate }}</icc-label>
+      @if (fieldConfig$().fieldLabel !== undefined) {
+        <icc-label>{{ fieldConfig$().fieldLabel! | translate }}</icc-label>
       }
       <input
         iccInput
         #inputEl
         type="text"
         autocomplete="off"
-        [readonly]="!!fieldConfig.selectOnly"
-        [formControlName]="fieldConfig.fieldName"
+        [readonly]="!!fieldConfig$().selectOnly"
+        [formControlName]="fieldConfig$().fieldName"
         (isOverlayOpen)="overlayOpen($event)"
         (change)="onChange()"
         [iccAutocomplete]="autocomplete"
         [iccAutocompleteClose]="autocompleteClose"
         [iccAutocompleteClickOption]="clickedOption"
         [required]="required"
-        placeholder="{{ fieldConfig.placeholder! | translate }}"
+        placeholder="{{ fieldConfig$().placeholder! | translate }}"
       />
-      @if (fieldConfig.clearValue && hasValue) {
+      @if (fieldConfig$().clearValue && hasValue) {
         <icc-icon icon="remove" iccSuffix (click)="clearSelected($event)"></icc-icon>
       }
       @if (!field.disabled) {
@@ -38,13 +38,13 @@
       }
       <icc-autocomplete
         #autocomplete="iccAutocomplete"
-        [multiSelection]="fieldConfig.multiSelection"
+        [multiSelection]="fieldConfig$().multiSelection"
         [displayWith]="displayFn.bind(this)"
         [compareWith]="compareFn.bind(this)"
       >
         <ng-template iccAutocompleteContent>
           <icc-select-option
-            [fieldConfig]="fieldConfig"
+            [fieldConfig]="fieldConfig$()"
             [fieldSetting]="fieldSetting"
             [autocomplete]="autocompleteComponent"
             [setSelected]="setSelected"

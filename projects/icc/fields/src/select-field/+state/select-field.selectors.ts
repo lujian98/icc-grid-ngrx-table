@@ -1,5 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { SelectFieldState } from '../models/select-field.model';
+import { defaultSelectFieldState } from '../models/default-select-field';
 
 export interface AppSelectState {
   iccSelectField: SelectFieldState;
@@ -16,7 +17,7 @@ export const selectFieldSetting = (fieldId: string) =>
 export const selectFieldConfig = (fieldId: string) =>
   createSelector(featureSelector, (state: SelectFieldState) => {
     const fieldConfig = state && state[fieldId] ? state[fieldId].fieldConfig : undefined;
-    return fieldConfig && state[fieldId].fieldSetting.viewportReady ? fieldConfig : undefined;
+    return fieldConfig && state[fieldId].fieldSetting.viewportReady ? fieldConfig : defaultSelectFieldState.fieldConfig;
   });
 
 export const selectOptions = (fieldId: string) =>
