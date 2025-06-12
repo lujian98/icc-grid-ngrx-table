@@ -18,7 +18,7 @@
           type="text"
           autocomplete="off"
           [readonly]="!!fieldConfig.selectOnly"
-          [formControlName]="fieldName!"
+          [formControlName]="fieldConfig.fieldName"
           (isOverlayOpen)="overlayOpen($event)"
           (change)="onChange()"
           [iccAutocomplete]="autocomplete"
