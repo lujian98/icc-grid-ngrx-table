@@ -92,6 +92,8 @@ import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './mo
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private _fieldConfig!: IccSelectFieldConfig;
   private _value!: string | string[] | object[];
@@ -103,15 +105,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   fieldConfig$!: Observable<IccSelectFieldConfig | undefined>;
   selectOptions$!: Observable<IccOptionType[]>; //{ [key: string]: T }[] | string[]
 
-  @Input() form!: FormGroup;
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   showFieldEditIndicator = input<boolean>(true);
   @Input()
   set fieldConfig(config: Partial<IccSelectFieldConfig>) {
     const fieldConfig = { ...defaultSelectFieldConfig, ...config };
-    if (!this.form) {
-      this.form = new FormGroup({});
-    }
-
     if (fieldConfig.options) {
       this.options = [...fieldConfig.options] as string[] | object[];
       //delete config.options;
@@ -164,20 +162,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.selectOptions$ = this.selectFieldFacade.selectOptions(this.fieldId);
       }
       if (!this.field) {
-        this.form.addControl(this.fieldConfig.fieldName!, new FormControl<{ [key: string]: T }>({}));
+        this.form().addControl(this.fieldConfig.fieldName!, new FormControl<{ [key: string]: T }>({}));
         this.setFormvalue();
       }
-
-      /*
-      if (!this.form) {
-        if (!this.form && this.fieldConfig.fieldName) {
-          this.form = new FormGroup({
-            [this.fieldConfig.fieldName]: new FormControl<{ [key: string]: T }>({}),
-          });
-        }
-        this.setFormvalue();
-      }*/
-      //this.setFormvalue();
     }
   }
 
@@ -214,7 +201,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   }
 
   get field(): FormControl {
-    return this.form?.get(this.fieldConfig.fieldName)! as FormControl;
+    return this.form()?.get(this.fieldConfig.fieldName)! as FormControl;
   }
 
   get fieldValue(): T[] {
@@ -323,25 +310,26 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.setSelected = false;
   }
 
-  registerOnChange(fn: (value: string[] | object[]) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string[] | object[]) => void): void {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  //TODO should use form or field???
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string[] | object[] }): void {
-    this.form.patchValue(value, { emitEvent: false });
+    this.form().patchValue(value, { emitEvent: false });
     this.changeDetectorRef.markForCheck();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.form.valid ? null : { [this.fieldConfig.fieldName]: true };
+    return this.form().valid ? null : { [this.fieldConfig.fieldName]: true };
   }
 
   ngOnDestroy(): void {
