@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IccSelectFieldConfig, IccOptionType, IccSelectFieldSetting } from '../models/select-field.model';
@@ -26,6 +26,18 @@ export class IccSelectFieldFacade {
 
   clearSelectFieldStore(fieldId: string): void {
     this.store.dispatch(selectFieldActions.clearSelectFieldStore({ fieldId }));
+  }
+
+  getFieldConfig(fieldId: string): Signal<IccSelectFieldConfig> {
+    return this.store.selectSignal(selectFieldConfig(fieldId));
+  }
+
+  getSetting(fieldId: string): Signal<IccSelectFieldSetting> {
+    return this.store.selectSignal(selectFieldSetting(fieldId));
+  }
+
+  getOptions(fieldId: string): Signal<IccOptionType[]> {
+    return this.store.selectSignal(selectOptions(fieldId));
   }
 
   selectSetting(fieldId: string): Observable<IccSelectFieldSetting | undefined> {
