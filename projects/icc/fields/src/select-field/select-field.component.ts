@@ -4,13 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
-  input,
   OnDestroy,
   Output,
   ViewChild,
   forwardRef,
   inject,
+  input,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -42,7 +41,7 @@ import {
 } from '@icc/ui/form-field';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable, Subject, map, take, takeUntil, timer } from 'rxjs';
+import { Observable, Subject, map, take, timer } from 'rxjs';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
 import { IccSelectFieldFacade } from './+state/select-field.facade';
@@ -92,6 +91,8 @@ import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from './mo
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroy$ = new Subject<void>();
+  onChanged: Function = () => {};
+  onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
   private fieldId = `select-${crypto.randomUUID()}`;
   private firstTimeLoad = true;
@@ -141,7 +142,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       timer(5)
         .pipe(take(1))
         .subscribe(() => {
-          return this.fieldConfig$().editable ? this.field.enable() : this.field.disable();
+          return this.setDisabledState(!this.fieldConfig$().editable);
         });
     }
   }
@@ -278,16 +279,16 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     this.setSelected = false;
   }
 
-  registerOnChange(fn: (value: string[] | object[]) => void): void {
-    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
   }
 
-  registerOnTouched(fn: (value: string[] | object[]) => void): void {
-    //this.form().valueChanges.pipe(takeUntil(this.destroy$)).subscribe(fn);
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.form().disable() : this.form().enable();
+  setDisabledState(disabled: boolean): void {
+    disabled ? this.form().disable() : this.form().enable();
   }
 
   writeValue(value: { [key: string]: string[] | object[] }): void {
