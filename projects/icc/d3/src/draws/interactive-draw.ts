@@ -94,7 +94,7 @@ export class IccInteractiveDraw<T> {
       const xScale = this.scale.scaleX.value as IccScaleLinear;
       const bisect = d3Array.bisector((d) => this.configs.x!(d)).right;
       const x0 = xScale.invert(pxy[0]);
-      this.draw.data.forEach((d) => {
+      this.draw.data$().forEach((d) => {
         const values = this.configs.y0!(d);
         idx = bisect(values, x0);
       });
@@ -138,7 +138,8 @@ export class IccInteractiveDraw<T> {
 
   private getInteractiveData(idx: number): IccD3Interactive[] {
     const ndata: IccD3Interactive[] = [];
-    this.draw.data
+    this.draw
+      .data$()
       .filter((d: any) => !d.disabled)
       .forEach((d: any, i) => {
         this.draw.draws.forEach((draw) => {

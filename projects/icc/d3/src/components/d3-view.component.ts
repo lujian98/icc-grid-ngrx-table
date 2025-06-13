@@ -6,6 +6,8 @@ import {
   HostBinding,
   HostListener,
   Input,
+  input,
+  signal,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -16,10 +18,8 @@ import {
 import { isDataSource } from '@angular/cdk/collections';
 import { Observable, of, Subscription, Subject } from 'rxjs';
 import { debounceTime, delay, takeWhile } from 'rxjs/operators';
-import * as d3 from 'd3-selection';
 // @ts-ignore
 import * as d3Dispatch from 'd3-dispatch';
-import * as d3Transition from 'd3-transition';
 import { IccD3DataSource } from '../d3-data-source';
 import { IccDrawServie } from '../services';
 import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from '../draws';
@@ -54,21 +54,7 @@ import { IccD3Config } from '../models/d3.model';
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private popoverService = inject(IccPopoverService);
-  private _d3Config!: IccD3Config;
   private _chartConfigs: IccD3ChartConfig[] = [];
-  private _data!: any[];
-
-  @Input()
-  set d3Config(value: IccD3Config) {
-    this._d3Config = { ...value };
-    if (value.options) {
-      this.options = { ...value.options };
-    }
-  }
-  get d3Config(): IccD3Config {
-    return this._d3Config;
-  }
-
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
     this._chartConfigs = [...val];
@@ -76,17 +62,31 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   get chartConfigs(): IccD3ChartConfig[] {
     return this._chartConfigs;
   }
+  d3Config = input.required({
+    transform: (d3Config: IccD3Config) => {
+      if (d3Config.options) {
+        this.options = { ...d3Config.options };
+      }
+      return d3Config;
+    },
+  });
+  data$ = signal<T[]>([]);
+  data = input([], {
+    transform: (data: T[]) => {
+      this.data$.set(data);
+      this._setDataSource(data);
+      return data;
+    },
+  });
 
-  @Input()
-  set data(val: T[]) {
-    this._data = [...val];
-  }
-  get data(): T[] {
-    return this._data;
-  }
+  dataSource = input([], {
+    transform: (dataSource: IccD3DataSource<T[]> | Observable<T[]> | T[]) => {
+      this._setDataSource(dataSource);
+      return dataSource;
+    },
+  });
 
   private options!: IccD3Options; // get form d3Config
-  @Input() dataSource!: IccD3DataSource<T[]> | Observable<T[]> | T[]; // TODO remove not used
 
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
@@ -147,7 +147,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
         takeWhile(() => this.alive),
         debounceTime(100),
       )
-      .subscribe(() => this.resizeChart(this.data));
+      .subscribe(() => this.resizeChart(this.data$()));
     this.scale.scaleChange$
       .pipe(
         takeWhile(() => this.alive),
@@ -158,8 +158,8 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
 
   ngAfterViewInit(): void {
     this.isViewReady = true;
-    if (this.data) {
-      this.updateChart(this.data);
+    if (this.data$()) {
+      this.updateChart(this.data$());
     }
   }
 
@@ -168,19 +168,11 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     if (changes.chartConfigs || changes.options) {
       this.view.initOptions(this.options, this.chartConfig);
       this.setChartConfigs();
-
       this._clearDataSource(true);
       // @ts-ignore
-      if (changes.chartConfigs && !changes.chartConfigs.firstChange && this.data) {
-        this._setDataSource(this.data);
+      if (changes.chartConfigs && !changes.chartConfigs.firstChange && this.data$()) {
+        this._setDataSource(this.data$());
       }
-    }
-    // @ts-ignore
-    if (changes.dataSource) {
-      this._setDataSource(this.dataSource);
-      // @ts-ignore
-    } else if (changes.data) {
-      this._setDataSource(this.data);
     }
   }
 
@@ -243,13 +235,13 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   }
 
   public updateChart(data: T[]): void {
-    this.data = this.checkData(data);
-    if (this.isViewReady && this.data) {
+    this.data$.set(this.checkData(data));
+    if (this.isViewReady && this.data$()) {
       if (!this.view.svg) {
-        this.createChart(this.data);
+        this.createChart(this.data$());
       } else {
-        this.setDrawDomain(this.data);
-        this.drawChart(this.data);
+        this.setDrawDomain(this.data$());
+        this.drawChart(this.data$());
         if (this.zoomConfig.enabled) {
           this.zoom.setZoomRange();
         }
@@ -312,11 +304,11 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   }
 
   stateChangeDraw(): void {
-    this.setDrawDomain(this.data); // TODO option to turn on/off set dromain
+    this.setDrawDomain(this.data$()); // TODO option to turn on/off set dromain
     if (this.zoomConfig.enabled) {
       this.zoom.setZoomRange();
     }
-    this.drawChart(this.data);
+    this.drawChart(this.data$());
     this.interactive.update();
   }
 
@@ -341,7 +333,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       this.stateChangeDraw();
       this.legendMouseover(d, !d.disabled);
     });
-    this.dispatch.on('legendResize', (d: any) => this.resizeChart(this.data));
+    this.dispatch.on('legendResize', (d: any) => this.resizeChart(this.data$()));
     this.dispatch.on('legendMouseover', (d: any) => this.legendMouseover(d, true));
     this.dispatch.on('legendMouseout', (d: any) => this.legendMouseover(d, false));
     this.dispatch.on('drawMouseover', (p: any) => {
@@ -402,16 +394,16 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       // @ts-ignore
       this._dataSubscription = dataStream.pipe(takeWhile(() => this.alive)).subscribe((data: T[]) => {
         if (data) {
-          this.data = data;
-          this.updateChart(this.data);
+          this.data$.set(data);
+          this.updateChart(this.data$());
         }
       });
     }
   }
 
   private _clearDataSource(clearElemet: boolean = false): void {
-    if (this.dataSource && typeof (this.dataSource as IccD3DataSource<T[]>).disconnect === 'function') {
-      (this.dataSource as IccD3DataSource<T[]>).disconnect();
+    if (this.dataSource() && typeof (this.dataSource() as IccD3DataSource<T[]>).disconnect === 'function') {
+      (this.dataSource() as IccD3DataSource<T[]>).disconnect();
       clearElemet = true;
     }
     if (clearElemet) {

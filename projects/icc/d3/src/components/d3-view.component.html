@@ -3,7 +3,7 @@
   *ngIf="legend && legend.enabled"
   [view]="view"
   [chartConfigs]="chartConfigs"
-  [data]="data"
+  [data]="data$()"
   [scale]="scale$ | async"
   [dispatch]="dispatch"
 >
