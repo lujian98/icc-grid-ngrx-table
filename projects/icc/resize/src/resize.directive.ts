@@ -1,15 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  inject,
-  input,
-  OnDestroy,
-  OnInit,
-  Output,
-  output,
-  Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output, Renderer2 } from '@angular/core';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { IccResizeInfo, IccResizeType } from './model';
 
