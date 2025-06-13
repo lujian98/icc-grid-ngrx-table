@@ -1,6 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ICC_DIALOG_CONFIG, IccDialogConfig } from './dialog/dialog.model';
 import { IccDialogService } from './dialog/dialog.service';
@@ -10,7 +9,7 @@ import { IccOverlay } from './overlay/overlay.models';
 import { IccOverlayService } from './overlay/overlay.service';
 
 @NgModule({
-  imports: [PortalModule, CommonModule],
+  imports: [PortalModule],
   exports: [OverlayModule, PortalModule],
 })
 export class IccOverlayModule {
