@@ -446,9 +446,10 @@ export class IccRadialGauge<T> extends IccAbstractDraw<T> {
           return true;
         }
       })
+      // @ts-ignore
       .transition()
       .duration(50)
-      .style('fill-opacity', (d) => (mouseover ? 0.9 : 0.75))
+      .style('fill-opacity', () => (mouseover ? 0.9 : 0.75))
       // @ts-ignore
       .attr('d', mouseover ? this.drawArc(7) : this.drawArc());
   }

@@ -55,9 +55,12 @@ export class IccHorizontalBarChart<T> extends IccAbstractDraw<T> {
       drawContents
         .attr('x', (d, i) => scaleX(0))
         .attr('width', (d, i) => 0)
+        // @ts-ignore
         .transition()
         .duration(this.chart.duration!)
+        // @ts-ignore
         .attr('x', (d, i) => scaleX(Math.min(0, this.chart.x!(d))))
+        // @ts-ignore
         .attr('width', (d, i) => scaleX(Math.abs(this.chart.x!(d))) - scaleX(0));
     } else {
       drawContents

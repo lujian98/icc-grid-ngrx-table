@@ -47,9 +47,12 @@ export class IccBarChart<T> extends IccAbstractDraw<T> {
       drawContents
         .attr('y', (d, i) => scaleY(0))
         .attr('height', (d, i) => 0)
+        // @ts-ignore
         .transition()
         .duration(this.chart.duration!)
+        // @ts-ignore
         .attr('y', (d, i) => scaleY(Math.max(0, this.chart.y!(d))))
+        // @ts-ignore
         .attr('height', (d, i) => scaleY(0) - scaleY(Math.abs(this.chart.y!(d))));
     } else {
       drawContents
