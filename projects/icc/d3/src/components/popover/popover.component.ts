@@ -1,18 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-//import { IccPopoverComponent } from '@icc/ui/popover';
-import { CommonModule } from '@angular/common';
 import { IccD3Popover } from '../../models';
 
 @Component({
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
 })
 export class IccD3PopoverComponent2 implements OnInit {
   data!: IccD3Popover; // TODO hover border color
-
-  //constructor(private overlayComponentRef: IccOverlayComponentRef<any>) {}
 
   ngOnInit(): void {}
 
