@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  effect,
-  signal,
-  input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, OnDestroy, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -28,19 +17,15 @@ import { IccMenuConfig } from './models/menu-item.model';
   imports: [ReactiveFormsModule, FormsModule, IccIconModule, IccMenuItemComponent, IccPopoverDirective],
 })
 export class IccMenusComponent<T> implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
   private selected: IccMenuConfig | undefined;
-  private destroy$ = new Subject<void>();
   private isFirstTime: boolean = true;
   bottom = IccPosition.BOTTOM;
   rightBottom = IccPosition.RIGHTBOTTOM;
   hoverTrigger = IccTrigger.HOVER;
   items$ = signal<IccMenuConfig[]>([]);
   values$ = signal<{ [key: string]: boolean }>({});
-  form = input(new FormGroup({}), {
-    transform: (form: FormGroup) => {
-      return form;
-    },
-  });
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   disabled = input<IccDisabled[]>([]);
   level = input<number>(0);
   clickToClose = input<boolean>(false);
@@ -67,7 +52,6 @@ export class IccMenusComponent<T> implements OnDestroy {
       return items;
     },
   });
-
   values = input(
     {},
     {
