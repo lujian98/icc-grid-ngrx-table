@@ -2,11 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   inject,
   input,
-  Output,
+  output,
   signal,
 } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -54,8 +53,7 @@ export class IccAccordionComponent {
       return items;
     },
   });
-
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
+  iccMenuItemClick = output<IccMenuConfig>();
 
   onMenuItemClick(item: IccMenuConfig): void {
     this.iccMenuItemClick.emit(item);
