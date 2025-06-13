@@ -2,12 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   inject,
   input,
   OnDestroy,
-  Output,
+  output,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -36,7 +35,7 @@ export class IccOptionComponent<T> implements OnDestroy {
     return this.elementRef.nativeElement.textContent;
   }
 
-  @Output() change: EventEmitter<IccOptionComponent<T>> = new EventEmitter();
+  change = output<IccOptionComponent<T>>();
 
   select(): void {
     this.setSelection(true);
