@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IccButtonComponent } from '@icc/ui/button';
 import { IccButtonConfg } from '@icc/ui/core';
@@ -23,8 +23,7 @@ export class IccLayoutHeaderComponent {
   private readonly router = inject(Router);
   title = input<string | undefined>(undefined);
   buttons = input<IccButtonConfg[]>([]);
-
-  @Output() iccButtonClick = new EventEmitter<IccButtonConfg>(false);
+  iccButtonClick = output<IccButtonConfg>();
 
   buttonClick(button: IccButtonConfg): void {
     if (button.link) {
