@@ -14,9 +14,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import { debounceTime, delay, takeWhile } from 'rxjs/operators';
+import { debounceTime, takeWhile } from 'rxjs/operators';
 // @ts-ignore
-import { CommonModule } from '@angular/common';
 import * as d3Dispatch from 'd3-dispatch';
 import { IccD3DataSource } from '../d3-data-source';
 import { IccAbstractDraw, IccAxisDraw, IccInteractiveDraw, IccScaleDraw, IccView, IccZoomDraw } from '../draws';
@@ -46,7 +45,7 @@ import { IccD3PopoverComponent2 } from './popover/popover.component';
   styleUrls: ['./d3-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, IccD3LegendComponent],
+  imports: [IccD3LegendComponent],
   providers: [IccDrawServie, IccPopoverService],
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnDestroy {
@@ -55,7 +54,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnDestroy {
   dispatch!: d3Dispatch.Dispatch<{}>;
   view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
   scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
-  scale$ = new Subject<IccScaleDraw<T>>();
   draws: IccAbstractDraw<T>[] = [];
   zoom!: IccZoomDraw<T>;
   interactive!: IccInteractiveDraw<T>;
@@ -134,12 +132,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnDestroy {
         debounceTime(100),
       )
       .subscribe(() => this.resizeChart(this.data$()));
-    this.scale.scaleChange$
-      .pipe(
-        takeWhile(() => this.alive),
-        delay(0),
-      )
-      .subscribe((scale) => this.scale$.next(scale));
   }
 
   ngAfterViewInit(): void {

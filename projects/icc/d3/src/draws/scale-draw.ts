@@ -40,7 +40,7 @@ export class IccScaleDraw<T> {
   y: AxisScale[] = [];
   colors!: IccScaleColor;
 
-  scaleChange$ = new Subject<IccScaleDraw<T>>();
+  //scaleChange$ = new Subject<IccScaleDraw<T>>();
   private chartConfigs!: IccD3ChartConfig[];
 
   get scaleX(): AxisScale {
@@ -72,7 +72,7 @@ export class IccScaleDraw<T> {
     this.update();
     this.setXAxis();
     this.setYAxis();
-    this.scaleChange$.next(this); // TODO may need track change for all?
+    //this.scaleChange$.next(this); // TODO may need track change for all?
   }
 
   update(): void {
