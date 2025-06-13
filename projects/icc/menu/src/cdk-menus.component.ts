@@ -1,5 +1,5 @@
 import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component, EventEmitter, input, OnDestroy, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnDestroy, output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -69,8 +69,8 @@ export class CdkMenusComponent<T> implements OnDestroy {
     },
   );
 
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
-  @Output() iccMenuFormChanges = new EventEmitter<T>(false);
+  iccMenuItemClick = output<IccMenuConfig>();
+  iccMenuFormChanges = output<T>();
 
   getDisabled(menu: IccMenuConfig): boolean {
     const find = this.disabled().find((item) => item.name === menu.name);

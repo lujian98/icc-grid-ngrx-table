@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, input, output } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { defaultCheckboxFieldConfig, IccCheckboxFieldComponent, IccCheckboxFieldConfig } from '@icc/ui/fields';
@@ -34,6 +34,7 @@ export class IccMenuItemComponent {
     },
   });
   disabled = input<boolean>(false);
+  iccMenuItemClick = output<IccMenuConfig>();
 
   get separator() {
     return this.menuItem().separator;
@@ -46,8 +47,6 @@ export class IccMenuItemComponent {
   get title(): string {
     return this.menuItem().title === undefined ? this.menuItem().name : this.menuItem().title!;
   }
-
-  @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
 
   hasChildItem(item: IccMenuConfig): boolean {
     return !item.hidden && !!item.children && item.children.length > 0;

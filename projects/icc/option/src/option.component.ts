@@ -26,6 +26,7 @@ export class IccOptionComponent<T> implements OnDestroy {
   protected click$: Subject<IccOptionComponent<T>> = new Subject<IccOptionComponent<T>>();
 
   value = input<T>();
+  change = output<IccOptionComponent<T>>();
 
   get click(): Observable<IccOptionComponent<T>> {
     return this.click$.asObservable();
@@ -34,8 +35,6 @@ export class IccOptionComponent<T> implements OnDestroy {
   get content() {
     return this.elementRef.nativeElement.textContent;
   }
-
-  change = output<IccOptionComponent<T>>();
 
   select(): void {
     this.setSelection(true);
