@@ -1,5 +1,5 @@
 import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, OnDestroy, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -26,35 +26,48 @@ import { IccMenuConfig } from './models/menu-item.model';
   ],
 })
 export class CdkMenusComponent<T> implements OnDestroy {
-  private _items: IccMenuConfig[] = [];
+  private readonly destroy$ = new Subject<void>();
   private selected: IccMenuConfig | undefined;
-  private destroy$ = new Subject<void>();
-  private _values: { [key: string]: boolean } = {};
-
-  @Input() form: FormGroup | undefined;
-
+  private isFirstTime: boolean = true;
+  items$ = signal<IccMenuConfig[]>([]);
+  values$ = signal<{ [key: string]: boolean }>({});
+  form = input(new FormGroup({}), { transform: (form: FormGroup) => form });
   disabled = input<IccDisabled[]>([]);
   level = input<number>(0);
-
-  @Input()
-  set items(val: IccMenuConfig[]) {
-    this._items = val;
-    this.setItems();
-  }
-  get items(): IccMenuConfig[] {
-    return this._items;
-  }
-
-  @Input()
-  set values(values: { [key: string]: boolean }) {
-    if (this.form && values) {
-      this.form.patchValue({ ...values }, { emitEvent: false });
-    }
-    this._values = values;
-  }
-  get values(): { [key: string]: boolean } {
-    return this._values;
-  }
+  items = input([], {
+    transform: (items: IccMenuConfig[]) => {
+      this.items$.set(items);
+      this.setSelected(this.selected);
+      if (this.isFirstTime) {
+        this.form()
+          .valueChanges.pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
+          .subscribe((val) => {
+            this.iccMenuFormChanges.emit(this.form().value as T);
+            this.values$.set(this.form().value);
+          });
+        this.isFirstTime = false;
+      }
+      items.forEach((item) => {
+        const field = this.form().get(item.name);
+        if (item.checkbox && !field) {
+          this.form().addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
+        }
+      });
+      return items;
+    },
+  });
+  values = input(
+    {},
+    {
+      transform: (values: { [key: string]: boolean }) => {
+        this.values$.set(values);
+        if (this.form && values) {
+          this.form().patchValue({ ...values }, { emitEvent: false });
+        }
+        return values;
+      },
+    },
+  );
 
   @Output() iccMenuItemClick = new EventEmitter<IccMenuConfig>(false);
   @Output() iccMenuFormChanges = new EventEmitter<T>(false);
@@ -79,33 +92,16 @@ export class CdkMenusComponent<T> implements OnDestroy {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
-  private setItems(): void {
-    if (this.selected) {
-      this.items.forEach((item) => (item.selected = item.name === this.selected!.name));
+  private setSelected(selected: IccMenuConfig | undefined): void {
+    if (selected) {
+      const items = this.items$().map((item) => ({
+        ...item,
+        selected: item.name === selected.name,
+      }));
+      this.items$.set(items);
     }
-    if (!this.form) {
-      this.form = new FormGroup({});
-      this.form.valueChanges
-        .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
-        .subscribe((val) => {
-          this.iccMenuFormChanges.emit(this.form?.value);
-          this.values = this.form?.value;
-        });
-    }
-    this.items.forEach((item) => {
-      // TODO disabled ??
-      const field = this.form!.get(item.name);
-      if (item.checkbox && !field) {
-        this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
-      }
-    });
+    this.selected = selected;
   }
-
-  private setSelected(selectedItem: IccMenuConfig): void {
-    this.items.forEach((item) => (item.selected = item.name === selectedItem.name));
-    this.selected = selectedItem;
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
