@@ -2,7 +2,7 @@
 <icc-d3-legend
   *ngIf="legend && legend.enabled"
   [view]="view"
-  [chartConfigs]="chartConfigs"
+  [chartConfigs]="chartConfigs$()"
   [data]="data$()"
   [scale]="scale$ | async"
   [dispatch]="dispatch"

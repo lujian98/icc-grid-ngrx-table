@@ -23,7 +23,7 @@ export class IccZoomDraw<T> {
   get configs(): IccD3ChartConfig {
     // TODO other charts if need only for X axis for now
     // console.log(' ssssssssssssssssss this.chartConfigs=', this.chartConfigs)
-    return this.draw.chartConfigs[0];
+    return this.draw.chartConfigs$()[0];
   }
 
   get drawPanel(): d3.Selection<d3.BaseType, {}, HTMLElement, any> {

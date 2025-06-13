@@ -1,3 +1,4 @@
+import { isDataSource } from '@angular/cdk/collections';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -5,43 +6,39 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
-  Input,
+  inject,
   input,
-  signal,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
+  signal,
   ViewEncapsulation,
-  inject,
 } from '@angular/core';
-import { isDataSource } from '@angular/cdk/collections';
-import { Observable, of, Subscription, Subject } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { debounceTime, delay, takeWhile } from 'rxjs/operators';
 // @ts-ignore
+import { CommonModule } from '@angular/common';
 import * as d3Dispatch from 'd3-dispatch';
 import { IccD3DataSource } from '../d3-data-source';
-import { IccDrawServie } from '../services';
-import { IccAbstractDraw, IccScaleDraw, IccAxisDraw, IccZoomDraw, IccView, IccInteractiveDraw } from '../draws';
-import { CommonModule } from '@angular/common';
+import { IccAbstractDraw, IccAxisDraw, IccInteractiveDraw, IccScaleDraw, IccView, IccZoomDraw } from '../draws';
 import {
-  IccD3Options,
-  IccD3ChartConfig,
-  IccD3LegendOptions,
-  IccD3ZoomOptions,
-  DEFAULT_CHART_OPTIONS,
-  DEFAULT_CHART_CONFIGS,
   DEFAULT_BULLET_CHART_CONFIGS,
-  DEFAULT_VERTICAL_BULLET_CHART_CONFIGS,
+  DEFAULT_CHART_CONFIGS,
+  DEFAULT_CHART_OPTIONS,
   DEFAULT_PIE_CHART_CONFIGS,
   DEFAULT_RADIAL_GAUGE_CONFIGS,
+  DEFAULT_VERTICAL_BULLET_CHART_CONFIGS,
+  IccD3ChartConfig,
+  IccD3LegendOptions,
+  IccD3Options,
+  IccD3ZoomOptions,
 } from '../models';
+import { IccDrawServie } from '../services';
 
-import { IccD3PopoverComponent2 } from './popover/popover.component';
-import { IccD3LegendComponent } from './legend/legend.component';
-import { IccPopoverService, IccPopoverComponent } from '@icc/ui/popover';
 import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
+import { IccPopoverComponent, IccPopoverService } from '@icc/ui/popover';
 import { IccD3Config } from '../models/d3.model';
+import { IccD3LegendComponent } from './legend/legend.component';
+import { IccD3PopoverComponent2 } from './popover/popover.component';
 
 @Component({
   selector: 'icc-d3-view',
@@ -52,7 +49,7 @@ import { IccD3Config } from '../models/d3.model';
   imports: [CommonModule, IccD3LegendComponent],
   providers: [IccDrawServie, IccPopoverService],
 })
-export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnDestroy {
   private popoverService = inject(IccPopoverService);
   private options!: IccD3Options; // get form d3Config
   dispatch!: d3Dispatch.Dispatch<{}>;
@@ -69,15 +66,17 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   isWindowReszie$: Subject<{}> = new Subject();
 
   data$ = signal<T[]>([]);
-
-  private _chartConfigs: IccD3ChartConfig[] = [];
-  @Input()
-  set chartConfigs(val: IccD3ChartConfig[]) {
-    this._chartConfigs = [...val];
-  }
-  get chartConfigs(): IccD3ChartConfig[] {
-    return this._chartConfigs;
-  }
+  chartConfigs$ = signal<IccD3ChartConfig[]>([]);
+  chartConfigs = input.required({
+    transform: (chartConfigs: IccD3ChartConfig[]) => {
+      const chartConfig = chartConfigs[0];
+      this.view.initOptions(this.options, chartConfig);
+      this.setChartConfigs(chartConfigs);
+      this._clearDataSource(true);
+      this._setDataSource(this.data$());
+      return chartConfigs;
+    },
+  });
   d3Config = input.required({
     transform: (d3Config: IccD3Config) => {
       if (d3Config.options) {
@@ -100,6 +99,14 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     },
   });
 
+  get legend(): IccD3LegendOptions {
+    return this.chartConfigs$()[0].legend!;
+  }
+
+  get zoomConfig(): IccD3ZoomOptions {
+    return this.chartConfigs$()[0].zoom!;
+  }
+
   @HostBinding('style.flex-direction') get flexDirection(): any {
     if (this.legend) {
       switch (this.legend.position) {
@@ -110,26 +117,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
         case 'right':
           return '';
       }
-    }
-  }
-
-  // @ts-ignore
-  get chartConfig(): IccD3ChartConfig {
-    if (this.chartConfigs && this.chartConfigs[0]) {
-      return this.chartConfigs[0];
-    }
-  }
-  // @ts-ignore
-  get legend(): IccD3LegendOptions {
-    if (this.chartConfigs && this.chartConfigs[0] && this.chartConfigs[0].legend) {
-      return this.chartConfigs[0].legend;
-    }
-  }
-
-  // @ts-ignore
-  get zoomConfig(): IccD3ZoomOptions {
-    if (this.chartConfigs && this.chartConfigs[0] && this.chartConfigs[0].zoom) {
-      return this.chartConfigs[0].zoom;
     }
   }
 
@@ -162,25 +149,9 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // @ts-ignore
-    if (changes.chartConfigs || changes.options) {
-      this.view.initOptions(this.options, this.chartConfig);
-      this.setChartConfigs();
-      this._clearDataSource(true);
-      // @ts-ignore
-      if (changes.chartConfigs && !changes.chartConfigs.firstChange && this.data$()) {
-        this._setDataSource(this.data$());
-      }
-    }
-  }
-
   // TODO this is temporary set chart group from options
-  private setChartConfigs(): void {
-    if (this.chartConfigs.length === 0) {
-      this.chartConfigs.push({});
-    }
-    this.chartConfigs = [...this.chartConfigs].map((item, index) => {
+  private setChartConfigs(chartConfigs: IccD3ChartConfig[]): void {
+    const newconfigs = chartConfigs.map((item, index) => {
       let chart = { ...item };
       if (chart.panelId === undefined) {
         chart.panelId = '0';
@@ -192,11 +163,9 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
         chart.xAxisId = 'BOTTOM';
       }
       if (index > 0) {
-        chart = this.getOptions(chart, this.chartConfigs[0]);
+        chart = this.getOptions(chart, chartConfigs[0]);
       }
-
       let configs = DEFAULT_CHART_CONFIGS;
-
       if (chart.chartType === 'bulletChart') {
         const bulletType = chart.bullet && chart.bullet.type ? chart.bullet.type : 'horizontal';
         const dOptions =
@@ -207,19 +176,9 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       } else if (chart.chartType === 'radialGauge') {
         configs = this.getOptions(DEFAULT_RADIAL_GAUGE_CONFIGS, configs);
       }
-
-      /* // TODO zoom optons
-        private setZoomOptions(): void {
-    // const zoom = this.options.zoom;
-    zoom.horizontalOff = !zoom.enabled ? true : zoom.horizontalOff;
-    zoom.horizontalBrushShow = !zoom.enabled || zoom.horizontalOff ? false : zoom.horizontalBrushShow;
-    zoom.verticalOff = !zoom.enabled ? true : zoom.verticalOff;
-    zoom.verticalBrushShow = !zoom.enabled || zoom.verticalOff ? false : zoom.verticalBrushShow;
-  }
-  */
       return this.getOptions(chart, configs); // TODO options is default chart config
     });
-    //console.log(' nnnnnnnn this.chartConfigs=', this.chartConfigs);
+    this.chartConfigs$.set(newconfigs);
   }
 
   private getOptions(option1: IccD3ChartConfig, option2: IccD3ChartConfig): IccD3ChartConfig {
@@ -264,11 +223,11 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   public createChart(data: T[]): void {
     this.view.setViewDimension(this.zoomConfig);
     this.scale.initColor(data);
-    this.view.initView(this.chartConfigs);
+    this.view.initView(this.chartConfigs$());
     this.view.update();
-    this.scale.buildScales(this.chartConfigs);
-    this.drawAxis = new IccAxisDraw(this.view, this.scale, this.chartConfigs);
-    this.chartConfigs.forEach((chart) => {
+    this.scale.buildScales(this.chartConfigs$());
+    this.drawAxis = new IccAxisDraw(this.view, this.scale, this.chartConfigs$());
+    this.chartConfigs$().forEach((chart) => {
       const draw = this.drawServie.getDraw(this.view, this.scale, this.dispatch, chart);
       this.draws.push(draw);
     });
@@ -279,7 +238,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
     }
     this.interactive = new IccInteractiveDraw(this.view, this.scale, this);
     this.interactive.drawPanel.select('.drawArea').on('mouseout', (e, d) => {
-      // console.log(' mouseout=', e)
       this.hidePopover();
     });
   }
@@ -289,8 +247,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       const drawData = data.filter((d: any) => {
         const panelId = d.panelId ? d.panelId : '0';
         const yAxisId = d.yAxisId ? d.yAxisId : 'LEFT';
-        // console.log( ' panelId=', panelId, '=draw.chartType=', draw.chartType)
-        // console.log( ' draw.panelId=', draw.panelId, '=draw.chartType=', draw.chartType)
         return (
           !d.disabled &&
           draw.panelId === panelId &&
@@ -429,7 +385,7 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
   private cloneData = <T>(data: T[]) => data && data.map((d) => (typeof d === 'object' ? Object.assign({}, d) : d));
 
   private checkData<T>(data: T[]): any[] {
-    const configs = this.chartConfigs[0];
+    const configs = this.chartConfigs$()[0];
     data = this.cloneData(data);
     return data && configs.chartType === 'pieChart' && !configs.y0!(data[0])
       ? [
