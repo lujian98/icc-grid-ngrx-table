@@ -54,6 +54,22 @@ import { IccD3Config } from '../models/d3.model';
 })
 export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private popoverService = inject(IccPopoverService);
+  private options!: IccD3Options; // get form d3Config
+  dispatch!: d3Dispatch.Dispatch<{}>;
+  view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
+  scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
+  scale$ = new Subject<IccScaleDraw<T>>();
+  draws: IccAbstractDraw<T>[] = [];
+  zoom!: IccZoomDraw<T>;
+  interactive!: IccInteractiveDraw<T>;
+  drawAxis!: IccAxisDraw<T>;
+  private _dataSubscription!: Subscription | null;
+  private alive = true;
+  private isViewReady = false;
+  isWindowReszie$: Subject<{}> = new Subject();
+
+  data$ = signal<T[]>([]);
+
   private _chartConfigs: IccD3ChartConfig[] = [];
   @Input()
   set chartConfigs(val: IccD3ChartConfig[]) {
@@ -70,7 +86,6 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       return d3Config;
     },
   });
-  data$ = signal<T[]>([]);
   data = input([], {
     transform: (data: T[]) => {
       this.data$.set(data);
@@ -78,28 +93,12 @@ export class IccD3ViewComponent<T> implements AfterViewInit, OnInit, OnChanges, 
       return data;
     },
   });
-
   dataSource = input([], {
     transform: (dataSource: IccD3DataSource<T[]> | Observable<T[]> | T[]) => {
       this._setDataSource(dataSource);
       return dataSource;
     },
   });
-
-  private options!: IccD3Options; // get form d3Config
-
-  dispatch!: d3Dispatch.Dispatch<{}>;
-  view = new IccView(this.elementRef, DEFAULT_CHART_OPTIONS);
-  scale: IccScaleDraw<T> = new IccScaleDraw(this.view);
-  scale$ = new Subject<IccScaleDraw<T>>();
-  draws: IccAbstractDraw<T>[] = [];
-  zoom!: IccZoomDraw<T>;
-  interactive!: IccInteractiveDraw<T>;
-  drawAxis!: IccAxisDraw<T>;
-  private _dataSubscription!: Subscription | null;
-  private alive = true;
-  private isViewReady = false;
-  isWindowReszie$: Subject<{}> = new Subject();
 
   @HostBinding('style.flex-direction') get flexDirection(): any {
     if (this.legend) {
