@@ -3,15 +3,19 @@
     #inputEl
     type="checkbox"
     class="cdk-visually-hidden"
-    [checked]="checked"
-    [disabled]="disabled"
-    [indeterminate]="indeterminate"
+    [checked]="checked$()"
+    [disabled]="disabled$()"
+    [indeterminate]="indeterminate$()"
     (change)="updateValueAndIndeterminate($event)"
     (click)="$event.stopPropagation()"
   />
   <span class="icc-checkbox-container">
-    <icc-icon [ngClass]="indeterminate ? 'indeterminate' : ''" *ngIf="indeterminate" icon="minus"></icc-icon>
-    <icc-icon [ngClass]="checked ? 'checked' : ''" *ngIf="!indeterminate" icon="check"></icc-icon>
+    @if (indeterminate$()) {
+      <icc-icon [class.indeterminate]="indeterminate$()" icon="minus"></icc-icon>
+    }
+    @if (!indeterminate$()) {
+      <icc-icon [class.checked]="checked$()" icon="check"></icc-icon>
+    }
   </span>
   <span class="icc-checkbox-label">
     <ng-content></ng-content>

@@ -1,5 +1,3 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -7,8 +5,10 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
-  Input,
+  inject,
+  input,
   Output,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -28,7 +28,7 @@ export class GhostCheckboxDirective {
   selector: 'icc-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
-  imports: [CommonModule, IccIconModule],
+  imports: [IccIconModule],
   host: {
     '[class.selected]': 'selected',
   },
@@ -41,41 +41,35 @@ export class GhostCheckboxDirective {
   ],
 })
 export class IccCheckboxComponent implements ControlValueAccessor {
-  private _checked = false;
-  private _disabled = false;
-  private _indeterminate = false;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  checked$ = signal<boolean>(false);
+  disabled$ = signal<boolean>(false);
+  indeterminate$ = signal<boolean>(false);
+  checked = input(false, {
+    transform: (checked: boolean) => {
+      this.checked$.set(checked);
+      return checked;
+    },
+  });
+  disabled = input(false, {
+    transform: (disabled: boolean) => {
+      this.checked$.set(disabled);
+      return disabled;
+    },
+  });
+  indeterminate = input(false, {
+    transform: (indeterminate: boolean) => {
+      this.indeterminate$.set(indeterminate);
+      return indeterminate;
+    },
+  });
+
   @ViewChild('inputEl') inputEl!: ElementRef;
 
   @Output() change = new EventEmitter<boolean>();
 
   protected onChange = (value: boolean) => {};
   protected onTouched = (value: boolean) => {};
-
-  @Input()
-  get checked(): boolean {
-    return this._checked;
-  }
-  set checked(value: boolean) {
-    this._checked = value;
-  }
-
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(value: boolean) {
-    this._disabled = coerceBooleanProperty(value);
-  }
-
-  @Input()
-  get indeterminate(): boolean {
-    return this._indeterminate;
-  }
-  set indeterminate(value: boolean) {
-    this._indeterminate = coerceBooleanProperty(value);
-  }
-
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
@@ -86,28 +80,28 @@ export class IccCheckboxComponent implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled$.set(isDisabled);
   }
 
   writeValue(value: boolean): void {
-    this._checked = value;
+    this.checked$.set(value);
 
     //Fix for issue where we reference .detectChanges
     //on a destroyed view (such as when toggling control
     //enabled/disabled from a parent form group)
     //https://github.com/SAP/fundamental-ngx/issues/2364
-    if (!(this.changeDetector as any).destroyed) {
-      this.changeDetector.detectChanges();
+    if (!(this.changeDetectorRef as any).destroyed) {
+      this.changeDetectorRef.detectChanges();
     }
   }
 
   updateValueAndIndeterminate(event: Event): void {
     event.stopPropagation();
     const input = event.target as HTMLInputElement;
-    this.checked = input.checked;
-    this.change.emit(this.checked);
-    this.onChange(this.checked);
-    this.indeterminate = input.indeterminate;
+    this.checked$.set(input.checked);
+    this.change.emit(this.checked$());
+    this.onChange(this.checked$());
+    this.indeterminate$.set(input.indeterminate);
   }
 
   focus(): void {
