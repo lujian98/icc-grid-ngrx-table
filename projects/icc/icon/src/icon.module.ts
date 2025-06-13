@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { IccIconComponent } from './icon.component';
 import { IccFontAwesomeIconsModule } from './font-awesome-icons.module';
 import { IccIconLibraries } from './icon-libraries';
@@ -8,7 +6,7 @@ import { IccIconLibraries } from './icon-libraries';
 @NgModule({
   declarations: [IccIconComponent],
   exports: [IccIconComponent],
-  imports: [CommonModule, IccFontAwesomeIconsModule],
+  imports: [IccFontAwesomeIconsModule],
 })
 export class IccIconModule {
   constructor(iconLibrary: IccIconLibraries) {
