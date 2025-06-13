@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  output,
   Renderer2,
 } from '@angular/core';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
@@ -27,8 +28,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   private resizeInfo!: IccResizeInfo;
   direction = input.required<IccResizeType>();
   elementKey = input.required<string>();
-
-  @Output() iccResizeEvent: EventEmitter<IccResizeInfo> = new EventEmitter<IccResizeInfo>();
+  iccResizeEvent = output<IccResizeInfo>();
 
   ngOnInit(): void {
     this.resizableMousedown = this.renderer.listen(this.document, 'mousedown', (event: MouseEvent) => {
