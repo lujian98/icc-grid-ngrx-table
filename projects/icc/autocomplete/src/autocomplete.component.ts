@@ -105,10 +105,10 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
 
   setSelectionOption(option: IccOptionComponent<T>): void {
     if (this.multiSelection() && Array.isArray(this.value)) {
-      const find = this.value.findIndex((item: T) => this.compareValue(option.value, item));
+      const find = this.value.findIndex((item: T) => this.compareValue(option.value()!, item));
       if (find > -1) {
         option.deselect();
-        const selected = this.selection.selected.find((item) => this.compareValue(option.value, item.value));
+        const selected = this.selection.selected.find((item) => this.compareValue(option.value()!, item.value()!));
         if (selected) {
           this.selection.deselect(selected);
         }
@@ -116,13 +116,13 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
       } else {
         option.select();
         this.selection.select(option);
-        this.value.push(option.value);
+        this.value.push(option.value());
       }
     } else {
       this.selection.clear();
       option.select();
       this.selection.select(option);
-      this.value = option.value;
+      this.value = option.value()!;
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -131,10 +131,10 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
     if (Array.isArray(value)) {
       let offset = -1;
       value.forEach((selected) => {
-        const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value));
+        const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value()!));
         if (find) {
           find.select();
-          const isSelected = this.selection.selected.find((item) => this.compareValue(selected, item.value));
+          const isSelected = this.selection.selected.find((item) => this.compareValue(selected, item.value()!));
           if (!isSelected) {
             this.selection.select(find);
           }
@@ -145,14 +145,14 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
         }
       });
       this.selection.selected.forEach((selected) => {
-        const isSelected = value.find((item) => this.compareValue(selected.value, item));
+        const isSelected = value.find((item) => this.compareValue(selected.value()!, item));
         if (!isSelected) {
           selected.deselect();
           this.selection.deselect(selected);
         }
       });
       this.options.forEach((option) => {
-        const isSelected = value.find((item) => this.compareValue(option.value, item));
+        const isSelected = value.find((item) => this.compareValue(option.value()!, item));
         if (!isSelected) {
           option.deselect();
           this.selection.deselect(option);
@@ -163,7 +163,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
       }
     } else {
       this.selection.clear();
-      const option = this.options.find((item: IccOptionComponent<T>) => this.compareValue(value!, item.value));
+      const option = this.options.find((item: IccOptionComponent<T>) => this.compareValue(value!, item.value()!));
       if (option) {
         option.select();
         this.selection.select(option);

@@ -4,12 +4,12 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input,
   inject,
+  input,
   OnDestroy,
   Output,
 } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'icc-option',
@@ -22,11 +22,11 @@ import { Subject, Observable } from 'rxjs';
   },
 })
 export class IccOptionComponent<T> implements OnDestroy {
-  elementRef = inject(ElementRef);
+  readonly elementRef = inject(ElementRef);
   selected: boolean = false;
   protected click$: Subject<IccOptionComponent<T>> = new Subject<IccOptionComponent<T>>();
 
-  @Input() value!: T;
+  value = input<T>();
 
   get click(): Observable<IccOptionComponent<T>> {
     return this.click$.asObservable();

@@ -124,7 +124,7 @@ export class IccSelectOptionComponent<T, G> {
   private setSelectChecked(): void {
     const values = this.fieldValue;
     this.optionList.toArray().forEach((option) => {
-      const find = values.find((item) => isEqual(item, option.value));
+      const find = values.find((item) => isEqual(item, option.value()!));
       option.selected = !!find;
     });
     this.changeDetectorRef.markForCheck();
@@ -165,9 +165,11 @@ export class IccSelectOptionComponent<T, G> {
   //support only header isEmpty and notEmpty
   headerOptionClick(option: IccOptionComponent<IccHeaderOption>): void {
     option.selected = !option.selected;
-    const optionKey = this.fieldSetting().singleListOption ? option.value[this.fieldConfig().optionKey] : option.value;
+    const optionKey = this.fieldSetting().singleListOption
+      ? option.value()![this.fieldConfig().optionKey]
+      : option.value;
     const optionValue = this.fieldSetting().singleListOption
-      ? option.value[this.fieldConfig().optionLabel]
+      ? option.value()![this.fieldConfig().optionLabel]
       : option.value;
     let value = this.field.value;
     if (this.fieldConfig().multiSelection) {
@@ -182,7 +184,7 @@ export class IccSelectOptionComponent<T, G> {
           } else {
             return (
               (item as { [key: string]: T })[this.fieldConfig().optionKey] !==
-              option.value[this.fieldConfig().optionKey]
+              option.value()![this.fieldConfig().optionKey]
             );
           }
         }) as object[];
