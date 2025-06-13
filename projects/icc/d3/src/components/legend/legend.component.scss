@@ -1,4 +1,8 @@
 :host {
+  display: flex;
+  .legend {
+    display: flex;
+  }
   .legend-icon {
     width: 12px;
     height: 12px;

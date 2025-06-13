@@ -1,20 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  HostBinding,
-  Input,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-} from '@angular/core';
-import { Subject } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { delay, takeWhile } from 'rxjs/operators';
-import * as d3 from 'd3-selection';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, OnDestroy, OnInit } from '@angular/core';
 import * as d3Dispatch from 'd3-dispatch';
-import { IccView, IccScaleDraw } from '../../draws';
+import * as d3 from 'd3-selection';
+import { Subject } from 'rxjs';
+import { delay, takeWhile } from 'rxjs/operators';
+import { IccScaleDraw, IccView } from '../../draws';
 import { IccD3ChartConfig } from '../../models';
 
 @Component({
@@ -25,14 +14,27 @@ import { IccD3ChartConfig } from '../../models';
   host: {
     '[class.style]': 'style',
   },
-  imports: [CommonModule],
 })
-export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
-  @Input() view!: IccView;
-  @Input() chartConfigs: IccD3ChartConfig[] = [];
-  @Input() data!: T[];
-  @Input() scale!: IccScaleDraw<T> | null;
-  @Input() dispatch!: d3Dispatch.Dispatch<{}>;
+export class IccD3LegendComponent<T> implements OnInit, OnDestroy {
+  view = input.required({
+    transform: (view: IccView) => {
+      if (this.availableWidth !== view.width - view.margin.left!) {
+        this.availableWidth = view.width - view.margin.left!;
+        //this.setLegendData();
+      }
+      return view;
+    },
+  });
+  chartConfigs = input<IccD3ChartConfig[]>([]);
+  data = input([], {
+    transform: (data: T[]) => {
+      this.setLegendData(data);
+      return data;
+    },
+  });
+  scale = input<IccScaleDraw<T> | null>(null);
+  dispatch = input<d3Dispatch.Dispatch<{}>>();
+
   private alive = true;
   stateChange$ = new Subject<boolean>();
   availableWidth = 0;
@@ -53,7 +55,7 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
   get configs(): IccD3ChartConfig {
     // TODO other charts if need only for X axis for now
     // console.log(' ssssssssssssssssss this.chartConfigs=', this.chartConfigs)
-    return this.chartConfigs[0];
+    return this.chartConfigs()[0];
   }
 
   get legend(): any {
@@ -69,24 +71,16 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
         delay(0),
       )
       .subscribe(() => {
-        this.dispatch.call('legendResize', this, this.getData());
+        this.dispatch()!.call('legendResize', this, this.getData());
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // @ts-ignore
-    if ((changes.view && this.availableWidth !== this.view.width - this.view.margin.left!) || changes.data) {
-      this.availableWidth = this.view.width - this.view.margin.left!;
-      this.setLegendData();
-    }
-  }
-
   getData(): T[] {
-    return this.configs.chartType === 'pieChart' ? this.configs.y0!(this.data[0]) : this.data;
+    return this.configs.chartType === 'pieChart' ? this.configs.y0!(this.data()[0]) : this.data();
   }
 
-  setLegendData(): void {
-    const data = this.getData();
+  setLegendData(inputdata?: T[]): void {
+    const data = inputdata ? inputdata : this.getData();
     if (data) {
       this.legendData = [];
       if (this.legend.position !== 'right') {
@@ -144,9 +138,9 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
   }
 
   legendStyles(): {} {
-    const right = 10 + this.view.margin.right! + (this.configs.zoom!.verticalBrushShow ? 80 : 0);
+    const right = 10 + this.view().margin.right! + (this.configs.zoom!.verticalBrushShow ? 80 : 0);
     let marginRight = `${right}px`;
-    let marginLeft = `${this.view.margin.left}px`;
+    let marginLeft = `${this.view().margin.left}px`;
     if (this.legend.align === 'right' && this.columnWidths.length === this.getData().length) {
       marginLeft = 'auto';
     } else if (this.legend.position === 'right') {
@@ -167,8 +161,8 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
   }
 
   legendColor(d: any, i: number): any {
-    if (d && this.scale && this.scale.colors) {
-      return d.color || this.scale.colors(this.configs.drawColor!(d, i));
+    if (d && this.scale()?.colors) {
+      return d.color || this.scale()!.colors(this.configs.drawColor!(d, i));
     }
   }
 
@@ -182,15 +176,15 @@ export class IccD3LegendComponent<T> implements OnInit, OnChanges, OnDestroy {
 
   itemClick(event: any, d: any): void {
     d.disabled = !d.disabled;
-    this.dispatch.call('legendClick', this, d);
+    this.dispatch()!.call('legendClick', this, d);
   }
 
   itemMouseOver(event: any, d: T): void {
-    this.dispatch.call('legendMouseover', this, d);
+    this.dispatch()!.call('legendMouseover', this, d);
   }
 
   itemMouseOut(event: any, d: T): void {
-    this.dispatch.call('legendMouseout', this, d);
+    this.dispatch()!.call('legendMouseout', this, d);
   }
 
   ngOnDestroy(): void {

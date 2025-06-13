@@ -1,16 +1,18 @@
-<div [ngStyle]="legendStyles()" *ngFor="let data of legendData; let i = index">
-  <div
-    class="legend"
-    style="display: flex"
-    *ngFor="let item of data; let j = index"
-    [ngStyle]="{ width: legendWidth(j) }"
-    (click)="itemClick($event, item)"
-    (mouseover)="itemMouseOver($event, item)"
-    (mouseout)="itemMouseOut($event, item)"
-  >
-    <div *ngIf="item" class="legend-icon" [ngStyle]="iconStyles(item, j)"></div>
-    <span *ngIf="item" [ngStyle]="{ 'white-space': 'nowrap', color: legendColor(item, i), 'margin-right': '15px' }">
-      {{ legendText(item) }}
-    </span>
+@for (data of legendData; track $index; let i = $index) {
+  <div [style]="legendStyles()">
+    @for (item of data; track $index; let j = $index) {
+      <div
+        class="legend"
+        [style.width]="legendWidth(j)"
+        (click)="itemClick($event, item)"
+        (mouseover)="itemMouseOver($event, item)"
+        (mouseout)="itemMouseOut($event, item)"
+      >
+        <div class="legend-icon" [style]="iconStyles(item, j)"></div>
+        <span [style]="{ 'white-space': 'nowrap', color: legendColor(item, i), 'margin-right': '15px' }">
+          {{ legendText(item) }}
+        </span>
+      </div>
+    }
   </div>
-</div>
+}
