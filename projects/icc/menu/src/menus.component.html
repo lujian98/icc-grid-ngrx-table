@@ -1,7 +1,7 @@
 <!-- Use form due to the use checkbox in the menu item -->
 @if (form) {
   <form [formGroup]="form">
-    @for (item of items; track $index; let index = $index) {
+    @for (item of items$(); track $index; let index = $index) {
       <div class="icc-menu-row">
         @if (isLeafMenu(item)) {
           <icc-menu-item
@@ -43,7 +43,7 @@
             [form]="form"
             class="icc-menus-sub-level"
             [items]="item.children!"
-            [values]="values"
+            [values]="values$()"
             [disabled]="disabled()"
             [level]="level() + 1"
             [clickToClose]="clickToClose()"
