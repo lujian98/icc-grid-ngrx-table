@@ -3,11 +3,13 @@ import {
   Component,
   EventEmitter,
   Input,
+  effect,
   signal,
   input,
   OnDestroy,
   Output,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IccDisabled } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
@@ -34,17 +36,34 @@ export class IccMenusComponent<T> implements OnDestroy {
   hoverTrigger = IccTrigger.HOVER;
   items$ = signal<IccMenuConfig[]>([]);
   values$ = signal<{ [key: string]: boolean }>({});
-
-  @Input() form: FormGroup | undefined;
+  form = input(new FormGroup({}), {
+    transform: (form: FormGroup) => {
+      return form;
+    },
+  });
   disabled = input<IccDisabled[]>([]);
   level = input<number>(0);
   clickToClose = input<boolean>(false);
   menuTrigger = input<IccTrigger>(IccTrigger.CLICK);
-
   items = input([], {
     transform: (items: IccMenuConfig[]) => {
       this.items$.set(items);
-      this.setItems(items);
+      this.setSelected(this.selected);
+      if (this.isFirstTime) {
+        this.form()
+          .valueChanges.pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
+          .subscribe((val) => {
+            this.iccMenuFormChanges.emit(this.form().value as T);
+            this.values$.set(this.form().value);
+          });
+        this.isFirstTime = false;
+      }
+      items.forEach((item) => {
+        const field = this.form().get(item.name);
+        if (item.checkbox && !field) {
+          this.form().addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
+        }
+      });
       return items;
     },
   });
@@ -55,7 +74,7 @@ export class IccMenusComponent<T> implements OnDestroy {
       transform: (values: { [key: string]: boolean }) => {
         this.values$.set(values);
         if (this.form && values) {
-          this.form.patchValue({ ...values }, { emitEvent: false });
+          this.form().patchValue({ ...values }, { emitEvent: false });
         }
         return values;
       },
@@ -85,44 +104,15 @@ export class IccMenusComponent<T> implements OnDestroy {
     return !item.hidden && !!item.children && item.children.length > 0;
   }
 
-  private setItems(items: IccMenuConfig[]): void {
-    if (this.selected) {
-      const items = this.items$().map((item) => {
-        return {
-          ...item,
-          selected: item.name === this.selected!.name,
-        };
-      });
+  private setSelected(selected: IccMenuConfig | undefined): void {
+    if (selected) {
+      const items = this.items$().map((item) => ({
+        ...item,
+        selected: item.name === selected.name,
+      }));
       this.items$.set(items);
     }
-    if (!this.form) {
-      this.form = new FormGroup({});
-      this.form.valueChanges
-        .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.destroy$))
-        .subscribe((val) => {
-          this.iccMenuFormChanges.emit(this.form?.value);
-          this.values$.set(this.form?.value);
-          this.values = this.form?.value;
-        });
-    }
-    items.forEach((item) => {
-      // TODO disabled ??
-      const field = this.form!.get(item.name);
-      if (item.checkbox && !field) {
-        this.form!.addControl(item.name, new FormControl<boolean>({ value: false, disabled: false }, []));
-      }
-    });
-  }
-
-  private setSelected(selectedItem: IccMenuConfig): void {
-    const items = this.items$().map((item) => {
-      return {
-        ...item,
-        selected: item.name === selectedItem.name,
-      };
-    });
-    this.items$.set(items);
-    this.selected = selectedItem;
+    this.selected = selected;
   }
 
   ngOnDestroy(): void {

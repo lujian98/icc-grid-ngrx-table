@@ -1,12 +1,12 @@
 <!-- Use form due to the use checkbox in the menu item -->
-@if (form) {
-  <form [formGroup]="form">
+@if (form()) {
+  <form [formGroup]="form()">
     @for (item of items$(); track $index; let index = $index) {
       <div class="icc-menu-row">
         @if (isLeafMenu(item)) {
           <icc-menu-item
             [disabled]="getDisabled(item)"
-            [form]="form"
+            [form]="form()"
             [menuItem]="item"
             (iccMenuItemClick)="menuItemClick($event)"
           >
@@ -27,7 +27,7 @@
         } @else if (hasChildItem(item) && level() > 0) {
           <icc-menu-item
             [disabled]="getDisabled(item)"
-            [form]="form"
+            [form]="form()"
             [menuItem]="item"
             [iccPopover]="menu"
             [iccPopoverTrigger]="hoverTrigger"
@@ -40,7 +40,7 @@
         }
         <ng-template #menu>
           <icc-menus
-            [form]="form"
+            [form]="form()"
             class="icc-menus-sub-level"
             [items]="item.children!"
             [values]="values$()"
