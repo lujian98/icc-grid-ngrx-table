@@ -53,7 +53,7 @@ export class IccCheckboxComponent implements ControlValueAccessor {
   });
   disabled = input(false, {
     transform: (disabled: boolean) => {
-      this.checked$.set(disabled);
+      this.disabled$.set(disabled);
       return disabled;
     },
   });

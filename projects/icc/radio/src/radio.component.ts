@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, forwardRef, input, signal } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'icc-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,31 +15,35 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModu
   ],
 })
 export class IccRadioComponent implements ControlValueAccessor {
-  @Input() field!: FormControl;
-  @Input() fieldName!: string;
-  @Input() value!: string;
-  @Input() checked!: boolean;
-  @Input() name!: string;
-  @Input() required!: boolean;
-  private _disabled = false;
-
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(disabled: boolean) {
-    this._disabled = disabled;
-  }
+  checked$ = signal<boolean>(false);
+  disabled$ = signal<boolean>(false);
+  checked = input(false, {
+    transform: (checked: boolean) => {
+      this.checked$.set(checked);
+      return checked;
+    },
+  });
+  disabled = input(false, {
+    transform: (disabled: boolean) => {
+      this.checked$.set(disabled);
+      return disabled;
+    },
+  });
+  field = input.required<FormControl>();
+  fieldName = input<string>('');
+  value = input<string>('');
+  name = input<string>('');
+  required = input<boolean>(false);
 
   registerOnChange(fn: (value: boolean) => void): void {}
 
   registerOnTouched(fn: (value: boolean) => void): void {}
 
   setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled$.set(isDisabled);
   }
 
   writeValue(value: boolean): void {
-    this.checked = value;
+    this.checked$.set(value);
   }
 }
