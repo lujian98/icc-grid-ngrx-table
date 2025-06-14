@@ -101,6 +101,7 @@ export class IccGridFacade {
 
   setGridColumnConfig(gridId: string, columnsConfig: IccColumnConfig): void {
     this.store.dispatch(gridActions.setGridColumnsConfig({ gridId, columnsConfig }));
+    this.dispatchGridData(gridId);
   }
 
   setSelectAllRows(gridId: string, selectAll: boolean): void {
