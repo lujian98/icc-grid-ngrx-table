@@ -24,6 +24,7 @@ import {
   IccTriggerStrategy,
   IccTriggerStrategyBuilderService,
 } from '@icc/ui/overlay';
+import { IccOptionComponent } from '@icc/ui/option';
 import { ICC_DOCUMENT } from '@icc/ui/theme';
 import { take, takeUntil, tap, timer } from 'rxjs';
 import { IccAutocompleteComponent } from './autocomplete.component';
@@ -70,8 +71,9 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   });
   autocompleteClickOption = input(undefined, {
     alias: 'iccAutocompleteClickOption',
-    transform: (clicked: string | undefined) => {
+    transform: (clicked: IccOptionComponent<unknown> | undefined) => {
       if (clicked) {
+        console.log(' clicked');
         this.setTriggerValue();
         this.change.emit(this.autocomplete().value);
         this._onChange(this.autocomplete().value);

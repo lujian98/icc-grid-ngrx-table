@@ -60,7 +60,6 @@ export class IccSelectOptionComponent<T, G> {
   form = input.required<FormGroup>();
   selectFilter = input<string>('');
   selectOptions = input<IccOptionType[]>(['']);
-  autocomplete = input.required<IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>>();
   setSelected = input.required({
     transform: (overlayOpen: boolean) => {
       this.delaySetSelected(overlayOpen);
@@ -68,7 +67,7 @@ export class IccSelectOptionComponent<T, G> {
     },
   });
   valueChange = output<T | T[]>();
-  clickedOption = output<string>();
+  clickedOption = output<IccOptionComponent<unknown>>();
   autocompleteClose = output<boolean>();
 
   isEmptyValue: IccHeaderOption = {
@@ -105,8 +104,7 @@ export class IccSelectOptionComponent<T, G> {
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
   clickOption(option: IccOptionComponent<unknown>): void {
-    this.autocomplete().setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
-    this.clickedOption.emit(uniqueId(16));
+    this.clickedOption.emit(option);
 
     timer(15)
       .pipe(take(1))
