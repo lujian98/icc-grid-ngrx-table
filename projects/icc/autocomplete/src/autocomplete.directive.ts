@@ -17,7 +17,6 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IccFormFieldComponent } from '@icc/ui/form-field';
-import { IccOptionComponent } from '@icc/ui/option';
 import {
   IccPosition,
   IccPositionBuilderService,
@@ -147,21 +146,6 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
     this.triggerStrategy.hide$
       .pipe(takeUntil(this.overlayRef.detachments().pipe(tap(() => this.hide()))))
       .subscribe(() => this.hide());
-
-    /*
-    this.autocomplete()
-      .optionsClick()
-      .pipe(takeUntil(this.overlayRef.detachments()))
-      .subscribe((option: IccOptionComponent<T>) => {
-        //console.log( ' click 22222222222')
-        this.autocomplete().setSelectionOption(option);
-        this.setTriggerValue();
-        this.change.emit(this.autocomplete().value);
-        this._onChange(this.autocomplete().value);
-        if (!this.autocomplete().multiSelection) {
-          this.hide();
-        }
-      });*/
 
     timer(10)
       .pipe(take(1))

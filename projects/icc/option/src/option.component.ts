@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  HostListener,
-  inject,
-  input,
-  OnDestroy,
-  output,
-} from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output } from '@angular/core';
 
 @Component({
   selector: 'icc-option',
@@ -20,17 +10,12 @@ import { Observable, Subject } from 'rxjs';
     '[class.selected]': 'selected',
   },
 })
-export class IccOptionComponent<T> implements OnDestroy {
+export class IccOptionComponent<T> {
   readonly elementRef = inject(ElementRef);
   selected: boolean = false;
-  protected click$: Subject<IccOptionComponent<T>> = new Subject<IccOptionComponent<T>>();
 
   value = input<T>();
   change = output<IccOptionComponent<T>>();
-
-  get click(): Observable<IccOptionComponent<T>> {
-    return this.click$.asObservable();
-  }
 
   get content() {
     return this.elementRef.nativeElement.textContent;
@@ -49,15 +34,5 @@ export class IccOptionComponent<T> implements OnDestroy {
       this.selected = selected;
       this.change.emit(this);
     }
-  }
-
-  @HostListener('click', ['$event'])
-  onClick(event: MouseEvent): void {
-    this.click$.next(this);
-    event.preventDefault();
-  }
-
-  ngOnDestroy(): void {
-    this.click$.complete();
   }
 }

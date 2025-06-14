@@ -16,8 +16,8 @@ import {
 } from '@angular/core';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccOverlayModule } from '@icc/ui/overlay';
-import { merge, Observable, Subject } from 'rxjs';
-import { filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
 
 @Component({
@@ -94,18 +94,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
       });
   }
 
-  /*
-  optionsClick(): Observable<IccOptionComponent<T>> {
-    return this.options.changes.pipe(
-      switchMap((options: QueryList<IccOptionComponent<T>>) => {
-        const clicks$ = options.map((option) => option.click);
-        return merge(...clicks$);
-      }),
-    );
-  }*/
-
   setSelectionOption(option: IccOptionComponent<T>): void {
-    console.log('1111111111 this.options=', this.options.length);
     if (this.multiSelection() && Array.isArray(this.value)) {
       const find = this.value.findIndex((item: T) => this.compareValue(option.value()!, item));
       if (find > -1) {
@@ -131,7 +120,6 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
 
   selectValue(value: T | null): void {
     if (Array.isArray(value)) {
-      console.log('22222222222222 this.options=', this.options.length);
       let offset = -1;
       value.forEach((selected) => {
         const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value()!));
