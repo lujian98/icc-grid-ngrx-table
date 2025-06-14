@@ -93,7 +93,7 @@ export class IccSelectOptionComponent<T, G> {
   }
 
   get isAllChecked(): boolean {
-    return this.fieldValue.length === this.selectOptions.length;
+    return this.fieldValue.length === this.selectOptions().length && this.selectOptions().length > 0;
   }
 
   get filterValue(): string {
