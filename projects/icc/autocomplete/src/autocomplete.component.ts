@@ -1,23 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonModule } from '@angular/common';
-import {
-  AfterContentInit,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ContentChildren,
-  ElementRef,
-  inject,
-  input,
-  OnDestroy,
-  QueryList,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChild, inject, input, TemplateRef, ViewChild } from '@angular/core';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccOverlayModule } from '@icc/ui/overlay';
-import { Subject } from 'rxjs';
-import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { IccAutocompleteContentDirective } from './autocomplete-content.directive';
 
 @Component({
@@ -27,12 +12,10 @@ import { IccAutocompleteContentDirective } from './autocomplete-content.directiv
   styleUrls: ['./autocomplete.component.scss'],
   imports: [CommonModule, IccOverlayModule],
 })
-export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestroy {
+export class IccAutocompleteComponent<T, G> {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private _selection = new SelectionModel<IccOptionComponent<T>>(false, []);
   private _value: T | null = null;
-  private destroy$ = new Subject<void>();
-
   displayWith = input<(value: T) => string>();
   compareWith = input<(value: T, option: T) => boolean>();
   multiSelection = input(false, {
@@ -76,23 +59,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   @ViewChild('root', { static: true }) rootTemplate!: TemplateRef<G>;
-  @ViewChild('options', { read: ElementRef }) optionList!: ElementRef;
   @ContentChild(IccAutocompleteContentDirective, { static: true }) content!: IccAutocompleteContentDirective<G>;
-  @ContentChildren(IccOptionComponent) options!: QueryList<IccOptionComponent<T>>;
-
-  ngAfterContentInit(): void {
-    this.options.changes
-      .pipe(
-        startWith(this.options),
-        filter(() => !!this.value && !!this.options?.length),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => {
-        Promise.resolve().then(() => {
-          this.selectValue(this.value);
-        });
-      });
-  }
 
   setSelectionOption(option: IccOptionComponent<T>): void {
     if (this.multiSelection() && Array.isArray(this.value)) {
@@ -118,61 +85,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
     this.changeDetectorRef.markForCheck();
   }
 
-  selectValue(value: T | null): void {
-    if (Array.isArray(value)) {
-      let offset = -1;
-      value.forEach((selected) => {
-        const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value()!));
-        if (find) {
-          find.select();
-          const isSelected = this.selection.selected.find((item) => this.compareValue(selected, item.value()!));
-          if (!isSelected) {
-            this.selection.select(find);
-          }
-          const offsetTop = find.elementRef.nativeElement.offsetTop;
-          if (offset === -1 || offset > offsetTop) {
-            offset = offsetTop;
-          }
-        }
-      });
-      this.selection.selected.forEach((selected) => {
-        const isSelected = value.find((item) => this.compareValue(selected.value()!, item));
-        if (!isSelected) {
-          selected.deselect();
-          this.selection.deselect(selected);
-        }
-      });
-      this.options.forEach((option) => {
-        const isSelected = value.find((item) => this.compareValue(option.value()!, item));
-        if (!isSelected) {
-          option.deselect();
-          this.selection.deselect(option);
-        }
-      });
-      if (this.optionList) {
-        this.optionList.nativeElement.scrollTop = offset > 100 ? offset : 0;
-      }
-    } else {
-      this.selection.clear();
-      const option = this.options.find((item: IccOptionComponent<T>) => this.compareValue(value!, item.value()!));
-      if (option) {
-        option.select();
-        this.selection.select(option);
-        if (this.optionList) {
-          const offsetTop = option.elementRef.nativeElement.offsetTop;
-          this.optionList.nativeElement.scrollTop = offsetTop;
-        }
-      }
-    }
-    this.changeDetectorRef.markForCheck();
-  }
-
   private compareValue(value: T, item: T): boolean {
     return this.compareWith() ? this.compareWith()!(value, item) : value === item;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

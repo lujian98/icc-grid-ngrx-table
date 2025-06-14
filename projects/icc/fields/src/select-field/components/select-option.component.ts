@@ -105,7 +105,7 @@ export class IccSelectOptionComponent<T, G> {
 
   clickOption(option: IccOptionComponent<unknown>): void {
     this.clickedOption.emit(option);
-    this.delaySetSelected();
+    this.delaySetSelected(true);
   }
 
   onScrolledIndexChange(index: number): void {
