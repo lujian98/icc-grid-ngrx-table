@@ -181,6 +181,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   autocompleteClose!: boolean;
   clickedOption: string | undefined;
   onClickedOption(clickedOption: string) {
+    console.log(' onClickedOption');
     this.clickedOption = clickedOption;
   }
   onAutocompleteClose(close: boolean): void {
@@ -194,7 +195,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
     this.changeDetectorRef.markForCheck();
     if (this.fieldConfig$().displayWith) {
-      return this.fieldConfig$().displayWith!(this.value());
+      return this.fieldConfig$().displayWith!(this.field.value);
     }
     if (Array.isArray(value)) {
       if (value.length > 0) {
