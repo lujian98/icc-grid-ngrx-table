@@ -104,8 +104,6 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   setSelectionOption(option: IccOptionComponent<T>): void {
-    console.log(' aaaaaaaaaaaa option=', option);
-    console.log(' sssssssss this.value=', this.value);
     if (this.multiSelection() && Array.isArray(this.value)) {
       const find = this.value.findIndex((item: T) => this.compareValue(option.value()!, item));
       if (find > -1) {
@@ -130,7 +128,6 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
   }
 
   selectValue(value: T | null): void {
-    console.log(' bbbbbbbbbbbbb value=', value);
     if (Array.isArray(value)) {
       let offset = -1;
       value.forEach((selected) => {
