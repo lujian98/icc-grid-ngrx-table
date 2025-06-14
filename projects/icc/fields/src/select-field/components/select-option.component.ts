@@ -107,6 +107,12 @@ export class IccSelectOptionComponent<T, G> {
   clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete().setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);
     this.clickedOption.emit(uniqueId(16));
+
+    timer(15)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.setSelectChecked();
+      });
   }
 
   onScrolledIndexChange(index: number): void {

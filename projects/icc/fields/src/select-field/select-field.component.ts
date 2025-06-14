@@ -182,6 +182,9 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   clickedOption: string | undefined;
   onClickedOption(clickedOption: string) {
     this.clickedOption = clickedOption;
+    console.log(' value =', this.value());
+    console.log(' this.field.value =', this.field.value);
+    //this.autocompleteComponent!.selectValue(this.value() as any)
   }
   onAutocompleteClose(close: boolean): void {
     this.autocompleteClose = close;

@@ -94,6 +94,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
       });
   }
 
+  /*
   optionsClick(): Observable<IccOptionComponent<T>> {
     return this.options.changes.pipe(
       switchMap((options: QueryList<IccOptionComponent<T>>) => {
@@ -101,9 +102,10 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
         return merge(...clicks$);
       }),
     );
-  }
+  }*/
 
   setSelectionOption(option: IccOptionComponent<T>): void {
+    console.log('1111111111 this.options=', this.options.length);
     if (this.multiSelection() && Array.isArray(this.value)) {
       const find = this.value.findIndex((item: T) => this.compareValue(option.value()!, item));
       if (find > -1) {
@@ -129,6 +131,7 @@ export class IccAutocompleteComponent<T, G> implements AfterContentInit, OnDestr
 
   selectValue(value: T | null): void {
     if (Array.isArray(value)) {
+      console.log('22222222222222 this.options=', this.options.length);
       let offset = -1;
       value.forEach((selected) => {
         const find = this.options.find((item: IccOptionComponent<T>) => this.compareValue(selected, item.value()!));

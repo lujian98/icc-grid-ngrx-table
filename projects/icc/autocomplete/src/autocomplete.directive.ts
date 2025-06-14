@@ -148,10 +148,12 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       .pipe(takeUntil(this.overlayRef.detachments().pipe(tap(() => this.hide()))))
       .subscribe(() => this.hide());
 
+    /*
     this.autocomplete()
       .optionsClick()
       .pipe(takeUntil(this.overlayRef.detachments()))
       .subscribe((option: IccOptionComponent<T>) => {
+        //console.log( ' click 22222222222')
         this.autocomplete().setSelectionOption(option);
         this.setTriggerValue();
         this.change.emit(this.autocomplete().value);
@@ -159,7 +161,7 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
         if (!this.autocomplete().multiSelection) {
           this.hide();
         }
-      });
+      });*/
 
     timer(10)
       .pipe(take(1))
