@@ -181,12 +181,11 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   autocompleteComponent!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
-  clickedOption: string | object | string[] | object[] | undefined;
+  clickedOption: string | undefined;
   onClickedOption(option: IccOptionComponent<unknown>) {
     this.autocompleteComponent.setSelectionOption(
       option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>,
     );
-    console.log('2222222 value =', this.value());
     this.clickedOption = uniqueId(16);
   }
   onAutocompleteClose(close: boolean): void {

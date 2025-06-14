@@ -70,9 +70,8 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   });
   autocompleteClickOption = input(undefined, {
     alias: 'iccAutocompleteClickOption',
-    transform: (clicked: string | object | string[] | object[] | undefined) => {
+    transform: (clicked: string | undefined) => {
       if (clicked) {
-        console.log(' clicked');
         this.setTriggerValue();
         this.change.emit(this.autocomplete().value);
         this._onChange(this.autocomplete().value);
