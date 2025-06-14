@@ -1,15 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkDragHandle, DragDropModule } from '@angular/cdk/drag-drop';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  inject,
-  input,
-  Output,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, Signal } from '@angular/core';
 import { DEFAULT_OVERLAY_SERVICE_CONFIG, IccOverlayServiceConfig, IccPosition, IccTrigger } from '@icc/ui/overlay';
 import { IccPopoverComponent, IccPopoverService } from '@icc/ui/popover';
 import { IccGridFacade } from '../../+state/grid.facade';
@@ -62,9 +53,8 @@ export class IccGridHeaderComponent<T> {
   gridConfig = input.required<IccGridConfig>();
   columns = input.required<IccColumnConfig[]>();
   columnWidths = input.required<IccColumnWidth[]>();
-
-  @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
-  @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
+  columnResizing = output<IccColumnWidth[]>();
+  columnResized = output<IccColumnWidth[]>();
 
   get selectColumnWidth(): string {
     return `${ROW_SELECTION_CELL_WIDTH}px`;

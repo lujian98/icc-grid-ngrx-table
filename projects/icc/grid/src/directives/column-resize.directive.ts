@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, inject, input, Output, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, input, output, Renderer2 } from '@angular/core';
 import { MIN_GRID_COLUMN_WIDTH } from '../models/constants';
 import { EventTargetTypes } from '../models/event-target-types';
 import { EventTypes } from '../models/event-types';
@@ -16,9 +16,8 @@ export class IccColumnResizeDirective {
   gridConfig = input.required<IccGridConfig>();
   gridSetting = input.required<IccGridSetting>();
   groupHeader = input<boolean>(false);
-
-  @Output() readonly columnResizing = new EventEmitter<IccColumnWidth[]>();
-  @Output() readonly columnResized = new EventEmitter<IccColumnWidth[]>();
+  columnResizing = output<IccColumnWidth[]>();
+  columnResized = output<IccColumnWidth[]>();
 
   private columnWidths: IccColumnWidth[] = [];
   private currentIndex: number = 0;

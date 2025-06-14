@@ -3,10 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   inject,
   input,
-  Output,
+  output,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -68,6 +67,9 @@ export class IccSelectOptionComponent<T, G> {
       return overlayOpen;
     },
   });
+  valueChange = output<T | T[]>();
+  clickedOption = output<string>();
+  autocompleteClose = output<boolean>();
 
   isEmptyValue: IccHeaderOption = {
     name: 'isEmpty',
@@ -101,10 +103,6 @@ export class IccSelectOptionComponent<T, G> {
 
   @ViewChildren(IccOptionComponent) optionList!: QueryList<IccOptionComponent<T>>;
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
-
-  @Output() valueChange = new EventEmitter<T | T[]>(true);
-  @Output() clickedOption = new EventEmitter<string>(false);
-  @Output() autocompleteClose = new EventEmitter<boolean>(false);
 
   clickOption(option: IccOptionComponent<unknown>): void {
     this.autocomplete().setSelectionOption(option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>);

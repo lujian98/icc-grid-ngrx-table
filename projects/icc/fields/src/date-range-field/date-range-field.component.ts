@@ -4,14 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
   Injector,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -109,6 +108,7 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
       return value;
     },
   });
+  valueChange = output<IccDateRange | null>();
 
   private initForm(fieldConfig: IccDateRangeFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -148,7 +148,6 @@ export class IccDateRangeFieldComponent implements OnInit, OnDestroy, ControlVal
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output() valueChange = new EventEmitter<IccDateRange | null>();
 
   ngOnInit(): void {
     this.rangeStoreService.rangeUpdate$.pipe(takeUntil(this.destroy$)).subscribe((range) => {

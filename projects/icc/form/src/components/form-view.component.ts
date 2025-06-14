@@ -2,12 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   inject,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IccButtonComponent } from '@icc/ui/button';
@@ -71,6 +70,7 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       return values;
     },
   });
+  formButtonClick = output<IccFormButtonClick>();
 
   private addFormControls(formFields: IccFormField[]): void {
     formFields.forEach((field) => {
@@ -142,8 +142,6 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   getButtonTitle(item: IccButtonConfg): string {
     return item.title === undefined ? item.name : item.title;
   }
-
-  @Output() formButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values) => this.checkFormValueChanged(values));

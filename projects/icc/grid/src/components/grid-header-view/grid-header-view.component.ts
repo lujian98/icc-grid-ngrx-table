@@ -1,15 +1,6 @@
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  EventEmitter,
-  inject,
-  input,
-  Output,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { IccGridFacade } from '../../+state/grid.facade';
 import { ROW_SELECTION_CELL_WIDTH } from '../../models/constants';
 import { DragDropEvent } from '../../models/drag-drop-event';
@@ -63,8 +54,7 @@ export class IccGridHeaderViewComponent {
     this.gridColumnWidthsEvent.emit(columnWidths);
     return columnWidths;
   });
-
-  @Output() gridColumnWidthsEvent = new EventEmitter<IccColumnWidth[]>();
+  gridColumnWidthsEvent = output<IccColumnWidth[]>();
 
   onColumnResizing(columnWidths: IccColumnWidth[]): void {
     this.resizedColumns.set(columnWidths);

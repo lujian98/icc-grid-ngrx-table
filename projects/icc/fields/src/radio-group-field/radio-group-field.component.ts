@@ -2,11 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   forwardRef,
   inject,
   input,
-  Output,
+  output,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -87,6 +86,7 @@ export class IccRadioGroupFieldComponent implements ControlValueAccessor, Valida
       return value;
     },
   });
+  valueChange = output<boolean>();
 
   private initForm(fieldConfig: IccRadioGroupFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -96,8 +96,6 @@ export class IccRadioGroupFieldComponent implements ControlValueAccessor, Valida
       .pipe(take(1))
       .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
-
-  @Output() valueChange = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
     return this.form().get(this.fieldConfig().fieldName!)! as FormControl;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, EventEmitter, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { IccColumnResizeTriggerDirective } from '../../../directives/column-resize-trigger.directive';
 import { IccColumnResizeDirective } from '../../../directives/column-resize.directive';
 import { ROW_SELECTION_CELL_WIDTH } from '../../../models/constants';
@@ -33,9 +33,8 @@ export class IccGridGroupHeaderComponent {
     });
     return groupHeaders;
   });
-
-  @Output() columnResizing = new EventEmitter<IccColumnWidth[]>();
-  @Output() columnResized = new EventEmitter<IccColumnWidth[]>();
+  columnResizing = output<IccColumnWidth[]>();
+  columnResized = output<IccColumnWidth[]>();
 
   getColumn(header: IccGroupHeader): IccColumnConfig {
     return this.columns().find((col) => col.name === header.field)!;

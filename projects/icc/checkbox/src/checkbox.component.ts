@@ -3,11 +3,10 @@ import {
   Component,
   Directive,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
   input,
-  Output,
+  output,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -63,10 +62,9 @@ export class IccCheckboxComponent implements ControlValueAccessor {
       return indeterminate;
     },
   });
+  change = output<boolean>();
 
   @ViewChild('inputEl') inputEl!: ElementRef;
-
-  @Output() change = new EventEmitter<boolean>();
 
   protected onChange = (value: boolean) => {};
   protected onTouched = (value: boolean) => {};

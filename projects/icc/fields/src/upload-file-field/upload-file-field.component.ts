@@ -3,11 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
   input,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -92,6 +91,8 @@ export class IccUploadFileFieldComponent implements ControlValueAccessor, Valida
       return value;
     },
   });
+  valueChange = output<string>();
+  selectUploadFile = output<File | null>();
 
   private initForm(fieldConfig: IccUploadFileFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -101,9 +102,6 @@ export class IccUploadFileFieldComponent implements ControlValueAccessor, Valida
       .pipe(take(1))
       .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
-
-  @Output() valueChange = new EventEmitter<string>(false);
-  @Output() selectUploadFile = new EventEmitter<File | null>(false);
 
   get field(): FormControl {
     return this.form().get(this.fieldConfig().fieldName!)! as FormControl;

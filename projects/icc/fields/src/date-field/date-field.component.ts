@@ -4,14 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
   Injector,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -109,6 +108,7 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
       return value;
     },
   });
+  valueChange = output<Date | null>();
 
   private initForm(fieldConfig: IccDateFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -146,7 +146,6 @@ export class IccDateFieldComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   @ViewChild('calendarInput', { static: false }) calendarInput!: ElementRef<HTMLInputElement>;
-  @Output() valueChange = new EventEmitter<Date | null>();
 
   ngOnInit(): void {
     this.translateService.onLangChange

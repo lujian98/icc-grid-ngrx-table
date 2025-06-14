@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  EventEmitter,
-  inject,
-  input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnDestroy, OnInit, output } from '@angular/core';
 import { IccButtonConfg, IccBUTTONS, IccButtonType, IccTasksService } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccLayoutComponent, IccLayoutHeaderComponent } from '@icc/ui/layout';
@@ -88,8 +78,7 @@ export class IccGridComponent<T> implements OnInit, OnDestroy {
       };
     });
   });
-
-  @Output() iccButtonClick = new EventEmitter<IccButtonClick>(false);
+  iccButtonClick = output<IccButtonClick>();
 
   constructor() {
     this.initGridConfig({ ...defaultGridConfig });

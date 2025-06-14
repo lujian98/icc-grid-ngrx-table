@@ -2,12 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   forwardRef,
   inject,
   input,
   OnDestroy,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -130,6 +129,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       return value;
     },
   });
+  valueChange = output<T | T[]>();
 
   getForm(): FormGroup {
     if (this.fieldSetting$()?.viewportReady && !this.field) {
@@ -174,8 +174,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     const value = this.field.value;
     return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
   }
-
-  @Output() valueChange = new EventEmitter<T | T[]>(true);
 
   @ViewChild(IccAutocompleteComponent, { static: false })
   autocompleteComponent!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;

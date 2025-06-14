@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IccGridFacade } from '../../../+state/grid.facade';
@@ -26,6 +26,7 @@ export class IccGridHeaderCellComponent {
   column = input.required<IccColumnConfig>();
   gridSetting = input.required<IccGridSetting>();
   gridConfig = input.required<IccGridConfig>();
+  columnMenuClick = output<ColumnMenuClick>();
 
   get title(): string {
     return this.column().title === undefined ? this.column().name : this.column().title!;
@@ -46,8 +47,6 @@ export class IccGridHeaderCellComponent {
   get draggable(): boolean {
     return this.gridConfig().columnReorder && this.column().draggable !== false;
   }
-
-  @Output() columnMenuClick = new EventEmitter<ColumnMenuClick>(false);
 
   headCellClick(event: MouseEvent): void {
     if (this.gridConfig().columnSort && this.column().sortField !== false) {

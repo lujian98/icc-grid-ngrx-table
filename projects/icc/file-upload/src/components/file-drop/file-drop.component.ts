@@ -4,11 +4,10 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  EventEmitter,
   input,
   NgZone,
   OnDestroy,
-  Output,
+  output,
   Renderer2,
   TemplateRef,
   ViewChild,
@@ -38,10 +37,9 @@ export class IccFileDropComponent<T> implements OnDestroy {
   browseBtnClassName = input<string>('btn btn-primary btn-xs icc-file-drop__browse-btn');
   browseBtnLabel = input<string>('Browse files');
   disabled = input<boolean>(false);
-
-  @Output() public onFileDrop: EventEmitter<IccFileDropEntry[]> = new EventEmitter();
-  @Output() public onFileOver: EventEmitter<DragEvent | Event> = new EventEmitter();
-  @Output() public onFileLeave: EventEmitter<Event> = new EventEmitter();
+  onFileDrop = output<IccFileDropEntry[]>();
+  onFileOver = output<DragEvent | Event>();
+  onFileLeave = output<Event>();
 
   @ContentChild(IccFileDropContentTemplateDirective, { read: TemplateRef }) contentTemplate?: TemplateRef<T>;
   @ViewChild('fileSelector', { static: true }) public fileSelector?: ElementRef;

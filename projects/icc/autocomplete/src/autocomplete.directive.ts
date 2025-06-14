@@ -4,7 +4,6 @@ import {
   ComponentRef,
   Directive,
   ElementRef,
-  EventEmitter,
   forwardRef,
   Host,
   HostListener,
@@ -13,7 +12,7 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Output,
+  output,
   ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -55,6 +54,8 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   private triggerStrategy!: IccTriggerStrategy;
   private trigger: IccTrigger = IccTrigger.FOCUS;
   private isShow: boolean = false;
+  _onChange: (value: T | null) => void = () => {};
+  _onTouched = () => {};
 
   autocomplete = input.required<IccAutocompleteComponent<T, G>>({
     alias: 'iccAutocomplete',
@@ -81,6 +82,8 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
       }
     },
   });
+  change = output<T | null>();
+  isOverlayOpen = output<boolean>();
 
   get origin(): HTMLInputElement {
     return this.host.nativeElement;
@@ -99,12 +102,6 @@ export class IccAutocompleteDirective<T, G> implements ControlValueAccessor, OnI
   get width(): number {
     return !this.formField ? this.origin.offsetWidth : this._getFormfieldWidth('.icc-form-field-wrapper');
   }
-
-  @Output() change = new EventEmitter<T | null>();
-  @Output() isOverlayOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  _onChange: (value: T | null) => void = () => {};
-  _onTouched = () => {};
 
   constructor(@Optional() @Host() private formField: IccFormFieldComponent) {}
 

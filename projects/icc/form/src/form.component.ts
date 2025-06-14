@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, output } from '@angular/core';
 import { IccFormField } from '@icc/ui/fields';
 import { IccLayoutComponent } from '@icc/ui/layout';
 import { IccFormStateModule } from './+state/form-state.module';
@@ -45,12 +45,11 @@ export class IccFormComponent implements OnDestroy {
       return values;
     },
   });
+  iccFormButtonClick = output<IccFormButtonClick>();
 
   get autoFitHeight() {
     return this.formConfig().autoFitHeight;
   }
-
-  @Output() iccFormButtonClick = new EventEmitter<IccFormButtonClick>(false);
 
   constructor() {
     this.initFormConfig({ ...defaultFormConfig });

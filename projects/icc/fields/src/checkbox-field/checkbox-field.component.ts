@@ -2,13 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   forwardRef,
   inject,
   input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -91,6 +90,7 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
       return value;
     },
   });
+  valueChange = output<boolean>();
 
   private initForm(fieldConfig: IccCheckboxFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -110,8 +110,6 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
       this.field.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.setEnableFields());
     }
   }
-
-  @Output() valueChange = new EventEmitter<boolean>(true);
 
   get field(): FormControl {
     return this.form().get(this.fieldConfig().fieldName!)! as FormControl;

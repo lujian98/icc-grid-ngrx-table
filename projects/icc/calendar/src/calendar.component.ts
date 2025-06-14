@@ -3,10 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   OnChanges,
   OnDestroy,
-  Output,
+  output,
   ViewChild,
   inject,
   input,
@@ -71,10 +70,10 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
       return value;
     },
   });
+  selectedDateChange = output<Date | null>();
+  monthViewChange = output<Date>();
 
   @ViewChild(MatCalendar, { static: true }) matCalendar!: MatCalendar<Date>;
-  @Output() readonly selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() readonly monthViewChange: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor() {
     this.currentMonth = this.getFirstDay(new Date());
@@ -112,7 +111,7 @@ export class IccCalendarComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   onSelectedChange(date: Date | null): void {
-    this.selectedDateChange.emit(date ? date : undefined);
+    this.selectedDateChange.emit(date ? date : null);
   }
 
   onMonthSelected(date: Date): void {

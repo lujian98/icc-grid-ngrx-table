@@ -3,11 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
   inject,
   input,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -91,6 +90,7 @@ export class IccNumberFieldComponent implements ControlValueAccessor, Validator 
       return value;
     },
   });
+  valueChange = output<number | null>();
 
   private initForm(fieldConfig: IccNumberFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -100,8 +100,6 @@ export class IccNumberFieldComponent implements ControlValueAccessor, Validator 
       .pipe(take(1))
       .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
-
-  @Output() valueChange = new EventEmitter<number | null>();
 
   get field(): FormControl {
     return this.form().get(this.fieldConfig().fieldName!)! as FormControl;

@@ -2,11 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   forwardRef,
   inject,
   input,
-  Output,
+  output,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -88,6 +87,7 @@ export class IccPasswordFieldComponent implements ControlValueAccessor, Validato
       return value;
     },
   });
+  valueChange = output<string>();
 
   private initForm(fieldConfig: IccPasswordFieldConfig): void {
     if (!this.form().get(fieldConfig.fieldName!)) {
@@ -97,8 +97,6 @@ export class IccPasswordFieldComponent implements ControlValueAccessor, Validato
       .pipe(take(1))
       .subscribe(() => this.setDisabledState(!this.fieldConfig().editable));
   }
-
-  @Output() valueChange = new EventEmitter<string>(false);
 
   get field(): FormControl {
     return this.form().get(this.fieldConfig().fieldName!)! as FormControl;
