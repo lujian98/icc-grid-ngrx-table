@@ -40,6 +40,7 @@ import {
 import { IccIconModule } from '@icc/ui/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, take, timer } from 'rxjs';
+import { isEqual, sortByField, uniqueId } from '@icc/ui/core';
 import { IccOptionComponent } from '@icc/ui/option';
 import { IccFieldsErrorsComponent } from '../field-errors/field-errors.component';
 import { IccSelectFieldStateModule } from './+state/select-field-state.module';
@@ -180,13 +181,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   autocompleteComponent!: IccAutocompleteComponent<{ [key: string]: T } | { [key: string]: T }[], G>;
   isOverlayOpen!: boolean;
   autocompleteClose!: boolean;
-  clickedOption: IccOptionComponent<unknown> | undefined;
+  clickedOption: string | object | string[] | object[] | undefined;
   onClickedOption(option: IccOptionComponent<unknown>) {
     this.autocompleteComponent.setSelectionOption(
       option as IccOptionComponent<{ [key: string]: T } | { [key: string]: T }[]>,
     );
     console.log('2222222 value =', this.value());
-    this.clickedOption = option;
+    this.clickedOption = uniqueId(16);
   }
   onAutocompleteClose(close: boolean): void {
     this.autocompleteClose = close;

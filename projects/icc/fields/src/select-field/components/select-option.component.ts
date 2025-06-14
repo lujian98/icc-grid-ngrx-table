@@ -11,9 +11,9 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IccAutocompleteComponent, IccFilterHighlightComponent } from '@icc/ui/autocomplete';
+import { IccFilterHighlightComponent } from '@icc/ui/autocomplete';
 import { IccCheckboxComponent } from '@icc/ui/checkbox';
-import { isEqual, sortByField, uniqueId } from '@icc/ui/core';
+import { isEqual, sortByField } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -105,12 +105,9 @@ export class IccSelectOptionComponent<T, G> {
 
   clickOption(option: IccOptionComponent<unknown>): void {
     this.clickedOption.emit(option);
-
     timer(15)
       .pipe(take(1))
-      .subscribe(() => {
-        this.setSelectChecked();
-      });
+      .subscribe(() => this.setSelectChecked());
   }
 
   onScrolledIndexChange(index: number): void {
