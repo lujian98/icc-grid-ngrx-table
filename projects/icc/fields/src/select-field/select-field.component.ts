@@ -89,7 +89,6 @@ import { IccOptionType, IccSelectFieldConfig } from './models/select-field.model
 })
 export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAccessor, Validator {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private readonly destroy$ = new Subject<void>();
   onChanged: Function = () => {};
   onTouched: Function = () => {};
   private selectFieldFacade = inject(IccSelectFieldFacade);
@@ -290,7 +289,5 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
 
   ngOnDestroy(): void {
     this.selectFieldFacade.clearSelectFieldStore(this.fieldId);
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
