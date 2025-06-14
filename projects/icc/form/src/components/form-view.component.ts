@@ -59,10 +59,13 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
       if (this.formConfig().validators) {
         this.form.addValidators(this.formConfig().validators!);
       }
+      if (this.values()) {
+        this.form.patchValue(this.values()!);
+      }
       return formFields;
     },
   });
-  values = input.required({
+  values = input(undefined, {
     transform: (values: object) => {
       if (this.form && values) {
         this.form.patchValue({ ...values });
@@ -149,9 +152,11 @@ export class IccFormViewComponent implements OnInit, OnDestroy {
   }
 
   private checkFormValueChanged(values: object): void {
-    isEqual(values, this.values()) ? this.form.markAsPristine() : this.form.markAsDirty();
-    this.setFieldDirty(values, this.values());
-    this.changeDetectorRef.markForCheck();
+    if (this.values()) {
+      isEqual(values, this.values()) ? this.form.markAsPristine() : this.form.markAsDirty();
+      this.setFieldDirty(values, this.values()!);
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   private setFieldDirty<T>(values: object, orgValues: object): void {
