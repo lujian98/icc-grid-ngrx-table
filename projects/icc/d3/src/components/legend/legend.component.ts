@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  HostBinding,
+  input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import * as d3Dispatch from 'd3-dispatch';
 import * as d3 from 'd3-selection';
 import { Subject } from 'rxjs';
@@ -20,26 +29,41 @@ export class IccD3LegendComponent<T> implements OnInit, OnDestroy {
     transform: (view: IccView) => {
       if (this.availableWidth !== view.width - view.margin.left!) {
         this.availableWidth = view.width - view.margin.left!;
-        //this.setLegendData();
       }
       return view;
     },
   });
   chartConfigs = input<IccD3ChartConfig[]>([]);
-  data = input([], {
-    transform: (data: T[]) => {
-      this.setLegendData(data);
-      return data;
-    },
-  });
+  data = input<T[]>([]);
   scale = input<IccScaleDraw<T> | null>(null);
   dispatch = input<d3Dispatch.Dispatch<{}>>();
+  legendData$ = computed(() => {
+    const legendData: any[] = [];
+    const data = this.getData();
+    if (data && this.view()) {
+      if (this.legend.position !== 'right') {
+        const seriesPerRow = this.getSeriesPerRow();
+        let nd: any[] = [];
+        data.forEach((d, i) => {
+          if (i !== 0 && i % seriesPerRow === 0) {
+            legendData.push(nd);
+            nd = [];
+          }
+          nd.push(d);
+        });
+        legendData.push(nd);
+      } else {
+        legendData.push(data);
+      }
+      this.stateChange$.next(true);
+    }
+    return legendData;
+  });
 
   private alive = true;
   stateChange$ = new Subject<boolean>();
   availableWidth = 0;
   columnWidths = [];
-  legendData!: T[][];
 
   @HostBinding('style.display') get display(): string {
     // @ts-ignore
@@ -54,7 +78,6 @@ export class IccD3LegendComponent<T> implements OnInit, OnDestroy {
 
   get configs(): IccD3ChartConfig {
     // TODO other charts if need only for X axis for now
-    // console.log(' ssssssssssssssssss this.chartConfigs=', this.chartConfigs)
     return this.chartConfigs()[0];
   }
 
@@ -75,33 +98,11 @@ export class IccD3LegendComponent<T> implements OnInit, OnDestroy {
       });
   }
 
-  getData(): T[] {
+  private getData(): T[] {
     return this.configs.chartType === 'pieChart' ? this.configs.y0!(this.data()[0]) : this.data();
   }
 
-  setLegendData(inputdata?: T[]): void {
-    const data = inputdata ? inputdata : this.getData();
-    if (data) {
-      this.legendData = [];
-      if (this.legend.position !== 'right') {
-        const seriesPerRow = this.getSeriesPerRow();
-        let nd: any[] = [];
-        data.forEach((d, i) => {
-          if (i !== 0 && i % seriesPerRow === 0) {
-            this.legendData.push(nd);
-            nd = [];
-          }
-          nd.push(d);
-        });
-        this.legendData.push(nd);
-      } else {
-        this.legendData.push(data);
-      }
-      this.stateChange$.next(true);
-    }
-  }
-
-  getSeriesPerRow(): number {
+  private getSeriesPerRow(): number {
     let seriesPerRow = 0;
     this.columnWidths = [];
     const legendText = d3.select(this.elementRef.nativeElement).selectAll('.legend');

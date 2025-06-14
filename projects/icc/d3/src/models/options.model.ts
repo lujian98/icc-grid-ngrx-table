@@ -83,7 +83,7 @@ export const DEFAULT_CHART_CONFIGS: IccD3ChartConfig = {
   xScaleType: 'time',
   yScaleType: 'linear',
   x0: (d: any) => d.key,
-  y0: (d: any) => d.values,
+  y0: (d: any) => d?.values,
   x: (d: any) => d.x,
   y: (d: any) => d.y,
   drawColor: (d: any) => d.key,
