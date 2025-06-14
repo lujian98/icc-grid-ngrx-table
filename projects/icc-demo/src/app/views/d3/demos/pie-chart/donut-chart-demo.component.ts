@@ -8,11 +8,11 @@ import * as d3Format from 'd3-format';
   styles: [':host { width: 1000px; height: 100%; display: flex; flex-direction: column;}'],
   template: `
     <div style="height: 100%; display: flex;">
-      <icc-d3 style="width: 500px;" [chartConfigs]="chartConfigs" [data]="data"></icc-d3>
-      <icc-d3 [chartConfigs]="chartConfigs2" [data]="data2"></icc-d3>
+      <icc-d3 style="width: 600px;" [chartConfigs]="chartConfigs" [data]="data"></icc-d3>
+      <icc-d3 style="width: 600px;" [chartConfigs]="chartConfigs2" [data]="data2"></icc-d3>
     </div>
   `,
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, IccD3Component],
 })
 export class AppDonutChartDemoComponent implements OnInit {
