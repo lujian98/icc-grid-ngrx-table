@@ -65,5 +65,34 @@
       "prettier --write --print-width 120",
       "git add"
     ]
-  }
+  },
+  "description": "Angular grid ui kit",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lujian98/icc-grid-ngrx-table.git"
+  },
+  "keywords": [
+    "Angular",
+    "19",
+    "grid",
+    "table",
+    "virtual",
+    "scroll",
+    "tree",
+    "grid",
+    "dashboard",
+    "form",
+    "fields",
+    "autocomplete",
+    "select",
+    "virtual",
+    "scroll"
+  ],
+  "author": "Jimmy Lu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lujian98/icc-grid-ngrx-table/issues"
+  },
+  "homepage": "https://github.com/lujian98/icc-grid-ngrx-table#readme"
 }
