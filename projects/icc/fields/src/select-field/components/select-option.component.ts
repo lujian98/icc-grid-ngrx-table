@@ -94,7 +94,8 @@ export class IccSelectOptionComponent<T, G> {
 
   get hasValue(): boolean {
     const value = this.field.value;
-    return (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
+    const hasFieldValue = (value instanceof Array ? value.length > 0 : !!value) && !this.field.disabled;
+    return hasFieldValue ? true : this.value$().length > 0;
   }
 
   get fieldValue(): T[] {

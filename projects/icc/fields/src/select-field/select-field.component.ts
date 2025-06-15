@@ -242,34 +242,33 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       this.setSelected = true;
     } else {
       if (this.fieldConfig$().multiSelection) {
-        this.field.setValue(this.value$());
-        this.valueChange.emit(this.value$() as T | T[]);
+        this.setValueChanged(this.value$());
       } else if (this.fieldConfig$().selectOnly) {
-        this.valueChange.emit(this.field.value);
-        this.value$.set(this.field.value);
+        this.setValueChanged(this.field.value);
       } else {
         const fieldValue = this.field.value;
         if (typeof fieldValue === 'string' || typeof fieldValue === 'number') {
           if (this.selectOptions$().every((i) => typeof i === 'string' || typeof i === 'number')) {
             const find = this.selectOptions$().find((option) => option === fieldValue);
             if (find) {
-              this.field.setValue(find);
-              this.valueChange.emit(find as T | T[]);
-              this.value$.set(find);
+              this.setValueChanged(find);
             } else {
-              this.field.setValue(this.value$());
-              this.valueChange.emit(this.value$() as T | T[]);
+              this.setValueChanged(this.value$());
             }
           } else {
-            this.field.setValue(this.value$());
-            this.valueChange.emit(this.value$() as T | T[]);
+            this.setValueChanged(this.value$());
           }
         } else {
-          this.valueChange.emit(fieldValue as T | T[]);
-          this.value$.set(fieldValue);
+          this.setValueChanged(this.field.value);
         }
       }
     }
+  }
+
+  private setValueChanged(value: string | object | string[] | object[]): void {
+    this.field.setValue(value);
+    this.valueChange.emit(value as T | T[]);
+    this.value$.set(value);
   }
 
   onChange(): void {
