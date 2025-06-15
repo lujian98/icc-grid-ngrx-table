@@ -196,7 +196,6 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onSelectOptionValueChange(value: T | T[]): void {
     this.field.setValue(value);
     this.valueChange.emit(value);
-    console.log(' on select change value=', value);
     this.value$.set(value as string | object | string[] | object[]);
   }
 
@@ -247,6 +246,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
         this.valueChange.emit(this.value$() as T | T[]);
       } else if (this.fieldConfig$().selectOnly) {
         this.valueChange.emit(this.field.value);
+        this.value$.set(this.field.value);
       } else {
         const fieldValue = this.field.value;
         if (typeof fieldValue === 'string' || typeof fieldValue === 'number') {
