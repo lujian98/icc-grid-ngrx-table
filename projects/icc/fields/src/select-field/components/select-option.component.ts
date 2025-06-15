@@ -5,6 +5,7 @@ import {
   Component,
   inject,
   input,
+  signal,
   output,
   QueryList,
   ViewChild,
@@ -58,6 +59,14 @@ export class IccSelectOptionComponent<T, G> {
   });
   fieldSetting = input.required<IccSelectFieldSetting>();
   form = input.required<FormGroup>();
+  value$ = signal<(string | object)[]>([]);
+  value = input('', {
+    transform: (value: string | object | string[] | object[]) => {
+      const val = value instanceof Array ? value : [value];
+      this.value$.set(val);
+      return value;
+    },
+  });
   selectFilter = input<string>('');
   selectOptions = input<IccOptionType[]>(['']);
   setSelected = input.required({
@@ -119,7 +128,7 @@ export class IccSelectOptionComponent<T, G> {
   }
 
   private setSelectChecked(): void {
-    const values = this.fieldValue;
+    const values = !this.filterValue ? this.fieldValue : this.value$();
     this.optionList.toArray().forEach((option) => {
       const find = values.find((item) => isEqual(item, option.value()!));
       option.selected = !!find;
