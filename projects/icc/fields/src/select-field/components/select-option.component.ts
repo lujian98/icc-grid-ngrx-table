@@ -18,7 +18,7 @@ import { isEqual, sortByField } from '@icc/ui/core';
 import { IccIconModule } from '@icc/ui/icon';
 import { IccOptionComponent } from '@icc/ui/option';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { take, timer } from 'rxjs';
+import { filter, take, timer } from 'rxjs';
 import { IccOptionType, IccSelectFieldConfig, IccSelectFieldSetting } from '../models/select-field.model';
 import { IccSelectFilterPipe } from '../pipes/select-filter.pipe';
 
@@ -116,14 +116,12 @@ export class IccSelectOptionComponent<T, G> {
   clickOption(option: IccOptionComponent<unknown>): void {
     this.clickedOption.emit(option);
     this.delaySetSelected(true);
-
-    if (this.fieldConfig().multiSelection) {
-      timer(20)
-        .pipe(take(1))
-        .subscribe(() => {
-          this.valueChange.emit(this.fieldValue);
-        });
-    }
+    timer(20)
+      .pipe(
+        take(1),
+        filter(() => this.fieldConfig().multiSelection),
+      )
+      .subscribe(() => this.valueChange.emit(this.fieldValue));
   }
 
   onScrolledIndexChange(index: number): void {
