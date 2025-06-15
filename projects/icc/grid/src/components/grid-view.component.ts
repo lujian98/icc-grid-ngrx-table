@@ -128,10 +128,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
   private setViewportPageSize(loadData: boolean = true, event?: string | MouseEvent | null): void {
     const clientHeight = this.viewport.elementRef.nativeElement.clientHeight;
     const clientWidth = this.viewport.elementRef.nativeElement.clientWidth;
-    const fitPageSize = Math.floor(clientHeight / this.gridConfig().rowHeight);
-    const pageSize =
-      !this.gridConfig().virtualScroll && !this.gridConfig().verticalScroll ? fitPageSize : this.gridConfig().pageSize;
-
+    const pageSize = Math.floor(clientHeight / this.gridConfig().rowHeight);
+    //const pageSize = !this.gridConfig().virtualScroll && !this.gridConfig().verticalScroll ? fitPageSize : this.gridConfig().pageSize;
     if (!event || typeof event === 'string') {
       this.gridFacade.setViewportPageSize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, loadData);
     } else {

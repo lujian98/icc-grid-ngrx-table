@@ -89,7 +89,8 @@ export const iccGridFeature = createFeature({
       const newState: GridState = { ...state };
       if (state[key]) {
         const gridConfig = state[key].gridConfig;
-        const pageSize = gridConfig.virtualScroll ? gridConfig.pageSize : action.pageSize;
+        const pageSize = gridConfig.virtualScroll || gridConfig.verticalScroll ? gridConfig.pageSize : action.pageSize;
+        console.log(' 3333 view port size =', action.pageSize);
         newState[key] = {
           ...state[key],
           gridConfig: {
