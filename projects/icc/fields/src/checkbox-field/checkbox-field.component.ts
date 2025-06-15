@@ -100,7 +100,8 @@ export class IccCheckboxFieldComponent implements OnInit, OnDestroy, ControlValu
     timer(5)
       .pipe(take(1))
       .subscribe(() => {
-        this.setDisabledState(!this.fieldConfig().editable);
+        //this.setDisabledState(!this.fieldConfig().editable);
+        !this.fieldConfig().editable ? this.field.disable() : this.field.enable();
         this.setEnableFields();
       });
   }

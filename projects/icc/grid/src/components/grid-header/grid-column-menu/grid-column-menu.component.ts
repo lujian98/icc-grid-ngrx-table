@@ -78,7 +78,7 @@ export class IccGridColumnMenuComponent {
         keepOpen: true,
         checkbox: true,
         checked: !column.hidden,
-        disabled: !this.gridConfig$().columnHidden || this.column.sortField === false,
+        disabled: !this.gridConfig$().columnHidden || column.allowHide === false,
       };
     });
     return [

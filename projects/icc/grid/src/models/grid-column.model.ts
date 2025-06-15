@@ -150,7 +150,8 @@ export type IccFilterField = IccObjectType.DateRange | IccObjectType.Number | Ic
 export interface IccColumnConfig {
   name: string;
   title?: string;
-  hidden?: boolean | string; // TODO column hidden: 'always' will hide always, 'never' will visible always
+  hidden?: boolean;
+  allowHide?: boolean; // default is true
   width?: number;
   align?: string;
   draggable?: boolean; // default is true

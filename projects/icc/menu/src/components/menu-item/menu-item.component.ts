@@ -28,7 +28,7 @@ export class IccMenuItemComponent {
         fieldName: menuItem.name,
         fieldLabel: menuItem.title || menuItem.name,
         labelBeforeCheckbox: false,
-        editable: true,
+        editable: !menuItem.disabled,
       };
       return menuItem;
     },

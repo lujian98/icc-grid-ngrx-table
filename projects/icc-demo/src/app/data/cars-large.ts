@@ -1339,6 +1339,7 @@ export const DCRColumnConfig: IccColumnConfig[] = [
     width: 150,
     groupField: false,
     cellEditable: true,
+    allowHide: false,
     //align: 'center',
   },
   {
