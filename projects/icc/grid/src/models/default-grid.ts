@@ -45,6 +45,8 @@ export const defaultGridSetting: IccGridSetting = {
   recordModified: false,
   totalCounts: 0,
   selected: 0,
+  scrollIndex: 0,
+  viewportSize: 25,
 };
 
 export const defaultState: IccGridState = {

@@ -93,6 +93,8 @@ export interface IccGridSetting {
   viewportReady: boolean;
   totalCounts: number;
   selected: number;
+  scrollIndex: number;
+  viewportSize: number;
 }
 
 export interface IccGridState<T extends object = object> {

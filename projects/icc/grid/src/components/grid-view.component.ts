@@ -103,6 +103,8 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       const displayTotal = (nextPage - 1) * pageSize;
       if (displayTotal - index < pageSize - 10 && displayTotal < this.gridSetting().totalCounts) {
         this.gridFacade.getGridPageData(this.gridSetting().gridId, nextPage);
+      } else {
+        this.gridFacade.setGridScrollIndex(this.gridSetting().gridId, this.scrollIndex);
       }
     }
   }
@@ -150,6 +152,7 @@ export class IccGridViewComponent<T> implements AfterViewInit, OnDestroy {
       } else if (data.length <= pageSize && clientWidth < widowWidth) {
         this.sizeChanged$.next(uniqueId(16));
       }
+      this.gridFacade.setViewportPageSize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, false);
     } else if (pageSize !== this.gridConfig().pageSize) {
       this.gridFacade.setViewportPageSize(this.gridConfig(), this.gridSetting(), pageSize, clientWidth, true);
     }

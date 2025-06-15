@@ -88,15 +88,18 @@ export const iccGridFeature = createFeature({
       const key = action.gridId;
       const newState: GridState = { ...state };
       if (state[key]) {
+        const gridConfig = state[key].gridConfig;
+        const pageSize = gridConfig.virtualScroll ? gridConfig.pageSize : action.pageSize;
         newState[key] = {
           ...state[key],
           gridConfig: {
-            ...state[key].gridConfig,
-            pageSize: action.pageSize,
+            ...gridConfig,
+            pageSize: pageSize,
           },
           gridSetting: {
             ...state[key].gridSetting,
             viewportWidth: action.viewportWidth,
+            viewportSize: action.pageSize,
           },
         };
       }
@@ -145,6 +148,20 @@ export const iccGridFeature = createFeature({
           gridConfig: {
             ...state[key].gridConfig,
             page: action.page,
+          },
+        };
+      }
+      return { ...newState };
+    }),
+    on(gridActions.setGridScrollIndex, (state, action) => {
+      const key = action.gridId;
+      const newState: GridState = { ...state };
+      if (state[key]) {
+        newState[key] = {
+          ...state[key],
+          gridSetting: {
+            ...state[key].gridSetting,
+            scrollIndex: action.scrollIndex,
           },
         };
       }

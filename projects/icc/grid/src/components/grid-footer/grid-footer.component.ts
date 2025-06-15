@@ -31,12 +31,18 @@ export class IccGridFooterComponent implements OnDestroy {
   gridConfig = input.required<IccGridConfig>();
   page: number = 1;
   get displaying(): string {
-    const start = (this.gridConfig().page - 1) * this.gridConfig().pageSize + 1;
-    let end = start + this.gridConfig().pageSize - 1;
-    if (end > this.gridSetting().totalCounts) {
-      end = this.gridSetting().totalCounts;
+    if (!this.gridConfig().virtualScroll) {
+      const start = (this.gridConfig().page - 1) * this.gridConfig().pageSize + 1;
+      let end = start + this.gridConfig().pageSize - 1;
+      if (end > this.gridSetting().totalCounts) {
+        end = this.gridSetting().totalCounts;
+      }
+      return `${start} - ${end}`;
+    } else {
+      const index = this.gridSetting().scrollIndex + 1;
+      const endindex = index + this.gridSetting().viewportSize;
+      return `${index} - ${endindex}`;
     }
-    return `${start} - ${end}`;
   }
   lastPage = computed(() => {
     return Math.ceil(this.gridSetting().totalCounts / this.gridConfig().pageSize) - 0;

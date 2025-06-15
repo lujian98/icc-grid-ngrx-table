@@ -184,6 +184,10 @@ export class IccGridFacade {
     this.dispatchGridData(gridId);
   }
 
+  setGridScrollIndex(gridId: string, scrollIndex: number): void {
+    this.store.dispatch(gridActions.setGridScrollIndex({ gridId, scrollIndex }));
+  }
+
   getGridData(gridId: string, gridSetting: IccGridSetting): void {
     if (!gridSetting.isTreeGrid) {
       if (gridSetting.lastUpdateTime) {

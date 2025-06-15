@@ -42,6 +42,11 @@ export const setViewportPage = createAction(
   props<{ gridId: string; page: number }>(),
 );
 
+export const setGridScrollIndex = createAction(
+  '[Grid] Setup Grid Scroll Index',
+  props<{ gridId: string; scrollIndex: number }>(),
+);
+
 export const setGridSortFields = createAction(
   '[Grid] Set Grid Sort Fields',
   props<{ gridId: string; gridConfig: IccGridConfig; isTreeGrid: boolean; sortFields: IccSortField[] }>(),
