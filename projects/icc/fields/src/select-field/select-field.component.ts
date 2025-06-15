@@ -5,6 +5,7 @@ import {
   forwardRef,
   inject,
   input,
+  signal,
   OnDestroy,
   output,
   ViewChild,
@@ -122,11 +123,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
       return options;
     },
   });
+  value$ = signal<string | object | string[] | object[]>([]);
   value = input('', {
     transform: (value: string | object | string[] | object[]) => {
       if (this.field && value !== undefined) {
         this.field.setValue(value);
       }
+      this.value$.set(value);
       return value;
     },
   });
@@ -193,6 +196,7 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
   onSelectOptionValueChange(value: T | T[]): void {
     this.field.setValue(value);
     this.valueChange.emit(value);
+    this.value$.set(value as string | object | string[] | object[]);
   }
 
   displayFn(value: string | { [key: string]: string } | { [key: string]: string }[]): string {
@@ -236,8 +240,13 @@ export class IccSelectFieldComponent<T, G> implements OnDestroy, ControlValueAcc
     if (this.isOverlayOpen) {
       this.autocompleteClose = false;
       this.setSelected = true;
-    } else if (!this.fieldConfig$().multiSelection) {
-      this.valueChange.emit(this.field.value);
+    } else {
+      //
+      if (this.fieldConfig$().multiSelection) {
+        this.field.setValue(this.value$());
+        this.valueChange.emit(this.value$() as any);
+      } else {
+      }
     }
   }
 

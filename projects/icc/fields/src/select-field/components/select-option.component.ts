@@ -115,6 +115,11 @@ export class IccSelectOptionComponent<T, G> {
   clickOption(option: IccOptionComponent<unknown>): void {
     this.clickedOption.emit(option);
     this.delaySetSelected(true);
+    timer(20)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.valueChange.emit(this.fieldValue);
+      });
   }
 
   onScrolledIndexChange(index: number): void {
