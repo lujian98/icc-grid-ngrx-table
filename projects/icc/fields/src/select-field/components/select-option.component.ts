@@ -115,11 +115,14 @@ export class IccSelectOptionComponent<T, G> {
   clickOption(option: IccOptionComponent<unknown>): void {
     this.clickedOption.emit(option);
     this.delaySetSelected(true);
-    timer(20)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.valueChange.emit(this.fieldValue);
-      });
+
+    if (this.fieldConfig().multiSelection) {
+      timer(20)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.valueChange.emit(this.fieldValue);
+        });
+    }
   }
 
   onScrolledIndexChange(index: number): void {
@@ -155,8 +158,14 @@ export class IccSelectOptionComponent<T, G> {
   private setVirtualScrollPosition(): void {
     if (this.viewport && this.hasValue && !this.isAllChecked) {
       const values = sortByField([...this.fieldValue], this.fieldConfig().optionLabel, 'asc');
-      const index = this.selectOptions().findIndex((option) => isEqual(option, values[0] as { [key: string]: T }));
-      this.viewport.scrollToIndex(index);
+      if (this.selectOptions().every((i) => typeof i === 'string' || typeof i === 'number')) {
+        const val = values[0] as string | number;
+        const idx = this.selectOptions().findIndex((option) => option === val);
+        this.viewport.scrollToIndex(idx);
+      } else {
+        const index = this.selectOptions().findIndex((option) => isEqual(option, values[0] as { [key: string]: T }));
+        this.viewport.scrollToIndex(index);
+      }
     }
   }
 
@@ -202,7 +211,6 @@ export class IccSelectOptionComponent<T, G> {
         this.setValueChanged(value, value);
       }
     } else {
-      this.autocompleteClose.emit(true);
       if (option.selected) {
         value = optionValue as string;
         this.setValueChanged(value, optionKey as T);
@@ -210,6 +218,7 @@ export class IccSelectOptionComponent<T, G> {
         value = '';
         this.setValueChanged(value, value);
       }
+      this.autocompleteClose.emit(true);
     }
   }
 
